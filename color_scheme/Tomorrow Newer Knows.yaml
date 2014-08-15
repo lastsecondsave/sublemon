@@ -1,0 +1,280 @@
+# [PackageDev] target_format: plist, ext: tmTheme
+name: Tomorrow Newer Knows
+uuid: 4F1880E0-A7D7-11E3-A5E2-0800200C9A66
+
+# Colors:
+# 82A3BF   blue
+# 8E8F8D   gray
+# A7B367   green
+# B798BF   purple
+# C86563   red
+# CCCCCC   light-gray
+# D09562   orange
+# D3B96B   yellow
+# FF0B00   bright-red
+
+settings:
+- settings:
+    background:    '#2D2D30'
+    caret:         '#CCCCCC'
+    foreground:    '#CCCCCC'
+    invisibles:    '#6A6A6A'
+    lineHighlight: '#36363A'
+    selection:     '#515158'
+
+- name:  Disabled highligths
+  scope: >
+    meta.function-call.c++ entity.name.function.c++,
+    support.function.any-method.c,
+    support.function.generic.powershell,
+  settings:
+    foreground: '#CCCCCC'
+
+- name:  Keyword
+  scope: >
+    keyword,
+    storage.type.function,
+  settings:
+    foreground: '#B798BF'
+
+- name:  Highligthed operators
+  scope: >
+    keyword.control.ternary,
+    keyword.operator.logical.java,
+    keyword.operator.instanceof.java,
+    keyword.operator.logical.python,
+    keyword.operator.bool.logical.python3,
+    keyword.operator.cast.c++,
+  settings:
+    foreground: '#B798BF'
+
+- name:  Operator
+  scope: keyword.operator
+  settings:
+    foreground: '#CCCCCC'
+
+- name:  Special operator
+  scope: >
+    keyword.operator.logical.unary,
+    source.yaml keyword.operator,
+  settings:
+    foreground: '#D09562'
+
+- name:  Delimiter
+  scope: >
+    keyword.operator.dereference,
+    meta.delimiter,
+  settings:
+    foreground: '#CCCCCC'
+
+- name:  Number and characters
+  scope: >
+    constant.numeric,
+    constant.character,
+  settings:
+    foreground: '#D09562'
+
+- name:  Comment
+  scope: comment
+  settings:
+    foreground: '#8E8F8D'
+
+- name:  Invalid
+  scope: invalid
+  settings:
+    foreground: '#FF0B00'
+
+- name:  Storage
+  scope: storage
+  settings:
+    foreground: '#B798BF'
+
+- name:  Storage type
+  scope: >
+    storage.type,
+    support.type,
+  settings:
+    foreground: '#B798BF'
+
+- name:  String
+  scope: string
+  settings:
+    foreground: '#A7B367'
+
+- name:  Language constant
+  scope: constant.language
+  settings:
+    foreground: '#D09562'
+
+- name:  User-defined constant
+  scope: >
+    constant.other,
+    constant.variable,
+  settings:
+    foreground: '#C86563'
+
+- name:  Class
+  scope: >
+    entity.name.class,
+    entity.name.type,
+    entity.name.type,
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Inherited class
+  scope: entity.other.inherited-class
+  settings:
+    foreground: '#C86563'
+
+- name:  Function name
+  scope: entity.name.function
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Function parameter
+  scope: variable.parameter
+  settings:
+    foreground: '#D09562'
+
+- name:  Language variable
+  scope: variable.language
+  settings:
+    foreground: '#D09562'
+
+- name:  Support class and function
+  scope: >
+    support.class,
+    support.function,
+  settings:
+    foreground: '#B798BF'
+
+- name:  Support constant
+  scope: support.constant
+  settings:
+    foreground: '#D09562'
+
+- name:  Java Properties keyword
+  scope: keyword.other.java-props
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Java package declaration
+  scope: >
+    keyword.other.package.java,
+    storage.modifier.package.java,
+  settings:
+    foreground: '#C86563'
+
+- name:  Java throwable declaration
+  scope: meta.throwables.java storage.type.java
+  settings:
+    foreground: '#C86563'
+
+- name:  Java assert keyword
+  scope: keyword.control.assert.java
+  settings:
+    foreground: '#C86563'
+
+- name:  Java annotation
+  scope: storage.type.annotation.java
+  settings:
+    foreground: '#D3B96B'
+
+- name:  Java annotation parameter
+  scope: meta.declaration.annotation.java constant.other.key.java
+  settings:
+    foreground: '#D3B96B'
+
+- name:  Javadoc argument
+  scope: >
+    variable.parameter.javadoc,
+    markup.underline.link.javadoc,
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Tag name
+  scope: >
+    entity.name.tag,
+    punctuation.definition.tag,
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Tag attribute
+  scope: entity.other.attribute-name
+  settings:
+    foreground: '#D3B96B'
+
+- name:  Tag equal sign
+  scope: meta.tag
+  settings:
+    foreground: '#D3B96B'
+
+- name:  Tag value
+  scope: meta.tag string
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Doctype keyword
+  scope: >
+    keyword.doctype.xml,
+    meta.tag.sgml.doctype.xml - variable.documentroot.xml,
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Diff inserted
+  scope: >
+    markup.inserted.diff,
+    punctuation.definition.to-file.diff,
+  settings:
+    foreground: '#A7B367'
+
+- name:  Diff deleted
+  scope: >
+    markup.deleted.diff,
+    punctuation.definition.from-file.diff,
+  settings:
+    foreground: '#C86563'
+
+- name:  Diff range
+  scope: meta.diff.range.unified
+  settings:
+    foreground: '#D3B96B'
+
+- name:  Diff header
+  scope: meta.diff.header
+  settings:
+    foreground: '#82A3BF'
+
+- name:  Find list filename
+  scope: entity.name.filename.find-in-files
+  settings:
+    foreground: '#82A3BF'
+
+- name:  C macro
+  scope: >
+    meta.preprocessor,
+    meta.preprocessor keyword,
+  settings:
+    foreground: '#D3B96B'
+
+- name:  Powershell variable scope
+  scope: variable.language.powershell keyword
+  settings:
+    foreground: '#D09562'
+
+- name:  Powershell variable
+  scope: variable.language.powershell
+  settings:
+    foreground: '#C86563'
+
+- name:  Powershell operator
+  scope: >
+    keyword.operator.comparison.powershell,
+    keyword.operator.logical.powershell,
+  settings:
+    foreground: '#8E8F8D'
+
+- name:  Powershell function
+  scope: support.function.generic.powershell
+  settings:
+    foreground: '#82A3BF'

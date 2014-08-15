@@ -1,0 +1,10 @@
+<snippet> 
+    <description>class</description>
+    <tabTrigger>class</tabTrigger>
+    <scope>source.java</scope>
+    <content>
+<![CDATA[class ${TM_FILENAME/(.*?)(\..+)/$1/}$1 {
+    $0
+}]]>
+    </content> 
+</snippet>

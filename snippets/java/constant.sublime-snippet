@@ -1,0 +1,6 @@
+<snippet>
+    <description>static final CONSTANT</description>
+    <tabTrigger>const</tabTrigger>
+    <scope>source.java</scope>
+    <content><![CDATA[static final ${1:String} ${2:CONSTANT} = ${3:null};]]></content>
+</snippet>

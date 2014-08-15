@@ -1,0 +1,6 @@
+vanilla/
+
+*.tmLanguage
+*.tmPreferences
+*.tmTheme
+*.sublime-workspace

@@ -1,0 +1,14 @@
+<snippet> 
+    <description>boolean getter-setter</description>
+    <tabTrigger>gsb</tabTrigger>
+    <scope>source.java</scope>
+    <content>
+<![CDATA[public boolean is${1/./\u$0/}() {
+    return ${1:property};
+}
+
+public void set${1/./\u$0/}(boolean ${1:property}) {
+    this.${1:property} = ${1:property};
+}]]>
+    </content> 
+</snippet>

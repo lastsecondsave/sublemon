@@ -1,0 +1,6 @@
+<snippet>
+    <description>continue</description>
+    <tabTrigger>con</tabTrigger>
+    <scope>source.java, source.js, source.c++, source.c</scope>
+    <content><![CDATA[continue;]]></content>
+</snippet>
