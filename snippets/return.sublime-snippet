@@ -1,0 +1,6 @@
+<snippet>
+    <description>return</description>
+    <scope>source.java, source.js, source.c++, source.c</scope>
+    <tabTrigger>return</tabTrigger>
+    <content><![CDATA[return $0;]]></content>
+</snippet>

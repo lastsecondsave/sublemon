@@ -1,0 +1,6 @@
+<snippet>
+    <description>public</description>
+    <tabTrigger>pu</tabTrigger>
+    <scope>source.java</scope>
+    <content><![CDATA[public ]]></content>
+</snippet>

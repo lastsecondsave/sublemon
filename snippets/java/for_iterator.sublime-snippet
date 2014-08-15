@@ -1,0 +1,10 @@
+<snippet>
+    <description>for iterator</description>
+    <tabTrigger>fort</tabTrigger>
+    <scope>source.java</scope>
+    <content>
+<![CDATA[for (Iterator<$1> ${2:itr} = ${3:list}.iterator(); $2.hasNext(); ) {
+    $0
+}]]>
+    </content>
+</snippet>

@@ -1,0 +1,5 @@
+<snippet> 
+    <description>Wrap as List&lt;T&gt;</description>
+    <scope>source.java</scope>
+    <content><![CDATA[List<${TM_SELECTED_TEXT}>]]></content> 
+</snippet>

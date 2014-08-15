@@ -1,0 +1,10 @@
+<snippet> 
+    <description>setter</description>
+    <tabTrigger>set</tabTrigger>
+    <scope>source.java</scope>
+    <content>
+<![CDATA[public void set${2/./\u$0/}(${1:String} ${2:property}) {
+    this.${2:property} = ${2:property};
+}]]>
+    </content> 
+</snippet>

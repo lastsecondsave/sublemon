@@ -1,0 +1,14 @@
+<snippet> 
+    <description>getter-setter</description>
+    <tabTrigger>gs</tabTrigger>
+    <scope>source.java</scope>
+    <content>
+<![CDATA[public ${1:String} get${2/./\u$0/}() {
+    return ${2:property};
+}
+
+public void set${2/./\u$0/}(${1:String} ${2:property}) {
+    this.${2:property} = ${2:property};
+}]]>
+    </content> 
+</snippet>

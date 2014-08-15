@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.java
+settings:
+  unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
