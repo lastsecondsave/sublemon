@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.yaml meta.match-group.yaml string.unquoted.yaml
+settings:
+  showInSymbolList: 1
