@@ -278,3 +278,15 @@ settings:
   scope: support.function.generic.powershell
   settings:
     foreground: '#82A3BF'
+
+- name:  INI key
+  scope: >
+    meta.property.ini punctuation.definition.quote.ini,
+    meta.property.ini keyword.name.ini,
+  settings:
+    foreground: '#82A3BF'
+
+- name:  INI value
+  scope: meta.value.ini
+  settings:
+    foreground: '#A7B367'
