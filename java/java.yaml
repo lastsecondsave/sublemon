@@ -310,8 +310,8 @@ repository:
       match: (\-|\+|\*|\/|%)
     - name: keyword.operator.logical.java
       match: (&&|\|\|)
-    - name: keyword.operator.logical.unary.java
-      match: (!)
+    - name: keyword.operator.unary.logical.java
+      match: '!'
     - name: keyword.operator.bitwise.java
       match: (\||&)
     - name: keyword.operator.dereference.java
