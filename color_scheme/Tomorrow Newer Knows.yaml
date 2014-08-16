@@ -26,25 +26,11 @@ settings:
   scope: >
     meta.function-call.c++ entity.name.function.c++,
     support.function.any-method.c,
-    support.function.generic.powershell,
   settings:
     foreground: '#CCCCCC'
 
 - name:  Keyword
-  scope: >
-    keyword,
-    storage.type.function,
-  settings:
-    foreground: '#B798BF'
-
-- name:  Highligthed operators
-  scope: >
-    keyword.control.ternary,
-    keyword.operator.logical.java,
-    keyword.operator.instanceof.java,
-    keyword.operator.logical.python,
-    keyword.operator.bool.logical.python3,
-    keyword.operator.cast.c++,
+  scope: keyword
   settings:
     foreground: '#B798BF'
 
@@ -53,9 +39,21 @@ settings:
   settings:
     foreground: '#CCCCCC'
 
+- name:  Highligthed operators
+  scope: >
+    keyword.control.ternary,
+    keyword.operator.logical.js,
+    keyword.operator.logical.java,
+    keyword.operator.instanceof.java,
+    keyword.operator.logical.python,
+    keyword.operator.bool.logical.python3,
+    keyword.operator.cast.c++,
+  settings:
+    foreground: '#B798BF'
+
 - name:  Special operator
   scope: >
-    keyword.operator.logical.unary,
+    keyword.operator.unary,
     source.yaml keyword.operator,
   settings:
     foreground: '#D09562'
@@ -74,6 +72,11 @@ settings:
   settings:
     foreground: '#D09562'
 
+- name:  String
+  scope: string
+  settings:
+    foreground: '#A7B367'
+
 - name:  Comment
   scope: comment
   settings:
@@ -89,18 +92,6 @@ settings:
   settings:
     foreground: '#B798BF'
 
-- name:  Storage type
-  scope: >
-    storage.type,
-    support.type,
-  settings:
-    foreground: '#B798BF'
-
-- name:  String
-  scope: string
-  settings:
-    foreground: '#A7B367'
-
 - name:  Language constant
   scope: constant.language
   settings:
@@ -113,11 +104,8 @@ settings:
   settings:
     foreground: '#C86563'
 
-- name:  Class
-  scope: >
-    entity.name.class,
-    entity.name.type,
-    entity.name.type,
+- name:  Entity name
+  scope: entity.name
   settings:
     foreground: '#82A3BF'
 
@@ -126,12 +114,7 @@ settings:
   settings:
     foreground: '#C86563'
 
-- name:  Function name
-  scope: entity.name.function
-  settings:
-    foreground: '#82A3BF'
-
-- name:  Function parameter
+- name:  Parameter
   scope: variable.parameter
   settings:
     foreground: '#D09562'
@@ -141,8 +124,9 @@ settings:
   settings:
     foreground: '#D09562'
 
-- name:  Support class and function
+- name:  Support type and function
   scope: >
+    support.type,
     support.class,
     support.function,
   settings:
@@ -242,11 +226,6 @@ settings:
 
 - name:  Diff header
   scope: meta.diff.header
-  settings:
-    foreground: '#82A3BF'
-
-- name:  Find list filename
-  scope: entity.name.filename.find-in-files
   settings:
     foreground: '#82A3BF'
 
