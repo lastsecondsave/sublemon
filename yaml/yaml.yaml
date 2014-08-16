@@ -33,8 +33,7 @@ patterns:
     '3': {name: punctuation.separator.key-value.yaml}
     '4': {name: punctuation.definition.entry.yaml}
 
-- name: string.unquoted.yaml
-  match: (?:(?:(-\s*)?(\w+\s*(:)))|(-))\s*(?:((")[^"]*("))|((')[^']*('))|([^,{}&#\[\]].*?(?:$|(?=\s+\#)|(?=\}\s*$))))?
+- match: (?:(?:(-\s*)?(\w.*?\s*(:)))|(-))\s*(?:((")[^"]*("))|((')[^']*('))|([^,{}&#\[\]].*?(?:$|(?=\s+\#)|(?=\}\s*$))))?
   captures:
     '1':  {name: punctuation.definition.entry.yaml}
     '2':  {name: entity.name.tag.yaml}
