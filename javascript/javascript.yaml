@@ -1,0 +1,324 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+comment: 'JavaScript Syntax: version 2.0'
+name: JavaScript
+scopeName: source.js
+fileTypes: [js, htc, jsx]
+uuid: 93E017CC-6F27-11D9-90EB-000D93589AF6
+
+patterns:
+- comment: Match the shebang for JavaScript executables
+  name: comment.line.number-sign.shebang.js
+  match: \A(#!).*$
+  captures:
+    '1': {name: punctuation.definition.comment.js}
+
+- name: entity.name.function.js
+  match: (?<!\w)[\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*(?=\s*:\s*function\b)
+
+- name: entity.name.attribute-name.js
+  match: (?<!\w)[\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*(?=\s*:)
+
+- comment: Match function, optional function name and optional function arguments
+  name: meta.function.js
+  begin: (?:(?<!\w)([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)\s*(=)\s*)?\b(function)(?:\s+([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*))?\s*(\()
+  beginCaptures:
+    '1': {name: meta.function.variable.js}
+    '2': {name: keyword.operator.js}
+    '3': {name: storage.type.function.js}
+    '4': {name: entity.name.function.js}
+    '5': {name: punctuation.definition.parameters.begin.js}
+  end: (\))
+  endCaptures:
+    '1': {name: punctuation.definition.parameters.end.js}
+  patterns:
+  - include: '#function-params'
+
+- name: constant.other.js
+  match: \b([A-Z][A-Z0-9_]+)\b
+
+- name: constant.numeric.hex.js
+  match: \b0[xX]\h+\b
+
+- name: constant.numeric.js
+  match: (?<!\w)(?>((0|[1-9][0-9]*)(\.[0-9]*)?|\.[0-9]+)([eE][+-]?[0-9]+)?)(?!\w)
+
+- name: string.quoted.single.js
+  begin: "'"
+  beginCaptures:
+    '0': {name: punctuation.definition.string.begin.js}
+  end: "'"
+  endCaptures:
+    '0': {name: punctuation.definition.string.end.js}
+  patterns:
+  - name: constant.character.escape.js
+    match: \\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)
+
+- name: string.quoted.double.js
+  begin: '"'
+  beginCaptures:
+    '0': {name: punctuation.definition.string.begin.js}
+  end: '"'
+  endCaptures:
+    '0': {name: punctuation.definition.string.end.js}
+  patterns:
+  - name: constant.character.escape.js
+    match: \\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)
+
+- name: comment.block.js
+  begin: /\*
+  end: \*/
+  captures:
+    '0': {name: punctuation.definition.comment.js}
+- begin: (^[ \t]+)?(?=//)
+  beginCaptures:
+    '1': {name: punctuation.whitespace.comment.leading.js}
+  end: (?!\G)
+  patterns:
+  - name: comment.line.double-slash.js
+    begin: //
+    beginCaptures:
+      '0': {name: punctuation.definition.comment.js}
+    end: '$'
+
+- name: storage.type.js
+  match: (?<!\.|\$)\b(let|var)\b(?!\$)
+
+- name: storage.modifier.js
+  match: (?<!\.|\$)\b(get|set)\b(?!\$)
+
+- name: keyword.control.js
+  match: (?<!\.|\$)\b(break|case|catch|continue|default|do|else|finally|for|if|return|switch|throw|try|while|yield)\b(?!\$)
+
+- name: keyword.operator.js
+  match: (?<!\.|\$)\b(delete|in|instanceof|new|typeof|void|with)\b(?!\$)
+
+- name: keyword.operator.logical.js
+  match: '&&|\|\|'
+
+- name: keyword.operator.unary.logical.js
+  match: '!'
+
+- name: keyword.operator.unary.bitwise.js
+  match: '~'
+
+- name: keyword.operator.js
+  match: '%|&|\*|\-\-|\-|\+\+|\+|===|==|=|!=|!==|<=|>=|<<=|>>=|>>>=|<>|<|>||\?\:|\*=|(?<!\()/=|%=|\+=|\-=|&=|\^='
+
+- name: keyword.other.js
+  match: (?<!\.|\$)\b(debugger)\b(?!\$)
+
+- name: support.class.js
+  match: (?<!\.|\$)\b(Array|Boolean|Date|Error|EvalError|Function|Number|Object|RangeError|ReferenceError|RegExp|String|SyntaxError|TypeError|URIError)\b(?!\$)
+
+- comment: DOM Core Level 4 (http://www.w3.org/TR/domcore/) and DOM Events Level 3 (http://www.w3.org/TR/DOM-Level-3-Events/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(Attr|CharacterData|Comment|CompositionEvent|CustomEvent|Document|DocumentFragment|DocumentType|DOMError|DOMException|DOMImplementation|DOMParser|DOMString|DOMTimestamp|DOMSettableTokenList|DOMStringList|DOMTokenList|Element|Event|EventTarget|FocusEvent|HTMLCollection|KeyboardEvent|MouseEvent|MutationObserver|MutationRecord|Node|NodeFilter|NodeIterator|NodeList|ProcessingInstruction|Range|Text|TextEvent|TreeWalker|UIEvent|WheelEvent|XMLDocument)\b(?!\$)
+
+- comment: DOM Core Level 4 (http://www.w3.org/TR/domcore/) and DOM Events Level 3 (http://www.w3.org/TR/DOM-Level-3-Events/)
+  name: invalid.deprecated.dom.js
+  match: (?<!\.|\$)\b(CDATASection|DOMConfiguration|DOMErrorHandler|DOMImplementationList|DOMImplementationSource|DOMLocator|DOMObject|DOMUserData|Entity|EntityReference|MutationEvent|NamedNodeMap|NameList|Notation|TypeInfo|UserDataHandler)\b(?!\$)
+
+- comment: TypedArray specification used by HTML 5 (http://www.khronos.org/registry/typedarray/specs/latest/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(ArrayBuffer|DataView|Float32Array|Float64Array|Int8Array|Int16Array|Int32Array|TypedArray|Uint8Array|Uint16Array|Uint32Array|Uint8ClampedArray)\b(?!\$)
+
+- comment: File specification used by HTML 5 (http://dev.w3.org/2006/webapi/FileAPI/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(Blob|File|FileList|FileReader)\b(?!\$)
+
+- comment: XMLHttpRequest specification used by HTML 5 (http://xhr.spec.whatwg.org/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(FormData|ProgressEvent|XMLHttpRequest|XMLHttpRequestUpload)\b(?!\$)
+
+- comment: EventSource specification used by HTML 5 (http://www.w3.org/TR/eventsource/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(EventSource)\b(?!\$)
+
+- comment: CSSOM specification used by HTML 5 (http://dev.w3.org/csswg/cssom/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(CSS|CSSCharsetRule|CSSImportRule|CSSPageRule|CSSRule|CSSRuleList|CSSStyleDeclaration|CSSStyleRule|CSSStyleSheet|MediaList|Stylesheet|StyleSheetList)\b(?!\$)
+
+- comment: CSSOM View specification used by HTML 5 (http://dev.w3.org/csswg/cssom-view/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(Screen)\b(?!\$)
+
+- comment: CSS Font specification used by HTML 5 (http://dev.w3.org/csswg/css-fonts/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(CSSFontFaceRule)\b(?!\$)
+
+- comment: SVG specification used by HTML 5 (http://www.w3.org/TR/SVG/single-page.html)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(SVGAElement|SVGAltGlyphDefElement|SVGAltGlyphElement|SVGAltGlyphItemElement|SVGAngle|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimatedAngle|SVGAnimatedBoolean|SVGAnimatedEnumeration|SVGAnimatedInteger|SVGAnimatedLength|SVGAnimatedLengthList|SVGAnimatedNumber|SVGAnimatedNumberList|SVGAnimatedPreserveAspectRatio|SVGAnimatedRect|SVGAnimatedString|SVGAnimatedTransformList|SVGAnimationElement|SVGCircleElement|SVGClipPathElement|SVGColor|SVGComponentTransferFunctionElement|SVGCursorElement|SVGDefsElement|SVGDescElement|SVGDocument|SVGElement|SVGElementInstance|SVGElementInstanceList|SVGEllipseElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEFloodElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGForeignObjectElement|SVGGElement|SVGGlyphElement|SVGGlyphRefElement|SVGGradientElement|SVGHKernElement|SVGImageElement|SVGLength|SVGLengthList|SVGLineElement|SVGLinearGradientElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMatrix|SVGMetadataElement|SVGMissingGlyphElement|SVGNumber|SVGNumberList|SVGPaint|SVGPathElement|SVGPathSeg|SVGPathSegArcAbs|SVGPathSegArcRel|SVGPathSegClosePath|SVGPathSegCurvetoCubicAbs|SVGPathSegCurvetoCubicRel|SVGPathSegCurvetoCubicSmoothAbs|SVGPathSegCurvetoCubicSmoothRel|SVGPathSegCurvetoQuadraticAbs|SVGPathSegCurvetoQuadraticRel|SVGPathSegCurvetoQuadraticSmoothAbs|SVGPathSegCurvetoQuadraticSmoothRel|SVGPathSegLinetoAbs|SVGPathSegLinetoHorizontalAbs|SVGPathSegLinetoHorizontalRel|SVGPathSegLinetoRel|SVGPathSegLinetoVerticalAbs|SVGPathSegLinetoVerticalRel|SVGPathSegList|SVGPathSegMovetoAbs|SVGPathSegMovetoRel|SVGPatternElement|SVGPoint|SVGPointList|SVGPolygonElement|SVGPolylineElement|SVGPreserveAspectRatio|SVGRadialGradientElement|SVGRect|SVGRectElement|SVGRenderingIntent|SVGSVGElement|SVGScriptElement|SVGSetElement|SVGStopElement|SVGStringList|SVGStyleElement|SVGSwitchElement|SVGSymbolElement|SVGTRefElement|SVGTSpanElement|SVGTextContentElement|SVGTextElement|SVGTextPathElement|SVGTextPositioningElement|SVGTitleElement|SVGTransform|SVGTransformList|SVGUnitTypes|SVGUseElement|SVGUseElement|SVGVKernElement|SVGViewElement|SVGViewSpec|SVGZoomEvent)\b(?!\$)
+
+- comment: WebGL specification used by HTML 5 (http://www.khronos.org/registry/webgl/specs/latest/1.0/)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(WebGLActiveInfo|WebGLBuffer|WebGLContextEvent|WebGLFramebuffer|WebGLProgram|WebGLRenderbuffer|WebGLRenderingContext|WebGLShader|WebGLShaderPrecisionFormat|WebGLTexture|WebGLUniformLocation)\b(?!\$)
+
+- comment: HTML 5 (http://www.w3.org/TR/html5/single-page.html)
+  name: support.class.dom.js
+  match: (?<!\.|\$)\b(Audio|BarProp|DOMStringMap|ErrorEvent|FileError|HTMLAllCollection|HTMLAnchorElement|HTMLAppletElement|HTMLAreaElement|HTMLAudioElement|HTMLBRElement|HTMLBaseElement|HTMLBodyElement|HTMLButtonElement|HTMLCanvasElement|HTMLDListElement|HTMLDataElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLEmbedElement|HTMLFieldSetElement|HTMLFontElement|HTMLFormControlsCollection|HTMLFormElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLIFrameElement|HTMLImageElement|HTMLInputElement|HTMLKeygenElement|HTMLLIElement|HTMLLabelElement|HTMLLegendElement|HTMLLinkElement|HTMLMapElement|HTMLMarqueeElement|HTMLMediaElement|HTMLMetaElement|HTMLMeterElement|HTMLModElement|HTMLOListElement|HTMLObjectElement|HTMLOptGroupElement|HTMLOptionElement|HTMLOptionsCollection|HTMLOutputElement|HTMLParagraphElement|HTMLParamElement|HTMLPreElement|HTMLProgressElement|HTMLQuoteElement|HTMLScriptElement|HTMLSelectElement|HTMLSour|HTMLSpanElement|HTMLStyleElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableElement|HTMLTableHeaderCellElement|HTMLTableRowElement|HTMLTableSectionElement|HTMLTextAreaElement|HTMLTimeElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement|HTMLVideoElement|HashChangeEvent|History|Image|Location|MediaController|MediaError|MouseEvent|Navigator|Option|PageTransitionEvent|PopStateEvent|TextTrack|TextTrackCue|TextTrackCueList|TextTrackList|TimeRanges|TrackEvent|UIEvent|ValidityState|Window)\b(?!\$)
+
+- comment: HTML 5 (http://www.w3.org/TR/html5/single-page.html#window)
+  name: support.constant.dom.js
+  match: (?<!\.|\$)\b(applicationCache|chrome|closed|console|crypto|document|external|frameElement|frames|history|innerHeight|innerWidth|length|location|locationbar|menubar|name|navigator|offscreenBuffering|onabort|onafterprint|onbeforeprint|onbeforeunload|onblur|oncancel|oncanplay|oncanplaythrough|onchange|onclick|onclose|oncuechange|ondblclick|ondrag|ondragend|ondragenter|ondragexit|ondragleave|ondragover|ondragstart|ondrop|ondurationchange|onemptied|onended|onerror|onfocus|onhashchange|oninput|oninvalid|onkeydown|onkeypress|onkeyup|onload|onloadeddata|onloadedmetadata|onloadstart|onmessage|onmousedown|onmouseenter|onmouseleave|onmousemove|onmouseout|onmouseover|onmouseup|onmousewheel|onoffline|ononline|onpagehide|onpageshow|onpause|onplay|onplaying|onpopstate|onprogress|onratechange|onreset|onresize|onscroll|onseeked|onseeking|onselect|onshow|onstalled|onstorage|onsubmit|onsuspend|ontimeupdate|onunload|onvolumechange|onwaiting|opener|outerHeight|outerWidth|pageXOffset|pageYOffset|parent|personalbar|postMessage|screen|screenX|screenY|scrollbars|scrollX|scrollY|self|status|statusbar|toolbar|top|window)\b(?!\$)
+
+- comment: HTML 5 (http://www.w3.org/TR/html5/single-page.html#window)
+  name: support.function.dom.js
+  match: (?<!\.|\$)\b(addEventListener|alert|atob|blur|btoa|clearInterval|clearTimeout|close|confirm|dispatchEvent|doNotTrack|find|focus|getComputedStyle|getMatchedCSSRules|getSelection|matchMedia|moveBy|moveTo|open|openDatabase|print|prompt|removeEventListener|resizeBy|resizeTo|scroll|scrollBy|scrollTo|setInterval|setTimeout|showModalDialog|stop)\b(?!\$)
+
+- name: invalid.deprecated.dom.js
+  match: (?<!\.|\$)\b(captureEvents|defaultStatus|defaultstatus|releaseEvents)\b(?!\$)
+
+- name: support.constant.js
+  match: (?<!\.|\$)\b(JSON|Math)\b(?!\$)
+
+- name: support.function.js
+  match: (?<!\.|\$)\b(decodeURI|decodeURIComponent|encodeURI|encodeURIComponent|eval|isFinite|isNaN|parseFloat|parseInt|uneval)\b(?!\$)
+
+- comment: Keywords reserved for future use but now are unused.
+  name: invalid.illegal.js
+  match: (?<!\.|\$)\b(class|const|enum|export|extends|import|super)\b(?!\$)
+
+- comment: Keywords reserved for future use in strict mode but now are unused.
+  name: invalid.deprecated.js
+  match: (?<!\.|\$)\b(implements|interface|package|private|protected|public|static)\b(?!\$)
+
+- name: constant.language.js
+  match: \b(false|Infinity|NaN|null|true|undefined)\b
+
+- name: variable.language.js
+  match: (?<!\.|\$)\b(this)\b(?!\$)
+
+- comment: Don't scope preceding whitespace as string.regex
+  begin: (?<=[=(:,]|^|return|&&|\|\||!|\?)\s*(?=/[^/*+?])
+  end: (?<=[/igm])
+  patterns:
+  - name: string.regexp.js
+    begin: /
+    beginCaptures:
+      '1': {name: punctuation.definition.string.begin.js}
+    end: (/)[igm]*
+    endCaptures:
+      '1': {name: punctuation.definition.string.end.js}
+    patterns:
+    - include: '#regexp'
+
+- name: punctuation.terminator.statement.js
+  match: \;
+
+- comment: Allows the special return snippet to fire.
+  match: (\{)(\})
+  captures:
+    '1': {name: punctuation.section.scope.begin.js}
+    '2': {name: punctuation.section.scope.end.js}
+
+- name: meta.brace.curly.js
+  match: '\{|\}'
+
+- name: meta.brace.round.js
+  match: \(|\)
+
+- name: meta.brace.square.js
+  match: \[|\]
+
+- name: meta.ternary-if.js
+  begin: \?
+  beginCaptures:
+    '0': {name: keyword.control.ternary}
+  end: ':'
+  endCaptures:
+    '0': {name: keyword.control.ternary}
+  patterns:
+  - include: $self
+
+- comment: Match classes based on the usage of the "new" operator.
+  name: support.class.js
+  match: (?<=new )([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?!\w)
+
+- comment: Match classes based on the usage of the "instanceof" operator.
+  name: support.class.js
+  match: (?<= instanceof )([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?!\w)
+
+- comment: Match classes based on the usage of the "prototype" property.
+  name: support.class.js
+  match: (?<!\w)([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?=\.prototype\b)
+
+- comment: Matches the "prototype" keyword.  Even though it is not a valid keyword, it is a special constant of sorts.
+  name: keyword.other.js
+  match: (?<=\.)(prototype)\b
+
+- comment: Matches the function calls.
+  name: meta.function.js
+  match: (?<!\w)([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?=\()
+
+repository:
+  function-params:
+    patterns:
+    - comment: 'Matches valid argument, function and variable names.  To be thorough: https://github.com/mathiasbynens/mothereff.in/tree/master/js-variables'
+      begin: (?=[\p{L}\p{Nl}$_])
+      end: (?=[,)])
+      patterns:
+      - name: variable.parameter.function.js
+        match: \G[\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*
+
+  regex-character-class:
+    patterns:
+    - name: constant.character.character-class.regexp
+      match: \\[wWsSdD]|\.
+    - name: constant.character.numeric.regexp
+      match: \\([0-7]{3}|x\h\h|u\h\h\h\h)
+    - name: constant.character.control.regexp
+      match: \\c[A-Z]
+    - name: constant.character.escape.backslash.regexp
+      match: \\.
+
+  regexp:
+    patterns:
+    - name: keyword.control.anchor.regexp
+      match: \\[bB]|\^|\$
+    - name: keyword.other.back-reference.regexp
+      match: \\[1-9]\d*
+    - name: keyword.operator.quantifier.regexp
+      match: '[?+*]|\{(\d+,\d+|\d+,|,\d+|\d+)\}\??'
+    - name: keyword.operator.or.regexp
+      match: \|
+    - name: meta.group.assertion.regexp
+      begin: (\()((\?=)|(\?!))
+      beginCaptures:
+        '1': {name: punctuation.definition.group.regexp}
+        '3': {name: meta.assertion.look-ahead.regexp}
+        '4': {name: meta.assertion.negative-look-ahead.regexp}
+      end: (\))
+      endCaptures:
+        '1': {name: punctuation.definition.group.regexp}
+      patterns:
+      - include: '#regexp'
+    - name: meta.group.regexp
+      begin: \((\?:)?
+      beginCaptures:
+        '0': {name: punctuation.definition.group.regexp}
+      end: \)
+      endCaptures:
+        '0': {name: punctuation.definition.group.regexp}
+      patterns:
+      - include: '#regexp'
+    - name: constant.other.character-class.set.regexp
+      begin: (\[)(\^)?
+      beginCaptures:
+        '1': {name: punctuation.definition.character-class.regexp}
+        '2': {name: keyword.operator.negation.regexp}
+      end: (\])
+      endCaptures:
+        '1': {name: punctuation.definition.character-class.regexp}
+      patterns:
+      - name: constant.other.character-class.range.regexp
+        match: (?:.|(\\(?:[0-7]{3}|x\h\h|u\h\h\h\h))|(\\c[A-Z])|(\\.))\-(?:[^\]\\]|(\\(?:[0-7]{3}|x\h\h|u\h\h\h\h))|(\\c[A-Z])|(\\.))
+        captures:
+          '1': {name: constant.character.numeric.regexp}
+          '2': {name: constant.character.control.regexp}
+          '3': {name: constant.character.escape.backslash.regexp}
+          '4': {name: constant.character.numeric.regexp}
+          '5': {name: constant.character.control.regexp}
+          '6': {name: constant.character.escape.backslash.regexp}
+      - include: '#regex-character-class'
+    - include: '#regex-character-class'
