@@ -301,7 +301,7 @@ repository:
     - name: keyword.operator.comparison.java
       match: (===?|!=|<=|>=|<>|<|>)
     - name: keyword.operator.assignment.arithmetic.java
-      match: ([+*/%-]=)
+      match: '[+*/\%-]='
     - name: keyword.operator.assignment.java
       match: (=)
     - name: keyword.operator.increment-decrement.java

@@ -16,6 +16,16 @@ patterns:
   patterns:
   - include: '#base'
 
+- name: string.unquoted.yaml
+  begin: ^\s*(-)?\s*((?:match|begin|end)(:))
+  beginCaptures:
+    '1': {name: keyword.operator.symbol}
+    '2': {name: entity.name.tag.yaml}
+    '3': {name: punctuation.separator.key-value.yaml}
+  end: '$'
+  patterns:
+  - include: source.regexp
+
 - include: '#base'
 
 repository:
