@@ -1,0 +1,19 @@
+{
+    "selector"   : "source.java",
+    "shell_cmd"  : "mvn -q compile",
+    "working_dir": "${project_path:${folder}}",
+    "file_regex" : "\\[ERROR\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
+    "syntax"     : "Packages/Maven/maven.tmLanguage",
+
+    "variants": [
+        {   "name"     : "Run",
+            "shell_cmd": "mvn -q -e exec:java"
+        },
+        {   "name"     : "Clean",
+            "shell_cmd": "mvn clean"
+        },
+        {   "name"     : "Clean Install",
+            "shell_cmd": "mvn -e clean install"
+        }
+    ]
+}
