@@ -1,7 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: XML
 scopeName: text.xml
-fileTypes: [xml, tld, jsp, pt, cpt, dtml, rss, opml]
+fileTypes: [xml]
 uuid: D3C4E6DA-6B1C-11D9-8CC2-000D93589AF6
 
 patterns:

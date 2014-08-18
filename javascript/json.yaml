@@ -1,8 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: JSON
 scopeName: source.json
-fileTypes: [json, sublime-settings, sublime-menu, sublime-keymap, sublime-mousemap,
-  sublime-theme, sublime-build, sublime-project, sublime-completions]
+fileTypes: [json]
 uuid: 0C3868E4-F96B-4E55-B204-1DCB5A20748B
 
 patterns:
