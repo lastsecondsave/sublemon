@@ -1,7 +1,7 @@
 {
 	"folders": [
 		{   "path": ".",
-            "file_exclude_patterns": ["*.tm*"],
+            "file_exclude_patterns": ["*.tm*", "*.hidden-tm*"],
             "folder_exclude_patterns": ["vanilla"]
 		}
 	]

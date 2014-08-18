@@ -4,3 +4,4 @@ vanilla/
 *.tmPreferences
 *.tmTheme
 *.sublime-workspace
+*.hidden-tmLanguage
