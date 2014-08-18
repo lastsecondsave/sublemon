@@ -1,4 +1,4 @@
-# [PackageDev] target_format: plist, ext: tmLanguage
+# [PackageDev] target_format: plist, ext: hidden-tmLanguage
 name: Maven Build Output
 scopeName: text.maven
 uuid: B5F3B290-2625-11E4-8C21-0800200C9A66
