@@ -1,0 +1,6 @@
+<snippet>
+    <description>CDATA</description>
+    <tabTrigger>cdata</tabTrigger>
+    <scope>text.xml</scope>
+	<content>&lt;![CDATA[${0:$SELECTION}]]&gt;</content>
+</snippet>
