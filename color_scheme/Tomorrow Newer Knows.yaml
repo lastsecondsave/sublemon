@@ -205,6 +205,11 @@ settings:
   settings:
     foreground: '#82A3BF'
 
+- name:  CDATA brackets
+  scope: text.xml punctuation.definition.string
+  settings:
+    foreground: '#8E8F8D'
+
 - name:  Diff inserted
   scope: >
     markup.inserted.diff,
