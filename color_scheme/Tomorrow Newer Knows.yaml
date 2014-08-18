@@ -54,7 +54,7 @@ settings:
 - name:  Special operator
   scope: >
     keyword.operator.unary,
-    source.yaml keyword.operator,
+    source.yaml keyword.operator.yaml,
   settings:
     foreground: '#D09562'
 
@@ -286,3 +286,27 @@ settings:
     entity.name.exception.maven,
   settings:
     foreground: '#D3B96B'
+
+- name:  RegExp limiters
+  scope: >
+    keyword.operator.or.regexp,
+    punctuation.definition.group.regexp,
+  settings:
+    foreground: '#D3B96B'
+
+- name:  RegExp keywords
+  scope: >
+    constant.character.character-class.regexp,
+    constant.character.control.regexp,
+    constant.character.hex.regexp,
+    constant.character.unicode.regexp,
+    constant.other.character-class.set.regexp,
+    keyword.operator.quantifier.regexp,
+    keyword.operator.negation.regexp,
+  settings:
+    foreground: '#B798BF'
+
+- name:  RegExp modifiers
+  scope: keyword.modifier.regexp
+  settings:
+    foreground: '#C86563'
