@@ -1,0 +1,69 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: Regular Expression
+scopeName: source.regexp
+fileTypes: [re]
+uuid: BAFE4C4F-8D59-48CD-A3BC-52A2084531C9
+
+patterns:
+- name: keyword.modifier.regexp
+  match: \(\?[x]\)
+
+- name: keyword.control.anchor.regexp
+  match: \\[bB]|\^|\$
+
+- name: keyword.other.back-reference.regexp
+  match: \\[1-9]\d*
+
+- name: keyword.operator.quantifier.regexp
+  match: '[?+*]|\{(\d+,\d+|\d+,|,\d+|\d+)\}\??'
+
+- name: keyword.operator.or.regexp
+  match: \|
+
+- name: meta.group.assertion.regexp
+  begin: (\((\?<?[=!]))
+  beginCaptures:
+    '1': {name: punctuation.definition.group.regexp}
+    '2': {name: meta.assertion.look-around.regexp}
+  end: (\))
+  endCaptures:
+    '1': {name: punctuation.definition.group.regexp}
+  patterns:
+  - include: '$self'
+
+- name: meta.group.regexp
+  begin: \((\?[:>|])?
+  beginCaptures:
+    '0': {name: punctuation.definition.group.regexp}
+  end: \)
+  endCaptures:
+    '0': {name: punctuation.definition.group.regexp}
+  patterns:
+  - include: '$self'
+
+- name: constant.other.character-class.set.regexp
+  begin: (\[)(\^)?
+  beginCaptures:
+    '1': {name: punctuation.definition.character-class.regexp}
+    '2': {name: keyword.operator.negation.regexp}
+  end: (\])
+  endCaptures:
+    '1': {name: punctuation.definition.character-class.regexp}
+  patterns:
+  - include: '#character-class'
+
+- include: '#character-class'
+
+repository:
+  character-class:
+    patterns:
+    - name: constant.character.character-class.regexp
+      match: \\[wWsSdDhHvVX]|\.
+    - name: constant.character.unicode.regexp
+      match: \\p([A-Za-z]|\{[A-Za-z]+\})
+    - name: constant.character.hex.regexp
+      match: \\x([0-9A-F]{2}|\{[0-9A-F]+\})
+    - name: constant.character.control.regexp
+      match: \\c[A-Z]
+    - name: constant.character.escape.backslash.regexp
+      match: \\.

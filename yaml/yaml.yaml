@@ -16,13 +16,16 @@ patterns:
   patterns:
   - include: '#base'
 
-- name: string.unquoted.yaml
-  begin: ^\s*(-)?\s*((?:match|begin|end)(:))
+- name: regexp.yaml
+  begin: ^\s*(-)?\s*((?:match|begin|end)(:))\s*(['"])?
   beginCaptures:
-    '1': {name: keyword.operator.symbol}
+    '1': {name: keyword.operator.yaml}
     '2': {name: entity.name.tag.yaml}
     '3': {name: punctuation.separator.key-value.yaml}
-  end: '$'
+    '4': {name: string.quoted.yaml}
+  end: (['\"])?\s*$
+  endCaptures:
+    '1': {name: string.quoted.yaml}
   patterns:
   - include: source.regexp
 
@@ -31,7 +34,7 @@ patterns:
 repository:
   base:
     patterns:
-    - name: keyword.operator.symbol
+    - name: keyword.operator.yaml
       match: '-'
 
     - name: string.unquoted.block.yaml
@@ -41,7 +44,7 @@ repository:
         '3': {name: punctuation.definition.entry.yaml}
         '4': {name: entity.name.tag.yaml}
         '5': {name: punctuation.separator.key-value.yaml}
-        '6': {name: keyword.operator.symbol}
+        '6': {name: keyword.operator.yaml}
       end: ^(?!^\1)|^(?=\1(-|\w+\s*:)|#)
       patterns:
       - include: '#erb'
