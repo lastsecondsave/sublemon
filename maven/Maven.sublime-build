@@ -3,7 +3,7 @@
     "shell_cmd"  : "mvn -q compile",
     "working_dir": "${project_path:${folder}}",
     "file_regex" : "\\[ERROR\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
-    "syntax"     : "Packages/Maven/maven.tmLanguage",
+    "syntax"     : "Packages/Maven/maven.hidden-tmLanguage",
 
     "variants": [
         {   "name"     : "Run",
