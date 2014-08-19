@@ -51,8 +51,15 @@ settings:
   scope: >
     keyword.operator.unary,
     source.yaml keyword.operator.yaml,
+    punctuation.separator.line.java-props,
   settings:
     foreground: '#D09562'
+
+- name:  Gray highligths
+  scope: >
+    punctuation.separator.key-value.java-props,
+  settings:
+    foreground: '#8E8F8D'
 
 - name:  Keyword
   scope: keyword

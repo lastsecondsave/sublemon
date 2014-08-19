@@ -6,19 +6,45 @@ uuid: 2A28E50A-6B1D-11D9-8689-000D93589AF6
 
 patterns:
 - name: comment.line.number-sign.java-props
-  match: ([#!])(.+)?$\n?
+  match: ^\s*([#!]).*$
   captures:
     '1': {name: punctuation.definition.comment.java-props}
 
-- name: comment.block.java-props
-  begin: /\*
-  end: \*/
-  captures:
-    '0': {name: punctuation.definition.comment.java-props}
+- begin: '^\s*(?=(\\[ =:]|\S)++\s*([=: ]|$))'
+  end: '\s*([=: \t])|$'
+  endCaptures:
+    '1': {name: punctuation.separator.key-value.java-props}
+  patterns:
+  - name: entity.name.tag.java-props
+    begin: (?:\S)
+    end: (?=(?!\\)\s)
+    patterns:
+    - include: '#escapes'
 
-- match: ^([^:=]+)([:=])(.*)$
+- name: entity.value.java-props
+  match: \s*([-+]?\d+)\s*$
   captures:
-    '1': {name: keyword.other.java-props}
-    '2': {name: punctuation.separator.key-value.java-props}
+    '1': {name: constant.numeric.java-props}
 
-keyEquivalent: ^~J
+- name: entity.value.java-props
+  match: \s*(true|false|on|off|yes|no)\s*$
+  captures:
+    '1': {name: constant.language.java-props}
+
+- name: entity.value.java-props
+  begin: (?:\S)
+  end: '(?!\\).$|^$'
+  patterns:
+  - name: punctuation.separator.line.java-props
+    match: '\\$'
+  - include: '#escapes'
+
+repository:
+  escapes:
+    patterns:
+    - name: constant.character.escape.java-props
+      match: \\[ trn:=\\]
+    - name: constant.character.escape.unicode.java-props
+      match: \\u[a-hA-H0-9]{1,4}
+    - name: invalid.backslash.java-props
+      match: \\
