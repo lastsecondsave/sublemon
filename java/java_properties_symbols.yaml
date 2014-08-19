@@ -1,0 +1,5 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.java-props entity.name.tag.java-props
+settings:
+  showInSymbolList: 1
+  symbolTransformation: s/\\//g;
