@@ -14,8 +14,8 @@ patterns:
   patterns:
   - name: entity.other.attribute-name.xml
     match: ' ([a-zA-Z-]+)'
-  - include: '#doublequotedString'
-  - include: '#singlequotedString'
+  - include: '#double-quoted-string'
+  - include: '#single-quoted-string'
 
 - name: meta.tag.sgml.doctype.xml
   begin: (<!)(DOCTYPE)\s+([:a-zA-Z_][:a-zA-Z0-9_.-]*)
@@ -25,13 +25,21 @@ patterns:
     '2': {name: keyword.doctype.xml}
     '3': {name: variable.documentroot.xml}
   patterns:
-  - include: '#internalSubset'
+  - include: '#internal-subset'
 
 - name: comment.block.xml
   begin: <[!%]--
   end: --%?>
   captures:
     '0': {name: punctuation.definition.comment.xml}
+
+- name: string.unquoted.cdata.xml
+  begin: <!\[CDATA\[
+  beginCaptures:
+    '0': {name: punctuation.definition.string.begin.xml}
+  end: ']]>'
+  endCaptures:
+    '0': {name: punctuation.definition.string.end.xml}
 
 - name: meta.tag.no-content.xml
   begin: (<)((?:([-_a-zA-Z0-9]+)((:)))?([-_.a-zA-Z0-9:]+))(?=(\s[^>]*)?></\2>)
@@ -52,74 +60,75 @@ patterns:
     '7': {name: entity.name.tag.localname.xml}
     '8': {name: punctuation.definition.tag.end.xml}
   patterns:
-  - include: '#tagStuff'
+  - include: '#tag-internals'
 
-- name: meta.tag.xml
-  begin: (</?)(?:([-_a-zA-Z0-9]+)((:)))?([-_.a-zA-Z0-9:]+)
-  end: (/?>)
-  endCaptures:
-    '1': {name: punctuation.definition.tag.end.xml}
-  captures:
-    '1': {name: punctuation.definition.tag.begin.xml}
-    '2': {name: entity.name.tag.namespace.xml}
-    '3': {name: entity.name.tag.xml}
-    '4': {name: punctuation.separator.namespace.xml}
-    '5': {name: entity.name.tag.localname.xml}
+- name: meta.mybatis.xml
+  begin: (?=<(select|update|insert|delete)\s)
+  end: (?=</\1>)
   patterns:
-  - include: '#tagStuff'
+  - include: '#tag'
+  - include: '#entity'
+  - include: '#bare-ampersand'
+  - name: keyword.other.mybatis.xml
+    match: '[#$]\{(.*),javaType=(.*?)(?:,jdbcType=(.*))?\}'
+    captures:
+      '1': {name: variable.parameter.mybatis.xml}
+      '2': {name: variable.parameter.mybatis.xml}
+      '3': {name: variable.parameter.mybatis.xml}
+  - name: keyword.embedded.sql.mybatis.xml
+    match: (?i)\b(select|distinct|from|where|and|order by|group by|insert|into|values|update|set|in|over)\b
+  - name: support.function.embedded.sql.mybatis.xml
+    match: (?i)\b(sysdate|systimestamp)\b
+  - name: support.function.embedded.sql.mybatis.xml
+    match: '([\w.]+(?=\()|(?i)\w+\.nextVal)'
+  - name: string.embedded.sql.mybatis.xml
+    match: "'.*'"
+  - name: constant.numeric.embedded.sql.mybatis.xml
+    match: \b\d+\b|\*|(?i)\bnull\b
+  - name: keyword.embedded.sql.mybatis.xml
+    match: \(|\)|\|\|
+  - name: keyword.callable.embedded.sql.mybatis.xml
+    match: '\{|\}|(?i)\bcall\b'
+  - name: invalid.embedded.sql.mybatis.xml
+    match: '<|>'
 
+- include: '#tag'
 - include: '#entity'
-
 - include: '#bare-ampersand'
 
-- name: source.java-props.embedded.xml
-  begin: <%@
-  beginCaptures:
-    '0': {name: punctuation.section.embedded.begin.xml}
-  end: '%>'
-  endCaptures:
-    '0': {name: punctuation.section.embedded.end.xml}
-  patterns:
-  - name: keyword.other.page-props.xml
-    match: page|include|taglib
-
-- name: source.java.embedded.xml
-  begin: <%[!=]?(?!--)
-  beginCaptures:
-    '0': {name: punctuation.section.embedded.begin.xml}
-  end: (?!--)%>
-  endCaptures:
-    '0': {name: punctuation.section.embedded.end.xml}
-  patterns:
-  - include: source.java
-
-- name: string.unquoted.cdata.xml
-  begin: <!\[CDATA\[
-  beginCaptures:
-    '0': {name: punctuation.definition.string.begin.xml}
-  end: ']]>'
-  endCaptures:
-    '0': {name: punctuation.definition.string.end.xml}
-
 repository:
-  EntityDecl:
-    begin: (<!)(ENTITY)\s+(%\s+)?([:a-zA-Z_][:a-zA-Z0-9_.-]*)(\s+(?:SYSTEM|PUBLIC)\s+)?
-    end: (>)
-    captures:
-      '1': {name: punctuation.definition.tag.begin.xml}
-      '2': {name: keyword.entity.xml}
-      '3': {name: punctuation.definition.entity.xml}
-      '4': {name: variable.entity.xml}
-      '5': {name: keyword.entitytype.xml}
+  tag:
     patterns:
-    - include: '#doublequotedString'
-    - include: '#singlequotedString'
+    - name: meta.tag.xml
+      begin: (</?)((?:([-_a-zA-Z0-9]+)(:))?([-_.a-zA-Z0-9:]+))
+      end: (/?>)
+      endCaptures:
+        '1': {name: punctuation.definition.tag.end.xml}
+      captures:
+        '1': {name: punctuation.definition.tag.begin.xml}
+        '2': {name: entity.name.tag.xml}
+        '3': {name: entity.name.tag.namespace.xml}
+        '4': {name: punctuation.separator.namespace.xml}
+        '5': {name: entity.name.tag.localname.xml}
+      patterns:
+      - include: '#tag-internals'
+
+  tag-internals:
+    patterns:
+    - match: ' (?:([-_a-zA-Z0-9]+)((:)))?([-_.a-zA-Z0-9]+)='
+      captures:
+        '1': {name: entity.other.attribute-name.namespace.xml}
+        '2': {name: entity.other.attribute-name.xml}
+        '3': {name: punctuation.separator.namespace.xml}
+        '4': {name: entity.other.attribute-name.localname.xml}
+    - include: '#double-quoted-string'
+    - include: '#single-quoted-string'
 
   bare-ampersand:
     name: invalid.illegal.bad-ampersand.xml
     match: '&'
 
-  doublequotedString:
+  double-quoted-string:
     name: string.quoted.double.xml
     begin: '"'
     beginCaptures:
@@ -131,31 +140,7 @@ repository:
     - include: '#entity'
     - include: '#bare-ampersand'
 
-  entity:
-    name: constant.character.entity.xml
-    match: (&)([:a-zA-Z_][:a-zA-Z0-9_.-]*|#[0-9]+|#x[0-9a-fA-F]+)(;)
-    captures:
-      '1': {name: punctuation.definition.constant.xml}
-      '3': {name: punctuation.definition.constant.xml}
-
-  internalSubset:
-    name: meta.internalsubset.xml
-    begin: (\[)
-    end: (\])
-    captures:
-      '1': {name: punctuation.definition.constant.xml}
-    patterns:
-    - include: '#EntityDecl'
-    - include: '#parameterEntity'
-
-  parameterEntity:
-    name: constant.character.parameter-entity.xml
-    match: (%)([:a-zA-Z_][:a-zA-Z0-9_.-]*)(;)
-    captures:
-      '1': {name: punctuation.definition.constant.xml}
-      '3': {name: punctuation.definition.constant.xml}
-
-  singlequotedString:
+  single-quoted-string:
     name: string.quoted.single.xml
     begin: "'"
     beginCaptures:
@@ -167,16 +152,42 @@ repository:
     - include: '#entity'
     - include: '#bare-ampersand'
 
-  tagStuff:
+  entity-decl:
+    begin: (<!)(ENTITY)\s+(%\s+)?([:a-zA-Z_][:a-zA-Z0-9_.-]*)(\s+(?:SYSTEM|PUBLIC)\s+)?
+    end: (>)
+    captures:
+      '1': {name: punctuation.definition.tag.begin.xml}
+      '2': {name: keyword.entity.xml}
+      '3': {name: punctuation.definition.entity.xml}
+      '4': {name: variable.entity.xml}
+      '5': {name: keyword.entitytype.xml}
     patterns:
-    - match: ' (?:([-_a-zA-Z0-9]+)((:)))?([-_.a-zA-Z0-9]+)='
-      captures:
-        '1': {name: entity.other.attribute-name.namespace.xml}
-        '2': {name: entity.other.attribute-name.xml}
-        '3': {name: punctuation.separator.namespace.xml}
-        '4': {name: entity.other.attribute-name.localname.xml}
-    - include: '#doublequotedString'
-    - include: '#singlequotedString'
+    - include: '#double-quoted-string'
+    - include: '#single-quoted-string'
+
+  entity:
+    name: constant.character.entity.xml
+    match: (&)([:a-zA-Z_][:a-zA-Z0-9_.-]*|#[0-9]+|#x[0-9a-fA-F]+)(;)
+    captures:
+      '1': {name: punctuation.definition.constant.xml}
+      '3': {name: punctuation.definition.constant.xml}
+
+  internal-subset:
+    name: meta.internal-subset.xml
+    begin: (\[)
+    end: (\])
+    captures:
+      '1': {name: punctuation.definition.constant.xml}
+    patterns:
+    - include: '#entity-decl'
+    - include: '#parameter-entity'
+
+  parameter-entity:
+    name: constant.character.parameter-entity.xml
+    match: (%)([:a-zA-Z_][:a-zA-Z0-9_.-]*)(;)
+    captures:
+      '1': {name: punctuation.definition.constant.xml}
+      '3': {name: punctuation.definition.constant.xml}
 
 firstLineMatch: '^<\?xml '
 foldingStartMarker: ^\s*(<[^!?%/](?!.+?(/>|</.+?>))|<[!%]--(?!.+?--%?>)|<%[!]?(?!.+?%>))
