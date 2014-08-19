@@ -6,7 +6,7 @@ uuid: BAFE4C4F-8D59-48CD-A3BC-52A2084531C9
 
 patterns:
 - name: keyword.modifier.regexp
-  match: \(\?[x]\)
+  match: \(\?[a-z]\)
 
 - name: keyword.control.anchor.regexp
   match: \\[bB]|\^|\$

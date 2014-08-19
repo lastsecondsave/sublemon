@@ -29,17 +29,13 @@ settings:
   settings:
     foreground: '#CCCCCC'
 
-- name:  Keyword
-  scope: keyword
+- name:  Red highligths
+  scope: >
+    keyword.callable.embedded.sql.mybatis.xml,
   settings:
-    foreground: '#B798BF'
+    foreground: '#C86563'
 
-- name:  Operator
-  scope: keyword.operator
-  settings:
-    foreground: '#CCCCCC'
-
-- name:  Highligthed operators
+- name:  Purple highligths
   scope: >
     keyword.control.ternary,
     keyword.operator.logical.js,
@@ -51,12 +47,22 @@ settings:
   settings:
     foreground: '#B798BF'
 
-- name:  Special operator
+- name:  Orange highligths
   scope: >
     keyword.operator.unary,
     source.yaml keyword.operator.yaml,
   settings:
     foreground: '#D09562'
+
+- name:  Keyword
+  scope: keyword
+  settings:
+    foreground: '#B798BF'
+
+- name:  Operator
+  scope: keyword.operator
+  settings:
+    foreground: '#CCCCCC'
 
 - name:  Delimiter
   scope: >
