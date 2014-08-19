@@ -1,0 +1,8 @@
+<snippet>
+    <description>method/function declaration</description>
+    <tabTrigger>funcd</tabTrigger>
+    <scope>source.java, source.c++, source.c</scope>
+    <content>
+<![CDATA[${1:void} ${2:run}($3);]]>
+    </content>
+</snippet>
