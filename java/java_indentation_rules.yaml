@@ -1,6 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.java - comment
+scope: source.java
 settings:
   bracketIndentNextLinePattern: ^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
   increaseIndentPattern: ^.*\{[^}"']*$|^\s*\bcase\b.*:\s*$|^\s*\bdefault\b:\s*$
   decreaseIndentPattern: ^(.*\*/)?\s*\}.*$
+  unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
