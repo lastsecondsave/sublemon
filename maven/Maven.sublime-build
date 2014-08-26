@@ -2,8 +2,8 @@
     "selector"   : "source.java",
     "shell_cmd"  : "mvn -q compile",
     "working_dir": "${project_path:${folder}}",
-    "file_regex" : "\\[ERROR\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
-    "syntax"     : "Packages/Maven/maven.hidden-tmLanguage",
+    "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
+    "syntax"     : "Packages/Maven/maven.tmLanguage",
 
     "variants": [
         {   "name"     : "Run",
