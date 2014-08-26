@@ -34,7 +34,7 @@ patterns:
     '1': {name: constant.language.java-props}
 
 - name: entity.value.java-props
-  begin: (?:\S)
+  begin: (?=\S)
   end: '(?!\\).$|^$'
   patterns:
   - name: punctuation.separator.line.java-props
