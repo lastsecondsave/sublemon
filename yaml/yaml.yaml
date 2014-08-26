@@ -16,8 +16,8 @@ patterns:
   patterns:
   - include: '#base'
 
-- name: regexp.yaml
-  begin: ^\s*(-)?\s*((?:match|begin|end|\w*Pattern)(:))\s*(['"])?
+- name: source.regexp.yaml
+  begin: ^\s*(-)?\s*((?:match|begin|end|\w*Pattern|firstLineMatch)(:))\s*(['"])?
   beginCaptures:
     '1': {name: keyword.operator.yaml}
     '2': {name: entity.name.tag.yaml}
@@ -165,5 +165,3 @@ repository:
   escaped_char:
     name: constant.character.escape.yaml
     match: \\.
-
-keyEquivalent: ^~Y
