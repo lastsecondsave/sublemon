@@ -21,27 +21,25 @@ patterns:
   match: \|
 
 - name: meta.group.assertion.regexp
-  begin: (\((\?<?[=!]))
-  beginCaptures:
-    '1': {name: punctuation.definition.group.regexp}
-    '2': {name: meta.assertion.look-around.regexp}
-  end: (\))
-  endCaptures:
-    '1': {name: punctuation.definition.group.regexp}
-  patterns:
-  - include: '$self'
-
-- name: meta.group.regexp
-  begin: \((\?[:>|])?
+  begin: \((\?<?[=!])
   beginCaptures:
     '0': {name: punctuation.definition.group.regexp}
+    '1': {name: meta.assertion.look-around.regexp}
   end: \)
   endCaptures:
     '0': {name: punctuation.definition.group.regexp}
   patterns:
   - include: '$self'
 
-- name: constant.other.character-class.set.regexp
+- name: meta.group.regexp
+  begin: \((\?[:>|])?
+  end: \)
+  captures:
+    '0': {name: punctuation.definition.group.regexp}
+  patterns:
+  - include: '$self'
+
+- name: constant.language.character-class.regexp
   begin: (\[)(\^)?
   beginCaptures:
     '1': {name: punctuation.definition.character-class.regexp}
@@ -57,7 +55,7 @@ patterns:
 repository:
   character-class:
     patterns:
-    - name: constant.character.character-class.regexp
+    - name: constant.language.character-class.regexp
       match: \\[wWsSdDhHvVX]|\.
     - name: constant.character.unicode.regexp
       match: \\p([A-Za-z]|\{[A-Za-z]+\})

@@ -31,14 +31,13 @@ settings:
 
 - name:  Purple highligths
   scope: >
-    meta.colored.pattern1,
     keyword.control.ternary,
     keyword.operator.logical.js,
     keyword.operator.logical.java,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
-    keyword.operator.bool.logical.python3,
     keyword.operator.cast.c++,
+    variable.mybatis.xml,
   settings:
     foreground: '#B798BF'
 
@@ -190,9 +189,6 @@ settings:
   settings:
     foreground: '#82A3BF'
 
-- name:  Tag name
-  scope: entity.name.tag
-
 - name:  XML tag name
   scope: >
     punctuation.definition.tag,
@@ -286,6 +282,11 @@ settings:
   settings:
     foreground: '#A7B367'
 
+- name:  INI section
+  scope: meta.tag.section.ini
+  settings:
+    foreground: '#D3B96B'
+
 - name:  Maven error indicator
   scope: meta.indicator.error.maven
   settings:
@@ -317,13 +318,9 @@ settings:
 
 - name:  RegExp keywords
   scope: >
-    constant.character.character-class.regexp,
-    constant.character.control.regexp,
-    constant.character.hex.regexp,
-    constant.character.unicode.regexp,
-    constant.other.character-class.set.regexp,
-    keyword.operator.quantifier.regexp,
-    keyword.operator.negation.regexp,
+    constant.language.character-class.regexp,
+    source.regexp constant.character - constant.character.escape,
+    source.regexp keyword.operator,
   settings:
     foreground: '#B798BF'
 
