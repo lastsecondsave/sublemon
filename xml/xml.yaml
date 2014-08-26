@@ -6,8 +6,8 @@ uuid: D3C4E6DA-6B1C-11D9-8CC2-000D93589AF6
 
 patterns:
 - name: comment.block.xml
-  begin: <[!%]--
-  end: --%?>
+  begin: <!--
+  end: -->
   captures:
     '0': {name: punctuation.definition.comment.xml}
 
@@ -41,7 +41,7 @@ patterns:
   - include: '#tag'
   - include: '#entity'
   - include: '#bad-entity'
-  - name: meta.colored.pattern1
+  - name: variable.mybatis.xml
     begin: '[#$]\{'
     end: '\}'
     patterns:
