@@ -347,3 +347,27 @@ settings:
     markup.bold.markdown,
   settings:
     foreground: '#D09562'
+
+- name:  CSS support
+  scope: >
+    constant.numeric.css keyword.other.unit,
+    meta.property-value.css support.constant,
+  settings:
+    foreground: '#CCCCCC'
+
+- name:  CSS selectors
+  scope: >
+    meta.selector.css,
+    meta.selector.css entity.name.tag.css,
+  settings:
+    foreground: '#D3B96B'
+
+- name:  CSS property key
+  scope: support.type.property-name.css
+  settings:
+    foreground: '#82A3BF'
+
+- name:  CSS important
+  scope: keyword.other.important.css
+  settings:
+    foreground: '#8E8F8D'
