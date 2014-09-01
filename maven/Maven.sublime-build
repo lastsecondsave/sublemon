@@ -9,11 +9,17 @@
         {   "name"     : "Run",
             "shell_cmd": "mvn -q -e exec:java"
         },
+        {   "name"     : "Run to File",
+            "shell_cmd": "mvn -q -e exec:java > out.log"
+        },
         {   "name"     : "Clean",
             "shell_cmd": "mvn clean"
         },
         {   "name"     : "Clean Install",
             "shell_cmd": "mvn -e clean install"
+        },
+        {   "name"     : "Package",
+            "shell_cmd": "mvn -q -e package"
         }
     ]
 }
