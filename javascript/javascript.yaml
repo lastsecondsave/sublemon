@@ -8,19 +8,19 @@ uuid: 93E017CC-6F27-11D9-90EB-000D93589AF6
 patterns:
 - comment: Match the shebang for JavaScript executables
   name: comment.line.number-sign.shebang.js
-  match: \A(#!).*$
+  match: ^(#!).*$
   captures:
     '1': {name: punctuation.definition.comment.js}
 
 - name: entity.name.function.js
-  match: (?<!\w)[\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*(?=\s*:\s*function\b)
+  match: (?<!\w)[a-zA-Z0-9$_][\w$]*(?=\s*:\s*function\b)
 
 - name: entity.name.attribute-name.js
-  match: (?<!\w)[\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*(?=\s*:)
+  match: (?<!\w)[a-zA-Z0-9$_][\w$]*(?=\s*:)
 
 - comment: Match function, optional function name and optional function arguments
   name: meta.function.js
-  begin: (?:(?<!\w)([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)\s*(=)\s*)?\b(function)(?:\s+([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*))?\s*(\()
+  begin: (?:(?<!\w)([a-zA-Z0-9$_][\w$]*)\s*(=)\s*)?\b(function)(?:\s+([a-zA-Z0-9$_][\w$]*))?\s*(\()
   beginCaptures:
     '1': {name: meta.function.variable.js}
     '2': {name: keyword.operator.js}
@@ -95,14 +95,17 @@ patterns:
 - name: keyword.operator.logical.js
   match: '&&|\|\|'
 
+- name: keyword.operator.assignment.js
+  match: '([+*/%&^|-]|<<|>>>?)?='
+
+- name: keyword.operator.js
+  match: '%|&|\*|\-\-|\-|\+\+|\+|===|==|!=|!==|<=|>=|<>|<|>|\?\:'
+
 - name: keyword.operator.unary.logical.js
   match: '!'
 
 - name: keyword.operator.unary.bitwise.js
   match: '~'
-
-- name: keyword.operator.js
-  match: '%|&|\*|\-\-|\-|\+\+|\+|===|==|=|!=|!==|<=|>=|<<=|>>=|>>>=|<>|<|>||\?\:|\*=|(?<!\()/=|%=|\+=|\-=|&=|\^='
 
 - name: keyword.other.js
   match: (?<!\.|\$)\b(debugger)\b(?!\$)
@@ -169,7 +172,7 @@ patterns:
 - name: invalid.deprecated.dom.js
   match: (?<!\.|\$)\b(captureEvents|defaultStatus|defaultstatus|releaseEvents)\b(?!\$)
 
-- name: support.constant.js
+- name: support.class.js
   match: (?<!\.|\$)\b(JSON|Math)\b(?!\$)
 
 - name: support.function.js
@@ -194,6 +197,7 @@ patterns:
   end: (?<=[/igm])
   patterns:
   - name: string.regexp.js
+    contentName: source.regexp.js
     begin: /
     beginCaptures:
       '1': {name: punctuation.definition.string.begin.js}
@@ -233,15 +237,15 @@ patterns:
 
 - comment: Match classes based on the usage of the "new" operator.
   name: support.class.js
-  match: (?<=new )([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?!\w)
+  match: (?<=new )([a-zA-Z0-9$_][\w$]*)(?!\w)
 
 - comment: Match classes based on the usage of the "instanceof" operator.
   name: support.class.js
-  match: (?<= instanceof )([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?!\w)
+  match: (?<= instanceof )([a-zA-Z0-9$_][\w$]*)(?!\w)
 
 - comment: Match classes based on the usage of the "prototype" property.
   name: support.class.js
-  match: (?<!\w)([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?=\.prototype\b)
+  match: (?<!\w)([a-zA-Z0-9$_][\w$]*)(?=\.prototype\b)
 
 - comment: Matches the "prototype" keyword.  Even though it is not a valid keyword, it is a special constant of sorts.
   name: keyword.other.js
@@ -249,14 +253,14 @@ patterns:
 
 - comment: Matches the function calls.
   name: meta.function.js
-  match: (?<!\w)([\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*)(?=\()
+  match: (?<!\w)([a-zA-Z0-9$_][\w$]*)(?=\()
 
 repository:
   function-params:
     patterns:
     - comment: 'Matches valid argument, function and variable names.  To be thorough: https://github.com/mathiasbynens/mothereff.in/tree/master/js-variables'
-      begin: (?=[\p{L}\p{Nl}$_])
+      begin: (?=[a-zA-Z0-9$_])
       end: (?=[,)])
       patterns:
       - name: variable.parameter.function.js
-        match: \G[\p{L}\p{Nl}$_][\p{L}\p{Nl}$\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*
+        match: \G[a-zA-Z0-9$_][\w$]*
