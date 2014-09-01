@@ -55,7 +55,7 @@ patterns:
   - name: support.function.embedded.sql.mybatis.xml
     match: '([\w.]+(?=\()|(?i)\w+\.nextVal)'
   - name: string.embedded.sql.mybatis.xml
-    match: "'.*'"
+    match: "'.*?'"
   - name: constant.numeric.embedded.sql.mybatis.xml
     match: \b\d+\b|\*|(?i)\bnull\b
   - name: keyword.embedded.sql.mybatis.xml
