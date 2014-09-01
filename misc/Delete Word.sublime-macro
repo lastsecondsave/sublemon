@@ -1,4 +1,0 @@
-[
-    {"command": "expand_selection", "args": {"to": "word"}},
-    {"command": "left_delete"}
-]

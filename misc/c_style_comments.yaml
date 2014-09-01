@@ -1,10 +1,10 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.java
+scope: source.c, source.c++, source.js, source.json, source.java
 settings:
   shellVariables:
   - name: TM_COMMENT_START
     value: '// '
   - name: TM_COMMENT_START_2
-    value: '/*'
+    value: /*
   - name: TM_COMMENT_END_2
     value: '*/'

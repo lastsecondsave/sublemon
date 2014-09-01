@@ -52,6 +52,7 @@ settings:
     keyword.operator.unary,
     source.yaml keyword.operator.yaml,
     punctuation.separator.line.java-props,
+    keyword.operator.wildcard.java,
   settings:
     foreground: '#D09562'
 
@@ -182,12 +183,10 @@ settings:
   settings:
     foreground: '#D3B96B'
 
-- name:  Javadoc argument
-  scope: >
-    variable.parameter.javadoc,
-    markup.underline.link.javadoc,
+- name:  Javadoc tag
+  scope: keyword.other.javadoc.java
   settings:
-    foreground: '#82A3BF'
+    foreground: '#CCCCCC'
 
 - name:  XML tag name
   scope: >
