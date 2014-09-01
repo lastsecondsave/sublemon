@@ -1,0 +1,79 @@
+[
+    /* Alt-cursor */
+
+    { "keys": ["alt+h"], "command": "move", "args": {"by": "characters", "forward": false} },
+    { "keys": ["alt+j"], "command": "move", "args": {"by": "lines", "forward": true} },
+    { "keys": ["alt+k"], "command": "move", "args": {"by": "lines", "forward": false} },
+    { "keys": ["alt+l"], "command": "move", "args": {"by": "characters", "forward": true} },
+
+    /* Search widget */
+
+    { "keys": ["alt+q"], "command": "toggle_in_selection",
+        "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
+    },
+    { "keys": ["alt+d"], "command": "toggle_reverse",
+        "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
+    },
+
+    /* GUI */
+
+    { "keys": ["f10"],     "command": "show_overlay", "args": {"overlay": "command_palette"} },
+    { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
+    { "keys": ["ctrl+q"],  "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
+
+    { "keys": ["ctrl+9"], "command": "show_panel" , "args": {"panel": "output.exec"} },
+    { "keys": ["ctrl+8"], "command": "show_panel" , "args": {"panel": "output.find_results"} },
+
+    { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
+    { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
+    { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_status_bar" },
+
+    /* Macro */
+
+    { "keys": ["ctrl+f12"], "command": "toggle_record_macro" },
+    { "keys": ["ctrl+shift+f12"], "command": "run_macro" },
+
+    { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
+        "args": {"file": "Packages/Default/Add Line in Braces.sublime-macro" },
+        "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
+    },
+
+    { "keys": ["ctrl+alt+d"], "command": "run_macro_file", "args": {"file": "Packages/Misc/Delete Word.sublime-macro"} },
+
+    /* Snippets */
+
+    { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " $SELECTION "} },
+    { "keys": ["alt+shift+w"], "command": "insert_snippet", "args": {"name": "Packages/Snippets/xml/tag.sublime-snippet"} },
+
+    /* Build */
+
+    { "keys": ["ctrl+b"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build: "} },
+    { "keys": ["ctrl+shift+b"], "command": "unbound" },
+
+    { "keys": ["f7"], "command": "build" },
+    { "keys": ["ctrl+f7"], "command": "build", "args": {"variant": "Clean"} },
+    { "keys": ["f5"], "command": "build", "args": {"variant": "Run"} },
+
+    /* Common */
+
+    { "keys": ["alt+w"], "command": "toggle_setting", "args": {"setting": "word_wrap"},
+        "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
+    },
+
+    { "keys": ["ctrl+;"], "command": "diff_changes" },
+
+    { "keys": ["alt+f7"], "command": "toggle_selection_scope" },
+
+    { "keys": ["alt+up"],   "command": "swap_line_up" },
+    { "keys": ["alt+down"], "command": "swap_line_down" },
+    { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 26, "by_character": false} },
+    { "keys": ["ctrl+alt+left"],  "command": "scroll_width", "args": {"amount": -26, "by_character": false} },
+
+    { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
+    { "keys": ["ctrl+alt+."], "command": "open_file" , "args": {"file": "${project}"} },
+
+    { "keys": ["ctrl+alt+s"], "command": "prompt_save_as" },
+    { "keys": ["ctrl+shift+s"], "command": "save_all" },
+    { "keys": ["ctrl+shift+c"], "command": "copy_path" },
+    { "keys": ["shift+alt+z"], "command": "reveal_in_side_bar" }
+]
