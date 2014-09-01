@@ -1,7 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: Java
 scopeName: source.java
-fileTypes: [java, bsh]
+fileTypes: [java]
 uuid: 2B449DF6-6B1D-11D9-94EC-000D93589AF6
 
 patterns:
@@ -152,6 +152,7 @@ repository:
       begin: <
       end: '>'
       patterns:
+      - include: '#generics-inline'
       - include: '#object-types'
       - include: '#comments'
     - name: meta.definition.class.inherited.classes.java
@@ -219,8 +220,19 @@ repository:
       match: /\*\*/
       captures:
         '0': {name: punctuation.definition.comment.java}
-    - include: text.html.javadoc
+    - include: '#comments-javadoc'
     - include: '#comments-inline'
+
+  comments-javadoc:
+    patterns:
+    - name: comment.block.documentation.java
+      begin: /\*\*
+      end: \*/
+      captures:
+        '0': {name: punctuation.definition.comment.java}
+      patterns:
+      - name: keyword.other.javadoc.java
+        match: '@[\w\d]+'
 
   comments-inline:
     patterns:
@@ -382,6 +394,7 @@ repository:
       begin: \b((?:[a-z]\w*\.)*[A-Z]+\w*)<
       end: '>|[^\w\s,\?<\[\]&]'
       patterns:
+      - include: '#generics-inline'
       - include: '#object-types'
       - begin: <
         comment: This is just to support <>'s with no actual type prefix
@@ -402,15 +415,13 @@ repository:
 
   object-types-inherited:
     patterns:
-    - name: entity.other.inherited-class.java
-      begin: \b((?:[a-z]\w*\.)*[A-Z]+\w*)<
-      end: '>|[^\w\s,<&]'
+    - name: storage.type.generic.java
+      begin: <
+      end: '>'
       patterns:
+      - include: '#generics-inline'
       - include: '#object-types'
-      - comment: This is just to support <>'s with no actual type prefix
-        name: storage.type.generic.java
-        begin: <
-        end: '>|[^\w\s,<&]'
+      - include: '#comments'
     - name: entity.other.inherited-class.java
       match: \b(?:[a-z]\w*(\.))*[A-Z]+\w*
       captures:
@@ -426,6 +437,11 @@ repository:
     - include: '#object-types'
     - name: variable.parameter.java
       match: \w+
+
+  generics-inline:
+    patterns:
+    - name: keyword.operator.wildcard.java
+      match: \?
 
   parens:
     begin: \(
@@ -522,4 +538,3 @@ repository:
           '1': {name: meta.definition.variable.name.java}
       - include: '#code'
     applyEndPatternLast: 1
-keyEquivalent: ^~J
