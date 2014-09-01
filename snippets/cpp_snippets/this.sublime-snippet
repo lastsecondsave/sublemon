@@ -1,5 +1,5 @@
 <snippet>
-    <description>this->x = x</description>
+    <description>this-&gt;x = x</description>
     <tabTrigger>this</tabTrigger>
     <scope>source.c++</scope>
     <content><![CDATA[this->$1 = $1;]]></content>

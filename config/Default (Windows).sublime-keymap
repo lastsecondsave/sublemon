@@ -38,8 +38,6 @@
         "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
     },
 
-    { "keys": ["ctrl+alt+d"], "command": "run_macro_file", "args": {"file": "Packages/Misc/Delete Word.sublime-macro"} },
-
     /* Snippets */
 
     { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " $SELECTION "} },
