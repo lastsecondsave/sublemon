@@ -2,10 +2,13 @@
     "extensions": [
         "xml",
         "xsd",
-        "svg",
+        "xsl",
+        "xslt",
         "wsdl"
     ],
+
     "hidden_extensions": [
+        "svg",
         "rss",
         "sublime-snippet",
         "vcproj",
