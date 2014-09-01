@@ -1,7 +1,7 @@
-vanilla/
+*.sublime-project
+*.sublime-workspace
 
+*.hidden-tmLanguage
 *.tmLanguage
 *.tmPreferences
 *.tmTheme
-*.sublime-workspace
-*.hidden-tmLanguage
