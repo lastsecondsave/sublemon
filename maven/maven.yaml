@@ -37,7 +37,7 @@ repository:
         '4': {name: meta.result.maven}
 
     - name: meta.exception.maven
-      match: '^(?:Caused by: )?([\w\.]+Exception): (.*)'
+      match: '^(?:Caused by: )?([\w\.]+Exception)(?:: (.*))?'
       captures:
         '1': {name: entity.name.exception.maven}
         '2': {name: string.maven}
