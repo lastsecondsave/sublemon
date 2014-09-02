@@ -23,42 +23,42 @@ settings:
     selection:     '#515158'
 
 - name:  Disabled highligths
-  scope: >
+  scope: >-
     meta.function-call.c++ entity.name.function.c++,
-    support.function.any-method.c,
+    support.function.any-method.c
   settings:
     foreground: '#CCCCCC'
 
 - name:  Purple highligths
-  scope: >
+  scope: >-
     keyword.control.ternary,
     keyword.operator.logical.js,
     keyword.operator.logical.java,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
     keyword.operator.cast.c++,
-    variable.mybatis.xml,
+    variable.mybatis.xml
   settings:
     foreground: '#B798BF'
 
 - name:  Red highligths
-  scope: >
-    keyword.callable.embedded.sql.mybatis.xml,
+  scope: >-
+    keyword.callable.embedded.sql.mybatis.xml
   settings:
     foreground: '#C86563'
 
 - name:  Orange highligths
-  scope: >
+  scope: >-
     keyword.operator.unary,
     source.yaml keyword.operator.yaml,
     punctuation.separator.line.java-props,
-    keyword.operator.wildcard.java,
+    keyword.operator.wildcard.java
   settings:
     foreground: '#D09562'
 
 - name:  Gray highligths
-  scope: >
-    punctuation.separator.key-value.java-props,
+  scope: >-
+    punctuation.separator.key-value.java-props
   settings:
     foreground: '#8E8F8D'
 
@@ -73,16 +73,16 @@ settings:
     foreground: '#CCCCCC'
 
 - name:  Delimiter
-  scope: >
+  scope: >-
     keyword.operator.dereference,
-    meta.delimiter,
+    meta.delimiter
   settings:
     foreground: '#CCCCCC'
 
 - name:  Number and characters
-  scope: >
+  scope: >-
     constant.numeric,
-    constant.character,
+    constant.character
   settings:
     foreground: '#D09562'
 
@@ -112,9 +112,9 @@ settings:
     foreground: '#D09562'
 
 - name:  User-defined constant
-  scope: >
+  scope: >-
     constant.other,
-    constant.variable,
+    constant.variable
   settings:
     foreground: '#C86563'
 
@@ -139,10 +139,10 @@ settings:
     foreground: '#D09562'
 
 - name:  Support type and function
-  scope: >
+  scope: >-
     support.type,
     support.class,
-    support.function,
+    support.function
   settings:
     foreground: '#B798BF'
 
@@ -157,9 +157,9 @@ settings:
     foreground: '#82A3BF'
 
 - name:  Java package declaration
-  scope: >
+  scope: >-
     keyword.other.package.java,
-    storage.modifier.package.java,
+    storage.modifier.package.java
   settings:
     foreground: '#C86563'
 
@@ -189,25 +189,25 @@ settings:
     foreground: '#CCCCCC'
 
 - name:  XML tag name
-  scope: >
+  scope: >-
     punctuation.definition.tag,
     meta.tag.sgml.doctype.xml,
-    meta.tag.sgml.doctype.xml keyword.doctype.xml,
+    meta.tag.sgml.doctype.xml keyword.doctype.xml
   settings:
     foreground: '#82A3BF'
 
 - name:  XML attribute name
-  scope: >
+  scope: >-
     meta.attribute.xml,
     entity.name.attribute,
-    variable.documentroot.xml,
+    variable.documentroot.xml
   settings:
     foreground: '#D3B96B'
 
 - name:  XML attribute value
-  scope: >
+  scope: >-
     meta.attribute.xml string.attribute,
-    meta.attribute.xml punctuation.definition.string,
+    meta.attribute.xml punctuation.definition.string
   settings:
     foreground: '#82A3BF'
 
@@ -217,16 +217,16 @@ settings:
     foreground: '#8E8F8D'
 
 - name:  Diff inserted
-  scope: >
+  scope: >-
     markup.inserted.diff,
-    punctuation.definition.to-file.diff,
+    punctuation.definition.to-file.diff
   settings:
     foreground: '#A7B367'
 
 - name:  Diff deleted
-  scope: >
+  scope: >-
     markup.deleted.diff,
-    punctuation.definition.from-file.diff,
+    punctuation.definition.from-file.diff
   settings:
     foreground: '#C86563'
 
@@ -241,9 +241,9 @@ settings:
     foreground: '#82A3BF'
 
 - name:  C macro
-  scope: >
+  scope: >-
     meta.preprocessor,
-    meta.preprocessor keyword,
+    meta.preprocessor keyword
   settings:
     foreground: '#D3B96B'
 
@@ -258,9 +258,9 @@ settings:
     foreground: '#C86563'
 
 - name:  Powershell operator
-  scope: >
+  scope: >-
     keyword.operator.comparison.powershell,
-    keyword.operator.logical.powershell,
+    keyword.operator.logical.powershell
   settings:
     foreground: '#8E8F8D'
 
@@ -270,9 +270,9 @@ settings:
     foreground: '#82A3BF'
 
 - name:  INI key
-  scope: >
+  scope: >-
     meta.property.ini punctuation.definition.quote.ini,
-    meta.property.ini keyword.name.ini,
+    meta.property.ini keyword.name.ini
   settings:
     foreground: '#82A3BF'
 
@@ -302,24 +302,24 @@ settings:
     foreground: '#B798BF'
 
 - name:  Maven results
-  scope: >
+  scope: >-
     meta.result.maven,
-    entity.name.exception.maven,
+    entity.name.exception.maven
   settings:
     foreground: '#D3B96B'
 
 - name:  RegExp limiters
-  scope: >
+  scope: >-
     keyword.operator.or.regexp,
-    punctuation.definition.group.regexp,
+    punctuation.definition.group.regexp
   settings:
     foreground: '#D3B96B'
 
 - name:  RegExp keywords
-  scope: >
+  scope: >-
     constant.language.character-class.regexp,
     source.regexp constant.character - constant.character.escape,
-    source.regexp keyword.operator,
+    source.regexp keyword.operator
   settings:
     foreground: '#B798BF'
 
@@ -334,30 +334,30 @@ settings:
     foreground: '#82A3BF'
 
 - name:  Markdown monospace
-  scope: >
+  scope: >-
     markup.raw.inline.markdown,
-    markup.raw.block.markdown,
+    markup.raw.block.markdown
   settings:
     foreground: '#A7B367'
 
 - name:  Markdown emphasis
-  scope: >
+  scope: >-
     markup.italic.markdown,
-    markup.bold.markdown,
+    markup.bold.markdown
   settings:
     foreground: '#D09562'
 
 - name:  CSS support
-  scope: >
+  scope: >-
     constant.numeric.css keyword.other.unit,
-    meta.property-value.css support.constant,
+    meta.property-value.css support.constant
   settings:
     foreground: '#CCCCCC'
 
 - name:  CSS selectors
-  scope: >
+  scope: >-
     meta.selector.css,
-    meta.selector.css entity.name.tag.css,
+    meta.selector.css entity.name.tag.css
   settings:
     foreground: '#D3B96B'
 
