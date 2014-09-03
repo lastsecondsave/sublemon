@@ -73,7 +73,7 @@ repository:
           '1': {name: constant.other.key.java}
           '2': {name: keyword.operator.assignment.java}
       - include: '#code'
-      - name: punctuation.seperator.property.java
+      - name: punctuation.separator.property.java
         match: ','
     - name: storage.type.annotation.java
       match: '@\w*'
@@ -130,7 +130,7 @@ repository:
         '1': {name: keyword.control.assert.java}
       end: $
       patterns:
-      - name: keyword.operator.assert.expression-seperator.java
+      - name: keyword.operator.assert.expression-separator.java
         match: ':'
       - include: '#code'
 
@@ -148,13 +148,10 @@ repository:
       captures:
         '1': {name: storage.modifier.java}
         '2': {name: entity.name.type.class.java}
-    - name: storage.type.generic.java
-      begin: <
-      end: '>'
+    - begin: (?=<)
+      end: (?<=>)
       patterns:
-      - include: '#generics-inline'
-      - include: '#object-types'
-      - include: '#comments'
+      - include: '#generics'
     - name: meta.definition.class.inherited.classes.java
       begin: extends
       beginCaptures:
@@ -343,7 +340,7 @@ repository:
     endCaptures:
       '0': {name: punctuation.definition.method-parameters.end.java}
     patterns:
-    - name: punctuation.definition.seperator.parameter.java
+    - name: punctuation.definition.separator.parameter.java
       match: ','
     - include: '#code'
 
@@ -363,15 +360,11 @@ repository:
       patterns:
       - include: '#parameters'
       - include: '#comments'
-    - name: storage.type.token.java
-      begin: <
-      end: '>'
+    - name: meta.type.token.java
+      begin: (?=<)
+      end: (?<=>)
       patterns:
-      - include: '#object-types'
-      - comment: This is just to support <>'s with no actual type prefix
-        name: storage.type.generic.java
-        begin: <
-        end: '>|[^\w\s,\[\]<]'
+      - include: '#generics'
     - name: meta.method.return-type.java
       begin: (?=\w.*\s+\w+\s*\()
       end: (?=\w+\s*\()
@@ -390,42 +383,53 @@ repository:
 
   object-types:
     patterns:
-    - name: storage.type.generic.java
-      begin: \b((?:[a-z]\w*\.)*[A-Z]+\w*)<
-      end: '>|[^\w\s,\?<\[\]&]'
+    - begin: \b((?:[a-z]\w*\.)*[A-Z]+\w*)(?=<)
+      end: (?<=>)
+      beginCaptures:
+        '1': {name: storage.type.java}
       patterns:
-      - include: '#generics-inline'
-      - include: '#object-types'
-      - begin: <
-        comment: This is just to support <>'s with no actual type prefix
-        end: '>|[^\w\s,\[\]<&]'
-        name: storage.type.generic.java
-    - name: storage.type.object.array.java
-      begin: \b((?:[a-z]\w*\.)*[A-Z]+\w*)(?=\[)
-      end: (?=[^\]\s])
+      - include: '#generics'
+    - begin: \b((?:[a-z]\w*\.)*[A-Z]+\w*)(?=\[)
+      end: (?<=\])
+      beginCaptures:
+        '1': {name: storage.type.java}
       patterns:
       - begin: \[
         end: \]
         patterns:
         - include: '#code'
     - name: storage.type.java
-      match: \b(?:[a-z]\w*(\.))*[A-Z]+\w*\b
+      match: \b(?:[a-z]\w*\.)*[A-Z]+\w*\b
+
+  generics:
+    patterns:
+    - name: keyword.operator.diamond.java
+      match: '<>'
+    - name: meta.generics.java
+      begin: '<'
+      end: '>'
       captures:
-        '1': {name: keyword.operator.dereference.java}
+        '0': {name: punctuation.definition.generics.java}
+      patterns:
+      - name: keyword.operator.wildcard.java
+        match: \?
+      - name: keyword.operator.java
+        match: \&
+      - name: storage.modifier.java
+        match: \b(extends|super)\b
+      - include: '#object-types'
+      - include: '#comments'
 
   object-types-inherited:
     patterns:
-    - name: storage.type.generic.java
-      begin: <
-      end: '>'
+    - begin: \b((?:[a-z]\w*\.)*[A-Z]+[\w\.\$]*)(?=<)
+      end: (?<=>)
+      beginCaptures:
+        '1': {name: entity.other.inherited-class.java}
       patterns:
-      - include: '#generics-inline'
-      - include: '#object-types'
-      - include: '#comments'
+      - include: '#generics'
     - name: entity.other.inherited-class.java
-      match: \b(?:[a-z]\w*(\.))*[A-Z]+\w*
-      captures:
-        '1': {name: keyword.operator.dereference.java}
+      match: \b(?:[a-z]\w*\.)*[A-Z]+[\w\.\$]*\b
 
   parameters:
     patterns:
@@ -437,11 +441,6 @@ repository:
     - include: '#object-types'
     - name: variable.parameter.java
       match: \w+
-
-  generics-inline:
-    patterns:
-    - name: keyword.operator.wildcard.java
-      match: \?
 
   parens:
     begin: \(

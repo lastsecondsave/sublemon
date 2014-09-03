@@ -17,23 +17,23 @@ patterns:
   endCaptures:
     '1': {name: punctuation.separator.key-value.java-props}
   patterns:
-  - name: entity.name.tag.java-props
+  - name: entity.name.key.java-props
     begin: (?:\S)
     end: (?=(?!\\)[ =:\t])
     patterns:
     - include: '#escapes'
 
-- name: entity.value.java-props
+- name: meta.value.java-props
   match: \s*([-+]?\d+)\s*$
   captures:
     '1': {name: constant.numeric.java-props}
 
-- name: entity.value.java-props
+- name: meta.value.java-props
   match: \s*(true|false|on|off|yes|no)\s*$
   captures:
     '1': {name: constant.language.java-props}
 
-- name: entity.value.java-props
+- name: meta.value.java-props
   begin: (?=\S)
   end: '(?!\\).$|^$'
   patterns:

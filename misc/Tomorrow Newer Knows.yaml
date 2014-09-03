@@ -34,6 +34,7 @@ settings:
     keyword.control.ternary,
     keyword.operator.logical.js,
     keyword.operator.logical.java,
+    keyword.operator.wildcard.java,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
     keyword.operator.cast.c++,
@@ -51,8 +52,7 @@ settings:
   scope: >-
     keyword.operator.unary,
     source.yaml keyword.operator.yaml,
-    punctuation.separator.line.java-props,
-    keyword.operator.wildcard.java
+    punctuation.separator.line.java-props
   settings:
     foreground: '#D09562'
 
