@@ -1,10 +1,10 @@
 [
-    /* Alt-cursor */
+    /* Vim-cursor */
 
-    { "keys": ["alt+h"], "command": "move", "args": {"by": "characters", "forward": false} },
-    { "keys": ["alt+j"], "command": "move", "args": {"by": "lines", "forward": true} },
-    { "keys": ["alt+k"], "command": "move", "args": {"by": "lines", "forward": false} },
-    { "keys": ["alt+l"], "command": "move", "args": {"by": "characters", "forward": true} },
+    { "keys": ["ctrl+alt+h"], "command": "move", "args": {"by": "characters", "forward": false} },
+    { "keys": ["ctrl+alt+j"], "command": "move", "args": {"by": "lines", "forward": true} },
+    { "keys": ["ctrl+alt+k"], "command": "move", "args": {"by": "lines", "forward": false} },
+    { "keys": ["ctrl+alt+l"], "command": "move", "args": {"by": "characters", "forward": true} },
 
     /* Search widget */
 
