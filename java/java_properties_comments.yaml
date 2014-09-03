@@ -4,3 +4,5 @@ settings:
   shellVariables:
   - name: TM_COMMENT_START
     value: '# '
+  - name: TM_COMMENT_START_2
+    value: '! '
