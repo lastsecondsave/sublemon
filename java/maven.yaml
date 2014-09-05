@@ -1,0 +1,49 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: Maven Build Output
+scopeName: text.maven
+uuid: B5F3B290-2625-11E4-8C21-0800200C9A66
+
+patterns:
+- name: meta.compile.error.maven
+  match: ^(?:(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)
+  captures:
+    '1': {name: meta.indicator.error.maven}
+    '2': {name: meta.indicator.warning.maven}
+    '3': {name: entity.name.file.maven}
+    '4': {name: constant.numeric.maven}
+    '5': {name: constant.numeric.maven}
+    '6': {name: string.maven}
+
+- begin: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
+  end: '```'
+  beginCaptures:
+    '1': {name: meta.indicator.error.maven}
+    '2': {name: meta.result.maven}
+    '3': {name: string.maven}
+  patterns:
+  - include: '#basic'
+
+- include: '#basic'
+
+repository:
+  basic:
+    patterns:
+    - name: comment.maven
+      match: ^(?:(\[ERROR\])|(\[WARNING\])|(\[INFO\])) ([A-Z 0-9]{2,}\s)?(.*)
+      captures:
+        '1': {name: meta.indicator.error.maven}
+        '2': {name: meta.indicator.warning.maven}
+        '3': {name: meta.indicator.info.maven}
+        '4': {name: meta.result.maven}
+
+    - name: meta.exception.maven
+      match: '^(?:Caused by: )?([\w\.]+Exception)(?:: (.*))?'
+      captures:
+        '1': {name: entity.name.exception.maven}
+        '2': {name: string.maven}
+
+    - name: meta.exception.maven
+      match: ^\s*at [\w\.\$]+\((.*):(.*)\)
+      captures:
+        '1': {name: entity.name.file.maven}
+        '2': {name: constant.numeric.maven}
