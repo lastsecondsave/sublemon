@@ -1,33 +1,40 @@
 # [PackageDev] target_format: plist, ext: tmTheme
-name: Tomorrow Newer Knows
-uuid: 4F1880E0-A7D7-11E3-A5E2-0800200C9A66
+name: Disco
+uuid: DC528CA7-4183-4CC0-A813-9431EE950599
 
 # Colors:
-# 82A3BF   blue
-# 8E8F8D   gray
-# A7B367   green
-# B798BF   purple
-# C86563   red
-# CCCCCC   light-gray
-# D09562   orange
-# D3B96B   yellow
-# FF0B00   bright-red
+# 838495   gray
+# CDCDCD   white
+# E572D2   purple
+# EF51AA   pink
+# 66B5F0   blue
+# C5CC4B   green
+# EFC52D   yellow
+# FF9A41   orange
+# FF8147   dark-orange
+# E5476C   red
 
 settings:
 - settings:
     background:    '#2D2D30'
-    caret:         '#CCCCCC'
-    foreground:    '#CCCCCC'
+    caret:         '#CDCDCD'
+    foreground:    '#CDCDCD'
     invisibles:    '#6A6A6A'
     lineHighlight: '#36363A'
     selection:     '#515158'
+
+- name:  Invalid
+  scope: invalid
+  settings:
+    foreground: '#FFFFFF'
+    background: '#E5476C'
 
 - name:  Disabled highligths
   scope: >-
     meta.function-call.c++ entity.name.function.c++,
     support.function.any-method.c
   settings:
-    foreground: '#CCCCCC'
+    foreground: '#CDCDCD'
 
 - name:  Purple highligths
   scope: >-
@@ -37,106 +44,90 @@ settings:
     keyword.operator.wildcard.java,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
-    keyword.operator.cast.c++,
-    variable.mybatis.xml
+    keyword.operator.cast.c++
   settings:
-    foreground: '#B798BF'
-
-- name:  Red highligths
-  scope: >-
-    keyword.callable.embedded.sql.mybatis.xml
-  settings:
-    foreground: '#C86563'
-
-- name:  Orange highligths
-  scope: >-
-    keyword.operator.unary,
-    source.yaml keyword.operator.yaml,
-    punctuation.separator.line.java-props
-  settings:
-    foreground: '#D09562'
-
-- name:  Gray highligths
-  scope: >-
-    punctuation.separator.key-value.java-props
-  settings:
-    foreground: '#8E8F8D'
+    foreground: '#E572D2'
 
 - name:  Keyword
-  scope: keyword
+  scope: keyword, storage.modifier
   settings:
-    foreground: '#B798BF'
+    foreground: '#E572D2'
 
 - name:  Operator
   scope: keyword.operator
   settings:
-    foreground: '#CCCCCC'
+    foreground: '#CDCDCD'
+
+- name:  Special operator
+  scope: >-
+    keyword.operator.unary,
+    keyword.operator.yaml,
+    punctuation.separator.line.java-props
+  settings:
+    foreground: '#FF8147'
 
 - name:  Delimiter
   scope: >-
     keyword.operator.dereference,
-    meta.delimiter
+    meta.delimiter,
+    punctuation.separator,
+    punctuation.terminator
   settings:
-    foreground: '#CCCCCC'
+    foreground: '#CDCDCD'
 
 - name:  Number and characters
   scope: >-
     constant.numeric,
     constant.character
   settings:
-    foreground: '#D09562'
+    foreground: '#FF8147'
 
 - name:  String
   scope: string
   settings:
-    foreground: '#A7B367'
+    foreground: '#C5CC4B'
 
 - name:  Comment
   scope: comment
   settings:
-    foreground: '#8E8F8D'
-
-- name:  Invalid
-  scope: invalid
-  settings:
-    foreground: '#FF0B00'
+    foreground: '#838495'
 
 - name:  Storage
-  scope: storage
+  scope: storage.type
   settings:
-    foreground: '#B798BF'
+    foreground: '#EF51AA'
 
 - name:  Language constant
   scope: constant.language
   settings:
-    foreground: '#D09562'
+    foreground: '#FF8147'
 
 - name:  User-defined constant
   scope: >-
     constant.other,
     constant.variable
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Entity name
   scope: entity.name
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  Inherited class
   scope: entity.other.inherited-class
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Parameter
   scope: variable.parameter
   settings:
-    foreground: '#D09562'
+    foreground: '#FF9A41'
 
 - name:  Language variable
   scope: variable.language
   settings:
-    foreground: '#D09562'
+    foreground: '#FF9A41'
 
 - name:  Support type and function
   scope: >-
@@ -144,49 +135,47 @@ settings:
     support.class,
     support.function
   settings:
-    foreground: '#B798BF'
+    foreground: '#EF51AA'
 
 - name:  Support constant
   scope: support.constant
   settings:
-    foreground: '#D09562'
+    foreground: '#FF9A41'
 
 - name:  Java Properties keyword
   scope: keyword.other.java-props
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  Java package declaration
-  scope: >-
-    keyword.other.package.java,
-    storage.modifier.package.java
+  scope: meta.package.java
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Java throwable declaration
   scope: meta.throwables.java storage.type.java
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Java assert keyword
   scope: keyword.control.assert.java
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Java annotation
   scope: storage.type.annotation.java
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  Java annotation parameter
   scope: meta.declaration.annotation.java constant.other.key.java
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  Javadoc tag
   scope: keyword.other.javadoc.java
   settings:
-    foreground: '#CCCCCC'
+    foreground: '#CDCDCD'
 
 - name:  XML tag name
   scope: >-
@@ -194,7 +183,7 @@ settings:
     meta.tag.sgml.doctype.xml,
     meta.tag.sgml.doctype.xml keyword.doctype.xml
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  XML attribute name
   scope: >-
@@ -202,171 +191,180 @@ settings:
     entity.name.attribute,
     variable.documentroot.xml
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  XML attribute value
   scope: >-
     meta.attribute.xml string.attribute,
     meta.attribute.xml punctuation.definition.string
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  XML CDATA brackets
   scope: meta.cdata.xml punctuation
   settings:
-    foreground: '#8E8F8D'
+    foreground: '#FF8147'
 
 - name:  Diff inserted
   scope: >-
     markup.inserted.diff,
     punctuation.definition.to-file.diff
   settings:
-    foreground: '#A7B367'
+    foreground: '#C5CC4B'
 
 - name:  Diff deleted
   scope: >-
     markup.deleted.diff,
     punctuation.definition.from-file.diff
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Diff range
   scope: meta.diff.range.unified
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  Diff header
   scope: meta.diff.header
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  C macro
   scope: >-
     meta.preprocessor,
     meta.preprocessor keyword
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  Powershell variable scope
   scope: variable.language.powershell keyword
   settings:
-    foreground: '#D09562'
+    foreground: '#FF9A41'
 
 - name:  Powershell variable
   scope: variable.language.powershell
   settings:
-    foreground: '#C86563'
+    foreground: '#EFC52D'
 
 - name:  Powershell operator
   scope: >-
     keyword.operator.comparison.powershell,
     keyword.operator.logical.powershell
   settings:
-    foreground: '#8E8F8D'
+    foreground: '#EF51AA'
 
 - name:  Powershell function
   scope: support.function.generic.powershell
   settings:
-    foreground: '#82A3BF'
+    foreground: '#EF51AA'
 
 - name:  INI key
   scope: >-
     meta.property.ini punctuation.definition.quote.ini,
     meta.property.ini keyword.name.ini
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  INI value
   scope: meta.value.ini
   settings:
-    foreground: '#A7B367'
+    foreground: '#C5CC4B'
 
 - name:  INI section
   scope: meta.tag.section.ini
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  Maven error indicator
   scope: meta.indicator.error.maven
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Maven warning indicator
   scope: meta.indicator.warning.maven
   settings:
-    foreground: '#D09562'
+    foreground: '#FF8147'
 
 - name:  Maven info indicator
   scope: meta.indicator.info.maven
   settings:
-    foreground: '#B798BF'
+    foreground: '#E572D2'
 
 - name:  Maven results
   scope: >-
     meta.result.maven,
     entity.name.exception.maven
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
 
 - name:  RegExp limiters
   scope: >-
     keyword.operator.or.regexp,
     punctuation.definition.group.regexp
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
+
+- name:  RegExp character classes
+  scope: >-
+    constant.language.character-class.regexp,
+    source.regexp constant.character - constant.character.escape
+  settings:
+    foreground: '#E572D2'
 
 - name:  RegExp keywords
   scope: >-
-    constant.language.character-class.regexp,
-    source.regexp constant.character - constant.character.escape,
+    source.regexp keyword.control,
     source.regexp keyword.operator
   settings:
-    foreground: '#B798BF'
+    foreground: '#EF51AA'
 
 - name:  RegExp modifiers
   scope: keyword.modifier.regexp
   settings:
-    foreground: '#C86563'
+    foreground: '#E5476C'
 
 - name:  Markdown title
   scope: punctuation.definition.heading.markdown
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  Markdown monospace
   scope: >-
     markup.raw.inline.markdown,
     markup.raw.block.markdown
   settings:
-    foreground: '#A7B367'
+    foreground: '#C5CC4B'
 
 - name:  Markdown emphasis
   scope: >-
     markup.italic.markdown,
     markup.bold.markdown
   settings:
-    foreground: '#D09562'
+    foreground: '#FF9A41'
 
 - name:  CSS support
   scope: >-
     constant.numeric.css keyword.other.unit,
     meta.property-value.css support.constant
   settings:
-    foreground: '#CCCCCC'
+    foreground: '#CDCDCD'
 
 - name:  CSS selectors
-  scope: >-
-    meta.selector.css,
-    meta.selector.css entity.name.tag.css
+  scope: meta.selector.css entity.other.attribute-name
   settings:
-    foreground: '#D3B96B'
+    foreground: '#EFC52D'
+
+- name:  CSS tag selector
+  scope: meta.selector.css entity.name.tag
+  settings:
+    foreground: '#C5CC4B'
 
 - name:  CSS property key
   scope: support.type.property-name.css
   settings:
-    foreground: '#82A3BF'
+    foreground: '#66B5F0'
 
 - name:  CSS important
   scope: keyword.other.important.css
   settings:
-    foreground: '#8E8F8D'
+    foreground: '#838495'
