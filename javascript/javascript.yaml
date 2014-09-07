@@ -1,5 +1,4 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
-comment: 'JavaScript Syntax: version 2.0'
 name: JavaScript
 scopeName: source.js
 fileTypes: [js, htc, jsx]
@@ -13,14 +12,11 @@ patterns:
     '1': {name: punctuation.definition.comment.js}
 
 - name: entity.name.function.js
-  match: (?<!\w)[a-zA-Z0-9$_][\w$]*(?=\s*:\s*function\b)
-
-- name: entity.name.attribute-name.js
-  match: (?<!\w)[a-zA-Z0-9$_][\w$]*(?=\s*:)
+  match: (?<!\w)[a-zA-Z$_][\w$]*(?=\s*:\s*function\b)
 
 - comment: Match function, optional function name and optional function arguments
   name: meta.function.js
-  begin: (?:(?<!\w)([a-zA-Z0-9$_][\w$]*)\s*(=)\s*)?\b(function)(?:\s+([a-zA-Z0-9$_][\w$]*))?\s*(\()
+  begin: (?:(?<!\w)([a-zA-Z$_][\w$]*)\s*(=)\s*)?\b(function)(?:\s+([a-zA-Z$_][\w$]*))?\s*(\()
   beginCaptures:
     '1': {name: meta.function.variable.js}
     '2': {name: keyword.operator.js}
@@ -237,15 +233,15 @@ patterns:
 
 - comment: Match classes based on the usage of the "new" operator.
   name: support.class.js
-  match: (?<=new )([a-zA-Z0-9$_][\w$]*)(?!\w)
+  match: (?<=new )([a-zA-Z$_][\w$]*)(?!\w)
 
 - comment: Match classes based on the usage of the "instanceof" operator.
   name: support.class.js
-  match: (?<= instanceof )([a-zA-Z0-9$_][\w$]*)(?!\w)
+  match: (?<= instanceof )([a-zA-Z$_][\w$]*)(?!\w)
 
 - comment: Match classes based on the usage of the "prototype" property.
   name: support.class.js
-  match: (?<!\w)([a-zA-Z0-9$_][\w$]*)(?=\.prototype\b)
+  match: (?<!\w)([a-zA-Z$_][\w$]*)(?=\.prototype\b)
 
 - comment: Matches the "prototype" keyword.  Even though it is not a valid keyword, it is a special constant of sorts.
   name: keyword.other.js
@@ -253,14 +249,14 @@ patterns:
 
 - comment: Matches the function calls.
   name: meta.function.js
-  match: (?<!\w)([a-zA-Z0-9$_][\w$]*)(?=\()
+  match: (?<!\w)([a-zA-Z$_][\w$]*)(?=\()
 
 repository:
   function-params:
     patterns:
     - comment: 'Matches valid argument, function and variable names.  To be thorough: https://github.com/mathiasbynens/mothereff.in/tree/master/js-variables'
-      begin: (?=[a-zA-Z0-9$_])
+      begin: (?=[a-zA-Z$_])
       end: (?=[,)])
       patterns:
       - name: variable.parameter.function.js
-        match: \G[a-zA-Z0-9$_][\w$]*
+        match: \G[a-zA-Z$_][\w$]*

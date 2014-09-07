@@ -21,8 +21,23 @@ patterns:
   patterns:
   - include: '#yaml'
 
+- begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+([>\|]-?)\s*$
+  beginCaptures:
+    '1': {name: entity.name.key.yaml}
+    '2': {name: punctuation.separator.mapping.yaml}
+    '3': {name: keyword.operator.yaml}
+  end: (?<=.)
+  patterns:
+  - contentName: source.regexp.yaml
+    begin: ^(\s+)
+    end: ^(?:\s*(- )|(?!\1).)
+    endCaptures:
+      '1': {name: keyword.operator.yaml}
+    patterns:
+    - include: source.regexp
+
 - contentName: source.regexp.yaml
-  begin: (match|begin|end|\w*(?:Pattern|Match|Marker))(:)\s+(['"])?
+  begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+(['"])?
   beginCaptures:
     '1': {name: entity.name.key.yaml}
     '2': {name: punctuation.separator.mapping.yaml}
