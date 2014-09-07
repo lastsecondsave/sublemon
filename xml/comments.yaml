@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: text.xml
+scope: source.xml
 settings:
   shellVariables:
   - name: TM_COMMENT_START
