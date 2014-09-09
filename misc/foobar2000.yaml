@@ -1,0 +1,17 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: foobar2000 Script
+scopeName: source.foobar2000
+uuid: 4D33F31F-DDB9-45BF-8D9F-BA680FE8FDD1
+
+patterns:
+- name: support.function.foobar2000
+  match: \$\w+
+
+- name: constant.numeric.foobar2000
+  match: \b\d+\b
+
+- name: string.quoted.single.foobar2000
+  match: "'.*?'"
+
+- name: variable.other.field.foobar2000
+  match: "%.*?%"

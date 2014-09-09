@@ -325,11 +325,6 @@ settings:
   settings:
     foreground: '#E5476C'
 
-- name:  Markup monospace
-  scope: markup.raw
-  settings:
-    foreground: '#C5CC4B'
-
 - name:  Markup emphasis
   scope: markup.italic, markup.bold.markdown
   settings:
@@ -339,6 +334,11 @@ settings:
   scope: markup.underline.link
   settings:
     foreground: '#EFC52D'
+
+- name:  Markdown monospace
+  scope: markup.raw.inline.markdown, punctuation.definition.block.fenced.markdown
+  settings:
+    foreground: '#C5CC4B'
 
 - name:  Markdown language marker
   scope: meta.fenced.language.marker.markdown
@@ -371,3 +371,8 @@ settings:
   scope: keyword.other.important.css
   settings:
     foreground: '#838495'
+
+- name:  foobar2000 tag field
+  scope: variable.other.field.foobar2000
+  settings:
+    foreground: '#EFC52D'

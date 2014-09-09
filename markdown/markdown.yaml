@@ -21,13 +21,10 @@ patterns:
   match: \*.+?\*
 
 - name: markup.strikethrough.markdown
-  match: ~~.+?~~
+  match: ~~\S.+?\S~~
 
 - name: markup.underline.link.markdown
   match: <.+?>
-
-- name: markup.raw.block.markdown
-  match: ^([ ]{4}|\t).*$
 
 - name: constant.character.escape.markdown
   match: \\[-`*_#+.!(){}\[\]\\>]
@@ -37,13 +34,21 @@ patterns:
   captures:
     '0': {name: entity.name.section.markdown}
 
-- name: markup.raw.fenced.block.markdown
+- name: markup.raw.block.markdown
+  match: ^([ ]{4}|\t).*$
+
+- name: markup.raw.block.fenced.markdown
   begin: ^(```)$
   end: ^(```)$
+  captures:
+    '1': {name: punctuation.definition.block.fenced.markdown}
 
-- begin: ^(```)(foobar2000)$
+- name: markup.raw.block.fenced.markdown
+  begin: ^(```)(foobar2000)$
   end: ^(```)$
   captures:
-    '1': {name: markup.raw.fenced.block.markdown}
+    '1': {name: punctuation.definition.block.fenced.markdown}
     '2': {name: meta.fenced.language.marker.markdown}
   contentName: source.foobar2000
+  patterns:
+  - include: source.foobar2000
