@@ -6,10 +6,10 @@ uuid: BAFE4C4F-8D59-48CD-A3BC-52A2084531C9
 
 patterns:
 - name: keyword.modifier.regexp
-  match: \(\?[a-z]\)
+  match: \(\?[imsxXU]+\)
 
 - name: keyword.control.anchor.regexp
-  match: \\[bB]|\^|\$
+  match: \\[bBAZzG]|\^|\$
 
 - name: keyword.other.back-reference.regexp
   match: \\[1-9]\d*
