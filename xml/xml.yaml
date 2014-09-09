@@ -14,6 +14,7 @@ patterns:
 - name: meta.xml.mybatis
   begin: (?=<(select|update|insert|delete)\s)
   end: (?=</\1>)
+  contentName: source.sql.mybatis
   patterns:
   - name: meta.tag.xml
     begin: (<)((?:([-.\w]+)(:))?([-.\w]+))
@@ -51,18 +52,7 @@ patterns:
         '1': {name: keyword.other.mybatis.xml}
         '2': {name: punctuation.separator.mybatis.xml}
         '3': {name: variable.parameter.mybatis.xml}
-  - name: keyword.embedded.sql.mybatis.xml
-    match: (?i)\b(select|distinct|from|where|and|order by|group by|insert|into|values|update|set|in|over)\b
-  - name: support.function.embedded.sql.mybatis.xml
-    match: (?i)\b(sysdate|systimestamp|count|nextVal)\b
-  - name: string.embedded.sql.mybatis.xml
-    match: "'.*?'"
-  - name: constant.numeric.embedded.sql.mybatis.xml
-    match: \b\d+\b|\*|(?i)\bnull\b
-  - name: keyword.embedded.sql.mybatis.xml
-    match: \|\|
-  - name: support.function.embedded.sql.mybatis.xml
-    match: (?i)\bcall\b
+  - include: source.sql
 
 - include: '#tag'
 
