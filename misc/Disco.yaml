@@ -36,7 +36,17 @@ settings:
   settings:
     foreground: '#CDCDCD'
 
-- name:  Purple highligths
+- name:  Keyword
+  scope: keyword, storage.modifier
+  settings:
+    foreground: '#E572D2'
+
+- name:  Symbolic operator
+  scope: keyword.operator
+  settings:
+    foreground: '#CDCDCD'
+
+- name:  Keyword operator
   scope: >-
     keyword.control.ternary,
     keyword.operator.logical.js,
@@ -44,25 +54,17 @@ settings:
     keyword.operator.wildcard.java,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
+    source.sql keyword.operator,
     keyword.operator.cast.c++
   settings:
     foreground: '#E572D2'
 
-- name:  Keyword
-  scope: keyword, storage.modifier
-  settings:
-    foreground: '#E572D2'
-
-- name:  Operator
-  scope: keyword.operator
-  settings:
-    foreground: '#CDCDCD'
-
-- name:  Special operator
+- name:  Special symbolic operator
   scope: >-
     keyword.operator.unary,
     keyword.operator.yaml,
-    punctuation.separator.line.java-props
+    punctuation.separator.line.java-props,
+    keyword.operator.commit.oracle.sql
   settings:
     foreground: '#FF8147'
 
@@ -323,31 +325,32 @@ settings:
   settings:
     foreground: '#E5476C'
 
-- name:  Markdown title
-  scope: punctuation.definition.heading.markdown
-  settings:
-    foreground: '#66B5F0'
-
-- name:  Markdown monospace
-  scope: >-
-    markup.raw.inline.markdown,
-    markup.raw.block.markdown
+- name:  Markup monospace
+  scope: markup.raw
   settings:
     foreground: '#C5CC4B'
 
-- name:  Markdown emphasis
-  scope: >-
-    markup.italic.markdown,
-    markup.bold.markdown
+- name:  Markup emphasis
+  scope: markup.italic, markup.bold.markdown
   settings:
     foreground: '#FF9A41'
+
+- name:  Markup links
+  scope: markup.underline.link
+  settings:
+    foreground: '#EFC52D'
+
+- name:  Markdown language marker
+  scope: meta.fenced.language.marker.markdown
+  settings:
+    foreground: '#EFC52D'
 
 - name:  CSS support
   scope: >-
     constant.numeric.css keyword.other.unit,
     meta.property-value.css support.constant
   settings:
-    foreground: '#CDCDCD'
+    foreground: '#EFC52D'
 
 - name:  CSS selectors
   scope: meta.selector.css entity.other.attribute-name
