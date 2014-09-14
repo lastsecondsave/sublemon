@@ -15,18 +15,18 @@ patterns:
     '6': {name: string.maven}
 
 - begin: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
-  end: '```'
+  end: '^(?!x)x'
   beginCaptures:
     '1': {name: meta.indicator.error.maven}
     '2': {name: meta.result.maven}
     '3': {name: string.maven}
   patterns:
-  - include: '#basic'
+  - include: '#maven'
 
-- include: '#basic'
+- include: '#maven'
 
 repository:
-  basic:
+  maven:
     patterns:
     - name: comment.maven
       match: ^(?:(\[ERROR\])|(\[WARNING\])|(\[INFO\])) ([A-Z 0-9]{2,}\s)?(.*)

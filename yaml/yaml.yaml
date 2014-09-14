@@ -5,54 +5,27 @@ fileTypes: [yaml, yml]
 uuid: 2BDCCC99-FE27-4B30-9923-32D39B01C5CA
 
 patterns:
-- include: '#comments'
-- include: '#flow-yaml'
-
-- name: keyword.operator.yaml
-  match: '^(---|\.{3})'
-
-- match: '(-) '
-  captures:
-    '1': {name: keyword.operator.yaml}
-
-- name: meta.match-group.yaml
-  begin: '(?=\bname: )'
-  end: '$'
+- begin: '^(?=# \[PackageDev\])'
+  end: ^(?!x)x
   patterns:
+  - include: '#package-dev'
   - include: '#yaml'
 
-- begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+([>\|]-?)\s*$
-  beginCaptures:
-    '1': {name: entity.name.key.yaml}
-    '2': {name: punctuation.separator.mapping.yaml}
-    '3': {name: keyword.operator.yaml}
-  end: (?<=.)
+- begin: (?=.)
+  end: ^(?!x)x
   patterns:
-  - contentName: source.regexp.yaml
-    begin: ^(\s+)
-    end: ^(?:\s*(- )|(?!\1).)
-    endCaptures:
-      '1': {name: keyword.operator.yaml}
-    patterns:
-    - include: source.regexp
-
-- contentName: source.regexp.yaml
-  begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+(['"])?
-  beginCaptures:
-    '1': {name: entity.name.key.yaml}
-    '2': {name: punctuation.separator.mapping.yaml}
-    '3': {name: string.quoted.yaml}
-  end: (['\"])?\s*(?=\s#|$)
-  endCaptures:
-    '1': {name: string.quoted.yaml}
-  patterns:
-  - include: source.regexp
-
-- include: '#yaml'
+  - include: '#yaml'
 
 repository:
   yaml:
     patterns:
+    - include: '#comments'
+    - include: '#flow-yaml'
+    - name: keyword.operator.yaml
+      match: '^(---|\.{3})'
+    - match: '(-) '
+      captures:
+        '1': {name: keyword.operator.yaml}
     - match: (?:^|(?<=\s))([>\|]-?)
       captures:
         '1': {name: keyword.operator.yaml}
@@ -137,6 +110,11 @@ repository:
       patterns:
       - include: '#escapes'
     - name: string.quoted.single.yaml
+      match: "(').*(')"
+      captures:
+        '1': {name: punctuation.definition.string.yaml}
+        '2': {name: punctuation.definition.string.yaml}
+    - name: string.quoted.single.yaml
       begin: "'"
       end: "'"
       captures:
@@ -152,8 +130,41 @@ repository:
   escapes:
     patterns:
     - name: constant.character.escape.yaml
-      match: \\[0abtnvfre"/\\N_LP]
+      match: \\[0abtnvfre"/\\N_LP ]
     - name: constant.character.escape.unicode.yaml
       match: \\(x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})
     - name: invalid.illegal.escape.yaml
       match: \\.
+
+  package-dev:
+    patterns:
+    - name: meta.match-group.yaml
+      begin: '(?=\bname: )'
+      end: '$'
+      patterns:
+      - include: '#yaml'
+    - begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+([>\|]-?)\s*$
+      beginCaptures:
+        '1': {name: entity.name.key.yaml}
+        '2': {name: punctuation.separator.mapping.yaml}
+        '3': {name: keyword.operator.yaml}
+      end: (?<=.)
+      patterns:
+      - contentName: source.regexp.yaml
+        begin: ^(\s+)
+        end: ^(?:\s*(- )|(?!\1).)
+        endCaptures:
+          '1': {name: keyword.operator.yaml}
+        patterns:
+        - include: source.regexp
+    - contentName: source.regexp.yaml
+      begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+(['"])?
+      beginCaptures:
+        '1': {name: entity.name.key.yaml}
+        '2': {name: punctuation.separator.mapping.yaml}
+        '3': {name: string.quoted.yaml}
+      end: (['\"])?\s*(?=\s#|$)
+      endCaptures:
+        '1': {name: string.quoted.yaml}
+      patterns:
+      - include: source.regexp
