@@ -117,7 +117,7 @@ repository:
   class:
     name: meta.class.java
     begin: (?=\w?[\w\s]*(?:class|(?:@)?interface|enum)\s+\w+)
-    end: '}'
+    end: '\}'
     endCaptures:
       '0': {name: punctuation.section.class.end.java}
     patterns:
@@ -136,7 +136,7 @@ repository:
       begin: extends
       beginCaptures:
         '0': {name: storage.modifier.extends.java}
-      end: (?={|implements)
+      end: (?=\{|implements)
       patterns:
       - include: '#object-types-inherited'
       - include: '#comments'
@@ -149,10 +149,10 @@ repository:
       - include: '#object-types-inherited'
       - include: '#comments'
     - name: meta.class.body.java
-      begin: '{'
+      begin: '\{'
       beginCaptures:
         '0': {name: punctuation.section.class.begin.java}
-      end: (?=})
+      end: (?=\})
       patterns:
       - include: '#class-body'
 
@@ -197,11 +197,6 @@ repository:
       match: /\*\*/
       captures:
         '0': {name: punctuation.definition.comment.java}
-    - include: '#comments-javadoc'
-    - include: '#comments-inline'
-
-  comments-javadoc:
-    patterns:
     - name: comment.block.documentation.java
       begin: /\*\*
       end: \*/
@@ -210,24 +205,20 @@ repository:
       patterns:
       - name: keyword.other.javadoc.java
         match: '@[\w\d]+'
-
-  comments-inline:
-    patterns:
+    - name: comment.block.java
+      match: (/\*).+(\*/)
+      captures:
+        '1': {name: punctuation.definition.comment.java}
+        '2': {name: punctuation.definition.comment.java}
     - name: comment.block.java
       begin: /\*
       end: \*/
       captures:
         '0': {name: punctuation.definition.comment.java}
-    - begin: (^[ \t]+)?(?=//)
-      beginCaptures:
-        '1': {name: punctuation.whitespace.comment.leading.java}
-      end: (?!\G)
-      patterns:
-      - name: comment.line.double-slash.java
-        begin: //
-        beginCaptures:
-          '0': {name: punctuation.definition.comment.java}
-        end: '$'
+    - name: comment.line.double-slash.java
+      match: (//).*$
+      captures:
+        '1': {name: punctuation.definition.comment.java}
 
   constants-and-special-vars:
     patterns:
@@ -247,10 +238,10 @@ repository:
       match: (?x)(?<!\w)(?>0[xX](\h([\h_]*\h)?)?((?<=\h)\.| \.(?=\h)| (?<=\h))(\h([\h_]*\h)?)?[pP][+-]?(0|[1-9]([0-9_]*[0-9])?)[fFdD]?)(?!\w)
     - name: constant.numeric.float.java
       match: (?x)(?<!\w)(?>((0|[1-9]([0-9_]*[0-9])?)(?=[eEfFdD.]))?((?<=[0-9])(?=[eEfFdD])| \.)([0-9]([0-9_]*[0-9])?)?([eE][+-]?(0|[1-9]([0-9_]*[0-9])?))?[fFdD]?)(?!\w)
-    - name: constant.other.java
-      match: (\.)?\b([A-Z][A-Z0-9_]+)(?!<|\.class|\s*\w+\s*=)\b
+    - match: (\.)?\b([A-Z][A-Z0-9_]+)(?!<|\.class|\s*\w+\s*=)\b
       captures:
         '1': {name: keyword.operator.dereference.java}
+        '2': {name: variable.constant.java}
 
   enums:
     begin: ^(?=\s*[A-Z0-9_]+\s*({|\(|,))
@@ -259,7 +250,7 @@ repository:
     - name: meta.enum.java
       begin: \w+
       beginCaptures:
-        '0': {name: constant.other.enum.java}
+        '0': {name: variable.constant.enum.java}
       end: (?=,|;|})
       patterns:
       - include: '#parens'
@@ -453,24 +444,20 @@ repository:
     patterns:
     - name: string.quoted.double.java
       begin: '"'
-      beginCaptures:
-        '0': {name: punctuation.definition.string.begin.java}
       end: '"'
-      endCaptures:
-        '0': {name: punctuation.definition.string.end.java}
+      captures:
+        '0': {name: punctuation.definition.string.java}
       patterns:
       - name: constant.character.escape.java
         match: \\.
     - name: string.quoted.single.java
       begin: "'"
-      beginCaptures:
-        '0': {name: punctuation.definition.string.begin.java}
       end: "'"
-      endCaptures:
-        '0': {name: punctuation.definition.string.end.java}
+      captures:
+        '0': {name: punctuation.definition.string.java}
       patterns:
-      - match: \\.
-        name: constant.character.escape.java
+      - name: constant.character.escape.java
+        match: \\.
 
   switch-selectors:
     patterns:
@@ -508,7 +495,7 @@ repository:
       - match: \s
       - match: ([A-Z_0-9]+)\s+(?=\=)
         captures:
-          '1': {name: constant.variable.java}
+          '1': {name: variable.constant.java}
       - match: (\w[^\s,]*)\s+(?=\=)
         captures:
           '1': {name: meta.definition.variable.name.java}
