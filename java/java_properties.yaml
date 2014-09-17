@@ -24,12 +24,12 @@ patterns:
     - include: '#escapes'
 
 - name: meta.value.java-props
-  match: \s*([-+]?\d+)\s*$
+  match: \s*([-+]?\d+(\.\d+)?)\s*$
   captures:
     '1': {name: constant.numeric.java-props}
 
 - name: meta.value.java-props
-  match: \s*(true|false|on|off|yes|no)\s*$
+  match: (?i)\s*(true|false|on|off|yes|no)\s*$
   captures:
     '1': {name: constant.language.java-props}
 

@@ -99,15 +99,13 @@ settings:
   settings:
     foreground: '#EF51AA'
 
-- name:  Language constant
-  scope: constant.language
+- name:  Constant
+  scope: constant
   settings:
     foreground: '#FF8147'
 
 - name:  User-defined constant
-  scope: >-
-    constant.other,
-    constant.variable
+  scope: variable.constant
   settings:
     foreground: '#E5476C'
 
@@ -183,7 +181,7 @@ settings:
   scope: >-
     punctuation.definition.tag,
     meta.tag.sgml.doctype.xml,
-    meta.tag.sgml.doctype.xml keyword.doctype.xml
+    meta.tag.sgml.doctype.xml keyword
   settings:
     foreground: '#66B5F0'
 
