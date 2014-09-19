@@ -285,11 +285,6 @@ settings:
   settings:
     foreground: '#FF8147'
 
-- name:  Maven info indicator
-  scope: meta.indicator.info.maven
-  settings:
-    foreground: '#E572D2'
-
 - name:  Maven results
   scope: >-
     meta.result.maven,
@@ -319,7 +314,9 @@ settings:
     foreground: '#EF51AA'
 
 - name:  RegExp modifiers
-  scope: keyword.modifier.regexp
+  scope: >-
+    keyword.modifier.regexp,
+    meta.group.modifier.regexp punctuation.definition.group.modifier.regexp
   settings:
     foreground: '#E5476C'
 
