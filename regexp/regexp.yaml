@@ -5,9 +5,6 @@ fileTypes: [re]
 uuid: BAFE4C4F-8D59-48CD-A3BC-52A2084531C9
 
 patterns:
-- name: keyword.modifier.regexp
-  match: \(\?[imsxXU]+\)
-
 - name: keyword.control.anchor.regexp
   match: \\[bBAZzG]|\^|\$
 
@@ -19,6 +16,19 @@ patterns:
 
 - name: keyword.operator.or.regexp
   match: \|
+
+- name: keyword.modifier.regexp
+  match: \(\?[imsxXU]+\)
+
+- name: meta.group.modifier.regexp
+  begin: '(\()(\?[imsxXU]+:)'
+  end: (\))
+  captures:
+    '1': {name: punctuation.definition.group.modifier.regexp}
+  beginCaptures:
+    '2': {name: keyword.modifier.regexp}
+  patterns:
+  - include: '$self'
 
 - name: meta.group.assertion.regexp
   begin: \((\?<?[=!])

@@ -1,6 +1,6 @@
 {
     "selector"   : "source.java",
-    "shell_cmd"  : "mvn -q compile",
+    "shell_cmd"  : "mvn compile",
     "working_dir": "${project_path:${folder}}",
     "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
     "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",

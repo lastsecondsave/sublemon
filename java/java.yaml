@@ -235,9 +235,9 @@ repository:
     - name: constant.numeric.integer.java
       match: \b(0|[1-9]([0-9_]*[0-9])?)[lL]?(?!\w|\.)
     - name: constant.numeric.hex-float.java
-      match: (?x)(?<!\w)(?>0[xX](\h([\h_]*\h)?)?((?<=\h)\.| \.(?=\h)| (?<=\h))(\h([\h_]*\h)?)?[pP][+-]?(0|[1-9]([0-9_]*[0-9])?)[fFdD]?)(?!\w)
+      match: (?<!\w)(?>0[xX](\h([\h_]*\h)?)?((?<=\h)\.| \.(?=\h)|(?<=\h))(\h([\h_]*\h)?)?[pP][+-]?(0|[1-9]([0-9_]*[0-9])?)[fFdD]?)(?!\w)
     - name: constant.numeric.float.java
-      match: (?x)(?<!\w)(?>((0|[1-9]([0-9_]*[0-9])?)(?=[eEfFdD.]))?((?<=[0-9])(?=[eEfFdD])| \.)([0-9]([0-9_]*[0-9])?)?([eE][+-]?(0|[1-9]([0-9_]*[0-9])?))?[fFdD]?)(?!\w)
+      match: (?<!\w)(?>((0|[1-9]([0-9_]*[0-9])?)(?=[eEfFdD.]))?((?<=[0-9])(?=[eEfFdD])|\.)([0-9]([0-9_]*[0-9])?)?([eE][+-]?(0|[1-9]([0-9_]*[0-9])?))?[fFdD]?)(?!\w)
     - match: (\.)?\b([A-Z][A-Z0-9_]+)(?!<|\.class|\s*\w+\s*=)\b
       captures:
         '1': {name: keyword.operator.dereference.java}
@@ -489,7 +489,7 @@ repository:
   variables:
     patterns:
     - name: meta.definition.variable.java
-      begin: (?x:(?=(?:(?:private|protected|public|native|synchronized|abstract|threadsafe|transient|static|final)|(?:def)|(?:void|boolean|byte|char|short|int|float|long|double)|(?:(?:[a-z]\w*\.)*[A-Z]+\w*))\s+(?!private|protected|public|native|synchronized|abstract|threadsafe|transient|static|final|def|void|boolean|byte|char|short|int|float|long|double)[\w\d_<>\[\],\?][\w\d_<>\[\],\? \t]*(?:=|$)))
+      begin: (?=(?:(?:private|protected|public|native|synchronized|abstract|threadsafe|transient|static|final)|(?:void|boolean|byte|char|short|int|float|long|double)|(?:(?:[a-z]\w*\.)*[A-Z]+\w*))\s+(?!private|protected|public|native|synchronized|abstract|threadsafe|transient|static|final|void|boolean|byte|char|short|int|float|long|double)[\w\d_<>\[\],\?][\w\d_<>\[\],\? \t]*(?:=|$))
       end: (?=;)
       patterns:
       - match: \s

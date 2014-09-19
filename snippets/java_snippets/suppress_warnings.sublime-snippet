@@ -1,0 +1,6 @@
+<snippet>
+    <description>@SuppressWarnings</description>
+    <scope>meta.class.body.java</scope>
+    <tabTrigger>sw</tabTrigger>
+    <content><![CDATA[@SuppressWarnings("${1:unchecked}")]]></content>
+</snippet>

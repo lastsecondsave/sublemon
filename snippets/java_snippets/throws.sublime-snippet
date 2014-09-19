@@ -1,0 +1,6 @@
+<snippet>
+    <description>throws Exception</description>
+    <scope>source.java</scope>
+    <tabTrigger>ths</tabTrigger>
+    <content><![CDATA[throws $0Exception ]]></content>
+</snippet>
