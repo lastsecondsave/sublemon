@@ -1,9 +1,9 @@
 <snippet> 
     <description>getter</description>
     <tabTrigger>get</tabTrigger>
-    <scope>source.java, source.c++</scope>
+    <scope>source.java</scope>
     <content>
-<![CDATA[public ${1:String} get${2/./\u$0/}() {
+<![CDATA[public ${1:String} ${1/boolean|(.*)/(?1:get:is)/}${2/./\u$0/}() {
     return ${2:property};
 }]]>
     </content> 
