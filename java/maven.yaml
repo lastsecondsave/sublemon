@@ -28,6 +28,14 @@ patterns:
       '2': {name: meta.result.maven}
   - include: '#maven'
 
+- begin: '(?=Tests run:)'
+  end: '$'
+  patterns:
+  - match: '(Tests run|Failures|Errors|Skipped|Time elapsed): ([\d.]+)'
+    captures:
+      '1': {name: keyword.maven}
+      '2': {name: constant.numeric.maven}
+
 - include: '#maven'
 
 repository:
@@ -42,7 +50,7 @@ repository:
         '4': {name: meta.result.maven}
 
     - name: meta.exception.maven
-      match: '^(?:Caused by: )?([\w\.]+Exception)(?:: (.*))?'
+      match: '^(?:Caused by: )?([\w\.]+(?:Exception|Failure|Error))(?:: (.*))?'
       captures:
         '1': {name: entity.name.exception.maven}
         '2': {name: string.maven}
