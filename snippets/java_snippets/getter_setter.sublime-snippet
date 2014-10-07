@@ -7,8 +7,8 @@
     return ${2:property};
 }
 
-public void set${2/./\u$0/}(${1:String} ${2:property}) {
-    this.${2:property} = ${2:property};
+public void set${2/./\u$0/}(${1/.*/$0/} ${2/.*/$0/}) {
+    this.${2/.*/$0 = $0/};
 }]]>
     </content> 
 </snippet>

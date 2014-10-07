@@ -204,9 +204,11 @@ repository:
         '0': {name: punctuation.definition.comment.java}
       patterns:
       - name: keyword.other.javadoc.java
+        match: '@param\s+[\w\d]+'
+      - name: keyword.other.javadoc.java
         match: '@[\w\d]+'
     - name: comment.block.java
-      match: (/\*).+(\*/)
+      match: (/\*).+?(\*/)
       captures:
         '1': {name: punctuation.definition.comment.java}
         '2': {name: punctuation.definition.comment.java}
@@ -337,7 +339,7 @@ repository:
       patterns:
       - include: '#generics'
     - name: meta.method.return-type.java
-      begin: (?=\w.*\s+\w+\s*\()
+      begin: (?=\w.*(\s+|\b)\w+\s*\()
       end: (?=\w+\s*\()
       patterns:
       - include: '#all-types'
@@ -444,20 +446,14 @@ repository:
     patterns:
     - name: string.quoted.double.java
       begin: '"'
-      end: '"'
+      end: '(")|$'
       captures:
-        '0': {name: punctuation.definition.string.java}
+        '1': {name: punctuation.definition.string.java}
       patterns:
       - name: constant.character.escape.java
-        match: \\.
-    - name: string.quoted.single.java
-      begin: "'"
-      end: "'"
-      captures:
-        '0': {name: punctuation.definition.string.java}
-      patterns:
-      - name: constant.character.escape.java
-        match: \\.
+        match: \\[tbnrf'"\\]
+    - name: constant.character.java
+      match: "'(\\\\[tbnrf'\"\\\\]|.)'"
 
   switch-selectors:
     patterns:
