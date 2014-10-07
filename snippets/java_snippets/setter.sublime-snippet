@@ -3,8 +3,8 @@
     <tabTrigger>set</tabTrigger>
     <scope>source.java</scope>
     <content>
-<![CDATA[public void set${2/./\u$0/}(${1:String} ${2:property}) {
-    this.${2:property} = ${2:property};
+<![CDATA[public void set${2/./\u$0/}(${1:String} ${2/.*/$0/}) {
+    this.${2:property} = ${2/.*/$0/};
 }]]>
     </content> 
 </snippet>
