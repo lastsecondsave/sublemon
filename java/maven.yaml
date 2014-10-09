@@ -42,7 +42,7 @@ repository:
   maven:
     patterns:
     - name: comment.maven
-      match: ^(?:(\[ERROR\])|(\[WARNING\])|(\[INFO\])) ([A-Z 0-9]{2,}\s)?(.*)
+      match: ^(?:(\[ERROR\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)
       captures:
         '1': {name: meta.indicator.error.maven}
         '2': {name: meta.indicator.warning.maven}

@@ -49,6 +49,7 @@ settings:
 - name:  Keyword operator
   scope: >-
     keyword.control.ternary,
+    keyword.operator.js,
     keyword.operator.logical.js,
     keyword.operator.logical.java,
     keyword.operator.wildcard.java,
