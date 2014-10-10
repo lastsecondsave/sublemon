@@ -1,0 +1,6 @@
+<snippet>
+    <description>return this</description>
+    <scope>source.java, source.js, source.c++, source.c</scope>
+    <tabTrigger>rett</tabTrigger>
+    <content><![CDATA[return this;]]></content>
+</snippet>
