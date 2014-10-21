@@ -5,21 +5,30 @@ fileTypes: [js, htc, jsx]
 uuid: 93E017CC-6F27-11D9-90EB-000D93589AF6
 
 patterns:
-- comment: Match the shebang for JavaScript executables
-  name: comment.line.number-sign.shebang.js
+- name: comment.line.number-sign.shebang.js
   match: ^(#!).*$
+  captures:
+    '1': {name: punctuation.definition.comment.js}
+
+- name: comment.block.js
+  begin: /\*
+  end: \*/
+  captures:
+    '0': {name: punctuation.definition.comment.js}
+
+- name: comment.line.double-slash.js
+  match: (//).*$
   captures:
     '1': {name: punctuation.definition.comment.js}
 
 - name: entity.name.function.js
   match: (?<!\w)[a-zA-Z$_][\w$]*(?=\s*:\s*function\b)
 
-- comment: Match function, optional function name and optional function arguments
-  name: meta.function.js
+- name: meta.function.js
   begin: (?:(?<!\w)([a-zA-Z$_][\w$]*)\s*(=)\s*)?\b(function)(?:\s+([a-zA-Z$_][\w$]*))?\s*(\()
   beginCaptures:
     '1': {name: meta.function.variable.js}
-    '2': {name: keyword.operator.js}
+    '2': {name: keyword.operator.assignment.js}
     '3': {name: storage.type.function.js}
     '4': {name: entity.name.function.js}
     '5': {name: punctuation.definition.parameters.begin.js}
@@ -27,7 +36,11 @@ patterns:
   endCaptures:
     '1': {name: punctuation.definition.parameters.end.js}
   patterns:
-  - include: '#function-params'
+  - begin: (?=[a-zA-Z$_])
+    end: (?=[,)])
+    patterns:
+    - name: variable.parameter.function.js
+      match: \G[a-zA-Z$_][\w$]*
 
 - name: variable.constant.js
   match: \b([A-Z][A-Z0-9_]+)\b
@@ -38,6 +51,15 @@ patterns:
 - name: constant.numeric.js
   match: (?<!\w)(?>((0|[1-9][0-9]*)(\.[0-9]*)?|\.[0-9]+)([eE][+-]?[0-9]+)?)(?!\w)
 
+- name: constant.language.js
+  match: \b(false|Infinity|NaN|null|true|undefined)\b
+
+- name: variable.language.js
+  match: (?<!\.|\$)\b(this)\b(?!\$)
+
+- name: punctuation.terminator.statement.js
+  match: ';'
+
 - name: string.quoted.single.js
   begin: "'"
   beginCaptures:
@@ -46,8 +68,7 @@ patterns:
   endCaptures:
     '0': {name: punctuation.definition.string.end.js}
   patterns:
-  - name: constant.character.escape.js
-    match: \\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.)
+  - include: '#escapes'
 
 - name: string.quoted.double.js
   begin: '"'
@@ -57,24 +78,22 @@ patterns:
   endCaptures:
     '0': {name: punctuation.definition.string.end.js}
   patterns:
-  - name: constant.character.escape.js
-    match: \\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)
+  - include: '#escapes'
 
-- name: comment.block.js
-  begin: /\*
-  end: \*/
-  captures:
-    '0': {name: punctuation.definition.comment.js}
-- begin: (^[ \t]+)?(?=//)
-  beginCaptures:
-    '1': {name: punctuation.whitespace.comment.leading.js}
-  end: (?!\G)
+- comment: Don't scope preceding whitespace as string.regex
+  begin: (?<=[=(:,]|^|return|&&|\|\||!|\?)\s*(?=/[^/*+?])
+  end: (?<=[/igm])
   patterns:
-  - name: comment.line.double-slash.js
-    begin: //
+  - name: string.regexp.js
+    contentName: source.regexp.js
+    begin: '/'
     beginCaptures:
-      '0': {name: punctuation.definition.comment.js}
-    end: '$'
+      '1': {name: punctuation.definition.string.begin.js}
+    end: (/)[igm]*
+    endCaptures:
+      '1': {name: punctuation.definition.string.end.js}
+    patterns:
+    - include: source.regexp
 
 - name: storage.type.js
   match: (?<!\.|\$)\b(let|var)\b(?!\$)
@@ -83,10 +102,10 @@ patterns:
   match: (?<!\.|\$)\b(get|set)\b(?!\$)
 
 - name: keyword.control.js
-  match: (?<!\.|\$)\b(break|case|catch|continue|default|do|else|finally|for|if|return|switch|throw|try|while|yield)\b(?!\$)
+  match: (?<!\.|\$)\b(break|case|catch|continue|default|do|else|finally|for|if|return|switch|throw|try|while|yield|delete|new)\b(?!\$)
 
 - name: keyword.operator.js
-  match: (?<!\.|\$)\b(delete|in|instanceof|new|typeof|void|with)\b(?!\$)
+  match: (?<!\.|\$)\b(in|instanceof|typeof|void|with)\b(?!\$)
 
 - name: keyword.operator.logical.js
   match: '&&|\|\|'
@@ -94,14 +113,28 @@ patterns:
 - name: keyword.operator.assignment.js
   match: '([+*/%&^|-]|<<|>>>?)?='
 
-- name: keyword.operator.js
-  match: '%|&|\*|\-\-|\-|\+\+|\+|===|==|!=|!==|<=|>=|<>|<|>|\?\:'
+- name: keyword.operator.comparison.js
+  match: '===?|!==?|<=|>=|<>|<|>'
+
+- name: keyword.operator.arithmetic.js
+  match: '/|%|\*|\-\-|\-|\+\+|\+'
+
+- name: keyword.operator.bitwise.js
+  match: '&|\|'
 
 - name: keyword.operator.unary.logical.js
   match: '!'
 
 - name: keyword.operator.unary.bitwise.js
   match: '~'
+
+- name: meta.ternary.js
+  begin: '\?'
+  end: ':'
+  captures:
+    '0': {name: keyword.control.ternary.js}
+  patterns:
+  - include: $self
 
 - name: keyword.other.js
   match: (?<!\.|\$)\b(debugger)\b(?!\$)
@@ -182,54 +215,11 @@ patterns:
   name: invalid.deprecated.js
   match: (?<!\.|\$)\b(implements|interface|package|private|protected|public|static)\b(?!\$)
 
-- name: constant.language.js
-  match: \b(false|Infinity|NaN|null|true|undefined)\b
-
-- name: variable.language.js
-  match: (?<!\.|\$)\b(this)\b(?!\$)
-
-- comment: Don't scope preceding whitespace as string.regex
-  begin: (?<=[=(:,]|^|return|&&|\|\||!|\?)\s*(?=/[^/*+?])
-  end: (?<=[/igm])
-  patterns:
-  - name: string.regexp.js
-    contentName: source.regexp.js
-    begin: /
-    beginCaptures:
-      '1': {name: punctuation.definition.string.begin.js}
-    end: (/)[igm]*
-    endCaptures:
-      '1': {name: punctuation.definition.string.end.js}
-    patterns:
-    - include: source.regexp
-
-- name: punctuation.terminator.statement.js
-  match: \;
-
 - comment: Allows the special return snippet to fire.
   match: (\{)(\})
   captures:
     '1': {name: punctuation.section.scope.begin.js}
     '2': {name: punctuation.section.scope.end.js}
-
-- name: meta.brace.curly.js
-  match: '\{|\}'
-
-- name: meta.brace.round.js
-  match: \(|\)
-
-- name: meta.brace.square.js
-  match: \[|\]
-
-- name: meta.ternary-if.js
-  begin: \?
-  beginCaptures:
-    '0': {name: keyword.control.ternary}
-  end: ':'
-  endCaptures:
-    '0': {name: keyword.control.ternary}
-  patterns:
-  - include: $self
 
 - comment: Match classes based on the usage of the "new" operator.
   name: support.class.js
@@ -252,11 +242,8 @@ patterns:
   match: (?<!\w)([a-zA-Z$_][\w$]*)(?=\()
 
 repository:
-  function-params:
+  escapes:
     patterns:
-    - comment: 'Matches valid argument, function and variable names.  To be thorough: https://github.com/mathiasbynens/mothereff.in/tree/master/js-variables'
-      begin: (?=[a-zA-Z$_])
-      end: (?=[,)])
-      patterns:
-      - name: variable.parameter.function.js
-        match: \G[a-zA-Z$_][\w$]*
+    - name: constant.character.escape.js
+      match: \\(x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]|37[0-7]?|[4-7][0-7]?|.)
+
