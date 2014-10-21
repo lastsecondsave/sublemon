@@ -346,7 +346,7 @@ settings:
     constant.numeric.css keyword.other.unit,
     meta.property-value.css support.constant
   settings:
-    foreground: '#EFC52D'
+    foreground: '#CDCDCD'
 
 - name:  CSS selectors
   scope: meta.selector.css entity.other.attribute-name
