@@ -49,12 +49,12 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Gist",
-		"Java",
-		"JavaScript",
 		"Vintage",
+		"JavaScript",
 		"XML",
 		"YAML",
+		"Gist",
+		"Java",
 		"SQL",
 		"Markdown"
 	],
@@ -67,7 +67,8 @@
 	[
 		"*.log",
 		"*.sql",
-		"*.md"
+		"*.md",
+		"*.jdo"
 	],
 	"margin": 0,
 	"minimap_scroll_to_clicked_text": true,
