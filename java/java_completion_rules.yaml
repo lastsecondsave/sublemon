@@ -1,4 +1,0 @@
-# [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.java
-settings:
-  cancelCompletion: '^\s*(\}?\s*(else|try|do|finally)|(class|package|enum)\s*[a-zA-Z_0-9]+*)$'
