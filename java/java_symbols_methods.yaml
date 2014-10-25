@@ -4,4 +4,5 @@ settings:
   showInSymbolList: 1
   symbolTransformation: |
     s/\s{2,}/ /g;
+    s/(?<=\() | (?=[,)])//g;
     s/^/  /;

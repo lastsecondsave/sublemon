@@ -1,6 +1,8 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.yaml
 settings:
+  increaseIndentPattern: '^(.*:\s*[>|]?\s*|\s*-\s+.*)$'
+  decreaseIndentPattern: '^\s*-\s+.*$'
   shellVariables:
   - name: TM_COMMENT_START
     value: '# '

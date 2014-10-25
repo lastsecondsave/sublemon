@@ -143,7 +143,7 @@ repository:
       end: '$'
       patterns:
       - include: '#yaml'
-    - begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+([>\|]-?)\s*$
+    - begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion)(:)\s+([>\|]-?)\s*$
       beginCaptures:
         '1': {name: entity.name.key.yaml}
         '2': {name: punctuation.separator.mapping.yaml}
@@ -158,7 +158,7 @@ repository:
         patterns:
         - include: source.regexp
     - contentName: source.regexp.yaml
-      begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation)(:)\s+(['"])?
+      begin: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion)(:)\s+(['"])?
       beginCaptures:
         '1': {name: entity.name.key.yaml}
         '2': {name: punctuation.separator.mapping.yaml}

@@ -2,6 +2,8 @@
 scope: source.js
 settings:
   bracketIndentNextLinePattern: ^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
-  increaseIndentPattern: ^.*\{[^}"']*$|^\s*\bcase\b.*:\s*$|^\s*\bdefault\b:\s*$
+  increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$
   decreaseIndentPattern: ^(.*\*/)?\s*\}.*$
   unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
+  cancelCompletion: ^\s*(function)\s*[a-zA-Z$_][\w$]+
+  indentSquareBrackets: true
