@@ -29,13 +29,6 @@ settings:
     foreground: '#FFFFFF'
     background: '#E5476C'
 
-- name:  Disabled highligths
-  scope: >-
-    meta.function-call.c++ entity.name.function.c++,
-    support.function.any-method.c
-  settings:
-    foreground: '#CDCDCD'
-
 - name:  Keyword
   scope: keyword, storage.modifier
   settings:
@@ -65,6 +58,7 @@ settings:
     keyword.operator.unary,
     keyword.operator.yaml,
     punctuation.separator.line.java-props,
+    punctuation.separator.line.macro.c,
     keyword.operator.commit.oracle.sql
   settings:
     foreground: '#FF8147'
@@ -230,12 +224,17 @@ settings:
   settings:
     foreground: '#66B5F0'
 
-- name:  C macro
+- name:  C macro definition
   scope: >-
-    meta.preprocessor,
-    meta.preprocessor keyword
+    punctuation.definition.macro.c,
+    keyword.macro.c
   settings:
     foreground: '#EFC52D'
+
+- name:  C macro body
+  scope: meta.macro.body.c
+  settings:
+    foreground: '#C5CC4B'
 
 - name:  Powershell variable scope
   scope: variable.language.powershell keyword

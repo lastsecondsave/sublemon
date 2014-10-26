@@ -1,0 +1,7 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.c++ meta.function.identifier
+settings:
+  showInSymbolList: 1
+  symbolTransformation: |
+    s/\s{2,}/ /g;
+    s/(?<=\() | (?=[,)])//g;

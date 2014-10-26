@@ -74,5 +74,5 @@
     { "keys": ["ctrl+shift+s"], "command": "save_all" },
     { "keys": ["ctrl+shift+c"], "command": "copy_path" },
     { "keys": ["shift+alt+z"], "command": "reveal_in_side_bar" },
-    { "keys": ["alt+shift+a"], "command": "expand_selection", "args": {"to": "brackets"} },
+    { "keys": ["shift+alt+a"], "command": "expand_selection", "args": {"to": "brackets"} }
 ]
