@@ -1,0 +1,178 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: C/C++
+scopeName: source.c++
+fileTypes: [c, h, cpp, hpp, cu, cuh]
+uuid: FF3EC5B4-68F5-4A85-A774-161C8D0058C6
+
+patterns:
+- include: '#comments'
+- include: '#macros'
+- include: '#functions'
+- include: '#constants'
+- include: '#keywords'
+- include: '#storage'
+- include: '#strings'
+
+repository:
+  comments:
+    patterns:
+    - name: comment.line.double-slash.c++
+      match: (//).*$
+      captures:
+        '1': {name: punctuation.definition.comment.c}
+    - name: comment.block.c
+      match: (/\*).*(\*/)
+      captures:
+        '1': {name: punctuation.definition.comment.c}
+        '2': {name: punctuation.definition.comment.c}
+    - name: comment.block.c
+      begin: /\*
+      end: \*/
+      captures:
+        '0': {name: punctuation.definition.comment.c}
+
+  strings:
+    patterns:
+    - name: string.quoted.double.c++
+      begin: 'L?"'
+      end: '(")|$'
+      captures:
+        '1': {name: punctuation.definition.string.c++}
+      patterns:
+      - name: constant.character.escape.c++
+        match: \\([abfnrt'"\\]|[0-7]{3}|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})
+
+  storage:
+    patterns:
+    - name: storage.modifier.c
+      match: \b(const|extern|register|restrict|static|volatile|inline)\b
+    - name: storage.modifier.c++
+      match: \b(friend|explicit|virtual|private|public|protected)\b
+    - name: storage.modifier.cuda
+      match: \b__(shared|constant|global)__\b
+    - name: storage.type.c
+      match: \b(void|unsigned|char|short|int|long|float|double)\b
+    - name: storage.type.c++
+      match: \b(auto|bool|wchar_t|__int(8|16|32|64))\b
+    - name: support.type.c
+      match: \b(size_t|FILE|fpos_t)\b
+    - name: support.type.cuda
+      match: \b(cuda\w+_t)\b
+    - name: meta.std.c++
+      match: \b(std)(::)(array|vector|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error)?\b
+      captures:
+        '1': {name: storage.modifier.namespace.c++}
+        '2': {name: punctuation.separator.namespace.c++}
+        '3': {name: support.type.std.c++}
+
+  constants:
+    patterns:
+    - name: constant.numeric.c++
+      match: \b(0[xX][0-9a-fA-F]+|0[0-7]+|([0-9]+\.?[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?)([uU]?[lL][lL]|[fF])?\b
+    - name: constant.language.c++
+      match: \b(nullptr|true|false)\b
+    - name: constant.language.c
+      match: \b(NULL|TRUE|FALSE)\b
+    - name: variable.language.c++
+      match: \b(this)\b
+    - name: constant.character.c++
+      match: "L?'(\\\\([abfnrt'\"\\\\]|[0-7]{3}|x[0-9a-fA-F]{2})|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8}|.)'"
+
+  keywords:
+    patterns:
+    - name: keyword.control.c
+      match: \b(return|break|case|continue|default|do|while|for|switch|if|else|goto)\b
+    - name: keyword.control.c++
+      match: \b(try|catch|throw|new|delete)\b
+    - name: keyword.operator.cast.c++
+      match: \b(const|dynamic|reinterpret|static)_cast\b
+
+  functions:
+    patterns:
+    - name: meta.function.c++
+      begin: '^\s*(?=[^=])(?=([\w*:~]+\s*)+\()'
+      end: (})|(?=;)
+      endCaptures:
+        '1': {name: punctuation.section.function.c++}
+      patterns:
+      - include: '#comments'
+      - include: '#storage'
+      - name: meta.function.identifier
+        begin: (?=[\w:~]+\s*\()
+        end: '\)'
+        patterns:
+        - begin: (?=[\w:~]+\s*\()
+          end: (?=\()
+          patterns:
+          - name: entity.name.function.c++
+            match: ~?\w+(?=\s*\()
+          - name: storage.modifier.namespace.c++
+            match: \w+
+          - name: punctuation.separator.namespace.c++
+            match: '::'
+        - begin: '\('
+          end: (?=\))
+          patterns:
+          - include: '#storage'
+      - match: \S+;
+      - name: meta.function.body.c++
+        begin: '{'
+        beginCaptures:
+          '0': {name: punctuation.section.function.c++}
+        end: (?=})
+        patterns:
+        - include: '#functions-internals'
+
+  functions-internals:
+    patterns:
+    - include: '#comments'
+    - include: '#constants'
+    - include: '#keywords'
+    - include: '#macros'
+    - include: '#storage'
+    - include: '#strings'
+    - begin: '{'
+      end: '}'
+      patterns:
+      - include: '#functions-internals'
+
+  macros:
+    patterns:
+    - name: meta.macro.c
+      begin: '^\s*(#)(?=\s*\w+)'
+      end: '(?<!\\)\n'
+      beginCaptures:
+        '1': {name: punctuation.definition.macro.c}
+      patterns:
+      - match: '(?<=#)\s*(include)\s*(".*?"|<.*?>)'
+        captures:
+          '1': {name: keyword.macro.c}
+          '2': {name: string.quoted.macro.c}
+      - begin: (?<=#)\s*(define)\s+(\w+)\(
+        end: \)
+        beginCaptures:
+          '1': {name: keyword.macro.c}
+          '2': {name: entity.name.function.macro.c}
+        patterns:
+        - name: variable.parameter.macro.c
+          match: \w+
+      - match: '(?<=#)\s*(define)\s*(\w+)'
+        captures:
+          '1': {name: keyword.macro.c}
+          '2': {name: variable.constant.macro.c}
+      - match: '(?<=#)\s*(ifn?def|undef)\s*(\w+)'
+        captures:
+          '1': {name: keyword.macro.c}
+          '2': {name: variable.constant.macro.c}
+      - name: keyword.macro.c
+        match: (?<=#)\s*(if|endif|else|elif|pragma|error)
+      - match: (defined)(?:\s*\((\w+)\)|\s+(\w+))
+        captures:
+          '1': {name: keyword.macro.c}
+          '2': {name: variable.constant.macro.c}
+          '3': {name: variable.constant.macro.c}
+      - name: punctuation.separator.line.macro.c
+        match: '\\$'
+      - include: '#constants'
+      - name: meta.macro.body.c
+        match: .
