@@ -28,7 +28,7 @@ patterns:
       '2': {name: meta.result.maven}
   - include: '#maven'
 
-- begin: '(junit\.framework\.ComparisonFailure):'
+- begin: '(junit\.framework\.\w+):'
   end: (?=^\s+at\b)
   beginCaptures:
     '1': {name: entity.name.exception.maven}
