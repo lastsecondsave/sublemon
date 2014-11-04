@@ -49,7 +49,8 @@ settings:
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
     source.sql keyword.operator,
-    keyword.operator.cast.c++
+    keyword.operator.cast.c++,
+    keyword.operator.sizeof.c
   settings:
     foreground: '#E572D2'
 

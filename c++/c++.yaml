@@ -5,15 +5,20 @@ fileTypes: [c, h, cpp, hpp, cu, cuh]
 uuid: FF3EC5B4-68F5-4A85-A774-161C8D0058C6
 
 patterns:
-- include: '#comments'
-- include: '#macros'
-- include: '#functions'
-- include: '#constants'
-- include: '#keywords'
-- include: '#storage'
-- include: '#strings'
+- include: '#code'
 
 repository:
+  code:
+    patterns:
+    - include: '#comments'
+    - include: '#macros'
+    - include: '#keywords'
+    - include: '#constants'
+    - include: '#functions'
+    - include: '#types'
+    - include: '#storage'
+    - include: '#strings'
+
   comments:
     patterns:
     - name: comment.line.double-slash.c++
@@ -21,7 +26,7 @@ repository:
       captures:
         '1': {name: punctuation.definition.comment.c}
     - name: comment.block.c
-      match: (/\*).*(\*/)
+      match: (/\*).*?(\*/)
       captures:
         '1': {name: punctuation.definition.comment.c}
         '2': {name: punctuation.definition.comment.c}
@@ -86,18 +91,23 @@ repository:
       match: \b(try|catch|throw|new|delete)\b
     - name: keyword.operator.cast.c++
       match: \b(const|dynamic|reinterpret|static)_cast\b
+    - name: keyword.operator.sizeof.c
+      match: \bsizeof\b
+    - match: \b(using(?:\s+namespace))\s+(\w+)
+      captures:
+        '1': {name: keyword.other.c++}
 
   functions:
     patterns:
     - name: meta.function.c++
-      begin: '^\s*(?=[^=])(?=([\w*:~]+\s*)+\()'
+      begin: '^(?=[^=;]+\()'
       end: (})|(?=;)
       endCaptures:
         '1': {name: punctuation.section.function.c++}
       patterns:
       - include: '#comments'
       - include: '#storage'
-      - name: meta.function.identifier
+      - name: meta.function.identifier.c++
         begin: (?=[\w:~]+\s*\()
         end: '\)'
         patterns:
@@ -114,6 +124,7 @@ repository:
           end: (?=\))
           patterns:
           - include: '#storage'
+          - include: '#comments'
       - match: \S+;
       - name: meta.function.body.c++
         begin: '{'
@@ -125,22 +136,45 @@ repository:
 
   functions-internals:
     patterns:
-    - include: '#comments'
-    - include: '#constants'
-    - include: '#keywords'
-    - include: '#macros'
-    - include: '#storage'
-    - include: '#strings'
     - begin: '{'
       end: '}'
       patterns:
       - include: '#functions-internals'
+    - include: '#comments'
+    - include: '#macros'
+    - include: '#keywords'
+    - include: '#constants'
+    - include: '#storage'
+    - include: '#strings'
+
+  types:
+    patterns:
+    - name: meta.type.identifier.c++
+      match: \b(enum|namespace)\s+(\w+)
+      captures:
+        '1': {name: storage.modifier.c++}
+        '2': {name: entity.name.support.c++}
+    - name: meta.class.c++
+      begin: ((class|struct)\s+(\w+)?)
+      end: (})|(?=;)
+      beginCaptures:
+        '1': {name: meta.type.identifier.c++}
+        '2': {name: storage.modifier.c++}
+        '3': {name: entity.name.type.class.c++}
+      patterns:
+      - name: meta.class.body.c++
+        begin: '{'
+        beginCaptures:
+          '0': {name: punctuation.section.class.c++}
+        end: (?=})
+        patterns:
+        - include: '#code'
 
   macros:
     patterns:
     - name: meta.macro.c
       begin: '^\s*(#)(?=\s*\w+)'
-      end: '(?<!\\)\n'
+      end: '(?<!\\)\n|(?=/[/*])'
       beginCaptures:
         '1': {name: punctuation.definition.macro.c}
       patterns:
