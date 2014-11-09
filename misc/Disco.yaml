@@ -5,6 +5,7 @@ uuid: DC528CA7-4183-4CC0-A813-9431EE950599
 # Colors:
 # 838495   gray
 # CDCDCD   white
+# AAAAF0   light-purple
 # E572D2   purple
 # EF51AA   pink
 # 66B5F0   blue
@@ -37,7 +38,7 @@ settings:
 - name:  Symbolic operator
   scope: keyword.operator
   settings:
-    foreground: '#CDCDCD'
+    foreground: '#AAAAF0'
 
 - name:  Keyword operator
   scope: >-
@@ -50,6 +51,7 @@ settings:
     keyword.operator.logical.python,
     source.sql keyword.operator,
     keyword.operator.cast.c++,
+    keyword.operator.logical.c,
     keyword.operator.sizeof.c
   settings:
     foreground: '#E572D2'
@@ -236,6 +238,11 @@ settings:
   scope: meta.macro.body.c
   settings:
     foreground: '#C5CC4B'
+
+- name:  C dereference operator
+  scope: keyword.operator.dereference.c
+  settings:
+    foreground: '#AAAAF0'
 
 - name:  Powershell variable scope
   scope: variable.language.powershell keyword

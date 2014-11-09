@@ -277,7 +277,7 @@ repository:
     - name: keyword.operator.instanceof.java
       match: \b(instanceof)\b
     - name: keyword.operator.bitwise.java
-      match: (<<|>>>?|~|\^)
+      match: (<<|>>>?|\^)
     - name: keyword.operator.assignment.bitwise.java
       match: ((&|\^|\||<<|>>>?)=)
     - name: keyword.operator.comparison.java
@@ -292,10 +292,10 @@ repository:
       match: (\-|\+|\*|\/|%)
     - name: keyword.operator.logical.java
       match: (&&|\|\|)
-    - name: keyword.operator.unary.logical.java
-      match: '!'
     - name: keyword.operator.bitwise.java
       match: (\||&)
+    - name: keyword.operator.unary.logical.java
+      match: '!'
     - name: keyword.operator.unary.bitwise.java
       match: '~'
     - name: keyword.operator.dereference.java
