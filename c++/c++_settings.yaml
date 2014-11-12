@@ -3,6 +3,6 @@ scope: source.c++
 settings:
   bracketIndentNextLinePattern: ^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default|public|private|protected):)\s*$
-  decreaseIndentPattern: ^(.*\*/)?\s*\}.*$
-  unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
+  decreaseIndentPattern: ^\s*((.*\*/\s*)?\};?|\b(case\s+\w+|default|public|private|protected):)\s*$
+  unIndentedLinePattern: ^\s*((\*/|//|\*).*)?$
   indentSquareBrackets: true

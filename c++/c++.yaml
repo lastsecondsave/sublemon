@@ -12,10 +12,19 @@ repository:
     patterns:
     - include: '#comments'
     - include: '#macros'
-    - include: '#keywords'
-    - include: '#constants'
     - include: '#functions'
     - include: '#types'
+    - include: '#operators'
+    - include: '#constants'
+    - include: '#storage'
+    - include: '#strings'
+
+  inner-code:
+    patterns:
+    - include: '#comments'
+    - include: '#macros'
+    - include: '#operators'
+    - include: '#constants'
     - include: '#storage'
     - include: '#strings'
 
@@ -83,16 +92,55 @@ repository:
     - name: constant.character.c++
       match: "L?'(\\\\([abfnrt'\"\\\\]|[0-7]{3}|x[0-9a-fA-F]{2})|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8}|.)'"
 
-  keywords:
+  operators:
     patterns:
     - name: keyword.control.c
       match: \b(return|break|case|continue|default|do|while|for|switch|if|else|goto)\b
     - name: keyword.control.c++
       match: \b(try|catch|throw|new|delete)\b
-    - name: keyword.operator.cast.c++
-      match: \b(const|dynamic|reinterpret|static)_cast\b
+    - name: meta.operator.cast.c++
+      begin: \b((?:const|dynamic|reinterpret|static)_cast)<
+      end: '>'
+      beginCaptures:
+        '1': {name: keyword.operator.cast.c++}
+      patterns:
+      - include: '#inner-code'
+    - begin: '\?'
+      end: ':'
+      captures:
+        '0': {name: keyword.control.ternary.c}
+      patterns:
+      - include: '#inner-code'
+    - begin: '<(?![<=])(?=\w.*?\w>)'
+      end: '>'
+      patterns:
+      - include: '#inner-code'
     - name: keyword.operator.sizeof.c
       match: \bsizeof\b
+    - name: keyword.operator.dereference.c
+      match: ->
+    - name: keyword.operator.bitwise.c
+      match: (<<|>>>?|~|\^)
+    - name: keyword.operator.assignment.bitwise.c
+      match: ((&|\^|\||<<|>>>?)=)
+    - name: keyword.operator.comparison.c
+      match: (===?|!=|<=|>=|<|>)
+    - name: keyword.operator.assignment.arithmetic.c
+      match: '[+*/\%-]='
+    - name: keyword.operator.assignment.c
+      match: '='
+    - name: keyword.operator.increment-decrement.c
+      match: (\-\-|\+\+)
+    - name: keyword.operator.arithmetic.c
+      match: (\-|\+|\*|\/|%)
+    - name: keyword.operator.logical.c
+      match: (&&|\|\|)
+    - name: keyword.operator.bitwise.c
+      match: (\||&)
+    - name: keyword.operator.unary.logical.c
+      match: '!'
+    - name: punctuation.terminator.c
+      match: ';'
     - match: \b(using(?:\s+namespace))\s+(\w+)
       captures:
         '1': {name: keyword.other.c++}
@@ -105,8 +153,6 @@ repository:
       endCaptures:
         '1': {name: punctuation.section.function.c++}
       patterns:
-      - include: '#comments'
-      - include: '#storage'
       - name: meta.function.identifier.c++
         begin: (?=[\w:~]+\s*\()
         end: '\)'
@@ -123,9 +169,12 @@ repository:
         - begin: '\('
           end: (?=\))
           patterns:
-          - include: '#storage'
-          - include: '#comments'
-      - match: \S+;
+          - include: '#inner-code'
+          - match: (\w+)\s*(?=[,)\[]|=)
+            captures:
+              '1': {name: variable.parameter.c++}
+          - name: storage.type.c++
+            match: \w+
       - name: meta.function.body.c++
         begin: '{'
         beginCaptures:
@@ -133,6 +182,8 @@ repository:
         end: (?=})
         patterns:
         - include: '#functions-internals'
+      - include: '#inner-code'
+      - match: \S+;
 
   functions-internals:
     patterns:
@@ -140,32 +191,27 @@ repository:
       end: '}'
       patterns:
       - include: '#functions-internals'
-    - include: '#comments'
-    - include: '#macros'
-    - include: '#keywords'
-    - include: '#constants'
-    - include: '#storage'
-    - include: '#strings'
+    - include: '#inner-code'
 
   types:
     patterns:
     - name: meta.type.identifier.c++
-      match: \b(enum|namespace)\s+(\w+)
+      match: \b(enum|namespace|union)\s+(\w+)
       captures:
         '1': {name: storage.modifier.c++}
         '2': {name: entity.name.support.c++}
-    - name: meta.class.c++
+    - name: meta.type.c++
       begin: ((class|struct)\s+(\w+)?)
       end: (})|(?=;)
       beginCaptures:
         '1': {name: meta.type.identifier.c++}
         '2': {name: storage.modifier.c++}
-        '3': {name: entity.name.type.class.c++}
+        '3': {name: entity.name.type.c++}
       patterns:
-      - name: meta.class.body.c++
+      - name: meta.type.body.c++
         begin: '{'
         beginCaptures:
-          '0': {name: punctuation.section.class.c++}
+          '0': {name: punctuation.section.type.c++}
         end: (?=})
         patterns:
         - include: '#code'
