@@ -277,11 +277,11 @@ repository:
     - name: keyword.operator.instanceof.java
       match: \b(instanceof)\b
     - name: keyword.operator.bitwise.java
-      match: (<<|>>>?|\^)
+      match: (<<|>>>?|~|\^)
     - name: keyword.operator.assignment.bitwise.java
       match: ((&|\^|\||<<|>>>?)=)
     - name: keyword.operator.comparison.java
-      match: (===?|!=|<=|>=|<>|<|>)
+      match: (===?|!=|<=|>=|<|>)
     - name: keyword.operator.assignment.arithmetic.java
       match: '[+*/\%-]='
     - name: keyword.operator.assignment.java
@@ -296,8 +296,6 @@ repository:
       match: (\||&)
     - name: keyword.operator.unary.logical.java
       match: '!'
-    - name: keyword.operator.unary.bitwise.java
-      match: '~'
     - name: keyword.operator.dereference.java
       match: (?<=\S)\.(?=\S)
     - name: punctuation.terminator.java

@@ -3,6 +3,6 @@ scope: source.java
 settings:
   bracketIndentNextLinePattern: ^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$
-  decreaseIndentPattern: ^(.*\*/)?\s*\}.*$
-  unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
+  decreaseIndentPattern: ^\s*((.*\*/\s*)?\};?|\b(case\s+\w+|default):)\s*$
+  unIndentedLinePattern: ^\s*((\*/|//|\*).*)?$
   indentSquareBrackets: true
