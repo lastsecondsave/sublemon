@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.c++ meta.class.body.c++ meta.function.identifier
+scope: source.c++ meta.type.body.c++ meta.function.identifier
 settings:
   showInSymbolList: 1
   symbolTransformation: |
