@@ -1,5 +1,0 @@
-# [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.sql
-settings:
-  increaseIndentPattern: ^\s*(select|from|where|order by)\s*$
-  decreaseIndentPattern: ^\s*(from|where|order by)\s*$

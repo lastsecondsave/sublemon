@@ -52,6 +52,7 @@ patterns:
   match: (?i)\b(count|upper|sum|max|min)(?=\()\b
 
 - include: '#oracle'
+- include: '#sql-plus'
 
 repository:
   comments:
@@ -86,7 +87,45 @@ repository:
     - name: storage.type.oracle.sql
       match: (?i)\b(n?varchar2|n?char|varray|object)\b
     - name: storage.type.modifier.oracle.sql
-      match: (?i)\b(byte)\b
+      match: (?i)\b(byte|var)\b
     - match: ^\s*(/)(?:\s+|$)
       captures:
         '1': {name: keyword.operator.commit.oracle.sql}
+
+  sql-plus:
+    patterns:
+    - name: meta.sql-plus.prompt.oracle.sql
+      match: (?i)^\s*(prompt)\s+(.*)$
+      captures:
+        '1': {name: support.function.oracle.sql}
+        '2': {name: string.unquoted.sql}
+    - name: meta.sql-plus.column.oracle.sql
+      begin: (?i)^\s*(column)\s+(\w+)
+      end: '$'
+      beginCaptures:
+        '1': {name: support.function.oracle.sql}
+        '2': {name: entity.name.column.oracle.sql}
+      patterns:
+      - match: (?i)\b(format)\s+(.+?)\b
+        captures:
+          '1': {name: keyword.other.oracle.sql}
+          '2': {name: constant.language.oracle.sql}
+      - match: (?i)\b(heading)\s+('.+?')\s?
+        captures:
+          '1': {name: keyword.other.oracle.sql}
+          '2': {name: string.quoted.oracle.sql}
+      - name: keyword.other.oracle.sql
+        match: (?i)\bjustify(\s+left|center|right)\b
+    - name: meta.sql-plus.repheader.oracle.sql
+      begin: (?i)^\s*(repheader)\s+(?=off|col|skip|'.*?')
+      end: '$'
+      beginCaptures:
+        '1': {name: support.function.oracle.sql}
+      patterns:
+      - match: (off)
+        name: keyword.other.oracle.sql
+      - match: (skip|col)\s+(\d+)
+        captures:
+          '1': {name: keyword.other.oracle.sql}
+          '2': {name: constant.numeric.oracle.sql}
+      - include: '#strings'
