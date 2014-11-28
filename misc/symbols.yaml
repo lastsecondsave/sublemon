@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: entity.name.title.rfc
+settings:
+  showInSymbolList: 1
