@@ -1,0 +1,6 @@
+<snippet>
+    <description>nullptr</description>
+    <tabTrigger>nu</tabTrigger>
+    <scope>source.c++</scope>
+    <content><![CDATA[nullptr]]></content>
+</snippet>

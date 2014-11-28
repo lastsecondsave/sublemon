@@ -27,23 +27,55 @@ repository:
     - include: '#constants'
     - include: '#storage'
     - include: '#strings'
+    - include: '#lambda'
+
+  inner-code-with-brackets:
+    patterns:
+    - begin: '\('
+      end: '\)'
+      patterns:
+      - include: '#inner-code-with-brackets'
+    - begin: '{'
+      end: '}'
+      patterns:
+      - include: '#inner-code-with-brackets'
+    - include: '#inner-code'
 
   comments:
     patterns:
+    - match: ^\s*(?=/[*/])
+    - name: comment.line.documentation.c++
+      begin: //[/!].*$
+      end: $
+      patterns:
+      - include: "#doxygen"
     - name: comment.line.double-slash.c++
-      match: (//).*$
-      captures:
-        '1': {name: punctuation.definition.comment.c}
+      match: //.*$
+    - name: comment.block.empty.c
+      match: /\*\*/
+    - name: comment.block.documentation.c++
+      begin: /\*[\*!]
+      patterns:
+      - include: "#doxygen"
+      end: \*/
     - name: comment.block.c
       match: (/\*).*?(\*/)
-      captures:
-        '1': {name: punctuation.definition.comment.c}
-        '2': {name: punctuation.definition.comment.c}
     - name: comment.block.c
       begin: /\*
       end: \*/
+
+  doxygen:
+    patterns:
+    - match: (?<=\s)([\\@]param(?:\[.*\])?)\s+(\w[\w,.]*)
       captures:
-        '0': {name: punctuation.definition.comment.c}
+        '1': {name: keyword.other.doxygen}
+        '2': {name: variable.parameter.doxygen}
+    - match: (?<=\s)([\\@](?:file|exception|throws?))\s+(\w[\w,.]*)
+      captures:
+        '1': {name: keyword.other.doxygen}
+        '2': {name: variable.parameter.doxygen}
+    - name: keyword.other.doxygen
+      match: (?<=\s)[\\@]\w+
 
   strings:
     patterns:
@@ -59,9 +91,9 @@ repository:
   storage:
     patterns:
     - name: storage.modifier.c
-      match: \b(const|extern|register|restrict|static|volatile|inline)\b
+      match: \b(const|extern|register|restrict|static|volatile|inline|typedef)\b
     - name: storage.modifier.c++
-      match: \b(friend|explicit|virtual|private|public|protected)\b
+      match: \b(friend|explicit|virtual|private|public|protected|mutable)\b
     - name: storage.modifier.cuda
       match: \b__(shared|constant|global)__\b
     - name: storage.type.c
@@ -73,7 +105,7 @@ repository:
     - name: support.type.cuda
       match: \b(cuda\w+_t)\b
     - name: meta.std.c++
-      match: \b(std)(::)(array|vector|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error)?\b
+      match: \b(std)(::)(array|vector|pair|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error|exception|(?:shared|auto|unique|weak)_ptr)?\b
       captures:
         '1': {name: storage.modifier.namespace.c++}
         '2': {name: punctuation.separator.namespace.c++}
@@ -82,7 +114,9 @@ repository:
   constants:
     patterns:
     - name: constant.numeric.c++
-      match: \b(0[xX][0-9a-fA-F]+|0[0-7]+|([0-9]+\.?[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?)([uU]?[lL][lL]|[fF])?\b
+      match: \b(0[xX][0-9a-fA-F]+|0[0-7]+)\b
+    - name: constant.numeric.c++
+      match: ((?<=\s|[=+*/%-(]|^)-)?\b[0-9]+\.?[0-9]*([eE][+-]?[0-9]+)?([uU]?[lL][lL]|[fF])?\b
     - name: constant.language.c++
       match: \b(nullptr|true|false)\b
     - name: constant.language.c
@@ -111,7 +145,11 @@ repository:
         '0': {name: keyword.control.ternary.c}
       patterns:
       - include: '#inner-code'
-    - begin: '<(?![<=])(?=\w.*?\w>)'
+    - begin: '<<<'
+      end: '>>>'
+      patterns:
+      - include: '#inner-code'
+    - begin: '(?<![<=])<(?![<=])(?=\w.*?[\w>*]>)'
       end: '>'
       patterns:
       - include: '#inner-code'
@@ -119,25 +157,23 @@ repository:
       match: \bsizeof\b
     - name: keyword.operator.dereference.c
       match: ->
+    - name: keyword.operator.comparison.c
+      match: (===?|!=|<=?|>=?)
+    - name: keyword.operator.assignment.c
+      match: (<<|>>>?|[+*/%-]|[&^|])?=
+    - name: keyword.operator.asterisk.c
+      match: '\*'
+    - name: keyword.operator.ampersand.c
+      match: '&&?'
     - name: keyword.operator.bitwise.c
       match: (<<|>>>?|~|\^)
-    - name: keyword.operator.assignment.bitwise.c
-      match: ((&|\^|\||<<|>>>?)=)
-    - name: keyword.operator.comparison.c
-      match: (===?|!=|<=|>=|<|>)
-    - name: keyword.operator.assignment.arithmetic.c
-      match: '[+*/\%-]='
-    - name: keyword.operator.assignment.c
-      match: '='
     - name: keyword.operator.increment-decrement.c
       match: (\-\-|\+\+)
     - name: keyword.operator.arithmetic.c
       match: (\-|\+|\*|\/|%)
-    - name: keyword.operator.logical.c
-      match: (&&|\|\|)
-    - name: keyword.operator.bitwise.c
-      match: (\||&)
-    - name: keyword.operator.unary.logical.c
+    - name: keyword.operator.c
+      match: '\|\|?'
+    - name: keyword.operator.unary.c
       match: '!'
     - name: punctuation.terminator.c
       match: ';'
@@ -153,13 +189,22 @@ repository:
       endCaptures:
         '1': {name: punctuation.section.function.c++}
       patterns:
-      - name: meta.function.identifier.c++
-        begin: (?=[\w:~]+\s*\()
-        end: '\)'
+      - name: meta.initialise-list.c++
+        begin: '(?<=\))\s*:'
+        end: \s*(?=[{;])
         patterns:
-        - begin: (?=[\w:~]+\s*\()
+        - include: '#inner-code-with-brackets'
+      - name: meta.function.identifier.c++
+        begin: (?=[\w:]*(~?\w|operator(\(\)|\S+?))+\s*\()
+        end: '\)\s*(const)?'
+        captures:
+          '1': {name: storage.modifier.c}
+        patterns:
+        - begin: (?=[\w:]*(~?\w|operator(\(\)|\S+?))+\s*\()
           end: (?=\()
           patterns:
+          - name: entity.name.function.c++
+            match: operator(\(\)|\S+?)(?=\s*\()
           - name: entity.name.function.c++
             match: ~?\w+(?=\s*\()
           - name: storage.modifier.namespace.c++
@@ -169,29 +214,43 @@ repository:
         - begin: '\('
           end: (?=\))
           patterns:
-          - include: '#inner-code'
-          - match: (\w+)\s*(?=[,)\[]|=)
-            captures:
-              '1': {name: variable.parameter.c++}
-          - name: storage.type.c++
-            match: \w+
+          - include: '#function-parameters'
       - name: meta.function.body.c++
         begin: '{'
         beginCaptures:
           '0': {name: punctuation.section.function.c++}
         end: (?=})
         patterns:
-        - include: '#functions-internals'
+        - include: '#inner-code-with-brackets'
       - include: '#inner-code'
+      - name: storage.type.c++
+        match: \w+
       - match: \S+;
 
-  functions-internals:
+  function-parameters:
     patterns:
-    - begin: '{'
-      end: '}'
-      patterns:
-      - include: '#functions-internals'
     - include: '#inner-code'
+    - match: (\w+)\s*(?=[,)\[]|=)
+      captures:
+        '1': {name: variable.parameter.c++}
+    - name: storage.type.c++
+      match: \w+
+
+  lambda:
+    patterns:
+    - begin: (?:^|(?<=[\s,]))(?=\[.*?\]\s*\()
+      end: '\)'
+      patterns:
+      - begin: (\[[=&]?)(?=.*?\]\s*\()
+        end: '(\])'
+        captures:
+          '1': {name: punctuation.definition.lambda.capture-list.c++}
+        patterns:
+        - include: '#inner-code'
+      - begin: '\('
+        end: (?=\))
+        patterns:
+        - include: '#function-parameters'
 
   types:
     patterns:
@@ -245,7 +304,7 @@ repository:
           '1': {name: keyword.macro.c}
           '2': {name: variable.constant.macro.c}
       - name: keyword.macro.c
-        match: (?<=#)\s*(if|endif|else|elif|pragma|error)
+        match: (?<=#)\s*(\w+)
       - match: (defined)(?:\s*\((\w+)\)|\s+(\w+))
         captures:
           '1': {name: keyword.macro.c}
