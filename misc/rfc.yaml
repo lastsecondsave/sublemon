@@ -1,0 +1,9 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: RFC Specification
+scopeName: text.rfc
+fileTypes: [rfc.txt, rfc]
+uuid: B3616E1E-17E9-4112-86D4-B16ABDDFD0BE
+
+patterns:
+- name: entity.name.title.rfc
+  match: ^(\d\.)+ .*?\w$
