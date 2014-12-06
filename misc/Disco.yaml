@@ -35,29 +35,21 @@ settings:
   settings:
     foreground: '#E572D2'
 
-- name:  Symbolic operator
+- name:  Blank symbolic operator
   scope: keyword.operator
   settings:
     foreground: '#AAAAF0'
 
-- name:  Keyword operator
+- name:  Colored symbolic operator
   scope: >-
     keyword.control.ternary,
-    keyword.operator.js,
-    keyword.operator.logical.js,
-    keyword.operator.logical.java,
-    keyword.operator.wildcard.java,
-    keyword.operator.instanceof.java,
-    keyword.operator.logical.python,
-    source.sql keyword.operator,
-    keyword.operator.cast.c++,
-    keyword.operator.logical.c,
-    keyword.operator.sizeof.c
+    keyword.operator.wildcard.java
   settings:
     foreground: '#E572D2'
 
 - name:  Special symbolic operator
   scope: >-
+    keyword.operator.js,
     keyword.operator.unary,
     keyword.operator.yaml,
     punctuation.separator.line.java-props,
@@ -65,6 +57,16 @@ settings:
     keyword.operator.commit.oracle.sql
   settings:
     foreground: '#FF8147'
+
+- name:  Keyword operator
+  scope: >-
+    keyword.operator.instanceof.java,
+    keyword.operator.logical.python,
+    source.sql keyword.operator,
+    keyword.operator.cast.c++,
+    keyword.operator.sizeof.c
+  settings:
+    foreground: '#E572D2'
 
 - name:  Delimiter
   scope: >-
@@ -91,6 +93,15 @@ settings:
   scope: comment
   settings:
     foreground: '#838495'
+
+- name:  Doc-comment keyword
+  scope: >-
+    keyword.other.javadoc,
+    variable.parameter.javadoc,
+    keyword.other.doxygen,
+    variable.parameter.doxygen
+  settings:
+    foreground: '#CDCDCD'
 
 - name:  Storage
   scope: storage.type
@@ -170,11 +181,6 @@ settings:
   settings:
     foreground: '#EFC52D'
 
-- name:  Javadoc tag
-  scope: keyword.other.javadoc.java
-  settings:
-    foreground: '#CDCDCD'
-
 - name:  XML tag name
   scope: >-
     punctuation.definition.tag,
@@ -243,6 +249,11 @@ settings:
   scope: keyword.operator.dereference.c
   settings:
     foreground: '#AAAAF0'
+
+- name:  C++ lambda capture list
+  scope: punctuation.definition.lambda.capture-list.c++
+  settings:
+    foreground: '#66B5F0'
 
 - name:  Powershell variable scope
   scope: variable.language.powershell keyword
@@ -328,10 +339,20 @@ settings:
   settings:
     foreground: '#E5476C'
 
-- name:  Markup emphasis
-  scope: markup.italic, markup.bold.markdown
+- name:  Markup italic
+  scope: markup.italic
   settings:
     foreground: '#FF9A41'
+
+- name:  Markup bold
+  scope: markup.bold
+  settings:
+    foreground: '#E5476C'
+
+- name:  Markup strikethrough
+  scope: markup.strikethrough
+  settings:
+    foreground: '#838495'
 
 - name:  Markup links
   scope: markup.underline.link
