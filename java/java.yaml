@@ -173,11 +173,7 @@ repository:
     - include: '#annotations'
     - include: '#class'
     - begin: '{'
-      beginCaptures:
-        '0': {name: punctuation.section.block.begin.java}
       end: '}'
-      endCaptures:
-        '0': {name: punctuation.section.block.end.java}
       patterns:
       - include: '#code'
     - include: '#assertions'
@@ -195,32 +191,21 @@ repository:
     patterns:
     - name: comment.block.empty.java
       match: /\*\*/
-      captures:
-        '0': {name: punctuation.definition.comment.java}
     - name: comment.block.documentation.java
       begin: /\*\*
       end: \*/
-      captures:
-        '0': {name: punctuation.definition.comment.java}
       patterns:
       - name: keyword.other.javadoc.java
-        match: '@param\s+[\w\d]+'
+        match: '@param\s+\w+'
       - name: keyword.other.javadoc.java
-        match: '@[\w\d]+'
+        match: '@\w+'
     - name: comment.block.java
       match: (/\*).+?(\*/)
-      captures:
-        '1': {name: punctuation.definition.comment.java}
-        '2': {name: punctuation.definition.comment.java}
     - name: comment.block.java
       begin: /\*
       end: \*/
-      captures:
-        '0': {name: punctuation.definition.comment.java}
     - name: comment.line.double-slash.java
       match: (//).*$
-      captures:
-        '1': {name: punctuation.definition.comment.java}
 
   constants-and-special-vars:
     patterns:
@@ -228,18 +213,10 @@ repository:
       match: \b(true|false|null)\b
     - name: variable.language.java
       match: \b(this|super)\b
-    - name: constant.numeric.hex.java
-      match: \b0[xX]\h([\h_]*\h)?[lL]?(?!\w|\.)
-    - name: constant.numeric.octal.java
-      match: \b0[0-7_]*[0-7][lL]?\b
-    - name: constant.numeric.binary.java
-      match: \b0[bB][01]([01_]*[01])?[lL]?\b
-    - name: constant.numeric.integer.java
-      match: \b(0|[1-9]([0-9_]*[0-9])?)[lL]?(?!\w|\.)
-    - name: constant.numeric.hex-float.java
-      match: (?<!\w)(?>0[xX](\h([\h_]*\h)?)?((?<=\h)\.| \.(?=\h)|(?<=\h))(\h([\h_]*\h)?)?[pP][+-]?(0|[1-9]([0-9_]*[0-9])?)[fFdD]?)(?!\w)
-    - name: constant.numeric.float.java
-      match: (?<!\w)(?>((0|[1-9]([0-9_]*[0-9])?)(?=[eEfFdD.]))?((?<=[0-9])(?=[eEfFdD])|\.)([0-9]([0-9_]*[0-9])?)?([eE][+-]?(0|[1-9]([0-9_]*[0-9])?))?[fFdD]?)(?!\w)
+    - name: constant.numeric.java
+      match: \b(0[xX][0-9a-fA-F_]+|0[bB][01_]+|0[0-7_]+)\b
+    - name: constant.numeric.java
+      match: ((?<=\s|[=+*/%-(]|^)-)?\b[0-9][0-9_]*\.?[0-9_]*([eE][+-]?[0-9]+)?[lLfF]?\b
     - match: (\.)?\b([A-Z][A-Z0-9_]+)(?!<|\.class|\s*\w+\s*=)\b
       captures:
         '1': {name: keyword.operator.dereference.java}
