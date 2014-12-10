@@ -20,7 +20,7 @@
 	"enable_tab_scrolling": true,
 	"enable_telemetry": "disabled",
 	"ensure_newline_at_eof_on_save": true,
-	"fallback_encoding": "hexadecimal",
+	"fallback_encoding": "cyrillic (windows 1251)",
 	"file_exclude_patterns":
 	[
 		"*.sublime-workspace",
@@ -57,7 +57,8 @@
 		"Java",
 		"C++",
 		"SQL",
-		"Markdown"
+		"Markdown",
+		"Objective-C"
 	],
 	"indent_guide_options":
 	[
