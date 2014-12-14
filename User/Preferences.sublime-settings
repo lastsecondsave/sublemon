@@ -1,0 +1,88 @@
+{
+	"always_show_minimap_viewport": false,
+	"atomic_save": false,
+	"auto_complete_commit_on_tab": true,
+	"auto_match_enabled": true,
+	"binary_file_patterns":
+	[
+		"target/*",
+		"*.bak",
+		"*.orig"
+	],
+	"caret_extra_width": 1,
+	"caret_style": "blink",
+	"close_windows_when_empty": false,
+	"color_scheme": "Packages/Sublemon/Disco.tmTheme",
+	"copy_with_empty_selection": false,
+	"default_line_ending": "unix",
+	"drag_text": false,
+	"draw_minimap_border": true,
+	"enable_tab_scrolling": true,
+	"enable_telemetry": "disabled",
+	"ensure_newline_at_eof_on_save": true,
+	"fallback_encoding": "cyrillic (windows 1251)",
+	"file_exclude_patterns":
+	[
+		"*.sublime-workspace",
+		"*.iml",
+		"*.pdb",
+		"*.zip",
+		"*.jar",
+		"*.class"
+	],
+	"folder_exclude_patterns":
+	[
+		".idea",
+		".svn",
+		".git",
+		".sublime",
+		"__pycache__"
+	],
+	"font_face": "PragmataPro",
+	"font_options":
+	[
+		"directwrite",
+		"no_italic"
+	],
+	"font_size": 10,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		".git",
+		"Vintage",
+		"JavaScript",
+		"XML",
+		"YAML",
+		"Java",
+		"C++",
+		"SQL",
+		"Markdown",
+		"Objective-C"
+	],
+	"indent_guide_options":
+	[
+		"draw_active",
+		"draw_normal"
+	],
+	"index_exclude_patterns":
+	[
+		"*.log",
+		"*.sql",
+		"*.md",
+		"*.jdo"
+	],
+	"margin": 0,
+	"minimap_scroll_to_clicked_text": true,
+	"open_files_in_new_window": false,
+	"overlay_scroll_bars": "enabled",
+	"remember_full_screen": true,
+	"scroll_speed": 1.0,
+	"shift_tab_unindent": true,
+	"show_encoding": true,
+	"show_line_endings": true,
+	"show_tab_close_buttons": false,
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true,
+	"word_wrap": false
+}
