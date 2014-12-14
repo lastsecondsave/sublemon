@@ -1,7 +1,10 @@
-*.sublime-project
 *.sublime-workspace
 
 *.hidden-tmLanguage
 *.tmLanguage
 *.tmPreferences
 *.tmTheme
+
+User/Package Control.cache
+User/Package Control.last-run
+User/Sublime *.sublime-settings
