@@ -1,0 +1,44 @@
+{
+    "folders": [
+        {   "name": "config",
+            "path": "User",
+            "file_exclude_patterns": ["Package Control.last-run", "Sublime *.sublime-settings"],
+            "folder_exclude_patterns": ["Package Control.cache"]
+        },
+        {   "name": "core",
+            "path": "Sublemon",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "c++",
+            "path": "Sublemon C++",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "java",
+            "path": "Sublemon Java",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "javascript",
+            "path": "Sublemon JavaScript",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "markdown",
+            "path": "Sublemon Markdown",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "snippets",
+            "path": "Sublemon Snippets"
+        },
+        {   "name": "sql",
+            "path": "Sublemon SQL",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "xml",
+            "path": "Sublemon XML",
+            "file_exclude_patterns": ["*.tm*"]
+        },
+        {   "name": "yaml",
+            "path": "Sublemon YAML",
+            "file_exclude_patterns": ["*.tm*"]
+        }
+    ]
+}
