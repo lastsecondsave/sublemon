@@ -12,12 +12,14 @@ repository:
     patterns:
     - include: '#comments'
     - include: '#macros'
+    - include: '#typedef'
     - include: '#functions'
     - include: '#types'
     - include: '#operators'
     - include: '#constants'
     - include: '#storage'
     - include: '#strings'
+    - include: '#lambda'
 
   inner-code:
     patterns:
@@ -29,7 +31,7 @@ repository:
     - include: '#strings'
     - include: '#lambda'
 
-  inner-code-with-brackets:
+  inner-code-on-brackets:
     patterns:
     - begin: '\('
       end: '\)'
@@ -39,6 +41,10 @@ repository:
       end: '}'
       patterns:
       - include: '#inner-code-with-brackets'
+
+  inner-code-with-brackets:
+    patterns:
+    - include: '#inner-code-on-brackets'
     - include: '#inner-code'
 
   comments:
@@ -91,7 +97,7 @@ repository:
   storage:
     patterns:
     - name: storage.modifier.c
-      match: \b(const|extern|register|restrict|static|volatile|inline|typedef)\b
+      match: \b(const|extern|register|restrict|static|volatile|inline)\b
     - name: storage.modifier.c++
       match: \b(friend|explicit|virtual|private|public|protected|mutable)\b
     - name: storage.modifier.cuda
@@ -105,7 +111,7 @@ repository:
     - name: support.type.cuda
       match: \b(cuda\w+_t)\b
     - name: meta.std.c++
-      match: \b(std)(::)(array|vector|pair|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error|exception|(?:shared|auto|unique|weak)_ptr)?\b
+      match: \b(std)(::)(array|vector|pair|(unordered_)?map|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error|exception|(?:shared|auto|unique|weak)_ptr)?\b
       captures:
         '1': {name: storage.modifier.namespace.c++}
         '2': {name: punctuation.separator.namespace.c++}
@@ -149,12 +155,12 @@ repository:
       end: '>>>'
       patterns:
       - include: '#inner-code'
-    - begin: '(?<![<=])<(?![<=])(?=\w.*?[\w>*]>)'
+    - begin: '(?<![<=])<(?![<=])(?=\w.*?[\w>*)]>)'
       end: '>'
       patterns:
       - include: '#inner-code'
-    - name: keyword.operator.sizeof.c
-      match: \bsizeof\b
+    - name: support.function.c++
+      match: \b(sizeof|decltype)\b
     - name: keyword.operator.dereference.c
       match: ->
     - name: keyword.operator.comparison.c
@@ -184,7 +190,7 @@ repository:
   functions:
     patterns:
     - name: meta.function.c++
-      begin: '^(?=[^=;]+\()'
+      begin: '(?=[\w~_][^=;]+\()'
       end: (})|(?=;)
       endCaptures:
         '1': {name: punctuation.section.function.c++}
@@ -196,7 +202,7 @@ repository:
         - include: '#inner-code-with-brackets'
       - name: meta.function.identifier.c++
         begin: (?=[\w:]*(~?\w|operator(\(\)|\S+?))+\s*\()
-        end: '\)\s*(const)?'
+        end: '\)(?:\s*(const))?'
         captures:
           '1': {name: storage.modifier.c}
         patterns:
@@ -255,12 +261,12 @@ repository:
   types:
     patterns:
     - name: meta.type.identifier.c++
-      match: \b(enum|namespace|union)\s+(\w+)
+      match: \b(namespace|union)\s+(\w+)
       captures:
         '1': {name: storage.modifier.c++}
         '2': {name: entity.name.support.c++}
     - name: meta.type.c++
-      begin: ((class|struct)\s+(\w+)?)
+      begin: ((class|struct|enum)\s+(\w+)?)
       end: (})|(?=;)
       beginCaptures:
         '1': {name: meta.type.identifier.c++}
@@ -273,7 +279,38 @@ repository:
           '0': {name: punctuation.section.type.c++}
         end: (?=})
         patterns:
+        - include: '#inner-code-on-brackets'
         - include: '#code'
+
+  typedef:
+    patterns:
+    - name: meta.typedef.c++
+      begin: (typedef)\s+(?=.*?\(\*.*?\))
+      end: ';'
+      beginCaptures:
+        '1': {name: storage.modifier.c++}
+      endCaptures:
+        '0': {name: punctuation.terminator.c}
+      patterns:
+      - match: \((\*)\b(.*?)\b\)
+        captures:
+          '1': {name: keyword.operator.asterisk.c}
+          '2': {name: entity.name.typedef.c++}
+      - begin: '\('
+        end: (?=\))
+        patterns:
+        - include: '#function-parameters'
+      - include: '#inner-code'
+    - name: meta.typedef.c++
+      begin: (typedef)\s+(?=.+?\w+\s*;)
+      end: (\w+)\s*(;)
+      beginCaptures:
+        '1': {name: storage.modifier.c++}
+      endCaptures:
+        '1': {name: entity.name.typedef.c++}
+        '2': {name: punctuation.terminator.c}
+      patterns:
+      - include: '#inner-code'
 
   macros:
     patterns:
