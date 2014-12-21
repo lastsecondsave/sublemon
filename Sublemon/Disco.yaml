@@ -42,6 +42,7 @@ settings:
 
 - name:  Colored symbolic operator
   scope: >-
+    keyword.operator.js,
     keyword.control.ternary,
     keyword.operator.wildcard.java
   settings:
@@ -49,7 +50,6 @@ settings:
 
 - name:  Special symbolic operator
   scope: >-
-    keyword.operator.js,
     keyword.operator.unary,
     keyword.operator.yaml,
     punctuation.separator.line.java-props,
@@ -181,7 +181,7 @@ settings:
   settings:
     foreground: '#EFC52D'
 
-- name:  XML tag name
+- name:  XML tag
   scope: >-
     punctuation.definition.tag,
     meta.tag.sgml.doctype.xml,
