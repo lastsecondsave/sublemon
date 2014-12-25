@@ -23,6 +23,7 @@
 	"fallback_encoding": "cyrillic (windows 1251)",
 	"file_exclude_patterns":
 	[
+		".project",
 		"*.sublime-workspace",
 		"*.iml",
 		"*.pdb",
@@ -67,6 +68,7 @@
 	],
 	"index_exclude_patterns":
 	[
+		".git*",
 		"*.log",
 		"*.sql",
 		"*.md",
