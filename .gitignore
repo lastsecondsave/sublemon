@@ -5,6 +5,7 @@
 *.tmPreferences
 *.tmTheme
 
-User/Package Control.cache
-User/Package Control.last-run
+User/Package Control*
 User/Sublime *.sublime-settings
+
+bz2/*
