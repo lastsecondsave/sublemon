@@ -168,3 +168,5 @@ repository:
         '1': {name: string.quoted.yaml}
       patterns:
       - include: source.regexp
+    - name: constant.language.yaml
+      match: \$self

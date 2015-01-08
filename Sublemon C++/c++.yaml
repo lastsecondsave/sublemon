@@ -103,7 +103,7 @@ repository:
     - name: storage.modifier.cuda
       match: \b__(shared|constant|global)__\b
     - name: storage.type.c
-      match: \b(void|unsigned|char|short|int|long|float|double)\b
+      match: \b(void|unsigned|char|short|int|long|float|double|struct)\b
     - name: storage.type.c++
       match: \b(auto|bool|wchar_t|__int(8|16|32|64))\b
     - name: support.type.c
@@ -316,7 +316,7 @@ repository:
     patterns:
     - name: meta.macro.c
       begin: '^\s*(#)(?=\s*\w+)'
-      end: '(?<!\\)\n|(?=/[/*])'
+      end: '(?<!\\)\n'
       beginCaptures:
         '1': {name: punctuation.definition.macro.c}
       patterns:
@@ -350,5 +350,6 @@ repository:
       - name: punctuation.separator.line.macro.c
         match: '\\$'
       - include: '#constants'
+      - include: '#comments'
       - name: meta.macro.body.c
         match: .
