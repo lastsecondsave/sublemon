@@ -6,4 +6,13 @@ uuid: B3616E1E-17E9-4112-86D4-B16ABDDFD0BE
 
 patterns:
 - name: entity.name.title.rfc
-  match: ^(\d\.)+ .*?\w$
+  match: ^\d+((\.\d+)*|\.?) .*?\w$
+
+- name: entity.name.title.rfc
+  match: ^Appendix \w+$
+
+- name: comment.rfc
+  match: ^\w.*\[Page \d+\]$
+
+- name: comment.rfc
+  match: ^RFC.*\d$

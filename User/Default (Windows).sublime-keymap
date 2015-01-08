@@ -27,6 +27,7 @@
     { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
     { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
     { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_status_bar" },
+    { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_tabs" },
 
     { "keys": ["ctrl+;"], "command": "diff_changes" },
     { "keys": ["ctrl+\\"], "command": "prompt_select_workspace" },
@@ -75,6 +76,7 @@
     { "keys": ["ctrl+shift+s"], "command": "save_all" },
     { "keys": ["ctrl+shift+c"], "command": "copy_path" },
     { "keys": ["shift+alt+z"], "command": "reveal_in_side_bar" },
+    { "keys": ["ctrl+k", "ctrl+;"], "command": "clone_file" },
 
     { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "brackets"} },
     { "keys": ["shift+alt+a"],  "command": "expand_selection", "args": {"to": "tag"} }
