@@ -13,6 +13,10 @@
             "path": "Sublemon C++",
             "file_exclude_patterns": ["*.tm*"]
         },
+        {   "name": "css",
+            "path": "Sublemon CSS",
+            "file_exclude_patterns": ["*.tm*"]
+        },
         {   "name": "java",
             "path": "Sublemon Java",
             "file_exclude_patterns": ["*.tm*"]

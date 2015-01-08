@@ -369,32 +369,25 @@ settings:
   settings:
     foreground: '#EFC52D'
 
-- name:  CSS support
-  scope: >-
-    constant.numeric.css keyword.other.unit,
-    meta.property-value.css support.constant
-  settings:
-    foreground: '#CDCDCD'
-
-- name:  CSS selectors
-  scope: meta.selector.css entity.other.attribute-name
-  settings:
-    foreground: '#EFC52D'
-
 - name:  CSS tag selector
   scope: meta.selector.css entity.name.tag
   settings:
-    foreground: '#C5CC4B'
+    foreground: '#EF51AA'
 
-- name:  CSS property key
-  scope: support.type.property-name.css
+- name:  CSS id selector
+  scope: meta.selector.css entity.name.id
   settings:
-    foreground: '#66B5F0'
+    foreground: '#EFC52D'
+
+- name:  CSS class selector
+  scope: meta.selector.css entity.name.class
+  settings:
+    foreground: '#E5476C'
 
 - name:  CSS important
   scope: keyword.other.important.css
   settings:
-    foreground: '#838495'
+    foreground: '#C5CC4B'
 
 - name:  foobar2000 tag field
   scope: variable.other.field.foobar2000

@@ -51,15 +51,16 @@
 	"ignored_packages":
 	[
 		".git",
-		"Vintage",
+		"C++",
+		"Java",
 		"JavaScript",
+		"Markdown",
+		"Objective-C",
+		"SQL",
+		"Vintage",
 		"XML",
 		"YAML",
-		"Java",
-		"C++",
-		"SQL",
-		"Markdown",
-		"Objective-C"
+		"CSS"
 	],
 	"indent_guide_options":
 	[

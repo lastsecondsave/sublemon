@@ -1,0 +1,7 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.css meta.selector.css
+settings:
+  showInSymbolList: 1
+  symbolTransformation: |
+    s/\n/ /;
+    s/\s{2,}/ /g;
