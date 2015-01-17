@@ -31,6 +31,7 @@
 		"*.jar",
 		"*.class"
 	],
+	"find_selected_text": false,
 	"folder_exclude_patterns":
 	[
 		".idea",
@@ -50,17 +51,17 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		".git",
 		"C++",
-		"Java",
-		"JavaScript",
-		"Markdown",
+		"XML",
 		"Objective-C",
+		"JavaScript",
+		"Java",
+		"YAML",
+		"Markdown",
+		"CSS",
 		"SQL",
 		"Vintage",
-		"XML",
-		"YAML",
-		"CSS"
+		".git"
 	],
 	"indent_guide_options":
 	[
