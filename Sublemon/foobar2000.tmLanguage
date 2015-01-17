@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>foobar2000 Script</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>\$\w+</string>
+			<key>name</key>
+			<string>support.function.foobar2000</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>\b\d+\b</string>
+			<key>name</key>
+			<string>constant.numeric.foobar2000</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>'.*?'</string>
+			<key>name</key>
+			<string>string.quoted.single.foobar2000</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>%.*?%</string>
+			<key>name</key>
+			<string>variable.other.field.foobar2000</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.foobar2000</string>
+	<key>uuid</key>
+	<string>4D33F31F-DDB9-45BF-8D9F-BA680FE8FDD1</string>
+</dict>
+</plist>
