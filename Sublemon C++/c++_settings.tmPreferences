@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>scope</key>
+	<string>source.c++</string>
+	<key>settings</key>
+	<dict>
+		<key>bracketIndentNextLinePattern</key>
+		<string>^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$</string>
+		<key>decreaseIndentPattern</key>
+		<string>^\s*((.*\*/\s*)?\}.*|\b(case\s+\w+|default|public|private|protected):|\*/)\s*$</string>
+		<key>increaseIndentPattern</key>
+		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default|public|private|protected):|/\*!.*)\s*$</string>
+		<key>indentSquareBrackets</key>
+		<true/>
+	</dict>
+</dict>
+</plist>

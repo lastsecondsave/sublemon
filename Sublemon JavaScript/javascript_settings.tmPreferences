@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>settings</key>
+	<dict>
+		<key>bracketIndentNextLinePattern</key>
+		<string>^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$</string>
+		<key>cancelCompletion</key>
+		<string>^\s*(function)\s*[a-zA-Z$_][\w$]+</string>
+		<key>decreaseIndentPattern</key>
+		<string>^(.*\*/)?\s*\}.*$</string>
+		<key>increaseIndentPattern</key>
+		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$</string>
+		<key>indentSquareBrackets</key>
+		<true/>
+		<key>unIndentedLinePattern</key>
+		<string>^\s*((\*/|//| \*).*)?$</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>rfc.txt</string>
+		<string>rfc</string>
+	</array>
+	<key>name</key>
+	<string>RFC Specification</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>match</key>
+			<string>^\d+((\.\d+)*|\.?) .*?\w$</string>
+			<key>name</key>
+			<string>entity.name.title.rfc</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^Appendix \w+$</string>
+			<key>name</key>
+			<string>entity.name.title.rfc</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\w.*\[Page \d+\]$</string>
+			<key>name</key>
+			<string>comment.rfc</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^RFC.*\d$</string>
+			<key>name</key>
+			<string>comment.rfc</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>text.rfc</string>
+	<key>uuid</key>
+	<string>B3616E1E-17E9-4112-86D4-B16ABDDFD0BE</string>
+</dict>
+</plist>
