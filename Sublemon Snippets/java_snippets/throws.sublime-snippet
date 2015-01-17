@@ -2,5 +2,5 @@
     <description>throws Exception</description>
     <scope>source.java</scope>
     <tabTrigger>ths</tabTrigger>
-    <content><![CDATA[throws $0Exception ]]></content>
+    <content><![CDATA[throws ${1:Exception}]]></content>
 </snippet>
