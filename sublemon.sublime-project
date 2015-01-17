@@ -25,10 +25,6 @@
             "path": "Sublemon JavaScript",
             "file_exclude_patterns": ["*.tm*"]
         },
-        {   "name": "markdown",
-            "path": "Sublemon Markdown",
-            "file_exclude_patterns": ["*.tm*"]
-        },
         {   "name": "snippets",
             "path": "Sublemon Snippets"
         },
