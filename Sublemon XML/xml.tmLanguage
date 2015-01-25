@@ -6,8 +6,6 @@
 	<array>
 		<string>xml</string>
 	</array>
-	<key>firstLineMatch</key>
-	<string>^&lt;\?xml </string>
 	<key>name</key>
 	<string>XML</string>
 	<key>patterns</key>

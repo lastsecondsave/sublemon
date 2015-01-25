@@ -4,6 +4,7 @@ settings:
   increaseIndentPattern: '^.*<(?![?!])[^\/]+>\s*$'
   decreaseIndentPattern: '^\s*<\/.*>\s*$'
   bracketIndentNextLinePattern: '^.*<[^>]+\s*$'
+  icon: file_type_xml
   shellVariables:
   - name: TM_COMMENT_START
     value: '<!-- '

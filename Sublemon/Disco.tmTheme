@@ -326,7 +326,7 @@
 			<key>name</key>
 			<string>XML attribute name</string>
 			<key>scope</key>
-			<string>meta.attribute.xml, entity.name.attribute, variable.documentroot.xml</string>
+			<string>meta.attribute.xml, entity.name.attribute.xml, variable.documentroot.xml</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
