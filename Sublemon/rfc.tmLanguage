@@ -13,7 +13,7 @@
 	<array>
 		<dict>
 			<key>match</key>
-			<string>^\d+((\.\d+)*|\.?) .*?\w$</string>
+			<string>^\d+((\.\d+)*|\.?)\.? .*?\w$</string>
 			<key>name</key>
 			<string>entity.name.title.rfc</string>
 		</dict>

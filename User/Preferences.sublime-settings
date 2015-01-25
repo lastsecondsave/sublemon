@@ -51,17 +51,17 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"C++",
-		"XML",
-		"Objective-C",
-		"JavaScript",
-		"Java",
-		"YAML",
-		"Markdown",
 		"CSS",
-		"SQL",
+		"XML",
+		"Java",
+		"JavaScript",
+		"Markdown",
+		".git",
 		"Vintage",
-		".git"
+		"YAML",
+		"C++",
+		"SQL",
+		"Objective-C"
 	],
 	"indent_guide_options":
 	[
@@ -86,6 +86,8 @@
 	"show_encoding": true,
 	"show_line_endings": true,
 	"show_tab_close_buttons": false,
+	"soda_classic_tabs": true,
+	"theme": "Soda Dark 3.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": false

@@ -192,7 +192,7 @@ settings:
 - name:  XML attribute name
   scope: >-
     meta.attribute.xml,
-    entity.name.attribute,
+    entity.name.attribute.xml,
     variable.documentroot.xml
   settings:
     foreground: '#EFC52D'

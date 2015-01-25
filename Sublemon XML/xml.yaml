@@ -3,7 +3,6 @@ name: XML
 scopeName: source.xml
 fileTypes: [xml]
 uuid: D3C4E6DA-6B1C-11D9-8CC2-000D93589AF6
-firstLineMatch: '^<\?xml '
 
 patterns:
 - include: '#comments'
