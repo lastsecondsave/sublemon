@@ -3,6 +3,7 @@ scope: source.yaml
 settings:
   increaseIndentPattern: '^(.*:\s*[>|]?\s*|\s*-\s+.*)$'
   decreaseIndentPattern: '^\s*-\s+.*$'
+  icon: file_type_yaml
   shellVariables:
   - name: TM_COMMENT_START
     value: '# '
