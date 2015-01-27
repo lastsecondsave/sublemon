@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: Git Configuration
+scopeName: source.git
+fileTypes: [.gitignore, .gitattributes]
