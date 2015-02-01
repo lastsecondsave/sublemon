@@ -4,13 +4,11 @@
     "working_dir": "${project_path:${folder}}",
     "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
     "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",
+    "keyfile"    : "pom.xml",
 
     "variants": [
         {   "name"     : "Run",
             "shell_cmd": "mvn -q -e exec:java"
-        },
-        {   "name"     : "Run to File",
-            "shell_cmd": "mvn -q -e exec:java > out.log"
         },
         {   "name"     : "Clean",
             "shell_cmd": "mvn clean"
@@ -20,6 +18,15 @@
         },
         {   "name"     : "Package",
             "shell_cmd": "mvn -q -e package"
+        },
+        {   "name"     : "Test",
+            "shell_cmd": "mvn -q test"
+        },
+        {   "name"     : "Debug",
+            "shell_cmd": "mvnDebug -q exec:java"
+        },
+        {   "name"     : "Debug Test",
+            "shell_cmd": "mvn -q -Dmaven.surefire.debug test"
         }
     ]
 }
