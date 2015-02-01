@@ -1,6 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.css
 settings:
+  icon: file_type_css
   shellVariables:
   - name: TM_COMMENT_START
     value: '/* '

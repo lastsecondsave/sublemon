@@ -15,12 +15,10 @@
 				<string>#CDCDCD</string>
 				<key>foreground</key>
 				<string>#CDCDCD</string>
-				<key>invisibles</key>
-				<string>#6A6A6A</string>
 				<key>lineHighlight</key>
-				<string>#36363A</string>
+				<string>#363642</string>
 				<key>selection</key>
-				<string>#515158</string>
+				<string>#515162</string>
 			</dict>
 		</dict>
 		<dict>

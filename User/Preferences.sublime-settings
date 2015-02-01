@@ -7,7 +7,8 @@
 	[
 		"target/*",
 		"*.bak",
-		"*.orig"
+		"*.orig",
+		"*.png"
 	],
 	"caret_extra_width": 1,
 	"caret_style": "blink",
@@ -51,17 +52,17 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		".git",
-		"C++",
-		"CSS",
-		"Java",
-		"JavaScript",
-		"Markdown",
 		"Objective-C",
-		"SQL",
+		"Markdown",
 		"Vintage",
+		"C++",
+		"YAML",
 		"XML",
-		"YAML"
+		".git",
+		"CSS",
+		"JavaScript",
+		"Java",
+		"SQL"
 	],
 	"indent_guide_options":
 	[

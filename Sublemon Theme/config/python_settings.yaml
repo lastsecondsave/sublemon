@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.python
+settings:
+  icon: file_type_python
