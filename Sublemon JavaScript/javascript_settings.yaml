@@ -7,4 +7,4 @@ settings:
   unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
   cancelCompletion: ^\s*(function)\s*[a-zA-Z$_][\w$]+
   indentSquareBrackets: true
-  icon: file_type_json
+  icon: file_type_js

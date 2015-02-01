@@ -33,7 +33,8 @@
             "file_exclude_patterns": ["*.tm*"]
         },
         {   "name": "theme",
-            "path": "Sublemon Theme"
+            "path": "Sublemon Theme",
+            "file_exclude_patterns": ["*.tm*"]
         },
         {   "name": "xml",
             "path": "Sublemon XML",

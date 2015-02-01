@@ -12,6 +12,8 @@
 		<string>^\s*(function)\s*[a-zA-Z$_][\w$]+</string>
 		<key>decreaseIndentPattern</key>
 		<string>^(.*\*/)?\s*\}.*$</string>
+		<key>icon</key>
+		<string>file_type_js</string>
 		<key>increaseIndentPattern</key>
 		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$</string>
 		<key>indentSquareBrackets</key>

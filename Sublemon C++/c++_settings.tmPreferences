@@ -10,6 +10,8 @@
 		<string>^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$</string>
 		<key>decreaseIndentPattern</key>
 		<string>^\s*((.*\*/\s*)?\}.*|\b(case\s+\w+|default|public|private|protected):|\*/)\s*$</string>
+		<key>icon</key>
+		<string>file_type_cpp</string>
 		<key>increaseIndentPattern</key>
 		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default|public|private|protected):|/\*!.*)\s*$</string>
 		<key>indentSquareBrackets</key>
