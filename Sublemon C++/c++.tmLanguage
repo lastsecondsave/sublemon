@@ -60,6 +60,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#winapi</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#strings</string>
 				</dict>
 				<dict>
@@ -227,6 +231,19 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>begin</key>
+					<string>(?==)</string>
+					<key>end</key>
+					<string>(?=[,)])</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#inner-code</string>
+						</dict>
+					</array>
+				</dict>
+				<dict>
 					<key>include</key>
 					<string>#inner-code</string>
 				</dict>
@@ -240,7 +257,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(\w+)\s*(?=[,)\[]|=)</string>
+					<string>(\w+)\s*(?=[,)\[=])</string>
 				</dict>
 				<dict>
 					<key>match</key>
@@ -418,6 +435,10 @@
 				</dict>
 				<dict>
 					<key>include</key>
+					<string>#winapi</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#strings</string>
 				</dict>
 				<dict>
@@ -555,9 +576,14 @@
 									<key>name</key>
 									<string>string.quoted.macro.c</string>
 								</dict>
+								<key>3</key>
+								<dict>
+									<key>name</key>
+									<string>invalid.macro.c</string>
+								</dict>
 							</dict>
 							<key>match</key>
-							<string>(?&lt;=#)\s*(include)\s*(".*?"|&lt;.*?&gt;)</string>
+							<string>(?&lt;=#)\s*(include)\s*(".*"|&lt;.*&gt;|(.*))</string>
 						</dict>
 						<dict>
 							<key>begin</key>
@@ -889,7 +915,7 @@
 					<key>match</key>
 					<string>\b(cuda\w+_t)\b</string>
 					<key>name</key>
-					<string>support.type.cuda</string>
+					<string>support.type.cuda.c</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -1129,6 +1155,24 @@
 							</array>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>winapi</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\b(LP|P)?(VOID|CHAR|BYTE|D?WORD|U?INT(32|64)|U?LONG(LONG)?|BOOL|HANDLE|CS[WT]?TR)\b</string>
+					<key>name</key>
+					<string>support.type.winapi.c</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\bP?(LARGE_INTEGER)\b</string>
+					<key>name</key>
+					<string>support.type.winapi.c</string>
 				</dict>
 			</array>
 		</dict>

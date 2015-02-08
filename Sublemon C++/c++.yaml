@@ -18,6 +18,7 @@ repository:
     - include: '#operators'
     - include: '#constants'
     - include: '#storage'
+    - include: '#winapi'
     - include: '#strings'
     - include: '#lambda'
 
@@ -28,6 +29,7 @@ repository:
     - include: '#operators'
     - include: '#constants'
     - include: '#storage'
+    - include: '#winapi'
     - include: '#strings'
     - include: '#lambda'
 
@@ -108,7 +110,7 @@ repository:
       match: \b(auto|bool|wchar_t|__int(8|16|32|64))\b
     - name: support.type.c
       match: \b(size_t|FILE|fpos_t)\b
-    - name: support.type.cuda
+    - name: support.type.cuda.c
       match: \b(cuda\w+_t)\b
     - name: meta.std.c++
       match: \b(std)(::)(array|vector|pair|(unordered_)?map|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error|exception|(?:shared|auto|unique|weak)_ptr)?\b
@@ -131,6 +133,13 @@ repository:
       match: \b(this)\b
     - name: constant.character.c++
       match: "L?'(\\\\([abfnrt'\"\\\\]|[0-7]{3}|x[0-9a-fA-F]{2})|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8}|.)'"
+
+  winapi:
+    patterns:
+    - name: support.type.winapi.c
+      match: \b(LP|P)?(VOID|CHAR|BYTE|D?WORD|U?INT(32|64)|U?LONG(LONG)?|BOOL|HANDLE|CS[WT]?TR)\b
+    - name: support.type.winapi.c
+      match: \bP?(LARGE_INTEGER)\b
 
   operators:
     patterns:
@@ -235,8 +244,12 @@ repository:
 
   function-parameters:
     patterns:
+    - begin: (?==)
+      end: (?=[,)])
+      patterns:
+      - include: '#inner-code'
     - include: '#inner-code'
-    - match: (\w+)\s*(?=[,)\[]|=)
+    - match: (\w+)\s*(?=[,)\[=])
       captures:
         '1': {name: variable.parameter.c++}
     - name: storage.type.c++
@@ -320,10 +333,11 @@ repository:
       beginCaptures:
         '1': {name: punctuation.definition.macro.c}
       patterns:
-      - match: '(?<=#)\s*(include)\s*(".*?"|<.*?>)'
+      - match: '(?<=#)\s*(include)\s*(".*"|<.*>|(.*))'
         captures:
           '1': {name: keyword.macro.c}
           '2': {name: string.quoted.macro.c}
+          '3': {name: invalid.macro.c}
       - begin: (?<=#)\s*(define)\s+(\w+)\(
         end: \)
         beginCaptures:
