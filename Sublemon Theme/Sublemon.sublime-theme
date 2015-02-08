@@ -420,7 +420,7 @@
         "layer1.inner_margin": [4, 5, 4, 3],
         "tint_index": 1,
 
-        "content_margin": [3, 4, 3, 3]
+        "content_margin": [3, 5, 3, 3]
     },
     {
         "class": "status_bar",

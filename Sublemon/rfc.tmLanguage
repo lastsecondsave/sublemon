@@ -13,18 +13,6 @@
 	<array>
 		<dict>
 			<key>match</key>
-			<string>^\d+((\.\d+)*|\.?)\.? .*?\w$</string>
-			<key>name</key>
-			<string>entity.name.title.rfc</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>^Appendix \w+$</string>
-			<key>name</key>
-			<string>entity.name.title.rfc</string>
-		</dict>
-		<dict>
-			<key>match</key>
 			<string>^\w.*\[Page \d+\]$</string>
 			<key>name</key>
 			<string>comment.rfc</string>
@@ -34,6 +22,16 @@
 			<string>^RFC.*\d$</string>
 			<key>name</key>
 			<string>comment.rfc</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^.+?\s{5,}.*?$</string>
+		</dict>
+		<dict>
+			<key>match</key>
+			<string>^\w.*$</string>
+			<key>name</key>
+			<string>entity.name.title.rfc</string>
 		</dict>
 	</array>
 	<key>scopeName</key>
