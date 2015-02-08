@@ -12,7 +12,7 @@
 				<key>background</key>
 				<string>#2D2D30</string>
 				<key>caret</key>
-				<string>#CDCDCD</string>
+				<string>#FFFFFF</string>
 				<key>foreground</key>
 				<string>#CDCDCD</string>
 				<key>lineHighlight</key>
@@ -31,7 +31,7 @@
 				<key>background</key>
 				<string>#E5476C</string>
 				<key>foreground</key>
-				<string>#FFFFFF</string>
+				<string>#CDCDCD</string>
 			</dict>
 		</dict>
 		<dict>

@@ -20,14 +20,14 @@ settings:
 - settings:
     background:    '#2D2D30'
     foreground:    '#CDCDCD'
-    caret:         '#CDCDCD'
+    caret:         '#FFFFFF'
     lineHighlight: '#363642'
     selection:     '#515162'
 
 - name:  Invalid
   scope: invalid
   settings:
-    foreground: '#FFFFFF'
+    foreground: '#CDCDCD'
     background: '#E5476C'
 
 - name:  Keyword

@@ -10,6 +10,8 @@
 		"*.orig",
 		"*.png"
 	],
+	"caret_extra_bottom": 1,
+	"caret_extra_top": 1,
 	"caret_extra_width": 1,
 	"caret_style": "blink",
 	"close_windows_when_empty": false,
@@ -41,33 +43,31 @@
 		".sublime",
 		"__pycache__"
 	],
-	"font_face": "PragmataPro",
+	"font_face": "Consolas",
 	"font_options":
 	[
 		"directwrite",
 		"no_italic"
 	],
-	"font_size": 10,
+	"font_size": 9,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
+		"Java",
+		"SQL",
 		"Objective-C",
+		"CSS",
 		"Markdown",
-		"Vintage",
-		"C++",
-		"YAML",
 		"XML",
 		".git",
-		"CSS",
+		"YAML",
 		"JavaScript",
-		"Java",
-		"SQL"
+		"C++",
+		"Vintage"
 	],
 	"indent_guide_options":
 	[
-		"draw_active",
-		"draw_normal"
 	],
 	"index_exclude_patterns":
 	[
@@ -77,7 +77,10 @@
 		"*.md",
 		"*.jdo"
 	],
+	"line_padding_bottom": -1,
+	"line_padding_top": 0,
 	"margin": 0,
+	"match_brackets_content": false,
 	"minimap_scroll_to_clicked_text": true,
 	"open_files_in_new_window": false,
 	"overlay_scroll_bars": "enabled",
