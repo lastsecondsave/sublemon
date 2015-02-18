@@ -311,6 +311,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Tags in javadoc</string>
+			<key>scope</key>
+			<string>meta.tag.javadoc.java</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#AAAAF0</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>XML tag</string>
 			<key>scope</key>
 			<string>punctuation.definition.tag, meta.tag.sgml.doctype.xml, meta.tag.sgml.doctype.xml keyword</string>

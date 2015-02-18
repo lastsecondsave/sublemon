@@ -181,6 +181,11 @@ settings:
   settings:
     foreground: '#EFC52D'
 
+- name:  Tags in javadoc
+  scope: meta.tag.javadoc.java
+  settings:
+    foreground: '#AAAAF0'
+
 - name:  XML tag
   scope: >-
     punctuation.definition.tag,

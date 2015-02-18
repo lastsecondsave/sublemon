@@ -195,10 +195,7 @@ repository:
       begin: /\*\*
       end: \*/
       patterns:
-      - name: keyword.other.javadoc.java
-        match: '@param\s+\w+'
-      - name: keyword.other.javadoc.java
-        match: '@\w+'
+      - include: "#javadoc"
     - name: comment.block.java
       match: (/\*).+?(\*/)
     - name: comment.block.java
@@ -206,6 +203,19 @@ repository:
       end: \*/
     - name: comment.line.double-slash.java
       match: (//).*$
+
+  javadoc:
+    patterns:
+    - name: keyword.other.javadoc.java
+      match: '@(?:param|throws)\s+\w+'
+    - match: '(@author)\s+(.*)'
+      captures:
+        '1': {name: keyword.other.javadoc.java}
+        '2': {name: no-spellcheck.java}
+    - name: keyword.other.javadoc.java
+      match: '@\w+'
+    - name: meta.tag.javadoc.java
+      match: </?\w*?/?>
 
   constants-and-special-vars:
     patterns:

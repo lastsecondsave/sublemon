@@ -1,7 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: Java Properties
 scopeName: source.java-props
-fileTypes: [properties]
+fileTypes: [properties, props]
 uuid: 2A28E50A-6B1D-11D9-8689-000D93589AF6
 
 patterns:
@@ -27,11 +27,6 @@ patterns:
   match: \s*([-+]?\d+(\.\d+)?)\s*$
   captures:
     '1': {name: constant.numeric.java-props}
-
-- name: meta.value.java-props
-  match: (?i)\s*(true|false|on|off|yes|no)\s*$
-  captures:
-    '1': {name: constant.language.java-props}
 
 - name: meta.value.java-props
   begin: (?=\S)
