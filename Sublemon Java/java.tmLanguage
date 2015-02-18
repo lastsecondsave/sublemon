@@ -621,16 +621,8 @@
 					<key>patterns</key>
 					<array>
 						<dict>
-							<key>match</key>
-							<string>@param\s+\w+</string>
-							<key>name</key>
-							<string>keyword.other.javadoc.java</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>@\w+</string>
-							<key>name</key>
-							<string>keyword.other.javadoc.java</string>
+							<key>include</key>
+							<string>#javadoc</string>
 						</dict>
 					</array>
 				</dict>
@@ -823,6 +815,47 @@
 							<string>#comments</string>
 						</dict>
 					</array>
+				</dict>
+			</array>
+		</dict>
+		<key>javadoc</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>@(?:param|throws)\s+\w+</string>
+					<key>name</key>
+					<string>keyword.other.javadoc.java</string>
+				</dict>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.other.javadoc.java</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>no-spellcheck.java</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(@author)\s+(.*)</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>@\w+</string>
+					<key>name</key>
+					<string>keyword.other.javadoc.java</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>&lt;/?\w*?/?&gt;</string>
+					<key>name</key>
+					<string>meta.tag.javadoc.java</string>
 				</dict>
 			</array>
 		</dict>

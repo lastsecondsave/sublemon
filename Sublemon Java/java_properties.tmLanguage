@@ -5,6 +5,7 @@
 	<key>fileTypes</key>
 	<array>
 		<string>properties</string>
+		<string>props</string>
 	</array>
 	<key>name</key>
 	<string>Java Properties</string>
@@ -71,20 +72,6 @@
 			</dict>
 			<key>match</key>
 			<string>\s*([-+]?\d+(\.\d+)?)\s*$</string>
-			<key>name</key>
-			<string>meta.value.java-props</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>constant.language.java-props</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>(?i)\s*(true|false|on|off|yes|no)\s*$</string>
 			<key>name</key>
 			<string>meta.value.java-props</string>
 		</dict>
