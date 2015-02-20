@@ -1,8 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: Regular Expression
 scopeName: source.regexp
-fileTypes: [re]
-uuid: BAFE4C4F-8D59-48CD-A3BC-52A2084531C9
+hidden: true
 
 patterns:
 - name: keyword.control.anchor.regexp
@@ -28,7 +27,7 @@ patterns:
   beginCaptures:
     '2': {name: keyword.modifier.regexp}
   patterns:
-  - include: '$self'
+  - include: $self
 
 - name: meta.group.assertion.regexp
   begin: \((\?<?[=!])
@@ -39,7 +38,7 @@ patterns:
   endCaptures:
     '0': {name: punctuation.definition.group.regexp}
   patterns:
-  - include: '$self'
+  - include: $self
 
 - name: meta.group.regexp
   begin: \((\?[:>|])?
@@ -47,7 +46,7 @@ patterns:
   captures:
     '0': {name: punctuation.definition.group.regexp}
   patterns:
-  - include: '$self'
+  - include: $self
 
 - name: constant.language.character-class.regexp
   begin: (\[)(\^)?

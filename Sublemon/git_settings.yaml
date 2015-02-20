@@ -2,3 +2,6 @@
 scope: source.git
 settings:
   icon: file_type_git
+  shellVariables:
+  - name: TM_COMMENT_START
+    value: '# '

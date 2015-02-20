@@ -1,7 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmLanguage
 name: foobar2000 Script
 scopeName: source.foobar2000
-uuid: 4D33F31F-DDB9-45BF-8D9F-BA680FE8FDD1
+hidden: true
 
 patterns:
 - name: support.function.foobar2000

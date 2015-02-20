@@ -55,16 +55,17 @@
 	"ignored_packages":
 	[
 		"CSS",
-		"Markdown",
-		"YAML",
-		"C++",
-		"JavaScript",
-		"SQL",
 		".git",
+		"SQL",
 		"Vintage",
+		"C++",
+		"YAML",
 		"XML",
 		"Java",
-		"Objective-C"
+		"JavaScript",
+		"Objective-C",
+		"Markdown",
+		"Regular Expressions"
 	],
 	"indent_guide_options":
 	[
