@@ -36,6 +36,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Warning</string>
+			<key>scope</key>
+			<string>warning</string>
+			<key>settings</key>
+			<dict>
+				<key>background</key>
+				<string>#363642</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Keyword</string>
 			<key>scope</key>
 			<string>keyword, storage.modifier</string>

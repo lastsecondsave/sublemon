@@ -74,6 +74,29 @@
 			</array>
 		</dict>
 		<dict>
+			<key>begin</key>
+			<string>(?=&lt;project\s+xmlns=.http://maven\.apache\.org/POM)</string>
+			<key>end</key>
+			<string>^(?!x)x</string>
+			<key>name</key>
+			<string>source.maven</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#doctype</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#maven</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#xml</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
 			<key>include</key>
 			<string>#doctype</string>
 		</dict>
@@ -259,6 +282,18 @@
 				</dict>
 			</array>
 		</dict>
+		<key>maven</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\$\{.*?\}</string>
+					<key>name</key>
+					<string>constant.maven</string>
+				</dict>
+			</array>
+		</dict>
 		<key>mybatis</key>
 		<dict>
 			<key>patterns</key>
@@ -375,7 +410,7 @@
 								<key>0</key>
 								<dict>
 									<key>name</key>
-									<string>keyword.other.mybatis.xml</string>
+									<string>keyword.other.mybatis</string>
 								</dict>
 							</dict>
 							<key>end</key>
@@ -388,17 +423,17 @@
 										<key>1</key>
 										<dict>
 											<key>name</key>
-											<string>keyword.other.mybatis.xml</string>
+											<string>keyword.other.mybatis</string>
 										</dict>
 										<key>2</key>
 										<dict>
 											<key>name</key>
-											<string>punctuation.separator.mybatis.xml</string>
+											<string>punctuation.separator.mybatis</string>
 										</dict>
 										<key>3</key>
 										<dict>
 											<key>name</key>
-											<string>variable.parameter.mybatis.xml</string>
+											<string>variable.parameter.mybatis</string>
 										</dict>
 									</dict>
 									<key>match</key>

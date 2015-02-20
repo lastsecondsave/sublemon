@@ -26,6 +26,14 @@ patterns:
   - include: '#mybatis'
   - include: '#xml'
 
+- name: source.maven
+  begin: '(?=<project\s+xmlns=.http://maven\.apache\.org/POM)'
+  end: ^(?!x)x
+  patterns:
+  - include: '#doctype'
+  - include: '#maven'
+  - include: '#xml'
+
 - include: '#doctype'
 
 - begin: (?=<[-.\w]+)
@@ -186,11 +194,16 @@ repository:
       - begin: '[#$]\{'
         end: '\}'
         captures:
-          '0': {name: keyword.other.mybatis.xml}
+          '0': {name: keyword.other.mybatis}
         patterns:
         - match: (?:\s*(javaType|jdbcType|mode)\s*(=))?\s*([.\w]+)
           captures:
-            '1': {name: keyword.other.mybatis.xml}
-            '2': {name: punctuation.separator.mybatis.xml}
-            '3': {name: variable.parameter.mybatis.xml}
+            '1': {name: keyword.other.mybatis}
+            '2': {name: punctuation.separator.mybatis}
+            '3': {name: variable.parameter.mybatis}
       - include: source.sql
+
+  maven:
+    patterns:
+    - name: constant.maven
+      match: '\$\{.*?\}'

@@ -32,8 +32,8 @@
     { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
     { "keys": ["ctrl+q"],  "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
-    { "keys": ["ctrl+9"], "command": "show_panel" , "args": {"panel": "output.exec"} },
-    { "keys": ["ctrl+8"], "command": "show_panel" , "args": {"panel": "output.find_results"} },
+    { "keys": ["ctrl+9"], "command": "show_panel" , "args": {"panel": "output.exec", "toggle": true} },
+    { "keys": ["ctrl+8"], "command": "show_panel" , "args": {"panel": "output.find_results", "toggle": true} },
 
     { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
     { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
@@ -73,12 +73,8 @@
         "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
     },
 
-    { "keys": ["alt+f7"], "command": "toggle_selection_scope" },
-
     { "keys": ["alt+up"],   "command": "swap_line_up" },
     { "keys": ["alt+down"], "command": "swap_line_down" },
-    { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 26, "by_character": false} },
-    { "keys": ["ctrl+alt+left"],  "command": "scroll_width", "args": {"amount": -26, "by_character": false} },
 
     { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
     { "keys": ["ctrl+alt+."], "command": "open_file" , "args": {"file": "${project}"} },
@@ -90,5 +86,12 @@
     { "keys": ["ctrl+k", "ctrl+;"], "command": "clone_file" },
 
     { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "brackets"} },
-    { "keys": ["shift+alt+a"],  "command": "expand_selection", "args": {"to": "tag"} }
+    { "keys": ["shift+alt+a"],  "command": "expand_selection", "args": {"to": "tag"} },
+
+    /* Plugins */
+
+    { "keys": ["alt+f7"], "command": "toggle_selection_scope" },
+    { "keys": ["ctrl+alt+z"], "command": "normalize_region_ends" },
+    { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 26, "by_character": false} },
+    { "keys": ["ctrl+alt+left"],  "command": "scroll_width", "args": {"amount": -26, "by_character": false} }
 ]

@@ -30,6 +30,11 @@ settings:
     foreground: '#CDCDCD'
     background: '#E5476C'
 
+- name:  Warning
+  scope: warning
+  settings:
+    background: '#363642'
+
 - name:  Keyword
   scope: keyword, storage.modifier
   settings:

@@ -9,6 +9,42 @@
 	</array>
 	<key>name</key>
 	<string>Git Configuration</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.git</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^\s*(#).*$</string>
+			<key>name</key>
+			<string>comment.line.number-sign.git</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.author.git</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.git</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>^.*?\(([\w \.@]+[a-z]).*?(\d+)\)</string>
+			<key>name</key>
+			<string>comment.git</string>
+		</dict>
+	</array>
 	<key>scopeName</key>
 	<string>source.git</string>
 </dict>

@@ -2,3 +2,15 @@
 name: Git Configuration
 scopeName: source.git
 fileTypes: [.gitignore, .gitattributes]
+
+patterns:
+- name: comment.line.number-sign.git
+  match: ^\s*(#).*$
+  captures:
+    '1': {name: punctuation.definition.comment.git}
+
+- name: comment.git
+  match: ^.*?\(([\w \.@]+[a-z]).*?(\d+)\)
+  captures:
+    '1': {name: entity.name.author.git}
+    '2': {name: constant.numeric.git}
