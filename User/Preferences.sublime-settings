@@ -15,7 +15,7 @@
 	"caret_extra_width": 1,
 	"caret_style": "blink",
 	"close_windows_when_empty": false,
-	"color_scheme": "Packages/Sublemon/Disco.tmTheme",
+	"color_scheme": "Packages/Sublemon Theme/Disco.tmTheme",
 	"copy_with_empty_selection": false,
 	"default_line_ending": "unix",
 	"drag_text": false,
