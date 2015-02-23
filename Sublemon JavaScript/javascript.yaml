@@ -16,7 +16,7 @@ patterns:
   match: //.*$
 
 - name: entity.name.function.js
-  match: \b[\w_$]+(?=\s*:\s*function\b)
+  match: \b[\w_$]+(?=\s*[:=]\s*function\b)
 
 - name: meta.function.js
   begin: \b(function)(?:\s+([\w_$]+))?\s*\(
