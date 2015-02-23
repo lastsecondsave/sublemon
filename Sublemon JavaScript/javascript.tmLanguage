@@ -32,7 +32,7 @@
 		</dict>
 		<dict>
 			<key>match</key>
-			<string>\b[\w_$]+(?=\s*:\s*function\b)</string>
+			<string>\b[\w_$]+(?=\s*[:=]\s*function\b)</string>
 			<key>name</key>
 			<string>entity.name.function.js</string>
 		</dict>

@@ -2,7 +2,6 @@
 name: CSS
 scopeName: source.css
 fileTypes: [css]
-uuid: ACA87C3F-31D8-4E5D-B778-4146BBF831F3
 
 patterns:
 - include: '#css'
@@ -51,6 +50,8 @@ repository:
       match: ':[\w-]+'
     - name: keyword.css
       match: '@[\w-]+'
+    - name: string.quoted.css
+      match: '".*?"'
 
   properties:
     patterns:

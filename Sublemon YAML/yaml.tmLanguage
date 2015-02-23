@@ -16,6 +16,8 @@
 			<string>^(?=# \[PackageDev\])</string>
 			<key>end</key>
 			<string>^(?!x)x</string>
+			<key>name</key>
+			<string>source.package-dev.yaml</string>
 			<key>patterns</key>
 			<array>
 				<dict>

@@ -5,7 +5,8 @@ fileTypes: [yaml, yml]
 uuid: 2BDCCC99-FE27-4B30-9923-32D39B01C5CA
 
 patterns:
-- begin: '^(?=# \[PackageDev\])'
+- name: source.package-dev.yaml
+  begin: '^(?=# \[PackageDev\])'
   end: ^(?!x)x
   patterns:
   - include: '#package-dev'

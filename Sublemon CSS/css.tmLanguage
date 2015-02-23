@@ -201,12 +201,16 @@
 					<key>name</key>
 					<string>keyword.css</string>
 				</dict>
+				<dict>
+					<key>match</key>
+					<string>".*?"</string>
+					<key>name</key>
+					<string>string.quoted.css</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>
 	<key>scopeName</key>
 	<string>source.css</string>
-	<key>uuid</key>
-	<string>ACA87C3F-31D8-4E5D-B778-4146BBF831F3</string>
 </dict>
 </plist>
