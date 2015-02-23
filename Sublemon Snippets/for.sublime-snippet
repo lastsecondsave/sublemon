@@ -1,10 +1,10 @@
 <snippet>
-    <description>for</description>
-    <tabTrigger>for</tabTrigger>
-    <scope>source.java, source.js, source.c++, source.c</scope>
-    <content>
+	<description>for</description>
+	<tabTrigger>for</tabTrigger>
+	<scope>source.java, source.js, source.c++, source.c</scope>
+	<content>
 <![CDATA[for ($1; $2; $3) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

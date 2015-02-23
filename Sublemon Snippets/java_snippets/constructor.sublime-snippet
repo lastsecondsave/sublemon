@@ -1,10 +1,10 @@
 <snippet>
-    <description>constructor</description>
-    <tabTrigger>ctor</tabTrigger>
-    <scope>source.java</scope>
-    <content>
+	<description>constructor</description>
+	<tabTrigger>ctor</tabTrigger>
+	<scope>source.java</scope>
+	<content>
 <![CDATA[${TM_FILENAME/(.*?)(\..+)/$1/}($1) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

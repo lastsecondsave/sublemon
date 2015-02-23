@@ -1,10 +1,10 @@
 <snippet> 
-    <description>finally</description>
-    <tabTrigger>finally</tabTrigger>
-    <scope>source.java</scope>
-    <content>
+	<description>finally</description>
+	<tabTrigger>finally</tabTrigger>
+	<scope>source.java</scope>
+	<content>
 <![CDATA[finally {
-    $0
+	$0
 }]]>
-    </content> 
+	</content> 
 </snippet>

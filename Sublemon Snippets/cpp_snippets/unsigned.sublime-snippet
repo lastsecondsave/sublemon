@@ -1,6 +1,6 @@
 <snippet>
-    <description>unsigned</description>
-    <tabTrigger>un</tabTrigger>
-    <scope>source.c++</scope>
-    <content><![CDATA[unsigned ]]></content>
+	<description>unsigned</description>
+	<tabTrigger>un</tabTrigger>
+	<scope>source.c++</scope>
+	<content><![CDATA[unsigned ]]></content>
 </snippet>

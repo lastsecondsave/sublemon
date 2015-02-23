@@ -1,10 +1,10 @@
 <snippet>
-    <description>if</description>
-    <tabTrigger>if</tabTrigger>
-    <scope>source.java, source.js, source.c++, source.c</scope>
-    <content>
+	<description>if</description>
+	<tabTrigger>if</tabTrigger>
+	<scope>source.java, source.js, source.c++, source.c</scope>
+	<content>
 <![CDATA[if ($1) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

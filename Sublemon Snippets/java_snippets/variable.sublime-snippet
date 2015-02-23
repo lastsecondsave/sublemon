@@ -1,6 +1,6 @@
 <snippet>
-    <description>variable</description>
-    <tabTrigger>var</tabTrigger>
-    <scope>source.java</scope>
-    <content><![CDATA[${1:String} ${2:${1/./\l$0/}} = ${3:null};]]></content>
+	<description>variable</description>
+	<tabTrigger>var</tabTrigger>
+	<scope>source.java</scope>
+	<content><![CDATA[${1:String} ${2:${1/./\l$0/}} = ${3:null};]]></content>
 </snippet>

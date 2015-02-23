@@ -1,8 +1,8 @@
 <snippet>
-    <description>logger</description>
-    <tabTrigger>log</tabTrigger>
-    <scope>source.java</scope>
-    <content>
+	<description>logger</description>
+	<tabTrigger>log</tabTrigger>
+	<scope>source.java</scope>
+	<content>
 <![CDATA[private static final Logger LOG = LoggerFactory.getLogger(${1:${TM_FILENAME/(.*?)(\..+)/$1/}}.class);]]>
-    </content>
+	</content>
 </snippet>

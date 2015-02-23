@@ -1,11 +1,11 @@
 <snippet>
-    <description>wmain</description>
-    <scope>source.c++</scope>
-    <tabTrigger>wmain</tabTrigger>
-    <content>
+	<description>wmain</description>
+	<scope>source.c++</scope>
+	<tabTrigger>wmain</tabTrigger>
+	<content>
 <![CDATA[int wmain(int argc, wchar_t const *argv[]) {
-    $0
-    return 0;
+	$0
+	return 0;
 }]]>
-    </content>
+	</content>
 </snippet>

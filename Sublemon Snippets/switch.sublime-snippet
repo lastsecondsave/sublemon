@@ -1,10 +1,10 @@
 <snippet>
-    <description>switch</description>
-    <tabTrigger>sw</tabTrigger>
-    <scope>source.java, source.js, source.c++, source.c</scope>
-    <content>
+	<description>switch</description>
+	<tabTrigger>sw</tabTrigger>
+	<scope>source.java, source.js, source.c++, source.c</scope>
+	<content>
 <![CDATA[switch ($1) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

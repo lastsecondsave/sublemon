@@ -1,10 +1,10 @@
 <snippet>
-    <description>function</description>
-    <tabTrigger>func</tabTrigger>
-    <scope>source.js</scope>
-    <content>
+	<description>function</description>
+	<tabTrigger>fun</tabTrigger>
+	<scope>source.js</scope>
+	<content>
 <![CDATA[function ${1:run}($2) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

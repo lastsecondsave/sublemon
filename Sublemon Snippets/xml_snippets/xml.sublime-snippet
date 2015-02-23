@@ -1,6 +1,6 @@
 <snippet>
-    <description>&lt;?xml&gt;</description>
-    <tabTrigger>xml</tabTrigger>
-    <scope>source.xml</scope>
-    <content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>]]></content>
+	<description>&lt;?xml&gt;</description>
+	<tabTrigger>xml</tabTrigger>
+	<scope>source.xml</scope>
+	<content><![CDATA[<?xml version="1.0" encoding="UTF-8"?>]]></content>
 </snippet>

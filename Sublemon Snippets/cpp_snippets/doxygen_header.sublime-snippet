@@ -1,10 +1,10 @@
 <snippet> 
-    <description>doxygen header</description>
-    <tabTrigger>dxh</tabTrigger>
-    <scope>source.c++</scope>
-    <content>
+	<description>doxygen header</description>
+	<tabTrigger>dxh</tabTrigger>
+	<scope>source.c++</scope>
+	<content>
 <![CDATA[/*! \file $TM_FILENAME
  */
 $0]]>
-    </content> 
+	</content> 
 </snippet>

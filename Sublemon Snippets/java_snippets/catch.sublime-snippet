@@ -1,10 +1,10 @@
 <snippet>
-    <description>catch</description>
-    <tabTrigger>catch</tabTrigger>
-    <scope>source.java</scope>
-    <content>
+	<description>catch</description>
+	<tabTrigger>catch</tabTrigger>
+	<scope>source.java</scope>
+	<content>
 <![CDATA[catch (${1:Exception} e) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

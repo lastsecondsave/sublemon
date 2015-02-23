@@ -1,10 +1,10 @@
 <snippet>
-    <description>if null</description>
-    <tabTrigger>ifn</tabTrigger>
-    <scope>source.java</scope>
-    <content>
+	<description>if null</description>
+	<tabTrigger>ifn</tabTrigger>
+	<scope>source.java</scope>
+	<content>
 <![CDATA[if (${1:value} == null) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>
