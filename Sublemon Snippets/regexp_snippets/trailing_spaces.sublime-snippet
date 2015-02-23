@@ -1,6 +1,6 @@
 <snippet>
-    <description>trailing spaces</description>
-    <scope>source.regexp</scope>
-    <tabTrigger>tr</tabTrigger>
-    <content><![CDATA[ +\$]]></content>
+	<description>trailing spaces</description>
+	<scope>source.regexp</scope>
+	<tabTrigger>tr</tabTrigger>
+	<content><![CDATA[ +\$]]></content>
 </snippet>

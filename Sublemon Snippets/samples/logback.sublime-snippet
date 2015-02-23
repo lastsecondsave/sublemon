@@ -1,18 +1,18 @@
 <snippet>
-    <description>Sample logback.xml</description>
-    <content>
+	<description>Sample logback.xml</description>
+	<content>
 <![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%date %-5level %logger %msg%n</pattern>
-        </encoder>
-    </appender>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date %-5level %logger %msg%n</pattern>
+		</encoder>
+	</appender>
 
-    <root level="${0:info}">
-        <appender-ref ref="stdout"/>
-    </root>
+	<root level="${0:info}">
+		<appender-ref ref="stdout"/>
+	</root>
 </configuration>
 ]]>
-    </content>
+	</content>
 </snippet>

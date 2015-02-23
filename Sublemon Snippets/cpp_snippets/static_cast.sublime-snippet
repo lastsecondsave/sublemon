@@ -1,6 +1,6 @@
 <snippet>
-    <description>static_cast</description>
-    <tabTrigger>stc</tabTrigger>
-    <scope>source.c++</scope>
-    <content><![CDATA[static_cast<$1>($2)]]></content>
+	<description>static_cast</description>
+	<tabTrigger>stc</tabTrigger>
+	<scope>source.c++</scope>
+	<content><![CDATA[static_cast<$1>($2)]]></content>
 </snippet>

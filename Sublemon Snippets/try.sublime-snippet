@@ -1,10 +1,10 @@
 <snippet>
-    <description>try</description>
-    <tabTrigger>try</tabTrigger>
-    <scope>source.java, source.c++</scope>
-    <content>
+	<description>try</description>
+	<tabTrigger>try</tabTrigger>
+	<scope>source.java, source.c++</scope>
+	<content>
 <![CDATA[try {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

@@ -1,6 +1,6 @@
 <snippet>
-    <description>@Override</description>
-    <scope>meta.class.body.java</scope>
-    <tabTrigger>over</tabTrigger>
-    <content><![CDATA[@Override]]></content>
+	<description>@Override</description>
+	<scope>meta.class.body.java</scope>
+	<tabTrigger>over</tabTrigger>
+	<content><![CDATA[@Override]]></content>
 </snippet>

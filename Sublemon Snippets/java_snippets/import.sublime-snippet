@@ -1,6 +1,6 @@
 <snippet>
-    <description>import a.b.*</description>
-    <tabTrigger>im</tabTrigger>
-    <scope>source.java</scope>
-    <content><![CDATA[import ${1:java}.${2:util}.${3:*};]]></content>
+	<description>import a.b.*</description>
+	<tabTrigger>im</tabTrigger>
+	<scope>source.java</scope>
+	<content><![CDATA[import ${1:java}.${2:util}.${3:*};]]></content>
 </snippet>

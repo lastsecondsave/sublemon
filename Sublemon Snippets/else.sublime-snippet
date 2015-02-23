@@ -1,10 +1,10 @@
 <snippet>
-    <description>else</description>
-    <tabTrigger>else</tabTrigger>
-    <scope>source.java, source.js, source.c++, source.c</scope>
-    <content>
+	<description>else</description>
+	<tabTrigger>else</tabTrigger>
+	<scope>source.java, source.js, source.c++, source.c</scope>
+	<content>
 <![CDATA[else {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

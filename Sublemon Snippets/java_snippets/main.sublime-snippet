@@ -1,10 +1,10 @@
 <snippet>
-    <description>main</description>
-    <scope>meta.class.body.java</scope>
-    <tabTrigger>main</tabTrigger>
-    <content>
+	<description>main</description>
+	<scope>meta.class.body.java</scope>
+	<tabTrigger>main</tabTrigger>
+	<content>
 <![CDATA[public static void main(String[] args) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>

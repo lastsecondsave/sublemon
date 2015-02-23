@@ -1,6 +1,6 @@
 <snippet>
-    <description>static</description>
-    <tabTrigger>st</tabTrigger>
-    <scope>source.java</scope>
-    <content><![CDATA[static ]]></content>
+	<description>static</description>
+	<tabTrigger>st</tabTrigger>
+	<scope>source.java</scope>
+	<content><![CDATA[static ]]></content>
 </snippet>

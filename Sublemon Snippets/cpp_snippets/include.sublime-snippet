@@ -1,6 +1,6 @@
 <snippet>
-    <description>#include</description>
-    <tabTrigger>inc</tabTrigger>
-    <scope>source.c++</scope>
-    <content><![CDATA[#include ]]></content>
+	<description>#include</description>
+	<tabTrigger>inc</tabTrigger>
+	<scope>source.c++</scope>
+	<content><![CDATA[#include ]]></content>
 </snippet>

@@ -1,6 +1,6 @@
 <snippet>
-    <description>obj.begin(), obj.end()</description>
-    <tabTrigger>bend</tabTrigger>
-    <scope>source.c++</scope>
-    <content><![CDATA[$1.begin(), $1.end()]]></content>
+	<description>obj.begin(), obj.end()</description>
+	<tabTrigger>bend</tabTrigger>
+	<scope>source.c++</scope>
+	<content><![CDATA[$1.begin(), $1.end()]]></content>
 </snippet>

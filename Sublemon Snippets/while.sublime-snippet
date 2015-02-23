@@ -1,10 +1,10 @@
 <snippet>
-    <description>while</description>
-    <tabTrigger>while</tabTrigger>
-    <scope>source.java, source.js, source.c++, source.c</scope>
-    <content>
+	<description>while</description>
+	<tabTrigger>while</tabTrigger>
+	<scope>source.java, source.js, source.c++, source.c</scope>
+	<content>
 <![CDATA[while ($1) {
-    $0
+	$0
 }]]>
-    </content>
+	</content>
 </snippet>
