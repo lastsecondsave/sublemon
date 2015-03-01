@@ -54,7 +54,7 @@ patterns:
 - begin: '(?=Tests run:)'
   end: '$'
   patterns:
-  - match: '(Tests run|Failures|Errors|Skipped|Time elapsed): ([\d.]+)'
+  - match: '(Tests run|Failures|Errors|Skipped|Time elapsed): (\d+(?:[,.]\d+)*(?: sec)?)'
     captures:
       '1': {name: keyword.maven}
       '2': {name: constant.numeric.maven}

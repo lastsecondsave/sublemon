@@ -1,10 +1,13 @@
 {
-    "selector"   : "source.java",
+    "keyfile"    : "pom.xml",
     "shell_cmd"  : "mvn compile",
     "working_dir": "${project_path:${folder}}",
     "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
     "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",
-    "keyfile"    : "pom.xml",
+
+    "env": {
+        "MAVEN_OPTS" : "-Xmx1024M"
+    },
 
     "variants": [
         {   "name"     : "Run",
@@ -18,6 +21,9 @@
         },
         {   "name"     : "Package",
             "shell_cmd": "mvn -q -e package"
+        },
+        {   "name"     : "Build Tests",
+            "shell_cmd": "mvn test-compile",
         },
         {   "name"     : "Test",
             "shell_cmd": "mvn -q test"

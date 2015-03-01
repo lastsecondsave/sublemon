@@ -27,7 +27,6 @@ settings:
 - name:  Invalid
   scope: invalid
   settings:
-    foreground: '#CDCDCD'
     background: '#E5476C'
 
 - name:  Warning
@@ -40,15 +39,14 @@ settings:
   settings:
     foreground: '#E572D2'
 
-- name:  Blank symbolic operator
+- name:  Symbolic operator
   scope: keyword.operator
   settings:
     foreground: '#AAAAF0'
 
-- name:  Colored symbolic operator
+- name:  Highlighted symbolic operator
   scope: >-
-    keyword.operator.js,
-    keyword.control.ternary,
+    keyword.operator.ternary,
     keyword.operator.wildcard.java
   settings:
     foreground: '#E572D2'
@@ -57,9 +55,8 @@ settings:
   scope: >-
     keyword.operator.unary,
     keyword.operator.yaml,
-    punctuation.separator.line.java-props,
-    punctuation.separator.line.macro.c,
-    keyword.operator.commit.oracle.sql
+    keyword.operator.commit.oracle.sql,
+    punctuation.separator.line
   settings:
     foreground: '#FF8147'
 
@@ -69,7 +66,8 @@ settings:
     keyword.operator.logical.python,
     source.sql keyword.operator,
     keyword.operator.cast.c++,
-    keyword.operator.sizeof.c
+    keyword.operator.sizeof.c,
+    keyword.operator.js
   settings:
     foreground: '#E572D2'
 
@@ -234,7 +232,7 @@ settings:
     foreground: '#E5476C'
 
 - name:  Diff range
-  scope: meta.diff.range.unified
+  scope: meta.diff.range
   settings:
     foreground: '#EFC52D'
 

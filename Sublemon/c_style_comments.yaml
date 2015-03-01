@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.c, source.c++, source.js, source.json, source.java
+scope: source.c, source.c++, source.js, source.json, source.java, source.groovy
 settings:
   shellVariables:
   - name: TM_COMMENT_START

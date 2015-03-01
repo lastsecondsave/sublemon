@@ -2,7 +2,6 @@
 name: C/C++
 scopeName: source.c++
 fileTypes: [c, h, cpp, hpp, cu, cuh]
-uuid: FF3EC5B4-68F5-4A85-A774-161C8D0058C6
 
 patterns:
 - include: '#code'
@@ -10,17 +9,10 @@ patterns:
 repository:
   code:
     patterns:
-    - include: '#comments'
-    - include: '#macros'
     - include: '#typedef'
     - include: '#functions'
     - include: '#types'
-    - include: '#operators'
-    - include: '#constants'
-    - include: '#storage'
-    - include: '#winapi'
-    - include: '#strings'
-    - include: '#lambda'
+    - include: '#inner-code'
 
   inner-code:
     patterns:
@@ -157,7 +149,7 @@ repository:
     - begin: '\?'
       end: ':'
       captures:
-        '0': {name: keyword.control.ternary.c}
+        '0': {name: keyword.operator.ternary.c}
       patterns:
       - include: '#inner-code'
     - begin: '<<<'
@@ -173,7 +165,7 @@ repository:
     - name: keyword.operator.dereference.c
       match: ->
     - name: keyword.operator.comparison.c
-      match: (===?|!=|<=?|>=?)
+      match: '[=!]=|[<>]=?'
     - name: keyword.operator.assignment.c
       match: (<<|>>>?|[+*/%-]|[&^|])?=
     - name: keyword.operator.asterisk.c
@@ -182,10 +174,8 @@ repository:
       match: '&&?'
     - name: keyword.operator.bitwise.c
       match: (<<|>>>?|~|\^)
-    - name: keyword.operator.increment-decrement.c
-      match: (\-\-|\+\+)
     - name: keyword.operator.arithmetic.c
-      match: (\-|\+|\*|\/|%)
+      match: \-\-?|\+\+?|\*|\/|%
     - name: keyword.operator.c
       match: '\|\|?'
     - name: keyword.operator.unary.c

@@ -30,8 +30,6 @@
 			<dict>
 				<key>background</key>
 				<string>#E5476C</string>
-				<key>foreground</key>
-				<string>#CDCDCD</string>
 			</dict>
 		</dict>
 		<dict>
@@ -58,7 +56,7 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Blank symbolic operator</string>
+			<string>Symbolic operator</string>
 			<key>scope</key>
 			<string>keyword.operator</string>
 			<key>settings</key>
@@ -69,9 +67,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Colored symbolic operator</string>
+			<string>Highlighted symbolic operator</string>
 			<key>scope</key>
-			<string>keyword.operator.js, keyword.control.ternary, keyword.operator.wildcard.java</string>
+			<string>keyword.operator.ternary, keyword.operator.wildcard.java</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -82,7 +80,7 @@
 			<key>name</key>
 			<string>Special symbolic operator</string>
 			<key>scope</key>
-			<string>keyword.operator.unary, keyword.operator.yaml, punctuation.separator.line.java-props, punctuation.separator.line.macro.c, keyword.operator.commit.oracle.sql</string>
+			<string>keyword.operator.unary, keyword.operator.yaml, keyword.operator.commit.oracle.sql, punctuation.separator.line</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -93,7 +91,7 @@
 			<key>name</key>
 			<string>Keyword operator</string>
 			<key>scope</key>
-			<string>keyword.operator.instanceof.java, keyword.operator.logical.python, source.sql keyword.operator, keyword.operator.cast.c++, keyword.operator.sizeof.c</string>
+			<string>keyword.operator.instanceof.java, keyword.operator.logical.python, source.sql keyword.operator, keyword.operator.cast.c++, keyword.operator.sizeof.c, keyword.operator.js</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -401,7 +399,7 @@
 			<key>name</key>
 			<string>Diff range</string>
 			<key>scope</key>
-			<string>meta.diff.range.unified</string>
+			<string>meta.diff.range</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

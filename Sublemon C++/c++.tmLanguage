@@ -28,14 +28,6 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#comments</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#macros</string>
-				</dict>
-				<dict>
-					<key>include</key>
 					<string>#typedef</string>
 				</dict>
 				<dict>
@@ -48,27 +40,7 @@
 				</dict>
 				<dict>
 					<key>include</key>
-					<string>#operators</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#constants</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#storage</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#winapi</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#strings</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#lambda</string>
+					<string>#inner-code</string>
 				</dict>
 			</array>
 		</dict>
@@ -746,7 +718,7 @@
 						<key>0</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.control.ternary.c</string>
+							<string>keyword.operator.ternary.c</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -799,7 +771,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(===?|!=|&lt;=?|&gt;=?)</string>
+					<string>[=!]=|[&lt;&gt;]=?</string>
 					<key>name</key>
 					<string>keyword.operator.comparison.c</string>
 				</dict>
@@ -829,13 +801,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(\-\-|\+\+)</string>
-					<key>name</key>
-					<string>keyword.operator.increment-decrement.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>(\-|\+|\*|\/|%)</string>
+					<string>\-\-?|\+\+?|\*|\/|%</string>
 					<key>name</key>
 					<string>keyword.operator.arithmetic.c</string>
 				</dict>
@@ -1179,7 +1145,5 @@
 	</dict>
 	<key>scopeName</key>
 	<string>source.c++</string>
-	<key>uuid</key>
-	<string>FF3EC5B4-68F5-4A85-A774-161C8D0058C6</string>
 </dict>
 </plist>
