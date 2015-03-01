@@ -97,7 +97,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(junit\.framework\.ComparisonFailure):</string>
+			<string>(junit\.framework\.\w+):</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -190,7 +190,7 @@
 						</dict>
 					</dict>
 					<key>match</key>
-					<string>(Tests run|Failures|Errors|Skipped|Time elapsed): ([\d.]+)</string>
+					<string>(Tests run|Failures|Errors|Skipped|Time elapsed): (\d+(?:[,.]\d+)*(?: sec)?)</string>
 				</dict>
 			</array>
 		</dict>
