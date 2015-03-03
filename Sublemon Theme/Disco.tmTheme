@@ -80,7 +80,7 @@
 			<key>name</key>
 			<string>Special symbolic operator</string>
 			<key>scope</key>
-			<string>keyword.operator.unary, keyword.operator.yaml, keyword.operator.commit.oracle.sql, punctuation.separator.line</string>
+			<string>keyword.operator.unary, keyword.operator.yaml, punctuation.separator.line</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -91,7 +91,7 @@
 			<key>name</key>
 			<string>Keyword operator</string>
 			<key>scope</key>
-			<string>keyword.operator.instanceof.java, keyword.operator.logical.python, source.sql keyword.operator, keyword.operator.cast.c++, keyword.operator.sizeof.c, keyword.operator.js</string>
+			<string>keyword.operator.character, keyword.operator.instanceof.java, keyword.operator.logical.python, source.sql keyword.operator</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -437,17 +437,6 @@
 			<dict>
 				<key>foreground</key>
 				<string>#C5CC4B</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>C dereference operator</string>
-			<key>scope</key>
-			<string>keyword.operator.dereference.c</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#AAAAF0</string>
 			</dict>
 		</dict>
 		<dict>
