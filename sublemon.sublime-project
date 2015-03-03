@@ -29,6 +29,10 @@
             "path": "Sublemon JavaScript",
             "file_exclude_patterns": ["*.tm*"]
         },
+        {   "name": "powershell",
+            "path": "Sublemon PowerShell",
+            "file_exclude_patterns": ["*.tm*"]
+        },
         {   "name": "snippets",
             "path": "Sublemon Snippets"
         },
