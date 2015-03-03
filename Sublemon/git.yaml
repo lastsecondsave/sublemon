@@ -9,8 +9,19 @@ patterns:
   captures:
     '1': {name: punctuation.definition.comment.git}
 
-- name: comment.git
-  match: ^.*?\(([\w \.@]+[a-z]).*?(\d+)\)
+- name: variable.language.git
+  match: -(diff|text)
+
+- comment: Line from "Blame" build variant
+  name: comment.git
+  match: ^([0-9a-f]{6,})\s.*?\(([\w \.@]+[a-z]).*?\s(\d+)\)
   captures:
-    '1': {name: entity.name.author.git}
-    '2': {name: constant.numeric.git}
+    '1': {name: constant.numeric.git}
+    '2': {name: entity.name.author.git}
+    '3': {name: constant.numeric.git}
+
+- comment: Line from "History" build variant
+  match: ^([0-9a-f]{6,})((?:\s\w+){1,2}).*$
+  captures:
+    '1': {name: constant.numeric.git}
+    '2': {name: entity.name.author.git}
