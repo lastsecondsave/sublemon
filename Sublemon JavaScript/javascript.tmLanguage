@@ -139,7 +139,7 @@
 			<array>
 				<dict>
 					<key>begin</key>
-					<string>(?:\b([\w$]+)\s*[:=]\s*(function)|(function)\s*([\w$]+)?)(?=\s*\()</string>
+					<string>(?:\b([\w$]+)\s*(?:(=)|:)\s*(function)|(function)\s*([\w$]+)?)(?=\s*\()</string>
 					<key>beginCaptures</key>
 					<dict>
 						<key>1</key>
@@ -150,7 +150,7 @@
 						<key>2</key>
 						<dict>
 							<key>name</key>
-							<string>storage.type.function.js</string>
+							<string>keyword.operator.symbolic.js</string>
 						</dict>
 						<key>3</key>
 						<dict>
@@ -158,6 +158,11 @@
 							<string>storage.type.function.js</string>
 						</dict>
 						<key>4</key>
+						<dict>
+							<key>name</key>
+							<string>storage.type.function.js</string>
+						</dict>
+						<key>5</key>
 						<dict>
 							<key>name</key>
 							<string>entity.name.function.js</string>
@@ -236,45 +241,15 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>&amp;&amp;|\|\|</string>
+					<string>[&amp;|+-]{1,2}|([+*/%&amp;^|&lt;&gt;=-]|&lt;&lt;|&gt;&gt;&gt;?)=?|[=!]==?|&lt;&gt;</string>
 					<key>name</key>
-					<string>keyword.operator.logical.js</string>
+					<string>keyword.operator.symbolic.js</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>([+*/%&amp;^|-]|&lt;&lt;|&gt;&gt;&gt;?)?=</string>
+					<string>[!~]</string>
 					<key>name</key>
-					<string>keyword.operator.assignment.js</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>[=!]==?|[&lt;&gt;]=?|&lt;&gt;</string>
-					<key>name</key>
-					<string>keyword.operator.comparison.js</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\-\-?|\+\+?|\*|\/|%</string>
-					<key>name</key>
-					<string>keyword.operator.arithmetic.js</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>&amp;|\|</string>
-					<key>name</key>
-					<string>keyword.operator.bitwise.js</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>!</string>
-					<key>name</key>
-					<string>keyword.operator.unary.logical.js</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>~</string>
-					<key>name</key>
-					<string>keyword.operator.unary.bitwise.js</string>
+					<string>keyword.operator.unary.js</string>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -301,7 +276,7 @@
 					<key>match</key>
 					<string>\b(in|typeof|void|with)\b</string>
 					<key>name</key>
-					<string>keyword.operator.js</string>
+					<string>keyword.operator.character.js</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -309,7 +284,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.operator.js</string>
+							<string>keyword.operator.character.js</string>
 						</dict>
 						<key>2</key>
 						<dict>

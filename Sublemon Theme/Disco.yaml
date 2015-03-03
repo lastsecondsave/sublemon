@@ -55,19 +55,16 @@ settings:
   scope: >-
     keyword.operator.unary,
     keyword.operator.yaml,
-    keyword.operator.commit.oracle.sql,
     punctuation.separator.line
   settings:
     foreground: '#FF8147'
 
 - name:  Keyword operator
   scope: >-
+    keyword.operator.character,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python,
-    source.sql keyword.operator,
-    keyword.operator.cast.c++,
-    keyword.operator.sizeof.c,
-    keyword.operator.js
+    source.sql keyword.operator
   settings:
     foreground: '#E572D2'
 
@@ -252,11 +249,6 @@ settings:
   scope: meta.macro.body.c
   settings:
     foreground: '#C5CC4B'
-
-- name:  C dereference operator
-  scope: keyword.operator.dereference.c
-  settings:
-    foreground: '#AAAAF0'
 
 - name:  C++ lambda capture list
   scope: punctuation.definition.lambda.capture-list.c++

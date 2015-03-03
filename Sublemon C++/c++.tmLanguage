@@ -695,7 +695,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.operator.cast.c++</string>
+							<string>keyword.operator.character.c++</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -765,51 +765,9 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>-&gt;</string>
+					<string>[&amp;|+-]{1,2}|([+*/%&amp;^|&lt;&gt;=-]|&lt;&lt;|&gt;&gt;&gt;?)=?|!=|-&gt;</string>
 					<key>name</key>
-					<string>keyword.operator.dereference.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>[=!]=|[&lt;&gt;]=?</string>
-					<key>name</key>
-					<string>keyword.operator.comparison.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>(&lt;&lt;|&gt;&gt;&gt;?|[+*/%-]|[&amp;^|])?=</string>
-					<key>name</key>
-					<string>keyword.operator.assignment.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\*</string>
-					<key>name</key>
-					<string>keyword.operator.asterisk.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>&amp;&amp;?</string>
-					<key>name</key>
-					<string>keyword.operator.ampersand.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>(&lt;&lt;|&gt;&gt;&gt;?|~|\^)</string>
-					<key>name</key>
-					<string>keyword.operator.bitwise.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\-\-?|\+\+?|\*|\/|%</string>
-					<key>name</key>
-					<string>keyword.operator.arithmetic.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\|\|?</string>
-					<key>name</key>
-					<string>keyword.operator.c</string>
+					<string>keyword.operator.symbolic.c++</string>
 				</dict>
 				<dict>
 					<key>match</key>

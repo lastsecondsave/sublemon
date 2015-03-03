@@ -143,7 +143,7 @@ repository:
       begin: \b((?:const|dynamic|reinterpret|static)_cast)<
       end: '>'
       beginCaptures:
-        '1': {name: keyword.operator.cast.c++}
+        '1': {name: keyword.operator.character.c++}
       patterns:
       - include: '#inner-code'
     - begin: '\?'
@@ -162,22 +162,8 @@ repository:
       - include: '#inner-code'
     - name: support.function.c++
       match: \b(sizeof|decltype)\b
-    - name: keyword.operator.dereference.c
-      match: ->
-    - name: keyword.operator.comparison.c
-      match: '[=!]=|[<>]=?'
-    - name: keyword.operator.assignment.c
-      match: (<<|>>>?|[+*/%-]|[&^|])?=
-    - name: keyword.operator.asterisk.c
-      match: '\*'
-    - name: keyword.operator.ampersand.c
-      match: '&&?'
-    - name: keyword.operator.bitwise.c
-      match: (<<|>>>?|~|\^)
-    - name: keyword.operator.arithmetic.c
-      match: \-\-?|\+\+?|\*|\/|%
-    - name: keyword.operator.c
-      match: '\|\|?'
+    - name: keyword.operator.symbolic.c++
+      match: '[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|!=|->'
     - name: keyword.operator.unary.c
       match: '!'
     - name: punctuation.terminator.c
