@@ -26,23 +26,55 @@
 			<string>comment.line.number-sign.git</string>
 		</dict>
 		<dict>
+			<key>match</key>
+			<string>-(diff|text)</string>
+			<key>name</key>
+			<string>variable.language.git</string>
+		</dict>
+		<dict>
 			<key>captures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>entity.name.author.git</string>
+					<string>constant.numeric.git</string>
 				</dict>
 				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.author.git</string>
+				</dict>
+				<key>3</key>
 				<dict>
 					<key>name</key>
 					<string>constant.numeric.git</string>
 				</dict>
 			</dict>
+			<key>comment</key>
+			<string>Line from "Blame" build variant</string>
 			<key>match</key>
-			<string>^.*?\(([\w \.@]+[a-z]).*?(\d+)\)</string>
+			<string>^([0-9a-f]{6,})\s.*?\(([\w \.@]+[a-z]).*?\s(\d+)\)</string>
 			<key>name</key>
 			<string>comment.git</string>
+		</dict>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>constant.numeric.git</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>entity.name.author.git</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Line from "History" build variant</string>
+			<key>match</key>
+			<string>^([0-9a-f]{6,})((?:\s\w+){1,2}).*$</string>
 		</dict>
 	</array>
 	<key>scopeName</key>

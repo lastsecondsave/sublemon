@@ -1,0 +1,21 @@
+{
+  "keyfile"    : ".gitignore",
+  "target"     : "powershell_exec",
+  "shell_cmd"  : "git diff '$file' | select -Skip 4",
+  "syntax"     : "Packages/Diff/Diff.tmLanguage",
+  "working_dir": "${project_path:${folder}}",
+
+  "variants": [
+    { "name"     : "Blame",
+      "shell_cmd": "git blame -n --date short '$file'",
+      "syntax"   : "Packages/Sublemon/git.tmLanguage",
+    },
+    { "name"     : "History",
+      "shell_cmd": "git log -50 --follow --no-merges --format='%h %<|(30)%an %s' '$file'",
+      "syntax"   : "Packages/Sublemon/git.tmLanguage",
+    },
+    { "name"     : "Gitk",
+      "shell_cmd": "Start-Process gitk -ArgumentList '\"$file\"'",
+    }
+  ]
+}

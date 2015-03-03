@@ -1,5 +1,9 @@
 {
     "folders": [
+        {   "name": ".",
+            "path": ".",
+            "folder_exclude_patterns": ["*"]
+        },
         {   "name": "config",
             "path": "User",
             "file_exclude_patterns": ["Package Control.last-run", "Sublime *.sublime-settings"],

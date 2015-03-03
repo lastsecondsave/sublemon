@@ -1,38 +1,39 @@
 {
-    "keyfile"    : "pom.xml",
-    "shell_cmd"  : "mvn compile",
-    "working_dir": "${project_path:${folder}}",
-    "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
-    "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",
+  "keyfile"    : "pom.xml",
+  "target"     : "powershell_exec",
+  "shell_cmd"  : "mvn compile",
+  "working_dir": "${project_path:${folder}}",
+  "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
+  "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",
 
-    "env": {
-        "MAVEN_OPTS" : "-Xmx1024M"
+  "env": {
+    "MAVEN_OPTS": "-Xmx1024M"
+  },
+
+  "variants": [
+    { "name"     : "Run",
+      "shell_cmd": "mvn -q -e exec:java"
     },
-
-    "variants": [
-        {   "name"     : "Run",
-            "shell_cmd": "mvn -q -e exec:java"
-        },
-        {   "name"     : "Clean",
-            "shell_cmd": "mvn clean"
-        },
-        {   "name"     : "Clean Install",
-            "shell_cmd": "mvn -e clean install"
-        },
-        {   "name"     : "Package",
-            "shell_cmd": "mvn -q -e package"
-        },
-        {   "name"     : "Build Tests",
-            "shell_cmd": "mvn test-compile",
-        },
-        {   "name"     : "Test",
-            "shell_cmd": "mvn -q test"
-        },
-        {   "name"     : "Debug",
-            "shell_cmd": "mvnDebug -q exec:java"
-        },
-        {   "name"     : "Debug Test",
-            "shell_cmd": "mvn -q -Dmaven.surefire.debug test"
-        }
-    ]
+    { "name"     : "Clean",
+      "shell_cmd": "mvn clean"
+    },
+    { "name"     : "Clean Install",
+      "shell_cmd": "mvn -e clean install"
+    },
+    { "name"     : "Package",
+      "shell_cmd": "mvn -q -e package"
+    },
+    { "name"     : "Build Tests",
+      "shell_cmd": "mvn test-compile",
+    },
+    { "name"     : "Test",
+      "shell_cmd": "mvn -q test"
+    },
+    { "name"     : "Debug",
+      "shell_cmd": "mvnDebug -q exec:java"
+    },
+    { "name"     : "Debug Test",
+      "shell_cmd": "mvn -q -Dmaven.surefire.debug test"
+    }
+  ]
 }
