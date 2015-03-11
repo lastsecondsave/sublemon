@@ -274,7 +274,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(in|typeof|void|with)\b</string>
+					<string>\b(in|of|typeof|void|with)\b</string>
 					<key>name</key>
 					<string>keyword.operator.character.js</string>
 				</dict>
