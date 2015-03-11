@@ -77,7 +77,7 @@ repository:
       patterns:
       - include: "#code"
     - name: keyword.operator.character.js
-      match: \b(in|typeof|void|with)\b
+      match: \b(in|of|typeof|void|with)\b
     - match: \b(instanceof)\s+([\w_$]+)\b
       captures:
         '1': {name: keyword.operator.character.js}

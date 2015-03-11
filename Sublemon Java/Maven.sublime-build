@@ -1,5 +1,5 @@
 {
-  "keyfile"    : "pom.xml",
+  "keyfiles"   : ["pom.xml"],
   "target"     : "powershell_exec",
   "shell_cmd"  : "mvn compile",
   "working_dir": "${project_path:${folder}}",
@@ -34,6 +34,9 @@
     },
     { "name"     : "Debug Test",
       "shell_cmd": "mvn -q -Dmaven.surefire.debug test"
+    },
+    { "name"     : "Generate Test Report",
+      "shell_cmd": "mvn -q surefire-report:report-only; mvn -q site -DgenerateReports=false",
     }
   ]
 }

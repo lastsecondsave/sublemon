@@ -547,19 +547,6 @@
 					<string>#class</string>
 				</dict>
 				<dict>
-					<key>begin</key>
-					<string>{</string>
-					<key>end</key>
-					<string>}</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>include</key>
-							<string>#code</string>
-						</dict>
-					</array>
-				</dict>
-				<dict>
 					<key>include</key>
 					<string>#assertions</string>
 				</dict>
@@ -599,6 +586,23 @@
 					<key>include</key>
 					<string>#all-types</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#trailing-spaces</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>{</string>
+					<key>end</key>
+					<string>}</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#code</string>
+						</dict>
+					</array>
+				</dict>
 			</array>
 		</dict>
 		<key>comments</key>
@@ -624,6 +628,10 @@
 							<key>include</key>
 							<string>#javadoc</string>
 						</dict>
+						<dict>
+							<key>include</key>
+							<string>#trailing-spaces</string>
+						</dict>
 					</array>
 				</dict>
 				<dict>
@@ -639,10 +647,17 @@
 					<string>\*/</string>
 					<key>name</key>
 					<string>comment.block.java</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#trailing-spaces</string>
+						</dict>
+					</array>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(//).*$</string>
+					<string>(//).*?(?=\s+$)</string>
 					<key>name</key>
 					<string>comment.line.double-slash.java</string>
 				</dict>
@@ -873,7 +888,7 @@
 					<key>match</key>
 					<string>\?|:</string>
 					<key>name</key>
-					<string>keyword.control.ternary.java</string>
+					<string>keyword.operator.ternary.java</string>
 				</dict>
 				<dict>
 					<key>match</key>
@@ -1415,6 +1430,18 @@
 				<dict>
 					<key>include</key>
 					<string>#object-types</string>
+				</dict>
+			</array>
+		</dict>
+		<key>trailing-spaces</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>[\t ]+$</string>
+					<key>name</key>
+					<string>warning.trailing-space.java</string>
 				</dict>
 			</array>
 		</dict>

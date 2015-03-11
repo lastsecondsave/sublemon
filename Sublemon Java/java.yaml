@@ -31,6 +31,65 @@ patterns:
 - include: '#code'
 
 repository:
+  code:
+    patterns:
+    - include: '#comments'
+    - include: '#annotations'
+    - include: '#class'
+    - include: '#assertions'
+    - include: '#parens'
+    - include: '#constants-and-special-vars'
+    - include: '#anonymous-classes-and-new'
+    - include: '#switch-selectors'
+    - include: '#keywords'
+    - include: '#storage-modifiers'
+    - include: '#method-call'
+    - include: '#strings'
+    - include: '#all-types'
+    - include: '#trailing-spaces'
+    - begin: '{'
+      end: '}'
+      patterns:
+      - include: '#code'
+
+  comments:
+    patterns:
+    - name: comment.block.empty.java
+      match: /\*\*/
+    - name: comment.block.documentation.java
+      begin: /\*\*
+      end: \*/
+      patterns:
+      - include: "#javadoc"
+      - include: '#trailing-spaces'
+    - name: comment.block.java
+      match: (/\*).+?(\*/)
+    - name: comment.block.java
+      begin: /\*
+      end: \*/
+      patterns:
+      - include: '#trailing-spaces'
+    - name: comment.line.double-slash.java
+      match: (//).*?(?=\s+$)
+
+  javadoc:
+    patterns:
+    - name: keyword.other.javadoc.java
+      match: '@(?:param|throws)\s+\w+'
+    - match: '(@author)\s+(.*)'
+      captures:
+        '1': {name: keyword.other.javadoc.java}
+        '2': {name: no-spellcheck.java}
+    - name: keyword.other.javadoc.java
+      match: '@\w+'
+    - name: meta.tag.javadoc.java
+      match: </?\w*?/?>
+
+  trailing-spaces:
+    patterns:
+    - name: warning.trailing-space.java
+      match: '[\t ]+$'
+
   all-types:
     patterns:
     - include: '#primitive-arrays'
@@ -167,56 +226,6 @@ repository:
     - include: '#storage-modifiers'
     - include: '#code'
 
-  code:
-    patterns:
-    - include: '#comments'
-    - include: '#annotations'
-    - include: '#class'
-    - begin: '{'
-      end: '}'
-      patterns:
-      - include: '#code'
-    - include: '#assertions'
-    - include: '#parens'
-    - include: '#constants-and-special-vars'
-    - include: '#anonymous-classes-and-new'
-    - include: '#switch-selectors'
-    - include: '#keywords'
-    - include: '#storage-modifiers'
-    - include: '#method-call'
-    - include: '#strings'
-    - include: '#all-types'
-
-  comments:
-    patterns:
-    - name: comment.block.empty.java
-      match: /\*\*/
-    - name: comment.block.documentation.java
-      begin: /\*\*
-      end: \*/
-      patterns:
-      - include: "#javadoc"
-    - name: comment.block.java
-      match: (/\*).+?(\*/)
-    - name: comment.block.java
-      begin: /\*
-      end: \*/
-    - name: comment.line.double-slash.java
-      match: (//).*$
-
-  javadoc:
-    patterns:
-    - name: keyword.other.javadoc.java
-      match: '@(?:param|throws)\s+\w+'
-    - match: '(@author)\s+(.*)'
-      captures:
-        '1': {name: keyword.other.javadoc.java}
-        '2': {name: no-spellcheck.java}
-    - name: keyword.other.javadoc.java
-      match: '@\w+'
-    - name: meta.tag.javadoc.java
-      match: </?\w*?/?>
-
   constants-and-special-vars:
     patterns:
     - name: constant.language.java
@@ -257,7 +266,7 @@ repository:
     patterns:
     - name: keyword.control.catch-exception.java
       match: \b(try|catch|finally|throw)\b
-    - name: keyword.control.ternary.java
+    - name: keyword.operator.ternary.java
       match: '\?|:'
     - name: keyword.control.java
       match: \b(return|break|case|continue|default|do|while|for|switch|if|else)\b
