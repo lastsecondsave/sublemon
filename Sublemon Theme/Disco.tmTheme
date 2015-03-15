@@ -11,12 +11,18 @@
 			<dict>
 				<key>background</key>
 				<string>#2D2D30</string>
+				<key>bracketsForeground</key>
+				<string>#FF8147</string>
 				<key>caret</key>
 				<string>#FFFFFF</string>
+				<key>findHighlight</key>
+				<string>#EFC52D</string>
 				<key>foreground</key>
 				<string>#CDCDCD</string>
 				<key>lineHighlight</key>
 				<string>#363642</string>
+				<key>minimapBorder</key>
+				<string>#CDCDCD</string>
 				<key>selection</key>
 				<string>#515162</string>
 			</dict>
@@ -711,7 +717,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#C5CC4B</string>
+				<string>#FF8147</string>
 			</dict>
 		</dict>
 		<dict>
