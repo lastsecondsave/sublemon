@@ -10,6 +10,7 @@ uuid: DC528CA7-4183-4CC0-A813-9431EE950599
 # EF51AA   pink           [239,  81, 170]
 # 66B5F0   blue           [102, 181, 240]
 # 363642   dark-blue      [ 54,  54,  66]
+# 2D2D30   bluish black   [ 45,  45,  48]
 # C5CC4B   green          [197, 204,  75]
 # EFC52D   yellow         [239, 197,  45]
 # FF9A41   orange         [255, 154,  65]
@@ -18,11 +19,14 @@ uuid: DC528CA7-4183-4CC0-A813-9431EE950599
 
 settings:
 - settings:
-    background:    '#2D2D30'
-    foreground:    '#CDCDCD'
-    caret:         '#FFFFFF'
-    lineHighlight: '#363642'
-    selection:     '#515162'
+    background:         '#2D2D30'
+    foreground:         '#CDCDCD'
+    caret:              '#FFFFFF'
+    selection:          '#515162'
+    lineHighlight:      '#363642'
+    findHighlight:      '#EFC52D'
+    minimapBorder:      '#CDCDCD'
+    bracketsForeground: '#FF8147'
 
 - name:  Invalid
   scope: invalid
@@ -387,7 +391,7 @@ settings:
 - name:  CSS important
   scope: keyword.other.important.css
   settings:
-    foreground: '#C5CC4B'
+    foreground: '#FF8147'
 
 - name:  foobar2000 tag field
   scope: variable.other.field.foobar2000
