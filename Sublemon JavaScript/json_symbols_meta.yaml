@@ -1,0 +1,5 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.json meta.name.json string
+settings:
+  showInSymbolList: 1
+  symbolTransformation: s/"//g;
