@@ -2,101 +2,92 @@
 name: JSON
 scopeName: source.json
 fileTypes: [json]
-uuid: 0C3868E4-F96B-4E55-B204-1DCB5A20748B
 
 patterns:
-- include: '#value'
+- include: '#json'
 
 repository:
-  array:
-    name: meta.structure.array.json
-    begin: \[
-    beginCaptures:
-      '0': {name: punctuation.definition.array.begin.json}
-    end: \]
-    endCaptures:
-      '0': {name: punctuation.definition.array.end.json}
+  json:
     patterns:
-    - include: '#value'
-    - name: punctuation.separator.array.json
-      match: ','
-    - name: invalid.illegal.expected-array-separator.json
-      match: '[^\s\]]'
+    - include: '#strings'
+    - include: '#numbers-and-constants'
+    - include: '#arrays'
+    - include: '#objects'
+    - include: '#comments'
 
   comments:
     patterns:
-    - name: comment.block.documentation.json
-      begin: /\*\*
-      end: \*/
-      captures:
-        '0': {name: punctuation.definition.comment.json}
+    - name: comment.block.json
+      match: /\*.*?\*/
     - name: comment.block.json
       begin: /\*
       end: \*/
-      captures:
-        '0': {name: punctuation.definition.comment.json}
-    - name: comment.line.double-slash.js
-      match: (//).*$\n?
-      captures:
-        '1': {name: punctuation.definition.comment.json}
+    - name: comment.line.json
+      match: //.*$
 
-  constant:
-    name: constant.language.json
-    match: \b(?:true|false|null)\b
-
-  number:
-    comment: handles integer and decimal numbers
-    name: constant.numeric.json
-    match: -?(?:0|[1-9]\d*)(?:(?:\.\d+)?(?:[eE][+-]?\d+)?)?
-
-  object:
-    comment: a JSON object
-    name: meta.structure.dictionary.json
-    begin: \{
-    beginCaptures:
-      '0': {name: punctuation.definition.dictionary.begin.json}
-    end: \}
-    endCaptures:
-      '0': {name: punctuation.definition.dictionary.end.json}
+  numbers-and-constants:
     patterns:
-    - comment: the JSON object key
-      include: '#string'
-    - include: '#comments'
-    - name: meta.structure.dictionary.value.json
-      begin: ':'
-      beginCaptures:
-        '0': {name: punctuation.separator.dictionary.key-value.json}
-      end: (,)|(?=\})
-      endCaptures:
-        '1': {name: punctuation.separator.dictionary.pair.json}
+    - name: constant.numeric.json
+      match: -?(?:0|[1-9]\d*)(?:(?:\.\d+)?(?:[eE][+-]?\d+)?)?
+    - name: constant.language.json
+      match: \b(?:true|false|null)\b
+
+  strings:
+    patterns:
+    - name: string.quoted.double.json
+      begin: '"'
+      end: '"|\n'
       patterns:
-      - comment: the JSON object value
-        include: '#value'
-      - name: invalid.illegal.expected-dictionary-separator.json
-        match: '[^\s,]'
-    - name: invalid.illegal.expected-dictionary-separator.json
-      match: '[^\s\}]'
+      - name: invalid.string.json
+        match: '[^"](?=\n)'
+      - name: constant.character.escape.json
+        match: \\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})
+      - name: invalid.character.escape.json
+        match: \\.
 
-  string:
-    name: string.quoted.double.json
-    begin: '"'
-    beginCaptures:
-      '0': {name: punctuation.definition.string.begin.json}
-    end: '"'
-    endCaptures:
-      '0': {name: punctuation.definition.string.end.json}
+  arrays:
     patterns:
-    - name: constant.character.escape.json
-      match: \\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})
-    - name: invalid.illegal.unrecognized-string-escape.json
-      match: \\.
+    - name: meta.structure.array.json
+      begin: \[
+      end: \]
+      patterns:
+      - include: '#json'
+      - name: punctuation.separator.array.json
+        match: ','
+      - name: invalid.character.json
+        match: '[^\s\]]'
 
-  value:
-    comment: "the 'value' diagram at http://json.org"
+  objects:
     patterns:
-    - include: '#constant'
-    - include: '#number'
-    - include: '#string'
-    - include: '#array'
-    - include: '#object'
-    - include: '#comments'
+    - name: meta.structure.dictionary.json
+      begin: \{
+      end: \}
+      patterns:
+      - include: '#meta'
+      - include: '#strings'
+      - include: '#comments'
+      - begin: ':'
+        beginCaptures:
+          '0': {name: punctuation.separator.dictionary.key-value.json}
+        end: (,)|(?=\})
+        endCaptures:
+          '1': {name: punctuation.separator.dictionary.json}
+        patterns:
+        - include: '#json'
+        - name: invalid.character.json
+          match: '[^\s,]'
+      - name: invalid.character.json
+        match: '[^\s\}]'
+
+  meta:
+    patterns:
+    - contentName: meta.name.json
+      begin: '("name")\s*(:)\s(?=")'
+      beginCaptures:
+        '1': {name: string.quoted.double.json}
+        '2': {name: punctuation.separator.dictionary.key-value.json}
+      end: '(?<=")\s*(,)?'
+      endCaptures:
+        '1': {name: punctuation.separator.dictionary.json}
+      patterns:
+      - include: '#strings'
