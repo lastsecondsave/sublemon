@@ -1,4 +1,7 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.json
 settings:
+  increaseIndentPattern: ^\s*[\{\[]\s*$
+  decreaseIndentPattern: ^\s*[\}\]](\s*,)?\s*$
+  indentSquareBrackets: true
   icon: file_type_json
