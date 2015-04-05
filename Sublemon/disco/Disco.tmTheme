@@ -75,7 +75,7 @@
 			<key>name</key>
 			<string>Highlighted symbolic operator</string>
 			<key>scope</key>
-			<string>keyword.operator.ternary, keyword.operator.wildcard.java</string>
+			<string>keyword.operator.ternary, keyword.operator.in, keyword.operator.wildcard.java</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -454,6 +454,17 @@
 			<dict>
 				<key>foreground</key>
 				<string>#66B5F0</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>C++ namespace separator</string>
+			<key>scope</key>
+			<string>punctuation.separator.namespace.c++</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#AAAAF0</string>
 			</dict>
 		</dict>
 		<dict>

@@ -51,6 +51,7 @@ settings:
 - name:  Highlighted symbolic operator
   scope: >-
     keyword.operator.ternary,
+    keyword.operator.in,
     keyword.operator.wildcard.java
   settings:
     foreground: '#E572D2'
@@ -258,6 +259,11 @@ settings:
   scope: punctuation.definition.lambda.capture-list.c++
   settings:
     foreground: '#66B5F0'
+
+- name:  C++ namespace separator
+  scope: punctuation.separator.namespace.c++
+  settings:
+    foreground: '#AAAAF0'
 
 - name:  Powershell variable scope
   scope: variable.language.powershell keyword
