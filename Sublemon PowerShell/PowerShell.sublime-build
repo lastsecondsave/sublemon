@@ -1,0 +1,10 @@
+{
+  "selector": "source.powershell",
+  "cmd": ["powershell.exe", "-ExecutionPolicy", "Unrestricted", "-File", "$file"],
+
+  "variants": [
+    { "name": "No Profile",
+      "cmd": ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Unrestricted", "-File", "$file"]
+    }
+  ]
+}

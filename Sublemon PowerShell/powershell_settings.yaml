@@ -1,4 +1,11 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.powershell
 settings:
+  shellVariables:
+  - name: TM_COMMENT_START
+    value: '# '
+  - name: TM_COMMENT_START_2
+    value: '<* '
+  - name: TM_COMMENT_END_2
+    value: ' *>'
   icon: file_type_powershell

@@ -101,15 +101,12 @@ repository:
     - name: storage.type.c++
       match: \b(auto|bool|wchar_t|__int(8|16|32|64))\b
     - name: support.type.c
-      match: \b(size_t|FILE|fpos_t)\b
-    - name: support.type.cuda.c
-      match: \b(cuda\w+_t)\b
+      match: \b(size_t)\b
     - name: meta.std.c++
-      match: \b(std)(::)(array|vector|pair|(unordered_)?map|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error|exception|(?:shared|auto|unique|weak)_ptr)?\b
+      match: \b(std)(::)(?=\w)
       captures:
         '1': {name: storage.modifier.namespace.c++}
         '2': {name: punctuation.separator.namespace.c++}
-        '3': {name: support.type.std.c++}
 
   constants:
     patterns:
@@ -135,10 +132,17 @@ repository:
 
   operators:
     patterns:
-    - name: keyword.control.c
-      match: \b(return|break|case|continue|default|do|while|for|switch|if|else|goto)\b
     - name: keyword.control.c++
-      match: \b(try|catch|throw|new|delete)\b
+      match: \b(return|break|case|continue|default|do|while|switch|if|else|goto|try|catch|throw|new|delete)\b
+    - name: meta.operator.for.c++
+      begin: \b(for)\s*\(
+      end: \)
+      beginCaptures:
+        '1': {name: keyword.control.c++}
+      patterns:
+      - include: '#inner-code-with-brackets'
+      - name: keyword.operator.in.c++
+        match: ':'
     - name: meta.operator.cast.c++
       begin: \b((?:const|dynamic|reinterpret|static)_cast)<
       end: '>'
@@ -166,8 +170,8 @@ repository:
       match: '[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|!=|->'
     - name: keyword.operator.unary.c
       match: '!'
-    - name: punctuation.terminator.c
-      match: ';'
+    - name: punctuation.separator.namespace.c++
+      match: '(?<=\w)::(?=\w)'
     - match: \b(using(?:\s+namespace))\s+(\w+)
       captures:
         '1': {name: keyword.other.c++}
@@ -313,7 +317,7 @@ repository:
         captures:
           '1': {name: keyword.macro.c}
           '2': {name: string.quoted.macro.c}
-          '3': {name: invalid.macro.c}
+          '3': {name: invalid.illegal.macro.c}
       - begin: (?<=#)\s*(define)\s+(\w+)\(
         end: \)
         beginCaptures:

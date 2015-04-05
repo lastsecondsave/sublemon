@@ -8,14 +8,17 @@
 		"target/*",
 		"*.bak",
 		"*.orig",
-		"*.png"
+		"*.png",
+		"*.gif",
+		"*.bmp",
+		"*.jpg"
 	],
 	"caret_extra_bottom": 0,
 	"caret_extra_top": 0,
 	"caret_extra_width": 1,
 	"caret_style": "blink",
 	"close_windows_when_empty": false,
-	"color_scheme": "Packages/Sublemon Theme/Disco.tmTheme",
+	"color_scheme": "Packages/Sublemon/disco/Disco.tmTheme",
 	"copy_with_empty_selection": false,
 	"default_line_ending": "unix",
 	"drag_text": false,
@@ -54,18 +57,18 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"CSS",
-		".git",
+		"Java",
 		"SQL",
-		"Vintage",
+		"JavaScript",
+		"CSS",
+		"Objective-C",
+		".git",
 		"C++",
 		"YAML",
 		"XML",
-		"Java",
-		"JavaScript",
-		"Objective-C",
-		"Markdown",
-		"Regular Expressions"
+		"Vintage",
+		"Regular Expressions",
+		"Markdown"
 	],
 	"indent_guide_options":
 	[
@@ -91,7 +94,7 @@
 	"show_encoding": true,
 	"show_line_endings": true,
 	"show_tab_close_buttons": false,
-	"theme": "Sublemon.sublime-theme",
+	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": false
