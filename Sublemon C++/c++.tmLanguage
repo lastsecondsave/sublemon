@@ -551,7 +551,7 @@
 								<key>3</key>
 								<dict>
 									<key>name</key>
-									<string>invalid.macro.c</string>
+									<string>invalid.illegal.macro.c</string>
 								</dict>
 							</dict>
 							<key>match</key>
@@ -677,15 +677,38 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\b(return|break|case|continue|default|do|while|for|switch|if|else|goto)\b</string>
-					<key>name</key>
-					<string>keyword.control.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\b(try|catch|throw|new|delete)\b</string>
+					<string>\b(return|break|case|continue|default|do|while|switch|if|else|goto|try|catch|throw|new|delete)\b</string>
 					<key>name</key>
 					<string>keyword.control.c++</string>
+				</dict>
+				<dict>
+					<key>begin</key>
+					<string>\b(for)\s*\(</string>
+					<key>beginCaptures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>keyword.control.c++</string>
+						</dict>
+					</dict>
+					<key>end</key>
+					<string>\)</string>
+					<key>name</key>
+					<string>meta.operator.for.c++</string>
+					<key>patterns</key>
+					<array>
+						<dict>
+							<key>include</key>
+							<string>#inner-code-with-brackets</string>
+						</dict>
+						<dict>
+							<key>match</key>
+							<string>:</string>
+							<key>name</key>
+							<string>keyword.operator.in.c++</string>
+						</dict>
+					</array>
 				</dict>
 				<dict>
 					<key>begin</key>
@@ -777,9 +800,9 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>;</string>
+					<string>(?&lt;=\w)::(?=\w)</string>
 					<key>name</key>
-					<string>punctuation.terminator.c</string>
+					<string>punctuation.separator.namespace.c++</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -831,15 +854,9 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(size_t|FILE|fpos_t)\b</string>
+					<string>\b(size_t)\b</string>
 					<key>name</key>
 					<string>support.type.c</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\b(cuda\w+_t)\b</string>
-					<key>name</key>
-					<string>support.type.cuda.c</string>
 				</dict>
 				<dict>
 					<key>captures</key>
@@ -854,14 +871,9 @@
 							<key>name</key>
 							<string>punctuation.separator.namespace.c++</string>
 						</dict>
-						<key>3</key>
-						<dict>
-							<key>name</key>
-							<string>support.type.std.c++</string>
-						</dict>
 					</dict>
 					<key>match</key>
-					<string>\b(std)(::)(array|vector|pair|(unordered_)?map|w?string|[io]?fstream|ios|streampos|(?:runtime|logic)_error|exception|(?:shared|auto|unique|weak)_ptr)?\b</string>
+					<string>\b(std)(::)(?=\w)</string>
 					<key>name</key>
 					<string>meta.std.c++</string>
 				</dict>

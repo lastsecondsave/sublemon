@@ -1,21 +1,23 @@
 {
-    "extensions": [
-        "xml",
-        "xsd",
-        "xsl",
-        "xslt",
-        "wsdl"
-    ],
+  "tab_size": 2,
 
-    "hidden_extensions": [
-        "svg",
-        "rss",
-        "sublime-snippet",
-        "vcproj",
-        "vcxproj",
-        "tmLanguage",
-        "tmTheme",
-        "tmSnippet",
-        "tmPreferences"
-    ]
+  "extensions": [
+    "xml",
+    "xsd",
+    "xsl",
+    "xslt",
+    "wsdl"
+  ],
+
+  "hidden_extensions": [
+    "svg",
+    "rss",
+    "sublime-snippet",
+    "vcproj",
+    "vcxproj",
+    "tmLanguage",
+    "tmTheme",
+    "tmSnippet",
+    "tmPreferences"
+  ]
 }
