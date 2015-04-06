@@ -27,20 +27,20 @@
 			[
 				"*.tm*"
 			],
-			"name": "disco",
-			"path": "Sublemon\\disco"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
 			"folder_exclude_patterns":
 			[
 				"*"
 			],
 			"name": "core",
 			"path": "Sublemon"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
+			"name": "disco",
+			"path": "Sublemon\\disco"
 		},
 		{
 			"file_exclude_patterns":
@@ -80,7 +80,7 @@
 				"*.tm*"
 			],
 			"name": "powershell",
-			"path": "Sublemon PowerShell"
+			"path": "Sublemon\\powershell"
 		},
 		{
 			"name": "snippets",
