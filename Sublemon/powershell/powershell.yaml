@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: PowerShell
+scopeName: source.powershell
+fileTypes: [ps1, psm1]
