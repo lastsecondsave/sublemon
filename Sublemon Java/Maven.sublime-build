@@ -1,10 +1,11 @@
 {
   "keyfiles"   : ["pom.xml"],
   "target"     : "powershell_exec",
-  "shell_cmd"  : "mvn compile",
+  "shell_cmd"  : "mvn compile | MavenFilter",
   "working_dir": "${project_path:${folder}}",
   "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
   "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",
+  "context"    : "Sublemon Java/maven_context.ps1",
 
   "env": {
     "MAVEN_OPTS": "-Xmx1024M"
@@ -12,19 +13,19 @@
 
   "variants": [
     { "name"     : "Run",
-      "shell_cmd": "mvn -q -e exec:java"
+      "shell_cmd": "mvn -q -e compile exec:java"
     },
     { "name"     : "Clean",
-      "shell_cmd": "mvn clean"
+      "shell_cmd": "mvn clean | MavenFilter"
     },
     { "name"     : "Clean Install",
-      "shell_cmd": "mvn -e clean install"
+      "shell_cmd": "mvn -e clean install | MavenFilter"
     },
     { "name"     : "Package",
       "shell_cmd": "mvn -q -e package"
     },
     { "name"     : "Build Tests",
-      "shell_cmd": "mvn test-compile",
+      "shell_cmd": "mvn test-compile | MavenFilter",
     },
     { "name"     : "Test",
       "shell_cmd": "mvn -q test"
