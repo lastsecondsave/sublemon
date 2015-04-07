@@ -64,7 +64,7 @@
 				"*.tm*"
 			],
 			"name": "java",
-			"path": "Sublemon Java"
+			"path": "Sublemon/sublemon_java"
 		},
 		{
 			"file_exclude_patterns":
@@ -80,7 +80,7 @@
 				"*.tm*"
 			],
 			"name": "powershell",
-			"path": "Sublemon\\powershell"
+			"path": "Sublemon/sublemon_powershell"
 		},
 		{
 			"name": "snippets",
