@@ -4,8 +4,8 @@
   "shell_cmd"  : "mvn compile | MavenFilter",
   "working_dir": "${project_path:${folder}}",
   "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
-  "syntax"     : "Packages/Sublemon Java/maven.tmLanguage",
-  "context"    : "Sublemon Java/maven_context.ps1",
+  "syntax"     : "Packages/Sublemon/sublemon_java/maven.tmLanguage",
+  "context"    : "$packages/Sublemon/sublemon_java/maven_context.ps1",
 
   "env": {
     "MAVEN_OPTS": "-Xmx1024M"
