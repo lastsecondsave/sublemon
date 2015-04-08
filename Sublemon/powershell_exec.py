@@ -13,7 +13,8 @@ class PowershellExecCommand(sublime_plugin.WindowCommand):
     load_profile = self.get_argument("load_profile", args)
     context = self.get_argument("context", args)
 
-    script = os.path.join(sublime.packages_path(), "Sublemon", "powershell", "powershell_exec.ps1")
+    script = os.path.join(sublime.packages_path(),
+        "Sublemon", "sublemon_powershell", "powershell_exec.ps1")
 
     cmd = ["powershell.exe", "-ExecutionPolicy", "Unrestricted"]
 
@@ -23,7 +24,7 @@ class PowershellExecCommand(sublime_plugin.WindowCommand):
     cmd.extend(["-File", script])
 
     if context:
-      cmd.extend(["-Context", os.path.join(sublime.packages_path(), context)])
+      cmd.extend(["-Context", sublime.expand_variables(context, self.window.extract_variables())])
 
     cmd.append("-Command")
     cmd.extend(command)
