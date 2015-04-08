@@ -1,0 +1,10 @@
+<snippet>
+	<description>try with resources</description>
+	<tabTrigger>tryr</tabTrigger>
+	<scope>source.java</scope>
+	<content>
+<![CDATA[try ($1) {
+	$0
+}]]>
+	</content>
+</snippet>
