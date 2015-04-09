@@ -688,10 +688,6 @@
 					<key>include</key>
 					<string>#entity</string>
 				</dict>
-				<dict>
-					<key>include</key>
-					<string>#bad-entity</string>
-				</dict>
 			</array>
 		</dict>
 	</dict>
