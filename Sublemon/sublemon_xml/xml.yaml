@@ -55,7 +55,6 @@ repository:
       endCaptures:
         '0': {name: punctuation.definition.cdata.end.xml}
     - include: '#entity'
-    - include: '#bad-entity'
 
   comments:
     patterns:

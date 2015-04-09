@@ -56,7 +56,7 @@
 
   { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " $SELECTION "} },
   { "keys": ["alt+shift+w"], "command": "insert_snippet",
-    "args": {"name": "Packages/Sublemon Snippets/xml_snippets/tag.sublime-snippet"}
+    "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
   },
 
   /* Build */
