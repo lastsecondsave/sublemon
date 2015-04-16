@@ -1,0 +1,172 @@
+%YAML 1.2
+---
+name: YAML
+scope: source.yaml
+file_extensions: [yaml, yml]
+
+contexts:
+  main:
+  - match: '^(?=# \[PackageDev\])'
+    set:
+    - meta_scope: source.package-dev.yaml
+    - include: package-dev
+    - include: package-dev-symbols
+    - include: yaml
+  - match: ''
+    set: yaml
+
+  yaml:
+  - include: operators
+  - include: comments
+  - include: flow-yaml
+  - include: keys
+  - include: scalars
+  - match: '^%\w+'
+    scope: entity.name.directive.yaml
+  - match: (\S.*?)\s*(?=\s#|$)
+    captures:
+      1: string.unquoted.yaml
+
+  flow-yaml:
+  - match: '\{'
+    scope: punctuation.section.flow.yaml
+    push:
+    - meta_scope: meta.section.flow.yaml
+    - match: '\}'
+      scope: punctuation.section.flow.yaml
+      pop: true
+    - include: flow-yaml-section
+  - match: '\['
+    scope: punctuation.section.flow.yaml
+    push:
+    - meta_scope: meta.section.flow.yaml
+    - match: '\]'
+      scope: punctuation.section.flow.yaml
+      pop: true
+    - include: flow-yaml-section
+  - match: '[\]\}]'
+    scope: invalid.illegal.stray.bracket
+
+  flow-yaml-section:
+  - include: comments
+  - include: flow-yaml
+  - include: keys
+  - include: scalars
+  - match: '([^\,\]\}\s].*?)\s*(?=[\,\]\}]|\s#|$)'
+    captures:
+      1: string.unquoted.yaml
+
+  operators:
+  - match: '^(---|\.{3})'
+    scope: keyword.operator.yaml
+  - match: '(-) '
+    captures:
+      1: keyword.operator.yaml
+  - match: '(?:^|(?<=\s))([>\|]-?)'
+    captures:
+      1: keyword.operator.yaml
+
+  comments:
+  - match: (?:^|(?<=\s))#.*$
+    scope: comment.line.number-sign.yaml
+
+  scalars:
+  - include: quoted-strings
+  - include: numbers-and-constants
+
+  numbers-and-constants:
+  - match: '\b(0x[0-9a-fA-F]+|0o[0-7]+|[-+]?[0-9]+|[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?)\b'
+    scope: constant.numeric.yaml
+  - match: '\b([Tt]rue|TRUE|[Ff]alse|FALSE|[Nn]ull|NULL|\.nan|\.N[Aa]N|[-+]?\.([Ii]nf|INF))\b'
+    scope: constant.language.yaml
+
+  quoted-strings:
+  - match: '"'
+    scope: punctuation.definition.string.yaml
+    push: double-quoted-strings
+  - match: (').*(')
+    scope: string.quoted.single.yaml
+    captures:
+      1: punctuation.definition.string.yaml
+      2: punctuation.definition.string.yaml
+  - match: "'"
+    scope: punctuation.definition.string.yaml
+    push:
+    - meta_scope: string.quoted.single.yaml
+    - match: "'"
+      scope: punctuation.definition.string.yaml
+      pop: true
+
+  double-quoted-strings:
+  - meta_scope: string.quoted.double.yaml
+  - match: '"'
+    scope: punctuation.definition.string.yaml
+    pop: true
+  - match: '\\[0abtnvfre"/\\N_LP ]'
+    scope: constant.character.escape.yaml
+  - match: '\\(x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})'
+    scope: constant.character.escape.unicode.yaml
+  - match: \\.
+    scope: invalid.illegal.escape
+
+  keys:
+  - match: (?=".+?":\s)
+    push:
+    - meta_scope: meta.key.yaml
+    - match: \s*(:)\s
+      captures:
+        1: punctuation.separator.mapping.yaml
+      pop: true
+    - match: '"'
+      scope: punctuation.definition.string.yaml
+      push:
+      - meta_scope: entity.name.key.yaml
+      - include: double-quoted-strings
+  - match: ('(.+?)')\s*(:)(?:\s|$)
+    scope: meta.key.yaml
+    captures:
+      1: string.quoted.single.yaml
+      2: entity.name.key.yaml
+      3: punctuation.separator.mapping.yaml
+  - match: '([^\s''"].*?)\s*(:)(?:\s|$)'
+    scope: meta.key.yaml
+    captures:
+      1: entity.name.key.yaml
+      2: punctuation.separator.mapping.yaml
+
+  package-dev-symbols:
+  - match: '(?=\b(name): )'
+    push:
+    - meta_scope: meta.match-group.yaml
+    - match: $
+      pop: true
+    - include: yaml
+
+  package-dev:
+  - match: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion|file_line_match)(:)
+    captures:
+      1: entity.name.key.yaml
+      2: punctuation.separator.mapping.yaml
+    push:
+    - match: \s+([>\|]-?)\s*$
+      captures:
+        1: keyword.operator.yaml
+      set:
+      - match: ^(\s+)
+        set: Packages/Sublemon/regexp.sublime-syntax
+        with_prototype:
+        - match: ^(?:\s*(- )|(?!\1).)
+          captures:
+            1: keyword.operator.yaml
+          pop: true
+    - match: \s+(['"])?
+      captures:
+        1: string.quoted.yaml
+      set: Packages/Sublemon/regexp.sublime-syntax
+      with_prototype:
+      - match: (\1)?\s*(?=\s#|$)
+        captures:
+          1: string.quoted.yaml
+        pop: true
+  - match: \$self
+    scope: constant.language.yaml
