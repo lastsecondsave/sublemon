@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: meta.context.sublime-syntax entity.name.key
+settings:
+  showInSymbolList: 1
