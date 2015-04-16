@@ -1,0 +1,78 @@
+%YAML 1.2
+---
+name: Regular Expression
+scope: source.regexp
+
+contexts:
+  main:
+  - match: '\\[bBAZzG]|\^|\$'
+    scope: keyword.control.anchor.regexp
+  - match: '\\[1-9]\d*'
+    scope: keyword.other.back-reference.regexp
+  - match: '[?+*]|\{(\d+,\d+|\d+,|,\d+|\d+)\}\??'
+    scope: keyword.operator.quantifier.regexp
+  - match: \|
+    scope: keyword.operator.or.regexp
+  - match: '\(\?[imsxXU]+\)'
+    scope: keyword.modifier.regexp
+
+  - match: '(\()(\?[imsxXU]+:)'
+    captures:
+      1: punctuation.definition.group.modifier.regexp
+      2: keyword.modifier.regexp
+    push:
+    - meta_scope: meta.group.modifier.regexp
+    - match: \)
+      scope: punctuation.definition.group.modifier.regexp
+      pop: true
+    - include: main
+
+  - match: '\((\?<?[=!])'
+    captures:
+      0: punctuation.definition.group.regexp
+      1: meta.assertion.look-around.regexp
+    push:
+      - meta_scope: meta.group.assertion.regexp
+      - match: \)
+        captures:
+          0: punctuation.definition.group.regexp
+        pop: true
+      - include: main
+
+  - match: '\((\?[:>|])?'
+    scope: punctuation.definition.group.regexp
+    push:
+      - meta_scope: meta.group.regexp
+      - match: \)
+        scope: punctuation.definition.group.regexp
+        pop: true
+      - include: main
+
+  - match: '(\[)(\^)?'
+    captures:
+      1: punctuation.definition.character-class.regexp
+      2: keyword.operator.negation.regexp
+    push:
+    - meta_scope: constant.language.character-class.regexp
+    - match: '(\])'
+      captures:
+        1: punctuation.definition.character-class.regexp
+      pop: true
+    - include: character-class
+
+  - match: '[\)\]]'
+    scope: invalid.illegal.stray.bracket
+
+  - include: character-class
+
+  character-class:
+  - match: '\\[wWsSdDhHvVX]|\.'
+    scope: constant.language.character-class.regexp
+  - match: '\\p([A-Za-z]|\{[A-Za-z]+\})'
+    scope: constant.character.unicode.regexp
+  - match: '\\x([0-9A-F]{2}|\{[0-9A-F]+\})'
+    scope: constant.character.hex.regexp
+  - match: '\\c[A-Z]'
+    scope: constant.character.control.regexp
+  - match: \\.
+    scope: constant.character.escape.backslash.regexp
