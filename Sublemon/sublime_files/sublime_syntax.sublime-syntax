@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Sublime Syntax
+scope: source.yaml
+file_extensions: [sublime-syntax]
+
+contexts:
+  main:
+  - meta_scope: source.sublime-syntax
+  - match: '(?=^  [\w-]+:)'
+    push:
+    - meta_scope: meta.context.sublime-syntax
+    - match: $
+      pop: true
+    - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#keys
+  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#package-dev
+  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#yaml

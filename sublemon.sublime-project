@@ -19,7 +19,7 @@
 			[
 				"Package Control.cache"
 			],
-			"name": "config",
+			"name": "user",
 			"path": "User"
 		},
 		{
@@ -41,6 +41,14 @@
 			],
 			"name": "disco",
 			"path": "Sublemon\\disco"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
+			"name": "sublime_files",
+			"path": "Sublemon\\sublime_files"
 		},
 		{
 			"file_exclude_patterns":
