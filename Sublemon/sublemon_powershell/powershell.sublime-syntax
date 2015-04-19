@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: PowerShell
+scope: source.powershell
+file_extensions: [ps1, psm1]
+
+contexts:
+  main:
+  - match: (?:^|(?<=\s))#.*$
+    scope: comment.line.number-sign.yaml

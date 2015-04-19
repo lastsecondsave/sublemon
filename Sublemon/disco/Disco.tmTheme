@@ -97,7 +97,7 @@
 			<key>name</key>
 			<string>Keyword operator</string>
 			<key>scope</key>
-			<string>keyword.operator.character, keyword.operator.instanceof.java, keyword.operator.logical.python, source.sql keyword.operator</string>
+			<string>keyword.operator.character, keyword.operator.instanceof.java, keyword.operator.logical.python</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -592,7 +592,7 @@
 			<key>name</key>
 			<string>RegExp character classes</string>
 			<key>scope</key>
-			<string>constant.language.character-class.regexp, source.regexp constant.character - constant.character.escape</string>
+			<string>constant.language.character.class.regexp, source.regexp constant.character - constant.character.escape</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

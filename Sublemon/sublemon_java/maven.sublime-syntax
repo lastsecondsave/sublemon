@@ -61,6 +61,14 @@ contexts:
     - match: (?=^\s+at\b)
       pop: true
 
+  - match: '(org\.drools\..*?Invalid\w+):'
+    captures:
+      1: entity.name.exception.maven
+    push: drools-result-string
+    with_prototype:
+    - match: (?=^\s+at\b)
+      pop: true
+
   - match: '^\s+(.+):(\d+)(?=\s+expected)'
     captures:
       1: entity.name.file.maven
@@ -92,6 +100,16 @@ contexts:
     captures:
       1: keyword.junit.maven
   - match: '[\[\]]'
-    scope: meta.result.maven
+    scope: punctuation.difference.junit.maven
   - match: .
     scope: string.maven
+
+  drools-result-string:
+  - match: 'Rule Compilation error'
+    scope: string.maven
+  - match: '^\s+(.*?\.java) \((\d+):(\d+)\) :\s+(.*)$'
+    captures:
+      1: entity.name.file.maven
+      2: constant.numeric.maven
+      3: constant.numeric.maven
+      4: string.maven
