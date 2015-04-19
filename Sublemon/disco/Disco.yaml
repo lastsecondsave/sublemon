@@ -68,8 +68,7 @@ settings:
   scope: >-
     keyword.operator.character,
     keyword.operator.instanceof.java,
-    keyword.operator.logical.python,
-    source.sql keyword.operator
+    keyword.operator.logical.python
   settings:
     foreground: '#E572D2'
 
@@ -330,7 +329,7 @@ settings:
 
 - name:  RegExp character classes
   scope: >-
-    constant.language.character-class.regexp,
+    constant.language.character.class.regexp,
     source.regexp constant.character - constant.character.escape
   settings:
     foreground: '#E572D2'
