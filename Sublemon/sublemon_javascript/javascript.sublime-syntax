@@ -13,9 +13,9 @@ contexts:
   - include: constants
   - include: support
   - include: functions
-  - match: "{"
+  - match: \{
     push:
-    - match: "}"
+    - match: \}
       pop: true
     - include: main
 
@@ -37,13 +37,13 @@ contexts:
     - match: \1|(?<!\\)\n
       pop: true
     - match: '[^''"\\](?=\n)$'
-      scope: invalid.illegal.missing.quote
+      scope: invalid.illegal.missing-quote
     - match: '\\([bfnrt''"\\]|u[0-9a-fA-F]{4})'
       scope: constant.character.escape.js
     - match: \\(?=\n)
       scope: punctuation.separator.line.js
     - match: \\.
-      scope: invalid.illegal.escape.character
+      scope: invalid.illegal.wrong-escape
 
   - match: '(?<=[=(:,&|?]|^|return)\s*/(?=[^/*+?])'
     scope: string.regexp.js
@@ -56,7 +56,7 @@ contexts:
   constants:
   - match: '\b(0[xX][0-9a-fA-F]+|0[0-7]+)\b'
     scope: constant.numeric.js
-  - match: '((?<=\s|[=+*/%-(]|^)-)?\b[0-9]+\.?[0-9]*([eE][+-]?[0-9]+)?\b'
+  - match: '((?<=[\s=+*/%-(]|^)-)?\b[0-9]+\.?[0-9]*([eE][+-]?[0-9]+)?\b'
     scope: constant.numeric.js
   - match: \b(false|Infinity|NaN|null|true|undefined)\b
     scope: constant.language.js
@@ -131,7 +131,7 @@ contexts:
     - match: (?=\S)
       pop: true
   - match: \{
-    scope: invalid.illegal.missing.function.parameters
+    scope: invalid.illegal.missing-function-parameters
     pop: true
   - match: (?=\S)
     pop: true

@@ -264,27 +264,24 @@ settings:
   settings:
     foreground: '#AAAAF0'
 
-- name:  Powershell variable scope
-  scope: variable.language.powershell keyword
+- name:  Powershell pipe and stream
+  scope: >-
+    keyword.operator.pipe.powershell,
+    keyword.operator.stream.powershell
   settings:
-    foreground: '#FF9A41'
+    foreground: '#FF8147'
 
-- name:  Powershell variable
-  scope: variable.language.powershell
+- name:  Powershell execute and escape
+  scope: >-
+    keyword.operator.execute.powershell,
+    keyword.operator.escape.powershell
+  settings:
+    foreground: '#E5476C'
+
+- name:  Powershell embedded expression
+  scope: punctuation.definition.expression.powershell
   settings:
     foreground: '#EFC52D'
-
-- name:  Powershell operator
-  scope: >-
-    keyword.operator.comparison.powershell,
-    keyword.operator.logical.powershell
-  settings:
-    foreground: '#EF51AA'
-
-- name:  Powershell function
-  scope: support.function.generic.powershell
-  settings:
-    foreground: '#EF51AA'
 
 - name:  INI key
   scope: >-
@@ -347,6 +344,11 @@ settings:
     meta.group.modifier.regexp punctuation.definition.group.modifier.regexp
   settings:
     foreground: '#E5476C'
+
+- name:  Embedded RegExp
+  scope: source source.regexp - source.yaml
+  settings:
+    foreground: '#C5CC4B'
 
 - name:  Markup italic
   scope: markup.italic

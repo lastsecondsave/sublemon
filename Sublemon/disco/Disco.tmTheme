@@ -469,46 +469,35 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Powershell variable scope</string>
+			<string>Powershell pipe and stream</string>
 			<key>scope</key>
-			<string>variable.language.powershell keyword</string>
+			<string>keyword.operator.pipe.powershell, keyword.operator.stream.powershell</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#FF9A41</string>
+				<string>#FF8147</string>
 			</dict>
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Powershell variable</string>
+			<string>Powershell execute and escape</string>
 			<key>scope</key>
-			<string>variable.language.powershell</string>
+			<string>keyword.operator.execute.powershell, keyword.operator.escape.powershell</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#E5476C</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Powershell embedded expression</string>
+			<key>scope</key>
+			<string>punctuation.definition.expression.powershell</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#EFC52D</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Powershell operator</string>
-			<key>scope</key>
-			<string>keyword.operator.comparison.powershell, keyword.operator.logical.powershell</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#EF51AA</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Powershell function</string>
-			<key>scope</key>
-			<string>support.function.generic.powershell</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#EF51AA</string>
 			</dict>
 		</dict>
 		<dict>
@@ -619,6 +608,17 @@
 			<dict>
 				<key>foreground</key>
 				<string>#E5476C</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Embedded RegExp</string>
+			<key>scope</key>
+			<string>source source.regexp - source.yaml</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#C5CC4B</string>
 			</dict>
 		</dict>
 		<dict>
