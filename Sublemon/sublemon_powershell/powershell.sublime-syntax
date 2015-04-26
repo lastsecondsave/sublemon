@@ -6,5 +6,172 @@ file_extensions: [ps1, psm1]
 
 contexts:
   main:
+  - include: code-section
+  - include: functions
+
+  code-section:
+  - include: comments
+  - include: storage
+  - include: keywords
+  - include: operators
+  - include: strings
+  - match: \{
+    push:
+    - match: \}
+      pop: true
+    - include: code-section
+  - match: \(
+    push:
+    - match: \)
+      pop: true
+    - include: code-section
+  - match: \[
+    push:
+    - match: \]
+      pop: true
+    - include: code-section
+
+  comments:
+  - match: (?:^|(?<=\s))<#.*?#>
+    scope: comment.block.powershell
+  - match: (?:^|(?<=\s))<#
+    push:
+    - meta_scope: comment.block.powershell
+    - match: '#>'
+      pop: true
   - match: (?:^|(?<=\s))#.*$
-    scope: comment.line.number-sign.yaml
+    scope: comment.line.number-sign.powershell
+
+  strings:
+  # Basic strings
+  - match: "'.*?'"
+    scope: string.quoted.single.powershell
+  - match: "'"
+    push:
+    - meta_scope: string.quoted.single.powershell
+    - match: "'"
+      pop: true
+  - match: '"'
+    push:
+    - meta_scope: string.quoted.double.powershell
+    - match: '"'
+      pop: true
+    - include: string-internals
+  # Here-String
+  - match: '@[''"]\s*\S+$'
+    scope: invalid.illegal.bad-here-string.powershell
+  - match: "@'"
+    push:
+    - meta_scope: string.other.here-string.single.powershell
+    - match: '^\s+''@'
+      scope: invalid.illegal.bad-here-string.powershell
+      pop: true
+    - match: "^'@"
+      pop: true
+  - match: '@"'
+    push:
+    - meta_scope: string.other.here-string.double.powershell
+    - match: '^\s+"@'
+      scope: invalid.illegal.bad-here-string.powershell
+      pop: true
+    - match: '^"@'
+      pop: true
+    - include: string-internals
+
+  string-internals:
+  - match: '`[0abfnrtv`"$]'
+    scope: constant.character.escape.powershell
+  - match: '`'
+    scope: invalid.illegal.wrong-escape.powershell
+  - match: '\$(\w+:)?\w+'
+    scope: variable.language.powershell
+  - match: \$\(
+    scope: punctuation.definition.expression.powershell
+    push:
+    - match: \(
+      push:
+      - match: \)
+        pop: true
+      - include: string-internals
+    - match: \)
+      scope: punctuation.definition.expression.powershell
+      pop: true
+    - include: string-internals
+
+  storage:
+  - match: '((?<=[\s=+*/%-(]|^)-)?\b\d+[.,]?\d*([kmg]b)?\b'
+    scope: constant.numeric.powershell
+  - match: '\$(\w+:)?\w+'
+    scope: variable.language.powershell
+  - match: '\[\s*(?=[A-Za-z])'
+    push:
+    - match: \w+
+      scope: storage.type.powershell
+    - match: (?=[^\w.])
+      set:
+      - match: \]
+        pop: true
+      - include: code-section
+
+  keywords:
+  - match: \b(?<![/\\\[-])(?i:begin|process|exit|break|return|catch|finally|sequence|class|for|switch|continue|foreach|throw|data|from|trap|define|try|do|if|until|dynamicparam|in|using|else|inlinescript|var|elseif|parallel|while|end|param|workflow|where)(?!-)\b
+    scope: keyword.control.powershell
+  - match: '[%?@$](?=\s*\{)'
+    scope: keyword.control.powershell
+  - match: '[@$](?=\s*\()'
+    scope: keyword.control.powershell
+
+  operators:
+  - match: (-(?:not)?match)\s+(')
+    captures:
+      1: keyword.operator.symbolic.powershell
+      2: string.quoted.powershell
+    push: Packages/Sublemon/regexp.sublime-syntax
+    with_prototype:
+    - match: "'"
+      scope: string.quoted.powershell
+      pop: true
+  - match: -(c?eq|ne|i?[gl][te]|(not)?(match|contains)|b?(and|not|x?or)|split|join|as|in)\b
+    scope: keyword.operator.symbolic.powershell
+  - match: '[+*%]=?|\+{2}|[-/]?='
+    scope: keyword.operator.symbolic.powershell
+  - match: (/|-{1,2})(?=[\d$\s])
+    scope: keyword.operator.symbolic.powershell
+  - match: '!'
+    scope: keyword.operator.unary.powershell
+  - match: \|
+    scope: keyword.operator.pipe.powershell
+  - match: (<|>>?)
+    scope: keyword.operator.stream.powershell
+  - match: '&|(?<![.\w])\.\s*(?=[$"''])'
+    scope: keyword.operator.execute.powershell
+  - match: '(`).'
+    captures:
+      1: keyword.operator.escape.powershell
+
+  functions:
+  - match: \b(?<![/-])(?i)(function|filter)\s+([A-Za-z][\w.-]*)
+    captures:
+      1: storage.type.function.powershell
+      2: entity.name.function.powershell
+    push: [function-body, function-parameters]
+
+  function-parameters:
+  - match: \(
+    set:
+    - meta_scope: meta.function.paremeters.powershell
+    - match: \)
+      pop: true
+    - include: code-section
+  - match: (?=\S)
+    pop: true
+
+  function-body:
+  - match: \{
+    set:
+    - meta_scope: meta.function.body.powershell
+    - match: \}
+      pop: true
+    - include: code-section
+  - match: (?=\S)
+    pop: true
