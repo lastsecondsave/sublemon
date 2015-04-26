@@ -61,7 +61,7 @@ contexts:
     - include: character.class
 
   - match: '[\)\]]'
-    scope: invalid.illegal.stray.bracket
+    scope: invalid.illegal.stray-bracket
 
   - include: character.class
 
