@@ -2,7 +2,7 @@
 ---
 name: JavaScript
 scope: source.js
-file_extensions: [js , jsm]
+file_extensions: [js, jsm]
 
 contexts:
   main:
@@ -13,11 +13,26 @@ contexts:
   - include: constants
   - include: support
   - include: functions
+  - include: bracket-balancing
+
+  bracket-balancing:
   - match: \{
     push:
     - match: \}
       pop: true
     - include: main
+  - match: \(
+    push:
+    - match: \)
+      pop: true
+    - include: main
+  - match: \[
+    push:
+    - match: \]
+      pop: true
+    - include: main
+  - match: '[)}\]]'
+    scope: invalid.illegal.stray-bracket
 
   comments:
   - match: /\*.*?\*/
@@ -68,12 +83,28 @@ contexts:
     scope: storage.type.js
 
   keywords:
-  - match: \b(break|case|catch|continue|default|do|else|finally|for|if|return|switch|throw|try|while|yield|delete)\b
+  - match: \b(break|case|catch|continue|default|do|else|finally|return|switch|throw|try|yield|delete)\b
     scope: keyword.control.js
+  - match: \b(if|while|for)\b
+    scope: keyword.control.js
+    push: semicolon-after-bracket-check
   - match: '\b(new)\s+([\w$]+)\b'
     captures:
       1: keyword.control.js
       2: support.class.js
+
+  semicolon-after-bracket-check:
+  - match: \(
+    set:
+    - match: \)
+      set:
+      - match: ';'
+        scope: invalid.illegal.bad-semicolon
+      - match: (?=\S)
+        pop: true
+    - include: main
+  - match: (?=\S)
+    pop: true
 
   operators:
   - match: "[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>"
