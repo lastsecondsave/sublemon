@@ -10,7 +10,7 @@
 			<key>settings</key>
 			<dict>
 				<key>background</key>
-				<string>#2D2D30</string>
+				<string>#2D2D34</string>
 				<key>bracketsForeground</key>
 				<string>#FF8147</string>
 				<key>caret</key>
@@ -24,7 +24,7 @@
 				<key>minimapBorder</key>
 				<string>#CDCDCD</string>
 				<key>selection</key>
-				<string>#515162</string>
+				<string>#264F78</string>
 			</dict>
 		</dict>
 		<dict>
@@ -689,9 +689,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>CSS tag selector</string>
+			<string>CSS general selector</string>
 			<key>scope</key>
-			<string>meta.selector.css entity.name.tag</string>
+			<string>meta.rule.selector.css entity.name.general</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -702,7 +702,7 @@
 			<key>name</key>
 			<string>CSS id selector</string>
 			<key>scope</key>
-			<string>meta.selector.css entity.name.id</string>
+			<string>meta.rule.selector.css entity.name.id</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -713,11 +713,22 @@
 			<key>name</key>
 			<string>CSS class selector</string>
 			<key>scope</key>
-			<string>meta.selector.css entity.name.class</string>
+			<string>meta.rule.selector.css entity.name.class</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#E5476C</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>CSS pseudo-class selector</string>
+			<key>scope</key>
+			<string>meta.rule.selector.css entity.name.pseudo-class</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#E572D2</string>
 			</dict>
 		</dict>
 		<dict>
