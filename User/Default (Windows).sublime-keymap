@@ -28,7 +28,7 @@
 
   /* GUI */
 
-  { "keys": ["f10"],     "command": "show_overlay", "args": {"overlay": "command_palette"} },
+  { "keys": ["alt+."],   "command": "show_overlay", "args": {"overlay": "command_palette"} },
   { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
   { "keys": ["ctrl+q"],  "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
@@ -49,14 +49,16 @@
 
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Default/Add Line in Braces.sublime-macro" },
-    "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
+    "context": [
+      {"key": "setting.is_widget", "operator": "equal", "operand": false}
+    ]
   },
-
-  /* Snippets */
-
-  { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " $SELECTION "} },
   { "keys": ["alt+shift+w"], "command": "insert_snippet",
     "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
+  },
+  { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " $SELECTION "}, "context": [
+      {"key": "selection_empty", "operator": "equal", "operand": false, "match_all": true}
+    ]
   },
 
   /* Build */
