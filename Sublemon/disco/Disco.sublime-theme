@@ -520,6 +520,13 @@
         "layer0.tint": [38, 79, 120]
     },
 
+    // Quick panel row's hover
+    {
+        "class": "quick_panel_row",
+        "attributes": ["hover"],
+        "layer0.tint": [54, 54, 66]
+    },
+
     // Quick panel filename label
     {
         "class": "quick_panel_label",
@@ -545,18 +552,25 @@
         "selected_fg": [170, 170, 240]
     },
 
-    // Condensed quick panel background
+    // Condensed quick panel
     {
         "class": "mini_quick_panel_row",
         "layer0.tint": [27, 27, 28],
         "layer0.opacity": 1.0
     },
 
-    // Condensed quick panel selected row background
+    // Condensed quick panel selected row
     {
         "class": "mini_quick_panel_row",
         "attributes": ["selected"],
         "layer0.tint": [38, 79, 120]
+    },
+
+    // Condensed quick panel row hover
+    {
+        "class": "mini_quick_panel_row",
+        "attributes": ["hover"],
+        "layer0.tint": [54, 54, 66]
     },
 
     /* ---------------------------------------- */
@@ -592,8 +606,8 @@
     // Auto-complete panel row
     {
         "class": "table_row",
-        "layer0.tint": [38, 79, 120],
-        "layer0.opacity": 0.0,
+        "layer0.tint": [27, 27, 28],
+        "layer0.opacity": 1.0,
         "layer0.inner_margin": [1, 1]
     },
 
@@ -601,7 +615,14 @@
     {
         "class": "table_row",
         "attributes": ["selected"],
-        "layer0.opacity": 1.0
+        "layer0.tint": [38, 79, 120]
+    },
+
+    // Auto-complete panel row hover
+    {
+        "class": "table_row",
+        "attributes": ["hover"],
+        "layer0.tint": [54, 54, 66]
     },
 
     /* ---------------------------------------- */
