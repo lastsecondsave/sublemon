@@ -15,6 +15,9 @@ contexts:
   - include: keywords
   - include: operators
   - include: strings
+  - include: bracket-balancing
+
+  bracket-balancing:
   - match: \{
     push:
     - match: \}
@@ -30,6 +33,8 @@ contexts:
     - match: \]
       pop: true
     - include: code-section
+  - match: '[)}\]]'
+    scope: invalid.illegal.stray-bracket
 
   comments:
   - match: (?:^|(?<=\s))<#.*?#>
@@ -131,9 +136,9 @@ contexts:
     - match: "'"
       scope: string.quoted.powershell
       pop: true
-  - match: -(c?eq|ne|i?[gl][te]|(not)?(match|contains)|b?(and|not|x?or)|split|join|as|in)\b
+  - match: -(c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
     scope: keyword.operator.symbolic.powershell
-  - match: '[+*%]=?|\+{2}|[-/]?='
+  - match: '[+*%]=?|\+{2}|[-/]?=|--%'
     scope: keyword.operator.symbolic.powershell
   - match: (/|-{1,2})(?=[\d$\s])
     scope: keyword.operator.symbolic.powershell
