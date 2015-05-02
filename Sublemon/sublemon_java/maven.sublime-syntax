@@ -53,7 +53,7 @@ contexts:
       2: constant.numeric.maven
 
   surefire:
-  - match: '((?:org\.)?junit\.(framework\.)?\w+):'
+  - match: '((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
     captures:
       1: entity.name.exception.maven
     push: junit-result-string
@@ -67,15 +67,6 @@ contexts:
     push: drools-result-string
     with_prototype:
     - match: (?=^\s+at\b)
-      pop: true
-
-  - match: '^\s+(.+):(\d+)(?=\s+expected)'
-    captures:
-      1: entity.name.file.maven
-      2: constant.numeric.maven
-    push: junit-result-string
-    with_prototype:
-    - match: $
       pop: true
 
   - match: (?=Tests run:)
@@ -100,7 +91,7 @@ contexts:
     captures:
       1: keyword.junit.maven
   - match: '[\[\]]'
-    scope: punctuation.difference.junit.maven
+    scope: constant.character.maven
   - match: .
     scope: string.maven
 
