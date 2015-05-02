@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>entity.name.title.rfc</string>
+	<string>entity.name.title.rfc, entity.name.section.ini</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

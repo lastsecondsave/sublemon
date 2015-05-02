@@ -502,31 +502,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>INI key</string>
-			<key>scope</key>
-			<string>meta.property.ini punctuation.definition.quote.ini, meta.property.ini keyword.name.ini</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66B5F0</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>INI value</string>
-			<key>scope</key>
-			<string>meta.value.ini</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#C5CC4B</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
 			<string>INI section</string>
 			<key>scope</key>
-			<string>meta.tag.section.ini</string>
+			<string>meta.section.ini, entity.name.section.ini</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
