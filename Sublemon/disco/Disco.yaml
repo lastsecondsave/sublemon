@@ -380,20 +380,25 @@ settings:
   settings:
     foreground: '#EFC52D'
 
-- name:  CSS tag selector
-  scope: meta.selector.css entity.name.tag
+- name:  CSS general selector
+  scope: meta.rule.selector.css entity.name.general
   settings:
     foreground: '#EF51AA'
 
 - name:  CSS id selector
-  scope: meta.selector.css entity.name.id
+  scope: meta.rule.selector.css entity.name.id
   settings:
     foreground: '#EFC52D'
 
 - name:  CSS class selector
-  scope: meta.selector.css entity.name.class
+  scope: meta.rule.selector.css entity.name.class
   settings:
     foreground: '#E5476C'
+
+- name:  CSS pseudo-class selector
+  scope: meta.rule.selector.css entity.name.pseudo-class
+  settings:
+    foreground: '#E572D2'
 
 - name:  CSS important
   scope: keyword.other.important.css

@@ -1,0 +1,114 @@
+%YAML 1.2
+---
+name: CSS
+scope: source.css
+file_extensions: [css]
+
+contexts:
+  prototype:
+  - match: /\*.*?\*/
+    scope: comment.block.css
+  - match: /\*
+    push:
+    - meta_scope: comment.block.css
+    - match: \*/
+      pop: true
+
+  main:
+  - match: '(?=[\w#.-])'
+    push: rule-selector
+  - match: '@(font-face|page|counter-style)'
+    scope: entity.name.at-rule.css
+    push: rule-selector
+  - match: '@[\w-]+'
+    scope: entity.name.at-rule.css
+    push: at-rule-selector
+  - match: \}
+    scope: invalid.illegal.stray-bracket
+
+  rule-selector:
+  - meta_scope: meta.rule.selector.css
+  - match: (?=\s*\{)
+    set:
+    - match: \{
+      set: rule-body
+  - match: '[;}]'
+    scope: invalid.illegal.bad-character
+    pop: true
+  - match: '((?<=\w\.)|(?<=\s|^)\.)[\w-]+'
+    scope: entity.name.class.css
+  - match: '((?<=\w:)|(?<=\w::)|(?<=\s|^):{1,2})[\w-]+'
+    scope: entity.name.pseudo-class.css
+  - match: '((?<=\w#)|(?<=\s|^)#)[\w-]+'
+    scope: entity.name.id.css
+  - include: constants
+  - include: support
+  - match: '[\w-]+'
+    scope: entity.name.general.css
+  - match: '@[\w-]+'
+    scope: invalid.illegal.second-at-rule.css
+
+  rule-body:
+  - meta_scope: meta.rule.body.css
+  - match: \}
+    pop: true
+  - include: properties
+  - match: \{
+    scope: invalid.illegal.bad-character
+
+  at-rule-selector:
+  - meta_scope: meta.rule.selector.css
+  - match: \b(and|or|not|only)\b
+    scope: keyword.operator.css
+  - match: (?=\s*;)
+    pop: true
+  - match: (?=\s*\{)
+    set:
+    - match: \{
+      set: at-rule-body
+  - include: rule-selector
+
+  at-rule-body:
+  - meta_scope: meta.at-rule.body.css
+  - match: \}
+    pop: true
+  - include: main
+
+  properties:
+  - match: '([\w-]+)\s*:\s*'
+    captures:
+      1: entity.name.key
+    push:
+    - meta_scope: meta.property.css
+    - meta_content_scope: meta.property.value.css
+    - match: \s*;
+      pop: true
+    - match: "!important"
+      scope: keyword.other.important.css
+    - include: constants
+    - include: support
+    - match: '[\w-]+'
+      scope: support.constant.css
+
+  constants:
+  - match: '[#-]?\d+(?:\.\d+)?(%|px|em|s)?'
+    scope: constant.numeric.css
+  - match: '(["'']).*?\1'
+    scope: string.quoted.css
+
+  support:
+  - match: ((rgb|hsl)a?|regexp)*\s*\(
+    captures:
+      1: support.function.css
+    push:
+    - match: \)
+      pop: true
+    - include: constants
+  - match: ([\w-]+)*\s*\(
+    captures:
+      1: support.function.css
+    push:
+    - meta_content_scope: string.css
+    - meta_include_prototype: false
+    - match: \)
+      pop: true
