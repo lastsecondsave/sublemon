@@ -143,7 +143,7 @@ contexts:
     - include: yaml
 
   package-dev:
-  - match: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion|file_line_match)(:)
+  - match: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion|first_line_match)(:)
     captures:
       1: entity.name.key.yaml
       2: punctuation.separator.mapping.yaml
