@@ -1,0 +1,33 @@
+%YAML 1.2
+---
+name: INI
+scope: source.ini
+file_extensions: [ini, inf, reg]
+first_line_match: '^\[.*\]$'
+
+contexts:
+  main:
+  - match: ^\s*[;#].*$
+    scope: comment.line.ini
+
+  - match: ^\s*\[(.*)\]
+    scope: meta.section.ini
+    captures:
+      1: entity.name.section.ini
+
+  - match: ^\s*(.*?)\s*=
+    captures:
+      1: entity.name.key.ini
+    push:
+    - match: '"'
+      set:
+      - meta_scope: string.quoted.ini
+      - match: $
+        pop: true
+      - include: escapes
+    - match: ''
+      pop: true
+
+  escapes:
+  - match: '\\[\\;"trn]'
+    scope: constant.character.escape.ini

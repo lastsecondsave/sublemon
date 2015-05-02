@@ -284,20 +284,8 @@ settings:
   settings:
     foreground: '#EFC52D'
 
-- name:  INI key
-  scope: >-
-    meta.property.ini punctuation.definition.quote.ini,
-    meta.property.ini keyword.name.ini
-  settings:
-    foreground: '#66B5F0'
-
-- name:  INI value
-  scope: meta.value.ini
-  settings:
-    foreground: '#C5CC4B'
-
 - name:  INI section
-  scope: meta.tag.section.ini
+  scope: meta.section.ini, entity.name.section.ini
   settings:
     foreground: '#EFC52D'
 
