@@ -1,7 +1,7 @@
 <snippet>
 	<description>if</description>
 	<tabTrigger>if</tabTrigger>
-	<scope>source.java, source.js, source.c++, source.c</scope>
+	<scope>source.java, source.js, source.c++, source.powershell</scope>
 	<content>
 <![CDATA[if ($1) {
 	$0
