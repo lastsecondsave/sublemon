@@ -138,9 +138,9 @@ contexts:
       pop: true
   - match: -(c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
     scope: keyword.operator.symbolic.powershell
-  - match: '[+*%]=?|\+{2}|[-/]?=|--%'
+  - match: '[%/*+-]?=|--%'
     scope: keyword.operator.symbolic.powershell
-  - match: (/|-{1,2})(?=[\d$\s])
+  - match: ([*/%]|--?|\+{2})(?=[\d$\s])
     scope: keyword.operator.symbolic.powershell
   - match: '!'
     scope: keyword.operator.unary.powershell
