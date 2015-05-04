@@ -95,9 +95,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Keyword operator</string>
+			<string>Alphanumeric operator</string>
 			<key>scope</key>
-			<string>keyword.operator.character, keyword.operator.instanceof.java, keyword.operator.logical.python</string>
+			<string>keyword.operator.alphanumeric, keyword.operator.instanceof.java, keyword.operator.logical.python</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
