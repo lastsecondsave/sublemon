@@ -718,7 +718,7 @@
 						<key>1</key>
 						<dict>
 							<key>name</key>
-							<string>keyword.operator.character.c++</string>
+							<string>keyword.operator.alphanumeric.c++</string>
 						</dict>
 					</dict>
 					<key>end</key>
@@ -790,7 +790,7 @@
 					<key>match</key>
 					<string>[&amp;|+-]{1,2}|([+*/%&amp;^|&lt;&gt;=-]|&lt;&lt;|&gt;&gt;&gt;?)=?|!=|-&gt;</string>
 					<key>name</key>
-					<string>keyword.operator.symbolic.c++</string>
+					<string>keyword.operator.c++</string>
 				</dict>
 				<dict>
 					<key>match</key>

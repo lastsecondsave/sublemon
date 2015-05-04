@@ -65,9 +65,9 @@ settings:
   settings:
     foreground: '#FF8147'
 
-- name:  Keyword operator
+- name:  Alphanumeric operator
   scope: >-
-    keyword.operator.character,
+    keyword.operator.alphanumeric,
     keyword.operator.instanceof.java,
     keyword.operator.logical.python
   settings:

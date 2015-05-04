@@ -147,7 +147,7 @@ repository:
       begin: \b((?:const|dynamic|reinterpret|static)_cast)<
       end: '>'
       beginCaptures:
-        '1': {name: keyword.operator.character.c++}
+        '1': {name: keyword.operator.alphanumeric.c++}
       patterns:
       - include: '#inner-code'
     - begin: '\?'
@@ -166,7 +166,7 @@ repository:
       - include: '#inner-code'
     - name: support.function.c++
       match: \b(sizeof|decltype)\b
-    - name: keyword.operator.symbolic.c++
+    - name: keyword.operator.c++
       match: '[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|!=|->'
     - name: keyword.operator.unary.c
       match: '!'

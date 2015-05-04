@@ -129,7 +129,7 @@ contexts:
   operators:
   - match: (-(?:not)?match)\s+(')
     captures:
-      1: keyword.operator.symbolic.powershell
+      1: keyword.operator.powershell
       2: string.quoted.powershell
     push: Packages/Sublemon/regexp.sublime-syntax
     with_prototype:
@@ -137,11 +137,11 @@ contexts:
       scope: string.quoted.powershell
       pop: true
   - match: -(c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
-    scope: keyword.operator.symbolic.powershell
+    scope: keyword.operator.powershell
   - match: '[%/*+-]?=|--%'
-    scope: keyword.operator.symbolic.powershell
+    scope: keyword.operator.powershell
   - match: ([*/%]|--?|\+{2})(?=[\d$\s])
-    scope: keyword.operator.symbolic.powershell
+    scope: keyword.operator.powershell
   - match: '!'
     scope: keyword.operator.unary.powershell
   - match: \|

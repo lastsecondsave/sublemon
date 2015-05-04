@@ -108,7 +108,7 @@ contexts:
 
   operators:
   - match: "[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>"
-    scope: keyword.operator.symbolic.js
+    scope: keyword.operator.js
   - match: "[!~]"
     scope: keyword.operator.unary.js
   - match: \?
@@ -119,10 +119,10 @@ contexts:
       pop: true
     - include: main
   - match: \b(in|of|typeof|void|with)\b
-    scope: keyword.operator.character.js
+    scope: keyword.operator.alphanumeric.js
   - match: '\b(instanceof)\s+([\w$]+)\b'
     captures:
-      1: keyword.operator.character.js
+      1: keyword.operator.alphanumeric.js
       2: support.class.js
 
   support:
@@ -143,7 +143,7 @@ contexts:
   - match: '(?:\b([\w$]+)\s*(?:(=)|:)\s*(function)|(function)\s*([\w$]+)?)'
     captures:
       1: entity.name.function.js
-      2: keyword.operator.symbolic.js
+      2: keyword.operator.js
       3: storage.type.function.js
       4: storage.type.function.js
       5: entity.name.function.js
