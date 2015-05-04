@@ -4,15 +4,26 @@
   "completions": [
     "captures",
     "file_extensions",
-    "file_line_match",
+    "first_line_match",
     "include",
     "match",
     "meta_content_scope",
     "meta_include_prototype",
     "meta_scope",
+    {"trigger": "pop", "contents": "pop: true"},
     "prototype",
+    "push",
     "scope",
     "syntax",
-    "with_prototype"
+    "with_prototype",
+
+    "invalid.illegal",
+    "entity.name",
+    "keyword",
+    "keyword.control",
+    "keyword.operator",
+    "constant.character",
+    "punctuation.separator",
+    "punctuation.definition"
   ]
 }
