@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+name: Java Properties
+scope: source.java-props
+file_extensions: [properties, props]
+
+contexts:
+  main:
+  - match: ^\s*[#!].*$
+    scope: comment.line.java-props
+
+  - match: '^\s*(?=(\\[=: ]|[^=: \t\n])++[ \t]*([ =:\t]|$))'
+    push:
+    - meta_content_scope: entity.name.key.java-props
+    - include: escapes
+    - match: '\s*$'
+      pop: true
+    - match: '(?=[=: \t])'
+      set:
+      - match: (?<!\\)\n
+        pop: true
+      - match: \\$
+        scope: punctuation.separator.line.java-props
+      - include: escapes
+
+  escapes:
+  - match: '\\[ trn:=\\]'
+    scope: constant.character.escape.java-props
+  - match: '\\u[a-hA-H0-9]{1,4}'
+    scope: constant.character.escape.unicode.java-props
+  - match: \\
+    scope: invalid.backslash.java-props
