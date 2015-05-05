@@ -1065,61 +1065,61 @@
 
     {
         "class": "icon_regex",
-        "layer0.texture": "Sublemon/Disco/icons/find_regex.png",
+        "layer0.texture": "Sublemon/Disco/images/find_regex.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_case",
-        "layer0.texture": "Sublemon/Disco/icons/find_case.png",
+        "layer0.texture": "Sublemon/Disco/images/find_case.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_highlight",
-        "layer0.texture": "Sublemon/Disco/icons/find_highlight.png",
+        "layer0.texture": "Sublemon/Disco/images/find_highlight.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_in_selection",
-        "layer0.texture": "Sublemon/Disco/icons/find_inselection.png",
+        "layer0.texture": "Sublemon/Disco/images/find_inselection.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_reverse",
-        "layer0.texture": "Sublemon/Disco/icons/find_reverse.png",
+        "layer0.texture": "Sublemon/Disco/images/find_reverse.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_whole_word",
-        "layer0.texture": "Sublemon/Disco/icons/find_wholeword.png",
+        "layer0.texture": "Sublemon/Disco/images/find_wholeword.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_wrap",
-        "layer0.texture": "Sublemon/Disco/icons/find_wrap.png",
+        "layer0.texture": "Sublemon/Disco/images/find_wrap.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_preserve_case",
-        "layer0.texture": "Sublemon/Disco/icons/replace_preserve_case.png",
+        "layer0.texture": "Sublemon/Disco/images/replace_preserve_case.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_context",
-        "layer0.texture": "Sublemon/Disco/icons/context.png",
+        "layer0.texture": "Sublemon/Disco/images/context.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_use_buffer",
-        "layer0.texture": "Sublemon/Disco/icons/use_buffer.png",
+        "layer0.texture": "Sublemon/Disco/images/use_buffer.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
@@ -1138,7 +1138,7 @@
     // Folder icon
     {
         "class": "icon_folder",
-        "layer0.texture": "Sublemon/Disco/icons/folder.png",
+        "layer0.texture": "Sublemon/Disco/images/folder.png",
         "layer0.opacity": 1.0,
         "content_margin": [0, 8]
     },
@@ -1147,7 +1147,7 @@
     {
         "class": "icon_folder",
         "parents": [{ "class": "tree_row", "attributes": ["expanded"] }],
-        "layer0.texture": "Sublemon/Disco/icons/folder_open.png",
+        "layer0.texture": "Sublemon/Disco/images/folder_open.png",
     },
 
     // Folder loading spinner
@@ -1157,14 +1157,14 @@
         {
             "keyframes":
             [
-                "Sublemon/Disco/icons/spinner7.png",
-                "Sublemon/Disco/icons/spinner6.png",
-                "Sublemon/Disco/icons/spinner5.png",
-                "Sublemon/Disco/icons/spinner4.png",
-                "Sublemon/Disco/icons/spinner3.png",
-                "Sublemon/Disco/icons/spinner2.png",
-                "Sublemon/Disco/icons/spinner1.png",
-                "Sublemon/Disco/icons/spinner.png",
+                "Sublemon/Disco/images/spinner7.png",
+                "Sublemon/Disco/images/spinner6.png",
+                "Sublemon/Disco/images/spinner5.png",
+                "Sublemon/Disco/images/spinner4.png",
+                "Sublemon/Disco/images/spinner3.png",
+                "Sublemon/Disco/images/spinner2.png",
+                "Sublemon/Disco/images/spinner1.png",
+                "Sublemon/Disco/images/spinner.png",
             ],
             "loop": true,
             "frame_time": 0.075,
@@ -1177,7 +1177,7 @@
     // Duplicate folder icon
     {
         "class": "icon_folder_dup",
-        "layer0.texture": "Sublemon/Disco/icons/folder_dup.png",
+        "layer0.texture": "Sublemon/Disco/images/folder_dup.png",
         "layer0.opacity": 1.0,
         "content_margin": [0, 8]
     }
