@@ -1,7 +1,6 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.git
 settings:
-  icon: file_type_git
   shellVariables:
   - name: TM_COMMENT_START
     value: '# '

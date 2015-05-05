@@ -6,4 +6,3 @@ settings:
   decreaseIndentPattern: ^\s*((.*\*/\s*)?\};?|\b(case\s+\w+|default):)\s*$
   unIndentedLinePattern: ^\s*((\*/|//|\*).*)?$
   indentSquareBrackets: true
-  icon: file_type_java

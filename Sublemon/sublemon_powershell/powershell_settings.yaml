@@ -8,4 +8,3 @@ settings:
     value: '<* '
   - name: TM_COMMENT_END_2
     value: ' *>'
-  icon: file_type_powershell

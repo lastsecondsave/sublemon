@@ -3,18 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.git</string>
+	<string>source.java-props, source.ini</string>
 	<key>settings</key>
 	<dict>
-		<key>shellVariables</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>TM_COMMENT_START</string>
-				<key>value</key>
-				<string># </string>
-			</dict>
-		</array>
+		<key>icon</key>
+		<string>file_type_properties</string>
 	</dict>
 </dict>
 </plist>

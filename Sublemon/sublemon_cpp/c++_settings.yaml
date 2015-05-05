@@ -5,4 +5,3 @@ settings:
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default|public|private|protected):|/\*!.*)\s*$
   decreaseIndentPattern: ^\s*((.*\*/\s*)?\}.*|\b(case\s+\w+|default|public|private|protected):|\*/)\s*$
   indentSquareBrackets: true
-  icon: file_type_cpp

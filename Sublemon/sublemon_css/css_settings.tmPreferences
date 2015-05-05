@@ -6,8 +6,6 @@
 	<string>source.css</string>
 	<key>settings</key>
 	<dict>
-		<key>icon</key>
-		<string>file_type_css</string>
 		<key>shellVariables</key>
 		<array>
 			<dict>
