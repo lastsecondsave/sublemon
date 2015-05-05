@@ -1,7 +1,6 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.java-props
 settings:
-  icon: file_type_java_properties
   shellVariables:
   - name: TM_COMMENT_START
     value: '# '

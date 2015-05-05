@@ -8,8 +8,6 @@
 	<dict>
 		<key>decreaseIndentPattern</key>
 		<string>^\s*[\}\]](\s*,)?\s*$</string>
-		<key>icon</key>
-		<string>file_type_json</string>
 		<key>increaseIndentPattern</key>
 		<string>^\s*[\{\[]\s*$</string>
 		<key>indentSquareBrackets</key>

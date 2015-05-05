@@ -37,7 +37,7 @@
 		{
 			"file_exclude_patterns":
 			[
-				"*.tm*"
+				"Disco.tm*"
 			],
 			"name": "disco",
 			"path": "Sublemon\\disco"

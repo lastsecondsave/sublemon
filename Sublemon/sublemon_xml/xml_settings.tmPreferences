@@ -10,8 +10,6 @@
 		<string>^.*&lt;[^&gt;]+\s*$</string>
 		<key>decreaseIndentPattern</key>
 		<string>^\s*&lt;\/.*&gt;\s*$</string>
-		<key>icon</key>
-		<string>file_type_xml</string>
 		<key>increaseIndentPattern</key>
 		<string>^.*&lt;(?![?!])[^\/]+&gt;\s*$</string>
 		<key>shellVariables</key>

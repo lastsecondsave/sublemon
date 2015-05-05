@@ -6,8 +6,6 @@
 	<string>source.ini</string>
 	<key>settings</key>
 	<dict>
-		<key>icon</key>
-		<string>file_type_java_properties</string>
 		<key>shellVariables</key>
 		<array>
 			<dict>
