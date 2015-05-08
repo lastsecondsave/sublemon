@@ -119,9 +119,14 @@ settings:
     foreground: '#FF8147'
 
 - name:  User-defined constant
-  scope: variable.constant
+  scope: constant.user
   settings:
     foreground: '#E5476C'
+
+- name:  User-defined variable
+  scope: variable.user
+  settings:
+    foreground: '#FF8147'
 
 - name:  Entity name
   scope: entity.name
@@ -155,11 +160,6 @@ settings:
   scope: support.constant
   settings:
     foreground: '#FF9A41'
-
-- name:  Java Properties keyword
-  scope: keyword.other.java-props
-  settings:
-    foreground: '#66B5F0'
 
 - name:  Java package declaration
   scope: meta.package.java

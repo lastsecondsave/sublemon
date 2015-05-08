@@ -16,6 +16,8 @@
     "scope",
     "syntax",
     "with_prototype",
+    "contexts",
+    "variables",
 
     "invalid.illegal",
     "entity.name",
@@ -24,6 +26,11 @@
     "keyword.operator",
     "constant.character",
     "punctuation.separator",
-    "punctuation.definition"
+    "punctuation.definition",
+    "variable.user",
+    "variable.language",
+    "constant.user",
+    "constant.language",
+    "constant.numeric"
   ]
 }
