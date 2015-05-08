@@ -50,24 +50,24 @@ contexts:
 
   - match: '(\[)(\^)?'
     captures:
-      1: punctuation.definition.character.class.regexp
+      1: punctuation.definition.character-class.regexp
       2: keyword.operator.negation.regexp
     push:
-    - meta_scope: constant.language.character.class.regexp
+    - meta_scope: constant.language.character-class.regexp
     - match: '(\])'
       captures:
-        1: punctuation.definition.character.class.regexp
+        1: punctuation.definition.character-class.regexp
       pop: true
-    - include: character.class
+    - include: character-class
 
   - match: '[\)\]]'
     scope: invalid.illegal.stray-bracket
 
-  - include: character.class
+  - include: character-class
 
-  character.class:
+  character-class:
   - match: '\\[wWsSdDhHvVX]|\.'
-    scope: constant.language.character.class.regexp
+    scope: constant.language.character-class.regexp
   - match: '\\p([A-Za-z]|\{[A-Za-z]+\})'
     scope: constant.character.unicode.regexp
   - match: '\\x([0-9A-F]{2}|\{[0-9A-F]+\})'
