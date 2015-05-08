@@ -10,7 +10,6 @@ contexts:
     set:
     - meta_scope: source.package-dev.yaml
     - include: package-dev
-    - include: package-dev-symbols
     - include: yaml
   - match: ''
     set: yaml
@@ -134,39 +133,16 @@ contexts:
       1: entity.name.key.yaml
       2: punctuation.separator.mapping.yaml
 
-  package-dev-symbols:
+  package-dev:
+  - include: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax#regexp-values
+  - match: \$self
+    scope: constant.language.yaml
+  # Loading 'regexp-values' context ends with error, this hack will help before it'll be fixed.
+  - match: ^(?!x)x
+    push: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax
   - match: '(?=\b(name): )'
     push:
     - meta_scope: meta.match-group.yaml
     - match: $
       pop: true
     - include: yaml
-
-  package-dev:
-  - match: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion|first_line_match)(:)
-    captures:
-      1: entity.name.key.yaml
-      2: punctuation.separator.mapping.yaml
-    push:
-    - match: \s+([>\|]-?)\s*$
-      captures:
-        1: keyword.operator.yaml
-      set:
-      - match: ^(\s+)
-        set: Packages/Sublemon/regexp.sublime-syntax
-        with_prototype:
-        - match: ^(?:\s*(- )|(?!\1).)
-          captures:
-            1: keyword.operator.yaml
-          pop: true
-    - match: \s+(['"])?
-      captures:
-        1: string.quoted.yaml
-      set: Packages/Sublemon/regexp.sublime-syntax
-      with_prototype:
-      - match: (\1)?\s*(?=\s#|$)
-        captures:
-          1: string.quoted.yaml
-        pop: true
-  - match: \$self
-    scope: constant.language.yaml
