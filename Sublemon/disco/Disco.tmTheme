@@ -185,11 +185,22 @@
 			<key>name</key>
 			<string>User-defined constant</string>
 			<key>scope</key>
-			<string>variable.constant</string>
+			<string>constant.user</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#E5476C</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>User-defined variable</string>
+			<key>scope</key>
+			<string>variable.user</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF8147</string>
 			</dict>
 		</dict>
 		<dict>
@@ -256,17 +267,6 @@
 			<dict>
 				<key>foreground</key>
 				<string>#FF9A41</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Java Properties keyword</string>
-			<key>scope</key>
-			<string>keyword.other.java-props</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66B5F0</string>
 			</dict>
 		</dict>
 		<dict>

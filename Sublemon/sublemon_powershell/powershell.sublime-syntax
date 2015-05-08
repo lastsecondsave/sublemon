@@ -88,8 +88,7 @@ contexts:
     scope: constant.character.escape.powershell
   - match: '`'
     scope: invalid.illegal.wrong-escape.powershell
-  - match: '\$(\w+:)?\w+'
-    scope: variable.language.powershell
+  - include: variables
   - match: \$\(
     scope: punctuation.definition.expression.powershell
     push:
@@ -106,8 +105,7 @@ contexts:
   storage:
   - match: '((?<=[\s=+*/%-(]|^)-)?\b\d+[.,]?\d*([kmg]b)?\b'
     scope: constant.numeric.powershell
-  - match: '\$(\w+:)?\w+'
-    scope: variable.language.powershell
+  - include: variables
   - match: '\[\s*(?=[A-Za-z])'
     push:
     - match: \w+
@@ -117,6 +115,10 @@ contexts:
       - match: \]
         pop: true
       - include: code-section
+
+  variables:
+  - match: '\$(\w+:)?\w+'
+    scope: variable.user.powershell
 
   keywords:
   - match: \b(?<![/\\\[-])(?i:begin|process|exit|break|return|catch|finally|sequence|class|for|switch|continue|foreach|throw|data|from|trap|define|try|do|if|until|dynamicparam|in|using|else|inlinescript|var|elseif|parallel|while|end|param|workflow|where)(?!-)\b
