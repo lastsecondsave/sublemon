@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.cpp</string>
+	<string>source.c++</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>
