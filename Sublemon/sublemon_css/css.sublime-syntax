@@ -17,7 +17,7 @@ contexts:
   main:
   - match: '(?=[\w#.-])'
     push: rule-selector
-  - match: '@(font-face|page|counter-style)'
+  - match: '@(?>font-face|page|counter-style)'
     scope: entity.name.at-rule.css
     push: rule-selector
   - match: '@[\w-]+'
@@ -35,11 +35,11 @@ contexts:
   - match: '[;}]'
     scope: invalid.illegal.bad-character
     pop: true
-  - match: '((?<=\w\.)|(?<=\s|^)\.)[\w-]+'
+  - match: '\.[\w-]+'
     scope: entity.name.class.css
-  - match: '((?<=\w:)|(?<=\w::)|(?<=\s|^):{1,2})[\w-]+'
+  - match: ':{1,2}[\w-]+'
     scope: entity.name.pseudo-class.css
-  - match: '((?<=\w#)|(?<=\s|^)#)[\w-]+'
+  - match: '#[\w-]+'
     scope: entity.name.id.css
   - include: constants
   - include: support
@@ -58,7 +58,7 @@ contexts:
 
   at-rule-selector:
   - meta_scope: meta.rule.selector.css
-  - match: \b(and|or|not|only)\b
+  - match: \b(?>and|or|not|only)\b
     scope: keyword.operator.css
   - match: (?=\s*;)
     pop: true
