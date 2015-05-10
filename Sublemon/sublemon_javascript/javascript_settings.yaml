@@ -1,9 +1,16 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.js
+scope: source.javascript
 settings:
-  bracketIndentNextLinePattern: ^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
+  bracketIndentNextLinePattern: ^\s*\b(?>if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$
   decreaseIndentPattern: ^(.*\*/)?\s*\}.*$
   unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
   cancelCompletion: ^\s*(function)\s*[a-zA-Z$_][\w$]+
   indentSquareBrackets: true
+  shellVariables:
+  - name: TM_COMMENT_START
+    value: '// '
+  - name: TM_COMMENT_START_2
+    value: '/* '
+  - name: TM_COMMENT_END_2
+    value: ' */'
