@@ -568,6 +568,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>RegExp character classes in character group</string>
+			<key>scope</key>
+			<string>constant.language.character-class.regexp constant.language.character-class.regexp</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#EF51AA</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>RegExp keywords</string>
 			<key>scope</key>
 			<string>source.regexp keyword.control, source.regexp keyword.operator</string>
