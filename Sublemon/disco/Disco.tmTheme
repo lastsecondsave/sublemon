@@ -491,6 +491,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Powershell static call separator</string>
+			<key>scope</key>
+			<string>punctuation.separator.static-call.powershell</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#AAAAF0</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Powershell embedded expression</string>
 			<key>scope</key>
 			<string>punctuation.definition.expression.powershell</string>

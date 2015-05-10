@@ -12,6 +12,7 @@ contexts:
   code-section:
   - include: comments
   - include: storage
+  - include: variables
   - include: keywords
   - include: operators
   - include: strings
@@ -105,15 +106,16 @@ contexts:
   storage:
   - match: '((?<=[\s=+*/%-(]|^)-)?\b\d+[.,]?\d*([kmg]b)?\b'
     scope: constant.numeric.powershell
-  - include: variables
   - match: '\[\s*(?=[A-Za-z])'
     push:
     - match: \w+
       scope: storage.type.powershell
     - match: (?=[^\w.])
       set:
-      - match: \]
+      - match: \](::)?
         pop: true
+        captures:
+          1: punctuation.separator.static-call.powershell
       - include: code-section
 
   variables:
@@ -121,7 +123,7 @@ contexts:
     scope: variable.user.powershell
 
   keywords:
-  - match: \b(?<![/\\\[-])(?i:begin|process|exit|break|return|catch|finally|sequence|class|for|switch|continue|foreach|throw|data|from|trap|define|try|do|if|until|dynamicparam|in|using|else|inlinescript|var|elseif|parallel|while|end|param|workflow|where)(?!-)\b
+  - match: (?i:)\b(?<![/\\\[-])(?>begin|break|catch|class|continue|data|define|do|dynamicparam|else(if)?|end|exit|finally|for(each)?|from|if|in|parallel|param|process|return|select|sequence|switch|throw|trap|try|until|using|var|where|while|workflow)(?!-)\b
     scope: keyword.control.powershell
   - match: '[%?@$](?=\s*\{)'
     scope: keyword.control.powershell
@@ -138,7 +140,7 @@ contexts:
     - match: "'"
       scope: string.quoted.powershell
       pop: true
-  - match: -(c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
+  - match: (?<=\s)-(?>c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
     scope: keyword.operator.powershell
   - match: '[%/*+-]?=|--%'
     scope: keyword.operator.powershell
