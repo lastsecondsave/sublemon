@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.js</string>
+	<string>source.javascript</string>
 	<key>settings</key>
 	<dict>
 		<key>bracketIndentNextLinePattern</key>
-		<string>^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$</string>
+		<string>^\s*\b(?&gt;if|while|else)\b[^;]*$|^\s*\b(for)\b.*$</string>
 		<key>cancelCompletion</key>
 		<string>^\s*(function)\s*[a-zA-Z$_][\w$]+</string>
 		<key>decreaseIndentPattern</key>
@@ -16,6 +16,27 @@
 		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$</string>
 		<key>indentSquareBrackets</key>
 		<true/>
+		<key>shellVariables</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_START</string>
+				<key>value</key>
+				<string>// </string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_START_2</string>
+				<key>value</key>
+				<string>/* </string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_END_2</string>
+				<key>value</key>
+				<string> */</string>
+			</dict>
+		</array>
 		<key>unIndentedLinePattern</key>
 		<string>^\s*((\*/|//| \*).*)?$</string>
 	</dict>

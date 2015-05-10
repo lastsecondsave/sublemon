@@ -1,8 +1,11 @@
 %YAML 1.2
 ---
 name: JavaScript
-scope: source.js
+scope: source.javascript
 file_extensions: [js, jsm]
+
+variables:
+  identifier: '[A-Za-z$_][\w$]*'
 
 contexts:
   main:
@@ -36,62 +39,70 @@ contexts:
 
   comments:
   - match: /\*.*?\*/
-    scope: comment.block.js
+    scope: comment.block.javascript
   - match: /\*
     push:
-    - meta_scope: comment.block.js
+    - meta_scope: comment.block.javascript
     - match: \*/
       pop: true
   - match: //.*$
-    scope: comment.line.js
+    scope: comment.line.javascript
 
   strings:
-  - match: (['"])
+  - match: '"'
     push:
-    - meta_scope: string.quoted.js
-    - match: \1|(?<!\\)\n
+    - meta_scope: string.quoted.javascript
+    - match: '"'
+      pop: true
+    - include: string-body
+  - match: "'"
+    push:
+    - meta_scope: string.quoted.javascript
+    - match: "'"
+      pop: true
+    - include: string-body
+  - match: '(?<=[=(:,&|?]|^|return)\s*/(?=[^/*+?])'
+    scope: string.regexp.javascript
+    push: Packages/Sublemon/regexp.sublime-syntax
+    with_prototype:
+    - match: '/[igm]*'
+      scope: string.regexp.javascript
+      pop: true
+
+  string-body:
+    - match: (?<!\\)\n
       pop: true
     - match: '[^''"\\](?=\n)$'
       scope: invalid.illegal.missing-quote
     - match: '\\([bfnrt''"\\]|u[0-9a-fA-F]{4})'
-      scope: constant.character.escape.js
+      scope: constant.character.escape.javascript
     - match: \\(?=\n)
-      scope: punctuation.separator.line.js
+      scope: punctuation.separator.line.javascript
     - match: \\.
       scope: invalid.illegal.wrong-escape
 
-  - match: '(?<=[=(:,&|?]|^|return)\s*/(?=[^/*+?])'
-    scope: string.regexp.js
-    push: Packages/Sublemon/regexp.sublime-syntax
-    with_prototype:
-    - match: '/[igm]*'
-      scope: string.regexp.js
-      pop: true
-
   constants:
   - match: '\b(0[xX][0-9a-fA-F]+|0[0-7]+)\b'
-    scope: constant.numeric.js
+    scope: constant.numeric.javascript
   - match: '((?<=[\s=+*/%-(]|^)-)?\b[0-9]+\.?[0-9]*([eE][+-]?[0-9]+)?\b'
-    scope: constant.numeric.js
-  - match: \b(false|Infinity|NaN|null|true|undefined)\b
-    scope: constant.language.js
+    scope: constant.numeric.javascript
+  - match: \b(?>false|Infinity|NaN|null|true|undefined)\b
+    scope: constant.language.javascript
   - match: \b(this)\b
-    scope: variable.language.js
-  - match: '\b[A-Z][A-Z0-9_]+\b'
-    scope: variable.constant.js
-  - match: \b(var|let)\b
-    scope: storage.type.js
+    scope: variable.language.javascript
+  - match: \b(?>var|let)\b
+    scope: storage.type.javascript
 
   keywords:
-  - match: \b(break|case|catch|continue|default|do|else|finally|return|switch|throw|try|yield|delete)\b
-    scope: keyword.control.js
-  - match: \b(if|while|for)\b
-    scope: keyword.control.js
+  - match: \b(?>break|case|catch|continue|default|do|else|finally|return|switch|throw|try|yield|delete)\b
+    scope: keyword.control.javascript
+  - match: \b(?>if|while|for)\b
+    scope: keyword.control.javascript
     push: semicolon-after-bracket-check
-  - match: '\b(new)\s+([\w$]+)\b'
+  - match: '\b(new)\s+({{identifier}})\b'
     captures:
-      1: keyword.control.js
-      2: support.class.js
+      1: keyword.control.javascript
+      2: support.class.javascript
 
   semicolon-after-bracket-check:
   - match: \(
@@ -108,57 +119,65 @@ contexts:
 
   operators:
   - match: "[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>"
-    scope: keyword.operator.js
+    scope: keyword.operator.javascript
   - match: "[!~]"
-    scope: keyword.operator.unary.js
+    scope: keyword.operator.unary.javascript
   - match: \?
-    scope: keyword.operator.ternary.js
+    scope: keyword.operator.ternary.javascript
     push:
     - match: ":"
-      scope: keyword.operator.ternary.js
+      scope: keyword.operator.ternary.javascript
       pop: true
     - include: main
   - match: \b(in|of|typeof|void|with)\b
-    scope: keyword.operator.alphanumeric.js
-  - match: '\b(instanceof)\s+([\w$]+)\b'
+    scope: keyword.operator.alphanumeric.javascript
+  - match: '\b(instanceof)\s+({{identifier}})\b'
     captures:
-      1: keyword.operator.alphanumeric.js
-      2: support.class.js
+      1: keyword.operator.alphanumeric.javascript
+      2: support.class.javascript
 
   support:
-  - match: \b(console|window|document)\b
-    scope: support.constant.js
-  - match: \b(JSON|Math|Object|Function)\b
-    scope: support.class.js
-  - match: \b(decodeURI(Component)?|encodeURI(Component)?|eval|is(Finite|NaN)|parse(Float|Int))\b
-    scope: support.function.js
+  - match: \b(?>console|window|document)\b
+    scope: support.constant.javascript
+  - match: \b(?>JSON|Math|Object|Function)\b
+    scope: support.class.javascript
+  - match: \b(?>(decode|encode)URI(Component)?|eval|is(Finite|NaN)|parse(Float|Int))\b
+    scope: support.function.javascript
   - match: (?<=.)bind(?=\s*\()
-    scope: support.function.js
-  - match: '\b([\w$]+)\.(prototype)\b'
+    scope: support.function.javascript
+  - match: '\b({{identifier}})\.(prototype)\b'
     captures:
-      1: support.type.js
-      2: keyword.other.js
+      1: support.type.javascript
+      2: keyword.other.javascript
 
   functions:
-  - match: '(?:\b([\w$]+)\s*(?:(=)|:)\s*(function)|(function)\s*([\w$]+)?)'
+  - match: '(?:\b({{identifier}})\s*(?:(=)|:)\s*(function)|(function)\s*({{identifier}})?)'
     captures:
-      1: entity.name.function.js
-      2: keyword.operator.js
-      3: storage.type.function.js
-      4: storage.type.function.js
-      5: entity.name.function.js
+      1: entity.name.function.javascript
+      2: keyword.operator.javascript
+      3: storage.type.function.javascript
+      4: storage.type.function.javascript
+      5: entity.name.function.javascript
     push: [function-body, function-parameters]
+  - match: (?=\([^(]*?\)\s*=>)
+    push: function-parameters
+  - match: (?=\(\s*{{identifier}}\s*,)
+    push: function-parameters
+  - match: '({{identifier}})?\s*(=>)'
+    captures:
+      1: variable.parameter.function.javascript
+      2: keyword.operator.lambda.javascript
 
   function-parameters:
   - match: \(
     set:
-    - meta_scope: meta.function.paremeters.js
+    - meta_scope: meta.function.paremeters.javascript
     - match: \)
       pop: true
-    - match: '[\w$]+'
-      scope: variable.parameter.function.js
+    - match: '{{identifier}}'
+      scope: variable.parameter.function.javascript
     - match: ','
-      scope: punctuation.separator.js
+      scope: punctuation.separator.javascript
     - match: (?=\S)
       pop: true
   - match: \{
@@ -170,7 +189,7 @@ contexts:
   function-body:
   - match: \{
     set:
-    - meta_scope: meta.function.body.js
+    - meta_scope: meta.function.body.javascript
     - match: \}
       pop: true
     - include: main
