@@ -320,6 +320,12 @@ settings:
   settings:
     foreground: '#E572D2'
 
+- name:  RegExp character classes in character group
+  scope: >-
+    constant.language.character-class.regexp constant.language.character-class.regexp
+  settings:
+    foreground: '#EF51AA'
+
 - name:  RegExp keywords
   scope: >-
     source.regexp keyword.control,

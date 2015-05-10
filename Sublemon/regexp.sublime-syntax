@@ -16,6 +16,7 @@ contexts:
   - match: '\(\?[imsxXU]+\)'
     scope: keyword.modifier.regexp
 
+  # (?m:expr)
   - match: '(\()(\?[imsxXU]+:)'
     captures:
       1: punctuation.definition.group.modifier.regexp
@@ -27,19 +28,8 @@ contexts:
       pop: true
     - include: main
 
-  - match: '\((\?<?[=!])'
-    captures:
-      0: punctuation.definition.group.regexp
-      1: meta.assertion.look-around.regexp
-    push:
-    - meta_scope: meta.group.assertion.regexp
-    - match: \)
-      captures:
-        0: punctuation.definition.group.regexp
-      pop: true
-    - include: main
-
-  - match: '\((\?[:>|])?'
+  # (?=expr)
+  - match: '\((\?(?>[:>|]|<?[=!]))?'
     scope: punctuation.definition.group.regexp
     push:
     - meta_scope: meta.group.regexp
@@ -48,24 +38,24 @@ contexts:
       pop: true
     - include: main
 
+  # [expr]
   - match: '(\[)(\^)?'
     captures:
       1: punctuation.definition.character-class.regexp
       2: keyword.operator.negation.regexp
     push:
     - meta_scope: constant.language.character-class.regexp
-    - match: '(\])'
-      captures:
-        1: punctuation.definition.character-class.regexp
+    - match: \]
+      scope: punctuation.definition.character-class.regexp
       pop: true
-    - include: character-class
+    - include: characters
 
   - match: '[\)\]]'
     scope: invalid.illegal.stray-bracket
 
-  - include: character-class
+  - include: characters
 
-  character-class:
+  characters:
   - match: '\\[wWsSdDhHvVX]|\.'
     scope: constant.language.character-class.regexp
   - match: '\\p([A-Za-z]|\{[A-Za-z]+\})'
