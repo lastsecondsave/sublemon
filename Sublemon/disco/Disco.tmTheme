@@ -271,6 +271,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Lambda</string>
+			<key>scope</key>
+			<string>punctuation.definition.lambda, keyword.operator.lambda</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#66B5F0</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Java package declaration</string>
 			<key>scope</key>
 			<string>meta.package.java</string>
@@ -443,17 +454,6 @@
 			<dict>
 				<key>foreground</key>
 				<string>#C5CC4B</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>C++ lambda capture list</string>
-			<key>scope</key>
-			<string>punctuation.definition.lambda.capture-list.c++</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#66B5F0</string>
 			</dict>
 		</dict>
 		<dict>

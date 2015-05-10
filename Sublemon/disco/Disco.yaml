@@ -161,6 +161,13 @@ settings:
   settings:
     foreground: '#FF9A41'
 
+- name:  Lambda
+  scope: >-
+    punctuation.definition.lambda,
+    keyword.operator.lambda
+  settings:
+    foreground: '#66B5F0'
+
 - name:  Java package declaration
   scope: meta.package.java
   settings:
@@ -254,11 +261,6 @@ settings:
   scope: meta.macro.body.c
   settings:
     foreground: '#C5CC4B'
-
-- name:  C++ lambda capture list
-  scope: punctuation.definition.lambda.capture-list.c++
-  settings:
-    foreground: '#66B5F0'
 
 - name:  C++ namespace separator
   scope: punctuation.separator.namespace.c++
