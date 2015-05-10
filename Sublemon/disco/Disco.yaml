@@ -279,6 +279,11 @@ settings:
   settings:
     foreground: '#E5476C'
 
+- name:  Powershell static call separator
+  scope: punctuation.separator.static-call.powershell
+  settings:
+    foreground: '#AAAAF0'
+
 - name:  Powershell embedded expression
   scope: punctuation.definition.expression.powershell
   settings:
