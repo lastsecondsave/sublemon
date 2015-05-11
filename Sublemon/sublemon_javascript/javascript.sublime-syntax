@@ -6,6 +6,7 @@ file_extensions: [js, jsm]
 
 variables:
   identifier: '[A-Za-z$_][\w$]*'
+  before_operation: (?<=[=(:,&|?]|^|return\s)\s*
 
 contexts:
   main:
@@ -24,6 +25,7 @@ contexts:
     - match: \}
       pop: true
     - include: main
+    - include: fields
   - match: \(
     push:
     - match: \)
@@ -37,6 +39,10 @@ contexts:
   - match: '[)}\]]'
     scope: invalid.illegal.stray-bracket
 
+  exit-before-any-match:
+  - match: (?=\S)
+    pop: true
+
   comments:
   - match: /\*.*?\*/
     scope: comment.block.javascript
@@ -49,6 +55,7 @@ contexts:
     scope: comment.line.javascript
 
   strings:
+  # TODO: replace with backtracking when fixed
   - match: '"'
     push:
     - meta_scope: string.quoted.javascript
@@ -61,7 +68,7 @@ contexts:
     - match: "'"
       pop: true
     - include: string-body
-  - match: '(?<=[=(:,&|?]|^|return)\s*/(?=[^/*+?])'
+  - match: '{{before_operation}}/(?=[^/*+?])'
     scope: string.regexp.javascript
     push: Packages/Sublemon/regexp.sublime-syntax
     with_prototype:
@@ -94,15 +101,24 @@ contexts:
     scope: storage.type.javascript
 
   keywords:
-  - match: \b(?>break|case|catch|continue|default|do|else|finally|return|switch|throw|try|yield|delete)\b
+  - match: \b(?>break|catch|continue|do|delete|else|finally|return|throw|try|yield)\b
     scope: keyword.control.javascript
-  - match: \b(?>if|while|for)\b
+  - match: \b(?>if|for|while)\b
     scope: keyword.control.javascript
     push: semicolon-after-bracket-check
-  - match: '\b(new)\s+({{identifier}})\b'
-    captures:
-      1: keyword.control.javascript
-      2: support.class.javascript
+  - match: \bswitch\b
+    scope: keyword.control.javascript
+    push: [switch-body, function-parameters]
+
+  switch-body:
+  - match: \{
+    set:
+    - match: \}
+      pop: true
+    - match: (?>case|default)
+      scope: keyword.control.javascript
+    - include: main
+  - include: exit-before-any-match
 
   semicolon-after-bracket-check:
   - match: \(
@@ -114,8 +130,7 @@ contexts:
       - match: (?=\S)
         pop: true
     - include: main
-  - match: (?=\S)
-    pop: true
+  - include: exit-before-any-match
 
   operators:
   - match: "[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>"
@@ -125,15 +140,19 @@ contexts:
   - match: \?
     scope: keyword.operator.ternary.javascript
     push:
-    - match: ":"
+    - match: ':'
       scope: keyword.operator.ternary.javascript
       pop: true
     - include: main
-  - match: \b(in|of|typeof|void|with)\b
+  - match: \b(?>in|of|typeof|void|with)\b
     scope: keyword.operator.alphanumeric.javascript
   - match: '\b(instanceof)\s+({{identifier}})\b'
     captures:
       1: keyword.operator.alphanumeric.javascript
+      2: support.class.javascript
+  - match: '\b(new)\s+({{identifier}})\b'
+    captures:
+      1: keyword.control.javascript
       2: support.class.javascript
 
   support:
@@ -150,23 +169,34 @@ contexts:
       1: support.type.javascript
       2: keyword.other.javascript
 
+  fields:
+  - match: '\b({{identifier}})\s*:'
+    captures:
+      1: entity.name.field.javascript
+
   functions:
-  - match: '(?:\b({{identifier}})\s*(?:(=)|:)\s*(function)|(function)\s*({{identifier}})?)'
+  - match: \b({{identifier}})\s*:\s*(?=function)
     captures:
       1: entity.name.function.javascript
       2: keyword.operator.javascript
-      3: storage.type.function.javascript
-      4: storage.type.function.javascript
-      5: entity.name.function.javascript
+  - match: \b(?<=prototype\.)({{identifier}})\s*(=)\s*(?=function)
+    captures:
+      1: entity.name.function.javascript
+      2: keyword.operator.javascript
+  - match: \b(function)(?:\s+({{identifier}}))?
+    captures:
+      1: storage.type.function.javascript
+      2: entity.name.function.javascript
     push: [function-body, function-parameters]
   - match: (?=\([^(]*?\)\s*=>)
     push: function-parameters
-  - match: (?=\(\s*{{identifier}}\s*,)
+  - match: '{{before_operation}}(?=\(\s*{{identifier}}\s*,)'
     push: function-parameters
   - match: '({{identifier}})?\s*(=>)'
     captures:
       1: variable.parameter.function.javascript
       2: keyword.operator.lambda.javascript
+    push: function-body
 
   function-parameters:
   - match: \(
@@ -176,15 +206,16 @@ contexts:
       pop: true
     - match: '{{identifier}}'
       scope: variable.parameter.function.javascript
-    - match: ','
-      scope: punctuation.separator.javascript
-    - match: (?=\S)
-      pop: true
+    - match: '='
+      scope: keyword.operator.javascript
+      push:
+      - match: (?=[,)])
+        pop: true
+      - include: main
   - match: \{
     scope: invalid.illegal.missing-function-parameters
     pop: true
-  - match: (?=\S)
-    pop: true
+  - include: exit-before-any-match
 
   function-body:
   - match: \{
@@ -193,5 +224,4 @@ contexts:
     - match: \}
       pop: true
     - include: main
-  - match: (?=\S)
-    pop: true
+  - include: exit-before-any-match
