@@ -134,12 +134,9 @@ contexts:
       2: punctuation.separator.mapping.yaml
 
   package-dev:
-  - include: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax#regexp-values
+  - include: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax#regexp-records
   - match: \$self
     scope: constant.language.yaml
-  # Loading 'regexp-values' context ends with error, this hack will help before it'll be fixed.
-  - match: ^(?!x)x
-    push: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax
   - match: '(?=\b(name): )'
     push:
     - meta_scope: meta.match-group.yaml
