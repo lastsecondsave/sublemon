@@ -1,51 +1,77 @@
 %YAML 1.2
 ---
 name: Sublime Syntax
-scope: source.yaml
+scope: source.yaml source.sublime-syntax
 file_extensions: [sublime-syntax]
 
 contexts:
   main:
-  - meta_scope: source.sublime-syntax
+  # Names of the contexts
   - match: '(?=^  [\w-]+:(\s+#|\s*$))'
     push:
     - meta_scope: meta.context.sublime-syntax
     - match: ((?=#)|$)
       pop: true
     - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#keys
-  - include: regexp-values
-  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#yaml
 
-  regexp-values:
-  - match: (match|begin|end|\w*(?:Pattern|Match|Marker)|symbolTransformation|cancelCompletion|first_line_match)(:)
+  # Sections 'contexts' and 'variables'
+  - match: '^(contexts)(:)'
     captures:
       1: entity.name.key.yaml
       2: punctuation.separator.mapping.yaml
     push:
-    # Multi-lined value
-    - match: \s+([>\|]-?)\s*$
+    - meta_scope: meta.section.contexts.sublime-syntax
+    - include: main
+  - match: '^(variables)(:)'
+    captures:
+      1: entity.name.key.yaml
+      2: punctuation.separator.mapping.yaml
+    push:
+    - meta_scope: meta.section.variables.sublime-syntax
+    - match: '(?=^contexts:)'
+      pop: true
+    - match: (\w+)(:)
       captures:
-        1: keyword.operator.yaml
-      set:
-      - match: ^(\s+)
-        set: Packages/Sublemon/regexp.sublime-syntax
-        with_prototype:
-        - match: ^(?:\s*(- )|(?!\1).)
-          captures:
-            1: keyword.operator.yaml
-          pop: true
-        - include: variables
-    # Single-lined value
-    - match: \s+(['"])?
-      captures:
-        1: string.quoted.yaml
+        1: entity.name.key.yaml
+        2: punctuation.separator.mapping.yaml
+      push: regexp-value
+    - include: main
+
+  - include: regexp-records
+  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#yaml
+
+  regexp-records:
+  - match: ((?>match|begin|end|symbolTransformation|cancelCompletion|first_line_match|\w+(?>Pattern|Match)))(:)
+    captures:
+      1: entity.name.key.yaml
+      2: punctuation.separator.mapping.yaml
+    push: regexp-value
+
+  regexp-value:
+  # Multi-lined value
+  - match: \s+([>\|]-?)\s*$
+    captures:
+      1: keyword.operator.yaml
+    set:
+    - match: ^(\s+)
       set: Packages/Sublemon/regexp.sublime-syntax
       with_prototype:
-      - match: (\1)?\s*(?=\s#|$)
+      - match: ^(?:\s*(- )|(?!\1).)
         captures:
-          1: string.quoted.yaml
+          1: keyword.operator.yaml
         pop: true
       - include: variables
+  # Single-lined value
+  - match: \s+(['"])?
+    captures:
+      1: string.quoted.yaml
+    set: Packages/Sublemon/regexp.sublime-syntax
+    with_prototype:
+    - match: (\1)?\s*(?=\s#|$)
+      captures:
+        1: string.quoted.yaml
+      pop: true
+    - include: variables
 
   variables:
   - match: '{{[A-Za-z0-9_]+}}'
