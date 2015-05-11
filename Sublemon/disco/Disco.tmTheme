@@ -20,7 +20,7 @@
 				<key>foreground</key>
 				<string>#CDCDCD</string>
 				<key>lineHighlight</key>
-				<string>#363642</string>
+				<string>#363642C0</string>
 				<key>minimapBorder</key>
 				<string>#CDCDCD</string>
 				<key>selection</key>
@@ -754,7 +754,5 @@
 			</dict>
 		</dict>
 	</array>
-	<key>uuid</key>
-	<string>DC528CA7-4183-4CC0-A813-9431EE950599</string>
 </dict>
 </plist>

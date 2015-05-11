@@ -222,26 +222,10 @@
     },
 
     /* ---------------------------------------- */
+    /* SIDEBAR                                  */
+    /* ---------------------------------------- */
 
-    {
-        "class": "panel_control",
-        "layer0.texture": "Sublemon/Disco/images/status_bar.png",
-        "layer0.inner_margin": [2, 2, 2, 2],
-        "content_margin": [0, 1],
-        "layer0.opacity": 1.0
-    },
-
-    {
-        "class": "tool_tip_control",
-        "layer0.texture": "Sublemon/Disco/images/tool_tip_background.png",
-        "layer0.inner_margin": [2, 2],
-        "layer0.opacity": 1.0,
-        "content_margin": [3, 3]
-    },
-    {
-        "class": "tool_tip_label_control",
-        "color": [0, 0, 0, 255]
-    },
+    // Disclosure button
     {
         "class": "disclosure_button_control",
         "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
@@ -249,52 +233,79 @@
         "layer0.inner_margin": 0,
         "content_margin": [8, 8, 8, 8]
     },
+
+    // Disclosure button when hover on row
     {
         "class": "disclosure_button_control",
         "parents": [{ "class": "tree_row", "attributes": ["hover"] }],
-        // "attributes": ["hover"],
         "layer0.opacity": 0.5
     },
+
+    // Expanded disclosure button
     {
         "class": "disclosure_button_control",
         "attributes": ["expanded"],
         "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
-        "layer0.opacity": 0.7
-    },
-    {
-        "class": "disclosure_button_control",
-        "parents": [{ "class": "tree_row", "attributes": ["expanded", "hover"] }],
-        // "attributes": ["expanded", "hover"],
-        "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
-        "layer0.opacity": 1.0
+        "layer0.opacity": 0.9
     },
 
+    // Expanded disclosure button when hover on row
+    // {
+    //     "class": "disclosure_button_control",
+    //     "parents": [{ "class": "tree_row", "attributes": ["expanded", "hover"] }],
+    //     "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+    //     "layer0.opacity": 1.0
+    // },
+
+    // Row
     {
         "class": "tree_row",
-        // "layer0.tint": [27, 27, 28],
+        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark.png",
         "layer0.opacity": 0.0,
         "layer0.inner_margin": [1, 1]
     },
+
+    // Selected row
     {
         "class": "tree_row",
         "attributes": ["selected"],
-        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark.png",
-        // "layer0.tint": [54, 54, 66],
         "layer0.opacity": 1.0
     },
+
+    // Row hover
+    {
+        "class": "tree_row",
+        "attributes": ["hover"],
+        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark_hover.png",
+        "layer0.opacity": 0.3
+    },
+
+    // Selected row hover
+    {
+        "class": "tree_row",
+        "attributes": ["hover", "selected"],
+        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark.png",
+        "layer0.opacity": 1.0
+    },
+
+    // Close button
     {
         "class": "close_button",
         "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
         "layer0.opacity": 0.1,
-        "layer0.inner_margin": 0,
+        "layer0.inner_margin": 1,
         "content_margin": [8, 8]
     },
+
+    // Close button when file changed
     {
         "class": "close_button",
         "attributes": ["dirty"],
         "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
-        "layer0.opacity": 0.7
+        "layer0.opacity": 0.9
     },
+
+    // Close button hover
     {
         "class": "close_button",
         "attributes": ["hover"],
@@ -302,22 +313,7 @@
         "layer0.opacity": 1.0
     },
 
-    // {
-    //     "class": "panel_close_button",
-    //     "layer0.texture": "Sublemon/Disco/images/dark_x.png",
-    //     "layer0.opacity": 0.6,
-    //     "layer1.texture": "Sublemon/Disco/images/dark_x_light_shadow.png",
-    //     "layer1.opacity": 0.0,
-    //     "content_margin": [8, 8]
-    // },
-    // {
-    //     "class": "panel_close_button",
-    //     "attributes": ["hover"],
-    //     "layer0.opacity": 0.0,
-    //     "layer1.opacity": 1.0,
-    // },
-
-
+    // Sidebar container
     {
         "class": "sidebar_container",
         "layer0.texture": "Sublemon/Disco/images/sidebar_bg.png",
@@ -325,6 +321,8 @@
         "layer0.inner_margin": [1, 1, 2, 1],
         "content_margin": [0, 0, 1, 0]
     },
+
+    // Rows container
     {
         "class": "sidebar_tree",
         "row_padding": [8, 2],
@@ -333,45 +331,42 @@
         "indent_top_level": false,
         "dark_content": true
     },
+
+    // Group/Folders label
     {
         "class": "sidebar_heading",
         "color": [210, 210, 210],
-        "font.bold": true,
-        "shadow_color": [0, 0, 0],
-        "shadow_offset": [0, -1]
+        "font.bold": true
     },
-    {
-        "class": "sidebar_heading",
-        "parents": [{"class": "tree_row", "attributes": ["selected"]}],
-        "shadow_offset": [0, 1]
-    },
+
+    // File label
     {
         "class": "sidebar_label",
         "color": [125, 125, 125],
-        "shadow_color": [0, 0, 0],
-        "shadow_offset": [0, -1],
         "font.bold": false,
         "font.italic": false
     },
+
+    // Selected file label
     {
         "class": "sidebar_label",
-        "parents": [{"class": "tree_row", "attributes": ["selected"]}],
+        "parents": [{ "class": "tree_row", "attributes": ["selected"] }],
         "color": [210, 210, 210],
-        "shadow_color": [0, 0, 0],
-        "shadow_offset": [0, -1]
     },
 
+    // Directory label
     {
         "class": "sidebar_label",
-        "parents": [{"class": "tree_row", "attributes": ["expandable"]}],
+        "parents": [{ "class": "tree_row", "attributes": ["expandable"] }],
         "color": [190, 190, 190]
     },
-    {
-        "class": "sidebar_label",
-        "parents": [{"class": "tree_row", "attributes": ["expandable", "hover"]}],
-        "color": [235, 235, 235]
-    },
 
+    // Directory label hover
+    // {
+    //     "class": "sidebar_label",
+    //     "parents": [{ "class": "tree_row", "attributes": ["expandable", "hover"] }],
+    //     "color": [235, 235, 235]
+    // },
 
     {
         "class": "sidebar_label",
@@ -524,7 +519,16 @@
     {
         "class": "quick_panel_row",
         "attributes": ["hover"],
-        "layer0.tint": [54, 54, 66]
+        "layer0.tint": [54, 54, 66],
+        "layer0.opacity": 0.3
+    },
+
+    // Quick panel selected row's hover
+    {
+        "class": "quick_panel_row",
+        "attributes": ["hover", "selected"],
+        "layer0.tint": [38, 79, 120],
+        "layer0.opacity": 1.0
     },
 
     // Quick panel filename label
@@ -570,7 +574,16 @@
     {
         "class": "mini_quick_panel_row",
         "attributes": ["hover"],
-        "layer0.tint": [54, 54, 66]
+        "layer0.tint": [54, 54, 66],
+        "layer0.opacity": 0.3
+    },
+
+    // Condensed quick panel selected row hover
+    {
+        "class": "mini_quick_panel_row",
+        "attributes": ["hover", "selected"],
+        "layer0.tint": [38, 79, 120],
+        "layer0.opacity": 1.0
     },
 
     /* ---------------------------------------- */
@@ -622,10 +635,54 @@
     {
         "class": "table_row",
         "attributes": ["hover"],
-        "layer0.tint": [54, 54, 66]
+        "layer0.tint": [54, 54, 66],
+        "layer0.opacity": 0.3
+    },
+
+    // Auto-complete selected panel row hover
+    {
+        "class": "table_row",
+        "attributes": ["hover", "selected"],
+        "layer0.tint": [38, 79, 120],
+        "layer0.opacity": 1.0
     },
 
     /* ---------------------------------------- */
+
+    {
+        "class": "panel_control",
+        "layer0.texture": "Sublemon/Disco/images/status_bar.png",
+        "layer0.inner_margin": [2, 2, 2, 2],
+        "content_margin": [0, 1],
+        "layer0.opacity": 1.0
+    },
+
+    {
+        "class": "panel_close_button",
+        "layer0.texture": "Sublemon/Disco/images/dark_x.png",
+        "layer0.opacity": 0.6,
+        "layer1.texture": "Sublemon/Disco/images/dark_x_light_shadow.png",
+        "layer1.opacity": 0.0,
+        "content_margin": [8, 8]
+    },
+    {
+        "class": "panel_close_button",
+        "attributes": ["hover"],
+        "layer0.opacity": 0.0,
+        "layer1.opacity": 1.0,
+    },
+
+    {
+        "class": "tool_tip_control",
+        "layer0.texture": "Sublemon/Disco/images/tool_tip_background.png",
+        "layer0.inner_margin": [2, 2],
+        "layer0.opacity": 1.0,
+        "content_margin": [3, 3]
+    },
+    {
+        "class": "tool_tip_label_control",
+        "color": [0, 0, 0, 255]
+    },
 
     {
         "class": "sheet_container_control",
@@ -1139,7 +1196,7 @@
     {
         "class": "icon_folder",
         "layer0.texture": "Sublemon/Disco/images/folder.png",
-        "layer0.opacity": 1.0,
+        "layer0.opacity": 0.0,
         "content_margin": [0, 8]
     },
 
