@@ -65,6 +65,7 @@
 
   { "keys": ["ctrl+b"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
   { "keys": ["alt+b"],  "command": "show_panel" ,  "args": {"panel": "output.exec", "toggle": true} },
+  { "keys": [""],    "command": "exec", "args": {"kill": true} },
 
   { "keys": ["f7"],      "command": "build" },
   { "keys": ["ctrl+f7"], "command": "build", "args": {"variant": "Clean"} },
