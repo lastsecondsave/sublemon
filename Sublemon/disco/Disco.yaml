@@ -1,6 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmTheme
 name: Disco
-uuid: DC528CA7-4183-4CC0-A813-9431EE950599
 
 # Colors:
 # 838495   gray           [131, 132, 149]
@@ -24,7 +23,7 @@ settings:
     foreground:         '#CDCDCD'
     caret:              '#FFFFFF'
     selection:          '#264F78'
-    lineHighlight:      '#363642'
+    lineHighlight:      '#363642C0'
     findHighlight:      '#EFC52D'
     minimapBorder:      '#CDCDCD'
     bracketsForeground: '#FF8147'
