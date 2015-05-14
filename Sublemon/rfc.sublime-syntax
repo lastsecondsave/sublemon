@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: RFC Specification
+scope: text.rfc
+file_extensions: [rfc.txt, rfc]
+
+contexts:
+  main:
+  - match: '^\w.*\[Page \d+\]$'
+    scope: comment.rfc
+  - match: ^RFC.*\d$
+    scope: comment.rfc
+  - match: '^.+?\s{5,}.*?$'
+  - match: ^\w.*$
+    scope: entity.name.title.rfc
