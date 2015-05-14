@@ -11,10 +11,10 @@ contexts:
 
   code-section:
   - include: comments
-  - include: storage
   - include: variables
-  - include: keywords
   - include: operators
+  - include: keywords
+  - include: storage
   - include: strings
   - include: bracket-balancing
 
@@ -142,16 +142,18 @@ contexts:
       pop: true
   - match: (?<=[\s()\[\]])-(?>c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
     scope: keyword.operator.powershell
-  - match: '[%/*+-]?=|--%'
+  - match: (?>[%/*+-]?=|--%)
     scope: keyword.operator.powershell
-  - match: ([*/%]|--?|\+{2})(?=[\d$\s])
+  - match: (?>[*/%]|--?|\+{2})(?=[\d$\s])
     scope: keyword.operator.powershell
   - match: '!'
     scope: keyword.operator.unary.powershell
   - match: \|
     scope: keyword.operator.pipe.powershell
-  - match: (<|>>?)
-    scope: keyword.operator.stream.powershell
+  - match: '[*1-5]?(<|>>?)(?:&[1-5])?'
+    scope: keyword.operator.powershell
+    captures:
+      1: keyword.operator.stream.powershell
   - match: '&|(?<![.\w])\.\s*(?=[$"''])'
     scope: keyword.operator.execute.powershell
   - match: '(`).'
@@ -159,7 +161,7 @@ contexts:
       1: keyword.operator.escape.powershell
 
   functions:
-  - match: \b(?<![/-])(?i)(function|filter)\s+([A-Za-z][\w.-]*)
+  - match: \b(?<![/-])(?i)((?>function|filter))\s+([A-Za-z][\w.-]*)
     captures:
       1: storage.type.function.powershell
       2: entity.name.function.powershell
