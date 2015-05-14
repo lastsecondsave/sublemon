@@ -2,5 +2,5 @@
 	<description>non-capturing group</description>
 	<scope>source.regexp</scope>
 	<tabTrigger>:</tabTrigger>
-	<content><![CDATA[(?:$0)]]></content>
+	<content><![CDATA[(?:${0:$SELECTION})]]></content>
 </snippet>
