@@ -23,6 +23,7 @@ settings:
     foreground:         '#CDCDCD'
     caret:              '#FFFFFF'
     selection:          '#264F78'
+    selectionBorder:    '#66B5F0'
     lineHighlight:      '#363642C0'
     findHighlight:      '#EFC52D'
     minimapBorder:      '#CDCDCD'
