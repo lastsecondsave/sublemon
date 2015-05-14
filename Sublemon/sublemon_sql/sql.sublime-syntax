@@ -1,0 +1,92 @@
+%YAML 1.2
+---
+name: SQL
+scope: source.sql
+file_extensions: [sql]
+
+contexts:
+  prototype:
+  - include: comments
+  - include: strings
+  - include: constants
+  - include: operators
+
+  main:
+  - include: queries
+  - include: bracket-balancing
+
+  comments:
+  - match: "--.*$"
+    scope: comment.line.double-dash.sql
+  - match: /\*.*\*/
+    scope: comment.block.sql
+  - match: /\*
+    push:
+    - meta_scope: comment.block.sql
+    - match: \*/
+      pop: true
+
+  constants:
+  - match: ((?<=[\s=+*/%-(]|^)-)?\b\d+(\.\d+)?\b
+    scope: constant.numeric.sql
+  - match: (?i)\b(?>null|true|false)\b
+    scope: constant.language.sql
+
+  strings:
+  - match: '(["'']).*?\1'
+    scope: string.quoted.sql
+  - match: '(["''])'
+    push:
+    - meta_scope: string.quoted.sql
+    - match: \1
+      pop: true
+
+  operators:
+  - match: (?i)\b(?>as|of|on|in|is|and|or|not|like|asc|desc)\b
+    scope: keyword.operator.alphanumeric.sql
+  - match: (?>\|\||[!:]?=|<>|[<>]=?|[+/-]|(?<!\.)\*)
+    scope: keyword.operator.sql
+  - match: ^\s*(/)(?:\s+|$)
+    captures:
+      1: keyword.operator.commit.oracle.sql
+
+  queries:
+  - match: (?i)\b(?>select|distinct|from|where|(?>order|group)\s+by|having)\b
+    scope: keyword.query.sql
+  - match: (?i)\b(?:(?>full|left|right)\s+)?(?:(?>inner|outer)\s+)?join\b
+    scope: keyword.query.sql
+  - match: (?i)\b((?>count|upper|sum|max|min))\s*\(
+    captures:
+      1: support.function.sql
+    push: scan-to-closing-round-bracket
+    with_prototype:
+    - match: (?i)\b(?>distinct)
+      scope: keyword.query.sql
+  - match: \(
+    push:
+    - include: queries
+    - include: scan-to-closing-round-bracket
+
+  scan-to-closing-round-bracket:
+  - match: \)
+    pop: true
+  - include: bracket-balancing
+
+  bracket-balancing:
+  - match: \{
+    push:
+    - match: \}
+      pop: true
+    - include: bracket-balancing
+  - match: \(
+    push:
+    - match: \)
+      pop: true
+    - include: bracket-balancing
+  - match: \[
+    push:
+    - match: \]
+      pop: true
+    - include: bracket-balancing
+  - match: '[)}\]]'
+    scope: invalid.illegal.stray-bracket
