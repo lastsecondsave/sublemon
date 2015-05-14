@@ -5,7 +5,7 @@ scope: text.maven
 
 contexts:
   main:
-  - match: '^(?:(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
+  - match: '^(?>(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
     captures:
       1: meta.indicator.error.maven
       2: meta.indicator.warning.maven
@@ -16,7 +16,7 @@ contexts:
 
   - include: 'summary'
 
-  - match: '^(?:(\[ERROR\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
+  - match: '^(?>(\[ERROR\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
     scope: comment.maven
     captures:
       1: meta.indicator.error.maven
@@ -40,7 +40,7 @@ contexts:
       scope: comment.maven
 
   exceptions:
-  - match: '^(?:Caused by: )?([\w\.]+(?:Exception|Failure|Error))(?:: (.*))?'
+  - match: '^(?:Caused by: )?([\w\.]+(?>Exception|Failure|Error))(?:: (.*))?'
     scope: meta.exception.maven
     captures:
       1: entity.name.exception.maven
@@ -71,7 +71,7 @@ contexts:
 
   - match: (?=Tests run:)
     push:
-    - match: '(Tests run|Failures|Errors|Skipped|Time elapsed): (\d+(?:[,.]\d+)*(?: sec)?)'
+    - match: '((?>Tests run|Failures|Errors|Skipped|Time elapsed)): (\d+(?:[,.]\d+)*(?: sec)?)'
       captures:
         1: keyword.maven
         2: constant.numeric.maven
@@ -80,7 +80,7 @@ contexts:
     - match: $
       pop: true
 
-  - match: '<<< (FAILURE|ERROR)!'
+  - match: '<<< ((?>FAILURE|ERROR))!'
     scope: meta.indicator.error.maven
 
   - include: 'summary'
