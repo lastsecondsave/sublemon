@@ -25,6 +25,9 @@
   { "keys": ["alt+d"], "command": "toggle_reverse",
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
   },
+  { "keys": ["alt+b"], "command": "toggle_use_buffer",
+    "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
+  },
 
   /* GUI */
 
@@ -43,6 +46,8 @@
   { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_tabs" },
 
   /* Macro */
+
+  { "keys": ["alt+,"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
 
   { "keys": ["ctrl+f12"], "command": "toggle_record_macro" },
   { "keys": ["ctrl+shift+f12"], "command": "run_macro" },
@@ -88,6 +93,7 @@
   { "keys": ["ctrl+shift+s"], "command": "save_all" },
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
   { "keys": ["shift+alt+z"],  "command": "reveal_in_side_bar" },
+  { "keys": ["shift+alt+."], "command": "close_tag" },
 
   { "keys": ["ctrl+k", "ctrl+;"], "command": "clone_file" },
 
