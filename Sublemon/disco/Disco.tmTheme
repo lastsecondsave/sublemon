@@ -352,7 +352,7 @@
 			<key>name</key>
 			<string>XML tag</string>
 			<key>scope</key>
-			<string>punctuation.definition.tag, meta.tag.sgml.doctype.xml, meta.tag.sgml.doctype.xml keyword</string>
+			<string>entity.name.tag, punctuation.definition.tag</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -363,7 +363,7 @@
 			<key>name</key>
 			<string>XML attribute name</string>
 			<key>scope</key>
-			<string>meta.attribute.xml, entity.name.attribute.xml, variable.documentroot.xml</string>
+			<string>source.xml entity.name.attribute</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

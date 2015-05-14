@@ -200,17 +200,13 @@ settings:
 
 - name:  XML tag
   scope: >-
-    punctuation.definition.tag,
-    meta.tag.sgml.doctype.xml,
-    meta.tag.sgml.doctype.xml keyword
+    entity.name.tag,
+    punctuation.definition.tag
   settings:
     foreground: '#66B5F0'
 
 - name:  XML attribute name
-  scope: >-
-    meta.attribute.xml,
-    entity.name.attribute.xml,
-    variable.documentroot.xml
+  scope: source.xml entity.name.attribute
   settings:
     foreground: '#EFC52D'
 
