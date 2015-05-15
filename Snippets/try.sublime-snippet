@@ -4,7 +4,7 @@
 	<scope>source.java, source.c++</scope>
 	<content>
 <![CDATA[try {
-	$0
+	${0:$SELECTION}
 }]]>
 	</content>
 </snippet>
