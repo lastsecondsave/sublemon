@@ -2,5 +2,5 @@
 	<description>Where-Object</description>
 	<tabTrigger>?</tabTrigger>
 	<scope>source.powershell</scope>
-	<content>?{ $0 }</content>
+	<content>?{ ${0:$SELECTION} }</content>
 </snippet>
