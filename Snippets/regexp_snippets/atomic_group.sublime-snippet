@@ -1,5 +1,5 @@
 <snippet>
-	<description>atomic group</description>
+	<description>Atomic Group</description>
 	<scope>source.regexp</scope>
 	<tabTrigger><![CDATA[>]]></tabTrigger>
 	<content><![CDATA[(?>${0:$SELECTION})]]></content>

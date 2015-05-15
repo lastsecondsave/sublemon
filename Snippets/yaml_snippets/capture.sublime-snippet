@@ -1,6 +1,0 @@
-<snippet>
-	<description>capture group</description>
-	<tabTrigger>cp</tabTrigger>
-	<scope>source.package-dev.yaml</scope>
-	<content><![CDATA['${1:1}': \{name: $0\}]]></content>
-</snippet>

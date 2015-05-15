@@ -1,5 +1,5 @@
 <snippet>
-	<description>attribute</description>
+	<description>Attribute</description>
 	<tabTrigger>a</tabTrigger>
 	<scope>source.xml meta.tag.xml</scope>
 	<content>${1:name}="$2"</content>
