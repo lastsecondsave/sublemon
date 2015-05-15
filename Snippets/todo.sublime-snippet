@@ -1,5 +1,5 @@
 <snippet>
-	<description>TODO:</description>
+	<description>TODO</description>
 	<tabTrigger>td</tabTrigger>
 	<scope>source.java, source.js, source.c++, source.c</scope>
 	<content><![CDATA[//TODO: ]]></content>
