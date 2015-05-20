@@ -9,13 +9,13 @@
         "class": "button_control",
         "content_margin": [6, 5, 6, 6],
         "min_size": [75, 0],
-        "layer0.texture": "Sublemon/Disco/images/full_button.png",
+        "layer0.texture": "Disco/images/full_button.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [6, 6],
-        "layer1.texture": "Sublemon/Disco/images/full_button_indented.png",
+        "layer1.texture": "Disco/images/full_button_indented.png",
         "layer1.opacity": 0.0,
         "layer1.inner_margin": [6, 6],
-        "layer2.texture": "Sublemon/Disco/images/blue_highlight.png",
+        "layer2.texture": "Disco/images/blue_highlight.png",
         "layer2.opacity": { "target": 0.0, "speed": 1.33, "interpolation": "smoothstep" },
         "layer2.inner_margin": [6, 6]
     },
@@ -39,29 +39,29 @@
     // Small Icon Buttons
     {
         "class": "icon_button_control",
-        "layer0.texture": "Sublemon/Disco/images/middle_button.png",
+        "layer0.texture": "Disco/images/middle_button.png",
         "layer0.inner_margin": [6, 6],
         "layer0.opacity": 1.0,
-        "layer2.texture": "Sublemon/Disco/images/blue_highlight.png",
+        "layer2.texture": "Disco/images/blue_highlight.png",
         "layer2.opacity": { "target": 0.0, "speed": 1.33, "interpolation": "smoothstep" },
         "content_margin": [4, 4]
     },
     {
         "class": "icon_button_control",
         "attributes": ["left"],
-        "layer0.texture": "Sublemon/Disco/images/left_button.png",
+        "layer0.texture": "Disco/images/left_button.png",
         "layer0.opacity": 1.0
     },
     {
         "class": "icon_button_control",
         "attributes": ["right"],
-        "layer0.texture": "Sublemon/Disco/images/right_button.png",
+        "layer0.texture": "Disco/images/right_button.png",
         "layer0.opacity": 1.0
     },
     {
         "class": "icon_button_control",
         "attributes": ["left", "right"],
-        "layer0.texture": "Sublemon/Disco/images/mini_button.png",
+        "layer0.texture": "Disco/images/mini_button.png",
         "layer0.opacity": 1.0,
         "layer0.draw_center": true
     },
@@ -80,25 +80,25 @@
     {
         "class": "icon_button_control",
         "attributes": ["selected"],
-        "layer0.texture": "Sublemon/Disco/images/middle_button_selected.png",
+        "layer0.texture": "Disco/images/middle_button_selected.png",
         "layer0.opacity": 1.0
     },
     {
         "class": "icon_button_control",
         "attributes": ["left", "selected"],
-        "layer0.texture": "Sublemon/Disco/images/left_button_selected.png",
+        "layer0.texture": "Disco/images/left_button_selected.png",
         "layer0.opacity": 1.0
     },
     {
         "class": "icon_button_control",
         "attributes": ["right", "selected"],
-        "layer0.texture": "Sublemon/Disco/images/right_button_selected.png",
+        "layer0.texture": "Disco/images/right_button_selected.png",
         "layer0.opacity": 1.0
     },
     {
         "class": "icon_button_control",
         "attributes": ["right", "left", "selected"],
-        "layer0.texture": "Sublemon/Disco/images/mini_button_selected.png",
+        "layer0.texture": "Disco/images/mini_button_selected.png",
         "layer0.opacity": 1.0
     },
 
@@ -123,7 +123,7 @@
     // Vertical scrollbar
     {
         "class": "scroll_bar_control",
-        "layer0.texture": "Sublemon/Disco/images/normal_bar_vertical.png",
+        "layer0.texture": "Disco/images/normal_bar_vertical.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [0, 6],
         "blur": false
@@ -142,7 +142,7 @@
     {
         "class": "scroll_bar_control",
         "attributes": ["horizontal"],
-        "layer0.texture": "Sublemon/Disco/images/normal_bar_horizontal.png",
+        "layer0.texture": "Disco/images/normal_bar_horizontal.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [6, 0],
         "blur": false
@@ -160,7 +160,7 @@
 
     {
         "class": "scroll_corner_control",
-        "layer0.texture": "Sublemon/Disco/images/normal_bar_corner.png",
+        "layer0.texture": "Disco/images/normal_bar_corner.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [1, 1]
     },
@@ -228,7 +228,7 @@
     // Disclosure button
     {
         "class": "disclosure_button_control",
-        "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+        "layer0.texture": "Disco/images/dirty_circle_light.png",
         "layer0.opacity": 0.1,
         "layer0.inner_margin": 0,
         "content_margin": [8, 8, 8, 8]
@@ -245,7 +245,7 @@
     {
         "class": "disclosure_button_control",
         "attributes": ["expanded"],
-        "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+        "layer0.texture": "Disco/images/dirty_circle_light.png",
         "layer0.opacity": 0.9
     },
 
@@ -253,14 +253,14 @@
     // {
     //     "class": "disclosure_button_control",
     //     "parents": [{ "class": "tree_row", "attributes": ["expanded", "hover"] }],
-    //     "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+    //     "layer0.texture": "Disco/images/dirty_circle_light.png",
     //     "layer0.opacity": 1.0
     // },
 
     // Row
     {
         "class": "tree_row",
-        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark.png",
+        "layer0.texture": "Disco/images/row_highlight_dark.png",
         "layer0.opacity": 0.0,
         "layer0.inner_margin": [1, 1]
     },
@@ -276,7 +276,7 @@
     {
         "class": "tree_row",
         "attributes": ["hover"],
-        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark_hover.png",
+        "layer0.texture": "Disco/images/row_highlight_dark_hover.png",
         "layer0.opacity": 0.3
     },
 
@@ -284,14 +284,14 @@
     {
         "class": "tree_row",
         "attributes": ["hover", "selected"],
-        "layer0.texture": "Sublemon/Disco/images/row_highlight_dark.png",
+        "layer0.texture": "Disco/images/row_highlight_dark.png",
         "layer0.opacity": 1.0
     },
 
     // Close button
     {
         "class": "close_button",
-        "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+        "layer0.texture": "Disco/images/dirty_circle_light.png",
         "layer0.opacity": 0.1,
         "layer0.inner_margin": 1,
         "content_margin": [8, 8]
@@ -301,7 +301,7 @@
     {
         "class": "close_button",
         "attributes": ["dirty"],
-        "layer0.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+        "layer0.texture": "Disco/images/dirty_circle_light.png",
         "layer0.opacity": 0.9
     },
 
@@ -309,14 +309,14 @@
     {
         "class": "close_button",
         "attributes": ["hover"],
-        "layer0.texture": "Sublemon/Disco/images/light_x_bright.png",
+        "layer0.texture": "Disco/images/light_x_bright.png",
         "layer0.opacity": 1.0
     },
 
     // Sidebar container
     {
         "class": "sidebar_container",
-        "layer0.texture": "Sublemon/Disco/images/sidebar_bg.png",
+        "layer0.texture": "Disco/images/sidebar_bg.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [1, 1, 2, 1],
         "content_margin": [0, 0, 1, 0]
@@ -416,7 +416,7 @@
     // Status bar container
     {
         "class": "status_bar",
-        "layer0.texture": "Sublemon/Disco/images/status_bar.png",
+        "layer0.texture": "Disco/images/status_bar.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [2, 2],
         "content_margin": [4, 2, 4, 0]
@@ -436,11 +436,11 @@
     // Input field
     {
         "class": "text_line_control",
-        "layer0.texture": "Sublemon/Disco/images/input_field.png",
+        "layer0.texture": "Disco/images/input_field.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [4, 5, 4, 3],
 
-        "layer1.texture": "Sublemon/Disco/images/input_field_shadow.png",
+        "layer1.texture": "Disco/images/input_field_shadow.png",
         "layer1.opacity": 1.0,
         "layer1.inner_margin": [4, 5, 4, 3],
         "tint_index": 1,
@@ -452,10 +452,10 @@
     {
         "class": "dropdown_button_control",
         "content_margin": [8, 8],
-        "layer0.texture": "Sublemon/Disco/images/down_arrow_inv.png",
+        "layer0.texture": "Disco/images/down_arrow_inv.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": [4, 4],
-        "layer1.texture": "Sublemon/Disco/images/down_arrow_inv_over.png",
+        "layer1.texture": "Disco/images/down_arrow_inv_over.png",
         "layer1.opacity": 0.0,
         "layer1.inner_margin": [4, 4],
     },
@@ -651,7 +651,7 @@
 
     {
         "class": "panel_control",
-        "layer0.texture": "Sublemon/Disco/images/status_bar.png",
+        "layer0.texture": "Disco/images/status_bar.png",
         "layer0.inner_margin": [2, 2, 2, 2],
         "content_margin": [0, 1],
         "layer0.opacity": 1.0
@@ -659,9 +659,9 @@
 
     {
         "class": "panel_close_button",
-        "layer0.texture": "Sublemon/Disco/images/dark_x.png",
+        "layer0.texture": "Disco/images/dark_x.png",
         "layer0.opacity": 0.6,
-        "layer1.texture": "Sublemon/Disco/images/dark_x_light_shadow.png",
+        "layer1.texture": "Disco/images/dark_x_light_shadow.png",
         "layer1.opacity": 0.0,
         "content_margin": [8, 8]
     },
@@ -674,7 +674,7 @@
 
     {
         "class": "tool_tip_control",
-        "layer0.texture": "Sublemon/Disco/images/tool_tip_background.png",
+        "layer0.texture": "Disco/images/tool_tip_background.png",
         "layer0.inner_margin": [2, 2],
         "layer0.opacity": 1.0,
         "content_margin": [3, 3]
@@ -696,7 +696,7 @@
         "layer0.opacity": 1.0,
         "tint_index": 0,
 
-        "layer1.texture": "Sublemon/Disco/images/tabset_background_transparent.png",
+        "layer1.texture": "Disco/images/tabset_background_transparent.png",
         "layer1.inner_margin": [2, 6],
         "layer1.opacity": 1.0,
 
@@ -716,28 +716,28 @@
         // Tabset override for light colors
         "class": "tabset_control",
         "attributes": ["file_light"],
-        "layer1.texture": "Sublemon/Disco/images/light_tabset_background_transparent.png"
+        "layer1.texture": "Disco/images/light_tabset_background_transparent.png"
     },
     {
         // Tabset override for medium-dark colors
         "class": "tabset_control",
         "attributes": ["file_medium_dark"],
         "layer1.opacity": 1.0,
-        "layer1.texture": "Sublemon/Disco/images/medium_dark_tabset_background_transparent.png"
+        "layer1.texture": "Disco/images/medium_dark_tabset_background_transparent.png"
     },
     {
         // Tabset override for dark colors
         "class": "tabset_control",
         "attributes": ["file_dark"],
         "layer1.opacity": 1.0,
-        "layer1.texture": "Sublemon/Disco/images/dark_tabset_background_transparent.png"
+        "layer1.texture": "Disco/images/dark_tabset_background_transparent.png"
     },
 
     // Tabs
     {
         "class": "tab_control",
 
-        "layer0.texture": "Sublemon/Disco/images/tab_mask_152_gradient2.png",
+        "layer0.texture": "Disco/images/tab_mask_152_gradient2.png",
         "layer0.inner_margin": [22, 4],
         "layer0.opacity": 1.0,
         "tint_index": 0,        // tint layer 0
@@ -758,54 +758,54 @@
     // Tabs (file color overrides)
     {
         "class": "tab_control", "attributes": ["file_light"],
-        "layer2.texture": "Sublemon/Disco/images/light_unselected_tab_bg2.png",
+        "layer2.texture": "Disco/images/light_unselected_tab_bg2.png",
         "layer2.opacity": 0.7
     },
     {
         "class": "tab_control", "attributes": ["file_medium"],
-        "layer2.texture": "Sublemon/Disco/images/medium_unselected_tab_bg.png",
+        "layer2.texture": "Disco/images/medium_unselected_tab_bg.png",
         "layer2.opacity": 0.5
     },
     {
         "class": "tab_control", "attributes": ["file_medium_dark"],
         "tint_modifier": [255, 255, 255, 32],
-        "layer2.texture": "Sublemon/Disco/images/medium_dark_unselected_tab_bg2.png",
+        "layer2.texture": "Disco/images/medium_dark_unselected_tab_bg2.png",
         "layer2.opacity": 1.0
     },
     {
         "class": "tab_control", "attributes": ["file_dark"],
         "tint_modifier": [255, 255, 255, 230],
-        "layer0.texture": "Sublemon/Disco/images/dark_tab_mask3.png",
-        "layer2.texture": "Sublemon/Disco/images/dark_unselected_tab_bg2.png",
+        "layer0.texture": "Disco/images/dark_tab_mask3.png",
+        "layer2.texture": "Disco/images/dark_unselected_tab_bg2.png",
         "layer2.opacity": 1.0
     },
 
     // Selected Tabs
     {
         "class": "tab_control", "attributes": ["selected"],
-        "layer0.texture": "Sublemon/Disco/images/tab_mask_white.png",
+        "layer0.texture": "Disco/images/tab_mask_white.png",
         "layer1.opacity": 0.0
     },
     {
         "class": "tab_control", "attributes": ["selected", "file_light"],
-        "layer2.texture": "Sublemon/Disco/images/light_selected_tab_bg.png",
+        "layer2.texture": "Disco/images/light_selected_tab_bg.png",
         "layer2.opacity": 0.8
     },
     {
         "class": "tab_control", "attributes": ["selected", "file_medium"],
-        "layer2.texture": "Sublemon/Disco/images/medium_selected_tab_bg.png",
+        "layer2.texture": "Disco/images/medium_selected_tab_bg.png",
         "layer2.opacity": 0.5
     },
     {
         "class": "tab_control", "attributes": ["selected", "file_medium_dark"],
         "tint_modifier": [0, 0, 0, 0],
-        "layer2.texture": "Sublemon/Disco/images/medium_dark_selected_tab_bg.png",
+        "layer2.texture": "Disco/images/medium_dark_selected_tab_bg.png",
         "layer2.opacity": 0.7
     },
     {
         "class": "tab_control", "attributes": ["selected", "file_dark"],
         "tint_modifier": [0, 0, 0, 0],
-        "layer2.texture": "Sublemon/Disco/images/dark_selected_tab_bg.png",
+        "layer2.texture": "Disco/images/dark_selected_tab_bg.png",
         "layer2.opacity": 1,
         "layer0.opacity": 1.0
     },
@@ -906,14 +906,14 @@
     {
         "class": "tab_close_button",
         "content_margin": [0, 0],
-        "layer0.texture": "Sublemon/Disco/images/grey_x.png",
+        "layer0.texture": "Disco/images/grey_x.png",
         "layer0.opacity": 0.0,
         "layer0.inner_margin": 0,
-        "layer1.texture": "Sublemon/Disco/images/dark_x.png",
+        "layer1.texture": "Disco/images/dark_x.png",
         "layer1.opacity": 0.0,
-        "layer2.texture": "Sublemon/Disco/images/grey_x_light_shadow.png",
+        "layer2.texture": "Disco/images/grey_x_light_shadow.png",
         "layer2.opacity": 1.0,
-        "layer3.texture": "Sublemon/Disco/images/dark_x_light_shadow.png",
+        "layer3.texture": "Disco/images/dark_x_light_shadow.png",
         "layer3.opacity": 0.0
     },
     {
@@ -927,7 +927,7 @@
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.texture": "Sublemon/Disco/images/dirty_circle.png",
+        "layer3.texture": "Disco/images/dirty_circle.png",
         "layer3.opacity": 0.5
     },
     {
@@ -944,7 +944,7 @@
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.texture": "Sublemon/Disco/images/dark_x_light_shadow.png",
+        "layer3.texture": "Disco/images/dark_x_light_shadow.png",
         "layer3.opacity": 1.0
     },
     {
@@ -953,7 +953,7 @@
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.texture": "Sublemon/Disco/images/dirty_circle.png",
+        "layer3.texture": "Disco/images/dirty_circle.png",
         "layer3.opacity": 1.0
     },
     {
@@ -967,7 +967,7 @@
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_medium_dark"]}],
-        "layer3.texture": "Sublemon/Disco/images/light_x.png",
+        "layer3.texture": "Disco/images/light_x.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
@@ -979,14 +979,14 @@
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+        "layer3.texture": "Disco/images/dirty_circle_light.png",
         "layer3.opacity": 0.5
     },
     {
         "class": "tab_close_button",
         "attributes": ["hover"],
         "parents": [{"class": "tab_control", "attributes": ["file_medium_dark"]}],
-        "layer3.texture": "Sublemon/Disco/images/light_x_bright.png",
+        "layer3.texture": "Disco/images/light_x_bright.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
@@ -995,7 +995,7 @@
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_dark"]}],
-        "layer3.texture": "Sublemon/Disco/images/light_x.png",
+        "layer3.texture": "Disco/images/light_x.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
@@ -1004,22 +1004,22 @@
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["dirty", "file_dark"]}],
-        "layer3.texture": "Sublemon/Disco/images/light_x.png",
+        "layer3.texture": "Disco/images/light_x.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.texture": "Sublemon/Disco/images/dirty_circle_light.png",
+        "layer3.texture": "Disco/images/dirty_circle_light.png",
         "layer3.opacity": 0.5
     },
     {
         "class": "tab_close_button",
         "attributes": ["hover"],
         "parents": [{"class": "tab_control", "attributes": ["file_dark"]}],
-        "layer3.texture": "Sublemon/Disco/images/light_x_bright.png",
+        "layer3.texture": "Disco/images/light_x_bright.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.texture": "Sublemon/Disco/images/light_x.png",
+        "layer3.texture": "Disco/images/light_x.png",
         "layer3.opacity": 1.0
     },
 
@@ -1027,10 +1027,10 @@
     {
         "class": "scroll_tabs_left_button",
         "content_margin": [9, 7, 8, 6],
-        "layer0.texture": "Sublemon/Disco/images/arrow_left.png",
+        "layer0.texture": "Disco/images/arrow_left.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": 0,
-        "layer1.texture": "Sublemon/Disco/images/arrow_left_over.png",
+        "layer1.texture": "Disco/images/arrow_left_over.png",
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
     },
@@ -1043,10 +1043,10 @@
     {
         "class": "scroll_tabs_right_button",
         "content_margin": [9, 7, 8, 6],
-        "layer0.texture": "Sublemon/Disco/images/arrow_right.png",
+        "layer0.texture": "Disco/images/arrow_right.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": 0,
-        "layer1.texture": "Sublemon/Disco/images/arrow_right_over.png",
+        "layer1.texture": "Disco/images/arrow_right_over.png",
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
     },
@@ -1059,10 +1059,10 @@
     {
         "class": "show_tabs_dropdown_button",
         "content_margin": [9, 7, 8, 6],
-        "layer0.texture": "Sublemon/Disco/images/arrow_down.png",
+        "layer0.texture": "Disco/images/arrow_down.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": 0,
-        "layer1.texture": "Sublemon/Disco/images/arrow_down_over.png",
+        "layer1.texture": "Disco/images/arrow_down_over.png",
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
     },
@@ -1074,10 +1074,10 @@
 
     {
         "class": "fold_button_control",
-        "layer0.texture": "Sublemon/Disco/images/arrow_right.png",
+        "layer0.texture": "Disco/images/arrow_right.png",
         "layer0.opacity": 1.0,
         "layer0.inner_margin": 0,
-        "layer1.texture": "Sublemon/Disco/images/arrow_right_over.png",
+        "layer1.texture": "Disco/images/arrow_right_over.png",
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
         "content_margin": [9, 7, 8, 6]
@@ -1091,8 +1091,8 @@
     {
         "class": "fold_button_control",
         "attributes": ["expanded"],
-        "layer0.texture": "Sublemon/Disco/images/arrow_down.png",
-        "layer1.texture": "Sublemon/Disco/images/arrow_down_over.png"
+        "layer0.texture": "Disco/images/arrow_down.png",
+        "layer1.texture": "Disco/images/arrow_down_over.png"
     },
 
     {
@@ -1122,61 +1122,61 @@
 
     {
         "class": "icon_regex",
-        "layer0.texture": "Sublemon/Disco/images/find_regex.png",
+        "layer0.texture": "Disco/images/find_regex.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_case",
-        "layer0.texture": "Sublemon/Disco/images/find_case.png",
+        "layer0.texture": "Disco/images/find_case.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_highlight",
-        "layer0.texture": "Sublemon/Disco/images/find_highlight.png",
+        "layer0.texture": "Disco/images/find_highlight.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_in_selection",
-        "layer0.texture": "Sublemon/Disco/images/find_inselection.png",
+        "layer0.texture": "Disco/images/find_inselection.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_reverse",
-        "layer0.texture": "Sublemon/Disco/images/find_reverse.png",
+        "layer0.texture": "Disco/images/find_reverse.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_whole_word",
-        "layer0.texture": "Sublemon/Disco/images/find_wholeword.png",
+        "layer0.texture": "Disco/images/find_wholeword.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_wrap",
-        "layer0.texture": "Sublemon/Disco/images/find_wrap.png",
+        "layer0.texture": "Disco/images/find_wrap.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_preserve_case",
-        "layer0.texture": "Sublemon/Disco/images/replace_preserve_case.png",
+        "layer0.texture": "Disco/images/replace_preserve_case.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_context",
-        "layer0.texture": "Sublemon/Disco/images/context.png",
+        "layer0.texture": "Disco/images/context.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
     {
         "class": "icon_use_buffer",
-        "layer0.texture": "Sublemon/Disco/images/use_buffer.png",
+        "layer0.texture": "Disco/images/use_buffer.png",
         "layer0.opacity": 1.0,
         "content_margin": [8, 8]
     },
@@ -1195,7 +1195,7 @@
     // Folder icon
     {
         "class": "icon_folder",
-        "layer0.texture": "Sublemon/Disco/images/folder.png",
+        "layer0.texture": "Disco/images/folder.png",
         "layer0.opacity": 0.0,
         "content_margin": [0, 8]
     },
@@ -1204,7 +1204,7 @@
     {
         "class": "icon_folder",
         "parents": [{ "class": "tree_row", "attributes": ["expanded"] }],
-        "layer0.texture": "Sublemon/Disco/images/folder_open.png",
+        "layer0.texture": "Disco/images/folder_open.png",
     },
 
     // Folder loading spinner
@@ -1214,14 +1214,14 @@
         {
             "keyframes":
             [
-                "Sublemon/Disco/images/spinner7.png",
-                "Sublemon/Disco/images/spinner6.png",
-                "Sublemon/Disco/images/spinner5.png",
-                "Sublemon/Disco/images/spinner4.png",
-                "Sublemon/Disco/images/spinner3.png",
-                "Sublemon/Disco/images/spinner2.png",
-                "Sublemon/Disco/images/spinner1.png",
-                "Sublemon/Disco/images/spinner.png",
+                "Disco/images/spinner7.png",
+                "Disco/images/spinner6.png",
+                "Disco/images/spinner5.png",
+                "Disco/images/spinner4.png",
+                "Disco/images/spinner3.png",
+                "Disco/images/spinner2.png",
+                "Disco/images/spinner1.png",
+                "Disco/images/spinner.png",
             ],
             "loop": true,
             "frame_time": 0.075,
@@ -1234,7 +1234,7 @@
     // Duplicate folder icon
     {
         "class": "icon_folder_dup",
-        "layer0.texture": "Sublemon/Disco/images/folder_dup.png",
+        "layer0.texture": "Disco/images/folder_dup.png",
         "layer0.opacity": 1.0,
         "content_margin": [0, 8]
     }

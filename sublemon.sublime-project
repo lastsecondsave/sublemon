@@ -40,7 +40,7 @@
 				"Disco.tm*"
 			],
 			"name": "disco",
-			"path": "Sublemon\\disco"
+			"path": "Disco"
 		},
 		{
 			"file_exclude_patterns":
