@@ -84,6 +84,7 @@
 	"shift_tab_unindent": true,
 	"show_encoding": true,
 	"show_line_endings": true,
+	"show_panel_on_build": false,
 	"show_tab_close_buttons": false,
 	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
