@@ -35,12 +35,14 @@ contexts:
   - include: entities
 
   comments:
-  - match: "<[!#%]--"
+  - match: "<!--"
     push:
     - meta_scope: comment.block.xml
     - match: "-->"
       pop: true
-  - match: "-->?"
+    - match: "--"
+      scope: invalid.illegal.bad-comments.xml
+  - match: "-->"
     scope: invalid.illegal.bad-comments.xml
 
   entities:
