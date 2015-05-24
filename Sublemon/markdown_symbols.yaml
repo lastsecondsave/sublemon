@@ -4,5 +4,5 @@ settings:
   showInSymbolList: 1
   symbolTransformation: |
     s/\s*#*$//;
-    s/(?<=#)#/ /g;
+    s/(?<=#)#/   /g;
     s/^#//;

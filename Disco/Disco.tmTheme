@@ -744,17 +744,6 @@
 				<string>#FF8147</string>
 			</dict>
 		</dict>
-		<dict>
-			<key>name</key>
-			<string>foobar2000 tag field</string>
-			<key>scope</key>
-			<string>variable.other.field.foobar2000</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#EFC52D</string>
-			</dict>
-		</dict>
 	</array>
 </dict>
 </plist>
