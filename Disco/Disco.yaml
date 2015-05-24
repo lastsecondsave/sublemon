@@ -402,8 +402,3 @@ settings:
   scope: keyword.other.important.css
   settings:
     foreground: '#FF8147'
-
-- name:  foobar2000 tag field
-  scope: variable.other.field.foobar2000
-  settings:
-    foreground: '#EFC52D'
