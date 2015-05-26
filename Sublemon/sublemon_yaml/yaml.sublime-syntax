@@ -58,9 +58,8 @@ contexts:
   operators:
   - match: '^(---|\.{3})'
     scope: keyword.operator.yaml
-  - match: '(-) '
-    captures:
-      1: keyword.operator.yaml
+  - match: '-(?=\s|$)'
+    scope: keyword.operator.yaml
   - match: '(?:^|(?<=\s))([>\|]-?)'
     captures:
       1: keyword.operator.yaml

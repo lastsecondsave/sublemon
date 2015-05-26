@@ -3,6 +3,9 @@
 name: Regular Expression
 scope: source.regexp
 
+variables:
+  modifiers: \?[imsxXU]+
+
 contexts:
   main:
   - match: '\\[bBAZzG]|\^|\$'
@@ -13,11 +16,11 @@ contexts:
     scope: keyword.operator.quantifier.regexp
   - match: \|
     scope: keyword.operator.or.regexp
-  - match: '\(\?[imsxXU]+\)'
+  - match: '\({{modifiers}}\)'
     scope: keyword.modifier.regexp
 
   # (?m:expr)
-  - match: '(\()(\?[imsxXU]+:)'
+  - match: '(\()({{modifiers}}:)'
     captures:
       1: punctuation.definition.group.modifier.regexp
       2: keyword.modifier.regexp
