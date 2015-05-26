@@ -117,6 +117,10 @@
 		{
 			"name": "snippets",
 			"path": "Snippets"
+		},
+		{
+			"name": "utils",
+			"path": "Sublemon\\utils"
 		}
 	]
 }
