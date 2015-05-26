@@ -12,9 +12,9 @@ contexts:
   code-section:
   - include: comments
   - include: variables
+  - include: storage
   - include: operators
   - include: keywords
-  - include: storage
   - include: strings
   - include: bracket-balancing
 
@@ -144,7 +144,9 @@ contexts:
     scope: keyword.operator.powershell
   - match: (?>[%/*+-]?=|--%)
     scope: keyword.operator.powershell
-  - match: (?>[*/%]|--?|\+{2})(?=[\d$\s])
+  - match: (?>--|\+\+)(?=\s|$)
+    scope: keyword.operator.powershell
+  - match: '[*/%+-](?=\s*(?>[\d$"'']|-\d))'
     scope: keyword.operator.powershell
   - match: '!'
     scope: keyword.operator.unary.powershell

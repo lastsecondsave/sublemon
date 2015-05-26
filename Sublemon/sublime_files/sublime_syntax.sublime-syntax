@@ -56,9 +56,7 @@ contexts:
     - match: ^(\s+)
       set: Packages/Sublemon/regexp.sublime-syntax
       with_prototype:
-      - match: ^(?:\s*(- )|(?!\1).)
-        captures:
-          1: keyword.operator.yaml
+      - match: ^(?=\s*-?\s*\w+:)
         pop: true
       - include: variables
   # Single-lined value
