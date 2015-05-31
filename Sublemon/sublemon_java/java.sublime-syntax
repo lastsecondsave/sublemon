@@ -1,0 +1,231 @@
+%YAML 1.2
+---
+name: Java
+scope: source.java
+file_extensions: [java]
+first_line_match: package\s+\w+(\.\w+)*;
+
+variables:
+  class_id: (?:[A-Z]\w*)
+  id: (?:[a-z]\w*)
+  escape: '\\(?>[bfnrt''"\\]|u[0-9a-fA-F]{4})'
+  number: (?:[0-9][0-9_]*)
+
+contexts:
+  prototype:
+  - include: comments
+  - include: trailing-spaces
+
+  main:
+  - include: code-section
+
+  code-section:
+  - include: strings
+  - include: constants
+  - include: operators
+  - include: storage
+  - include: keywords
+  - include: bracket-balancing
+
+  bracket-balancing:
+  - match: \{
+    push:
+    - match: \}
+      pop: true
+    - include: code-section
+  - match: \(
+    push:
+    - match: \)
+      pop: true
+    - match: ;
+      scope: invalid.illegal.unexpected-semicolon
+    - include: code-section
+  - match: \[
+    push:
+    - match: \]
+      pop: true
+    - include: code-section
+  - match: '[)}\]]'
+    scope: invalid.illegal.stray-bracket
+
+  trailing-spaces:
+  - match: '[\t ]+$'
+    scope: warning.trailing-space.java
+
+  exit-before-any-match:
+  - match: (?=\S)
+    pop: true
+
+  comments:
+  - match: /\*\*(?!/)
+    push: javadoc
+  - match: /\*.*?\*/
+    scope: comment.block.java
+  - match: /\*
+    push:
+    - meta_scope: comment.block.java
+    - match: \*/
+      pop: true
+  - match: //.*$
+    scope: comment.line.java
+
+  javadoc:
+  - meta_scope: comment.block.documentation.java
+  - match: \*/
+    pop: true
+  - match: '@(?>param|throws)\s+[\w<>]*'
+    scope: keyword.documentation.javadoc.java
+  - match: '(@author)\s+(.*)'
+    captures:
+      1: keyword.documentation.javadoc.java
+      2: no-spellcheck.java
+  - match: '@\w+'
+    scope: keyword.javadoc.java
+  - match: </?\w+.*?/?>
+    scope: meta.tag.javadoc.java
+
+  strings:
+  - match: '"'
+    push:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.java
+    - match: '"|$'
+      pop: true
+    - match: '{{escape}}'
+      scope: constant.character.escape.java
+    - match: \\.
+      scope: invalid.illegal.wrong-escape
+    - match: '[^"](?=\n)$'
+      scope: invalid.illegal.missing-quote
+
+  constants:
+  - match: '\b(?>0[xX][0-9a-fA-F_]+|0[0-7_]+)\b'
+    scope: constant.numeric.java
+  - match: '(?:(?<=[\s=+*/%-(]|^)-)?\b{{number}}(\.{{number}}?)?(?:[eE][+-]?{{number}})?[lLfF]?\b'
+    scope: constant.numeric.java
+  - match: '''(?>{{escape}}|.)'''
+    scope: constant.character.java
+  - match: \b(?>false|null|true)\b
+    scope: constant.language.java
+  - match: \b(?>this|super)\b
+    scope: variable.language.java
+
+  storage:
+  - match: \b(?>void|boolean|byte|char|short|int|float|long|double)\b
+    scope: storage.type.primitive.java
+  - match: \b(?>public|private|protected|static|final|native|synchronized|abstract|transient|strictfp)\b
+    scope: storage.modifier.java
+  - match: \b[A-Z]\b
+    scope: storage.type.generic.java
+  - match: \b[A-Z][A-Z_0-9]+\b
+    scope: constant.user.java
+  - match: \b({{class_id}})(?=\s*<)
+    scope: storage.type.java
+    push: generic
+  - match: \b{{class_id}}\b
+    scope: storage.type.java
+  - match: \b(?=(?:{{id}}\.)+{{class_id}})
+    push:
+    - match: '{{id}}'
+      scope: storage.type.package.java
+    - match: (?={{class_id}})
+      pop: true
+
+  generic:
+  - meta_scope: meta.generic.java
+  - match: '>'
+    pop: true
+  - match: \?
+    scope: keyword.operator.wildcard.java
+  - match: \&
+    scope: keyword.operator.java
+  - match: \b(?>extends|super)\b
+    scope: storage.modifier.java
+  - include: storage
+
+  operators:
+  - match: (?>[&|+-]{1,2}|(?>[+*/%&^|<>=-]|<<|>>>?)=?|!=)
+    scope: keyword.operator.java
+  - match: '[!~]'
+    scope: keyword.operator.unary.java
+  - match: \?
+    scope: keyword.operator.ternary.java
+    push:
+    - match: ':'
+      scope: keyword.operator.ternary.java
+      pop: true
+    - include: code-section
+  - match: \binstanceof\b
+    scope: keyword.operator.alphanumeric.java
+
+  keywords:
+  - match: \b(?>break|continue|else|finally|return|throw)\b
+    scope: keyword.control.java
+  # expr (), then possible {}
+  - match: \b(?>catch|if|try|while)\b
+    scope: keyword.control.java
+    push: round-brackets-no-semicolon
+  # do-while
+  - match: \bdo\b
+    scope: keyword.control.java
+    push:
+    - match: \bwhile\b
+      scope: keyword.control.java
+    - include: code-section
+  # switch
+  - match: \bswitch\b
+    scope: keyword.control.java
+    push: [switch-body, no-semicolon, switch-condition]
+  # for
+  - match: \bfor\b
+    scope: keyword.control.java
+    push: [no-semicolon, for-condition]
+
+  switch-condition:
+  - match: \(
+    set:
+    - match: ({{id}})\s*(?=\))|(?=\S)
+      captures:
+        1: variable.parameter.java
+      set:
+      - match: \)
+        pop: true
+      - include: code-section
+  - include: exit-before-any-match
+
+  switch-body:
+  - match: \{
+    set:
+    - match: \}
+      pop: true
+    - match: (?>case|default)
+      scope: keyword.control.java
+    - include: main
+  - include: exit-before-any-match
+
+  for-condition:
+  - match: \(
+    set:
+    - match: \)
+      pop: true
+    - match: '[;:]'
+      scope: keyword.operator.java
+    - match: \s({{id}})(?=\s*:)
+      captures:
+        1: variable.parameter.java
+    - include: code-section
+  - include: exit-before-any-match
+
+  round-brackets-no-semicolon:
+  - match: \(
+    set:
+    - match: \)
+      set: no-semicolon
+    - include: code-section
+  - include: exit-before-any-match
+
+  no-semicolon:
+  - match: ';'
+    scope: invalid.illegal.bad-semicolon
+  - include: exit-before-any-match
+
