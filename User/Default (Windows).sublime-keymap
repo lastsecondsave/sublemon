@@ -31,7 +31,7 @@
 
   /* GUI */
 
-  { "keys": ["alt+."],   "command": "show_overlay", "args": {"overlay": "command_palette"} },
+  { "keys": ["alt+,"],   "command": "show_overlay", "args": {"overlay": "command_palette"} },
   { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
   { "keys": ["ctrl+q"],  "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
@@ -47,7 +47,7 @@
 
   /* Macro */
 
-  { "keys": ["alt+,"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
+  { "keys": ["alt+."], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
 
   { "keys": ["ctrl+f12"], "command": "toggle_record_macro" },
   { "keys": ["ctrl+shift+f12"], "command": "run_macro" },
@@ -68,8 +68,8 @@
 
   /* Build */
 
-  { "keys": ["ctrl+b"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
-  { "keys": ["alt+b"],  "command": "show_panel" ,  "args": {"panel": "output.exec", "toggle": true} },
+  { "keys": ["alt+b"],  "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
+  { "keys": ["ctrl+b"], "command": "show_panel" ,  "args": {"panel": "output.exec", "toggle": true} },
   { "keys": [""],    "command": "exec", "args": {"kill": true} },
 
   { "keys": ["f7"],      "command": "build" },
