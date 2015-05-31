@@ -4,18 +4,19 @@ name: Disco
 # Colors:
 # 838495   gray           [131, 132, 149]
 # CDCDCD   white          [205, 205, 205]
-# AAAAF0   light-purple   [170, 170, 240]
+# AAAAF0   light violet   [170, 170, 240]
+# B69EFF   violet         [182, 158, 255]
 # E572D2   purple         [229, 114, 210]
 # EF51AA   pink           [239,  81, 170]
-# 66B5F0   blue           [102, 181, 240]
-# 264F78   dark-blue      [ 38,  79, 120]
+# 77ABFF   blue           [119, 171, 255]
+# 264F78   dark blue      [ 38,  79, 120]
 # 363642   bluish gray    [ 54,  54,  66]
 # 2D2D34   bluish black   [ 45,  45,  52]
 # C5CC4B   green          [197, 204,  75]
-# EFC52D   yellow         [239, 197,  45]
+# EDC61A   yellow         [239, 197,  45]
 # FF9A41   orange         [255, 154,  65]
-# FF8147   dark-orange    [255, 129,  71]
-# E5476C   red            [229,  71, 108]
+# FF8147   dark orange    [255, 129,  71]
+# E5476C   crimson        [229,  71, 108]
 
 settings:
 - settings:
@@ -23,9 +24,9 @@ settings:
     foreground:         '#CDCDCD'
     caret:              '#FFFFFF'
     selection:          '#264F78'
-    selectionBorder:    '#66B5F0'
+    selectionBorder:    '#77ABFF'
     lineHighlight:      '#363642C0'
-    findHighlight:      '#EFC52D'
+    findHighlight:      '#EDC61A'
     minimapBorder:      '#CDCDCD'
     bracketsForeground: '#FF8147'
 
@@ -47,15 +48,7 @@ settings:
 - name:  Symbolic operator
   scope: keyword.operator
   settings:
-    foreground: '#AAAAF0'
-
-- name:  Highlighted symbolic operator
-  scope: >-
-    keyword.operator.ternary,
-    keyword.operator.in,
-    keyword.operator.wildcard.java
-  settings:
-    foreground: '#E572D2'
+    foreground: '#B69EFF'
 
 - name:  Special symbolic operator
   scope: >-
@@ -68,7 +61,6 @@ settings:
 - name:  Alphanumeric operator
   scope: >-
     keyword.operator.alphanumeric,
-    keyword.operator.instanceof.java,
     keyword.operator.logical.python
   settings:
     foreground: '#E572D2'
@@ -99,24 +91,20 @@ settings:
   settings:
     foreground: '#838495'
 
-- name:  Doc-comment keyword
-  scope: >-
-    keyword.other.javadoc,
-    variable.parameter.javadoc,
-    keyword.other.doxygen,
-    variable.parameter.doxygen
-  settings:
-    foreground: '#CDCDCD'
-
 - name:  Storage
   scope: storage.type
   settings:
     foreground: '#EF51AA'
 
-- name:  Constant
-  scope: constant
+- name:  Language constant
+  scope: constant.language
   settings:
     foreground: '#FF8147'
+
+- name:  Language variable
+  scope: variable.language
+  settings:
+    foreground: '#FF9A41'
 
 - name:  User-defined constant
   scope: constant.user
@@ -126,12 +114,12 @@ settings:
 - name:  User-defined variable
   scope: variable.user
   settings:
-    foreground: '#FF8147'
+    foreground: '#FF9A41'
 
 - name:  Entity name
   scope: entity.name
   settings:
-    foreground: '#66B5F0'
+    foreground: '#77ABFF'
 
 - name:  Inherited class
   scope: entity.other.inherited-class
@@ -140,11 +128,6 @@ settings:
 
 - name:  Parameter
   scope: variable.parameter
-  settings:
-    foreground: '#FF9A41'
-
-- name:  Language variable
-  scope: variable.language
   settings:
     foreground: '#FF9A41'
 
@@ -166,7 +149,19 @@ settings:
     punctuation.definition.lambda,
     keyword.operator.lambda
   settings:
-    foreground: '#66B5F0'
+    foreground: '#77ABFF'
+
+- name:  Doc-comment keyword and parameter
+  scope: >-
+    comment.block.documentation keyword,
+    comment.block.documentation variable.parameter
+  settings:
+    foreground: '#CDCDCD'
+
+- name:  Tags in doc-comments
+  scope: comment.block.documentation meta.tag
+  settings:
+    foreground: '#AAAAF0'
 
 - name:  Java package declaration
   scope: meta.package.java
@@ -186,36 +181,36 @@ settings:
 - name:  Java annotation
   scope: storage.type.annotation.java
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
+
+- name:  Java generic type
+  scope: storage.type.generic.java
+  settings:
+    foreground: '#FF8147'
 
 - name:  Java annotation parameter
   scope: meta.declaration.annotation.java constant.other.key.java
   settings:
-    foreground: '#EFC52D'
-
-- name:  Tags in javadoc
-  scope: meta.tag.javadoc.java
-  settings:
-    foreground: '#AAAAF0'
+    foreground: '#EDC61A'
 
 - name:  XML tag
   scope: >-
     entity.name.tag,
     punctuation.definition.tag
   settings:
-    foreground: '#66B5F0'
+    foreground: '#77ABFF'
 
 - name:  XML attribute name
   scope: source.xml entity.name.attribute
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  XML attribute value
   scope: >-
     meta.attribute.xml string.attribute,
     meta.attribute.xml punctuation.definition.string
   settings:
-    foreground: '#66B5F0'
+    foreground: '#77ABFF'
 
 - name:  XML CDATA brackets
   scope: meta.cdata.xml punctuation
@@ -239,19 +234,19 @@ settings:
 - name:  Diff range
   scope: meta.diff.range
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  Diff header
   scope: meta.diff.header
   settings:
-    foreground: '#66B5F0'
+    foreground: '#77ABFF'
 
 - name:  C macro definition
   scope: >-
     punctuation.definition.macro.c,
     keyword.macro.c
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  C macro body
   scope: meta.macro.body.c
@@ -261,7 +256,7 @@ settings:
 - name:  C++ namespace separator
   scope: punctuation.separator.namespace.c++
   settings:
-    foreground: '#AAAAF0'
+    foreground: '#B69EFF'
 
 - name:  Powershell pipe and stream
   scope: >-
@@ -280,17 +275,17 @@ settings:
 - name:  Powershell static call separator
   scope: punctuation.separator.static-call.powershell
   settings:
-    foreground: '#AAAAF0'
+    foreground: '#B69EFF'
 
 - name:  Powershell embedded expression
   scope: punctuation.definition.expression.powershell
   settings:
-    foreground: '#EFC52D'
+    foreground: '#FF8147'
 
 - name:  INI section
   scope: meta.section.ini, entity.name.section.ini
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  Maven error indicator
   scope: meta.indicator.error.maven
@@ -307,14 +302,14 @@ settings:
     meta.result.maven,
     entity.name.exception.maven
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  RegExp limiters
   scope: >-
     keyword.operator.or.regexp,
     punctuation.definition.group.regexp
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  RegExp character classes
   scope: >-
@@ -366,7 +361,7 @@ settings:
 - name:  Markup links
   scope: markup.underline.link
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  Markdown monospace
   scope: markup.raw.inline.markdown, punctuation.definition.block.fenced.markdown
@@ -376,7 +371,7 @@ settings:
 - name:  Markdown language marker
   scope: meta.fenced.language.marker.markdown
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  CSS general selector
   scope: meta.rule.selector.css entity.name.general
@@ -386,7 +381,7 @@ settings:
 - name:  CSS id selector
   scope: meta.rule.selector.css entity.name.id
   settings:
-    foreground: '#EFC52D'
+    foreground: '#EDC61A'
 
 - name:  CSS class selector
   scope: meta.rule.selector.css entity.name.class

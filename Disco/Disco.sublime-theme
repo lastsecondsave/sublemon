@@ -535,9 +535,9 @@
     {
         "class": "quick_panel_label",
         "fg": [210, 210, 210],
-        "match_fg": [102, 181, 240],
+        "match_fg": [119, 171, 255],
         "selected_fg": [255, 255, 255],
-        "selected_match_fg": [102, 181, 240]
+        "selected_match_fg": [119, 171, 255]
     },
 
     // Quick panel filepath label
@@ -552,8 +552,8 @@
     // Quick panel score label
     {
         "class": "quick_panel_score_label",
-        "fg": [170, 170, 240],
-        "selected_fg": [170, 170, 240]
+        "fg": [255, 129,  71],
+        "selected_fg": [255, 129,  71]
     },
 
     // Condensed quick panel
@@ -611,9 +611,9 @@
     {
         "class": "auto_complete_label",
         "fg": [210, 210, 210],
-        "match_fg": [102, 181, 240],
+        "match_fg": [119, 171, 255],
         "selected_fg": [255, 255, 255],
-        "selected_match_fg": [102, 181, 240]
+        "selected_match_fg": [119, 171, 255]
     },
 
     // Auto-complete panel row
