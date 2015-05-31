@@ -16,7 +16,7 @@
 				<key>caret</key>
 				<string>#FFFFFF</string>
 				<key>findHighlight</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 				<key>foreground</key>
 				<string>#CDCDCD</string>
 				<key>lineHighlight</key>
@@ -26,7 +26,7 @@
 				<key>selection</key>
 				<string>#264F78</string>
 				<key>selectionBorder</key>
-				<string>#66B5F0</string>
+				<string>#77ABFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -70,18 +70,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#AAAAF0</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Highlighted symbolic operator</string>
-			<key>scope</key>
-			<string>keyword.operator.ternary, keyword.operator.in, keyword.operator.wildcard.java</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#E572D2</string>
+				<string>#B69EFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -99,7 +88,7 @@
 			<key>name</key>
 			<string>Alphanumeric operator</string>
 			<key>scope</key>
-			<string>keyword.operator.alphanumeric, keyword.operator.instanceof.java, keyword.operator.logical.python</string>
+			<string>keyword.operator.alphanumeric, keyword.operator.logical.python</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -152,17 +141,6 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Doc-comment keyword</string>
-			<key>scope</key>
-			<string>keyword.other.javadoc, variable.parameter.javadoc, keyword.other.doxygen, variable.parameter.doxygen</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#CDCDCD</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
 			<string>Storage</string>
 			<key>scope</key>
 			<string>storage.type</string>
@@ -174,13 +152,24 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Constant</string>
+			<string>Language constant</string>
 			<key>scope</key>
-			<string>constant</string>
+			<string>constant.language</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#FF8147</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Language variable</string>
+			<key>scope</key>
+			<string>variable.language</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF9A41</string>
 			</dict>
 		</dict>
 		<dict>
@@ -202,7 +191,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#FF8147</string>
+				<string>#FF9A41</string>
 			</dict>
 		</dict>
 		<dict>
@@ -213,7 +202,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#66B5F0</string>
+				<string>#77ABFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -232,17 +221,6 @@
 			<string>Parameter</string>
 			<key>scope</key>
 			<string>variable.parameter</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#FF9A41</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Language variable</string>
-			<key>scope</key>
-			<string>variable.language</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -279,7 +257,29 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#66B5F0</string>
+				<string>#77ABFF</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Doc-comment keyword and parameter</string>
+			<key>scope</key>
+			<string>comment.block.documentation keyword, comment.block.documentation variable.parameter</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#CDCDCD</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Tags in doc-comments</string>
+			<key>scope</key>
+			<string>comment.block.documentation meta.tag</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#AAAAF0</string>
 			</dict>
 		</dict>
 		<dict>
@@ -323,7 +323,18 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Java generic type</string>
+			<key>scope</key>
+			<string>storage.type.generic.java</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF8147</string>
 			</dict>
 		</dict>
 		<dict>
@@ -334,18 +345,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Tags in javadoc</string>
-			<key>scope</key>
-			<string>meta.tag.javadoc.java</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#AAAAF0</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -356,7 +356,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#66B5F0</string>
+				<string>#77ABFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -367,7 +367,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -378,7 +378,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#66B5F0</string>
+				<string>#77ABFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -422,7 +422,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -433,7 +433,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#66B5F0</string>
+				<string>#77ABFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -444,7 +444,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -466,7 +466,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#AAAAF0</string>
+				<string>#B69EFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -499,7 +499,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#AAAAF0</string>
+				<string>#B69EFF</string>
 			</dict>
 		</dict>
 		<dict>
@@ -510,7 +510,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#FF8147</string>
 			</dict>
 		</dict>
 		<dict>
@@ -521,7 +521,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -554,7 +554,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -565,7 +565,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -664,7 +664,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -686,7 +686,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
@@ -708,7 +708,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#EFC52D</string>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
