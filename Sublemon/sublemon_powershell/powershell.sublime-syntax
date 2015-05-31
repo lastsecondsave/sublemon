@@ -12,8 +12,10 @@ contexts:
   code-section:
   - include: comments
   - include: variables
-  - include: storage
+  - include: stream-redirection
+  - include: numbers
   - include: operators
+  - include: storage
   - include: keywords
   - include: strings
   - include: bracket-balancing
@@ -92,20 +94,21 @@ contexts:
   - include: variables
   - match: \$\(
     scope: punctuation.definition.expression.powershell
-    push:
-    - match: \(
-      push:
-      - match: \)
-        pop: true
-      - include: string-internals
-    - match: \)
-      scope: punctuation.definition.expression.powershell
-      pop: true
-    - include: string-internals
+    push: string-internals-expressions
 
-  storage:
+  string-internals-expressions:
+  - match: \)
+    scope: punctuation.definition.expression.powershell
+    pop: true
+  - match: (?=")
+    pop: true
+  - include: code-section
+
+  numbers:
   - match: '((?<=[\s=+*/%-(]|^)-)?\b\d+[.,]?\d*([kmg]b)?\b'
     scope: constant.numeric.powershell
+
+  storage:
   - match: '\[\s*(?=[A-Za-z])'
     push:
     - match: \w+
@@ -152,15 +155,17 @@ contexts:
     scope: keyword.operator.unary.powershell
   - match: \|
     scope: keyword.operator.pipe.powershell
-  - match: '[*1-5]?(<|>>?)(?:&[1-5])?'
-    scope: keyword.operator.powershell
-    captures:
-      1: keyword.operator.stream.powershell
   - match: '&|(?<![.\w])\.\s*(?=[$"''])'
     scope: keyword.operator.execute.powershell
   - match: '(`).'
     captures:
       1: keyword.operator.escape.powershell
+
+  stream-redirection:
+  - match: '[*1-5]?(<|>>?)(?:&[1-5])?'
+    scope: keyword.operator.powershell
+    captures:
+      1: keyword.operator.stream.powershell
 
   functions:
   - match: \b(?<![/-])(?i)((?>function|filter))\s+([A-Za-z][\w.-]*)
