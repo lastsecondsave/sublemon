@@ -284,9 +284,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Java package declaration</string>
+			<string>Java package declaration and import asterisk</string>
 			<key>scope</key>
-			<string>meta.package.java</string>
+			<string>meta.package.java storage.type, storage.type.asterisk.java</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

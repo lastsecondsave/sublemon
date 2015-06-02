@@ -163,8 +163,8 @@ settings:
   settings:
     foreground: '#AAAAF0'
 
-- name:  Java package declaration
-  scope: meta.package.java
+- name:  Java package declaration and import asterisk
+  scope: meta.package.java storage.type, storage.type.asterisk.java
   settings:
     foreground: '#E5476C'
 

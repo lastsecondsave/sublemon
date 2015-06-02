@@ -1,4 +1,4 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.java meta.class meta.class.identifier
+scope: source.java meta.class.identifier
 settings:
   showInSymbolList: 1
