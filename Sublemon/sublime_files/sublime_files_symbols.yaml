@@ -2,3 +2,4 @@
 scope: meta.context.sublime-syntax entity.name.key
 settings:
   showInSymbolList: 1
+  showInIndexedSymbolList: 1
