@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>meta.context.sublime-syntax entity.name.key.yaml</string>
+	<string>meta.context.sublime-syntax entity.name.key</string>
 	<key>settings</key>
 	<dict>
+		<key>showInIndexedSymbolList</key>
+		<integer>1</integer>
 		<key>showInSymbolList</key>
 		<integer>1</integer>
 	</dict>
