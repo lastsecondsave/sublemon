@@ -31,7 +31,6 @@
 
   /* GUI */
 
-  { "keys": ["alt+,"],   "command": "show_overlay", "args": {"overlay": "command_palette"} },
   { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
   { "keys": ["ctrl+q"],  "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
@@ -40,6 +39,7 @@
   { "keys": ["alt+f11"], "command": "prompt_select_workspace" },
   { "keys": ["ctrl+;"],  "command": "diff_changes" },
 
+  { "keys": ["ctrl+k", "ctrl+o"], "command": "toggle_show_open_files" },
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
   { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_status_bar" },
@@ -49,26 +49,25 @@
 
   { "keys": ["alt+."], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
 
-  { "keys": ["ctrl+f12"], "command": "toggle_record_macro" },
-  { "keys": ["ctrl+shift+f12"], "command": "run_macro" },
+  { "keys": ["ctrl+f12"], "command": "run_macro" },
+  { "keys": ["ctrl+shift+f12"], "command": "toggle_record_macro" },
 
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
-    "args": {"file": "Packages/Default/Add Line in Braces.sublime-macro" },
-    "context": [
-      {"key": "setting.is_widget", "operator": "equal", "operand": false}
-    ]
+    "args": {"file": "Packages/Sublemon/add_indent.sublime-macro" },
+    "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
   },
   { "keys": ["alt+shift+w"], "command": "insert_snippet",
     "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
   },
-  { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " $SELECTION "}, "context": [
-      {"key": "selection_empty", "operator": "equal", "operand": false, "match_all": true}
-    ]
+  { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "},
+    "context": [{"key": "selection_empty", "operator": "equal", "operand": false, "match_all": true}]
   },
 
   /* Build */
 
-  { "keys": ["alt+b"],  "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
+  { "keys": ["alt+b"],  "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "},
+    "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
+  },
   { "keys": ["ctrl+b"], "command": "show_panel" ,  "args": {"panel": "output.exec", "toggle": true} },
   { "keys": [""],    "command": "exec", "args": {"kill": true} },
 
@@ -99,6 +98,9 @@
 
   { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "brackets"} },
   { "keys": ["shift+alt+a"],  "command": "expand_selection", "args": {"to": "tag"} },
+
+  { "keys": ["alt+z"], "command": "jump_back" },
+  { "keys": ["alt+x"], "command": "jump_forward" },
 
   /* Plugins */
 
