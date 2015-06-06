@@ -13,8 +13,7 @@ class PowershellExecCommand(sublime_plugin.WindowCommand):
     load_profile = self.get_argument("load_profile", args)
     context = self.get_argument("context", args)
 
-    script = os.path.join(sublime.packages_path(),
-        "Sublemon", "sublemon_powershell", "powershell_exec.ps1")
+    script = os.path.join(sublime.packages_path(), "Sublemon", "powershell_exec.ps1")
 
     cmd = ["powershell.exe", "-ExecutionPolicy", "Unrestricted"]
 
