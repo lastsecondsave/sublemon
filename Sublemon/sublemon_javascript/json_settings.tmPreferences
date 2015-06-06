@@ -12,6 +12,27 @@
 		<string>^\s*[\{\[]\s*$</string>
 		<key>indentSquareBrackets</key>
 		<true/>
+		<key>shellVariables</key>
+		<array>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_START</string>
+				<key>value</key>
+				<string>// </string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_START_2</string>
+				<key>value</key>
+				<string>/*</string>
+			</dict>
+			<dict>
+				<key>name</key>
+				<string>TM_COMMENT_END_2</string>
+				<key>value</key>
+				<string>*/</string>
+			</dict>
+		</array>
 	</dict>
 </dict>
 </plist>

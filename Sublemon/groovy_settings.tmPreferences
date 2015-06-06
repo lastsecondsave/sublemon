@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.c, source.c++, source.javascript, source.json, source.java, source.groovy</string>
+	<string>source.groovy</string>
 	<key>settings</key>
 	<dict>
 		<key>shellVariables</key>
@@ -18,13 +18,13 @@
 				<key>name</key>
 				<string>TM_COMMENT_START_2</string>
 				<key>value</key>
-				<string>/* </string>
+				<string>/*</string>
 			</dict>
 			<dict>
 				<key>name</key>
 				<string>TM_COMMENT_END_2</string>
 				<key>value</key>
-				<string> */</string>
+				<string>*/</string>
 			</dict>
 		</array>
 	</dict>

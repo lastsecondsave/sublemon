@@ -5,3 +5,10 @@ settings:
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default|public|private|protected):|/\*!.*)\s*$
   decreaseIndentPattern: ^\s*((.*\*/\s*)?\}.*|\b(case\s+\w+|default|public|private|protected):|\*/)\s*$
   indentSquareBrackets: true
+  shellVariables:
+  - name: TM_COMMENT_START
+    value: '// '
+  - name: TM_COMMENT_START_2
+    value: '/*'
+  - name: TM_COMMENT_END_2
+    value: '*/'
