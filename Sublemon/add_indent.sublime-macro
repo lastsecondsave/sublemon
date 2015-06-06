@@ -1,0 +1,4 @@
+[
+    { "command": "insert_snippet", "args": {"contents": "\n${0:$SELECTION}\n"} },
+    { "command": "indent" }
+]
