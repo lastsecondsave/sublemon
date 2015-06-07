@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.javascript
+scope: source.js
 settings:
   bracketIndentNextLinePattern: ^\s*\b(?>if|while|else)\b[^;]*$|^\s*\b(for)\b.*$
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$

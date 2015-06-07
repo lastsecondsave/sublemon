@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: JavaScript
-scope: source.javascript
+scope: source.js
 file_extensions: [js, jsm]
 
 variables:
@@ -133,9 +133,9 @@ contexts:
   - include: exit-before-any-match
 
   operators:
-  - match: "[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>"
+  - match: (?>[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>)
     scope: keyword.operator.javascript
-  - match: "[!~]"
+  - match: '[!~]'
     scope: keyword.operator.unary.javascript
   - match: \?
     scope: keyword.operator.ternary.javascript
