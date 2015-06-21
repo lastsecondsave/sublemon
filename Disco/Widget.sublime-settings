@@ -1,3 +1,4 @@
 {
-	"color_scheme": "Packages/Disco/Disco.tmTheme"
+  "auto_match_enabled": true,
+  "color_scheme": "Packages/Disco/Disco.tmTheme"
 }
