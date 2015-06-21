@@ -134,7 +134,7 @@ contexts:
     scope: keyword.control.powershell
 
   operators:
-  - match: (-(?:not)?match)\s+(')
+  - match: (-(?>(?:not)?match|[ic]?replace))\s+(')
     captures:
       1: keyword.operator.powershell
       2: string.quoted.powershell
