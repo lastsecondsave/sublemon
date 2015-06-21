@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: meta.function.identifier.javascript
+settings:
+  showInSymbolList: 1

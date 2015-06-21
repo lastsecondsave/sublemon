@@ -5,8 +5,8 @@ scope: source.js
 file_extensions: [js, jsm]
 
 variables:
-  identifier: '[A-Za-z$_][\w$]*'
-  before_operation: (?<=[=(:,&|?]|^|return\s)\s*
+  id: '(?:\b[A-Za-z$_][\w$]*\b)'
+  after_operator: (?:(?<=[=(:,&|?]|^|return\s)\s*)
 
 contexts:
   main:
@@ -15,11 +15,12 @@ contexts:
   - include: keywords
   - include: operators
   - include: constants
-  - include: support
+  - include: prototypes
   - include: functions
-  - include: bracket-balancing
+  - include: support
+  - include: bracket_balancing
 
-  bracket-balancing:
+  bracket_balancing:
   - match: \{
     push:
     - match: \}
@@ -39,7 +40,7 @@ contexts:
   - match: '[)}\]]'
     scope: invalid.illegal.stray-bracket
 
-  exit-before-any-match:
+  pop_before_space:
   - match: (?=\S)
     pop: true
 
@@ -61,22 +62,23 @@ contexts:
     - meta_scope: string.quoted.javascript
     - match: '"'
       pop: true
-    - include: string-body
+    - include: string_body
   - match: "'"
     push:
     - meta_scope: string.quoted.javascript
     - match: "'"
       pop: true
-    - include: string-body
-  - match: '{{before_operation}}/(?=[^/*+?])'
-    scope: string.regexp.javascript
+    - include: string_body
+  - match: '{{after_operator}}(/)(?=[^/*+?])'
+    captures:
+      1: string.regexp.javascript
     push: Packages/Sublemon/regexp.sublime-syntax
     with_prototype:
     - match: '/[igm]*'
       scope: string.regexp.javascript
       pop: true
 
-  string-body:
+  string_body:
     - match: (?<!\\)\n
       pop: true
     - match: '[^''"\\](?=\n)$'
@@ -105,12 +107,12 @@ contexts:
     scope: keyword.control.javascript
   - match: \b(?>if|for|while)\b
     scope: keyword.control.javascript
-    push: semicolon-after-bracket-check
+    push: semicolon_after_bracket_check
   - match: \bswitch\b
     scope: keyword.control.javascript
-    push: [switch-body, function-parameters]
+    push: [switch_body, function_parameters]
 
-  switch-body:
+  switch_body:
   - match: \{
     set:
     - match: \}
@@ -118,9 +120,9 @@ contexts:
     - match: (?>case|default)
       scope: keyword.control.javascript
     - include: main
-  - include: exit-before-any-match
+  - include: pop_before_space
 
-  semicolon-after-bracket-check:
+  semicolon_after_bracket_check:
   - match: \(
     set:
     - match: \)
@@ -130,7 +132,7 @@ contexts:
       - match: (?=\S)
         pop: true
     - include: main
-  - include: exit-before-any-match
+  - include: pop_before_space
 
   operators:
   - match: (?>[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>)
@@ -146,65 +148,72 @@ contexts:
     - include: main
   - match: \b(?>in|of|typeof|void|with)\b
     scope: keyword.operator.alphanumeric.javascript
-  - match: '\b(instanceof)\s+({{identifier}})\b'
+  - match: '\b(instanceof)\s+({{id}})\b'
     captures:
       1: keyword.operator.alphanumeric.javascript
       2: support.class.javascript
-  - match: '\b(new)\s+({{identifier}})\b'
+  - match: '\b(new)\s+({{id}})\b'
     captures:
       1: keyword.control.javascript
       2: support.class.javascript
 
   support:
-  - match: \b(?>console|window|document)\b
+  - match: \b(?<!\.)(?>console|window|document)\b
     scope: support.constant.javascript
-  - match: \b(?>JSON|Math|Object|Function)\b
+  - match: \b(?>Array|Function|JSON|Math|Object)\b
     scope: support.class.javascript
   - match: \b(?>(decode|encode)URI(Component)?|eval|is(Finite|NaN)|parse(Float|Int))\b
     scope: support.function.javascript
-  - match: (?<=.)bind(?=\s*\()
+  - match: (?<=.)(?>bind|call)(?=\s*\()
     scope: support.function.javascript
-  - match: '\b({{identifier}})\.(prototype)\b'
+
+  fields:
+  - match: '({{id}})\s*:'
+    captures:
+      1: entity.name.field.javascript
+
+  prototypes:
+  # Object.prototype.f = function()
+  - match: (({{id}})\.(prototype)\.({{id}}))\s*(=)\s*(?=function)
+    captures:
+      1: meta.function.identifier.javascript
+      2: support.type.javascript
+      3: keyword.other.javascript
+      4: entity.name.function.javascript
+  - match: '({{id}})\.(prototype)\b'
     captures:
       1: support.type.javascript
       2: keyword.other.javascript
 
-  fields:
-  - match: '\b({{identifier}})\s*:'
-    captures:
-      1: entity.name.field.javascript
-
   functions:
-  - match: \b({{identifier}})\s*:\s*(?=function)
+  # f: function()
+  - match: \b({{id}})\s*:\s*(?=function)
     captures:
       1: entity.name.function.javascript
       2: keyword.operator.javascript
-  - match: \b(?<=prototype\.)({{identifier}})\s*(=)\s*(?=function)
-    captures:
-      1: entity.name.function.javascript
-      2: keyword.operator.javascript
-  - match: \b(function)(?:\s+({{identifier}}))?
+  # function f()
+  - match: \b(function)(?:\s+({{id}}))?
     captures:
       1: storage.type.function.javascript
       2: entity.name.function.javascript
-    push: [function-body, function-parameters]
+    push: [function_body, function_parameters]
   - match: (?=\([^(]*?\)\s*=>)
-    push: function-parameters
-  - match: '{{before_operation}}(?=\(\s*{{identifier}}\s*,)'
-    push: function-parameters
-  - match: '({{identifier}})?\s*(=>)'
+    push: function_parameters
+  - match: '{{after_operator}}(?=\(\s*{{id}}\s*,)'
+    push: function_parameters
+  - match: '({{id}})?\s*(=>)'
     captures:
       1: variable.parameter.function.javascript
       2: keyword.operator.lambda.javascript
-    push: function-body
+    push: function_body
 
-  function-parameters:
+  function_parameters:
   - match: \(
     set:
     - meta_scope: meta.function.paremeters.javascript
     - match: \)
       pop: true
-    - match: '{{identifier}}'
+    - match: '{{id}}'
       scope: variable.parameter.function.javascript
     - match: '='
       scope: keyword.operator.javascript
@@ -215,13 +224,13 @@ contexts:
   - match: \{
     scope: invalid.illegal.missing-function-parameters
     pop: true
-  - include: exit-before-any-match
+  - include: pop_before_space
 
-  function-body:
+  function_body:
   - match: \{
     set:
     - meta_scope: meta.function.body.javascript
     - match: \}
       pop: true
     - include: main
-  - include: exit-before-any-match
+  - include: pop_before_space
