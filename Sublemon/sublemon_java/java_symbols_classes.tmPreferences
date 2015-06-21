@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>meta.class.body.java meta.class.identifier</string>
+	<string>source.java meta.class.identifier</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
 		<integer>1</integer>
 		<key>symbolTransformation</key>
-		<string>s/\s{2,}/ /g; s/^/  /;</string>
+		<string>s/\s{2,}/ /g;</string>
 	</dict>
 </dict>
 </plist>

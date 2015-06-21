@@ -143,7 +143,7 @@
 			<key>name</key>
 			<string>Storage</string>
 			<key>scope</key>
-			<string>storage.type</string>
+			<string>storage</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -297,7 +297,7 @@
 			<key>name</key>
 			<string>Java throwable declaration</string>
 			<key>scope</key>
-			<string>meta.throwables.java storage.type.java</string>
+			<string>entity.other.throwable.java</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -317,9 +317,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Java annotation</string>
+			<string>Java annotation name and parameter</string>
 			<key>scope</key>
-			<string>storage.type.annotation.java</string>
+			<string>punctuation.definition.annotation.java, meta.annotation.identifier.java storage.type, variable.parameter.annotation.java</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -335,17 +335,6 @@
 			<dict>
 				<key>foreground</key>
 				<string>#FF8147</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Java annotation parameter</string>
-			<key>scope</key>
-			<string>meta.declaration.annotation.java constant.other.key.java</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>

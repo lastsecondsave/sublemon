@@ -3,17 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.java meta.class.body meta.method.identifier</string>
+	<string>source.java meta.method.identifier</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
 		<integer>1</integer>
 		<key>symbolTransformation</key>
-		<string>s/\/\*.*?\*\// /g;
-s/\s{2,}/ /g;
-s/(?&lt;=\() | (?=[,)])//g;
-s/^/  /;
-</string>
+		<string>s/\/\*.*?\*\// /g; s/\s{2,}/ /g; s/(?&lt;=\() | (?=[,)])//g; s/^/  /;</string>
 	</dict>
 </dict>
 </plist>
