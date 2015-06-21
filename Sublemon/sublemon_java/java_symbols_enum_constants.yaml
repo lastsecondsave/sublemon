@@ -1,0 +1,6 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: constant.user.enum.java
+settings:
+  showInSymbolList: 1
+  showInIndexedSymbolList: 1
+  symbolTransformation: s/^/  /;

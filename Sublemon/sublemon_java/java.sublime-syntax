@@ -6,7 +6,8 @@ file_extensions: [java]
 first_line_match: package\s+\w+(\.\w+)*;
 
 variables:
-  id: (?:[a-z]\w*)
+  id: (?:\b[a-zA-Z]\w*\b)
+  small_id: (?:\b[a-z]\w*\b)
   class_id: (?:\b[A-Z]\w*\b)
   escape: '\\(?>[bfnrt''"\\]|u[0-9a-fA-F]{4})'
   number: (?:[0-9][0-9_]*)
@@ -16,8 +17,6 @@ variables:
 contexts:
   prototype:
   - include: comments
-  - match: '[\t ]+$'
-    scope: warning.trailing-space.java
 
   main:
   - match: ''
@@ -38,6 +37,7 @@ contexts:
   - include: operators
   - include: storage
   - include: keywords
+  - include: annotations
   - include: bracket_balancing
 
   before_class_section:
@@ -61,6 +61,7 @@ contexts:
       - match: '{{before_non_space}}'
         set: [import_class_name, package]
     - include: pop_before_non_space
+  - include: annotations
 
   import_class_name:
   - include: storage_class
@@ -100,6 +101,10 @@ contexts:
 
   pop_on_any:
   - match: ''
+    pop: true
+
+  pop_on_fence:
+  - match: '[{}]'
     pop: true
 
   comments:
@@ -159,7 +164,7 @@ contexts:
   storage:
   - match: \b(?>void|boolean|byte|char|short|int|float|long|double)\b
     scope: storage.type.primitive.java
-  - match: \b(?>public|private|protected|static|final|native|synchronized|abstract|transient|strictfp)\b
+  - match: \b(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp)\b
     scope: storage.modifier.java
   - match: \b[A-Z][A-Z_0-9]+\b
     scope: constant.user.java
@@ -174,11 +179,11 @@ contexts:
   - include: package_before_class_name
 
   package_before_class_name:
-  - match: \b(?=(?:{{id}}\.)+{{class_id}})
+  - match: \b(?=(?:{{small_id}}\.)+{{class_id}})
     push: package
 
   package:
-  - match: '{{id}}'
+  - match: '{{small_id}}'
     scope: storage.type.package.java
   - match: (?=[^a-z.])
     pop: true
@@ -190,12 +195,13 @@ contexts:
     - match: '>'
       pop: true
     - match: \?
-      scope: keyword.operator.wildcard.java
+      scope: storage.type.wildcard.java
     - match: \&
       scope: keyword.operator.java
     - match: \b(?>extends|super)\b
       scope: storage.modifier.java
     - include: storage_class
+    - include: pop_on_fence
   - include: pop_on_any
 
   operators:
@@ -212,12 +218,26 @@ contexts:
     - include: code_section
   - match: \binstanceof\b
     scope: keyword.operator.alphanumeric.java
+  - match: \bnew\b
+    scope: keyword.operator.alphanumeric.java
+    push: new_statement
+  - match: \.
+    push:
+    - include: angular_brackets
+    - include: pop_before_non_space
+
+  angular_brackets:
+  - match: '<'
+    push:
+    - match: '>'
+      pop: true
+    - include: code_section
 
   keywords:
   - match: \b(?>break|continue|else|finally|return|throw)\b
     scope: keyword.control.java
   # expr (), then possible {}
-  - match: \b(?>catch|if|try|while)\b
+  - match: \b(?>if|try|while)\b
     scope: keyword.control.java
     push: round_brackets_no_semicolon
   # do-while
@@ -226,6 +246,7 @@ contexts:
     push:
     - match: \bwhile\b
       scope: keyword.control.java
+      pop: true
     - include: code_section
   # switch
   - match: \bswitch\b
@@ -235,11 +256,15 @@ contexts:
   - match: \bfor\b
     scope: keyword.control.java
     push: [no_semicolon, for_condition]
+  # catch
+  - match: \bcatch\b
+    scope: keyword.control.java
+    push: [no_semicolon, method_parameters]
 
   switch_condition:
   - match: \(
     set:
-    - match: ({{id}})\s*(?=\))|(?=\S)
+    - match: ({{small_id}})\s*(?=\))|(?=\S)
       captures:
         1: variable.parameter.java
       set:
@@ -255,7 +280,7 @@ contexts:
       pop: true
     - match: (?>case|default)
       scope: keyword.control.java
-    - include: main
+    - include: code_section
   - include: pop_before_non_space
 
   for_condition:
@@ -264,8 +289,8 @@ contexts:
     - match: \)
       pop: true
     - match: '[;:]'
-      scope: keyword.operator.java
-    - match: \s({{id}})(?=\s*:)
+      # scope: keyword.operator.java
+    - match: \s({{small_id}})(?=\s*:)
       captures:
         1: variable.parameter.java
     - include: code_section
@@ -284,38 +309,61 @@ contexts:
     scope: invalid.illegal.bad-semicolon
   - include: pop_before_non_space
 
+  annotations:
+  - match: '@(?!in)'
+    scope: punctuation.definition.annotation.java
+    push: [annotation_parameters, annotation_identifier]
+
+  annotation_identifier:
+  - meta_scope: meta.annotation.identifier.java
+  - match: '{{class_id}}'
+    scope: storage.type.annotation.java
+  - include: package_before_class_name
+  - include: pop_on_any
+
+  annotation_parameters:
+  - match: \(
+    set:
+    - match: \)
+      pop: true
+    - match: '{{small_id}}(?=\s*=)'
+      scope: variable.parameter.annotation.java
+    - include: code_section
+  - include: pop_before_non_space
+
   classes:
-  - match: (?=class)
-    push: [implements_statement, extends_statement, class_identifier]
-  - match: (?=interface)
-    push: [extends_statement, class_identifier]
-  - match: (?=enum)
-    push: [implements_statement, extends_statement, class_identifier]
+  - match: (?<=^|\s)(?=class\s)
+    push: [class_body, implements_statement, extends_statement, class_identifier]
+  - match: (?<=^|\s)(?=interface\s)
+    push: [class_body, extends_statement, class_identifier]
+  - match: (?<=^|\s)(?=enum\s)
+    push: [enum_body, implements_statement, class_identifier]
+  - match: (?<=^|\s)(?=@interface\s)
+    push: [class_body, class_identifier]
 
   class_identifier:
   - meta_scope: meta.class.identifier.java
-  - match: '{{before_non_space}}'
+  - match: (?>[\w@]+)
+    scope: storage.type.modifier.java
     push:
-    - match: (?>class|enum|interface)
-      scope: storage.type.modifier.java
+    - match: '{{before_non_space}}'
       set:
-      - match: '{{before_non_space}}'
-        set:
-        - match: '{{class_id}}'
-          scope: entity.name.class.java
-          set: generic
-        - include: package_before_class_name
-  - include: pop_before_space
+      - match: '{{class_id}}'
+        scope: entity.name.class.java
+        set: generic
+      - include: package_before_class_name
+      - include: pop_on_any
+  - include: pop_on_any
 
   extends_statement:
-  - match: (?>extends)
-    scope: storage.type.modifier.java
+  - match: \bextends\b
+    scope: keyword.java
     set: inherited_class_name
   - include: pop_before_non_space
 
   implements_statement:
-  - match: (?>implements)
-    scope: storage.type.modifier.java
+  - match: \bimplements\b
+    scope: keyword.java
     set:
     - - match: ','
         push: inherited_class_name
@@ -330,3 +378,127 @@ contexts:
       scope: entity.other.inherited-class.java
       set: generic
     - include: package_before_class_name
+    - include: pop_on_any
+
+  class_body:
+  - match: \{
+    set:
+    - meta_scope: meta.class.body.java
+    - match: \}
+      pop: true
+    - include: class_body_section
+  - include: pop_before_non_space
+
+  enum_body:
+  - match: \{
+    set:
+    - meta_scope: meta.class.body.java
+    - match: \}
+      pop: true
+    - match: '{{before_non_space}}'
+      push: [enum_declarations, enum_constants]
+  - include: pop_before_non_space
+
+  enum_constants:
+  - match: '{{id}}'
+    scope: constant.user.enum.java
+    push:
+    - match: \(
+      set:
+      - match: \)
+        pop: true
+      - include: code_section
+    - include: pop_before_non_space
+  - match: ';'
+    pop: true
+  - include: annotations
+  - include: pop_on_fence
+
+  enum_declarations:
+  - match: (?=\})
+    pop: true
+  - include: class_body_section
+
+  class_body_section:
+  - include: fields
+  - include: methods
+  - include: classes
+  - include: angular_brackets
+  - include: code_section
+
+  fields:
+  - match: '='
+    scope: keyword.operator.java
+    push:
+    - match: ';'
+      pop: true
+    - include: code_section
+
+  methods:
+  - match: '(?={{id}}\s*\()'
+    push: [method_body, throws_statement, method_identifier]
+
+  method_identifier:
+  - meta_scope: meta.method.identifier.java
+  - match: '{{id}}'
+    scope: entity.name.function.java
+    push:
+    - match: '{{before_non_space}}'
+      set: method_parameters
+  - match: (?<=\))
+    pop: true
+
+  method_parameters:
+  - match: \(
+    set:
+    - match: \)
+      pop: true
+    - include: pop_on_fence
+    - include: code_section
+    - match: '{{id}}'
+      scope: variable.parameter.java
+
+  method_body:
+  - match: \{
+    set:
+    - meta_scope: meta.method.body.java
+    - match: \}
+      pop: true
+    - include: code_section
+  - include: pop_before_non_space
+
+  throws_statement:
+  - match: \bthrows\b
+    scope: keyword.java
+    set:
+    - - match: ','
+        push: throws_class_name
+      - include: pop_before_non_space
+    - throws_class_name
+  - include: pop_before_non_space
+
+  throws_class_name:
+  - match: '{{before_non_space}}'
+    set:
+    - match: '{{class_id}}'
+      scope: entity.other.throwable.java
+      set: generic
+    - include: package_before_class_name
+    - include: pop_on_any
+
+  new_statement:
+  - match: '{{before_non_space}}'
+    set:
+    - include: storage
+    # new type[]
+    - match: \[
+      set:
+      - match: \]
+        pop: true
+      - include: code_section
+    # new Type()
+    - match: \(
+      set:
+      - match: \)
+        set: class_body
+      - include: code_section

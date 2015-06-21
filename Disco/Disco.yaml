@@ -92,7 +92,7 @@ settings:
     foreground: '#838495'
 
 - name:  Storage
-  scope: storage.type
+  scope: storage
   settings:
     foreground: '#EF51AA'
 
@@ -169,7 +169,7 @@ settings:
     foreground: '#E5476C'
 
 - name:  Java throwable declaration
-  scope: meta.throwables.java storage.type.java
+  scope: entity.other.throwable.java
   settings:
     foreground: '#E5476C'
 
@@ -178,8 +178,11 @@ settings:
   settings:
     foreground: '#E5476C'
 
-- name:  Java annotation
-  scope: storage.type.annotation.java
+- name:  Java annotation name and parameter
+  scope: >-
+    punctuation.definition.annotation.java,
+    meta.annotation.identifier.java storage.type,
+    variable.parameter.annotation.java
   settings:
     foreground: '#EDC61A'
 
@@ -188,15 +191,8 @@ settings:
   settings:
     foreground: '#FF8147'
 
-- name:  Java annotation parameter
-  scope: meta.declaration.annotation.java constant.other.key.java
-  settings:
-    foreground: '#EDC61A'
-
 - name:  XML tag
-  scope: >-
-    entity.name.tag,
-    punctuation.definition.tag
+  scope: entity.name.tag, punctuation.definition.tag
   settings:
     foreground: '#77ABFF'
 
