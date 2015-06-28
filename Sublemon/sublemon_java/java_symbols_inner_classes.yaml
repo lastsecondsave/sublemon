@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: meta.class.body.java meta.class.identifier
+scope: source.java meta.class.body meta.class.identifier
 settings:
   showInSymbolList: 1
   symbolTransformation: s/\s{2,}/ /g; s/^/  /;

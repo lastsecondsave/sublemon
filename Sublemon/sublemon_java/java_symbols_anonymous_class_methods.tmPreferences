@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.java meta.class.body meta.class.body meta.method.identifier</string>
+	<string>source.java meta.class.body meta.class.body.anonymous meta.method.identifier</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
@@ -12,7 +12,7 @@
 		<string>s/\/\*.*?\*\// /g;
 s/\s{2,}/ /g;
 s/(?&lt;=\() | (?=[,)])//g;
-s/^/    /;
+s/^/    ? /;
 </string>
 	</dict>
 </dict>

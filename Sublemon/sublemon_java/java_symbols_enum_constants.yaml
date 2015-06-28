@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: constant.user.enum.java
+scope: source.java meta.class.body constant.user.enum
 settings:
   showInSymbolList: 1
   showInIndexedSymbolList: 1
