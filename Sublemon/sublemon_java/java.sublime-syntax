@@ -41,45 +41,40 @@ contexts:
   - include: bracket_balancing
 
   before_class_section:
-  - match: (?=package)
+  - match: (?=\bpackage\b)
     push:
     - meta_scope: meta.package.java
     - match: package
       scope: keyword.package.java
-      push:
-      - match: '{{before_non_space}}'
-        set: package
-    - include: pop_before_non_space
-  - match: (?=import)
+      push: [package, pop_before_non_space_same_line]
+    - include: pop_on_any
+  - match: (?=\bimport\b)
     push:
     - meta_scope: meta.import.java
-    - match: (import)\s*(static)?
+    - match: (import)(?:\s+(static))?
       captures:
         1: keyword.import.java
         2: keyword.import.static.java
-      push:
-      - match: '{{before_non_space}}'
-        set: [import_class_name, package]
-    - include: pop_before_non_space
+      push: [import_class_name, package, pop_before_non_space_same_line]
+    - include: pop_on_any
   - include: annotations
 
   import_class_name:
   - include: storage_class
   - match: \*
     scope: storage.type.asterisk.java
-  - match: (?=;)
-    pop: true
+  - match: \.
+    push: package
+  - include: pop_before_non_space
 
   bracket_balancing:
   - match: \{
     push:
-    - match: \}
-      pop: true
+    - include: pop_on_closed_curly_bracket
     - include: code_section
   - match: \(
     push:
-    - match: \)
-      pop: true
+    - include: pop_on_closed_round_bracket
     - match: ;
       scope: invalid.illegal.unexpected-semicolon
     - include: code_section
@@ -87,12 +82,18 @@ contexts:
     push:
     - match: \]
       pop: true
+    - match: ;
+      scope: invalid.illegal.unexpected-semicolon
     - include: code_section
   - match: '[)}\]]'
     scope: invalid.illegal.stray-bracket
 
   pop_before_non_space:
   - match: '{{before_non_space}}'
+    pop: true
+
+  pop_before_non_space_same_line:
+  - match: '[\t ]*'
     pop: true
 
   pop_before_space:
@@ -105,6 +106,14 @@ contexts:
 
   pop_on_fence:
   - match: '[{}]'
+    pop: true
+
+  pop_on_closed_curly_bracket:
+  - match: \}
+    pop: true
+
+  pop_on_closed_round_bracket:
+  - match: \)
     pop: true
 
   comments:
@@ -220,11 +229,26 @@ contexts:
     scope: keyword.operator.alphanumeric.java
   - match: \bnew\b
     scope: keyword.operator.alphanumeric.java
-    push: new_statement
+    push: [new_statement, pop_before_non_space]
   - match: \.
     push:
     - include: angular_brackets
     - include: pop_before_non_space
+
+  new_statement:
+  - include: storage
+  # new type[]
+  - match: \[
+    set:
+    - match: \]
+      pop: true
+    - include: code_section
+  # new Type()
+  - match: \(
+    set:
+    - match: \)
+      set: anonymous_class_body
+    - include: code_section
 
   angular_brackets:
   - match: '<'
@@ -276,8 +300,7 @@ contexts:
   switch_body:
   - match: \{
     set:
-    - match: \}
-      pop: true
+    - include: pop_on_closed_curly_bracket
     - match: (?>case|default)
       scope: keyword.control.java
     - include: code_section
@@ -286,8 +309,7 @@ contexts:
   for_condition:
   - match: \(
     set:
-    - match: \)
-      pop: true
+    - include: pop_on_closed_round_bracket
     - match: '[;:]'
       # scope: keyword.operator.java
     - match: \s({{small_id}})(?=\s*:)
@@ -324,8 +346,7 @@ contexts:
   annotation_parameters:
   - match: \(
     set:
-    - match: \)
-      pop: true
+    - include: pop_on_closed_round_bracket
     - match: '{{small_id}}(?=\s*=)'
       scope: variable.parameter.annotation.java
     - include: code_section
@@ -384,17 +405,23 @@ contexts:
   - match: \{
     set:
     - meta_scope: meta.class.body.java
-    - match: \}
-      pop: true
+    - include: pop_on_closed_curly_bracket
+    - include: class_body_section
+  - include: pop_before_non_space
+
+  anonymous_class_body:
+  - match: \{
+    set:
+    - meta_scope: meta.class.body.anonymous.java
+    - include: pop_on_closed_curly_bracket
     - include: class_body_section
   - include: pop_before_non_space
 
   enum_body:
   - match: \{
     set:
-    - meta_scope: meta.class.body.java
-    - match: \}
-      pop: true
+    - meta_scope: meta.class.body.enum.java
+    - include: pop_on_closed_curly_bracket
     - match: '{{before_non_space}}'
       push: [enum_declarations, enum_constants]
   - include: pop_before_non_space
@@ -405,8 +432,7 @@ contexts:
     push:
     - match: \(
       set:
-      - match: \)
-        pop: true
+      - include: pop_on_closed_round_bracket
       - include: code_section
     - include: pop_before_non_space
   - match: ';'
@@ -442,17 +468,13 @@ contexts:
   - meta_scope: meta.method.identifier.java
   - match: '{{id}}'
     scope: entity.name.function.java
-    push:
-    - match: '{{before_non_space}}'
-      set: method_parameters
-  - match: (?<=\))
-    pop: true
+    push: [method_parameters, pop_before_non_space]
+  - include: pop_on_any
 
   method_parameters:
   - match: \(
     set:
-    - match: \)
-      pop: true
+    - include: pop_on_closed_round_bracket
     - include: pop_on_fence
     - include: code_section
     - match: '{{id}}'
@@ -462,8 +484,7 @@ contexts:
   - match: \{
     set:
     - meta_scope: meta.method.body.java
-    - match: \}
-      pop: true
+    - include: pop_on_closed_curly_bracket
     - include: code_section
   - include: pop_before_non_space
 
@@ -475,30 +496,12 @@ contexts:
         push: throws_class_name
       - include: pop_before_non_space
     - throws_class_name
+    - pop_before_non_space
   - include: pop_before_non_space
 
   throws_class_name:
-  - match: '{{before_non_space}}'
-    set:
-    - match: '{{class_id}}'
-      scope: entity.other.throwable.java
-      set: generic
-    - include: package_before_class_name
-    - include: pop_on_any
-
-  new_statement:
-  - match: '{{before_non_space}}'
-    set:
-    - include: storage
-    # new type[]
-    - match: \[
-      set:
-      - match: \]
-        pop: true
-      - include: code_section
-    # new Type()
-    - match: \(
-      set:
-      - match: \)
-        set: class_body
-      - include: code_section
+  - match: '{{class_id}}'
+    scope: entity.other.throwable.java
+    set: generic
+  - include: package_before_class_name
+  - include: pop_on_any
