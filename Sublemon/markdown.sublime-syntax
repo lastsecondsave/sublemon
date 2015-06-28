@@ -14,12 +14,22 @@ contexts:
     scope: markup.italic.markdown
   - match: ~~\S.+?\S~~
     scope: markup.strikethrough.markdown
+
+  # Links
   - match: <.+?>
     scope: markup.underline.link.markdown
+  - match: (\[.+?\])(\(.+?\))
+    captures:
+      1: markup.italic.markdown
+      2: markup.underline.link.markdown
+
   - match: '\\[-`*_#+.!(){}\[\]\\>]'
     scope: constant.character.escape.markdown
+
   - match: '^#{1,6}(?!#)\s*(.*?)\s*#*$'
     scope: markup.heading.markdown entity.name.section.markdown
+
+  # Raw blocks
   - match: '^([ ]{4}|\t).*$'
     scope: markup.raw.block.markdown
 
@@ -27,9 +37,7 @@ contexts:
     scope: punctuation.definition.block.fenced.markdown
     push:
     - meta_scope: markup.raw.block.fenced.markdown
-    - match: ^```$
-      scope: punctuation.definition.block.fenced.markdown
-      pop: true
+    - include: fenced_block_termination
 
   - match: ^```(foobar2000)$
     scope: punctuation.definition.block.fenced.markdown
@@ -37,6 +45,9 @@ contexts:
       1: meta.fenced.language.marker.markdown
     push: Packages/Sublemon/foobar2000.sublime-syntax
     with_prototype:
-    - match: ^```$
-      scope: punctuation.definition.block.fenced.markdown
-      pop: true
+    - include: fenced_block_termination
+
+  fenced_block_termination:
+  - match: ^```$
+    scope: punctuation.definition.block.fenced.markdown
+    pop: true
