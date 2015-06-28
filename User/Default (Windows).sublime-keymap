@@ -37,7 +37,7 @@
   { "keys": ["ctrl+alt+f"], "command": "show_panel" , "args": {"panel": "output.find_results", "toggle": true} },
 
   { "keys": ["alt+f11"], "command": "prompt_select_workspace" },
-  { "keys": ["ctrl+;"],  "command": "diff_changes" },
+  { "keys": ["ctrl+shift+;"],  "command": "diff_changes" },
 
   { "keys": ["ctrl+k", "ctrl+o"], "command": "toggle_show_open_files" },
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
@@ -56,6 +56,23 @@
     "args": {"file": "Packages/Sublemon/add_indent.sublime-macro" },
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
   },
+  { "keys": ["ctrl+;"], "command": "run_macro_file",
+    "args": {"file": "Packages/Sublemon/add_semicolon.sublime-macro"},
+    "context": [
+      { "key": "selector", "operator": "equal",
+        "operand": "source.java, source.js, source.c++", "match_all": true
+      },
+    ]
+  },
+  { "keys": ["ctrl+,"], "command": "run_macro_file",
+    "args": {"file": "Packages/Sublemon/add_comma.sublime-macro"},
+    "context": [
+      { "key": "selector", "operator": "equal",
+        "operand": "source.java, source.js, source.c++, source.json", "match_all": true
+      },
+    ]
+  },
+
   { "keys": ["alt+shift+w"], "command": "insert_snippet",
     "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
   },
