@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>meta.class.body.java meta.class.identifier</string>
+	<string>source.java meta.class.body meta.class.identifier</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>

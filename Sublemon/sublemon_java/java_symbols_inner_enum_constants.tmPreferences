@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>meta.class.body.java meta.class.body.java constant.user.enum.java</string>
+	<string>source.java meta.class.body meta.class.body constant.user.enum</string>
 	<key>settings</key>
 	<dict>
 		<key>showInIndexedSymbolList</key>
