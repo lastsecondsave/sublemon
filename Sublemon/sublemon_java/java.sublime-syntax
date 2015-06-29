@@ -13,6 +13,7 @@ variables:
   number: (?:[0-9][0-9_]*)
   before_non_space: (?=\S)
   before_space: (?=\s)
+  b: (?<!\.)\b
 
 contexts:
   prototype:
@@ -41,14 +42,14 @@ contexts:
   - include: bracket_balancing
 
   before_class_section:
-  - match: (?=\bpackage\b)
+  - match: '{{b}}(?=package\b)'
     push:
     - meta_scope: meta.package.java
     - match: package
       scope: keyword.package.java
       push: [package, pop_before_non_space_same_line]
     - include: pop_on_any
-  - match: (?=\bimport\b)
+  - match: '{{b}}(?=import\b)'
     push:
     - meta_scope: meta.import.java
     - match: (import)(?:\s+(static))?
@@ -165,15 +166,15 @@ contexts:
     scope: constant.numeric.java
   - match: '''(?>{{escape}}|.)'''
     scope: constant.character.java
-  - match: \b(?>false|null|true)\b
+  - match: '{{b}}(?>false|null|true)\b'
     scope: constant.language.java
-  - match: \b(?>this|super)\b
+  - match: '{{b}}(?>this|super)\b'
     scope: variable.language.java
 
   storage:
-  - match: \b(?>void|boolean|byte|char|short|int|float|long|double)\b
+  - match: '{{b}}(?>void|boolean|byte|char|short|int|float|long|double)\b'
     scope: storage.type.primitive.java
-  - match: \b(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp)\b
+  - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp)\b'
     scope: storage.modifier.java
   - match: \b[A-Z][A-Z_0-9]+\b
     scope: constant.user.java
@@ -225,9 +226,9 @@ contexts:
       scope: keyword.operator.ternary.java
       pop: true
     - include: code_section
-  - match: \binstanceof\b
+  - match: '{{b}}instanceof\b'
     scope: keyword.operator.alphanumeric.java
-  - match: \bnew\b
+  - match: '{{b}}new\b'
     scope: keyword.operator.alphanumeric.java
     push: [new_statement, pop_before_non_space]
   - match: \.
@@ -258,30 +259,30 @@ contexts:
     - include: code_section
 
   keywords:
-  - match: \b(?>break|continue|else|finally|return|throw)\b
+  - match: '{{b}}(?>break|continue|else|finally|return|throw)\b'
     scope: keyword.control.java
   # expr (), then possible {}
-  - match: \b(?>if|try|while)\b
+  - match: '{{b}}(?>if|try|while)\b'
     scope: keyword.control.java
     push: round_brackets_no_semicolon
   # do-while
-  - match: \bdo\b
+  - match: '{{b}}do\b'
     scope: keyword.control.java
     push:
-    - match: \bwhile\b
+    - match: '{{b}}while\b'
       scope: keyword.control.java
       pop: true
     - include: code_section
   # switch
-  - match: \bswitch\b
+  - match: '{{b}}switch\b'
     scope: keyword.control.java
     push: [switch_body, no_semicolon, switch_condition]
   # for
-  - match: \bfor\b
+  - match: '{{b}}for\b'
     scope: keyword.control.java
     push: [no_semicolon, for_condition]
   # catch
-  - match: \bcatch\b
+  - match: '{{b}}catch\b'
     scope: keyword.control.java
     push: [no_semicolon, method_parameters]
 
@@ -353,13 +354,13 @@ contexts:
   - include: pop_before_non_space
 
   classes:
-  - match: (?<=^|\s)(?=class\s)
+  - match: '{{b}}(?=class\s)'
     push: [class_body, implements_statement, extends_statement, class_identifier]
-  - match: (?<=^|\s)(?=interface\s)
+  - match: '{{b}}(?=interface\s)'
     push: [class_body, extends_statement, class_identifier]
-  - match: (?<=^|\s)(?=enum\s)
+  - match: '{{b}}(?=enum\s)'
     push: [enum_body, implements_statement, class_identifier]
-  - match: (?<=^|\s)(?=@interface\s)
+  - match: '{{b}}(?=@interface\s)'
     push: [class_body, class_identifier]
 
   class_identifier:
@@ -370,7 +371,7 @@ contexts:
     - match: '{{before_non_space}}'
       set:
       - match: '{{class_id}}'
-        scope: entity.name.class.java
+        scope: entity.name.type.java
         set: generic
       - include: package_before_class_name
       - include: pop_on_any
