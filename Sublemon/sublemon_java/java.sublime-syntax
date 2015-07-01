@@ -160,7 +160,7 @@ contexts:
       scope: invalid.illegal.missing-quote
 
   constants:
-  - match: '\b(?>0[xX][0-9a-fA-F_]+|0[0-7_]+)\b'
+  - match: '\b(?>0[xX][0-9a-fA-F_]+|0[0-7_]+)[Ll]?\b'
     scope: constant.numeric.java
   - match: '(?:(?<=[\s=+*/%-(]|^)-)?\b{{number}}(\.{{number}}?)?(?:[eE][+-]?{{number}})?[lLfF]?\b'
     scope: constant.numeric.java
@@ -494,7 +494,7 @@ contexts:
     scope: keyword.java
     set:
     - - match: ','
-        push: throws_class_name
+        push: [throws_class_name, pop_before_non_space]
       - include: pop_before_non_space
     - throws_class_name
     - pop_before_non_space
