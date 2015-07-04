@@ -368,13 +368,12 @@ contexts:
   - match: (?>[\w@]+)
     scope: storage.type.modifier.java
     push:
-    - match: '{{before_non_space}}'
-      set:
-      - match: '{{class_id}}'
+    - - match: '{{class_id}}'
         scope: entity.name.type.java
         set: generic
       - include: package_before_class_name
       - include: pop_on_any
+    - pop_before_non_space
   - include: pop_on_any
 
   extends_statement:
@@ -388,7 +387,7 @@ contexts:
     scope: keyword.java
     set:
     - - match: ','
-        push: inherited_class_name
+        push: [inherited_class_name, pop_before_non_space]
       - include: pop_before_non_space
     - inherited_class_name
   - include: pop_before_non_space
@@ -469,12 +468,15 @@ contexts:
   - meta_scope: meta.method.identifier.java
   - match: '{{id}}'
     scope: entity.name.function.java
-    push: [method_parameters, pop_before_non_space]
-  - include: pop_on_any
+    set:
+    - - include: method_parameters
+    - - meta_scope: meta.method.identifier.java
+      - include: pop_before_non_space
 
   method_parameters:
   - match: \(
     set:
+    - meta_scope: meta.method.identifier.java meta.method.parameters.java
     - include: pop_on_closed_round_bracket
     - include: pop_on_fence
     - include: code_section
