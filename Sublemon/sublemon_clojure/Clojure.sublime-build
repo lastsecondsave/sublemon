@@ -1,0 +1,4 @@
+{
+  "selector": "source.clojure",
+  "shell_cmd": "clojure $file"
+}
