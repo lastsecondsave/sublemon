@@ -11,7 +11,7 @@
 		<key>symbolTransformation</key>
 		<string>s/\/\*.*?\*\// /g;
 s/\s{2,}/ /g;
-s/(?&lt;=\() | (?=[,)])//g;
+s/(?&lt;=\() | (?=[,()])//g;
 s/^/    /;
 </string>
 	</dict>
