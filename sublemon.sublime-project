@@ -63,6 +63,14 @@
 			[
 				"*.tm*"
 			],
+			"name": "clojure",
+			"path": "Sublemon\\sublemon_clojure"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
 			"name": "css",
 			"path": "Sublemon\\sublemon_css"
 		},
