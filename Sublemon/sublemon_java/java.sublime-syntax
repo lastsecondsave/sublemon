@@ -284,7 +284,7 @@ contexts:
   # catch
   - match: '{{b}}catch\b'
     scope: keyword.control.java
-    push: [no_semicolon, method_parameters]
+    push: [no_semicolon, catch_parameters]
 
   switch_condition:
   - match: \(
@@ -318,6 +318,14 @@ contexts:
         1: variable.parameter.java
     - include: code_section
   - include: pop_before_non_space
+
+  catch_parameters:
+  - match: \(
+    set:
+    - include: pop_on_closed_round_bracket
+    - include: pop_on_fence
+    - include: code_section
+    - include: parameters
 
   round_brackets_no_semicolon:
   - match: \(
@@ -480,8 +488,7 @@ contexts:
     - include: pop_on_closed_round_bracket
     - include: pop_on_fence
     - include: code_section
-    - match: '{{id}}'
-      scope: variable.parameter.java
+    - include: parameters
 
   method_body:
   - match: \{
@@ -490,6 +497,10 @@ contexts:
     - include: pop_on_closed_curly_bracket
     - include: code_section
   - include: pop_before_non_space
+
+  parameters:
+  - match: '{{id}}'
+    scope: variable.parameter.java
 
   throws_statement:
   - match: \bthrows\b
