@@ -2,5 +2,5 @@
 	<description>println</description>
 	<tabTrigger>pl</tabTrigger>
 	<scope>source.java</scope>
-	<content><![CDATA[System.out.println($0);]]></content>
+	<content><![CDATA[System.out.println(${0:$SELECTION});]]></content>
 </snippet>
