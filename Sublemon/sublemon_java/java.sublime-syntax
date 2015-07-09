@@ -20,15 +20,7 @@ contexts:
   - include: comments
 
   main:
-  - match: ''
-    set:
-    - meta_scope: meta.before-class-section.java
-    - include: before_class_section
-    - match: ^(?!package|import)(?=\S)
-      set: class_section
-
-  class_section:
-  - meta_scope: meta.class-section.java
+  - include: before_class_section
   - include: classes
   - include: code_section
 
@@ -120,6 +112,9 @@ contexts:
   comments:
   - match: /\*\*(?!/)
     push: javadoc
+    with_prototype:
+    - match: \*/
+      pop: true
   - match: /\*.*?\*/
     scope: comment.block.java
   - match: /\*
@@ -129,13 +124,18 @@ contexts:
       pop: true
   - match: //.*$
     scope: comment.line.java
+  - match: ^(?><{7}|={7}|>{7}).*$
+    scope: comment.line.merge.java
 
   javadoc:
   - meta_scope: comment.block.documentation.java
-  - match: \*/
-    pop: true
   - match: '@(?>param|throws)\s+[\w<>]*'
     scope: keyword.documentation.javadoc.java
+  - match: \{\s*(@(?>code|literal))
+    captures:
+      1: keyword.documentation.javadoc.java
+    push:
+    - include: pop_on_closed_curly_bracket
   - match: '(@author)\s+(.*)'
     captures:
       1: keyword.documentation.javadoc.java
