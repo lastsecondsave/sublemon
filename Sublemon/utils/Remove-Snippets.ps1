@@ -9,7 +9,7 @@ gci '*.sublime-package' | %{
 
     [System.IO.Compression.ZipFile]::ExtractToDirectory($packageZip, $package)
     del $packageZip
-    del $package\*.sublime-snippet
+    gci -r $package\*.sublime-snippet | del
     [System.IO.Compression.ZipFile]::CreateFromDirectory($package, $packageZip)
     del -r $package
 
