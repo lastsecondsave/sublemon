@@ -31,6 +31,7 @@ contexts:
   - include: storage
   - include: keywords
   - include: annotations
+  - include: lambda_parameters_list
   - include: bracket_balancing
 
   before_class_section:
@@ -142,8 +143,11 @@ contexts:
       2: no-spellcheck.java
   - match: '@\w+'
     scope: keyword.javadoc.java
-  - match: </?\w+.*?/?>
+  - match: (</?)\w+.*?(/?>)
     scope: meta.tag.javadoc.java
+    captures:
+      1: punctuation.definition.tag.begin.javadoc
+      2: punctuation.definition.tag.end.javadoc
 
   strings:
   - match: '"'
@@ -215,7 +219,9 @@ contexts:
   - include: pop_on_any
 
   operators:
-  - match: (?>[&|+-]{1,2}|(?>[+*/%&^|<>=-]|<<|>>>?)=?|!=)
+  - match: '->'
+    scope: keyword.operator.lambda.java
+  - match: (?>[&|+-]{1,2}|(?>[+*/%&^|<>=-]|<<|>>>?)=?|!=|::)
     scope: keyword.operator.java
   - match: '[!~]'
     scope: keyword.operator.unary.java
@@ -284,7 +290,7 @@ contexts:
   # catch
   - match: '{{b}}catch\b'
     scope: keyword.control.java
-    push: [no_semicolon, catch_parameters]
+    push: [no_semicolon, parameters_list]
 
   switch_condition:
   - match: \(
@@ -319,13 +325,17 @@ contexts:
     - include: code_section
   - include: pop_before_non_space
 
-  catch_parameters:
+  parameters_list:
   - match: \(
     set:
     - include: pop_on_closed_round_bracket
     - include: pop_on_fence
     - include: code_section
     - include: parameters
+
+  parameters:
+  - match: '{{id}}'
+    scope: variable.parameter.java
 
   round_brackets_no_semicolon:
   - match: \(
@@ -477,11 +487,11 @@ contexts:
   - match: '{{id}}'
     scope: entity.name.function.java
     set:
-    - - include: method_parameters
+    - - include: method_parameters_list
     - - meta_scope: meta.method.identifier.java
       - include: pop_before_non_space
 
-  method_parameters:
+  method_parameters_list:
   - match: \(
     set:
     - meta_scope: meta.method.identifier.java meta.method.parameters.java
@@ -497,10 +507,6 @@ contexts:
     - include: pop_on_closed_curly_bracket
     - include: code_section
   - include: pop_before_non_space
-
-  parameters:
-  - match: '{{id}}'
-    scope: variable.parameter.java
 
   throws_statement:
   - match: \bthrows\b
@@ -519,3 +525,9 @@ contexts:
     set: generic
   - include: package_before_class_name
   - include: pop_on_any
+
+  lambda_parameters_list:
+  - match: '({{id}})(?=\s*->)'
+    scope: variable.parameter.function.java
+  - match: (?=\([^(]*?\)\s*->)
+    push: parameters_list
