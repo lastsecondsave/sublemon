@@ -9,12 +9,15 @@ variables:
   id: '[-.\w]+'
 
 contexts:
+  prototype:
+  - include: comments
+
   main:
   - match: '(<\?)\s*(xml)'
     captures:
       1: punctuation.definition.tag.begin.xml
       2: entity.name.tag.xml
-    push: tag-internals
+    push: tag_internals
 
   - match: (?=<project\s+xmlns=.http://maven\.apache\.org/POM)
     push:
@@ -22,14 +25,12 @@ contexts:
     - include: maven
     - include: xml
 
-  - include: comments
   - include: doctype
 
   - match: '(?=<{{id}})'
     push: xml
 
   xml:
-  - include: comments
   - include: tag
   - include: cdata
   - include: entities
@@ -51,10 +52,11 @@ contexts:
   - match: '[&<>]'
     scope: invalid.illegal.entity.xml
 
-  quoted-strings:
+  quoted_strings:
   - match: '([''"])'
     push:
     - meta_scope: string.quoted.xml
+    - meta_include_prototype: false
     - match: \1
       pop: true
     - include: entities
@@ -77,7 +79,7 @@ contexts:
       2: entity.name.tag.namespace.xml
       3: punctuation.separator.namespace.xml
       4: entity.name.tag.localname.xml
-    push: tag-internals
+    push: tag_internals
   # Closing tag
   - match: '(</)(?:({{id}})(:))?({{id}})\s*(>)'
     scope: meta.tag.xml
@@ -88,7 +90,7 @@ contexts:
       4: entity.name.tag.localname.xml
       5: punctuation.definition.tag.end.xml
 
-  tag-internals:
+  tag_internals:
   - meta_scope: meta.tag.xml
   - include: comments
   - match: '[/?]?>'
@@ -110,17 +112,39 @@ contexts:
     - include: entities
 
   doctype:
-  - match: '(<!)(DOCTYPE)'
+  - match: '(<!)(DOCTYPE)\s*({{id}})'
     captures:
-      1: punctuation.definition.tag.xml
+      1: punctuation.definition.tag.begin.xml
       2: entity.name.tag.xml
+      3: entity.name.doctype.element.xml
     push:
-    - meta_scope: meta.tag.sgml.doctype.xml
+    - meta_scope: meta.tag.doctype.xml
     - match: '>'
+      scope: punctuation.definition.tag.end.xml
       pop: true
-    - match: '{{id}}'
-      scope: entity.name.xml
-    - include: quoted-strings
+    - match: (?>SYSTEM|PUBLIC)
+      scope: keyword.doctype.xml
+    - match: \[
+      scope: punctuation.definition.doctype.begin.xml
+      push:
+      - match: \]
+        scope: punctuation.definition.doctype.end.xml
+        pop: true
+      - include: doctype_element
+    - include: quoted_strings
+
+  doctype_element:
+  - match: '(<!)((?>ELEMENT|ATTLIST))\s*({{id}})'
+    captures:
+      1: punctuation.definition.tag.begin.xml
+      2: entity.name.tag.xml
+      3: entity.name.doctype.element.xml
+    push:
+    - meta_scope: meta.tag.doctype.element.xml
+    - match: '>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: quoted_strings
 
   maven:
   - match: '\$\{.*?\}'

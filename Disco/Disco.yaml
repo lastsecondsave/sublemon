@@ -191,13 +191,22 @@ settings:
   settings:
     foreground: '#FF8147'
 
-- name:  XML tag
-  scope: entity.name.tag, punctuation.definition.tag
+- name:  Tag
+  scope: entity.name.tag
   settings:
     foreground: '#77ABFF'
 
-- name:  XML attribute name
-  scope: source.xml entity.name.attribute
+- name:  XML keywords and punctuation
+  scope: >-
+    source.xml keyword,
+    source.xml punctuation.definition
+  settings:
+    foreground: '#77ABFF'
+
+- name:  XML attribute and doctype name
+  scope: >-
+    source.xml entity.name.attribute,
+    entity.name.doctype.element.xml
   settings:
     foreground: '#EDC61A'
 
