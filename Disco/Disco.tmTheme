@@ -339,9 +339,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>XML tag</string>
+			<string>Tag</string>
 			<key>scope</key>
-			<string>entity.name.tag, punctuation.definition.tag</string>
+			<string>entity.name.tag</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -350,9 +350,20 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>XML attribute name</string>
+			<string>XML keywords and punctuation</string>
 			<key>scope</key>
-			<string>source.xml entity.name.attribute</string>
+			<string>source.xml keyword, source.xml punctuation.definition</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#77ABFF</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>XML attribute and doctype name</string>
+			<key>scope</key>
+			<string>source.xml entity.name.attribute, entity.name.doctype.element.xml</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
