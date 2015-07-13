@@ -218,7 +218,7 @@ settings:
     foreground: '#77ABFF'
 
 - name:  XML CDATA brackets
-  scope: meta.cdata.xml punctuation
+  scope: meta.cdata.xml punctuation.definition
   settings:
     foreground: '#FF8147'
 
@@ -372,6 +372,13 @@ settings:
   scope: markup.raw.inline.markdown, punctuation.definition.block.fenced.markdown
   settings:
     foreground: '#C5CC4B'
+
+- name:  Markdown punctuation
+  scope: >-
+    punctuation.definition.list.markdown,
+    punctuation.definition.quote.markdown
+  settings:
+    foreground: '#FF8147'
 
 - name:  Markdown language marker
   scope: meta.fenced.language.marker.markdown
