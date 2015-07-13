@@ -385,7 +385,7 @@
 			<key>name</key>
 			<string>XML CDATA brackets</string>
 			<key>scope</key>
-			<string>meta.cdata.xml punctuation</string>
+			<string>meta.cdata.xml punctuation.definition</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -676,6 +676,17 @@
 			<dict>
 				<key>foreground</key>
 				<string>#C5CC4B</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Markdown punctuation</string>
+			<key>scope</key>
+			<string>punctuation.definition.list.markdown, punctuation.definition.quote.markdown</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF8147</string>
 			</dict>
 		</dict>
 		<dict>
