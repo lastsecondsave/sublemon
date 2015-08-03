@@ -357,7 +357,7 @@ contexts:
 
   annotation_identifier:
   - meta_scope: meta.annotation.identifier.java
-  - match: '{{class_id}}'
+  - match: '\.?{{class_id}}'
     scope: storage.type.annotation.java
   - include: package_before_class_name
   - include: pop_on_any
@@ -366,7 +366,7 @@ contexts:
   - match: \(
     set:
     - include: pop_on_closed_round_bracket
-    - match: '{{small_id}}(?=\s*=)'
+    - match: '{{id}}(?=\s*=)'
       scope: variable.parameter.annotation.java
     - include: code_section
   - include: pop_before_non_space
