@@ -22,7 +22,7 @@ contexts:
       3: constant.numeric.git
 
   # Line from "History" build variant
-  - match: '^([0-9a-f]{6,})((?:\s[\w\.@]+)+).*$'
+  - match: '^([0-9a-f]{6,})((?:\s[\w\.@-]+)+).*$'
     captures:
       1: constant.numeric.git
       2: entity.name.author.git
