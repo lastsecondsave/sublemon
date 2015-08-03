@@ -33,12 +33,6 @@
     { "name"     : "Test",
       "shell_cmd": "mvn -q test | MavenFilter"
     },
-    { "name"     : "Debug",
-      "shell_cmd": "mvnDebug -q exec:java"
-    },
-    { "name"     : "Debug Test",
-      "shell_cmd": "mvn -q -Dmaven.surefire.debug test"
-    },
     { "name"     : "Generate Test Report",
       "shell_cmd": "mvn -q surefire-report:report-only; mvn -q site -DgenerateReports=false",
     }
