@@ -87,6 +87,14 @@
 			[
 				"*.tm*"
 			],
+			"name": "maven",
+			"path": "Sublemon\\sublemon_maven"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
 			"name": "javascript",
 			"path": "Sublemon\\sublemon_javascript"
 		},
