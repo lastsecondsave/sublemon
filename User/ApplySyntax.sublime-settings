@@ -1,0 +1,12 @@
+{
+  "default_syntaxes": [],
+
+  "syntaxes": [
+    {
+      "syntax": "Sublemon/sublemon_maven/maven_pom",
+      "rules": [
+          { "file_path": ".*\\\\pom\\.xml$" }
+      ]
+    }
+  ]
+}
