@@ -14,7 +14,7 @@ contexts:
       5: constant.numeric.maven
       6: string.maven
 
-  - include: 'summary'
+  - include: summary
 
   - match: '^(?>(\[ERROR\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
     scope: comment.maven
@@ -24,10 +24,10 @@ contexts:
       3: meta.indicator.info.maven
       4: meta.result.maven
 
-  - include: 'exceptions'
+  - include: exceptions
 
   - match: '^ T E S T S'
-    push: 'surefire'
+    push: surefire
 
   summary:
   - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
@@ -53,6 +53,8 @@ contexts:
       2: constant.numeric.maven
 
   surefire:
+  - match: ^(?=\[(?>INFO|ERROR|WARNING)\])
+    pop: true
   - match: '((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
     captures:
       1: entity.name.exception.maven
