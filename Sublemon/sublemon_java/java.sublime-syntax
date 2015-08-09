@@ -234,7 +234,8 @@ contexts:
     - include: code_section
   - match: '{{b}}instanceof\b'
     scope: keyword.operator.alphanumeric.java
-  - match: '{{b}}new\b'
+  # 'new' can come after a dot
+  - match: '\bnew\b'
     scope: keyword.operator.alphanumeric.java
     push: [new_statement, pop_before_non_space]
   - match: \.
