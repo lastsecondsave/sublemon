@@ -18,15 +18,7 @@ contexts:
       1: punctuation.definition.tag.begin.xml
       2: entity.name.tag.xml
     push: tag_internals
-
-  - match: (?=<project\s+xmlns=.http://maven\.apache\.org/POM)
-    push:
-    - meta_scope: source.maven
-    - include: maven
-    - include: xml
-
   - include: doctype
-
   - match: '(?=<{{id}})'
     push: xml
 
@@ -106,6 +98,7 @@ contexts:
     push:
     - meta_scope: meta.attribute.xml
     - meta_content_scope: string.attribute.xml
+    - meta_include_prototype: false
     - match: \5
       scope: punctuation.definition.string.xml
       pop: true
@@ -145,7 +138,3 @@ contexts:
       scope: punctuation.definition.tag.end.xml
       pop: true
     - include: quoted_strings
-
-  maven:
-  - match: '\$\{.*?\}'
-    scope: variable.user.maven

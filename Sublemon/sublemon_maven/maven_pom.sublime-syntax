@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: Maven Pom File
+scope: source.xml source.maven
+
+contexts:
+  main:
+  - match: ''
+    push: Packages/Sublemon/sublemon_xml/xml.sublime-syntax
+    with_prototype:
+    - match: '\$\{.*?\}'
+      scope: variable.user.maven
+
