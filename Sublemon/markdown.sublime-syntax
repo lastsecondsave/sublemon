@@ -8,9 +8,13 @@ contexts:
   main:
   - match: (`+)[^`]+?\1
     scope: markup.raw.inline.markdown
-  - match: (\*\*|__).+?\1
+  - match: \*\*.+?\*\*
     scope: markup.bold.markdown
-  - match: (\*|_).+?\1
+  - match: \*.+?\*
+    scope: markup.italic.markdown
+  - match: (?<=\W|^)__.+?__(?=\W|$)
+    scope: markup.bold.markdown
+  - match: (?<=\W|^)_.+?_(?=\W|$)
     scope: markup.italic.markdown
   - match: ~~\S.+?\S~~
     scope: markup.strikethrough.markdown
