@@ -12,9 +12,9 @@ contexts:
   main:
   - include: comments
   - include: strings
+  - include: constants
   - include: keywords
   - include: operators
-  - include: constants
   - include: prototypes
   - include: functions
   - include: support
