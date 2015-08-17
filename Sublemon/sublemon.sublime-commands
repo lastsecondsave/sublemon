@@ -1,0 +1,10 @@
+[
+  {
+    "caption": "Sublemon: Demo",
+    "command": "sublemon_demo"
+  },
+  {
+    "caption": "Sublemon: Escape",
+    "command": "sublemon_escape"
+  }
+]
