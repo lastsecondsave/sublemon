@@ -87,7 +87,7 @@ contexts:
     - include: string-internals
 
   string-internals:
-  - match: '`[0abfnrtv`"$]'
+  - match: '`[0abfnrtv`":$]'
     scope: constant.character.escape.powershell
   - match: '`'
     scope: invalid.illegal.wrong-escape.powershell
@@ -123,6 +123,8 @@ contexts:
 
   variables:
   - match: '\$(\w+:)?\w+'
+    scope: variable.user.powershell
+  - match: '\$\{(\w+:)?\w+\}'
     scope: variable.user.powershell
 
   keywords:
