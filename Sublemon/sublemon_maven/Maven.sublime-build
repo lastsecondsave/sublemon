@@ -12,6 +12,10 @@
   },
 
   "variants": [
+    { "name"     : "Parameterized",
+      "param_cmd": "mvn $args | MavenFilter",
+      "prompt"   : "mvn"
+    },
     { "name"     : "Exec",
       "shell_cmd": "mvn -q -e exec:java | MavenFilter"
     },
