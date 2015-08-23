@@ -302,6 +302,11 @@ settings:
   settings:
     foreground: '#FF8147'
 
+- name:  Maven variable in comment
+  scope: comment.block.xml variable.user.maven
+  settings:
+    foreground: '#838495'
+
 - name:  Maven results
   scope: >-
     meta.result.maven,
