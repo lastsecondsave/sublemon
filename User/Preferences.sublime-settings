@@ -5,7 +5,6 @@
 	"auto_match_enabled": true,
 	"binary_file_patterns":
 	[
-		"target/*",
 		"*.bak",
 		"*.orig",
 		"*.png",
@@ -39,6 +38,7 @@
 		".idea",
 		".svn",
 		".git",
+		".gradle",
 		".sublime",
 		"__pycache__"
 	],
