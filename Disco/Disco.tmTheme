@@ -548,6 +548,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Maven variable in comment</string>
+			<key>scope</key>
+			<string>comment.block.xml variable.user.maven</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#838495</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Maven results</string>
 			<key>scope</key>
 			<string>meta.result.maven, entity.name.exception.maven</string>
