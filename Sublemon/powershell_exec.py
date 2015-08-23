@@ -2,16 +2,21 @@ import os, sublime, sublime_plugin
 
 class PowershellExecCommand(sublime_plugin.WindowCommand):
   def run(self, **args):
+    prompt = self.extract_argument("prompt", args)
+    if prompt:
+      on_done = lambda x: self.run_parameterized(x, args)
+      self.window.show_input_panel(prompt, '', on_done, None, None)
+      return False
+
     if "shell_cmd" in args:
-      command = [args["shell_cmd"]]
-      del args["shell_cmd"]
+      command = [self.extract_argument("shell_cmd", args)]
     elif "cmd" in args:
       command = args["cmd"]
     else:
       return False
 
-    load_profile = self.get_argument("load_profile", args)
-    context = self.get_argument("context", args)
+    load_profile = self.extract_argument("load_profile", args)
+    context = self.extract_argument("context", args)
 
     script = os.path.join(sublime.packages_path(), "Sublemon", "powershell_exec.ps1")
 
@@ -30,10 +35,19 @@ class PowershellExecCommand(sublime_plugin.WindowCommand):
 
     args["cmd"] = cmd
     self.window.run_command("exec", args)
+    # self.window.run_command("show_panel", {"panel": "output.exec"})
 
-  def get_argument(self, name, args):
-    result = None
+  def extract_argument(self, name, args):
     if name in args:
       result = args[name]
       del args[name]
-    return result
+      return result
+
+  def run_parameterized(self, input_string, args):
+    variables = self.window.extract_variables()
+    input_string = sublime.expand_variables(input_string, variables)
+
+    variables['args'] = input_string
+    args['shell_cmd'] = sublime.expand_variables(self.extract_argument('param_cmd', args), variables)
+
+    self.run(**args)
