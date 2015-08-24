@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.git</string>
+	<string>source.unix</string>
 	<key>settings</key>
 	<dict>
 		<key>shellVariables</key>

@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Unix Config
+scope: source.unix
+
+contexts:
+  main:
+  - match: ^\s*(#).*$
+    scope: comment.line.number-sign.git

@@ -1,5 +1,5 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.git
+scope: source.unix
 settings:
   shellVariables:
   - name: TM_COMMENT_START
