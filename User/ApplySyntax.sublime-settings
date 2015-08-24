@@ -7,6 +7,12 @@
       "rules": [
           { "file_path": ".*\\\\pom\\.xml$" }
       ]
+    },
+    {
+      "syntax": "Sublemon/git_config",
+      "rules": [
+          { "file_path": ".*\\.git\\\\info\\\\exclude" }
+      ]
     }
   ]
 }

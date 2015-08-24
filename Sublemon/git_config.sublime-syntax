@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: Git Config
+scope: source.unix source.git
+file_extensions: [.gitignore, .gitattributes]
+hidden: true
+
+contexts:
+  main:
+  - match: '-(?>diff|text)'
+    scope: variable.language.git
+
+  - include: Packages/Sublemon/unix_config.sublime-syntax
