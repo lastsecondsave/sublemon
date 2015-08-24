@@ -2,27 +2,28 @@ import os, sublime, sublime_plugin
 
 class PowershellExecCommand(sublime_plugin.WindowCommand):
   def run(self, **args):
-    prompt = self.extract_argument("prompt", args)
+    extract_argument = lambda x: self.extract_argument(x, args)
+
+    prompt = extract_argument("prompt")
     if prompt:
       on_done = lambda x: self.run_parameterized(x, args)
       self.window.show_input_panel(prompt, '', on_done, None, None)
       return False
 
     if "shell_cmd" in args:
-      command = [self.extract_argument("shell_cmd", args)]
+      command = [extract_argument("shell_cmd")]
     elif "cmd" in args:
       command = args["cmd"]
     else:
       return False
 
-    load_profile = self.extract_argument("load_profile", args)
-    context = self.extract_argument("context", args)
-
+    context = extract_argument("context")
+    show_output = not extract_argument("no_output")
     script = os.path.join(sublime.packages_path(), "Sublemon", "powershell_exec.ps1")
 
     cmd = ["powershell.exe", "-ExecutionPolicy", "Unrestricted"]
 
-    if not load_profile:
+    if not extract_argument("load_profile"):
       cmd.append("-NoProfile")
 
     cmd.extend(["-File", script])
@@ -35,7 +36,9 @@ class PowershellExecCommand(sublime_plugin.WindowCommand):
 
     args["cmd"] = cmd
     self.window.run_command("exec", args)
-    # self.window.run_command("show_panel", {"panel": "output.exec"})
+
+    if show_output:
+      self.window.run_command("show_panel", {"panel": "output.exec"})
 
   def extract_argument(self, name, args):
     if name in args:
