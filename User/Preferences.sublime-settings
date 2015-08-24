@@ -27,6 +27,8 @@
 		".project",
 		"*.sublime-workspace",
 		"*.iml",
+		"*.ipr",
+		"*.iws",
 		"*.pdb",
 		"*.zip",
 		"*.jar",
