@@ -5,6 +5,7 @@ scope: text.maven
 
 contexts:
   main:
+  # Compilation's error and warning
   - match: '^(?>(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
     captures:
       1: meta.indicator.error.maven
@@ -14,8 +15,17 @@ contexts:
       5: constant.numeric.maven
       6: string.maven
 
-  - include: summary
+  # Summary
+  - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
+    captures:
+      1: meta.indicator.error.maven
+      2: meta.result.maven
+      3: string.maven
+    push:
+    - match: '^\[\w+\] .*'
+      scope: comment.maven
 
+  # Generic maven message
   - match: '^(?>(\[ERROR\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
     scope: comment.maven
     captures:
@@ -26,51 +36,31 @@ contexts:
 
   - include: exceptions
 
-  - match: '^ T E S T S'
-    push: surefire
-
-  summary:
-  - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
-    captures:
-      1: meta.indicator.error.maven
-      2: meta.result.maven
-      3: string.maven
-    push:
-    - match: '^\[\w+\] .*'
-      scope: comment.maven
+  - match: ^(?!\[(?>INFO|ERROR|WARNING)\])
+    push: plain_text
 
   exceptions:
+  - match: '((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
+    captures:
+      1: entity.name.exception.maven
+    push: junit_result_string
+    with_prototype:
+    - match: (?=^\s+at\b)
+      pop: true
   - match: '^(?:Caused by: )?([\w\.]+(?>Exception|Failure|Error))(?:: (.*))?'
     scope: meta.exception.maven
     captures:
       1: entity.name.exception.maven
       2: string.maven
-
   - match: '^\s*at [\w\.\$<>]+\((.*):(.*)\)'
     scope: meta.exception.maven
     captures:
       1: entity.name.file.maven
       2: constant.numeric.maven
 
-  surefire:
+  plain_text:
   - match: ^(?=\[(?>INFO|ERROR|WARNING)\])
     pop: true
-  - match: '((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
-    captures:
-      1: entity.name.exception.maven
-    push: junit-result-string
-    with_prototype:
-    - match: (?=^\s+at\b)
-      pop: true
-
-  - match: '(org\.drools\..*?Invalid\w+):'
-    captures:
-      1: entity.name.exception.maven
-    push: drools-result-string
-    with_prototype:
-    - match: (?=^\s+at\b)
-      pop: true
-
   - match: (?=Tests run:)
     push:
     - match: '((?>Tests run|Failures|Errors|Skipped|Time elapsed)): (\d+(?:[,.]\d+)*(?: sec)?)'
@@ -81,14 +71,11 @@ contexts:
       scope: meta.indicator.error.maven
     - match: $
       pop: true
-
   - match: '<<< ((?>FAILURE|ERROR))!'
     scope: meta.indicator.error.maven
-
-  - include: 'summary'
   - include: 'exceptions'
 
-  junit-result-string:
+  junit_result_string:
   - match: '\b(expected|but was):'
     captures:
       1: keyword.junit.maven
@@ -96,13 +83,3 @@ contexts:
     scope: constant.character.maven
   - match: .
     scope: string.maven
-
-  drools-result-string:
-  - match: 'Rule Compilation error'
-    scope: string.maven
-  - match: '^\s+(.*?\.java) \((\d+):(\d+)\) :\s+(.*)$'
-    captures:
-      1: entity.name.file.maven
-      2: constant.numeric.maven
-      3: constant.numeric.maven
-      4: string.maven
