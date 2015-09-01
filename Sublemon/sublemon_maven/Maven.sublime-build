@@ -28,6 +28,9 @@
     { "name"     : "Clean Install",
       "shell_cmd": "mvn -e clean install | MavenFilter"
     },
+    { "name"     : "Quick Install",
+      "shell_cmd": "mvn -e `-Dmaven.test.skip=true install | MavenFilter"
+    },
     { "name"     : "Package",
       "shell_cmd": "mvn -e package | MavenFilter"
     },
