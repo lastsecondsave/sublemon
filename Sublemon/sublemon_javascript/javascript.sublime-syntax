@@ -45,6 +45,10 @@ contexts:
     pop: true
 
   comments:
+  - match: /\*-\s*(.*?)\s*-\*/
+    scope: comment.block.javascript
+    captures:
+      1: comment.mark.javascript
   - match: /\*.*?\*/
     scope: comment.block.javascript
   - match: /\*
