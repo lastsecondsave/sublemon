@@ -47,6 +47,10 @@ contexts:
     - meta_scope: comment.block.powershell
     - match: '#>'
       pop: true
+  - match: ^#\s*\[(.+)\]
+    scope: comment.line.number-sign.powershell
+    captures:
+      1: comment.mark.powershell
   - match: (?:^|(?<=\s))#.*$
     scope: comment.line.number-sign.powershell
 
@@ -111,6 +115,14 @@ contexts:
   storage:
   - match: '\[\s*(?=[A-Za-z])'
     push:
+    - match: (?i)(parameter)\s*\(
+      captures:
+        1: storage.type.powershell
+      push:
+      - meta_scope: meta.parameter.powershell
+      - match: \)
+        pop: true
+      - include: code-section
     - match: \w+
       scope: storage.type.powershell
     - match: (?=[^\w.])
@@ -128,7 +140,7 @@ contexts:
     scope: variable.user.powershell
 
   keywords:
-  - match: (?i:)\b(?<![/\\\[-])(?>begin|break|catch|class|continue|data|define|do|dynamicparam|else(if)?|end|exit|finally|for(each)?|from|if|in|parallel|param|process|return|select|sequence|switch|throw|trap|try|until|using|var|where|while|workflow)(?!-)\b
+  - match: (?i)\b(?<![/\\\[-])(?>begin|break|catch|class|continue|data|define|do|dynamicparam|else(if)?|end|exit|finally|for(each)?|from|if|in|parallel|param|process|return|select|sequence|switch|throw|trap|try|until|using|var|where|while|workflow)(?!-)\b
     scope: keyword.control.powershell
   - match: '[%?@$](?=\s*\{)'
     scope: keyword.control.powershell
