@@ -1,0 +1,6 @@
+<snippet>
+	<description>Mandatory</description>
+	<tabTrigger>man</tabTrigger>
+	<scope>meta.parameter.powershell</scope>
+	<content>Mandatory</content>
+</snippet>

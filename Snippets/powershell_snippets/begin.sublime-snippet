@@ -1,0 +1,10 @@
+<snippet>
+	<description>begin</description>
+	<tabTrigger>begin</tabTrigger>
+	<scope>source.powershell</scope>
+	<content>
+<![CDATA[begin {
+	$0
+}]]>
+	</content>
+</snippet>
