@@ -39,8 +39,32 @@ contexts:
   - match: ^(?!\[(?>INFO|ERROR|WARNING)\])
     push: plain_text
 
+  plain_text:
+  - match: ^(?=\[(?>INFO|ERROR|WARNING)\])
+    pop: true
+  - match: (?=Tests run:)
+    push:
+    - match: '((?>Tests run|Failures|Errors|Skipped|Time elapsed)): (\d+(?:[,.]\d+)*(?: sec)?)'
+      captures:
+        1: keyword.maven
+        2: constant.numeric.maven
+    - match: '<<< (?>FAILURE|ERROR)!'
+      scope: meta.indicator.error.maven
+    - match: $
+      pop: true
+  - match: Running [\w\.]+Test
+    scope: meta.result.maven
+  - match: '^([\w\.]+)\(([\w\.]+)\)\s*(Time elapsed): (\d+(?:[,.]\d+)*(?: sec)?)\s+(<<< (?>FAILURE|ERROR)!)'
+    captures:
+      1: entity.name.test.maven
+      2: meta.result.maven
+      3: keyword.maven
+      4: constant.numeric.maven
+      5: meta.indicator.error.maven
+  - include: 'exceptions'
+
   exceptions:
-  - match: '((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
+  - match: '^((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
     captures:
       1: entity.name.exception.maven
     push: junit_result_string
@@ -57,23 +81,6 @@ contexts:
     captures:
       1: entity.name.file.maven
       2: constant.numeric.maven
-
-  plain_text:
-  - match: ^(?=\[(?>INFO|ERROR|WARNING)\])
-    pop: true
-  - match: (?=Tests run:)
-    push:
-    - match: '((?>Tests run|Failures|Errors|Skipped|Time elapsed)): (\d+(?:[,.]\d+)*(?: sec)?)'
-      captures:
-        1: keyword.maven
-        2: constant.numeric.maven
-    - match: '<<< (FAILURE|ERROR)!'
-      scope: meta.indicator.error.maven
-    - match: $
-      pop: true
-  - match: '<<< ((?>FAILURE|ERROR))!'
-    scope: meta.indicator.error.maven
-  - include: 'exceptions'
 
   junit_result_string:
   - match: '\b(expected|but was):'
