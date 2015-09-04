@@ -34,7 +34,7 @@
     { "name"     : "Package",
       "shell_cmd": "mvn -e package | MavenFilter"
     },
-    { "name"     : "Build Tests",
+    { "name"     : "Compile Tests",
       "shell_cmd": "mvn test-compile | MavenFilter",
     },
     { "name"     : "Test",
