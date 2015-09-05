@@ -194,17 +194,27 @@ contexts:
   - match: \b({{id}})\s*:\s*(?=function)
     captures:
       1: entity.name.function.javascript
-      2: keyword.operator.javascript
+  # f = function()
+  - match: \b({{id}})(?=\s*=\s*function)
+    captures:
+      1: entity.name.function.javascript
   # function f()
   - match: \b(function)(?:\s+({{id}}))?
     captures:
       1: storage.type.function.javascript
       2: entity.name.function.javascript
     push: [function_body, function_parameters]
+  # f = () => {...}
+  - match: \b({{id}})(?=\s*=\s*(?:\([^(]*?\)|{{id}})\s*=>)
+    captures:
+      1: entity.name.function.javascript
+  # (...) =>
   - match: (?=\([^(]*?\)\s*=>)
     push: function_parameters
+  # = (a,
   - match: '{{after_operator}}(?=\(\s*{{id}}\s*,)'
     push: function_parameters
+  # a =>
   - match: '({{id}})?\s*(=>)'
     captures:
       1: variable.parameter.function.javascript
