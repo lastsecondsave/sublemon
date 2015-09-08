@@ -9,8 +9,10 @@ variables:
   after_operator: (?:(?<=[=(:,&|?]|^|return\s)\s*)
 
 contexts:
-  main:
+  prototype:
   - include: comments
+
+  main:
   - include: strings
   - include: constants
   - include: keywords
@@ -112,11 +114,19 @@ contexts:
     scope: storage.type.javascript
 
   keywords:
-  - match: \b(?>break|catch|continue|do|delete|else|finally|return|throw|try|yield)\b
+  - match: \b(?>break|catch|continue|delete|else|finally|return|throw|try|yield\*?)\b
     scope: keyword.control.javascript
   - match: \b(?>if|for|while)\b
     scope: keyword.control.javascript
     push: semicolon_after_bracket_check
+  # do-while
+  - match: '\bdo\b'
+    scope: keyword.control.javascript
+    push:
+    - match: '\bwhile\b'
+      scope: keyword.control.javascript
+      pop: true
+    - include: main
   - match: \bswitch\b
     scope: keyword.control.javascript
     push: [switch_body, function_parameters]
@@ -204,7 +214,7 @@ contexts:
     captures:
       1: entity.name.function.javascript
   # function f()
-  - match: \b(function)(?:\s+({{id}}))?
+  - match: \b(function\*?)(?:\s+({{id}}))?
     captures:
       1: storage.type.function.javascript
       2: entity.name.function.javascript
