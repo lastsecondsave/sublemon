@@ -2,5 +2,5 @@
 	<description>console.log</description>
 	<tabTrigger>log</tabTrigger>
 	<scope>source.js</scope>
-	<content><![CDATA[console.log($0);]]></content>
+	<content><![CDATA[console.log(${0:$SELECTION});]]></content>
 </snippet>
