@@ -627,7 +627,7 @@
 			<key>name</key>
 			<string>Embedded RegExp</string>
 			<key>scope</key>
-			<string>source source.regexp - source.yaml</string>
+			<string>source source.regexp - source.yaml, punctuation.definition.regexp</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>

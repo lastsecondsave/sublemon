@@ -349,7 +349,7 @@ settings:
     foreground: '#E5476C'
 
 - name:  Embedded RegExp
-  scope: source source.regexp - source.yaml
+  scope: source source.regexp - source.yaml, punctuation.definition.regexp
   settings:
     foreground: '#C5CC4B'
 
