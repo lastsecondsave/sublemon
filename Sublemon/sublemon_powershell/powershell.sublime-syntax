@@ -151,11 +151,11 @@ contexts:
   - match: (-(?>(?:not)?match|[ic]?replace))\s+(')
     captures:
       1: keyword.operator.powershell
-      2: string.quoted.powershell
+      2: punctuation.definition.regexp.powershell
     push: Packages/Sublemon/regexp.sublime-syntax
     with_prototype:
     - match: "'"
-      scope: string.quoted.powershell
+      scope: punctuation.definition.regexp.powershell
       pop: true
   - match: (?<=[\s()\[\]])-(?>c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
     scope: keyword.operator.powershell

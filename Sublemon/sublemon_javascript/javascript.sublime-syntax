@@ -61,25 +61,30 @@ contexts:
 
   strings:
   # TODO: replace with backtracking when fixed
+  # Double quoted
   - match: '"'
     push:
     - meta_scope: string.quoted.javascript
+    - meta_include_prototype: false
     - match: '"'
       pop: true
+  # Single quoted
     - include: string_body
   - match: "'"
     push:
     - meta_scope: string.quoted.javascript
+    - meta_include_prototype: false
     - match: "'"
       pop: true
     - include: string_body
+  # Regular Expression
   - match: '{{after_operator}}(/)(?=[^/*+?])'
     captures:
-      1: string.regexp.javascript
+      1: punctuation.definition.regexp.javascript
     push: Packages/Sublemon/regexp.sublime-syntax
     with_prototype:
     - match: '/[igm]*'
-      scope: string.regexp.javascript
+      scope: punctuation.definition.regexp.javascript
       pop: true
 
   string_body:
