@@ -1,10 +1,15 @@
 {
   "selector": "source.powershell",
-  "cmd": ["powershell.exe", "-ExecutionPolicy", "Unrestricted", "-File", "$file"],
+  "target"  : "simple_exec",
+  "cmd"     : ["powershell.exe", "-ExecutionPolicy", "Unrestricted", "-File", "$file"],
 
   "variants": [
     { "name": "No Profile",
-      "cmd": ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Unrestricted", "-File", "$file"]
+      "cmd" : ["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Unrestricted", "-File", "$file"]
+    },
+    { "name"     : "Parameterized",
+      "param_cmd": "powershell.exe -File $file $args",
+      "prompt"   : "$file_name"
     }
   ]
 }
