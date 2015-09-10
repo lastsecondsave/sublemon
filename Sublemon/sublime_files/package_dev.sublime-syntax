@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: PackageDev File
+scope: source.yaml source.package-dev
+first_line_match: '# \[PackageDev\] .+'
+
+contexts:
+  main:
+  - include: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax#regexp-records
+
+  - match: \$self
+    scope: constant.language.yaml
+
+  - match: '(?=\b(name): )'
+    push:
+    - meta_scope: meta.match-group.yaml
+    - match: $
+      pop: true
+    - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax
+
+  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax
