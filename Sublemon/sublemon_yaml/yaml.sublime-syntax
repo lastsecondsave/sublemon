@@ -6,15 +6,6 @@ file_extensions: [yaml, yml]
 
 contexts:
   main:
-  - match: '^(?=# \[PackageDev\])'
-    set:
-    - meta_scope: source.package-dev.yaml
-    - include: package-dev
-    - include: yaml
-  - match: ''
-    set: yaml
-
-  yaml:
   - include: operators
   - include: comments
   - include: flow-yaml
@@ -131,14 +122,3 @@ contexts:
     captures:
       1: entity.name.key.yaml
       2: punctuation.separator.mapping.yaml
-
-  package-dev:
-  - include: Packages/Sublemon/sublime_files/sublime_syntax.sublime-syntax#regexp-records
-  - match: \$self
-    scope: constant.language.yaml
-  - match: '(?=\b(name): )'
-    push:
-    - meta_scope: meta.match-group.yaml
-    - match: $
-      pop: true
-    - include: yaml

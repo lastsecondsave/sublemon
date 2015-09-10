@@ -38,7 +38,7 @@ contexts:
     - include: main
 
   - include: regexp-records
-  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#yaml
+  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax
 
   regexp-records:
   - match: ((?>match|begin|end|symbolTransformation|cancelCompletion|first_line_match|\w+(?>Pattern|Match)))(:)

@@ -13,6 +13,14 @@
       "rules": [
           { "file_path": ".*\\.git\\\\info\\\\exclude" }
       ]
+    },
+    {
+      "syntax": "Sublemon/sublime_files/package_dev",
+      "match": "all",
+      "rules": [
+          { "file_path": ".*\\.yaml" },
+          {"first_line": "# \\[PackageDev\\] .+"}
+      ]
     }
   ]
 }
