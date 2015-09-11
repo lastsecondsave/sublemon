@@ -56,7 +56,7 @@
 				"*.tm*"
 			],
 			"name": "c++",
-			"path": "Sublemon\\sublemon_cpp"
+			"path": "Sublemon\\cpp_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -64,7 +64,7 @@
 				"*.tm*"
 			],
 			"name": "clojure",
-			"path": "Sublemon\\sublemon_clojure"
+			"path": "Sublemon\\clojure_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -72,7 +72,7 @@
 				"*.tm*"
 			],
 			"name": "css",
-			"path": "Sublemon\\sublemon_css"
+			"path": "Sublemon\\css_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -80,7 +80,7 @@
 				"*.tm*"
 			],
 			"name": "java",
-			"path": "Sublemon\\sublemon_java"
+			"path": "Sublemon\\java_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -88,7 +88,15 @@
 				"*.tm*"
 			],
 			"name": "maven",
-			"path": "Sublemon\\sublemon_maven"
+			"path": "Sublemon\\maven_spec"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
+			"name": "gradle",
+			"path": "Sublemon\\gradle_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -96,7 +104,7 @@
 				"*.tm*"
 			],
 			"name": "javascript",
-			"path": "Sublemon\\sublemon_javascript"
+			"path": "Sublemon\\javascript_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -104,7 +112,7 @@
 				"*.tm*"
 			],
 			"name": "powershell",
-			"path": "Sublemon\\sublemon_powershell"
+			"path": "Sublemon\\powershell_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -112,7 +120,7 @@
 				"*.tm*"
 			],
 			"name": "sql",
-			"path": "Sublemon\\sublemon_sql"
+			"path": "Sublemon\\sql_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -120,7 +128,7 @@
 				"*.tm*"
 			],
 			"name": "xml",
-			"path": "Sublemon\\sublemon_xml"
+			"path": "Sublemon\\xml_spec"
 		},
 		{
 			"file_exclude_patterns":
@@ -128,7 +136,7 @@
 				"*.tm*"
 			],
 			"name": "yaml",
-			"path": "Sublemon\\sublemon_yaml"
+			"path": "Sublemon\\yaml_spec"
 		},
 		{
 			"name": "snippets",

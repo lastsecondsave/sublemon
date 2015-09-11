@@ -6,7 +6,7 @@ scope: source.xml source.maven
 contexts:
   main:
   - match: ''
-    push: Packages/Sublemon/sublemon_xml/xml.sublime-syntax
+    push: Packages/Sublemon/xml_spec/xml.sublime-syntax
     with_prototype:
     - match: '\$\{.*?\}'
       scope: variable.user.maven

@@ -57,7 +57,7 @@ contexts:
     scope: punctuation.definition.block.fenced.markdown
     captures:
       1: meta.fenced.language.marker.markdown
-    push: Packages/Sublemon/sublemon_xml/xml.sublime-syntax
+    push: Packages/Sublemon/xml_spec/xml.sublime-syntax
     with_prototype:
     - include: fenced_block_termination
 

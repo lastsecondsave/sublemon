@@ -1,0 +1,9 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: source.java meta.method.identifier
+settings:
+  showInSymbolList: 1
+  symbolTransformation: >-
+    s/\/\*.*?\*\// /g;
+    s/\s{2,}/ /g;
+    s/(?<=\() | (?=[,()])//g;
+    s/^/  /;

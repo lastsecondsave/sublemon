@@ -12,7 +12,7 @@ contexts:
     - meta_scope: meta.context.sublime-syntax
     - match: ((?=#)|$)
       pop: true
-    - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax#keys
+    - include: Packages/Sublemon/yaml_spec/yaml.sublime-syntax#keys
 
   # Sections 'contexts' and 'variables'
   - match: '^(contexts)(:)'
@@ -38,7 +38,7 @@ contexts:
     - include: main
 
   - include: regexp-records
-  - include: Packages/Sublemon/sublemon_yaml/yaml.sublime-syntax
+  - include: Packages/Sublemon/yaml_spec/yaml.sublime-syntax
 
   regexp-records:
   - match: ((?>match|begin|end|symbolTransformation|cancelCompletion|first_line_match|\w+(?>Pattern|Match)))(:)

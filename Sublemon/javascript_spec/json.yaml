@@ -1,0 +1,93 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+name: JSON
+scopeName: source.json
+fileTypes: [json]
+
+patterns:
+- include: '#json'
+
+repository:
+  json:
+    patterns:
+    - include: '#strings'
+    - include: '#numbers-and-constants'
+    - include: '#arrays'
+    - include: '#objects'
+    - include: '#comments'
+
+  comments:
+    patterns:
+    - name: comment.block.json
+      match: /\*.*?\*/
+    - name: comment.block.json
+      begin: /\*
+      end: \*/
+    - name: comment.line.json
+      match: //.*$
+
+  numbers-and-constants:
+    patterns:
+    - name: constant.numeric.json
+      match: -?(?:0|[1-9]\d*)(?:(?:\.\d+)?(?:[eE][+-]?\d+)?)?
+    - name: constant.language.json
+      match: \b(?:true|false|null)\b
+
+  strings:
+    patterns:
+    - name: string.quoted.double.json
+      begin: '"'
+      end: '"|\n'
+      patterns:
+      - name: invalid.string.json
+        match: '[^"](?=\n)'
+      - name: constant.character.escape.json
+        match: \\(?:["\\/bfnrt]|u[0-9a-fA-F]{4})
+      - name: invalid.character.escape.json
+        match: \\.
+
+  arrays:
+    patterns:
+    - name: meta.structure.array.json
+      begin: \[
+      end: \]
+      patterns:
+      - include: '#json'
+      - name: punctuation.separator.array.json
+        match: ','
+      - name: invalid.character.json
+        match: '[^\s\]]'
+
+  objects:
+    patterns:
+    - name: meta.structure.dictionary.json
+      begin: \{
+      end: \}
+      patterns:
+      - include: '#meta'
+      - include: '#strings'
+      - include: '#comments'
+      - begin: ':'
+        beginCaptures:
+          '0': {name: punctuation.separator.dictionary.key-value.json}
+        end: (,)|(?=\})
+        endCaptures:
+          '1': {name: punctuation.separator.dictionary.json}
+        patterns:
+        - include: '#json'
+        - name: invalid.character.json
+          match: '[^\s,]'
+      - name: invalid.character.json
+        match: '[^\s\}]'
+
+  meta:
+    patterns:
+    - contentName: meta.name.json
+      begin: '("name")\s*(:)\s(?=")'
+      beginCaptures:
+        '1': {name: string.quoted.double.json}
+        '2': {name: punctuation.separator.dictionary.key-value.json}
+      end: '(?<=")\s*(,)?'
+      endCaptures:
+        '1': {name: punctuation.separator.dictionary.json}
+      patterns:
+      - include: '#strings'

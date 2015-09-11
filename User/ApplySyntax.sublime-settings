@@ -3,7 +3,7 @@
 
   "syntaxes": [
     {
-      "syntax": "Sublemon/sublemon_maven/maven_pom",
+      "syntax": "Sublemon/maven_spec/maven_pom",
       "rules": [
           { "file_path": ".*\\\\pom\\.xml$" }
       ]
