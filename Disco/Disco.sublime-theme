@@ -260,33 +260,33 @@
     // Row
     {
         "class": "tree_row",
-        "layer0.texture": "Disco/images/row_highlight_dark.png",
+        "layer0.tint": [54, 54, 66],
         "layer0.opacity": 0.0,
-        "layer0.inner_margin": [1, 1]
+        "layer1.texture": "Disco/images/sidebar_row_bumper.png",
+        "layer1.opacity": 0.0,
+        "layer1.inner_margin": [2, 0, 0, 0]
     },
 
     // Selected row
     {
         "class": "tree_row",
         "attributes": ["selected"],
-        "layer0.opacity": 1.0
+        "layer1.opacity": 1.0
     },
 
     // Row hover
     {
         "class": "tree_row",
         "attributes": ["hover"],
-        "layer0.texture": "Disco/images/row_highlight_dark_hover.png",
         "layer0.opacity": 0.3
     },
 
     // Selected row hover
-    {
-        "class": "tree_row",
-        "attributes": ["hover", "selected"],
-        "layer0.texture": "Disco/images/row_highlight_dark.png",
-        "layer0.opacity": 1.0
-    },
+    // {
+    //     "class": "tree_row",
+    //     "attributes": ["hover", "selected"],
+    //     "layer0.opacity": 0.3
+    // },
 
     // Close button
     {
@@ -335,7 +335,7 @@
     // Group/Folders label
     {
         "class": "sidebar_heading",
-        "color": [210, 210, 210],
+        "color": [190, 190, 190],
         "font.bold": true
     },
 
@@ -351,7 +351,7 @@
     {
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["selected"] }],
-        "color": [210, 210, 210],
+        "color": [250, 250, 250],
     },
 
     // Directory label

@@ -19,8 +19,10 @@
 				<string>#EDC61A</string>
 				<key>foreground</key>
 				<string>#CDCDCD</string>
+				<key>inactiveSelection</key>
+				<string>#264F78</string>
 				<key>lineHighlight</key>
-				<string>#363642C0</string>
+				<string>#AAAAF020</string>
 				<key>minimapBorder</key>
 				<string>#CDCDCD</string>
 				<key>selection</key>
