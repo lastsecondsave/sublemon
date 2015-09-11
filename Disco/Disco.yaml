@@ -83,7 +83,7 @@ settings:
     foreground: '#FF8147'
 
 - name:  String
-  scope: string
+  scope: string, meta.inline-expression string
   settings:
     foreground: '#C5CC4B'
 
@@ -163,6 +163,11 @@ settings:
   scope: comment.block.documentation meta.tag
   settings:
     foreground: '#AAAAF0'
+
+- name:  Inline expressions
+  scope: string meta.inline-expression
+  settings:
+    foreground: '#CDCDCD'
 
 - name:  Java package declaration and import asterisk
   scope: meta.package.java storage.type, storage.type.asterisk.java

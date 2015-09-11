@@ -101,6 +101,7 @@ contexts:
     push: string-internals-expressions
 
   string-internals-expressions:
+  - meta_scope: meta.inline-expression.powersell
   - match: \)
     scope: punctuation.definition.expression.powershell
     pop: true

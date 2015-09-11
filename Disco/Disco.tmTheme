@@ -123,7 +123,7 @@
 			<key>name</key>
 			<string>String</string>
 			<key>scope</key>
-			<string>string</string>
+			<string>string, meta.inline-expression string</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -282,6 +282,17 @@
 			<dict>
 				<key>foreground</key>
 				<string>#AAAAF0</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Inline expressions</string>
+			<key>scope</key>
+			<string>string meta.inline-expression</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#CDCDCD</string>
 			</dict>
 		</dict>
 		<dict>
