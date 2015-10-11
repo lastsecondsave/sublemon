@@ -298,15 +298,25 @@ settings:
   settings:
     foreground: '#EDC61A'
 
-- name:  Maven error indicator
-  scope: meta.indicator.error.maven
+- name:  Error indicator
+  scope: meta.indicator.error
   settings:
     foreground: '#E5476C'
 
-- name:  Maven warning indicator
-  scope: meta.indicator.warning.maven
+- name:  Warning indicator
+  scope: meta.indicator.warning
   settings:
     foreground: '#FF8147'
+
+- name:  Success indicator
+  scope: meta.indicator.success
+  settings:
+    foreground: '#C5CC4B'
+
+- name:  Task indicator
+  scope: meta.indicator.task
+  settings:
+    foreground: '#EDC61A'
 
 - name:  Maven variable in comment
   scope: comment.block.xml variable.user.maven

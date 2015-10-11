@@ -539,9 +539,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Maven error indicator</string>
+			<string>Error indicator</string>
 			<key>scope</key>
-			<string>meta.indicator.error.maven</string>
+			<string>meta.indicator.error</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
@@ -550,13 +550,35 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Maven warning indicator</string>
+			<string>Warning indicator</string>
 			<key>scope</key>
-			<string>meta.indicator.warning.maven</string>
+			<string>meta.indicator.warning</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#FF8147</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Success indicator</string>
+			<key>scope</key>
+			<string>meta.indicator.success</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#C5CC4B</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Task indicator</string>
+			<key>scope</key>
+			<string>meta.indicator.task</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#EDC61A</string>
 			</dict>
 		</dict>
 		<dict>
