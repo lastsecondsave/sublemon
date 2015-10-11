@@ -113,9 +113,6 @@ contexts:
   comments:
   - match: /\*\*(?!/)
     push: javadoc
-    with_prototype:
-    - match: \*/
-      pop: true
   - match: /\*.*?\*/
     scope: comment.block.java
   - match: /\*
@@ -130,6 +127,8 @@ contexts:
 
   javadoc:
   - meta_scope: comment.block.documentation.java
+  - match: \*/
+    pop: true
   - match: '@(?>param|throws)\s+[\w<>]*'
     scope: keyword.documentation.javadoc.java
   - match: \{\s*(@(?>code|literal))
@@ -178,7 +177,7 @@ contexts:
   storage:
   - match: '{{b}}(?>void|boolean|byte|char|short|int|float|long|double)\b'
     scope: storage.type.primitive.java
-  - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp)\b'
+  - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp|volatile)\b'
     scope: storage.modifier.java
   - match: \b[A-Z][A-Z_0-9]+\b
     scope: constant.user.java
@@ -417,6 +416,7 @@ contexts:
     - match: '{{class_id}}'
       scope: entity.other.inherited-class.java
       set: generic
+    - match: '{{id}}'
     - include: package_before_class_name
     - include: pop_on_any
 
