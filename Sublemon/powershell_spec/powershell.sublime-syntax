@@ -158,7 +158,7 @@ contexts:
     - match: "'"
       scope: punctuation.definition.regexp.powershell
       pop: true
-  - match: (?<=[\s()\[\]])-(?>c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|as|sh[rl])\b
+  - match: (?<=[\s()\[\]])-(?>c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|[ia]s|sh[rl])\b
     scope: keyword.operator.powershell
   - match: (?>[%/*+-]?=|--%)
     scope: keyword.operator.powershell
