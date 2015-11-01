@@ -131,10 +131,11 @@ contexts:
     pop: true
   - match: '@(?>param|throws)\s+[\w<>]*'
     scope: keyword.documentation.javadoc.java
-  - match: \{\s*(@(?>code|literal))
+  - match: \{\s*(@(?>code|literal|link))
     captures:
       1: keyword.documentation.javadoc.java
     push:
+    - meta_scope: no-spellcheck.java
     - include: pop_on_closed_curly_bracket
   - match: '(@author)\s+(.*)'
     captures:
@@ -201,6 +202,10 @@ contexts:
   - match: (?=[^a-z.])
     pop: true
 
+  methods_generic:
+  - match: '(?=<[^>]+?(?>extends|super).+?>)'
+    push: generic
+
   generic:
   - match: '\s*<'
     set:
@@ -220,8 +225,12 @@ contexts:
   operators:
   - match: '->'
     scope: keyword.operator.lambda.java
-  - match: (?>[&|+-]{1,2}|(?>[+*/%&^|<>=-]|<<|>>>?)=?|!=|::)
+  - match: (?>[&|+-]{1,2}|(?>[+*/%&^|<>=-]|<<|>>>?)=?|!=)
     scope: keyword.operator.java
+  - match: (::)(new)?
+    captures:
+      1: keyword.operator.java
+      2: keyword.operator.alphanumeric.java
   - match: '[!~]'
     scope: keyword.operator.unary.java
   - match: \?
@@ -265,7 +274,7 @@ contexts:
     - include: code_section
 
   keywords:
-  - match: '{{b}}(?>break|continue|else|finally|return|throw)\b'
+  - match: '{{b}}(?>assert|break|continue|else|finally|return|throw)\b'
     scope: keyword.control.java
   # expr (), then possible {}
   - match: '{{b}}(?>if|try|while)\b'
@@ -397,7 +406,11 @@ contexts:
   extends_statement:
   - match: \bextends\b
     scope: keyword.java
-    set: inherited_class_name
+    set:
+    - - match: ','
+        push: [inherited_class_name, pop_before_non_space]
+      - include: pop_before_non_space
+    - inherited_class_name
   - include: pop_before_non_space
 
   implements_statement:
@@ -416,8 +429,8 @@ contexts:
     - match: '{{class_id}}'
       scope: entity.other.inherited-class.java
       set: generic
-    - match: '{{id}}'
     - include: package_before_class_name
+    - match: '{{id}}'
     - include: pop_on_any
 
   class_body:
@@ -467,6 +480,7 @@ contexts:
   class_body_section:
   - include: fields
   - include: methods
+  - include: methods_generic
   - include: classes
   - include: angular_brackets
   - include: code_section
