@@ -32,3 +32,10 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
     content = content.replace('\\', '\\\\')
     if len(content) > initial_content_length:
       self.view.replace(edit, region, content)
+
+class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
+  def run(self, edit):
+    guides = self.view.settings().get("indent_guide_options")
+    guides = [] if len(guides) > 0 else ["draw_normal"]
+    self.view.settings().set("indent_guide_options", guides)
+

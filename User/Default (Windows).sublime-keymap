@@ -42,8 +42,9 @@
   { "keys": ["ctrl+k", "ctrl+o"], "command": "toggle_show_open_files" },
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
   { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
-  { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_status_bar" },
+  { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_indent_guides" },
   { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_tabs" },
+  { "keys": ["ctrl+k", "ctrl+/"], "command": "toggle_status_bar" },
 
   /* Macro */
 

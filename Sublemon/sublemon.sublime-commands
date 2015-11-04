@@ -6,5 +6,9 @@
   {
     "caption": "Escape Backslashes",
     "command": "escape_backslashes"
+  },
+  {
+    "caption": "Toggle Indent Guides",
+    "command": "toggle_indent_guides"
   }
 ]
