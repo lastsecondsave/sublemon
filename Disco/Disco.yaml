@@ -92,6 +92,12 @@ settings:
   settings:
     foreground: '#838495'
 
+- name:  Comment mark
+  scope: comment.mark
+  settings:
+    foreground: '#AAAAF0'
+    fontStyle: italic
+
 - name:  Storage
   scope: storage
   settings:
