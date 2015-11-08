@@ -1,0 +1,14 @@
+[
+  { "id": "view",
+    "children": [
+      { "caption": "-",
+        "id":"sublemon"
+      },
+
+      { "caption": "Draw Centered",
+        "command": "toggle_draw_centered",
+        "checkbox": true
+      }
+    ]
+  }
+]

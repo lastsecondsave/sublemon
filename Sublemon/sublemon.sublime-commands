@@ -10,5 +10,9 @@
   {
     "caption": "Toggle Indent Guides",
     "command": "toggle_indent_guides"
+  },
+  {
+    "caption": "View: Toggle Draw Centered",
+    "command": "toggle_draw_centered"
   }
 ]
