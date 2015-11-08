@@ -113,6 +113,10 @@ contexts:
   comments:
   - match: /\*\*(?!/)
     push: javadoc
+  - match: /\*-\s+(.+?)\s+-\*/
+    scope: comment.block.java
+    captures:
+      1: comment.mark.java
   - match: /\*.*?\*/
     scope: comment.block.java
   - match: /\*
