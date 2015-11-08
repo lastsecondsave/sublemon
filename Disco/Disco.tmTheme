@@ -143,6 +143,19 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Comment mark</string>
+			<key>scope</key>
+			<string>comment.mark</string>
+			<key>settings</key>
+			<dict>
+				<key>fontStyle</key>
+				<string>italic</string>
+				<key>foreground</key>
+				<string>#AAAAF0</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Storage</string>
 			<key>scope</key>
 			<string>storage</string>
