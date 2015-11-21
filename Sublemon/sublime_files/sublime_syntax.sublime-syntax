@@ -54,7 +54,7 @@ contexts:
       1: keyword.operator.yaml
     set:
     - match: ^(\s+)
-      set: Packages/Sublemon/regexp.sublime-syntax
+      set: Packages/Sublemon/other/regexp.sublime-syntax
       with_prototype:
       - match: ^(?=\s*-?\s*\w+:)
         pop: true
@@ -63,7 +63,7 @@ contexts:
   - match: \s+(['"])?
     captures:
       1: string.quoted.yaml
-    set: Packages/Sublemon/regexp.sublime-syntax
+    set: Packages/Sublemon/other/regexp.sublime-syntax
     with_prototype:
     - match: (\1)?\s*(?=\s#|$)
       captures:

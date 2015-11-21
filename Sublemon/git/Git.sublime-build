@@ -1,7 +1,7 @@
 {
   "keyfiles"   : [".gitignore", ".gitattributes"],
-  "target"     : "powershell_exec",
-  "shell_cmd"  : "git diff '$file' | select -Skip 4",
+  "target"     : "tinker_exec",
+  "shell_cmd"  : "git diff '$file'",
   "syntax"     : "Packages/Diff/Diff.tmLanguage",
   "working_dir": "${project_path:${folder}}",
 

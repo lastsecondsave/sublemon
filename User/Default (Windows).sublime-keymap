@@ -55,11 +55,11 @@
   { "keys": ["ctrl+shift+f12"], "command": "toggle_record_macro" },
 
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/add_indent.sublime-macro" },
+    "args": {"file": "Packages/Sublemon/macro/add_indent.sublime-macro" },
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
   },
   { "keys": ["ctrl+;"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/add_semicolon.sublime-macro"},
+    "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"},
     "context": [
       { "key": "selector", "operator": "equal",
         "operand": "source.java, source.js, source.c++", "match_all": true
@@ -67,7 +67,7 @@
     ]
   },
   { "keys": ["ctrl+,"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/add_comma.sublime-macro"},
+    "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"},
     "context": [
       { "key": "selector", "operator": "equal",
         "operand": "source.java, source.js, source.c++, source.json", "match_all": true
