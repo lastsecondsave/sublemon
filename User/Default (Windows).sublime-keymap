@@ -1,22 +1,4 @@
 [
-  /* Vim-cursor */
-
-  { "keys": ["super+alt+h"], "command": "move", "args": {"by": "characters", "forward": false} },
-  { "keys": ["super+alt+j"], "command": "move", "args": {"by": "lines", "forward": true} },
-  { "keys": ["super+alt+k"], "command": "move", "args": {"by": "lines", "forward": false} },
-  { "keys": ["super+alt+l"], "command": "move", "args": {"by": "characters", "forward": true} },
-  { "keys": ["super+alt+u"], "command": "move", "args": {"by": "pages", "forward": false} },
-  { "keys": ["super+alt+i"], "command": "move", "args": {"by": "pages", "forward": true} },
-
-  /* WASD-cursor */
-
-  { "keys": ["super+alt+a"], "command": "move", "args": {"by": "characters", "forward": false} },
-  { "keys": ["super+alt+s"], "command": "move", "args": {"by": "lines", "forward": true} },
-  { "keys": ["super+alt+w"], "command": "move", "args": {"by": "lines", "forward": false} },
-  { "keys": ["super+alt+d"], "command": "move", "args": {"by": "characters", "forward": true} },
-  { "keys": ["super+alt+q"], "command": "move", "args": {"by": "pages", "forward": false} },
-  { "keys": ["super+alt+e"], "command": "move", "args": {"by": "pages", "forward": true} },
-
   /* Search widget */
 
   { "keys": ["alt+q"], "command": "toggle_in_selection",
