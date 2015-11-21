@@ -471,7 +471,7 @@ contexts:
       - include: pop_on_closed_round_bracket
       - include: code_section
     - include: pop_before_non_space
-  - match: ';'
+  - match: ';|(?=\})'
     pop: true
   - include: annotations
   - include: pop_on_fence

@@ -35,12 +35,32 @@
 			"path": "Sublemon"
 		},
 		{
+			"name": "macro",
+			"path": "Sublemon\\macro"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
+			"name": "other",
+			"path": "Sublemon\\other"
+		},
+		{
 			"file_exclude_patterns":
 			[
 				"Disco.tm*"
 			],
 			"name": "disco",
 			"path": "Disco"
+		},
+		{
+			"file_exclude_patterns":
+			[
+				"*.tm*"
+			],
+			"name": "git",
+			"path": "Sublemon\\git"
 		},
 		{
 			"file_exclude_patterns":
