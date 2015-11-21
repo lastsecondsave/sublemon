@@ -2,7 +2,12 @@
 
 User/Package Control.last-run
 User/Package Control.cache
-User/Sublime *.sublime-settings
 User/java.sublime-settings
 
+# Someone's dependencies
 bz2/*
+markupsafe/*
+mdpopups/*
+pygments/*
+python-jinja2/*
+python-markdown/*
