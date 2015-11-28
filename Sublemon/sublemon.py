@@ -33,6 +33,11 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
     if len(content) > initial_content_length:
       self.view.replace(edit, region, content)
 
+class ShowFilePathCommand(sublime_plugin.WindowCommand):
+  def run(self):
+    variables = self.window.extract_variables()
+    sublime.status_message(variables["file"])
+
 class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     guides = self.view.settings().get("indent_guide_options")
