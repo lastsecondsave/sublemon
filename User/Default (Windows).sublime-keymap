@@ -29,6 +29,8 @@
   { "keys": ["ctrl+k", "ctrl+/"], "command": "toggle_status_bar" },
   { "keys": ["ctrl+k", "ctrl+q"], "command": "toggle_draw_centered" },
 
+  { "keys": ["alt+c"], "command": "show_file_path" },
+
   /* Macro */
 
   { "keys": ["alt+."], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },

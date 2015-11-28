@@ -86,6 +86,7 @@
 	"remember_full_screen": true,
 	"shift_tab_unindent": true,
 	"show_encoding": true,
+	"show_full_path": false,
 	"show_line_endings": true,
 	"show_panel_on_build": false,
 	"show_tab_close_buttons": false,
