@@ -27,24 +27,8 @@
 			[
 				"*.tm*"
 			],
-			"folder_exclude_patterns":
-			[
-				"*"
-			],
-			"name": "core",
+			"name": "sublemon",
 			"path": "Sublemon"
-		},
-		{
-			"name": "macro",
-			"path": "Sublemon\\macro"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "other",
-			"path": "Sublemon\\other"
 		},
 		{
 			"file_exclude_patterns":
@@ -54,117 +38,9 @@
 			"name": "disco",
 			"path": "Disco"
 		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "git",
-			"path": "Sublemon\\git"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "sublime_files",
-			"path": "Sublemon\\sublime_files"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "c++",
-			"path": "Sublemon\\cpp_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "clojure",
-			"path": "Sublemon\\clojure_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "css",
-			"path": "Sublemon\\css_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "java",
-			"path": "Sublemon\\java_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "maven",
-			"path": "Sublemon\\maven_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "gradle",
-			"path": "Sublemon\\gradle_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "javascript",
-			"path": "Sublemon\\javascript_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "powershell",
-			"path": "Sublemon\\powershell_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "sql",
-			"path": "Sublemon\\sql_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "xml",
-			"path": "Sublemon\\xml_spec"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"name": "yaml",
-			"path": "Sublemon\\yaml_spec"
-		},
-		{
+				{
 			"name": "snippets",
 			"path": "Snippets"
-		},
-		{
-			"name": "utils",
-			"path": "Sublemon\\utils"
 		}
 	]
 }
