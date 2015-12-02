@@ -342,7 +342,7 @@
     // File label
     {
         "class": "sidebar_label",
-        "color": [125, 125, 125],
+        "color": [140, 140, 140],
         "font.bold": false,
         "font.italic": false
     },
@@ -351,14 +351,28 @@
     {
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["selected"] }],
-        "color": [250, 250, 250],
+        "color": [240, 240, 240],
     },
 
     // Directory label
     {
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["expandable"] }],
-        "color": [190, 190, 190]
+        "color": [140, 140, 140]
+    },
+
+    // Selected directory label
+    {
+        "class": "sidebar_label",
+        "parents": [{ "class": "tree_row", "attributes": ["expandable", "selected"] }],
+        "color": [240, 240, 240]
+    },
+
+    // Expanded directory label
+    {
+        "class": "sidebar_label",
+        "parents": [{ "class": "tree_row", "attributes": ["expanded"] }],
+        "color": [240, 240, 240]
     },
 
     // Directory label hover
