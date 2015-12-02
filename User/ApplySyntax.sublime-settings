@@ -5,21 +5,21 @@
     {
       "syntax": "Sublemon/maven_spec/maven_pom",
       "rules": [
-          { "file_path": ".*\\\\pom\\.xml$" }
+          { "file_path": ".*(\\\\|\/)pom\\.xml$" }
       ]
     },
     {
-      "syntax": "Sublemon/git_config",
+      "syntax": "Sublemon/git_spec/git_config",
       "rules": [
-          { "file_path": ".*\\.git\\\\info\\\\exclude" }
+          { "file_path": ".*\\.git(\\\\|\/)info(\\\\|\/)exclude" }
       ]
     },
     {
-      "syntax": "Sublemon/sublime_files/package_dev",
+      "syntax": "Sublemon/sublime_files_spec/package_dev",
       "match": "all",
       "rules": [
           { "file_path": ".*\\.yaml" },
-          {"first_line": "# \\[PackageDev\\] .+"}
+          { "first_line": "# \\[PackageDev\\] .+" }
       ]
     }
   ]
