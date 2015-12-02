@@ -10,4 +10,4 @@ contexts:
   - match: '-(?>diff|text)'
     scope: variable.language.git
 
-  - include: Packages/Sublemon/unix_config.sublime-syntax
+  - include: Packages/Sublemon/etc/unix_config.sublime-syntax
