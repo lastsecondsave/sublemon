@@ -26,6 +26,7 @@
 	"file_exclude_patterns":
 	[
 		".project",
+		".DS_Store",
 		"*.sublime-workspace",
 		"*.iml",
 		"*.ipr",
@@ -43,30 +44,30 @@
 		".git",
 		".gradle",
 		".sublime",
-		"__pycache__"
+		"__pycache__",
+		"target"
 	],
-	"font_face": "Consolas",
 	"font_options":
 	[
 		"directwrite"
 	],
-	"font_size": 9,
+	"font_size": 10,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		".git",
-		"JavaScript",
-		"CSS",
-		"XML",
-		"Vintage",
-		"Java",
 		"C++",
-		"YAML",
-		"SQL",
+		"CSS",
+		"Java",
+		"JavaScript",
 		"Markdown",
 		"Objective-C",
-		"Regular Expressions"
+		"Regular Expressions",
+		"SQL",
+		"Vintage",
+		"XML",
+		"YAML"
 	],
 	"indent_guide_options":
 	[
@@ -82,8 +83,10 @@
 	"margin": 2,
 	"match_brackets_content": false,
 	"minimap_scroll_to_clicked_text": true,
+	"move_to_limit_on_up_down": true,
 	"overlay_scroll_bars": "enabled",
 	"remember_full_screen": true,
+	"scroll_past_end": true,
 	"shift_tab_unindent": true,
 	"show_encoding": true,
 	"show_full_path": false,
