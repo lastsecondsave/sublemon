@@ -170,7 +170,7 @@ contexts:
   constants:
   - match: '\b(?>0[xX][0-9a-fA-F_]+|0[0-7_]+)[Ll]?\b'
     scope: constant.numeric.java
-  - match: '(?:(?<=[\s=+*/%-(]|^)-)?\b{{number}}(\.{{number}}?)?(?:[eE][+-]?{{number}})?[lLfF]?\b'
+  - match: '(?:(?<=[\s=+*/%-(]|^)-)?\b{{number}}(\.{{number}}?)?(?:[eE][+-]?{{number}})?[lLfFdD]?\b'
     scope: constant.numeric.java
   - match: '''(?>{{escape}}|.)'''
     scope: constant.character.java
