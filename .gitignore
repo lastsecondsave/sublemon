@@ -4,6 +4,8 @@ User/Package Control.last-run
 User/Package Control.cache
 User/java.sublime-settings
 
+.DS_Store
+
 # Someone's dependencies
 bz2/*
 markupsafe/*
