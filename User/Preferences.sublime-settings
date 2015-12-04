@@ -86,6 +86,7 @@
 	"move_to_limit_on_up_down": true,
 	"overlay_scroll_bars": "enabled",
 	"remember_full_screen": true,
+	"open_files_in_new_window": false,
 	"scroll_past_end": true,
 	"shift_tab_unindent": true,
 	"show_encoding": true,
