@@ -75,8 +75,8 @@
 
   /* Build */
 
-  { "keys": ["ctrl+b"], "command": "show_panel" ,  "args": {"panel": "output.exec", "toggle": true} },
-  { "keys": [""],    "command": "exec", "args": {"kill": true} },
+  { "keys": ["ctrl+b"],       "command": "show_panel" ,  "args": {"panel": "output.exec", "toggle": true} },
+  { "keys": ["super+ctrl+c"], "command": "exec", "args": {"kill": true} },
 
   { "keys": ["f7"],            "command": "build" },
   { "keys": ["ctrl+f7"],       "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
@@ -97,7 +97,7 @@
   { "keys": ["ctrl+alt+."], "command": "open_file" , "args": {"file": "${project}"} },
 
   { "keys": ["ctrl+alt+s"],   "command": "prompt_save_as" },
-  { "keys": ["super+shift+s"], "command": "save_all" },
+  { "keys": ["ctrl+shift+s"], "command": "save_all" },
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
   { "keys": ["shift+alt+z"],  "command": "reveal_in_side_bar" },
   { "keys": ["shift+alt+."],  "command": "close_tag" },
@@ -128,7 +128,6 @@
   { "keys": ["alt+o"], "command": "switch_file", "args": {"extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "hh", "h", "ipp", "inl", "m", "mm"]} },
   { "keys": ["ctrl+n"], "command": "new_file" },
   { "keys": ["ctrl+s"], "command": "save" },
-  { "keys": ["ctrl+shift+s"], "command": "prompt_save_as" },
   { "keys": ["ctrl+f4"], "command": "close_file" },
   { "keys": ["ctrl+w"], "command": "close" },
 
@@ -207,9 +206,6 @@
   { "keys": ["ctrl+shift+space"], "command": "expand_selection", "args": {"to": "scope"} },
   { "keys": ["ctrl+m"], "command": "move_to", "args": {"to": "brackets"} },
   { "keys": ["ctrl+shift+j"], "command": "expand_selection", "args": {"to": "indentation"} },
-
-  { "keys": ["ctrl+q"], "command": "toggle_record_macro" },
-  { "keys": ["ctrl+shift+q"], "command": "run_macro" },
 
   { "keys": ["ctrl+enter"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Add Line.sublime-macro"} },
   { "keys": ["ctrl+shift+enter"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Add Line Before.sublime-macro"} },
