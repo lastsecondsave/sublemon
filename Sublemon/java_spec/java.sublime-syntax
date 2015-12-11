@@ -145,7 +145,7 @@ contexts:
     captures:
       1: keyword.documentation.javadoc.java
       2: no-spellcheck.java
-  - match: '@\w+'
+  - match: '@[\w.]+'
     scope: keyword.javadoc.java
   - match: (</?)\w+.*?(/?>)
     scope: meta.tag.javadoc.java
