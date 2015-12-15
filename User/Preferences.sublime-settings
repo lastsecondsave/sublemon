@@ -50,8 +50,7 @@
 	"font_face": "PragmataPro",
 	"font_options":
 	[
-		"directwrite",
-		"no_round"
+		"directwrite"
 	],
 	"font_size": 10,
 	"highlight_line": true,
