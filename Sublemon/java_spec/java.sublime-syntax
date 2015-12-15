@@ -133,14 +133,15 @@ contexts:
   - meta_scope: comment.block.documentation.java
   - match: \*/
     pop: true
-  - match: '@(?>param|throws)\s+[\w<>]*'
+  - match: '@(?>param)\s+[\w<>]*'
     scope: keyword.documentation.javadoc.java
-  - match: \{\s*(@(?>code|literal|link))
-    captures:
-      1: keyword.documentation.javadoc.java
+  - match: (\{\s*@(?>code|literal|link))
+    scope: keyword.documentation.inline.javadoc.java
     push:
     - meta_scope: no-spellcheck.java
-    - include: pop_on_closed_curly_bracket
+    - match: \}
+      scope: keyword.documentation.inline.javadoc.java
+      pop: true
   - match: '(@author)\s+(.*)'
     captures:
       1: keyword.documentation.javadoc.java
@@ -430,6 +431,9 @@ contexts:
   inherited_class_name:
   - match: '{{before_non_space}}'
     set:
+    - match: '({{class_id}})(?>.(?={{class_id}}))+'
+      captures:
+        1: entity.other.inherited-class.java
     - match: '{{class_id}}'
       scope: entity.other.inherited-class.java
       set: generic
