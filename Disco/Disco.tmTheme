@@ -138,7 +138,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#838495</string>
+				<string>#9090A0</string>
 			</dict>
 		</dict>
 		<dict>
@@ -288,13 +288,24 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Doc-comment inline keyword</string>
+			<key>scope</key>
+			<string>keyword.documentation.inline</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#9090A090</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Tags in doc-comments</string>
 			<key>scope</key>
 			<string>comment.block.documentation meta.tag</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#AAAAF0</string>
+				<string>#AAAAF090</string>
 			</dict>
 		</dict>
 		<dict>
@@ -602,7 +613,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#838495</string>
+				<string>#9090A0</string>
 			</dict>
 		</dict>
 		<dict>
@@ -712,7 +723,7 @@
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#838495</string>
+				<string>#9090A0</string>
 			</dict>
 		</dict>
 		<dict>

@@ -2,7 +2,7 @@
 name: Disco
 
 # Colors:
-# 838495   gray           [131, 132, 149]
+# 9090A0   gray           [144, 144, 160]
 # CDCDCD   white          [205, 205, 205]
 # AAAAF0   light violet   [170, 170, 240]
 # B69EFF   violet         [182, 158, 255]
@@ -90,7 +90,7 @@ settings:
 - name:  Comment
   scope: comment
   settings:
-    foreground: '#838495'
+    foreground: '#9090A0'
 
 - name:  Comment mark
   scope: comment.mark
@@ -165,10 +165,15 @@ settings:
   settings:
     foreground: '#CDCDCD'
 
+- name:  Doc-comment inline keyword
+  scope: keyword.documentation.inline
+  settings:
+    foreground: '#9090A090'
+
 - name:  Tags in doc-comments
   scope: comment.block.documentation meta.tag
   settings:
-    foreground: '#AAAAF0'
+    foreground: '#AAAAF090'
 
 - name:  Inline expressions
   scope: string meta.inline-expression
@@ -327,7 +332,7 @@ settings:
 - name:  Maven variable in comment
   scope: comment.block.xml variable.user.maven
   settings:
-    foreground: '#838495'
+    foreground: '#9090A0'
 
 - name:  Maven results
   scope: >-
@@ -388,7 +393,7 @@ settings:
 - name:  Markup strikethrough
   scope: markup.strikethrough
   settings:
-    foreground: '#838495'
+    foreground: '#9090A0'
 
 - name:  Markup links
   scope: markup.underline.link
