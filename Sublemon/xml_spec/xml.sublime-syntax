@@ -13,7 +13,7 @@ contexts:
   - include: comments
 
   main:
-  - match: '(<\?)\s*(xml)'
+  - match: '(<\?)\s*(xml(?:-stylesheet)?)'
     captures:
       1: punctuation.definition.tag.begin.xml
       2: entity.name.tag.xml
@@ -103,6 +103,11 @@ contexts:
       scope: punctuation.definition.string.xml
       pop: true
     - include: entities
+  - match: '(?:({{id}})(:))?({{id}})'
+    captures:
+      1: entity.name.attribute.namespace.xml
+      2: punctuation.separator.namespace.xml
+      3: entity.name.attribute.localname.xml
 
   doctype:
   - match: '(<!)(DOCTYPE)\s*({{id}})'
