@@ -83,7 +83,7 @@ contexts:
   - match: '{{after_operator}}(/)(?=[^/*+?])'
     captures:
       1: punctuation.definition.regexp.javascript
-    push: Packages/Sublemon/other/regexp.sublime-syntax
+    push: Packages/Sublemon/etc/regexp.sublime-syntax
     with_prototype:
     - match: '/[igm]*'
       scope: punctuation.definition.regexp.javascript
