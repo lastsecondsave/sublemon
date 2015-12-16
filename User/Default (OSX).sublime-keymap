@@ -1,4 +1,10 @@
 [
+  /* Unbound */
+
+  { "keys": ["ctrl+shift+b"], "command": "unbound" },
+  { "keys": ["alt+shift+w"], "command": "unbound" },
+  { "keys": ["ctrl+;"], "command": "unbound" },
+
   /* Search widget */
 
   { "keys": ["alt+q"], "command": "toggle_in_selection",
@@ -18,7 +24,8 @@
 
   { "keys": ["ctrl+alt+f"], "command": "show_panel" , "args": {"panel": "output.find_results", "toggle": true} },
 
-  { "keys": ["ctrl+shift+;"],  "command": "diff_changes" },
+  { "keys": ["alt+f9"], "command": "diff_changes" },
+  { "keys": ["alt+/"],  "command": "show_file_path" },
 
   { "keys": ["ctrl+k", "ctrl+o"], "command": "toggle_show_open_files" },
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
@@ -27,8 +34,6 @@
   { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_tabs" },
   { "keys": ["ctrl+k", "ctrl+/"], "command": "toggle_status_bar" },
   { "keys": ["ctrl+k", "ctrl+q"], "command": "toggle_draw_centered" },
-
-  { "keys": ["alt+c"], "command": "show_file_path" },
 
   /* Macro */
 
@@ -49,11 +54,11 @@
       },
     ]
   },
-  { "keys": ["ctrl+;"], "command": "run_macro_file",
+  { "keys": ["ctrl+shift+;"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_colon.sublime-macro"},
     "context": [
       { "key": "selector", "operator": "equal",
-        "operand": "source.python", "match_all": true
+        "operand": "source.json, source.yaml, source.python, source.css", "match_all": true
       },
     ]
   },
@@ -66,7 +71,7 @@
     ]
   },
 
-  { "keys": ["alt+shift+w"], "command": "insert_snippet",
+  { "keys": ["alt+shift+,"], "command": "insert_snippet",
     "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
   },
   { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "},
@@ -81,8 +86,6 @@
   { "keys": ["f7"],            "command": "build" },
   { "keys": ["ctrl+f7"],       "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
   { "keys": ["ctrl+shift+f7"], "command": "build", "args": {"select": true} },
-
-  { "keys": ["ctrl+shift+b"], "command": "unbound" },
 
   /* Common */
 
@@ -110,6 +113,9 @@
 
   { "keys": ["alt+z"], "command": "jump_back" },
   { "keys": ["alt+x"], "command": "jump_forward" },
+
+  { "keys": ["super+pageup"], "command": "prev_view" },
+  { "keys": ["super+pagedown"], "command": "next_view" },
 
   /* Plugins */
 
@@ -408,8 +414,6 @@
   { "keys": ["ctrl+keypad_plus"], "command": "increase_font_size" },
   { "keys": ["ctrl+shift+keypad_plus"], "command": "decrease_font_size" },
 
-  { "keys": ["alt+shift+w"], "command": "insert_snippet", "args": { "name": "Packages/XML/long-tag.sublime-snippet" } },
-
   { "keys": ["ctrl+shift+["], "command": "fold" },
   { "keys": ["ctrl+shift+]"], "command": "unfold" },
   { "keys": ["ctrl+k", "ctrl+1"], "command": "fold_by_level", "args": {"level": 1} },
@@ -482,8 +486,5 @@
   },
   { "keys": ["alt+enter"], "command": "find_all", "args": {"close_panel": true},
     "context": [{"key": "panel", "operand": "incremental_find"}, {"key": "panel_has_focus"}]
-  },
-
-  { "keys": ["super+pageup"], "command": "prev_view" },
-  { "keys": ["super+pagedown"], "command": "next_view" }
+  }
 ]
