@@ -1,4 +1,10 @@
 [
+  /* Unbound */
+
+  { "keys": ["ctrl+shift+b"], "command": "unbound" },
+  { "keys": ["alt+shift+w"], "command": "unbound" },
+  { "keys": ["ctrl+;"], "command": "unbound" },
+
   /* Search widget */
 
   { "keys": ["alt+q"], "command": "toggle_in_selection",
@@ -18,8 +24,8 @@
 
   { "keys": ["ctrl+alt+f"], "command": "show_panel" , "args": {"panel": "output.find_results", "toggle": true} },
 
-  { "keys": ["alt+f11"], "command": "prompt_select_workspace" },
-  { "keys": ["ctrl+shift+;"],  "command": "diff_changes" },
+  { "keys": ["alt+f9"], "command": "diff_changes" },
+  { "keys": ["alt+/"],  "command": "show_file_path" },
 
   { "keys": ["ctrl+k", "ctrl+o"], "command": "toggle_show_open_files" },
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
@@ -28,8 +34,6 @@
   { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_tabs" },
   { "keys": ["ctrl+k", "ctrl+/"], "command": "toggle_status_bar" },
   { "keys": ["ctrl+k", "ctrl+q"], "command": "toggle_draw_centered" },
-
-  { "keys": ["alt+c"], "command": "show_file_path" },
 
   /* Macro */
 
@@ -50,11 +54,11 @@
       },
     ]
   },
-  { "keys": ["ctrl+;"], "command": "run_macro_file",
+  { "keys": ["ctrl+shift+;"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_colon.sublime-macro"},
     "context": [
       { "key": "selector", "operator": "equal",
-        "operand": "source.python", "match_all": true
+        "operand": "source.json, source.yaml, source.python, source.css", "match_all": true
       },
     ]
   },
@@ -62,12 +66,12 @@
     "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"},
     "context": [
       { "key": "selector", "operator": "equal",
-        "operand": "source.java, source.js, source.c++, source.json", "match_all": true
+        "operand": "source.java, source.js, source.c++, source.json, source.css", "match_all": true
       },
     ]
   },
 
-  { "keys": ["alt+shift+w"], "command": "insert_snippet",
+  { "keys": ["alt+shift+,"], "command": "insert_snippet",
     "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
   },
   { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "},
