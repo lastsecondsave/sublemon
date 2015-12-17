@@ -13,11 +13,15 @@ contexts:
   - include: comments
 
   main:
-  - match: '(<\?)\s*(xml(?:-stylesheet)?)'
+  - match: '(<\?)\s*({{id}})'
     captures:
-      1: punctuation.definition.tag.begin.xml
-      2: entity.name.tag.xml
-    push: tag_internals
+      1: punctuation.definition.tag.instruction.begin.xml
+      2: entity.name.tag.instruction.xml
+    push:
+    - match: '\?>'
+      scope: punctuation.definition.tag.instruction.end.xml
+      pop: true
+    - include: tag_internals
   - include: doctype
   - match: '(?=<{{id}})'
     push: xml
@@ -41,7 +45,7 @@ contexts:
   entities:
   - match: '&(?:[:a-zA-Z_][:\w.-]*|#[0-9]+|#x[0-9a-fA-F]+);'
     scope: constant.character.entity.xml
-  - match: '[&<>]'
+  - match: '[&<]'
     scope: invalid.illegal.entity.xml
 
   quoted_strings:
@@ -59,6 +63,7 @@ contexts:
     push:
     - meta_scope: meta.cdata.xml
     - meta_content_scope: string.cdata.xml
+    - meta_include_prototype: false
     - match: \]\]>
       scope: punctuation.definition.cdata.xml
       pop: true
@@ -71,7 +76,11 @@ contexts:
       2: entity.name.tag.namespace.xml
       3: punctuation.separator.namespace.xml
       4: entity.name.tag.localname.xml
-    push: tag_internals
+    push:
+    - match: '/?>'
+      scope: punctuation.definition.tag.end.xml
+      pop: true
+    - include: tag_internals
   # Closing tag
   - match: '(</)(?:({{id}})(:))?({{id}})\s*(>)'
     scope: meta.tag.xml
@@ -85,9 +94,6 @@ contexts:
   tag_internals:
   - meta_scope: meta.tag.xml
   - include: comments
-  - match: '[/?]?>'
-    scope: punctuation.definition.tag.end.xml
-    pop: true
   - match: '(?:({{id}})(:))?({{id}})(=)([''"])'
     captures:
       1: entity.name.attribute.namespace.xml
