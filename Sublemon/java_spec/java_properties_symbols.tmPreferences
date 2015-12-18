@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.java-props entity.name.java-props</string>
+	<string>source.java-props entity.name.key.java-props</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
