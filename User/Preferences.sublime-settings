@@ -6,11 +6,11 @@
 	"binary_file_patterns":
 	[
 		"*.bak",
-		"*.orig",
-		"*.png",
-		"*.gif",
 		"*.bmp",
-		"*.jpg"
+		"*.gif",
+		"*.jpg",
+		"*.orig",
+		"*.png"
 	],
 	"caret_extra_width": 1,
 	"caret_style": "blink",
@@ -25,25 +25,26 @@
 	"fallback_encoding": "cyrillic (windows 1251)",
 	"file_exclude_patterns":
 	[
-		".project",
-		".DS_Store",
-		"*.sublime-workspace",
+		"*.class",
 		"*.iml",
 		"*.ipr",
 		"*.iws",
-		"*.pdb",
-		"*.zip",
 		"*.jar",
-		"*.class"
+		"*.pdb",
+		"*.sublime-workspace",
+		"*.xls",
+		"*.zip",
+		".DS_Store",
+		".project"
 	],
 	"find_selected_text": false,
 	"folder_exclude_patterns":
 	[
-		".idea",
-		".svn",
 		".git",
 		".gradle",
+		".idea",
 		".sublime",
+		".svn",
 		"__pycache__",
 		"target"
 	],
@@ -75,11 +76,13 @@
 	],
 	"index_exclude_patterns":
 	[
-		".git*",
 		"*.log",
-		"*.sql",
 		"*.md",
-		"*.jdo"
+		"*.properties",
+		"*.sql",
+		"*.txt",
+		"*.xml",
+		".git*"
 	],
 	"margin": 2,
 	"match_brackets_content": false,
