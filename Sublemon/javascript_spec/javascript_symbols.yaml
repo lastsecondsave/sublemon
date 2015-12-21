@@ -2,3 +2,4 @@
 scope: meta.function.identifier.javascript
 settings:
   showInSymbolList: 1
+  symbolTransformation: s/\.prototype\./\./g;
