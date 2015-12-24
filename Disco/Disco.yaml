@@ -96,7 +96,6 @@ settings:
   scope: comment.mark
   settings:
     foreground: '#AAAAF0'
-    fontStyle: italic
 
 - name:  Storage
   scope: storage
