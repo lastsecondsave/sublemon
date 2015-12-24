@@ -1,3 +1,4 @@
+import os
 import sublime, sublime_plugin
 
 class SublemonDemoCommand(sublime_plugin.TextCommand):
@@ -36,7 +37,11 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
 class ShowFilePathCommand(sublime_plugin.WindowCommand):
   def run(self):
     variables = self.window.extract_variables()
-    sublime.status_message(variables["file"])
+    file_path = variables["file"]
+    home_path = os.environ["HOME"]
+    if file_path.startswith(home_path):
+      file_path = "~" + file_path[len(home_path):]
+    sublime.status_message(file_path)
 
 class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
   def run(self, edit):
