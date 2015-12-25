@@ -429,6 +429,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>XML substitution variable</string>
+			<key>scope</key>
+			<string>punctuation.definition.substitution.xml</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF8147</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Diff inserted</string>
 			<key>scope</key>
 			<string>markup.inserted.diff, punctuation.definition.to-file.diff</string>
