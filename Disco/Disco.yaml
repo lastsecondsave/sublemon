@@ -238,6 +238,11 @@ settings:
   settings:
     foreground: '#FF8147'
 
+- name:  XML substitution variable
+  scope: punctuation.definition.substitution.xml
+  settings:
+    foreground: '#FF8147'
+
 - name:  Diff inserted
   scope: >-
     markup.inserted.diff,

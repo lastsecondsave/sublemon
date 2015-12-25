@@ -30,6 +30,7 @@ contexts:
   - include: tag
   - include: cdata
   - include: entities
+  - include: substitutions
 
   comments:
   - match: "<!--"
@@ -67,6 +68,7 @@ contexts:
     - match: \]\]>
       scope: punctuation.definition.cdata.xml
       pop: true
+    - include: substitutions
 
   tag:
   # Opening and single tag
@@ -109,6 +111,7 @@ contexts:
       scope: punctuation.definition.string.xml
       pop: true
     - include: entities
+    - include: substitutions
   - match: '(?:({{id}})(:))?({{id}})'
     captures:
       1: entity.name.attribute.namespace.xml
@@ -149,3 +152,11 @@ contexts:
       scope: punctuation.definition.tag.end.xml
       pop: true
     - include: quoted_strings
+
+  substitutions:
+  - match: '(\$\{).*?(?:(:).*?)?(\})'
+    scope: variable.user.substitution.xml
+    captures:
+      1: punctuation.definition.substitution.xml
+      2: punctuation.definition.substitution.xml
+      3: punctuation.definition.substitution.xml
