@@ -616,28 +616,6 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Maven variable in comment</string>
-			<key>scope</key>
-			<string>comment.block.xml variable.user.maven</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#9090A0</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>Maven results</string>
-			<key>scope</key>
-			<string>meta.result.maven, entity.name.exception.maven</string>
-			<key>settings</key>
-			<dict>
-				<key>foreground</key>
-				<string>#EDC61A</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>name</key>
 			<string>RegExp limiters</string>
 			<key>scope</key>
 			<string>keyword.operator.or.regexp, punctuation.definition.group.regexp</string>
