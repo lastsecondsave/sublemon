@@ -227,11 +227,9 @@ settings:
     foreground: '#EDC61A'
 
 - name:  XML attribute value
-  scope: >-
-    meta.attribute.xml string.attribute,
-    meta.attribute.xml punctuation.definition.string
+  scope: meta.attribute.xml string
   settings:
-    foreground: '#77ABFF'
+    foreground: '#C5CC4B'
 
 - name:  XML CDATA brackets
   scope: meta.cdata.xml punctuation.definition

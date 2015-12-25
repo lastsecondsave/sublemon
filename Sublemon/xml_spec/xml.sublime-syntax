@@ -18,6 +18,7 @@ contexts:
       1: punctuation.definition.tag.instruction.begin.xml
       2: entity.name.tag.instruction.xml
     push:
+    - meta_scope: meta.instruction.xml
     - match: '\?>'
       scope: punctuation.definition.tag.instruction.end.xml
       pop: true
@@ -49,14 +50,28 @@ contexts:
   - match: '[&<]'
     scope: invalid.illegal.entity.xml
 
-  quoted_strings:
-  - match: '([''"])'
+  strings:
+  - match: '"'
     push:
-    - meta_scope: string.quoted.xml
+    - meta_scope: string.quoted.double.xml
     - meta_include_prototype: false
-    - match: \1
+    - match: '"'
+      pop: true
+    - include: string-internals
+  - match: "'"
+    push:
+    - meta_scope: string.quoted.single.xml
+    - meta_include_prototype: false
+    - match: "'"
+      pop: true
+    - include: string-internals
+
+  string-internals:
+    - match: \n
+      scope: invalid.illegal.not-closed-string.xml
       pop: true
     - include: entities
+    - include: substitutions
 
   cdata:
   - match: '<!\[CDATA\['
@@ -79,6 +94,7 @@ contexts:
       3: punctuation.separator.namespace.xml
       4: entity.name.tag.localname.xml
     push:
+    - meta_scope: meta.tag.xml
     - match: '/?>'
       scope: punctuation.definition.tag.end.xml
       pop: true
@@ -94,29 +110,22 @@ contexts:
       5: punctuation.definition.tag.end.xml
 
   tag_internals:
-  - meta_scope: meta.tag.xml
-  - include: comments
-  - match: '(?:({{id}})(:))?({{id}})(=)([''"])'
-    captures:
-      1: entity.name.attribute.namespace.xml
-      2: punctuation.separator.namespace.xml
-      3: entity.name.attribute.localname.xml
-      4: punctuation.separator.attribute.xml
-      5: punctuation.definition.string.xml
-    push:
-    - meta_scope: meta.attribute.xml
-    - meta_content_scope: string.attribute.xml
-    - meta_include_prototype: false
-    - match: \5
-      scope: punctuation.definition.string.xml
-      pop: true
-    - include: entities
-    - include: substitutions
   - match: '(?:({{id}})(:))?({{id}})'
     captures:
       1: entity.name.attribute.namespace.xml
       2: punctuation.separator.namespace.xml
       3: entity.name.attribute.localname.xml
+    push:
+    - meta_scope: meta.attribute.xml
+    - match: '='
+      scope: punctuation.separator.attribute.xml
+      set:
+      - meta_content_scope: meta.attribute.xml
+      - include: strings
+      - match: ''
+        pop: true
+    - match: ''
+      pop: true
 
   doctype:
   - match: '(<!)(DOCTYPE)\s*({{id}})'
@@ -138,7 +147,7 @@ contexts:
         scope: punctuation.definition.doctype.end.xml
         pop: true
       - include: doctype_element
-    - include: quoted_strings
+    - include: strings
 
   doctype_element:
   - match: '(<!)((?>ELEMENT|ATTLIST))\s*({{id}})'
@@ -151,7 +160,7 @@ contexts:
     - match: '>'
       scope: punctuation.definition.tag.end.xml
       pop: true
-    - include: quoted_strings
+    - include: strings
 
   substitutions:
   - match: '(\$\{).*?(?:(:).*?)?(\})'
