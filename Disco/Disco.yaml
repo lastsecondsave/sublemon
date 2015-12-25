@@ -331,18 +331,6 @@ settings:
   settings:
     foreground: '#EDC61A'
 
-- name:  Maven variable in comment
-  scope: comment.block.xml variable.user.maven
-  settings:
-    foreground: '#9090A0'
-
-- name:  Maven results
-  scope: >-
-    meta.result.maven,
-    entity.name.exception.maven
-  settings:
-    foreground: '#EDC61A'
-
 - name:  RegExp limiters
   scope: >-
     keyword.operator.or.regexp,
