@@ -409,11 +409,11 @@
 			<key>name</key>
 			<string>XML attribute value</string>
 			<key>scope</key>
-			<string>meta.attribute.xml string.attribute, meta.attribute.xml punctuation.definition.string</string>
+			<string>meta.attribute.xml string</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
-				<string>#77ABFF</string>
+				<string>#C5CC4B</string>
 			</dict>
 		</dict>
 		<dict>
