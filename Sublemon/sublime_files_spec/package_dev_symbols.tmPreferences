@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.yaml meta.match-group.yaml string.unquoted.yaml</string>
+	<string>source.package-dev meta.match-group.yaml string.unquoted.yaml</string>
 	<key>settings</key>
 	<dict>
 		<key>showInSymbolList</key>
