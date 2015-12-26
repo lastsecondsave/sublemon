@@ -102,9 +102,7 @@
         "layer0.opacity": 1.0
     },
 
-    /* ---------------------------------------- */
-    /* SCROLLBARS                               */
-    /* ---------------------------------------- */
+    /** SCROLLBARS **/
 
     // Scrollbar's container
     {
@@ -221,9 +219,7 @@
         "layer0.tint": [205, 205, 205]
     },
 
-    /* ---------------------------------------- */
-    /* SIDEBAR                                  */
-    /* ---------------------------------------- */
+    /** SIDEBAR **/
 
     // Disclosure button
     {
@@ -318,7 +314,7 @@
         "class": "sidebar_container",
         "layer0.texture": "Disco/images/sidebar_bg.png",
         "layer0.opacity": 1.0,
-        "layer0.inner_margin": [1, 1, 2, 1],
+        "layer0.inner_margin": [0, 0, 1, 0],
         "content_margin": [0, 0, 1, 0]
     },
 
@@ -342,7 +338,7 @@
     // File label
     {
         "class": "sidebar_label",
-        "color": [140, 140, 140],
+        "color": [131, 132, 149],
         "font.bold": false,
         "font.italic": false
     },
@@ -358,7 +354,7 @@
     {
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["expandable"] }],
-        "color": [140, 140, 140]
+        "color": [131, 132, 149]
     },
 
     // Selected directory label
@@ -388,9 +384,7 @@
         "font.italic": true
     },
 
-    /* ---------------------------------------- */
-    /* MINIMAP                                  */
-    /* ---------------------------------------- */
+    /** MINIMAP **/
 
     // Minimap background
     {
@@ -417,9 +411,7 @@
         "viewport_opacity": { "target": 1.0, "speed": 20.0, "interpolation": "smoothstep" },
     },
 
-    /* ---------------------------------------- */
-    /* STATUS BAR                               */
-    /* ---------------------------------------- */
+    /** STATUS BAR **/
 
     // Status bar border
     {
@@ -443,9 +435,7 @@
         "min_size": [25, 0]
     },
 
-    /* ---------------------------------------- */
-    /* INPUT FIELD                              */
-    /* ---------------------------------------- */
+    /** INPUT FIELD **/
 
     // Input field
     {
@@ -481,9 +471,7 @@
         "layer1.opacity": 1.0
     },
 
-    /* ---------------------------------------- */
-    /* FIND/REPLACE PANEL                       */
-    /* ---------------------------------------- */
+    /** FIND/REPLACE PANEL **/
 
     // Find/replace panel
     {
@@ -512,9 +500,7 @@
     //     "layer1.opacity": 1.0,
     // },
 
-    /* ---------------------------------------- */
-    /* QUICK PANEL                              */
-    /* ---------------------------------------- */
+    /** QUICK PANEL **/
 
     // Input field in quick panel
     {
@@ -631,9 +617,7 @@
         "layer0.opacity": 1.0
     },
 
-    /* ---------------------------------------- */
-    /* AUTO-COMPLETE PANEL                      */
-    /* ---------------------------------------- */
+    /** AUTO-COMPLETE PANEL **/
 
     // Auto-complete panel border
     {
@@ -1203,9 +1187,7 @@
         "content_margin": [8, 8]
     },
 
-    /* ---------------------------------------- */
-    /* SIDEBAR ICONS                            */
-    /* ---------------------------------------- */
+    /** SIDEBAR ICONS **/
 
     // File icon
     {
