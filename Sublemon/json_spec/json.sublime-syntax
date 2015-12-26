@@ -13,7 +13,7 @@ contexts:
   - include: comments
 
   comments:
-  - match: /\*-\s(.+?)\s-\*/
+  - match: ^\s*/\*\*\s(.*?\S)\s\*\*/
     scope: comment.block.json
     captures:
       1: comment.mark.json

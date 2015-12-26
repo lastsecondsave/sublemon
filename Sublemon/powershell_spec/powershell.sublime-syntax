@@ -47,7 +47,7 @@ contexts:
     - meta_scope: comment.block.powershell
     - match: '#>'
       pop: true
-  - match: ^##\s+(.+?)\s+##
+  - match: ^\s*##\s(.*?\S)\s##
     scope: comment.line.number-sign.powershell
     captures:
       1: comment.mark.powershell

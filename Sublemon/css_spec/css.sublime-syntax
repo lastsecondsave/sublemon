@@ -6,13 +6,7 @@ file_extensions: [css]
 
 contexts:
   prototype:
-  - match: /\*.*?\*/
-    scope: comment.block.css
-  - match: /\*
-    push:
-    - meta_scope: comment.block.css
-    - match: \*/
-      pop: true
+  - include: comments
 
   main:
   - match: '(?=[\w#.-])'
@@ -25,6 +19,19 @@ contexts:
     push: at-rule-selector
   - match: \}
     scope: invalid.illegal.stray-bracket
+
+  comments:
+  - match: ^\s*/\*\*\s(.*?\S)\s\*\*/
+    scope: comment.block.css
+    captures:
+      1: comment.mark.css
+  - match: /\*.*?\*/
+    scope: comment.block.css
+  - match: /\*
+    push:
+    - meta_scope: comment.block.css
+    - match: \*/
+      pop: true
 
   rule-selector:
   - meta_scope: meta.rule.selector.css
