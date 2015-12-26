@@ -12,7 +12,6 @@
   "hidden_extensions": [
     "svg",
     "rss",
-    "sublime-snippet",
     "vcproj",
     "vcxproj",
     "tmLanguage",
