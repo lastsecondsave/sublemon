@@ -47,7 +47,7 @@ contexts:
     pop: true
 
   comments:
-  - match: /\*-\s+(.+?)\s+-\*/
+  - match: ^\s*/\*\*\s(.*?\S)\s\*\*/
     scope: comment.block.javascript
     captures:
       1: comment.mark.javascript
@@ -62,7 +62,6 @@ contexts:
     scope: comment.line.javascript
 
   strings:
-  # TODO: replace with backtracking when fixed
   # Double quoted
   - match: '"'
     push:
@@ -70,8 +69,8 @@ contexts:
     - meta_include_prototype: false
     - match: '"'
       pop: true
-  # Single quoted
     - include: string_body
+  # Single quoted
   - match: "'"
     push:
     - meta_scope: string.quoted.javascript
