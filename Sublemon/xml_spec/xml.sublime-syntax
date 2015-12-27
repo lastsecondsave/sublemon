@@ -67,9 +67,6 @@ contexts:
     - include: string-internals
 
   string-internals:
-    - match: \n
-      scope: invalid.illegal.not-closed-string.xml
-      pop: true
     - include: entities
     - include: substitutions
 
