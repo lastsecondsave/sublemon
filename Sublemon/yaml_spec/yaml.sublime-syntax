@@ -4,20 +4,22 @@ name: YAML
 scope: source.yaml
 file_extensions: [yaml, yml]
 
+variables:
+  value_terminator: (?=\s*(?:\s#|$))
+
 contexts:
   main:
   - include: operators
   - include: comments
-  - include: flow-yaml
+  - include: flow_yaml
   - include: keys
   - include: scalars
   - match: '^%\w+'
     scope: entity.name.directive.yaml
-  - match: (\S.*?)\s*(?=\s#|$)
-    captures:
-      1: string.unquoted.yaml
+  - match: \S.*?{{value_terminator}}
+    scope: string.unquoted.yaml
 
-  flow-yaml:
+  flow_yaml:
   - match: '\{'
     scope: punctuation.section.flow.yaml
     push:
@@ -25,7 +27,7 @@ contexts:
     - match: '\}'
       scope: punctuation.section.flow.yaml
       pop: true
-    - include: flow-yaml-section
+    - include: flow_yaml_section
   - match: '\['
     scope: punctuation.section.flow.yaml
     push:
@@ -33,13 +35,13 @@ contexts:
     - match: '\]'
       scope: punctuation.section.flow.yaml
       pop: true
-    - include: flow-yaml-section
+    - include: flow_yaml_section
   - match: '[\]\}]'
     scope: invalid.illegal.stray.bracket
 
-  flow-yaml-section:
+  flow_yaml_section:
   - include: comments
-  - include: flow-yaml
+  - include: flow_yaml
   - include: keys
   - include: scalars
   - match: '([^\,\]\}\s].*?)\s*(?=[\,\]\}]|\s#|$)'
@@ -60,19 +62,19 @@ contexts:
     scope: comment.line.number-sign.yaml
 
   scalars:
-  - include: quoted-strings
-  - include: numbers-and-constants
+  - include: quoted_strings
+  - include: numbers_and_constants
 
-  numbers-and-constants:
-  - match: '\b(0x[0-9a-fA-F]+|0o[0-7]+|[-+]?[0-9]+|[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?)\b'
+  numbers_and_constants:
+  - match: '\b(?:0x[0-9a-fA-F]+|0o[0-7]+|[-+]?[0-9]+|[-+]?(?:\.[0-9]+|[0-9]+(?:\.[0-9]*)?)(?:[eE][-+]?[0-9]+)?){{value_terminator}}'
     scope: constant.numeric.yaml
-  - match: '\b([Tt]rue|TRUE|[Ff]alse|FALSE|[Nn]ull|NULL|\.nan|\.N[Aa]N|[-+]?\.([Ii]nf|INF))\b'
+  - match: '\b(?:[Tt]rue|TRUE|[Ff]alse|FALSE|[Nn]ull|NULL|\.nan|\.N[Aa]N|[-+]?\.(?:[Ii]nf|INF)){{value_terminator}}'
     scope: constant.language.yaml
 
-  quoted-strings:
+  quoted_strings:
   - match: '"'
     scope: punctuation.definition.string.yaml
-    push: double-quoted-strings
+    push: double_quoted_strings
   - match: (').*(')
     scope: string.quoted.single.yaml
     captures:
@@ -86,14 +88,14 @@ contexts:
       scope: punctuation.definition.string.yaml
       pop: true
 
-  double-quoted-strings:
+  double_quoted_strings:
   - meta_scope: string.quoted.double.yaml
   - match: '"'
     scope: punctuation.definition.string.yaml
     pop: true
   - match: '\\[0abtnvfre"/\\N_LP ]'
     scope: constant.character.escape.yaml
-  - match: '\\(x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})'
+  - match: '\\(?:x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})'
     scope: constant.character.escape.unicode.yaml
   - match: \\.
     scope: invalid.illegal.escape
@@ -110,7 +112,7 @@ contexts:
       scope: punctuation.definition.string.yaml
       push:
       - meta_scope: entity.name.key.yaml
-      - include: double-quoted-strings
+      - include: double_quoted_strings
   - match: ('(.+?)')\s*(:)(?:\s|$)
     scope: meta.key.yaml
     captures:
