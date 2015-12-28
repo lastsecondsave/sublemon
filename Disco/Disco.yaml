@@ -207,6 +207,11 @@ settings:
   settings:
     foreground: '#FF8147'
 
+- name:  Java log exception
+  scope: text.log.java entity.name.exception
+  settings:
+    foreground: '#E5476C'
+
 - name:  Tag
   scope: entity.name.tag
   settings:
@@ -326,8 +331,8 @@ settings:
   settings:
     foreground: '#C5CC4B'
 
-- name:  Task indicator
-  scope: meta.indicator.task
+- name:  Log message
+  scope: text.log meta.message
   settings:
     foreground: '#EDC61A'
 

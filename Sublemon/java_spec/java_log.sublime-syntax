@@ -1,0 +1,45 @@
+%YAML 1.2
+---
+name: Java Log
+scope: text.log.java
+
+variables:
+  small_id: (?:\b[a-z]\w*\b)
+
+contexts:
+  main:
+  - match: ^.* \b(?>INFO|(ERROR)|(WARN(?:ING)?))\b
+    scope: comment.log.java
+    captures:
+      1: meta.indicator.error.java
+      2: meta.indicator.warning.java
+
+  - include: exceptions
+
+  exceptions:
+  - match: '^((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
+    captures:
+      1: entity.name.exception.java
+    push: junit_result_string
+  - match: '(Caused by: )?((?:{{small_id}}\.)+(?:[A-Z]\w*)?(?>Exception|Error|Failure))(?:: (.*))?'
+    scope: meta.exception.java
+    captures:
+      1: meta.message.java
+      2: entity.name.exception.java
+      3: string.java
+  - match: '^\s*at [\w\.\$<>]+\((.*):(.*)\)'
+    scope: meta.exception.java
+    captures:
+      1: entity.name.file.java
+      2: constant.numeric.java
+
+  junit_result_string:
+  - match: (?=^\s+at\b)
+    pop: true
+  - match: '\b(expected|but was):'
+    captures:
+      1: keyword.junit.java
+  - match: '[\[\]]'
+    scope: constant.character.java
+  - match: .
+    scope: string.java

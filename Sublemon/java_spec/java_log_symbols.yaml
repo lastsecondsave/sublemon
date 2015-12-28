@@ -1,0 +1,4 @@
+# [PackageDev] target_format: plist, ext: tmPreferences
+scope: text.log.java entity.name.exception
+settings:
+  showInSymbolList: 1
