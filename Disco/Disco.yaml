@@ -371,9 +371,14 @@ settings:
     foreground: '#E5476C'
 
 - name:  Embedded RegExp
-  scope: source source.regexp - source.yaml, punctuation.definition.regexp
+  scope: source source.regexp - source.yaml
   settings:
     foreground: '#C5CC4B'
+
+- name:  Embedded RegExp delimiters
+  scope: source punctuation.definition.regexp
+  settings:
+    foreground: '#FF9A41'
 
 - name:  Markup italic
   scope: markup.italic
