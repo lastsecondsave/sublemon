@@ -684,11 +684,22 @@
 			<key>name</key>
 			<string>Embedded RegExp</string>
 			<key>scope</key>
-			<string>source source.regexp - source.yaml, punctuation.definition.regexp</string>
+			<string>source source.regexp - source.yaml</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
 				<string>#C5CC4B</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Embedded RegExp delimiters</string>
+			<key>scope</key>
+			<string>source punctuation.definition.regexp</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#FF9A41</string>
 			</dict>
 		</dict>
 		<dict>
