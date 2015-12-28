@@ -374,6 +374,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Java log exception</string>
+			<key>scope</key>
+			<string>text.log.java entity.name.exception</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#E5476C</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Tag</string>
 			<key>scope</key>
 			<string>entity.name.tag</string>
@@ -605,9 +616,9 @@
 		</dict>
 		<dict>
 			<key>name</key>
-			<string>Task indicator</string>
+			<string>Log message</string>
 			<key>scope</key>
-			<string>meta.indicator.task</string>
+			<string>text.log meta.message</string>
 			<key>settings</key>
 			<dict>
 				<key>foreground</key>
