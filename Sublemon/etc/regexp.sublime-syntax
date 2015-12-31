@@ -8,6 +8,17 @@ variables:
 
 contexts:
   main:
+  # Extended mode
+  - match: (?=\(\?x\))
+    push: simple_mode
+    with_prototype:
+    - match: ^\s*#.*$
+      scope: comment.line.regexp
+
+  - match: (?=\S)
+    push: simple_mode
+
+  simple_mode:
   - match: '\\[bBAZzG]|\^|\$'
     scope: keyword.control.anchor.regexp
   - match: '\\[1-9]\d*'
@@ -19,6 +30,8 @@ contexts:
   - match: '\({{modifiers}}\)'
     scope: keyword.modifier.regexp
 
+  - include: characters
+
   # (?m:expr)
   - match: '(\()({{modifiers}}:)'
     captures:
@@ -29,7 +42,7 @@ contexts:
     - match: \)
       scope: punctuation.definition.group.modifier.regexp
       pop: true
-    - include: main
+    - include: simple_mode
 
   # (?=expr)
   - match: '\((\?(?>[:>|]|<?[=!]))?'
@@ -39,7 +52,7 @@ contexts:
     - match: \)
       scope: punctuation.definition.group.regexp
       pop: true
-    - include: main
+    - include: simple_mode
 
   # [expr]
   - match: '(\[)(\^)?'
@@ -55,8 +68,6 @@ contexts:
 
   - match: '[\)\]]'
     scope: invalid.illegal.stray-bracket
-
-  - include: characters
 
   characters:
   - match: '\\[wWsSdDhHvVX]|\.'
