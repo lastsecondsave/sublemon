@@ -482,23 +482,23 @@
         "layer0.opacity": 1.0
     },
 
-    // Close button on find/replace panel
-    // {
-    //     "class": "panel_close_button",
-    //     "layer0.texture": "Disco/images/dark_x.png",
-    //     "layer0.opacity": 0.6,
-    //     "layer1.texture": "Disco/images/dark_x_light_shadow.png",
-    //     "layer1.opacity": 0.0,
-    //     "content_margin": [8, 8]
-    // },
+    // Close button on find/replace panel (hidden)
+    {
+        "class": "panel_close_button",
+        "layer0.texture": "Disco/images/dark_x.png",
+        "layer0.opacity": 0.6,
+        "layer1.texture": "Disco/images/dark_x_light_shadow.png",
+        "layer1.opacity": 0.0,
+        "content_margin": [0, 0]
+    },
 
     // Close button on find/replace panel hover
-    // {
-    //     "class": "panel_close_button",
-    //     "attributes": ["hover"],
-    //     "layer0.opacity": 0.0,
-    //     "layer1.opacity": 1.0,
-    // },
+    {
+        "class": "panel_close_button",
+        "attributes": ["hover"],
+        "layer0.opacity": 0.0,
+        "layer1.opacity": 1.0,
+    },
 
     /** QUICK PANEL **/
 
@@ -739,7 +739,8 @@
         "layer1.texture": "Disco/images/dark_tabset_background_transparent.png"
     },
 
-    // Tabs
+    /** TABS **/
+
     {
         "class": "tab_control",
 
@@ -970,15 +971,19 @@
         "layer2.opacity": 0.0,
         "layer3.opacity": 0.0
     },
+
+    // Tab close (hidden)
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_medium_dark"]}],
-        "layer3.texture": "Disco/images/light_x.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
-        "layer3.opacity": 1.0
+        "layer3.texture": "Disco/images/light_x.png",
+        "layer3.opacity": 0.0
     },
+
+    // Tab close button for edited file (hidden)
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["dirty", "file_medium_dark"]}],
@@ -986,31 +991,33 @@
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
         "layer3.texture": "Disco/images/dirty_circle_light.png",
-        "layer3.opacity": 0.5
+        "layer3.opacity": 0.0
     },
+
+    // Tab close on hover
     {
         "class": "tab_close_button",
         "attributes": ["hover"],
         "parents": [{"class": "tab_control", "attributes": ["file_medium_dark"]}],
-        "layer3.texture": "Disco/images/light_x_bright.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
+        "layer3.texture": "Disco/images/light_x_bright.png",
         "layer3.opacity": 1.0
     },
+
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_dark"]}],
-        "layer3.texture": "Disco/images/light_x.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
+        "layer3.texture": "Disco/images/light_x.png",
         "layer3.opacity": 1.0
     },
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["dirty", "file_dark"]}],
-        "layer3.texture": "Disco/images/light_x.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
@@ -1021,7 +1028,6 @@
         "class": "tab_close_button",
         "attributes": ["hover"],
         "parents": [{"class": "tab_control", "attributes": ["file_dark"]}],
-        "layer3.texture": "Disco/images/light_x_bright.png",
         "layer0.opacity": 0.0,
         "layer1.opacity": 0.0,
         "layer2.opacity": 0.0,
