@@ -37,6 +37,8 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
 class ShowFilePathCommand(sublime_plugin.WindowCommand):
   def run(self):
     variables = self.window.extract_variables()
+    if not "file" in variables:
+      return
     file_path = variables["file"]
     home_path = os.environ["HOME"]
     if file_path.startswith(home_path):
