@@ -1,9 +1,13 @@
 # [PackageDev] target_format: plist, ext: tmPreferences
 scope: source.json
 settings:
-  increaseIndentPattern: ^\s*[\{\[]\s*$
-  decreaseIndentPattern: ^\s*[\}\]](\s*,)?\s*$
-  indentSquareBrackets: true
+  increaseIndentPattern: |
+    (?x).*(?>
+      # \{[^}]*(?:\{.*\})+[^}]* |
+      \{[^}]* |
+      \[[^\]]*)
+    $
+  decreaseIndentPattern: \s*[}\]](?:\s*,)?\s*$
   shellVariables:
   - name: TM_COMMENT_START
     value: '// '
