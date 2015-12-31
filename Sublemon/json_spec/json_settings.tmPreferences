@@ -7,11 +7,14 @@
 	<key>settings</key>
 	<dict>
 		<key>decreaseIndentPattern</key>
-		<string>^\s*[\}\]](\s*,)?\s*$</string>
+		<string>\s*[}\]](?:\s*,)?\s*$</string>
 		<key>increaseIndentPattern</key>
-		<string>^\s*[\{\[]\s*$</string>
-		<key>indentSquareBrackets</key>
-		<true/>
+		<string>(?x).*(?&gt;
+  # \{[^}]*(?:\{.*\})+[^}]* |
+  \{[^}]* |
+  \[[^\]]*)
+$
+</string>
 		<key>shellVariables</key>
 		<array>
 			<dict>
