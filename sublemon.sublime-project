@@ -12,19 +12,6 @@
 		{
 			"file_exclude_patterns":
 			[
-				"Package Control.last-run",
-				"Package Control.*bundle"
-			],
-			"folder_exclude_patterns":
-			[
-				"Package Control.cache"
-			],
-			"name": "user",
-			"path": "User"
-		},
-		{
-			"file_exclude_patterns":
-			[
 				"*.tm*"
 			],
 			"name": "sublemon",
@@ -38,7 +25,24 @@
 			"name": "disco",
 			"path": "Disco"
 		},
-				{
+		{
+			"file_exclude_patterns":
+			[
+				"Package Control.last-run",
+				"Package Control.*bundle"
+			],
+			"folder_exclude_patterns":
+			[
+				"Package Control.cache"
+			],
+			"name": "user",
+			"path": "User"
+		},
+		{
+			"name": "default",
+			"path": "Default"
+		},
+		{
 			"name": "snippets",
 			"path": "Snippets"
 		}
