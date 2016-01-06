@@ -12,8 +12,6 @@
 		<string>^\s*((.*\*/\s*)?\}.*|\b(case\s+\w+|default|public|private|protected):|\*/)\s*$</string>
 		<key>increaseIndentPattern</key>
 		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default|public|private|protected):|/\*!.*)\s*$</string>
-		<key>indentSquareBrackets</key>
-		<true/>
 		<key>shellVariables</key>
 		<array>
 			<dict>

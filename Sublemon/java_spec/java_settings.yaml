@@ -5,7 +5,6 @@ settings:
   increaseIndentPattern: ^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$
   decreaseIndentPattern: ^\s*((.*\*/\s*)?\};?|\b(case\s+\w+|default):)\s*$
   unIndentedLinePattern: ^\s*((\*/|//|\*).*)?$
-  indentSquareBrackets: true
   shellVariables:
   - name: TM_COMMENT_START
     value: '// '

@@ -170,7 +170,7 @@ contexts:
     captures:
       1: keyword.operator.alphanumeric.javascript
       2: support.class.javascript
-  - match: '\b(new)\s+({{id}})\b'
+  - match: '\b(new)\s+({{id}})(?!\.)\b'
     captures:
       1: keyword.control.javascript
       2: support.class.javascript
