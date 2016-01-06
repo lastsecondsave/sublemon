@@ -15,8 +15,7 @@ contexts:
     - match: ^\s*#.*$
       scope: comment.line.regexp
 
-  - match: (?=\S)
-    push: simple_mode
+  - include: simple_mode
 
   simple_mode:
   - match: '\\[bBAZzG]|\^|\$'

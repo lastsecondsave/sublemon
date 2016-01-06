@@ -6,7 +6,6 @@ settings:
   decreaseIndentPattern: ^(.*\*/)?\s*\}.*$
   unIndentedLinePattern: ^\s*((\*/|//| \*).*)?$
   cancelCompletion: ^\s*(function)\s*[a-zA-Z$_][\w$]+
-  indentSquareBrackets: true
   shellVariables:
   - name: TM_COMMENT_START
     value: '// '

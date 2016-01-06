@@ -14,8 +14,6 @@
 		<string>^(.*\*/)?\s*\}.*$</string>
 		<key>increaseIndentPattern</key>
 		<string>^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$</string>
-		<key>indentSquareBrackets</key>
-		<true/>
 		<key>shellVariables</key>
 		<array>
 			<dict>
