@@ -1,0 +1,12 @@
+{
+  "tab_size": 2,
+
+  "extensions": [],
+
+  "hidden_extensions": [
+    ".bashrc",
+    ".zshrc",
+    ".zshenv",
+    ".zzshrc"
+  ]
+}
