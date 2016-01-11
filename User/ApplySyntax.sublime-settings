@@ -21,6 +21,12 @@
           { "file_path": ".*\\.yaml" },
           { "first_line": "# \\[PackageDev\\] .+" }
       ]
+    },
+    {
+      "syntax": "Sublemon/shell_spec/shell",
+      "rules": [
+          { "first_line": "#!/bin/sh" }
+      ]
     }
   ]
 }

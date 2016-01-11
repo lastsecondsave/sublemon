@@ -1,0 +1,46 @@
+%YAML 1.2
+---
+name: Shell
+scope: source.shell
+file_extensions: [sh, bash, zsh]
+
+variables:
+  id: (?:\b\w+\b)
+
+contexts:
+  main:
+  - include: comments
+  - include: variables
+  - include: strings
+
+  comments:
+  - match: ^##\s+(.+?)\s+##
+    scope: comment.line.number-sign.shell
+    captures:
+      1: comment.mark.shell
+  - match: (?:^|(?<=\s))#.*$
+    scope: comment.line.number-sign.shell
+
+  strings:
+  - match: "'.*?'"
+    scope: string.quoted.single.shell
+  - match: "'"
+    push:
+    - meta_scope: string.quoted.single.shell
+    - match: "'"
+      pop: true
+  - match: '"'
+    push:
+    - meta_scope: string.quoted.double.shell
+    - match: '"'
+      pop: true
+    - include: string-internals
+
+  string-internals:
+  - include: variables
+
+  variables:
+  - match: '\$(?>{{id}}|[@*])'
+    scope: variable.user.shell
+  - match: '\$\{{{id}}\}'
+    scope: variable.user.shell
