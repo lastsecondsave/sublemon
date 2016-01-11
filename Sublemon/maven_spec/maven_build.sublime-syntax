@@ -61,5 +61,5 @@ contexts:
       3: keyword.maven
       4: constant.numeric.maven
       5: meta.indicator.error.maven
-  - include: Packages/Sublemon/java_spec/java_log.sublime-syntax#exceptions
+  - include: Packages/Sublemon/java_spec/java_log.sublime-syntax
 
