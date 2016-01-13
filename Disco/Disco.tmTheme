@@ -374,6 +374,17 @@
 		</dict>
 		<dict>
 			<key>name</key>
+			<string>Java anonymous class brackets</string>
+			<key>scope</key>
+			<string>meta.class.body.anonymous.java punctuation.definition.class</string>
+			<key>settings</key>
+			<dict>
+				<key>foreground</key>
+				<string>#E5476C</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>name</key>
 			<string>Java log exception</string>
 			<key>scope</key>
 			<string>text.log.java entity.name.exception</string>
