@@ -207,6 +207,11 @@ settings:
   settings:
     foreground: '#FF8147'
 
+- name:  Java anonymous class brackets
+  scope: meta.class.body.anonymous.java punctuation.definition.class
+  settings:
+    foreground: '#E5476C'
+
 - name:  Java log exception
   scope: text.log.java entity.name.exception
   settings:

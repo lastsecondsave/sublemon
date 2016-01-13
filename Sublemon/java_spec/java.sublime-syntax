@@ -431,7 +431,7 @@ contexts:
   inherited_class_name:
   - match: '{{before_non_space}}'
     set:
-    - match: '({{class_id}})(?>.(?={{class_id}}))+'
+    - match: '({{class_id}})(?>\.(?={{class_id}}))+'
       captures:
         1: entity.other.inherited-class.java
     - match: '{{class_id}}'
@@ -443,25 +443,28 @@ contexts:
 
   class_body:
   - match: \{
+    scope: punctuation.definition.class.begin.java
     set:
     - meta_scope: meta.class.body.java
-    - include: pop_on_closed_curly_bracket
+    - include: class_closed_curly_bracket
     - include: class_body_section
   - include: pop_before_non_space
 
   anonymous_class_body:
   - match: \{
+    scope: punctuation.definition.class.begin.java
     set:
     - meta_scope: meta.class.body.anonymous.java
-    - include: pop_on_closed_curly_bracket
+    - include: class_closed_curly_bracket
     - include: class_body_section
   - include: pop_before_non_space
 
   enum_body:
   - match: \{
+    scope: punctuation.definition.class.begin.java
     set:
     - meta_scope: meta.class.body.enum.java
-    - include: pop_on_closed_curly_bracket
+    - include: class_closed_curly_bracket
     - match: '{{before_non_space}}'
       push: [enum_declarations, enum_constants]
   - include: pop_before_non_space
@@ -492,6 +495,11 @@ contexts:
   - include: classes
   - include: angular_brackets
   - include: code_section
+
+  class_closed_curly_bracket:
+  - match: \}
+    scope: punctuation.definition.class.end.java
+    pop: true
 
   fields:
   - match: '='
