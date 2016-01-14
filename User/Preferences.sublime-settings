@@ -60,6 +60,7 @@
 	"ignored_packages":
 	[
 		".git",
+		"AAAPackageDev",
 		"C++",
 		"CSS",
 		"Java",

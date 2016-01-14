@@ -10,9 +10,9 @@
 			"path": "."
 		},
 		{
-			"file_exclude_patterns":
+			"folder_exclude_patterns":
 			[
-				"*.tm*"
+				"generated"
 			],
 			"name": "sublemon",
 			"path": "Sublemon"
