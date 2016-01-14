@@ -1,5 +1,0 @@
-# [PackageDev] target_format: plist, ext: tmPreferences
-scope: comment.mark
-settings:
-  showInSymbolList: 1
-  symbolTransformation: s/^/> /;
