@@ -1,8 +1,0 @@
-# [PackageDev] target_format: plist, ext: tmPreferences
-scope: text.markdown markup.heading.markdown
-settings:
-  showInSymbolList: 1
-  symbolTransformation: |
-    s/\s*#*$//;
-    s/(?<=#)#/   /g;
-    s/^#//;

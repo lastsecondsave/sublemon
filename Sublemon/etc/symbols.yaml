@@ -1,4 +1,0 @@
-# [PackageDev] target_format: plist, ext: tmPreferences
-scope: entity.name.title.rfc, entity.name.section.ini
-settings:
-  showInSymbolList: 1
