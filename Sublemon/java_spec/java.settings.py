@@ -1,12 +1,14 @@
-import os, hashlib, plistlib
+import os, hashlib, plistlib, shutil
 
-os.makedirs("generated", exist_ok=True)
+shutil.rmtree("generated", ignore_errors=True)
+os.mkdir("generated")
 
 def settings(scope, **settings):
   filename = hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
   print("{}: {}".format(filename, scope))
   with open(os.path.join("generated", filename), "wb") as pfile:
     plistlib.dump(dict(scope=scope, settings=settings), pfile)
+
 
 settings("source.java",
   bracketIndentNextLinePattern = r"^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$",
@@ -59,3 +61,19 @@ for i in range(5):
     showInSymbolList = 1,
     symbolTransformation = method_transformation + r"s/^/\? /;" + indent(m*2 + 1)
   )
+
+settings("text.log.java entity.name.exception",
+  showInSymbolList = 1
+)
+
+settings("source.java-props",
+  shellVariables = [
+    dict(name = "TM_COMMENT_START",   value = "# "),
+    dict(name = "TM_COMMENT_START_2", value = "! ")
+  ]
+)
+
+settings("source.java-props entity.name.key.java-props",
+  showInSymbolList = 1,
+  symbolTransformation = "s/\\//g;"
+)
