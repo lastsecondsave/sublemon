@@ -114,6 +114,15 @@
   { "keys": ["f7"],            "command": "build" },
   { "keys": ["ctrl+shift+f7"], "command": "build", "args": {"select": true} },
 
+  /** XML **/
+
+  { "keys": ["shift+alt+a"],  "command": "expand_selection", "args": {"to": "tag"} },
+  { "keys": ["shift+alt+."],  "command": "close_tag" },
+
+  { "keys": ["alt+shift+,"], "command": "insert_snippet",
+    "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
+  },
+
   /** PLUGINS **/
 
   { "keys": ["alt+f6"],     "command": "toggle_selection_scope" },
@@ -190,7 +199,6 @@
   { "keys": ["super+1"], "command": "focus_group", "args": { "group": 0 } },
   { "keys": ["super+2"], "command": "focus_group", "args": { "group": 1 } },
   { "keys": ["super+3"], "command": "focus_group", "args": { "group": 2 } },
-
 
   /** WINDOWS KEYBOARD **/
 
