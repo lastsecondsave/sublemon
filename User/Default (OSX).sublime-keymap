@@ -6,8 +6,6 @@
   { "keys": ["ctrl+;"],       "command": "unbound" },
   { "keys": ["ctrl+o"],       "command": "unbound" },
   { "keys": ["alt+q"],        "command": "unbound" },
-  { "keys": ["super+up"],     "command": "unbound" },
-  { "keys": ["super+down"],   "command": "unbound" },
 
   /** COMMON **/
 
@@ -47,9 +45,8 @@
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
   },
 
-  { "keys": ["alt+`"], "command": "hide_panel", "args": {"cancel": true},
-    "context": [{"key": "panel_visible", "operator": "equal", "operand": true}]
-  },
+  { "keys": ["super+down"], "command": "next_view" },
+  { "keys": ["super+up"],   "command": "prev_view" },
 
   /** SEARCH WIDGET **/
 
@@ -73,6 +70,10 @@
 
   { "keys": ["super+f"], "command": "hide_panel",
     "context": [{"key": "panel", "operand": "find"}, {"key": "panel_has_focus"}]
+  },
+
+  { "keys": ["super+alt+f"], "command": "hide_panel",
+    "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
   },
 
   /** BUILD PANEL **/
@@ -131,8 +132,8 @@
   { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 26, "by_character": false} },
   { "keys": ["ctrl+alt+left"],  "command": "scroll_width", "args": {"amount": -26, "by_character": false} },
 
-  { "keys": ["super+ctrl+up"],   "command": "move_tab", "args": { "position": "-1" } },
-  { "keys": ["super+ctrl+down"], "command": "move_tab", "args": { "position": "+1" } },
+  { "keys": ["shift+ctrl+pageup"],   "command": "move_tab", "args": { "position": "-1" } },
+  { "keys": ["shift+ctrl+pagedown"], "command": "move_tab", "args": { "position": "+1" } },
 
   /** MACRO **/
 
@@ -151,29 +152,25 @@
   { "keys": ["ctrl+;"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"},
     "context": [
-      { "key": "selector", "operator": "equal",
-        "operand": "source.java, source.js, source.c++", "match_all": true
-      },
+      { "key": "selector", "operator": "equal", "operand": "source.java, source.js, source.c++" },
     ]
   },
 
   { "keys": ["ctrl+shift+;"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_colon.sublime-macro"},
     "context": [
-      { "key": "selector", "operator": "equal",
-        "operand": "source.json, source.yaml, source.python, source.css", "match_all": true
-      },
+      { "key": "selector", "operator": "equal", "operand": "source.json, source.yaml, source.python, source.css" },
     ]
   },
 
   { "keys": ["ctrl+,"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"},
     "context": [
-      { "key": "selector", "operator": "equal",
-        "operand": "source.java, source.js, source.c++, source.json, source.css", "match_all": true
-      },
+      { "key": "selector", "operator": "equal", "operand": "source.java, source.js, source.c++, source.json, source.css" },
     ]
   },
+
+  /** SMART KEYS **/
 
   { "keys": ["enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Default/Add Line in Braces.sublime-macro"},
@@ -185,12 +182,60 @@
     ]
   },
 
+  { "keys": ["("], "command": "insert_snippet", "args": {"contents": "($0)"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+      { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
+    ]
+  },
+
+  { "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$0]"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+      { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
+    ]
+  },
+
+  { "keys": ["{"], "command": "insert_snippet", "args": {"contents": "{$0}"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+      { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+    ]
+  },
+
+  { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"},
+    "context": [{"key": "selection_empty", "operator": "equal", "operand": false, "match_all": true}]
+  },
+
+  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\$(${0:$SELECTION})"},
+    "context": [
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+      { "key": "selector", "operator": "equal", "operand": "source.shell" }
+    ]
+  },
+
+  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\${${0:$SELECTION}}"},
+    "context": [
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+      { "key": "selector", "operator": "equal", "operand": "source.xml" }
+    ]
+  },
+
   /** YOUR MODIFIERS ARE ALL WRONG **/
 
   { "keys": ["super+f3"],       "command": "find_under" },
   { "keys": ["super+shift+f3"], "command": "find_under_prev" },
 
   { "keys": ["ctrl+super+."], "command": "open_file" , "args": {"file": "${project}"} },
+
+  { "keys": ["ctrl+super+up"], "command": "select_lines", "args": {"forward": false} },
+  { "keys": ["ctrl+super+down"], "command": "select_lines", "args": {"forward": true} },
 
   { "keys": ["super+t"], "command": "transpose" },
 
