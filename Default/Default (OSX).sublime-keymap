@@ -325,13 +325,13 @@ and don't need to be repeated here. Anything listed here will take precedence, h
 	},
 
 	// Auto-pair brackets
-	{ "keys": ["("], "command": "insert_snippet", "args": {"contents": "($0)"}, "context":
+	/*{ "keys": ["("], "command": "insert_snippet", "args": {"contents": "($0)"}, "context":
 		[
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
 		]
-	},
+	},*/
 	{ "keys": ["("], "command": "insert_snippet", "args": {"contents": "(${0:$SELECTION})"}, "context":
 		[
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
@@ -355,13 +355,13 @@ and don't need to be repeated here. Anything listed here will take precedence, h
 	},
 
 	// Auto-pair square brackets
-	{ "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$0]"}, "context":
+	/*{ "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$0]"}, "context":
 		[
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
 		]
-	},
+	},*/
 	{ "keys": ["["], "command": "insert_snippet", "args": {"contents": "[${0:$SELECTION}]"}, "context":
 		[
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
@@ -385,13 +385,13 @@ and don't need to be repeated here. Anything listed here will take precedence, h
 	},
 
 	// Auto-pair curly brackets
-	{ "keys": ["{"], "command": "insert_snippet", "args": {"contents": "{$0}"}, "context":
+	/*{ "keys": ["{"], "command": "insert_snippet", "args": {"contents": "{$0}"}, "context":
 		[
 			{ "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
 			{ "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
 			{ "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
 		]
-	},
+	},*/
 	{ "keys": ["{"], "command": "wrap_block", "args": {"begin": "{", "end": "}"}, "context":
 		[
 			{ "key": "indented_block", "match_all": true },

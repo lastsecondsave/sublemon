@@ -59,10 +59,12 @@
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
   },
 
-  { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "find", "reverse": false} },
-
   { "keys": ["ctrl+f"], "command": "hide_panel",
     "context": [{"key": "panel", "operand": "find"}, {"key": "panel_has_focus"}]
+  },
+
+  { "keys": ["ctrl+h"], "command": "hide_panel",
+    "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
   },
 
   /** BUILD PANEL **/
@@ -150,6 +152,8 @@
     ]
   },
 
+  /** SMART KEYS **/
+
   { "keys": ["enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Default/Add Line in Braces.sublime-macro"},
     "context": [
@@ -157,6 +161,51 @@
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "[{\\[]$", "match_all": true },
       { "key": "following_text", "operator": "regex_contains", "operand": "^[}\\]]", "match_all": true }
+    ]
+  },
+
+  { "keys": ["("], "command": "insert_snippet", "args": {"contents": "($0)"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+      { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
+    ]
+  },
+
+  { "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$0]"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+      { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
+    ]
+  },
+
+  { "keys": ["{"], "command": "insert_snippet", "args": {"contents": "{$0}"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
+      { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
+    ]
+  },
+
+  { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"},
+    "context": [{"key": "selection_empty", "operator": "equal", "operand": false, "match_all": true}]
+  },
+
+  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\$(${0:$SELECTION})"},
+    "context": [
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+      { "key": "selector", "operator": "equal", "operand": "source.shell" }
+    ]
+  },
+
+  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\${${0:$SELECTION}}"},
+    "context": [
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+      { "key": "selector", "operator": "equal", "operand": "source.xml" }
     ]
   }
 ]
