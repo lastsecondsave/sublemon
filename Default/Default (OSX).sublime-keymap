@@ -683,8 +683,8 @@ and don't need to be repeated here. Anything listed here will take precedence, h
 	{ "keys": ["ctrl+k"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete to Hard EOL.sublime-macro"} },
 	{ "keys": ["ctrl+l"], "command": "show_at_center" },
 	{ "keys": ["ctrl+o"], "command": "insert_snippet", "args": { "contents": "$0\n" } },
-	{ "keys": ["ctrl+super+d"], "command": "noop" },
-	{ "keys": ["ctrl+super+shift+d"], "command": "noop" },
+	// { "keys": ["ctrl+super+d"], "command": "noop" },
+	// { "keys": ["ctrl+super+shift+d"], "command": "noop" },
 
 	// HTML, XML close tag
 	{ "keys": ["/"], "command": "close_tag", "args": { "insert_slash": true }, "context":
