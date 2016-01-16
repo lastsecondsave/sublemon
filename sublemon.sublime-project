@@ -20,7 +20,7 @@
 		{
 			"file_exclude_patterns":
 			[
-				"Disco.tm*"
+				"*.tm*"
 			],
 			"name": "disco",
 			"path": "Disco"
