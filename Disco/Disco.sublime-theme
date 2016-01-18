@@ -245,29 +245,17 @@
         "layer0.opacity": 1.0
     },
 
-    // Expanded disclosure button when hover on row
-    // {
-    //     "class": "disclosure_button_control",
-    //     "parents": [{ "class": "tree_row", "attributes": ["expanded", "hover"] }],
-    //     "layer0.texture": "Disco/images/small_circle_light.png",
-    //     "layer0.opacity": 1.0
-    // },
-
     // Row
     {
         "class": "tree_row",
         "layer0.tint": [54, 54, 66],
-        "layer0.opacity": 0.0,
-        "layer1.texture": "Disco/images/sidebar_row_bumper.png",
-        "layer1.opacity": 0.0,
-        "layer1.inner_margin": [2, 0, 0, 0]
+        "layer0.opacity": 0.0
     },
 
     // Selected row
     {
         "class": "tree_row",
-        "attributes": ["selected"],
-        "layer1.opacity": 1.0
+        "attributes": ["selected"]
     },
 
     // Row hover
@@ -348,6 +336,7 @@
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["selected"] }],
         "color": [240, 240, 240],
+        "font.bold": true
     },
 
     // Directory label
@@ -368,16 +357,11 @@
     {
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["expanded"] }],
-        "color": [240, 240, 240]
+        "color": [240, 240, 240],
+        "font.bold": true
     },
 
-    // Directory label hover
-    // {
-    //     "class": "sidebar_label",
-    //     "parents": [{ "class": "tree_row", "attributes": ["expandable", "hover"] }],
-    //     "color": [235, 235, 235]
-    // },
-
+    // Label for transient file (unused)
     {
         "class": "sidebar_label",
         "attributes": ["transient"],
