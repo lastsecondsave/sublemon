@@ -22,8 +22,16 @@
 			[
 				"*.tm*"
 			],
+			"folder_exclude_patterns":
+			[
+				"generated"
+			],
 			"name": "disco",
 			"path": "Disco"
+		},
+		{
+			"name": "default",
+			"path": "Default"
 		},
 		{
 			"file_exclude_patterns":
@@ -37,10 +45,6 @@
 			],
 			"name": "user",
 			"path": "User"
-		},
-		{
-			"name": "default",
-			"path": "Default"
 		},
 		{
 			"name": "snippets",
