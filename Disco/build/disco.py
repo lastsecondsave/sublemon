@@ -1,6 +1,8 @@
+import hashlib
+import os
 import plistlib
 import re
-import os
+import shutil
 
 GRAY         = "#9090A0" # [144, 144, 160]
 WHITE        = "#CDCDCD" # [205, 205, 205]
@@ -149,3 +151,33 @@ settings = [
 
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
   plistlib.dump(dict(name="Disco", settings=settings), pfile)
+
+def icon(scope, filename):
+  return dict(
+    scope = scope,
+    settings = dict(icon=filename)
+  )
+
+icons = [
+  icon("source.xml", "file_type_xml"),
+  icon("source.c++", "file_type_cpp"),
+  icon("source.css", "file_type_css"),
+  icon("source.git", "file_type_git"),
+  icon("source.java", "file_type_java"),
+  icon("source.js", "file_type_javascript"),
+  icon("source.json", "file_type_json"),
+  icon("text.markdown, text.rfc", "file_type_markup"),
+  icon("source.java-props, source.ini", "file_type_properties"),
+  icon("source.python", "file_type_python"),
+  icon("source.yaml", "file_type_yaml")
+]
+
+targetDirectory = os.path.join("..", "generated")
+shutil.rmtree(targetDirectory, ignore_errors=True)
+os.mkdir(targetDirectory)
+
+for icon in icons:
+  filename = hashlib.sha1(icon["scope"].encode('ascii')).hexdigest() + ".tmPreferences"
+
+  with open(os.path.join(targetDirectory, filename), "wb") as pfile:
+    plistlib.dump(icon, pfile)
