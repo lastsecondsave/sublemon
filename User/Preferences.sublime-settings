@@ -54,7 +54,7 @@
 	[
 		"directwrite"
 	],
-	"font_size": 10,
+	"font_size": 11,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
@@ -95,7 +95,7 @@
 		"*.yml",
 		".git*"
 	],
-	"margin": 2,
+	"margin": 0,
 	"match_brackets_content": false,
 	"minimap_scroll_to_clicked_text": true,
 	"move_to_limit_on_up_down": true,
