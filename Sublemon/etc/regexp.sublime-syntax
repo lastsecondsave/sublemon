@@ -12,15 +12,18 @@ contexts:
   - match: (?=\(\?x\))
     push: simple_mode
     with_prototype:
-    - match: ^\s*#.*$
-      scope: comment.line.regexp
+    - match: ^\s*(#.*)$
+      captures:
+        1: comment.line.regexp
 
   - include: simple_mode
 
   simple_mode:
   - match: '\\[bBAZzG]|\^|\$'
     scope: keyword.control.anchor.regexp
-  - match: '\\[1-9]\d*'
+  - match: '\(\?(?>R|P&\w+|[+-]?\d+)\)'
+    scope: keyword.control.subroutine.regexp
+  - match: '(?>\\[1-9]\d*|\(\?P=\w+\))'
     scope: keyword.other.back-reference.regexp
   - match: '[?+*]|\{(\d+,\d+|\d+,|,\d+|\d+)\}\??'
     scope: keyword.operator.quantifier.regexp
@@ -43,7 +46,19 @@ contexts:
       pop: true
     - include: simple_mode
 
-  # (?=expr)
+  # (?P<name>expr)
+  - match: '(\(\?P)(''\w+''|<\w+>)'
+    captures:
+      1: punctuation.definition.group.regexp
+      2: entity.name.group.regexp
+    push:
+    - meta_scope: meta.group.regexp
+    - match: \)
+      scope: punctuation.definition.group.regexp
+      pop: true
+    - include: simple_mode
+
+  # (?=expr), (expr)
   - match: '\((\?(?>[:>|]|<?[=!]))?'
     scope: punctuation.definition.group.regexp
     push:
