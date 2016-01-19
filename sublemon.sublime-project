@@ -30,10 +30,6 @@
 			"path": "Disco"
 		},
 		{
-			"name": "default",
-			"path": "Default"
-		},
-		{
 			"file_exclude_patterns":
 			[
 				"Package Control.last-run",
@@ -45,6 +41,10 @@
 			],
 			"name": "user",
 			"path": "User"
+		},
+		{
+			"name": "default",
+			"path": "Default"
 		},
 		{
 			"name": "snippets",
