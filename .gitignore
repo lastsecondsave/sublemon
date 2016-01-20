@@ -1,19 +1,15 @@
-*.tm*
-*.sublime-workspace
-*/generated/*
+/*
 
-User/java.sublime-settings
+!/Disco
+/Disco/generated
+/Disco/*.tmTheme
 
-User/Package Control.last-run
-User/Package Control.cache
-User/Package Control.*bundle
+!/Sublemon
+/Sublemon/*/generated
 
-.DS_Store
+!/User
+/User/Package Control.last-run
+/User/Package Control.cache
+/User/Package Control.*bundle
 
-# Someone's dependencies
-bz2/*
-markupsafe/*
-mdpopups/*
-pygments/*
-python-jinja2/*
-python-markdown/*
+!/Snippets
