@@ -130,7 +130,7 @@ settings = [
   rule("RegExp modifiers",                """keyword.modifier.regexp,
                                              meta.group.modifier.regexp punctuation.definition.group.modifier""", foreground = CRIMSON),
 
-  rule("Embedded RegExp",            "source source.regexp - source.yaml", foreground = GREEN),
+  rule("Embedded RegExp",            "source.regexp.embedded - source.yaml", foreground = GREEN),
   rule("Embedded RegExp delimiters", "source punctuation.definition.regexp", foreground = ORANGE),
 
   rule("Markup italic",        "markup.italic", foreground = ORANGE),
