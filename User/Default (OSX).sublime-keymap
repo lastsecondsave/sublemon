@@ -9,6 +9,9 @@
 
   { "keys": ["shift+super+z"],  "command": "reveal_in_side_bar" },
 
+  { "keys": ["super+o"], "command": "open_file_path" },
+  { "keys": ["super+shift+o"], "command": "prompt_open_file" },
+
   { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
 
   /** SEARCH WIDGET **/
