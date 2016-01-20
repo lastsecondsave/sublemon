@@ -1,0 +1,10 @@
+<snippet>
+	<description>anonymous function</description>
+	<tabTrigger>ff</tabTrigger>
+	<scope>source.js</scope>
+	<content>
+<![CDATA[function($1) {
+	$0
+}]]>
+	</content>
+</snippet>
