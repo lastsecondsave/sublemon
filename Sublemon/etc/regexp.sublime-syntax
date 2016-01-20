@@ -5,7 +5,7 @@ scope: source.regexp
 
 variables:
   modifiers: \?[imsxXU]+
-  group_name: (?:'\w+|<\w+>)
+  group_name: (?:'\w+'|<\w+>)
   number: '[+-]?\d+'
 
 contexts:
