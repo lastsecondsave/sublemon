@@ -5,27 +5,34 @@ scope: source.regexp
 
 variables:
   modifiers: \?[imsxXU]+
+  group_name: (?:'\w+|<\w+>)
+  number: '[+-]?\d+'
 
 contexts:
   main:
-  # Extended mode
+  # Free-spacing mode
   - match: (?=\(\?x\))
-    push: simple_mode
+    set: regexp
     with_prototype:
     - match: ^\s*(#.*)$
       captures:
         1: comment.line.regexp
 
-  - include: simple_mode
+  - match: ''
+    set: regexp
 
-  simple_mode:
-  - match: '\\[bBAZzG]|\^|\$'
+  embedded:
+  - meta_scope: source.regexp.embedded
+  - include: regexp
+
+  regexp:
+  - match: '\\[ABbKZzG]|\^|\$'
     scope: keyword.control.anchor.regexp
-  - match: '\(\?(?>R|P&\w+|[+-]?\d+)\)'
+  - match: '(?>\(\?(?>R|P&\w+|{{number}})\)|\\g(?:{{group_name}}|''{{number}}''|<{{number}}>))'
     scope: keyword.control.subroutine.regexp
-  - match: '(?>\\[1-9]\d*|\(\?P=\w+\))'
-    scope: keyword.other.back-reference.regexp
-  - match: '[?+*]|\{(\d+,\d+|\d+,|,\d+|\d+)\}\??'
+  - match: '(?>\\[1-9]\d*|\(\?P=(\w+)\)|\\k{{group_name}})'
+    scope: keyword.other.backreference.regexp
+  - match: '[?+*]|\{(?>\d+,\d+|\d+,|,\d+|\d+)\}\??'
     scope: keyword.operator.quantifier.regexp
   - match: \|
     scope: keyword.operator.or.regexp
@@ -44,10 +51,10 @@ contexts:
     - match: \)
       scope: punctuation.definition.group.modifier.regexp
       pop: true
-    - include: simple_mode
+    - include: regexp
 
   # (?P<name>expr)
-  - match: '(\(\?P)(''\w+''|<\w+>)'
+  - match: '(\(\?P?)({{group_name}})'
     captures:
       1: punctuation.definition.group.regexp
       2: entity.name.group.regexp
@@ -56,17 +63,17 @@ contexts:
     - match: \)
       scope: punctuation.definition.group.regexp
       pop: true
-    - include: simple_mode
+    - include: regexp
 
   # (?=expr), (expr)
-  - match: '\((\?(?>[:>|]|<?[=!]))?'
+  - match: '\((\?(?>[:>|]|<?[=!])?)?'
     scope: punctuation.definition.group.regexp
     push:
     - meta_scope: meta.group.regexp
     - match: \)
       scope: punctuation.definition.group.regexp
       pop: true
-    - include: simple_mode
+    - include: regexp
 
   # [expr]
   - match: '(\[)(\^)?'
