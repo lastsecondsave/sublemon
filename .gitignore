@@ -13,3 +13,5 @@
 /User/Package Control.*bundle
 
 !/Snippets
+
+.DS_Store
