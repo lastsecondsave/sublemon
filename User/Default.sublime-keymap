@@ -33,6 +33,8 @@
 
   { "keys": ["alt+/"],  "command": "show_file_path" },
 
+  { "keys": ["f1"], "command": "prev_bookmark" },
+
   { "keys": ["ctrl+k", "ctrl+o"], "command": "clone_file" },
   { "keys": ["ctrl+k", "ctrl+;"], "command": "diff_changes" },
   { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
@@ -146,6 +148,8 @@
     ]
   },
 
+  { "keys": ["ctrl+k", "ctrl+j"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete to BOL.sublime-macro"} },
+
   /** SMART KEYS **/
 
   { "keys": ["enter"], "command": "run_macro_file",
@@ -192,7 +196,7 @@
   { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\$(${0:$SELECTION})"},
     "context": [
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.shell" }
+      { "key": "selector", "operator": "equal", "operand": "source.shell, source.powershell" }
     ]
   },
 
