@@ -77,5 +77,7 @@ class OpenFilePathCommand(sublime_plugin.WindowCommand):
   def run(self):
     on_done = lambda x: self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
     initial = sublime.get_clipboard(4096).strip()
+    if initial.find('\n') != -1:
+      initial = ""
     view = self.window.show_input_panel("File Name:", initial, on_done, None, None)
     view.sel().add(sublime.Region(0, len(initial)))
