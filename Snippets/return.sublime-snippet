@@ -1,6 +1,6 @@
 <snippet>
 	<description>return</description>
 	<scope>source.java, source.js, source.c++, source.c, source.powershell</scope>
-	<tabTrigger>return</tabTrigger>
+	<tabTrigger>ret</tabTrigger>
 	<content><![CDATA[return ]]></content>
 </snippet>
