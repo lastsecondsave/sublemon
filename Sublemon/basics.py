@@ -35,15 +35,26 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
       self.view.replace(edit, region, content)
 
 class ShowFilePathCommand(sublime_plugin.WindowCommand):
-  def run(self):
+  def run(self, raw=False):
     variables = self.window.extract_variables()
     if not "file" in variables:
       return
+
     file_path = variables["file"]
+
+    if raw:
+      sublime.status_message(file_path)
+
+    if "project_path" in variables:
+      project_path = variables["project_path"]
+      if file_path.startswith(project_path):
+        file_path = file_path[len(project_path)+1:]
+
     home_path = os.environ["HOME"]
     if file_path.startswith(home_path):
-      file_path = "~" + file_path[len(home_path):]
-    sublime.status_message(file_path)
+      file_path = "~ " + file_path[len(home_path)+1:]
+
+    sublime.status_message(file_path.replace(os.sep, " → "))
 
 class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
   def run(self, edit):
