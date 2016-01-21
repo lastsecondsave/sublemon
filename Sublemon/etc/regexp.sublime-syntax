@@ -21,6 +21,10 @@ contexts:
   - match: ''
     set: regexp
 
+  # Hide warning about unused scope
+  - match: (?!x)x
+    set: embedded
+
   embedded:
   - meta_scope: source.regexp.embedded
   - include: regexp
