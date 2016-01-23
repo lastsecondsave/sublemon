@@ -76,7 +76,7 @@ class ToggleDrawCenteredCommand(sublime_plugin.ApplicationCommand):
     return s.get("draw_centered", False)
 
 class OpenFilePathCommand(sublime_plugin.WindowCommand):
-  WIN_PATH = re.compile(r'(?>[A-Za-z]:|\\)\\[^<>:"/|?*]+(?::\d+){0,2}')
+  WIN_PATH = re.compile(r'(?:[A-Za-z]:|\\)\\[^<>:"/|?*]+(?::\d+){0,2}')
   NIX_PATH = re.compile(r'~?/.+')
 
   def run(self):
