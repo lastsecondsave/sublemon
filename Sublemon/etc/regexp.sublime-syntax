@@ -44,6 +44,8 @@ contexts:
     scope: keyword.modifier.regexp
 
   - include: characters
+  - match: '\.'
+    scope: constant.language.character-class.regexp
 
   # (?m:expr)
   - match: '(\()({{modifiers}}:)'
@@ -95,7 +97,7 @@ contexts:
     scope: invalid.illegal.stray-bracket
 
   characters:
-  - match: '\\[wWsSdDhHvVX]|\.'
+  - match: '\\[wWsSdDhHvVX]'
     scope: constant.language.character-class.regexp
   - match: '\\p([A-Za-z]|\{[A-Za-z]+\})'
     scope: constant.character.unicode.regexp
