@@ -159,17 +159,19 @@ def icon(scope, filename):
   )
 
 icons = [
-  icon("source.xml", "file_type_xml"),
   icon("source.c++", "file_type_cpp"),
   icon("source.css", "file_type_css"),
   icon("source.git", "file_type_git"),
+  icon("source.groovy", "file_type_groovy"),
   icon("source.java", "file_type_java"),
+  icon("source.java-props, source.ini", "file_type_properties"),
   icon("source.js", "file_type_javascript"),
   icon("source.json", "file_type_json"),
-  icon("text.markdown, text.rfc", "file_type_markup"),
-  icon("source.java-props, source.ini", "file_type_properties"),
+  icon("source.powershell", "file_type_powershell"),
   icon("source.python", "file_type_python"),
-  icon("source.yaml", "file_type_yaml")
+  icon("source.xml", "file_type_xml"),
+  icon("source.yaml", "file_type_yaml"),
+  icon("text.markdown, text.rfc", "file_type_markup")
 ]
 
 targetDirectory = os.path.join("..", "generated")
