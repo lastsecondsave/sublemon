@@ -5,10 +5,8 @@
 	],
 	"installed_packages":
 	[
-		"AAAPackageDev",
 		"Alignment",
 		"ApplySyntax",
-		"Dictionaries",
 		"Horizontal Scroll",
 		"IndentX",
 		"MoveTab",
