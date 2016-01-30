@@ -5,6 +5,8 @@ import subprocess
 import sys
 import threading
 
+## PIPES ##
+
 class Pipe:
     def output(self, line):
         self.next_pipe.output(line)
@@ -13,7 +15,7 @@ class Pipe:
         self.next_pipe.error(line)
 
     def flush(self):
-        pass
+        self.next_pipe.flush()
 
     def attach(self, next_pipe):
         link_point = self
@@ -21,11 +23,11 @@ class Pipe:
             link_point = link_point.next_pipe
         link_point.next_pipe = next_pipe
 
-class LineBuffer:
-    def __init__(self, consumer, encoding="utf-8"):
-        self.buff = ""
+class OutputPipeBuffer:
+    def __init__(self, pipe, encoding="utf-8"):
+        self.buffer = ""
         self.encoding = encoding
-        self.consumer = consumer
+        self.pipe = pipe
 
     def next(self, chunk):
         try:
@@ -41,18 +43,46 @@ class LineBuffer:
             if len(cutoff) > 0 and cutoff[-1] == '\r':
                 cutoff = cutoff[:-1]
 
-            self.buff += cutoff
-            self.flush()
+            self.buffer += cutoff
+            self.flush_buffer()
 
             b = e + 1
             e = chunk.find('\n', b)
 
-        self.buff = chunk[b:]
+        self.buffer = chunk[b:]
+
+    def flush_buffer(self):
+        if len(self.buffer) > 0:
+            self.write_to_pipe(self.buffer)
+            self.buffer = ""
+
+    def write_to_pipe(self, text):
+        self.pipe.output(text)
 
     def flush(self):
-        if len(self.buff) > 0:
-            self.consumer(self.buff)
-            self.buff = ""
+        self.flush_buffer()
+        self.pipe.flush()
+
+class ErrorPipeBuffer(OutputPipeBuffer):
+    def write_to_pipe(self, text):
+        self.pipe.error(text)
+
+class AsyncStreamConsumer(threading.Thread):
+    def __init__(self, stream, consumer):
+        super().__init__(self)
+        self.stream = stream
+        self.consumer = consumer
+
+    def run(self):
+        while True:
+            chunk = os.read(self.stream.fileno(), 2**15)
+            if len(chunk) == 0:
+                break
+            self.consumer.next(chunk)
+        self.consumer.flush()
+        self.stream.close()
+
+## OUTPUT PANEL ##
 
 class OutputPanel:
     def __init__(self, window):
@@ -116,20 +146,10 @@ class OutputPanelPipe(Pipe):
     def error(self, line):
         self.output_panel.append_line(line)
 
-class AsyncStreamConsumer(threading.Thread):
-    def __init__(self, stream, consumer):
-        super().__init__(self)
-        self.stream = stream
-        self.consumer = consumer
+    def flush(self):
+        pass
 
-    def run(self):
-        while True:
-            chunk = os.read(self.stream.fileno(), 2**15)
-            if len(chunk) == 0:
-                break
-            self.consumer.next(chunk)
-        self.consumer.flush()
-        self.stream.close()
+## EXECUTOR ##
 
 class Executor:
     def __init__(self, window):
@@ -175,8 +195,8 @@ class Executor:
         else:
             pipe = final_pipe
 
-        AsyncStreamConsumer(self.proc.stdout, LineBuffer(pipe.output)).start()
-        AsyncStreamConsumer(self.proc.stderr, LineBuffer(pipe.error)).start()
+        AsyncStreamConsumer(self.proc.stdout, OutputPipeBuffer(pipe)).start()
+        AsyncStreamConsumer(self.proc.stderr, ErrorPipeBuffer(pipe)).start()
 
     def copy_output_settings(self, options, output_settings):
         copy = lambda x, y: self.copy_output_setting(x, y, options, output_settings)
