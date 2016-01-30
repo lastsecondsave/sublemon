@@ -12,6 +12,7 @@
 /User/Package Control.cache
 /User/Package Control.*bundle
 
+!/Default
 !/Snippets
 
 .DS_Store
