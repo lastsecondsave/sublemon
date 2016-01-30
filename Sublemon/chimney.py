@@ -5,17 +5,6 @@ import subprocess
 import sys
 import threading
 
-## UTILS ##
-
-def _get_startupinfo():
-    startupinfo = None
-    if sys.platform == "win32":
-        startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    return startupinfo
-
-## CLASSES ##
-
 class Pipe:
     def output(self, line):
         self.next_pipe.output(line)
@@ -26,8 +15,11 @@ class Pipe:
     def flush(self):
         pass
 
-    def connect(self, next_pipe):
-        self.next_pipe = next_pipe
+    def attach(self, next_pipe):
+        link_point = self
+        while link_point.next_pipe:
+            link_point = link_point.next_pipe
+        link_point.next_pipe = next_pipe
 
 class LineBuffer:
     def __init__(self, consumer, encoding=None):
@@ -70,21 +62,16 @@ class OutputPanel:
         self.line_buffer_lock = threading.Lock()
         self.line_buffer = collections.deque()
 
-        self.set_settings(
-            line_numbers=False,
-            gutter=False,
-            scroll_past_end=False,
-            result_file_regex="",
-            result_line_regex=""
-        )
-
     def reset(self):
         self.view.run_command('erase_view')
-
-        with self.line_buffer_lock:
-            self.line_buffer.clear()
-
+        self.line_buffer.clear()
         self.set_settings(
+            line_numbers="False",
+            gutter="False",
+            scroll_past_end="False",
+            result_base_dir="",
+            result_file_regex="",
+            result_line_regex="",
             syntax="Packages/Text/Plain text.tmLanguage"
         )
 
@@ -150,11 +137,14 @@ class Executor:
         self.output = OutputPanel(window)
         print("Created executor for #" + str(window.id()))
 
-    def run(self, **options):
+    def run(self, options, pipe=None):
         option = lambda x: self.get_option(x, options)
 
         shell_cmd = option("shell_cmd")
         cmd = option("shell_cmd")
+
+        working_dir = self.get_option("working_dir", options, default=self.get_working_dir())
+        options["result_base_dir"] = working_dir
 
         if shell_cmd and sys.platform == "win32":
             pass
@@ -163,7 +153,8 @@ class Executor:
 
         print("Running " + shell_cmd if shell_cmd else " ".join(cmd))
 
-        proc = subprocess.Popen(cmd, startupinfo=_get_startupinfo(),
+        os.chdir(working_dir)
+        self.proc = subprocess.Popen(cmd, startupinfo=_get_startupinfo(),
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL)
 
         # Prepare output panel
@@ -178,14 +169,23 @@ class Executor:
 
         # Start pipes
 
-        pipe = OutputPanelPipe(self.output)
-        AsyncStreamConsumer(proc.stdout, LineBuffer(pipe.output)).start()
-        AsyncStreamConsumer(proc.stderr, LineBuffer(pipe.error)).start()
+        final_pipe = OutputPanelPipe(self.output)
+        if pipe:
+            pipe.attach(final_pipe)
+        else:
+            pipe = final_pipe
+
+        AsyncStreamConsumer(self.proc.stdout, LineBuffer(pipe.output)).start()
+        AsyncStreamConsumer(self.proc.stderr, LineBuffer(pipe.error)).start()
 
     def copy_output_settings(self, options, output_settings):
         copy = lambda x, y: self.copy_output_setting(x, y, options, output_settings)
 
-        copy("syntax", "syntax")
+        direct_copies = ["syntax", "result_base_dir"]
+
+        for o in direct_copies:
+            copy(o, o)
+
         copy("file_regex", "result_file_regex")
         copy("line_regex", "result_line_regex")
 
@@ -194,7 +194,6 @@ class Executor:
         if value:
             output_settings[dst_name] = value
 
-
     def get_option(self, name, options, expand=False, default=None):
         if not name in options:
             return default
@@ -202,6 +201,11 @@ class Executor:
         if expand:
             result = sublime.expand_variables(result, self.window.extract_variables())
         return result
+
+    def get_working_dir(self):
+        view = self.window.active_view()
+        if (view and view.file_name()):
+            return os.path.dirname(view.file_name())
 
 ## COMMANDS ##
 
@@ -212,17 +216,20 @@ class EraseViewCommand(sublime_plugin.TextCommand):
 class ChimneyCommand(sublime_plugin.WindowCommand):
     def __init__(self, window):
         super().__init__(window)
-        get_executor(window)
+        _get_executor(window)
+
+    def get_pipe(self, args):
+        return None
 
     def run(self, **args):
-        executor = get_executor(self.window)
-        executor.run(**args)
+        executor = _get_executor(self.window)
+        executor.run(args, self.get_pipe(args))
 
 ## STARTUP ##
 
 _executors = {}
 
-def get_executor(window):
+def _get_executor(window):
     if not window and not hasattr(window, 'id'):
         raise ValueError("invalid Window object")
 
@@ -231,3 +238,10 @@ def get_executor(window):
         _executors[wid] = Executor(window)
 
     return _executors[wid]
+
+def _get_startupinfo():
+    startupinfo = None
+    if sys.platform == "win32":
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    return startupinfo
