@@ -22,9 +22,9 @@ class Pipe:
         link_point.next_pipe = next_pipe
 
 class LineBuffer:
-    def __init__(self, consumer, encoding=None):
+    def __init__(self, consumer, encoding="utf-8"):
         self.buff = ""
-        self.encoding = encoding or sys.stdin.encoding
+        self.encoding = encoding
         self.consumer = consumer
 
     def next(self, chunk):
@@ -107,14 +107,14 @@ class OutputPanel:
         self.window.run_command("show_panel", {"panel": "output.exec"})
 
 class OutputPanelPipe(Pipe):
-    def __init__(self, outputPanel):
-        self.outputPanel = outputPanel
+    def __init__(self, output_panel):
+        self.output_panel = output_panel
 
     def output(self, line):
-        self.outputPanel.append_line(line)
+        self.output_panel.append_line(line)
 
     def error(self, line):
-        self.outputPanel.append_line(line)
+        self.output_panel.append_line(line)
 
 class AsyncStreamConsumer(threading.Thread):
     def __init__(self, stream, consumer):
@@ -134,7 +134,7 @@ class AsyncStreamConsumer(threading.Thread):
 class Executor:
     def __init__(self, window):
         self.window = window
-        self.output = OutputPanel(window)
+        self.output_panel = OutputPanel(window)
         print("Created executor for #" + str(window.id()))
 
     def run(self, options, pipe=None):
@@ -147,7 +147,7 @@ class Executor:
         options["result_base_dir"] = working_dir
 
         if shell_cmd and sys.platform == "win32":
-            pass
+            cmd = ["powershell.exe", "-Command", shell_cmd]
         elif shell_cmd:
             cmd = [os.environ["SHELL"], "-c", shell_cmd]
 
@@ -159,17 +159,17 @@ class Executor:
 
         # Prepare output panel
 
-        self.output.reset()
+        self.output_panel.reset()
         output_settings = dict()
         self.copy_output_settings(options, output_settings)
-        self.output.set_settings(**output_settings)
+        self.output_panel.set_settings(**output_settings)
 
         if not self.get_option('no_output', options):
-            self.output.show()
+            self.output_panel.show()
 
         # Start pipes
 
-        final_pipe = OutputPanelPipe(self.output)
+        final_pipe = OutputPanelPipe(self.output_panel)
         if pipe:
             pipe.attach(final_pipe)
         else:
