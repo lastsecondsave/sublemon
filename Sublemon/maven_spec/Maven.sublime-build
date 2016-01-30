@@ -1,11 +1,10 @@
 {
   "keyfiles"   : ["pom.xml"],
-  "target"     : "powershell_exec",
-  "shell_cmd"  : "mvn compile | MavenFilter",
+  "target"     : "chimney",
+  "shell_cmd"  : "mvn compile",
   "working_dir": "${project_path:${folder}}",
   "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
   "syntax"     : "Packages/Sublemon/maven_spec/maven_build.sublime-syntax",
-  "context"    : "$packages/Sublemon/maven_spec/maven_context.ps1",
 
   "env": {
     "MAVEN_OPTS": "-Xmx1024M"
@@ -13,32 +12,32 @@
 
   "variants": [
     { "name"     : "Parameterized",
-      "param_cmd": "mvn $args | MavenFilter",
+      "param_cmd": "mvn $args",
       "prompt"   : "mvn"
     },
     { "name"     : "Exec",
-      "shell_cmd": "mvn -q -e exec:java | MavenFilter"
+      "shell_cmd": "mvn -q -e exec:java"
     },
     { "name"     : "Compile and Exec",
-      "shell_cmd": "mvn -q -e compile exec:java | MavenFilter"
+      "shell_cmd": "mvn -q -e compile exec:java"
     },
     { "name"     : "Clean",
-      "shell_cmd": "mvn clean | MavenFilter"
+      "shell_cmd": "mvn clean"
     },
     { "name"     : "Clean Install",
-      "shell_cmd": "mvn -e clean install | MavenFilter"
+      "shell_cmd": "mvn -e clean install"
     },
     { "name"     : "Quick Install",
-      "shell_cmd": "mvn -e `-Dmaven.test.skip=true install | MavenFilter"
+      "shell_cmd": "mvn -e -Dmaven.test.skip=true install"
     },
     { "name"     : "Package",
-      "shell_cmd": "mvn -e package | MavenFilter"
+      "shell_cmd": "mvn -e package"
     },
     { "name"     : "Compile Tests",
-      "shell_cmd": "mvn test-compile | MavenFilter",
+      "shell_cmd": "mvn test-compile",
     },
     { "name"     : "Test",
-      "shell_cmd": "mvn -q test | MavenFilter"
+      "shell_cmd": "mvn -q test"
     },
     { "name"     : "Generate Test Report",
       "shell_cmd": "mvn -q surefire-report:report-only; mvn -q site -DgenerateReports=false",
