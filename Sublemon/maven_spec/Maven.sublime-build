@@ -2,19 +2,11 @@
   "keyfiles"   : ["pom.xml"],
   "target"     : "chimney",
   "shell_cmd"  : "mvn compile",
-  "working_dir": "${project_path:${folder}}",
-  "file_regex" : "\\[(?:ERROR|WARNING)\\] /?(.+):\\[(\\d+),(\\d+)\\] (.*)",
+  "working_dir": "${folder}",
+  "file_regex" : "^(?:\\[(?:ERROR|WARNING)\\] )?([^ \\t].*):\\[(\\d+),(\\d+)\\](?: error:)? (.*)",
   "syntax"     : "Packages/Sublemon/maven_spec/maven_build.sublime-syntax",
 
-  "env": {
-    "MAVEN_OPTS": "-Xmx1024M"
-  },
-
   "variants": [
-    { "name"     : "Parameterized",
-      "param_cmd": "mvn $args",
-      "prompt"   : "mvn"
-    },
     { "name"     : "Exec",
       "shell_cmd": "mvn -q -e exec:java"
     },
@@ -38,9 +30,6 @@
     },
     { "name"     : "Test",
       "shell_cmd": "mvn -q test"
-    },
-    { "name"     : "Generate Test Report",
-      "shell_cmd": "mvn -q surefire-report:report-only; mvn -q site -DgenerateReports=false",
     }
   ]
 }
