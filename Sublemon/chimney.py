@@ -23,7 +23,7 @@ class Pipe:
             link_point = link_point.next_pipe
         link_point.next_pipe = next_pipe
 
-class OutputPipeBuffer:
+class OutputBuffer:
     def __init__(self, pipe, encoding="utf-8"):
         self.buffer = ""
         self.encoding = encoding
@@ -49,7 +49,7 @@ class OutputPipeBuffer:
             b = e + 1
             e = chunk.find('\n', b)
 
-        self.buffer = chunk[b:]
+        self.buffer += chunk[b:]
 
     def flush_buffer(self):
         if len(self.buffer) > 0:
@@ -63,7 +63,7 @@ class OutputPipeBuffer:
         self.flush_buffer()
         self.pipe.flush()
 
-class ErrorPipeBuffer(OutputPipeBuffer):
+class ErrorBuffer(OutputBuffer):
     def write_to_pipe(self, text):
         self.pipe.error(text)
 
@@ -81,6 +81,10 @@ class AsyncStreamConsumer(threading.Thread):
             self.consumer.next(chunk)
         self.consumer.flush()
         self.stream.close()
+        self.on_close()
+
+    def on_close(self):
+        pass
 
 ## OUTPUT PANEL ##
 
@@ -92,18 +96,15 @@ class OutputPanel:
         self.line_buffer_lock = threading.Lock()
         self.line_buffer = collections.deque()
 
-    def reset(self):
-        self.view.run_command('erase_view')
-        self.line_buffer.clear()
         self.set_settings(
             line_numbers="False",
             gutter="False",
-            scroll_past_end="False",
-            result_base_dir="",
-            result_file_regex="",
-            result_line_regex="",
-            syntax="Packages/Text/Plain text.tmLanguage"
+            scroll_past_end="False"
         )
+
+    def reset(self):
+        self.view.run_command('erase_view')
+        self.line_buffer.clear()
 
     def set_settings(self, syntax=None, **settings):
         for k, v in settings.items():
@@ -112,6 +113,8 @@ class OutputPanel:
 
         if syntax:
             self.view.assign_syntax(syntax)
+
+        self.window.create_output_panel("exec")
 
     def append_line(self, line):
         with self.line_buffer_lock:
@@ -151,40 +154,48 @@ class OutputPanelPipe(Pipe):
 
 ## EXECUTOR ##
 
+class Options:
+    def __init__(self, options_dict):
+        self._original_dict = options_dict
+
+        option = lambda x, y=None: self.get_original(x, default=y)
+
+        self.cmd         = option("cmd")
+        self.file_regex  = option("file_regex", "")
+        self.kill        = option("kill", False)
+        self.line_regex  = option("line_regex", "")
+        self.no_output   = option("no_output", False)
+        self.shell_cmd   = option("shell_cmd")
+        self.syntax      = option("syntax", "Packages/Text/Plain text.tmLanguage")
+        self.working_dir = option("working_dir")
+
+    def get_original(self, name, default=None):
+        if not name in self._original_dict:
+            return default
+        return self._original_dict[name]
+
 class Executor:
     def __init__(self, window):
         self.window = window
         self.output_panel = OutputPanel(window)
-        print("Created executor for #" + str(window.id()))
+        self.running_proc = None
+        _log("Created executor for #{}", window.id())
 
     def run(self, options, pipe=None):
-        option = lambda x: self.get_option(x, options)
+        if self.running_proc:
+            self.kill_process()
 
-        shell_cmd = option("shell_cmd")
-        cmd = option("shell_cmd")
+        if options.kill:
+            return
 
-        working_dir = self.get_option("working_dir", options, default=self.get_working_dir())
-        options["result_base_dir"] = working_dir
-
-        if shell_cmd and sys.platform == "win32":
-            cmd = ["powershell.exe", "-Command", shell_cmd]
-        elif shell_cmd:
-            cmd = [os.environ["SHELL"], "-c", shell_cmd]
-
-        print("Running " + shell_cmd if shell_cmd else " ".join(cmd))
-
-        os.chdir(working_dir)
-        self.proc = subprocess.Popen(cmd, startupinfo=_get_startupinfo(),
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL)
+        proc = self.start_process(options)
 
         # Prepare output panel
 
         self.output_panel.reset()
-        output_settings = dict()
-        self.copy_output_settings(options, output_settings)
-        self.output_panel.set_settings(**output_settings)
+        self.output_panel.set_settings(**self.map_output_panel_settings(options))
 
-        if not self.get_option('no_output', options):
+        if not options.no_output:
             self.output_panel.show()
 
         # Start pipes
@@ -195,32 +206,53 @@ class Executor:
         else:
             pipe = final_pipe
 
-        AsyncStreamConsumer(self.proc.stdout, OutputPipeBuffer(pipe)).start()
-        AsyncStreamConsumer(self.proc.stderr, ErrorPipeBuffer(pipe)).start()
+        output_consumer = AsyncStreamConsumer(proc.stdout, OutputBuffer(pipe))
+        output_consumer.on_close = self.mark_process_terminated;
+        output_consumer.start()
 
-    def copy_output_settings(self, options, output_settings):
-        copy = lambda x, y: self.copy_output_setting(x, y, options, output_settings)
+        AsyncStreamConsumer(proc.stderr, ErrorBuffer(pipe)).start()
 
-        direct_copies = ["syntax", "result_base_dir"]
+        self.running_proc = proc
 
-        for o in direct_copies:
-            copy(o, o)
+    def start_process(self, opt):
+        if not opt.working_dir:
+            opt.working_dir = self.get_working_dir()
 
-        copy("file_regex", "result_file_regex")
-        copy("line_regex", "result_line_regex")
+        if opt.shell_cmd and sys.platform == "win32":
+            opt.cmd = ["powershell.exe", "-Command", opt.shell_cmd]
+            message = "[ps:{}] " + opt.shell_cmd
+        elif opt.shell_cmd:
+            opt.cmd = [os.environ["SHELL"], "-i", "-c", opt.shell_cmd]
+            message = "[sh:{}] " + opt.shell_cmd
+        else:
+            message = "[{}] " + " ".join(opt.cmd)
 
-    def copy_output_setting(self, src_name, dst_name, options, output_settings):
-        value = self.get_option(src_name, options)
-        if value:
-            output_settings[dst_name] = value
+        os.chdir(opt.working_dir)
+        proc = subprocess.Popen(opt.cmd, startupinfo=_get_startupinfo(),
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL)
 
-    def get_option(self, name, options, expand=False, default=None):
-        if not name in options:
-            return default
-        result = options[name]
-        if expand:
-            result = sublime.expand_variables(result, self.window.extract_variables())
-        return result
+        _log("Running " + message, proc.pid)
+        return proc
+
+    def kill_process(self):
+        if sys.platform == "win32":
+            subprocess.Popen("taskkill /PID " + str(self.running_proc.pid), startupinfo=_get_startupinfo())
+        else:
+            self.running_proc.terminate()
+
+    def mark_process_terminated(self):
+        if self.running_proc:
+            self.running_proc.poll()
+            _log("Terminated [{}], exit code: {}", self.running_proc.pid, self.running_proc.returncode)
+            self.running_proc = None
+
+    def map_output_panel_settings(self, options):
+        return dict(
+            result_base_dir = options.working_dir,
+            result_file_regex = options.file_regex,
+            result_line_regex = options.line_regex,
+            syntax = options.syntax
+        )
 
     def get_working_dir(self):
         view = self.window.active_view()
@@ -238,12 +270,13 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
         super().__init__(window)
         _get_executor(window)
 
-    def get_pipe(self, args):
+    def get_pipe(self, options):
         return None
 
     def run(self, **args):
         executor = _get_executor(self.window)
-        executor.run(args, self.get_pipe(args))
+        options = Options(args)
+        executor.run(options, self.get_pipe(options))
 
 ## STARTUP ##
 
@@ -265,3 +298,6 @@ def _get_startupinfo():
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     return startupinfo
+
+def _log(message, *params):
+    print("Chimney: " + message.format(*params))
