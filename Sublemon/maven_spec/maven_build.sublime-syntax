@@ -15,6 +15,14 @@ contexts:
       5: constant.numeric.maven
       6: string.maven
 
+  # Maven 2 compilation's error
+  - match: '^(\S.+):\[(\d+),(\d+)\] error: (.*)'
+    captures:
+      1: entity.name.file.maven
+      2: constant.numeric.maven
+      3: constant.numeric.maven
+      4: string.maven
+
   # Summary
   - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
     captures:
@@ -26,7 +34,7 @@ contexts:
       scope: comment.maven
 
   # Generic maven message
-  - match: '^(?>(\[ERROR\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
+  - match: '^(?>(\[(?:ERROR|FATAL)\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
     scope: comment.maven
     captures:
       1: meta.indicator.error.maven
@@ -36,11 +44,11 @@ contexts:
 
   - include: Packages/Sublemon/java_spec/java_log.sublime-syntax#exceptions
 
-  - match: ^(?!\[(?>INFO|ERROR|WARNING)\])
+  - match: ^(?!\[(?>INFO|ERROR|FATAL|WARNING)\])
     push: plain_text
 
   plain_text:
-  - match: ^(?=\[(?>INFO|ERROR|WARNING)\])
+  - match: ^(?=\[(?>INFO|ERROR|FATAL|WARNING)\])
     pop: true
   - match: (?=Tests run:)
     push:
