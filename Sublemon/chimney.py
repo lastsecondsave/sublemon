@@ -8,6 +8,9 @@ import threading
 ## PIPES ##
 
 class Pipe:
+    def __init__(self):
+        self.next_pipe = None
+
     def output(self, line):
         self.next_pipe.output(line)
 
@@ -19,7 +22,7 @@ class Pipe:
 
     def attach(self, next_pipe):
         link_point = self
-        while link_point.next_pipe:
+        while link_point.next_pipe != None:
             link_point = link_point.next_pipe
         link_point.next_pipe = next_pipe
 
@@ -96,11 +99,7 @@ class OutputPanel:
         self.line_buffer_lock = threading.Lock()
         self.line_buffer = collections.deque()
 
-        self.set_settings(
-            line_numbers="False",
-            gutter="False",
-            scroll_past_end="False"
-        )
+        self.set_settings(gutter="False", scroll_past_end="False")
 
     def reset(self):
         self.view.run_command('erase_view')
@@ -174,15 +173,18 @@ class Options:
             return default
         return self._original_dict[name]
 
+class State:
+    pass
+
 class Executor:
     def __init__(self, window):
         self.window = window
         self.output_panel = OutputPanel(window)
-        self.running_proc = None
+        self.running_state = None
         _log("Created executor for #{}", window.id())
 
-    def run(self, options, pipe=None):
-        if self.running_proc:
+    def run(self, options, pipe=None, on_complete=None):
+        if self.running_state:
             self.kill_process()
 
         if options.kill:
@@ -207,12 +209,15 @@ class Executor:
             pipe = final_pipe
 
         output_consumer = AsyncStreamConsumer(proc.stdout, OutputBuffer(pipe))
-        output_consumer.on_close = self.mark_process_terminated;
+        output_consumer.on_close = self.finish;
         output_consumer.start()
 
         AsyncStreamConsumer(proc.stderr, ErrorBuffer(pipe)).start()
 
-        self.running_proc = proc
+        self.running_state = State()
+        self.running_state.proc = proc
+        self.running_state.shell = options.shell_cmd != None
+        self.running_state.on_complete = on_complete
 
     def start_process(self, opt):
         if not opt.working_dir:
@@ -234,17 +239,30 @@ class Executor:
         _log("Running " + message, proc.pid)
         return proc
 
+    def finish(self):
+        errors_count = len(self.output_panel.view.find_all_results())
+        self.running_state.on_complete(errors_count)
+
+        self.mark_process_terminated()
+        self.running_state = None
+
     def kill_process(self):
+        pid = str(self.running_state.proc.pid)
+
         if sys.platform == "win32":
-            subprocess.Popen("taskkill /PID " + str(self.running_proc.pid), startupinfo=_get_startupinfo())
+            cmd = ["taskkill", "/PID", pid]
+        elif self.running_state.shell:
+            cmd = ["pkill", "-P", pid]
         else:
-            self.running_proc.terminate()
+            cmd = ["kill", pid]
+
+        _log("Killing {}", pid)
+        subprocess.Popen(cmd, startupinfo=_get_startupinfo())
 
     def mark_process_terminated(self):
-        if self.running_proc:
-            self.running_proc.poll()
-            _log("Terminated [{}], exit code: {}", self.running_proc.pid, self.running_proc.returncode)
-            self.running_proc = None
+        proc = self.running_state.proc
+        proc.poll()
+        _log("Terminated [{}], exit code: {}", proc.pid, proc.returncode)
 
     def map_output_panel_settings(self, options):
         return dict(
@@ -276,7 +294,17 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
     def run(self, **args):
         executor = _get_executor(self.window)
         options = Options(args)
-        executor.run(options, self.get_pipe(options))
+        executor.run(options, pipe=self.get_pipe(options), on_complete=self.finish)
+
+    def finish(self, errors_count):
+        if errors_count == 0:
+            message = "Build finished"
+        elif errors_count == 1:
+            message = "Build finished with 1 error"
+        else:
+            message = "Build finished with " + errors_count +" errors"
+
+        sublime.status_message(message)
 
 ## STARTUP ##
 
