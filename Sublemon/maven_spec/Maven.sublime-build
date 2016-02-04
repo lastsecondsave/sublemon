@@ -1,6 +1,6 @@
 {
   "keyfiles"   : ["pom.xml"],
-  "target"     : "chimney",
+  "target"     : "maven",
   "shell_cmd"  : "mvn compile",
   "working_dir": "${folder}",
   "file_regex" : "^(?:\\[(?:ERROR|WARNING)\\] )?([^ \\t].*):\\[(\\d+),(\\d+)\\](?: error:)? (.*)",
