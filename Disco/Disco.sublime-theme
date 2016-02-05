@@ -419,6 +419,14 @@
         "min_size": [25, 0]
     },
 
+    // Panels button
+    {
+        "class": "panel_button_control",
+        "layer0.texture": "Disco/images/panels.png",
+        "layer0.opacity": 0.7,
+        "content_margin": [12, 8]
+    },
+
     /** INPUT FIELD **/
 
     // Input field
