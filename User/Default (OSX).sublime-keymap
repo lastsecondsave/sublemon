@@ -9,35 +9,10 @@
 
   { "keys": ["shift+super+z"],  "command": "reveal_in_side_bar" },
 
-  { "keys": ["super+o"], "command": "open_file_path" },
+  { "keys": ["super+o"], "command": "unbound" },
   { "keys": ["super+shift+o"], "command": "prompt_open_file" },
 
   { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
-
-  /** SEARCH WIDGET **/
-
-  { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "find", "reverse": false} },
-  { "keys": ["ctrl+f"], "command": "hide_panel",
-    "context": [{"key": "panel", "operand": "find"}, {"key": "panel_has_focus"}]
-  },
-
-  { "keys": ["ctrl+h"], "command": "show_panel", "args": {"panel": "replace", "reverse": false} },
-  { "keys": ["ctrl+h"], "command": "hide_panel",
-    "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
-  },
-
-  { "keys": ["ctrl+i"], "command": "show_panel", "args": {"panel": "incremental_find", "reverse": false} },
-  { "keys": ["ctrl+i"], "command": "hide_panel",
-    "context": [{"key": "panel", "operand": "incremental_find"}, {"key": "panel_has_focus"}]
-  },
-
-  { "keys": ["super+f"], "command": "hide_panel",
-    "context": [{"key": "panel", "operand": "find"}, {"key": "panel_has_focus"}]
-  },
-
-  { "keys": ["super+alt+f"], "command": "hide_panel",
-    "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
-  },
 
   /** QUICK MENU **/
 
@@ -46,17 +21,20 @@
   { "keys": ["super+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
   { "keys": ["super+f7"],  "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
 
-  /** BUILD PANEL **/
+  /** PANELS **/
 
-  { "keys": ["super+b"], "command": "show_panel", "args": {"panel": "output.exec"} },
+  { "keys": ["super+f"],       "command": "show_panel", "args": {"panel": "find", "reverse": false, "toggle": true} },
+  { "keys": ["super+i"],       "command": "show_panel", "args": {"panel": "incremental_find", "reverse": false, "toggle": true} },
+  { "keys": ["super+shift+i"], "command": "show_panel", "args": {"panel": "incremental_find", "reverse": true, "toggle": true} },
+  { "keys": ["super+alt+f"],   "command": "show_panel", "args": {"panel": "replace", "reverse": false, "toggle": true} },
+  { "keys": ["super+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files", "toggle": true, "toggle": true} },
 
+  { "keys": ["super+b"],  "command": "show_panel", "args": {"panel": "output.exec"} },
   { "keys": ["super+b"], "command": "hide_panel",
-    "context": [{"key": "panel_visible", "operator": "equal", "operand": true}]
+    "context": [{"key": "panel", "operand": "output.exec"}, {"key": "panel_visible"}]
   },
 
-  { "keys": ["super+b"], "command": "show_panel", "args": {"panel": "output.exec"},
-    "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
-  },
+  { "keys": ["alt+`"], "command": "hide_panel" },
 
   /** BUILD **/
 
@@ -172,7 +150,6 @@
   { "keys": ["ctrl+r"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
   { "keys": ["ctrl+shift+r"], "command": "goto_symbol_in_project" },
 
-  { "keys": ["ctrl+shift+i"], "command": "show_panel", "args": {"panel": "incremental_find", "reverse": true} },
   { "keys": ["ctrl+shift+h"], "command": "replace_next" },
   { "keys": ["f3"], "command": "find_next" },
   { "keys": ["shift+f3"], "command": "find_prev" },
@@ -181,7 +158,6 @@
   { "keys": ["alt+f3"], "command": "find_all_under" },
   { "keys": ["ctrl+e"], "command": "slurp_find_string" },
   { "keys": ["ctrl+shift+e"], "command": "slurp_replace_string" },
-  { "keys": ["ctrl+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },
 
   { "keys": ["ctrl+shift+up"], "command": "swap_line_up" },
   { "keys": ["ctrl+shift+down"], "command": "swap_line_down" },
