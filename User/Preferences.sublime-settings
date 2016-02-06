@@ -27,6 +27,8 @@
 	"file_exclude_patterns":
 	[
 		"*.class",
+		"*.dll",
+		"*.exe",
 		"*.iml",
 		"*.ipr",
 		"*.iws",
@@ -105,7 +107,6 @@
 	"show_encoding": true,
 	"show_full_path": false,
 	"show_line_endings": true,
-	"show_panel_on_build": false,
 	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
