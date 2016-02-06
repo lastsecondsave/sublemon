@@ -77,7 +77,7 @@
     "context": [{"key": "panel", "operand": "output.exec"}, {"key": "panel_visible"}]
   },
 
-  { "keys": ["alt+~"], "command": "hide_panel" },
+  { "keys": ["alt+`"], "command": "hide_panel" },
 
   /** BUILD **/
 
