@@ -146,7 +146,14 @@ settings = [
   rule("CSS id selector",           "meta.rule.selector.css entity.name.id", foreground = YELLOW),
   rule("CSS class selector",        "meta.rule.selector.css entity.name.class", foreground = CRIMSON),
   rule("CSS pseudo-class selector", "meta.rule.selector.css entity.name.pseudo-class", foreground = PURPLE),
-  rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE)
+  rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
+
+  # Tweaks for default syntaxes
+
+  rule("Python logical operator",         "keyword.operator.logical.python", foreground = PURPLE),
+  rule("Python function with underlines", "entity.name.function.python support.function.magic.python", foreground = BLUE),
+  rule("Python annotation",             """entity.name.function.decorator.python,
+                                           entity.name.function.decorator.python support.function.builtin.python""", foreground = YELLOW)
 ]
 
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
