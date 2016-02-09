@@ -180,6 +180,6 @@ os.mkdir(targetDirectory)
 
 for icon in icons:
   filename = hashlib.sha1(icon["scope"].encode('ascii')).hexdigest() + ".tmPreferences"
-
+  print("{}: {}".format(filename, icon["scope"]))
   with open(os.path.join(targetDirectory, filename), "wb") as pfile:
     plistlib.dump(icon, pfile)
