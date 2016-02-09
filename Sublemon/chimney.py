@@ -8,9 +8,6 @@ import threading
 ## PIPES ##
 
 class Pipe:
-    def __init__(self):
-        self.next_pipe = None
-
     def output(self, line):
         self.next_pipe.output(line)
 
@@ -22,7 +19,7 @@ class Pipe:
 
     def attach(self, next_pipe):
         link_point = self
-        while link_point.next_pipe != None:
+        while hasattr(link_point, "next_pipe"):
             link_point = link_point.next_pipe
         link_point.next_pipe = next_pipe
 
@@ -155,9 +152,9 @@ class OutputPanelPipe(Pipe):
 
 class Options:
     def __init__(self, options_dict):
-        self._original_dict = options_dict
+        self.original_dict = options_dict
 
-        option = lambda x, y=None: self.get_original(x, default=y)
+        option = lambda x, y=None: options_dict.get(x, y)
 
         self.cmd         = option("cmd")
         self.file_regex  = option("file_regex", "")
@@ -168,10 +165,8 @@ class Options:
         self.syntax      = option("syntax", "Packages/Text/Plain text.tmLanguage")
         self.working_dir = option("working_dir")
 
-    def get_original(self, name, default=None):
-        if not name in self._original_dict:
-            return default
-        return self._original_dict[name]
+    def __getitem__(self, arg):
+        return self.original_dict.get(arg, None)
 
 class State:
     pass
@@ -183,7 +178,7 @@ class Executor:
         self.running_state = None
         _log("Created executor for #{}", window.id())
 
-    def run(self, options, pipe=None, on_complete=None):
+    def run(self, options, pipe, on_complete):
         if self.running_state:
             self.kill_process()
 
@@ -288,13 +283,17 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
         super().__init__(window)
         _get_executor(window)
 
-    def get_pipe(self, options):
-        return None
-
     def run(self, **args):
-        executor = _get_executor(self.window)
         options = Options(args)
-        executor.run(options, pipe=self.get_pipe(options), on_complete=self.finish)
+        self.preprocess_options(options)
+        pipe=self.get_pipe(options)
+        _get_executor(self.window).run(options, pipe, self.finish)
+
+    def get_pipe(self, options):
+        pass
+
+    def preprocess_options(self, options):
+        pass
 
     def finish(self, errors_count):
         if errors_count == 0:
