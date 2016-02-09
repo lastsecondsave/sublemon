@@ -1,35 +1,21 @@
 {
-  "keyfiles"   : ["pom.xml"],
-  "target"     : "maven",
-  "shell_cmd"  : "mvn compile",
-  "working_dir": "${folder}",
-  "file_regex" : "^(?:\\[(?:ERROR|WARNING)\\] )?([^ \\t].*):\\[(\\d+),(\\d+)\\](?: error:)? (.*)",
-  "syntax"     : "Packages/Sublemon/maven_spec/maven_build.sublime-syntax",
+  "selector": "source.maven",
+  "keyfiles": ["pom.xml"],
+  "target"  : "maven",
+  "mvn_cmd" : "compile",
 
   "variants": [
-    { "name"     : "Exec",
-      "shell_cmd": "mvn -q -e exec:java"
+    { "name"   : "Clean",
+      "mvn_cmd": "clean"
     },
-    { "name"     : "Compile and Exec",
-      "shell_cmd": "mvn -q -e compile exec:java"
+    { "name"   : "Exec",
+      "mvn_cmd": "exec:java",
+      "quiet"  : true,
+      "errors" : true
     },
-    { "name"     : "Clean",
-      "shell_cmd": "mvn clean"
-    },
-    { "name"     : "Clean Install",
-      "shell_cmd": "mvn -e clean install"
-    },
-    { "name"     : "Quick Install",
-      "shell_cmd": "mvn -e -Dmaven.test.skip=true install"
-    },
-    { "name"     : "Package",
-      "shell_cmd": "mvn -e package"
-    },
-    { "name"     : "Compile Tests",
-      "shell_cmd": "mvn test-compile",
-    },
-    { "name"     : "Test",
-      "shell_cmd": "mvn -q test"
+    { "name"   : "Test",
+      "mvn_cmd": "test",
+      "quiet"  : true
     }
   ]
 }
