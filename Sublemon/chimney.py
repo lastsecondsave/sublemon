@@ -97,6 +97,7 @@ class OutputPanel:
         self.line_buffer = collections.deque()
 
         self.set_settings(gutter="False", scroll_past_end="False")
+        self.autoshow = False
 
     def reset(self):
         self.view.run_command('erase_view')
@@ -131,6 +132,8 @@ class OutputPanel:
             self.line_buffer.clear()
 
         self.view.run_command('append', {'characters': characters, 'force': True, 'scroll_to_end': True})
+        if self.autoshow and self.window.active_panel() != "exec":
+            self.show()
 
     def show(self):
         self.window.run_command("show_panel", {"panel": "output.exec"})
@@ -160,7 +163,7 @@ class Options:
         self.file_regex  = option("file_regex", "")
         self.kill        = option("kill", False)
         self.line_regex  = option("line_regex", "")
-        self.no_output   = option("no_output", False)
+        self.show_output = option("show_output", "text").lower()
         self.shell_cmd   = option("shell_cmd")
         self.syntax      = option("syntax", "Packages/Text/Plain text.tmLanguage")
         self.working_dir = option("working_dir")
@@ -186,14 +189,17 @@ class Executor:
             return
 
         proc = self.start_process(options)
+        sublime.status_message("Build started")
 
         # Prepare output panel
 
         self.output_panel.reset()
         self.output_panel.set_settings(**self.map_output_panel_settings(options))
 
-        if not options.no_output:
+        if options.show_output == "always":
             self.output_panel.show()
+
+        self.output_panel.autoshow = options.show_output == "text";
 
         # Start pipes
 
@@ -211,8 +217,8 @@ class Executor:
 
         self.running_state = State()
         self.running_state.proc = proc
-        self.running_state.shell = options.shell_cmd != None
         self.running_state.on_complete = on_complete
+        self.running_state.options = options
 
     def start_process(self, opt):
         if not opt.working_dir:
@@ -238,6 +244,9 @@ class Executor:
         errors_count = len(self.output_panel.view.find_all_results())
         self.running_state.on_complete(errors_count)
 
+        if self.running_state.options.show_output == "error" and errors_count > 0:
+            self.output_panel.show()
+
         self.mark_process_terminated()
         self.running_state = None
 
@@ -246,7 +255,7 @@ class Executor:
 
         if sys.platform == "win32":
             cmd = ["taskkill", "/PID", pid]
-        elif self.running_state.shell:
+        elif self.running_state.options.shell_cmd != None:
             cmd = ["pkill", "-P", pid]
         else:
             cmd = ["kill", pid]
