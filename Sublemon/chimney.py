@@ -307,10 +307,9 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
     def finish(self, errors_count):
         if errors_count == 0:
             message = "Build finished"
-        elif errors_count == 1:
-            message = "Build finished with 1 error"
         else:
-            message = "Build finished with " + errors_count +" errors"
+            message = "Build finished with {} error{}".format(
+                    errors_count, "s" if errors_count > 1 else "")
 
         sublime.status_message(message)
 
