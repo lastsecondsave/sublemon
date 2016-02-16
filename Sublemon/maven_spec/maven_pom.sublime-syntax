@@ -2,6 +2,7 @@
 ---
 name: Maven Pom File
 scope: source.xml source.maven
+file_extensions: [pom]
 
 contexts:
   main:
