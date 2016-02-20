@@ -138,9 +138,12 @@ settings = [
   rule("Markup strikethrough", "markup.strikethrough", foreground = GRAY),
   rule("Markup links",         "markup.underline.link", foreground = YELLOW),
 
-  rule("Markdown monospace",       "markup.raw.inline.markdown, punctuation.definition.block.fenced.markdown", foreground = GREEN),
-  rule("Markdown punctuation",     "punctuation.definition.list.markdown, punctuation.definition.quote.markdown", foreground = DARK_ORANGE),
-  rule("Markdown language marker", "meta.fenced.language.marker.markdown", foreground = YELLOW),
+  rule("Markdown monospace",       """markup.raw.inline.markdown, punctuation.definition.block.fenced.markdown,
+                                      text.markdown markup.raw.block""", foreground = GREEN),
+  rule("Markdown punctuation",     """punctuation.definition.list.markdown, punctuation.definition.quote.markdown,
+                                      punctuation.heading.underline.markdown, punctuation.definition.image.markdown""", foreground = DARK_ORANGE),
+  rule("Markdown language marker",   "meta.fenced.language.marker.markdown", foreground = YELLOW),
+  rule("Markdown language marker",   "text.markdown entity.name.tag", foreground = PINK),
 
   rule("CSS general selector",      "meta.rule.selector.css entity.name.general", foreground = PINK),
   rule("CSS id selector",           "meta.rule.selector.css entity.name.id", foreground = YELLOW),
