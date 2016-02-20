@@ -37,26 +37,39 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
       self.view.replace(edit, region, content)
 
 class ShowFilePathCommand(sublime_plugin.WindowCommand):
-  def run(self, raw=False):
-    variables = self.window.extract_variables()
-    if not "file" in variables:
+  def run(self):
+    file_path = self.window.active_view().file_name()
+    if not file_path:
       return
 
-    file_path = variables["file"]
+    if self.window.project_data():
+      score = 0
+      short_path = file_path
 
-    if raw:
-      sublime.status_message(file_path)
+      for name, path in self.project_folders().items():
+        if not file_path.startswith(path):
+          continue
 
-    if "project_path" in variables:
-      project_path = variables["project_path"]
-      if file_path.startswith(project_path):
-        file_path = file_path[len(project_path)+1:]
+        if len(path) > score:
+          short_path = os.path.join(name, file_path[len(path):])
 
-    home_path = os.environ["HOME"]
+      file_path = short_path
+
+    home_path = os.environ["HOME"] + os.sep
     if file_path.startswith(home_path):
-      file_path = "~ " + file_path[len(home_path)+1:]
+      file_path = "~ " + file_path[len(home_path):]
 
     sublime.status_message(file_path.replace(os.sep, " → "))
+
+  def project_folders(self):
+    project_path = self.window.extract_variables()["project_path"]
+    folders = self.window.project_data()["folders"]
+    result = dict()
+    for folder in folders:
+      path = os.path.normpath(os.path.join(project_path, folder["path"]))
+      name = folder["name"] if "name" in folder else os.path.basename(path)
+      result[name] = path + os.sep
+    return result
 
 class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
   def run(self, edit):
