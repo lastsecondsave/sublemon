@@ -19,57 +19,75 @@ contexts:
   - match: ~~\S.+?\S~~
     scope: markup.strikethrough.markdown
 
+  # Tags
+  - match: (<(.+?)>)(.*?)(</\2>)
+    captures:
+      1: entity.name.tag.markdown
+      4: entity.name.tag.markdown
+
   # Links
   - match: <.+?>
     scope: markup.underline.link.markdown
-  - match: (\[.+?\])(\(.+?\))
+  - match: (!)?(\[.+?\])(\(.+?\)|\[.+?\])
     captures:
-      1: markup.italic.markdown
-      2: markup.underline.link.markdown
+      1: punctuation.definition.image.markdown
+      2: markup.italic.markdown
+      3: markup.underline.link.markdown
 
   - match: '\\[-`*_#+.!(){}\[\]\\>]'
     scope: constant.character.escape.markdown
 
+  # Titles
   - match: '^#{1,6}(?!#)\s*(.*?)\s*#*$'
     scope: markup.heading.markdown entity.name.section.markdown
+  - match: '^(?>-+|=+)$'
+    scope: markup.heading.markdown punctuation.heading.underline.markdown
 
-  - match: ^(?>[ ]{4}|\t)*((?>[*-]|[0-9a-z]\.))
-    captures:
-      1: punctuation.definition.list.markdown
-
-  - match: ^(>)
+  # Lists / Quote
+  - match: '^(>)?\s*([*-]\s+|[0-9a-z]\.)'
     captures:
       1: punctuation.definition.quote.markdown
+      2: punctuation.definition.list.markdown
+  - match: ^>
+    scope: punctuation.definition.quote.markdown
 
   # Raw blocks
   - match: '^(?>[ ]{4}|\t).*$'
     scope: markup.raw.block.markdown
-
-  - match: ^```(foobar2000)$
+  - match: ^```$
     scope: punctuation.definition.block.fenced.markdown
-    captures:
-      1: meta.fenced.language.marker.markdown
-    push: Packages/Sublemon/foobar2000.sublime-syntax
-    with_prototype:
-    - include: fenced_block_termination
-
-  - match: ^```(xml)$
-    scope: punctuation.definition.block.fenced.markdown
-    captures:
-      1: meta.fenced.language.marker.markdown
-    push: Packages/Sublemon/xml_spec/xml.sublime-syntax
-    with_prototype:
-    - include: fenced_block_termination
-
-  - match: ^```(\S*)$
-    scope: punctuation.definition.block.fenced.markdown
-    captures:
-      1: meta.fenced.language.marker.markdown
     push:
     - meta_scope: markup.raw.block.fenced.markdown
-    - include: fenced_block_termination
+    - match: ^```$
+      scope: punctuation.definition.block.fenced.markdown
+      pop: true
+  - match: (?=^```)
+    push: fenced_block
 
-  fenced_block_termination:
+  fenced_block:
+  - meta_scope: meta.raw.block.fenced.markdown
   - match: ^```$
     scope: punctuation.definition.block.fenced.markdown
     pop: true
+  - match: ^```
+    scope: punctuation.definition.block.fenced.markdown
+    push:
+    - match: json$
+      scope: meta.fenced.language.marker.markdown
+      push: Packages/Sublemon/json_spec/json.sublime-syntax
+    - match: xml$
+      scope: meta.fenced.language.marker.markdown
+      push: Packages/Sublemon/xml_spec/xml.sublime-syntax
+    - match: yaml$
+      scope: meta.fenced.language.marker.markdown
+      push: Packages/Sublemon/yaml_spec/yaml.sublime-syntax
+    - match: foobar2000$
+      scope: meta.fenced.language.marker.markdown
+      push: Packages/Sublemon/etc/foobar2000.sublime-syntax
+    - match: \S+$
+      scope: meta.fenced.language.marker.markdown
+      push:
+      - meta_scope: markup.raw.block.fenced.markdown
+    with_prototype:
+    - match: (?=^```$)
+      pop: true

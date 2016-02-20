@@ -40,7 +40,7 @@ settings("source.unix",
   ]
 )
 
-settings("text.markdown markup.heading.markdown",
+settings("text.markdown markup.heading entity.name.section",
   showInSymbolList = 1,
   symbolTransformation = \
     r"s/\s*#*$//;" + \
