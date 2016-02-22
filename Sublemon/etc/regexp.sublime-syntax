@@ -97,7 +97,7 @@ contexts:
     scope: invalid.illegal.stray-bracket
 
   characters:
-  - match: '\\[wWsSdDhHvVX]'
+  - match: '\\[wWsSdDhHvVXt]'
     scope: constant.language.character-class.regexp
   - match: '\\p([A-Za-z]|\{[A-Za-z]+\})'
     scope: constant.character.unicode.regexp
