@@ -188,6 +188,7 @@ class Executor:
         if options.kill:
             return
 
+        self.set_working_dir(options)
         proc = self.start_process(options)
         sublime.status_message("Build started")
 
@@ -220,10 +221,19 @@ class Executor:
         self.running_state.on_complete = on_complete
         self.running_state.options = options
 
-    def start_process(self, opt):
+    def set_working_dir(self, opt):
         if not opt.working_dir:
-            opt.working_dir = self.get_working_dir()
+            view = self.window.active_view()
+            if (view and view.file_name()):
+                opt.working_dir = os.path.dirname(view.file_name())
+            return
 
+        if not os.path.isabs(opt.working_dir):
+            base_path = _var(self.window, "project_path")
+            opt.working_dir = os.path.join(base_path, opt.working_dir)
+
+
+    def start_process(self, opt):
         if opt.shell_cmd and sys.platform == "win32":
             opt.cmd = ["powershell.exe", "-Command", opt.shell_cmd]
             message = "[ps:{}] " + opt.shell_cmd
@@ -276,11 +286,6 @@ class Executor:
             syntax = options.syntax
         )
 
-    def get_working_dir(self):
-        view = self.window.active_view()
-        if (view and view.file_name()):
-            return os.path.dirname(view.file_name())
-
 ## COMMANDS ##
 
 class EraseViewCommand(sublime_plugin.TextCommand):
@@ -305,13 +310,14 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
         pass
 
     def finish(self, errors_count):
-        if errors_count == 0:
-            message = "Build finished"
-        else:
-            message = "Build finished with {} error{}".format(
-                    errors_count, "s" if errors_count > 1 else "")
+        message = "Build finished"
+        if errors_count > 0:
+            message += " with {} error{}".format(errors_count, "s" if errors_count > 1 else "")
 
         sublime.status_message(message)
+
+    def var(self, name) :
+        return _var(self.window, name)
 
 ## STARTUP ##
 
@@ -336,3 +342,6 @@ def _get_startupinfo():
 
 def _log(message, *params):
     print("Chimney: " + message.format(*params))
+
+def _var(window, name, default=None):
+    return window.extract_variables().get(name, default)
