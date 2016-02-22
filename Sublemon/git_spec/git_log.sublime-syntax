@@ -1,0 +1,12 @@
+%YAML 1.2
+---
+name: Git Log Output
+scope: text.git
+hidden: true
+
+contexts:
+  main:
+  - match: '^(\^?[0-9a-f]{6,}) (.+?) → (.*)$'
+    captures:
+      1: constant.numeric.git
+      2: entity.name.author.git

@@ -1,0 +1,10 @@
+[
+  {
+    "caption": "Git: Diff",
+    "command": "git_diff"
+  },
+  {
+    "caption": "Git: Log",
+    "command": "git_log"
+  }
+]
