@@ -54,6 +54,7 @@ contexts:
   - include: annotations
 
   import_class_name:
+  - include: user_constant
   - include: storage_class
   - match: \*
     scope: storage.type.asterisk.java
@@ -185,9 +186,12 @@ contexts:
     scope: storage.type.primitive.java
   - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp|volatile)\b'
     scope: storage.modifier.java
+  - include: user_constant
+  - include: storage_class
+
+  user_constant:
   - match: \b[A-Z][A-Z_0-9]+\b
     scope: constant.user.java
-  - include: storage_class
 
   storage_class:
   - match: \b[A-Z]\b
@@ -392,7 +396,7 @@ contexts:
     push: [class_body, extends_statement, class_identifier]
   - match: '{{b}}(?=enum\s)'
     push: [enum_body, implements_statement, class_identifier]
-  - match: '{{b}}(?=@interface\s)'
+  - match: '(?<=\s|^)(?=@interface\s)'
     push: [class_body, class_identifier]
 
   class_identifier:
