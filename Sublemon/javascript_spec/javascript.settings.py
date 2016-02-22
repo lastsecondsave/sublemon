@@ -9,6 +9,7 @@ def settings(scope, **settings):
   with open(os.path.join("generated", filename), "wb") as pfile:
     plistlib.dump(dict(scope=scope, settings=settings), pfile)
 
+## JAVASCRIPT ##
 
 settings("source.js",
   bracketIndentNextLinePattern = r"^\s*\b(?>if|while|else)\b[^;]*$|^\s*\b(for)\b.*$",
