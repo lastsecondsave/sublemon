@@ -9,6 +9,7 @@ def settings(scope, **settings):
   with open(os.path.join("generated", filename), "wb") as pfile:
     plistlib.dump(dict(scope=scope, settings=settings), pfile)
 
+## JAVA ##
 
 settings("source.java",
   bracketIndentNextLinePattern = r"^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$",
@@ -61,9 +62,13 @@ for i in range(5):
     symbolTransformation = method_transformation + r"s/^/\? /;" + indent(m*2 + 1)
   )
 
+## JAVA LOG ##
+
 settings("text.log.java entity.name.exception",
   showInSymbolList = 1
 )
+
+## JAVA PROPERTIES ##
 
 settings("source.java-props",
   shellVariables = [

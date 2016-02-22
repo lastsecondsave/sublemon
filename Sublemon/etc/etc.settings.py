@@ -9,11 +9,14 @@ def settings(scope, **settings):
   with open(os.path.join("generated", filename), "wb") as pfile:
     plistlib.dump(dict(scope=scope, settings=settings), pfile)
 
+## COMMON ##
 
 settings("comment.mark",
   showInSymbolList = 1,
   symbolTransformation = "s/^/> /;"
 )
+
+## SOURCE ##
 
 settings("source.groovy",
   shellVariables = [
@@ -39,6 +42,8 @@ settings("source.unix",
     dict(name = "TM_COMMENT_START", value = "# ")
   ]
 )
+
+## TEXT ##
 
 settings("text.markdown markup.heading entity.name.section",
   showInSymbolList = 1,
