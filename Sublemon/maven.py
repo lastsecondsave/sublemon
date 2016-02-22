@@ -1,11 +1,11 @@
 import re
-import Sublemon.chimney
+from Sublemon.chimney import Pipe, ChimneyCommand
 
 DASHES_PATTERN        = re.compile(r'\[INFO\] -+')
 SUMMARY_PATTERN       = re.compile(r'\[ERROR\] Failed to execute goal.*')
 SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
 
-class MavenPipe(Sublemon.chimney.Pipe):
+class MavenPipe(Pipe):
     def __init__(self):
         self.skip = False
 
@@ -21,7 +21,7 @@ class MavenPipe(Sublemon.chimney.Pipe):
 
         self.next_pipe.output(line)
 
-class MavenCommand(Sublemon.chimney.ChimneyCommand):
+class MavenCommand(ChimneyCommand):
     def get_pipe(self, options):
         return MavenPipe()
 
@@ -44,9 +44,5 @@ class MavenCommand(Sublemon.chimney.ChimneyCommand):
         options.file_regex = r"^(?:\[(?:ERROR|WARNING)\] )?(\S.*):\[(\d+),(\d+)\](?: error:)? (.*)"
 
         if not options.working_dir:
-            window_vars = self.window.extract_variables()
-
-            if window_vars["file_name"] == "pom.xml":
-                options.working_dir = window_vars["file_path"]
-            else:
-                options.working_dir = window_vars['folder']
+            is_pom = self.var("file_name") == "pom.xml"
+            options.working_dir = self.var("file_path") if is_pom else self.var("folder")
