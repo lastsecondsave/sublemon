@@ -16,7 +16,6 @@
 
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
   { "keys": ["shift+alt+z"],  "command": "reveal_in_side_bar" },
-  { "keys": ["ctrl+alt+v"],   "command": "paste_from_history" },
 
   { "keys": ["ctrl+k", "ctrl+;"], "command": "clone_file" },
 
@@ -48,8 +47,11 @@
 
   /** SEARCH WIDGET **/
 
-  { "keys": ["alt+q"], "command": "toggle_in_selection", "context": [{"key": "setting.is_widget"}] },
-  { "keys": ["alt+b"], "command": "toggle_use_buffer", "context": [{"key": "setting.is_widget"}] },
+  { "keys": ["alt+q"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
+  { "keys": ["alt+b"], "command": "toggle_use_buffer",    "context": [{"key": "setting.is_widget"}] },
+  { "keys": ["f1"],    "command": "toggle_regex",         "context": [{"key": "setting.is_widget"}] },
+  { "keys": ["f2"],    "command": "toggle_case_sensitive","context": [{"key": "setting.is_widget"}] },
+  { "keys": ["f4"],    "command": "toggle_whole_word",    "context": [{"key": "setting.is_widget"}] },
 
   /** QUICK MENU **/
 
