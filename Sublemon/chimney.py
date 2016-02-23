@@ -44,15 +44,15 @@ class OutputBuffer:
                 cutoff = cutoff[:-1]
 
             self.buffer += cutoff
-            self.flush_buffer()
+            self.flush_buffer(True)
 
             b = e + 1
             e = chunk.find('\n', b)
 
         self.buffer += chunk[b:]
 
-    def flush_buffer(self):
-        if len(self.buffer) > 0:
+    def flush_buffer(self, force=False):
+        if len(self.buffer) > 0 or force:
             self.write_to_pipe(self.buffer)
             self.buffer = ""
 
