@@ -59,6 +59,9 @@ class ShowFilePathCommand(sublime_plugin.WindowCommand):
         if file_path.startswith(home_path):
             file_path = "~ " + file_path[len(home_path):]
 
+        if file_path.startswith(os.sep):
+            file_path = file_path[1:]
+
         sublime.status_message(file_path.replace(os.sep, " → "))
 
     def project_folders(self):
