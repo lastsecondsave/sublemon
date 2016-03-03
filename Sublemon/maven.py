@@ -19,6 +19,10 @@ class MavenPipe(Pipe):
         if self.skip and SKIPPED_LINES_PATTERN.match(line):
             return
 
+        i = line.rfind('\r')
+        if i != -1:
+            line = line[i+1:]
+
         self.next_pipe.output(line)
 
 class MavenCommand(ChimneyCommand):
