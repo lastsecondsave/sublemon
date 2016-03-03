@@ -262,16 +262,16 @@ class Executor:
 
     def kill_process(self):
         pid = str(self.running_state.proc.pid)
+        _log("Killing {}", pid)
 
         if sys.platform == "win32":
             cmd = ["taskkill", "/PID", pid]
-        elif self.running_state.options.shell_cmd != None:
-            cmd = ["pkill", "-P", pid]
-        else:
-            cmd = ["kill", pid]
+            subprocess.Popen(cmd, startupinfo=_get_startupinfo())
+            return
 
-        _log("Killing {}", pid)
-        subprocess.Popen(cmd, startupinfo=_get_startupinfo())
+        subprocess.Popen(["kill",  pid])
+        if self.running_state.options.shell_cmd != None:
+            subprocess.Popen(["pkill", "-P", pid])
 
     def mark_process_terminated(self):
         proc = self.running_state.proc
