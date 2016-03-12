@@ -85,7 +85,9 @@ settings = [
 
   rule("Java package declaration",             "meta.package.java storage.type", foreground = CRIMSON),
   rule("Java import asterisk",                 "storage.type.asterisk.java", foreground = CRIMSON),
-  rule("Java throwable declaration",           "entity.other.throwable.java", foreground = CRIMSON),
+  rule("Java throwable declaration",           "(meta.throws.statement.java storage.type.java) -meta.generic", foreground = CRIMSON),
+  rule("Java inherited class",               """(meta.extends.statement.java storage.type.java) -meta.generic,
+                                                (meta.implements.statement.java storage.type.java) -meta.generic""", foreground = CRIMSON),
   rule("Java assert keyword",                  "keyword.control.assert.java", foreground = CRIMSON),
   rule("Java annotation name and parameter", """punctuation.definition.annotation.java,
                                                 meta.annotation.identifier.java storage.type,

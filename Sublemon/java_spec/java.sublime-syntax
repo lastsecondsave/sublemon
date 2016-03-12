@@ -13,6 +13,8 @@ variables:
   number: (?:[0-9][0-9_]*)
   before_non_space: (?=\S)
   before_space: (?=\s)
+  after_space: (?<=\s)
+  spaces: (?:[\t ]+|\b[\t ]*)
   b: (?<!\.)\b
 
 contexts:
@@ -35,32 +37,37 @@ contexts:
   - include: bracket_balancing
 
   before_class_section:
-  - match: '{{b}}(?=package\b)'
-    push:
-    - meta_scope: meta.package.java
-    - match: package
-      scope: keyword.package.java
-      push: [package, pop_before_non_space_same_line]
-    - include: pop_on_any
-  - match: '{{b}}(?=import\b)'
-    push:
-    - meta_scope: meta.import.java
-    - match: (import)(?:\s+(static))?
-      captures:
-        1: keyword.import.java
-        2: keyword.import.static.java
-      push: [import_class_name, package, pop_before_non_space_same_line]
-    - include: pop_on_any
+  - include: package_section
+  - include: import_section
   - include: annotations
 
-  import_class_name:
-  - include: user_constant
-  - include: storage_class
-  - match: \*
-    scope: storage.type.asterisk.java
-  - match: \.
-    push: package
-  - include: pop_before_non_space
+  eat_spaces:
+  - match: '[\t ]*'
+    pop: true
+
+  pop_before_non_space:
+  - match: '{{before_non_space}}'
+    pop: true
+
+  pop_before_space:
+  - match: '{{before_space}}'
+    pop: true
+
+  pop_before_any:
+  - match: ''
+    pop: true
+
+  pop_on_fence:
+  - match: '[{}]'
+    pop: true
+
+  pop_on_closed_curly_bracket:
+  - match: \}
+    pop: true
+
+  pop_on_closed_round_bracket:
+  - match: \)
+    pop: true
 
   bracket_balancing:
   - match: \{
@@ -83,41 +90,43 @@ contexts:
   - match: '[)}\]]'
     scope: invalid.illegal.stray-bracket
 
-  pop_before_non_space:
-  - match: '{{before_non_space}}'
-    pop: true
+  package_section:
+  - match: '{{b}}(package){{spaces}}'
+    scope: keyword.package.java
+    push:
+    - - meta_scope: meta.package.java
+      - include: pop_before_any
+    - package
 
-  pop_before_non_space_same_line:
-  - match: '[\t ]*'
-    pop: true
+  import_section:
+  - match: '{{b}}(import)\b'
+    scope: keyword.import.java
+    push:
+    - - meta_scope: meta.import.java
+      - include: pop_before_any
+    - - match: '{{b}}(static){{spaces}}'
+        scope: keyword.import.static.java
+        set: [static_import_class_names, package]
+      - match: '{{before_non_space}}'
+        set: [import_class_names, package]
+    with_prototype:
+    - match: (?=;)
+      pop: true
 
-  pop_before_space:
-  - match: '{{before_space}}'
-    pop: true
+  import_class_names:
+  - match: '{{class_id}}'
+    scope: storage.type.java
+  - match: \*
+    scope: storage.type.asterisk.java
+  - include: pop_before_any
 
-  pop_on_any:
-  - match: ''
-    pop: true
-
-  pop_on_fence:
-  - match: '[{}]'
-    pop: true
-
-  pop_on_closed_curly_bracket:
-  - match: \}
-    pop: true
-
-  pop_on_closed_round_bracket:
-  - match: \)
-    pop: true
+  static_import_class_names:
+  - include: user_constant
+  - include: import_class_names
 
   comments:
   - match: /\*\*(?!/)
     push: javadoc
-  - match: ^\s*/\*\*\s(.*?\S)\s\*\*/
-    scope: comment.block.java
-    captures:
-      1: comment.mark.java
   - match: /\*.*?\*/
     scope: comment.block.java
   - match: /\*
@@ -182,27 +191,60 @@ contexts:
     scope: variable.language.java
 
   storage:
-  - match: '{{b}}(?>void|boolean|byte|char|short|int|float|long|double)\b'
-    scope: storage.type.primitive.java
-  - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp|volatile)\b'
-    scope: storage.modifier.java
-  - include: user_constant
+  - include: primitive_types
+  - include: storage_modifiers
   - include: storage_class
 
+  primitive_types:
+  - match: '{{b}}(?>void|boolean|byte|char|short|int|float|long|double)\b'
+    scope: storage.type.primitive.java
+
+  storage_modifiers:
+  - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp|volatile)\b'
+    scope: storage.modifier.java
+
   user_constant:
-  - match: \b[A-Z][A-Z_0-9]+\b
+  - match: \b[A-Z][A-Z_0-9]*\b
     scope: constant.user.java
 
-  storage_class:
-  - match: \b[A-Z]\b
-    scope: storage.type.generic.java
+  starts_with_package:
+  - match: '{{b}}(?=(?:[a-z]\w+\.)+[A-Z])'
+    push: [after_package, package]
+
+  after_package:
+  - include: class_name
+  - include: user_constant
+  - include: pop_before_any
+
+  class_name:
   - match: '{{class_id}}'
     scope: storage.type.java
-    push: generic
-  - include: package_before_class_name
+    push: after_class
 
-  package_before_class_name:
-  - match: \b(?=(?:{{small_id}}\.)+{{class_id}})
+  after_class:
+  - match: '\s*<'
+    set: generic
+  - match: \.
+    set:
+    - include: user_constant
+    - include: class_name
+    - include: pop_before_any
+  - include: pop_before_any
+
+  storage_class:
+  - match: '{{b}}[A-Z](?=[\s,>])'
+    scope: storage.type.generic.java
+  - include: starts_with_package
+  - include: user_constant
+  - include: class_name
+
+  storage_class_only:
+  - include: starts_with_package
+  - include: class_name
+  - include: pop_before_any
+
+  package_before:
+  - match: '{{b}}(?=(?:[a-z]\w+\.)+[A-Z])'
     push: package
 
   package:
@@ -211,25 +253,23 @@ contexts:
   - match: (?=[^a-z.])
     pop: true
 
-  methods_generic:
-  - match: '(?=<[^>]+?(?>extends|super).+?>)'
-    push: generic
-
   generic:
-  - match: '\s*<'
-    set:
-    - meta_scope: meta.generic.java
-    - match: '>'
-      pop: true
-    - match: \?
-      scope: storage.type.wildcard.java
-    - match: \&
-      scope: keyword.operator.java
-    - match: \b(?>extends|super)\b
-      scope: storage.modifier.java
-    - include: storage_class
-    - include: pop_on_fence
-  - include: pop_on_any
+  - meta_scope: meta.generic.java
+  - match: '>'
+    pop: true
+  - match: \?
+    scope: storage.type.wildcard.java
+  - match: \&
+    scope: keyword.operator.java
+  - match: \b(?>extends|super)\b
+    scope: storage.modifier.java
+  - include: storage_class
+  - include: primitive_types
+  - include: pop_on_fence
+
+  methods_generic:
+  - match: '<(?=[^>]+?(?>extends|super).+?>)'
+    push: generic
 
   operators:
   - match: '->'
@@ -283,8 +323,16 @@ contexts:
     - include: code_section
 
   keywords:
-  - match: '{{b}}(?>assert|break|continue|else|finally|return|throw)\b'
+  - match: '{{b}}(?>else|finally|throw)\b'
     scope: keyword.control.java
+  - match: '{{b}}return\b'
+    scope: keyword.control.return.java
+  - match: '{{b}}continue\b'
+    scope: keyword.control.continue.java
+  - match: '{{b}}break\b'
+    scope: keyword.control.break.java
+  - match: '{{b}}assert\b'
+    scope: keyword.control.assert.java
   # expr (), then possible {}
   - match: '{{b}}(?>if|try|while)\b'
     scope: keyword.control.java
@@ -335,11 +383,11 @@ contexts:
   - match: \(
     set:
     - include: pop_on_closed_round_bracket
-    - match: '[;:]'
-      # scope: keyword.operator.java
-    - match: \s({{small_id}})(?=\s*:)
+    - match: ;
+    - match: '{{after_space}}({{small_id}})\s*(:)'
       captures:
         1: variable.parameter.java
+        2: keyword.operator.java
     - include: code_section
   - include: pop_before_non_space
 
@@ -377,8 +425,8 @@ contexts:
   - meta_scope: meta.annotation.identifier.java
   - match: '\.?{{class_id}}'
     scope: storage.type.annotation.java
-  - include: package_before_class_name
-  - include: pop_on_any
+  - include: package_before
+  - include: pop_before_any
 
   annotation_parameters:
   - match: \(
@@ -406,44 +454,36 @@ contexts:
     push:
     - - match: '{{class_id}}'
         scope: entity.name.type.java
-        set: generic
-      - include: package_before_class_name
-      - include: pop_on_any
+        set: after_class
+      - include: pop_before_any
     - pop_before_non_space
-  - include: pop_on_any
+  - include: pop_before_any
 
   extends_statement:
   - match: \bextends\b
     scope: keyword.java
     set:
+    - - meta_scope: meta.extends.statement.java
+      - include: pop_before_any
     - - match: ','
-        push: [inherited_class_name, pop_before_non_space]
+        push: [storage_class_only, pop_before_non_space]
       - include: pop_before_non_space
-    - inherited_class_name
+    - storage_class_only
+    - pop_before_non_space
   - include: pop_before_non_space
 
   implements_statement:
   - match: \bimplements\b
     scope: keyword.java
     set:
+    - - meta_scope: meta.implements.statement.java
+      - include: pop_before_any
     - - match: ','
-        push: [inherited_class_name, pop_before_non_space]
+        push: [storage_class_only, pop_before_non_space]
       - include: pop_before_non_space
-    - inherited_class_name
+    - storage_class_only
+    - pop_before_non_space
   - include: pop_before_non_space
-
-  inherited_class_name:
-  - match: '{{before_non_space}}'
-    set:
-    - match: '({{class_id}})(?>\.(?={{class_id}}))+'
-      captures:
-        1: entity.other.inherited-class.java
-    - match: '{{class_id}}'
-      scope: entity.other.inherited-class.java
-      set: generic
-    - include: package_before_class_name
-    - match: '{{id}}'
-    - include: pop_on_any
 
   class_body:
   - match: \{
@@ -547,19 +587,14 @@ contexts:
   - match: \bthrows\b
     scope: keyword.java
     set:
+    - - meta_scope: meta.throws.statement.java
+      - include: pop_before_any
     - - match: ','
-        push: [throws_class_name, pop_before_non_space]
+        push: [storage_class_only, pop_before_non_space]
       - include: pop_before_non_space
-    - throws_class_name
+    - storage_class_only
     - pop_before_non_space
   - include: pop_before_non_space
-
-  throws_class_name:
-  - match: '{{class_id}}'
-    scope: entity.other.throwable.java
-    set: generic
-  - include: package_before_class_name
-  - include: pop_on_any
 
   lambda_parameters_list:
   - match: '({{id}})(?=\s*->)'

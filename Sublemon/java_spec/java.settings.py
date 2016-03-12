@@ -12,9 +12,9 @@ def settings(scope, **settings):
 ## JAVA ##
 
 settings("source.java",
-  bracketIndentNextLinePattern = r"^\s*\b(if|while|else)\b[^;]*$|^\s*\b(for)\b.*$",
-  increaseIndentPattern        = r"^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$",
-  decreaseIndentPattern        = r"^\s*((.*\*/\s*)?\};?|\b(case\s+\w+|default):)\s*$",
+  increaseIndentPattern = r".*(?>[\{\[])\s*$",
+  decreaseIndentPattern = r"\s*(?>[\}\]]).*$",
+  indentParens = True,
   shellVariables = [
     dict(name = "TM_COMMENT_START",   value = "// "),
     dict(name = "TM_COMMENT_START_2", value = "/*"),
@@ -32,7 +32,13 @@ method_transformation = \
   r"s/\s{2,}/ /g;" + \
   r"s/(?<=\() | (?=[,()])//g;"
 
+anonymous_method_transformation = method_transformation + r"s/^/\? /;"
+anonymous_class_transformation = r"s/\{/class \?/;"
+
 indent = lambda x: r"s/^/{}/;".format(' ' * x * 2)
+
+anonymous_class_scope  = " meta.class.body.anonymous punctuation.definition.class.begin"
+anonymous_method_scope = " meta.class.body.anonymous meta.method.identifier"
 
 for i in range(5):
   settings("source.java" + " meta.class.body"*i + " meta.class.identifier",
@@ -40,26 +46,46 @@ for i in range(5):
     symbolTransformation = r"s/\s{2,}/ /g;" + indent(i)
   )
 
-  m = i + 1
+  j = i + 1
 
-  settings("source.java" + " meta.class.body"*m + " meta.method.identifier",
+  settings("source.java" + " meta.class.body"*j + " meta.method.identifier",
     showInSymbolList = 1,
-    symbolTransformation = method_transformation + indent(m)
+    symbolTransformation = method_transformation + indent(j)
   )
 
-  settings("source.java" + " meta.class.body"*m + " constant.user.enum",
+  settings("source.java" + " meta.class.body"*j + " constant.user.enum",
     showInSymbolList = 1,
-    symbolTransformation = indent(m)
+    symbolTransformation = indent(j)
   )
 
-  settings("source.java" + " meta.method.body"*m + " meta.class.body.anonymous punctuation.definition.class.begin",
+  settings("source.java" + " meta.class.body.java"*j + anonymous_class_scope,
     showInSymbolList = 1,
-    symbolTransformation = r"s/\{/class \?/;" + indent(m*2)
+    symbolTransformation = anonymous_class_transformation + indent(j)
   )
 
-  settings("source.java" + " meta.method.body"*m + " meta.class.body.anonymous meta.method.identifier",
+  settings("source.java" + " meta.class.body.java"*j + anonymous_method_scope,
     showInSymbolList = 1,
-    symbolTransformation = method_transformation + r"s/^/\? /;" + indent(m*2 + 1)
+    symbolTransformation = anonymous_method_transformation + indent(j + 1)
+  )
+
+  settings("source.java" + " meta.class.body.java"*j + " meta.method.body" + anonymous_class_scope,
+    showInSymbolList = 1,
+    symbolTransformation = anonymous_class_transformation + indent(j + 1)
+  )
+
+  settings("source.java" + " meta.class.body.java"*j + " meta.method.body" + anonymous_method_scope,
+    showInSymbolList = 1,
+    symbolTransformation = anonymous_method_transformation + indent(j + 2)
+  )
+
+  settings("source.java" + " meta.method.body"*j + anonymous_class_scope,
+    showInSymbolList = 1,
+    symbolTransformation = anonymous_class_transformation + indent(j*2)
+  )
+
+  settings("source.java" + " meta.method.body"*j + anonymous_method_scope,
+    showInSymbolList = 1,
+    symbolTransformation = anonymous_method_transformation + indent(j*2 + 1)
   )
 
 ## JAVA LOG ##
