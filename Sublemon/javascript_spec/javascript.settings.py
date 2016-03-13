@@ -12,10 +12,9 @@ def settings(scope, **settings):
 ## JAVASCRIPT ##
 
 settings("source.js",
-  bracketIndentNextLinePattern = r"^\s*\b(?>if|while|else)\b[^;]*$|^\s*\b(for)\b.*$",
-  increaseIndentPattern        = r"^\s*(.*\{[^}]*|\b(case\s+\w+|default):)\s*$",
-  decreaseIndentPattern        = r"^(.*\*/)?\s*\}.*$",
-  cancelCompletion             = r"^\s*(function)\s*[a-zA-Z$_][\w$]+",
+  increaseIndentPattern = r".*(?>[\{\[])\s*$",
+  decreaseIndentPattern = r"\s*(?>[\}\]]).*$",
+  indentParens = True,
   shellVariables = [
     dict(name = "TM_COMMENT_START",   value = "// "),
     dict(name = "TM_COMMENT_START_2", value = "/*"),
