@@ -22,6 +22,9 @@ import static some.package.here.ClassName.CONSTANT;
 import static some.package.here.ClassName.C;
 //                                        ^ constant.user.java
 
+import static some.package.here.ClassName.*;
+//                                        ^ meta.import.java storage.type.asterisk.java
+
 import some.package.here.CLASS;
 //                       ^ meta.import.java storage.type.java
 
@@ -90,5 +93,7 @@ class ClassName extends some.package.Parent.Class<T> implements some.package.Par
 
         A isClass;
 //      ^ storage.type.generic.java
+
+        Collections.<Integer>emptyList()
     }
 }
