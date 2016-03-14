@@ -116,6 +116,7 @@ contexts:
   import_class_names:
   - match: '{{class_id}}'
     scope: storage.type.java
+  - match: \.
   - match: \*
     scope: storage.type.asterisk.java
   - include: pop_before_any
@@ -224,7 +225,7 @@ contexts:
   after_class:
   - match: '\s*<'
     set: generic
-  - match: \.
+  - match: \.(?=\w)
     set:
     - include: user_constant
     - include: class_name
