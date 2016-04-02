@@ -6,7 +6,7 @@ scope: text.log.java.maven
 contexts:
   main:
   # Compilation's error and warning
-  - match: '^(?>(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
+  - match: '^(?:(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
     captures:
       1: meta.indicator.error.maven
       2: meta.indicator.warning.maven
@@ -34,7 +34,7 @@ contexts:
       scope: comment.maven
 
   # Generic maven message
-  - match: '^(?>(\[(?:ERROR|FATAL)\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
+  - match: '^(?:(\[(?:ERROR|FATAL)\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
     scope: comment.maven
     captures:
       1: meta.indicator.error.maven
@@ -44,25 +44,25 @@ contexts:
 
   - include: Packages/Sublemon/java_spec/java_log.sublime-syntax#exceptions
 
-  - match: ^(?!\[(?>INFO|ERROR|FATAL|WARNING)\])
+  - match: ^(?!\[(?:INFO|ERROR|FATAL|WARNING)\])
     push: plain_text
 
   plain_text:
-  - match: ^(?=\[(?>INFO|ERROR|FATAL|WARNING)\])
+  - match: ^(?=\[(?:INFO|ERROR|FATAL|WARNING)\])
     pop: true
   - match: (?=Tests run:)
     push:
-    - match: '((?>Tests run|Failures|Errors|Skipped|Time elapsed)): (\d+(?:[,.]\d+)*(?: sec)?)'
+    - match: '((?:Tests run|Failures|Errors|Skipped|Time elapsed)): (\d+(?:[,.]\d+)*(?: sec)?)'
       captures:
         1: keyword.maven
         2: constant.numeric.maven
-    - match: '<<< (?>FAILURE|ERROR)!'
+    - match: '<<< (?:FAILURE|ERROR)!'
       scope: meta.indicator.error.maven
     - match: $
       pop: true
   - match: Running [\w\.]+Test
     scope: meta.message.maven
-  - match: '^([\w\.]+)\(([\w\.]+)\)\s*(Time elapsed): (\d+(?:[,.]\d+)*(?: sec)?)\s+(<<< (?>FAILURE|ERROR)!)'
+  - match: '^([\w\.]+)\(([\w\.]+)\)\s*(Time elapsed): (\d+(?:[,.]\d+)*(?: sec)?)\s+(<<< (?:FAILURE|ERROR)!)'
     captures:
       1: entity.name.test.maven
       2: meta.message.maven

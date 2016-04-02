@@ -41,7 +41,7 @@ contexts:
   - include: Packages/Sublemon/yaml_spec/yaml.sublime-syntax
 
   regexp-records:
-  - match: ((?>match|begin|end|symbolTransformation|cancelCompletion|first_line_match|\w+(?>Pattern|Match)))(:)
+  - match: ((?:match|begin|end|symbolTransformation|cancelCompletion|first_line_match|\w+(?:Pattern|Match)))(:)
     captures:
       1: entity.name.key.yaml
       2: punctuation.separator.mapping.yaml

@@ -105,17 +105,17 @@ contexts:
     scope: constant.numeric.javascript
   - match: '((?<=[\s=+*/%-(]|^)[+-])?\b[0-9]+\.?[0-9]*([eE][+-]?[0-9]+)?\b'
     scope: constant.numeric.javascript
-  - match: \b(?>false|Infinity|NaN|null|true|undefined)\b
+  - match: \b(?:false|Infinity|NaN|null|true|undefined)\b
     scope: constant.language.javascript
   - match: \b(this)\b
     scope: variable.language.javascript
-  - match: \b(?>var|let)\b
+  - match: \b(?:var|let)\b
     scope: storage.type.javascript
 
   keywords:
-  - match: \b(?>break|catch|continue|delete|else|finally|return|throw|try|yield\*?)\b
+  - match: \b(?:break|catch|continue|delete|else|finally|return|throw|try|yield\*?)\b
     scope: keyword.control.javascript
-  - match: \b(?>if|for|while)\b
+  - match: \b(?:if|for|while)\b
     scope: keyword.control.javascript
     push: semicolon_after_bracket_check
   # do-while
@@ -135,7 +135,7 @@ contexts:
     set:
     - match: \}
       pop: true
-    - match: (?>case|default)
+    - match: (?:case|default)
       scope: keyword.control.javascript
     - include: main
   - include: pop_before_space
@@ -153,7 +153,7 @@ contexts:
   - include: pop_before_space
 
   operators:
-  - match: (?>[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>)
+  - match: (?:[&|+-]{1,2}|([+*/%&^|<>=-]|<<|>>>?)=?|[=!]==?|<>)
     scope: keyword.operator.javascript
   - match: '[!~]'
     scope: keyword.operator.unary.javascript
@@ -164,7 +164,7 @@ contexts:
       scope: keyword.operator.ternary.javascript
       pop: true
     - include: main
-  - match: \b(?>in|of|typeof|void|with)\b
+  - match: \b(?:in|of|typeof|void|with)\b
     scope: keyword.operator.alphanumeric.javascript
   - match: '\b(instanceof)\s+({{id}})\b'
     captures:
@@ -176,13 +176,13 @@ contexts:
       2: support.class.javascript
 
   support:
-  - match: \b(?<!\.)(?>console|window|document)\b
+  - match: \b(?<!\.)(?:console|window|document)\b
     scope: support.constant.javascript
-  - match: \b(?>Array|Function|JSON|Math|Object)\b
+  - match: \b(?:Array|Function|JSON|Math|Object)\b
     scope: support.class.javascript
-  - match: \b(?>(decode|encode)URI(Component)?|eval|is(Finite|NaN)|parse(Float|Int))\b
+  - match: \b(?:(decode|encode)URI(Component)?|eval|is(Finite|NaN)|parse(Float|Int))\b
     scope: support.function.javascript
-  - match: (?<=.)(?>bind|call)(?=\s*\()
+  - match: (?<=.)(?:bind|call)(?=\s*\()
     scope: support.function.javascript
 
   fields:

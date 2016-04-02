@@ -11,7 +11,7 @@ contexts:
   main:
   - match: '(?=[\w#.-])'
     push: rule-selector
-  - match: '@(?>font-face|page|counter-style)'
+  - match: '@(?:font-face|page|counter-style)'
     scope: entity.name.at-rule.css
     push: rule-selector
   - match: '@[\w-]+'
@@ -65,9 +65,9 @@ contexts:
 
   at-rule-selector:
   - meta_scope: meta.rule.selector.css
-  - match: \b(?>and|or|not|only)\b
+  - match: \b(?:and|or|not|only)\b
     scope: keyword.operator.css
-  - match: (?=\s*(?>;|(?=\})))
+  - match: (?=\s*(?:;|(?=\})))
     pop: true
   - match: (?=\s*\{)
     set:
@@ -88,7 +88,7 @@ contexts:
     push:
     - meta_scope: meta.property.css
     - meta_content_scope: meta.property.value.css
-    - match: (?=\s*(?>;|(?=\})))
+    - match: (?=\s*(?:;|(?=\})))
       pop: true
     - match: "!important"
       scope: keyword.other.important.css
@@ -98,12 +98,14 @@ contexts:
       scope: support.constant.css
 
   constants:
-  - match: '-?\d+(?:\.\d+)?(?>%|px|pt|em|s)?'
+  - match: '-?\d+(?:\.\d+)?(?:%|px|pt|em|s)?'
     scope: constant.numeric.css
   - match: '#[0-9A-Fa-f]{1,6}'
     scope: constant.numeric.css
-  - match: '(["'']).*?\1'
-    scope: string.quoted.css
+  - match: "'.*?'"
+    scope: string.quoted.single.css
+  - match: '".*?"'
+    scope: string.quoted.double.css
 
   support:
   - match: ((rgb|hsl)a?|regexp)*\s*\(

@@ -9,7 +9,7 @@ variables:
   id: (?:\b[a-zA-Z]\w*\b)
   small_id: (?:\b[a-z]\w*\b)
   class_id: (?:\b[A-Z]\w*\b)
-  escape: '\\(?>[bfnrt''"\\]|u[0-9a-fA-F]{4})'
+  escape: '\\(?:[bfnrt''"\\]|u[0-9a-fA-F]{4})'
   number: (?:[0-9][0-9_]*)
   before_non_space: (?=\S)
   before_space: (?=\s)
@@ -137,16 +137,16 @@ contexts:
       pop: true
   - match: //.*$
     scope: comment.line.java
-  - match: ^(?><{7}|={7}|>{7}).*$
+  - match: ^(?:<{7}|={7}|>{7}).*$
     scope: comment.line.merge.java
 
   javadoc:
   - meta_scope: comment.block.documentation.java
   - match: \*/
     pop: true
-  - match: '@(?>param)\s+[\w<>]*'
+  - match: '@(?:param)\s+[\w<>]*'
     scope: keyword.documentation.javadoc.java
-  - match: (\{\s*@(?>code|literal|link))
+  - match: (\{\s*@(?:code|literal|link))
     scope: keyword.documentation.inline.javadoc.java
     push:
     - meta_scope: no-spellcheck.java
@@ -180,15 +180,15 @@ contexts:
       scope: invalid.illegal.missing-quote
 
   constants:
-  - match: '\b(?>0[xX][0-9a-fA-F_]+|0[0-7_]+)[Ll]?\b'
+  - match: '\b(?:0[xX][0-9a-fA-F_]+|0[0-7_]+)[Ll]?\b'
     scope: constant.numeric.java
   - match: '(?:(?<=[\s=+*/%-(]|^)-)?\b{{number}}(\.{{number}}?)?(?:[eE][+-]?{{number}})?[lLfFdD]?\b'
     scope: constant.numeric.java
-  - match: '''(?>{{escape}}|.)'''
+  - match: '''(?:{{escape}}|.)'''
     scope: constant.character.java
-  - match: '{{b}}(?>false|null|true)\b'
+  - match: '{{b}}(?:false|null|true)\b'
     scope: constant.language.java
-  - match: '{{b}}(?>this|super)\b'
+  - match: '{{b}}(?:this|super)\b'
     scope: variable.language.java
 
   storage:
@@ -197,11 +197,11 @@ contexts:
   - include: storage_class
 
   primitive_types:
-  - match: '{{b}}(?>void|boolean|byte|char|short|int|float|long|double)\b'
+  - match: '{{b}}(?:void|boolean|byte|char|short|int|float|long|double)\b'
     scope: storage.type.primitive.java
 
   storage_modifiers:
-  - match: '{{b}}(?>default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp|volatile)\b'
+  - match: '{{b}}(?:default|public|private|protected|static|final|native|synchronized|abstract|transient|strictfp|volatile)\b'
     scope: storage.modifier.java
 
   user_constant:
@@ -262,20 +262,20 @@ contexts:
     scope: storage.type.wildcard.java
   - match: \&
     scope: keyword.operator.java
-  - match: \b(?>extends|super)\b
+  - match: \b(?:extends|super)\b
     scope: storage.modifier.java
   - include: storage_class
   - include: primitive_types
   - include: pop_on_fence
 
   methods_generic:
-  - match: '<(?=[^>]+?(?>extends|super).+?>)'
+  - match: '<(?=[^>]+?(?:extends|super).+?>)'
     push: generic
 
   operators:
   - match: '->'
     scope: keyword.operator.lambda.java
-  - match: (?>[&|+-]{1,2}|(?>[+*/%&^|<>=-]|<<|>>>?)=?|!=)
+  - match: (?:[&|+-]{1,2}|(?:[+*/%&^|<>=-]|<<|>>>?)=?|!=)
     scope: keyword.operator.java
   - match: (::)(new)?
     captures:
@@ -324,7 +324,7 @@ contexts:
     - include: code_section
 
   keywords:
-  - match: '{{b}}(?>else|finally|throw)\b'
+  - match: '{{b}}(?:else|finally|throw)\b'
     scope: keyword.control.java
   - match: '{{b}}return\b'
     scope: keyword.control.return.java
@@ -335,7 +335,7 @@ contexts:
   - match: '{{b}}assert\b'
     scope: keyword.control.assert.java
   # expr (), then possible {}
-  - match: '{{b}}(?>if|try|while)\b'
+  - match: '{{b}}(?:if|try|while)\b'
     scope: keyword.control.java
     push: round_brackets_no_semicolon
   # do-while
@@ -375,7 +375,7 @@ contexts:
   - match: \{
     set:
     - include: pop_on_closed_curly_bracket
-    - match: (?>case|default)
+    - match: (?:case|default)
       scope: keyword.control.java
     - include: code_section
   - include: pop_before_non_space
@@ -450,7 +450,7 @@ contexts:
 
   class_identifier:
   - meta_scope: meta.class.identifier.java
-  - match: (?>[\w@]+)
+  - match: (?:[\w@]+)
     scope: storage.type.modifier.java
     push:
     - - match: '{{class_id}}'

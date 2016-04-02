@@ -30,7 +30,7 @@ contexts:
   numbers-and-constants:
   - match: '-?(?:0|[1-9]\d*)(?:(?:\.\d+)?(?:[eE][+-]?\d+)?)?'
     scope: constant.numeric.json
-  - match: \b(?>true|false|null)\b
+  - match: \b(?:true|false|null)\b
     scope: constant.language.json
 
   strings:
