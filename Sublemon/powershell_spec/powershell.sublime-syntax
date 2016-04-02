@@ -141,7 +141,7 @@ contexts:
     scope: variable.user.powershell
 
   keywords:
-  - match: (?i)\b(?<![/\\\[-])(?>begin|break|catch|class|continue|data|define|do|dynamicparam|else(if)?|end|exit|finally|for(each)?|from|if|in|parallel|param|process|return|select|sequence|switch|throw|trap|try|until|using|var|where|while|workflow)(?!-)\b
+  - match: (?i)\b(?<![/\\\[-])(?:begin|break|catch|class|continue|data|define|do|dynamicparam|else(if)?|end|exit|finally|for(each)?|from|if|in|parallel|param|process|return|select|sequence|switch|throw|trap|try|until|using|var|where|while|workflow)(?!-)\b
     scope: keyword.control.powershell
   - match: '[%?@$](?=\s*\{)'
     scope: keyword.control.powershell
@@ -149,7 +149,7 @@ contexts:
     scope: keyword.control.powershell
 
   operators:
-  - match: (-(?>(?:not)?match|[ic]?replace))\s+(')
+  - match: (-(?:(?:not)?match|[ic]?replace))\s+(')
     captures:
       1: keyword.operator.powershell
       2: punctuation.definition.regexp.powershell
@@ -158,13 +158,13 @@ contexts:
     - match: "'"
       scope: punctuation.definition.regexp.powershell
       pop: true
-  - match: (?<=[\s()\[\]])-(?>c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|[ia]s|sh[rl])\b
+  - match: (?<=[\s()\[\]])-(?:c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|[ia]s|sh[rl])\b
     scope: keyword.operator.powershell
-  - match: (?>[%/*+-]?=|--%)
+  - match: (?:[%/*+-]?=|--%)
     scope: keyword.operator.powershell
-  - match: (?>--|\+\+)(?=\s|$)
+  - match: (?:--|\+\+)(?=\s|$)
     scope: keyword.operator.powershell
-  - match: '[*/%+-](?=\s*(?>[\d$"'']|-\d))'
+  - match: '[*/%+-](?=\s*(?:[\d$"'']|-\d))'
     scope: keyword.operator.powershell
   - match: '!'
     scope: keyword.operator.unary.powershell
@@ -183,7 +183,7 @@ contexts:
       1: keyword.operator.stream.powershell
 
   functions:
-  - match: \b(?<![/-])(?i)((?>function|filter))\s+([A-Za-z][\w.-]*)
+  - match: \b(?<![/-])(?i)((?:function|filter))\s+([A-Za-z][\w.-]*)
     captures:
       1: storage.type.function.powershell
       2: entity.name.function.powershell

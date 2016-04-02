@@ -135,7 +135,7 @@ contexts:
     - match: '>'
       scope: punctuation.definition.tag.end.xml
       pop: true
-    - match: (?>SYSTEM|PUBLIC)
+    - match: (?:SYSTEM|PUBLIC)
       scope: keyword.doctype.xml
     - match: \[
       scope: punctuation.definition.doctype.begin.xml
@@ -147,7 +147,7 @@ contexts:
     - include: strings
 
   doctype_element:
-  - match: '(<!)((?>ELEMENT|ATTLIST))\s*({{id}})'
+  - match: '(<!)(ELEMENT|ATTLIST)\s*({{id}})'
     captures:
       1: punctuation.definition.tag.begin.xml
       2: entity.name.tag.xml

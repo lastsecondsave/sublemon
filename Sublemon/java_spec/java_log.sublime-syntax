@@ -8,7 +8,7 @@ variables:
 
 contexts:
   main:
-  - match: ^.* \b(?>INFO|(ERROR)|(WARN(?:ING)?))\b
+  - match: ^.* \b(?:INFO|(ERROR)|(WARN(?:ING)?))\b
     scope: comment.log.java
     captures:
       1: meta.indicator.error.java
@@ -21,7 +21,7 @@ contexts:
     captures:
       1: entity.name.exception.java
     push: junit_result_string
-  - match: '(Caused by: )?((?:{{small_id}}\.)+(?:[A-Z]\w*)?(?>Exception|Error|Failure))\b(?:: (.*))?'
+  - match: '(Caused by: )?((?:{{small_id}}\.)+(?:[A-Z]\w*)?(?:Exception|Error|Failure))\b(?:: (.*))?'
     scope: meta.exception.java
     captures:
       1: meta.message.java

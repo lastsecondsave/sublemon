@@ -7,7 +7,7 @@ hidden: true
 
 contexts:
   main:
-  - match: '-(?>diff|text)'
+  - match: '-(?:diff|text)'
     scope: variable.language.git
 
   - include: Packages/Sublemon/etc/unix_config.sublime-syntax

@@ -32,11 +32,11 @@ contexts:
   regexp:
   - match: '\\[ABbKZzG]|\^|\$'
     scope: keyword.control.anchor.regexp
-  - match: '(?>\(\?(?>R|P&\w+|{{number}})\)|\\g(?:{{group_name}}|''{{number}}''|<{{number}}>))'
+  - match: '(?:\(\?(?:R|P&\w+|{{number}})\)|\\g(?:{{group_name}}|''{{number}}''|<{{number}}>))'
     scope: keyword.control.subroutine.regexp
-  - match: '(?>\\[1-9]\d*|\(\?P=(\w+)\)|\\k{{group_name}})'
+  - match: '(?:\\[1-9]\d*|\(\?P=(\w+)\)|\\k{{group_name}})'
     scope: keyword.other.backreference.regexp
-  - match: '[?+*]|\{(?>\d+,\d+|\d+,|,\d+|\d+)\}\??'
+  - match: '[?+*]|\{(?:\d+,\d+|\d+,|,\d+|\d+)\}\??'
     scope: keyword.operator.quantifier.regexp
   - match: \|
     scope: keyword.operator.or.regexp
@@ -72,7 +72,7 @@ contexts:
     - include: regexp
 
   # (?=expr), (expr)
-  - match: '\((\?(?>[:>|]|<?[=!])?)?'
+  - match: '\((\?(?:[:>|]|<?[=!])?)?'
     scope: punctuation.definition.group.regexp
     push:
     - meta_scope: meta.group.regexp

@@ -40,7 +40,7 @@ contexts:
   # Titles
   - match: '^#{1,6}(?!#)\s*(.*?)\s*#*$'
     scope: markup.heading.markdown entity.name.section.markdown
-  - match: '^(?>-+|=+)$'
+  - match: '^(?:-+|=+)$'
     scope: markup.heading.markdown punctuation.heading.underline.markdown
 
   # Lists / Quote
@@ -52,7 +52,7 @@ contexts:
     scope: punctuation.definition.quote.markdown
 
   # Raw blocks
-  - match: '^(?>[ ]{4}|\t).*$'
+  - match: '^(?:[ ]{4}|\t).*$'
     scope: markup.raw.block.markdown
   - match: ^```$
     scope: punctuation.definition.block.fenced.markdown
