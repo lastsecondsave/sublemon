@@ -1,0 +1,4 @@
+$ SYNTAX TEST "Packages/Sublemon/xml_spec/xml.sublime-syntax"
+
+<tag attr="val"wrong/>
+$              ^ invalid.illegal
