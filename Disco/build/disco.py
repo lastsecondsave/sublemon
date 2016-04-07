@@ -153,6 +153,8 @@ settings = [
   rule("CSS pseudo-class selector", "meta.rule.selector.css entity.name.pseudo-class", foreground = PURPLE),
   rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
 
+  rule("Git not commited line number", "meta.not-commited-yet.git constant.numeric.line-number", foreground = GREEN),
+
   # Tweaks for default syntaxes
 
   rule("Python logical operator",         "keyword.operator.logical.python", foreground = PURPLE),
