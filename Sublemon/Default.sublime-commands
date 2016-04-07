@@ -1,9 +1,5 @@
 [
   {
-    "caption": "Sublemon: Demo",
-    "command": "sublemon_demo"
-  },
-  {
     "caption": "Escape Backslashes",
     "command": "escape_backslashes"
   },
@@ -14,5 +10,27 @@
   {
     "caption": "View: Toggle Draw Centered",
     "command": "toggle_draw_centered"
+  },
+
+  /** GIT **/
+
+  {
+    "caption": "Git: Diff",
+    "command": "git_diff"
+  },
+  {
+    "caption": "Git: Log",
+    "command": "git_log"
+  },
+  {
+    "caption": "Git: Blame",
+    "command": "git_blame"
+  },
+
+  /** EXPERIMENTAL **/
+
+  {
+    "caption": "Sublemon: Demo",
+    "command": "sublemon_demo"
   }
 ]
