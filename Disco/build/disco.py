@@ -156,6 +156,7 @@ settings = [
   rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
 
   rule("Git not commited line number", "meta.not-commited-yet.git constant.numeric.line-number", foreground = GREEN),
+  rule("Git date",                     "constant.date.git", foreground = DARK_VIOLET),
 
   # Tweaks for default syntaxes
 

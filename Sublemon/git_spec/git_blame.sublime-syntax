@@ -28,5 +28,5 @@ contexts:
     - match: (?:(.+)\s+)?(\d{4}-\d{2}-\d{2})\s+(\d+)
       captures:
         1: entity.name.author.git
-        2: comment.git
+        2: constant.date.git
         3: constant.numeric.line-number.git

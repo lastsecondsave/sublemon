@@ -6,7 +6,8 @@ hidden: true
 
 contexts:
   main:
-  - match: '^(\^?[0-9a-f]{6,}) (.+?) → (.*)$'
+  - match: '^(\^?[0-9a-f]{6,}) (\d{4}-\d{2}-\d{2}) (.+?) → (.*)$'
     captures:
       1: constant.numeric.git
-      2: entity.name.author.git
+      2: constant.date.git
+      3: entity.name.author.git
