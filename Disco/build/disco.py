@@ -5,10 +5,12 @@ import re
 import shutil
 
 GRAY         = "#9090A0" # [144, 144, 160]
+DARK_GRAY    = "#51515D" # [ 81,  81,  93]
 WHITE        = "#CDCDCD" # [205, 205, 205]
 CLEAR_WHITE  = "#FFFFFF" # [255, 255, 255]
 LIGHT_VIOLET = "#AAAAF0" # [170, 170, 240]
 VIOLET       = "#B69EFF" # [182, 158, 255]
+DARK_VIOLET  = "#5E5E8E" # [94,   94, 142]
 PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
 BLUE         = "#77ABFF" # [119, 171, 255]
@@ -80,8 +82,8 @@ settings = [
 
   rule("Doc-comment keyword and parameter", """comment.block.documentation keyword,
                                                comment.block.documentation variable.parameter""", foreground = WHITE),
-  rule("Doc-comment inline keyword",          "keyword.documentation.inline", foreground = GRAY+"90"),
-  rule("Tags in doc-comments",                "comment.block.documentation meta.tag", foreground = LIGHT_VIOLET+"90"),
+  rule("Doc-comment inline keyword",          "keyword.documentation.inline", foreground = DARK_GRAY),
+  rule("Tags in doc-comments",                "comment.block.documentation meta.tag", foreground = DARK_VIOLET),
 
   rule("Java package declaration",             "meta.package.java storage.type", foreground = CRIMSON),
   rule("Java import asterisk",                 "storage.type.asterisk.java", foreground = CRIMSON),
