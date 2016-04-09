@@ -316,8 +316,14 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
 
         sublime.status_message(message)
 
-    def var(self, name) :
-        return _var(self.window, name)
+    def var(self, name, default=None):
+        return _var(self.window, name, default)
+
+    def conf(self, name, default=None):
+        project_data = self.window.project_data()
+        if not "chimney" in project_data:
+            return default
+        return project_data["chimney"].get(name, default)
 
 ## STARTUP ##
 
