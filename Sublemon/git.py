@@ -7,8 +7,8 @@ class GitDiffCommand(ChimneyCommand):
 
 class GitLogCommand(ChimneyCommand):
     def preprocess_options(self, options):
-        options.shell_cmd = "git log -50 --follow --no-merges --format='{}' -- '{}'"\
-                .format("%h %an → %s", self.var("file"))
+        options.shell_cmd = "git log -50 --follow --no-merges --date=short --format='{}' -- '{}'"\
+                .format("%h %ad %an → %s", self.var("file"))
         options.syntax = "Packages/Sublemon/git_spec/git_log.sublime-syntax"
 
 class GitBlameCommand(ChimneyCommand):
