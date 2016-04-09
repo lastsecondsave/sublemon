@@ -30,7 +30,7 @@ class MavenCommand(ChimneyCommand):
         return MavenPipe()
 
     def preprocess_options(self, options):
-        cmd = ["mvn"]
+        cmd = [self.conf("mvn_exec", "mvn")]
 
         if options["offline"]:
             cmd.append("-o")
