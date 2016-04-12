@@ -33,8 +33,12 @@ contexts:
   - include: entities_pack
   - include: substitutions_pack
 
-  pop_before_any:
+  pop_otherwise:
   - match: ''
+    pop: true
+
+  spaces:
+  - match: '(?=\S)'
     pop: true
 
   comments_pack:
@@ -59,11 +63,11 @@ contexts:
     set: [double_quoted_string_scope, double_quoted_string]
   - match: "'"
     set: [single_quoted_string_scope, single_quoted_string]
-  - include: pop_before_any
+  - include: pop_otherwise
 
   double_quoted_string_scope:
   - meta_scope: string.quoted.double.xml
-  - include: pop_before_any
+  - include: pop_otherwise
 
   double_quoted_string:
   - meta_include_prototype: false
@@ -73,7 +77,7 @@ contexts:
 
   single_quoted_string_scope:
   - meta_scope: string.quoted.single.xml
-  - include: pop_before_any
+  - include: pop_otherwise
 
   single_quoted_string:
   - meta_include_prototype: false
@@ -131,22 +135,22 @@ contexts:
       1: entity.name.attribute.namespace.xml
       2: punctuation.separator.namespace.xml
       3: entity.name.attribute.localname.xml
-    push: [attribute_scope, attribute_value]
+    push: [attribute_scope, attribute_value, spaces]
 
   attribute_scope:
   - meta_scope: meta.attribute.xml
-  - include: pop_before_any
+  - include: pop_otherwise
 
   attribute_value:
   - match: '='
     scope: punctuation.separator.attribute.xml
-    set: [space_check, string]
-  - include: pop_before_any
+    set: [space_check, string, spaces]
+  - include: pop_otherwise
 
   space_check:
   - match: '{{id}}'
     scope: invalid.illegal.no-space
-  - include: pop_before_any
+  - include: pop_otherwise
 
   doctype_pack:
   - match: '(<!)(DOCTYPE)\s*({{id}})'
