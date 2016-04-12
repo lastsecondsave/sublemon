@@ -2,3 +2,7 @@ $ SYNTAX TEST "Packages/Sublemon/xml_spec/xml.sublime-syntax"
 
 <tag attr="val"wrong/>
 $              ^ invalid.illegal
+
+<tag attr = "val" />
+$         ^ meta.attribute.xml punctuation.separator.attribute.xml
+$           ^ meta.attribute.xml string.quoted.double.xml
