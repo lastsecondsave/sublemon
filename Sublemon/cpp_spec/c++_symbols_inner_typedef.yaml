@@ -1,6 +1,0 @@
-# [PackageDev] target_format: plist, ext: tmPreferences
-scope: source.c++ meta.type.body.c++ entity.name.typedef.c++
-settings:
-  showInSymbolList: 1
-  showInIndexedSymbolList: 1
-  symbolTransformation: s/^/  typedef /g;

@@ -57,7 +57,6 @@
 	"ignored_packages":
 	[
 		".git",
-		"C++",
 		"CSS",
 		"Java",
 		"JavaScript",
