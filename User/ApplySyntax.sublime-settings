@@ -15,14 +15,6 @@
       ]
     },
     {
-      "syntax": "Sublemon/sublime_files_spec/package_dev",
-      "match": "all",
-      "rules": [
-          { "file_path": ".*\\.yaml" },
-          { "first_line": "# \\[PackageDev\\] .+" }
-      ]
-    },
-    {
       "syntax": "Sublemon/shell_spec/shell",
       "rules": [
           { "first_line": "#!/bin/sh" }
