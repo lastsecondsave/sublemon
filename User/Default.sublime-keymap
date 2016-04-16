@@ -33,9 +33,10 @@
 
   { "keys": ["f1"], "command": "prev_bookmark" },
 
-  { "keys": ["ctrl+k", "ctrl+o"], "command": "clone_file" },
+  { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
+  { "keys": ["ctrl+k", "ctrl+n"], "command": "clone_file" },
   { "keys": ["ctrl+k", "ctrl+;"], "command": "diff_changes" },
-  { "keys": ["ctrl+k", "ctrl+n"], "command": "toggle_menu" },
+
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_indent_guides" },
   { "keys": ["ctrl+k", "ctrl+/"], "command": "toggle_setting", "args": {"setting": "word_wrap"}},
