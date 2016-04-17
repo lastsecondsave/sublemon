@@ -58,8 +58,13 @@ contexts:
       1: keyword.operator.yaml
 
   comments:
-  - match: (?:^|(?<=\s))#.*$
+  - match: ^\s*##\s(.*?\S)\s##$
     scope: comment.line.number-sign.yaml
+    captures:
+      1: comment.mark.yaml
+  - match: (?:^|\s)(#.*$)
+    captures:
+      1: comment.line.number-sign.yaml
 
   scalars:
   - include: quoted_strings
