@@ -8,6 +8,6 @@ for spy in $(find Sublemon -name '*.settings.py'); do
   python $spy
 done;
 
-cd "$ROOT_DIR/Disco/build"
+cd "$ROOT_DIR/Disco/src"
 echo "\nRunning disco.py in $(pwd)\n"
 python disco.py

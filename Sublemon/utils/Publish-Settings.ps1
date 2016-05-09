@@ -10,7 +10,7 @@ gci -r '*.settings.py' | %{
 Pop-Location
 Push-Location
 
-Set-Location "..\..\Disco\build"
+Set-Location "..\..\Disco\src"
 Write-Output "`nRunning disco.py in $(pwd)`n"
 python disco.py
 
