@@ -42,37 +42,34 @@ class ShowFilePathCommand(sublime_plugin.WindowCommand):
         if not file_path:
             return
 
-        if self.window.project_data():
-            score = 0
-            short_path = file_path
+        prefix = None
+        variables = self.window.extract_variables()
 
-            for name, path in self.project_folders().items():
-                if not file_path.startswith(path):
-                    continue
+        if "project" in variables:
+            settings = self.window.project_data().get("settings", dict())
+            base_path = settings.get("project_root", variables["project_path"])
 
-                if len(path) > score:
-                    short_path = os.path.join(name, file_path[len(path):])
+            if file_path.startswith(base_path + os.sep):
+                file_path = file_path[len(base_path)+1:]
+                prefix = variables["project_base_name"]
 
-            file_path = short_path
+        if not prefix:
+            if sys.platform != "win32":
+                home_path = os.environ["HOME"]
+            else:
+                home_path = os.environ["HOMEDRIVE"] + os.environ["HOMEPATH"]
 
-        home_path = os.environ["HOME"] + os.sep
-        if file_path.startswith(home_path):
-            file_path = "~ " + file_path[len(home_path):]
+            if file_path.startswith(home_path + os.sep):
+                file_path = file_path[len(home_path)+1:]
+                prefix = "~"
+            elif sys.platform == "win32":
+                prefix = file_path[0:2].lower()
+                file_path = file_path[3:]
+            else:
+                prefix = "/"
+                file_path = file_path[1:]
 
-        if file_path.startswith(os.sep):
-            file_path = file_path[1:]
-
-        sublime.status_message(file_path.replace(os.sep, " → "))
-
-    def project_folders(self):
-        project_path = self.window.extract_variables()["project_path"]
-        folders = self.window.project_data()["folders"]
-        result = dict()
-        for folder in folders:
-            path = os.path.normpath(os.path.join(project_path, folder["path"]))
-            name = folder["name"] if "name" in folder else os.path.basename(path)
-            result[name] = path + os.sep
-        return result
+        sublime.status_message("({}) → {}".format(prefix, file_path.replace(os.sep, " → ")))
 
 class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
