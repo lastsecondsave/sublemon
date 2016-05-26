@@ -24,7 +24,7 @@ contexts:
       - include: escapes
 
   escapes:
-  - match: '\\[ trn:=\\]'
+  - match: '\\[ trn:=\\!#]'
     scope: constant.character.escape.java-props
   - match: '\\u[a-hA-H0-9]{1,4}'
     scope: constant.character.escape.unicode.java-props
