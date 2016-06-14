@@ -6,8 +6,7 @@ SUMMARY_PATTERN       = re.compile(r'\[ERROR\] Failed to execute goal.*')
 SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
 
 class MavenPipe(Pipe):
-    def __init__(self):
-        self.skip = False
+    skip = False
 
     def output(self, line):
         if DASHES_PATTERN.match(line):
@@ -26,11 +25,14 @@ class MavenPipe(Pipe):
         self.next_pipe.output(line)
 
 class MavenCommand(ChimneyCommand):
-    def get_pipe(self, options):
+    def section(self):
+        return "mvn"
+
+    def create_pipe(self, options, variables):
         return MavenPipe()
 
-    def preprocess_options(self, options):
-        cmd = [self.conf("mvn_exec", "mvn")]
+    def preprocess_options(self, options, variables):
+        cmd = [options.get("executable", "mvn")]
 
         if options["offline"]:
             cmd.append("-o")
@@ -48,5 +50,7 @@ class MavenCommand(ChimneyCommand):
         options.file_regex = r"^(?:\[(?:ERROR|WARNING)\] )?(\S.*):\[(\d+),(\d+)\](?: error:)? (.*)"
 
         if not options.working_dir:
-            is_pom = self.var("file_name") == "pom.xml"
-            options.working_dir = self.var("file_path") if is_pom else self.var("folder")
+            if variables["file_name"] == "pom.xml":
+                options.working_dir = variables["file_path"]
+            else:
+                options.working_dir = variables["folder"]
