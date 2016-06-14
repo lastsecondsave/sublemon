@@ -9,7 +9,8 @@ DARK_GRAY    = "#51515D" # [ 81,  81,  93]
 WHITE        = "#CDCDCD" # [205, 205, 205]
 CLEAR_WHITE  = "#FFFFFF" # [255, 255, 255]
 LIGHT_VIOLET = "#AAAAF0" # [170, 170, 240]
-VIOLET       = "#B69EFF" # [182, 158, 255]
+# VIOLET       = "#B69EFF" # [182, 158, 255]
+VIOLET       = "#6699FF" # [182, 158, 255]
 DARK_VIOLET  = "#5E5E8E" # [94,   94, 142]
 PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
@@ -30,13 +31,13 @@ def rule(name, scope, **settings):
   )
 
 settings = dict(
-  background         = BLUISH_BLACK,
+  background         = '#000000',
   foreground         = WHITE,
   caret              = CLEAR_WHITE,
   selection          = DARK_BLUE+"90",
   inactiveSelection  = DARK_BLUE,
   selectionBorder    = BLUE,
-  lineHighlight      = CRIMSON+"20",
+  lineHighlight      = CRIMSON+"50",
   findHighlight      = YELLOW,
   minimapBorder      = WHITE,
   bracketsForeground = DARK_ORANGE
