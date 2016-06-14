@@ -1,6 +1,7 @@
 import collections
 import os
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 import subprocess
 import sys
 import threading
@@ -68,10 +69,11 @@ class ErrorBuffer(OutputBuffer):
         self.pipe.error(text)
 
 class AsyncStreamConsumer(threading.Thread):
-    def __init__(self, stream, consumer):
+    def __init__(self, stream, consumer, on_close=None):
         super().__init__(self)
         self.stream = stream
         self.consumer = consumer
+        self.on_close = on_close
 
     def run(self):
         while True:
@@ -79,12 +81,12 @@ class AsyncStreamConsumer(threading.Thread):
             if len(chunk) == 0:
                 break
             self.consumer.next(chunk)
+
         self.consumer.flush()
         self.stream.close()
-        self.on_close()
 
-    def on_close(self):
-        pass
+        if self.on_close:
+            self.on_close()
 
 ## OUTPUT PANEL ##
 
@@ -97,19 +99,24 @@ class OutputPanel:
         self.line_buffer = collections.deque()
 
         self.set_settings(gutter="False", scroll_past_end="False")
-        self.autoshow = False
 
     def reset(self):
         self.view.run_command('erase_view')
         self.line_buffer.clear()
 
-    def set_settings(self, syntax=None, **settings):
+    def set_settings(self,
+            syntax=None, scroll_to_end=False, show_on_text=False,
+            **settings):
+
         for k, v in settings.items():
             if v:
                 self.view.settings().set(k, v)
 
         if syntax:
             self.view.assign_syntax(syntax)
+
+        self.show_on_text = show_on_text
+        self.scroll_to_end = scroll_to_end
 
         self.window.create_output_panel("exec")
 
@@ -131,9 +138,15 @@ class OutputPanel:
             characters = '\n'.join(self.line_buffer) + '\n'
             self.line_buffer.clear()
 
-        self.view.run_command('append', {'characters': characters, 'force': True, 'scroll_to_end': True})
-        if self.autoshow and self.window.active_panel() != "exec":
+        self.view.run_command('append', dict(
+            characters = characters,
+            force = True,
+            scroll_to_end = self.scroll_to_end
+        ))
+
+        if self.show_on_text:
             self.show()
+            self.show_on_text = False
 
     def show(self):
         self.window.run_command("show_panel", {"panel": "output.exec"})
@@ -159,17 +172,21 @@ class Options:
 
         option = lambda x, y=None: options_dict.get(x, y)
 
-        self.cmd         = option("cmd")
-        self.file_regex  = option("file_regex", "")
-        self.kill        = option("kill", False)
-        self.line_regex  = option("line_regex", "")
-        self.show_output = option("show_output", "text").lower()
-        self.shell_cmd   = option("shell_cmd")
-        self.syntax      = option("syntax", "Packages/Text/Plain text.tmLanguage")
-        self.working_dir = option("working_dir")
+        self.cmd           = option("cmd")
+        self.file_regex    = option("file_regex", "")
+        self.kill          = option("kill", False)
+        self.line_regex    = option("line_regex", "")
+        self.shell_cmd     = option("shell_cmd")
+        self.syntax        = option("syntax", "Packages/Text/Plain text.tmLanguage")
+        self.working_dir   = option("working_dir")
+        self.show_output   = option("show_output", "text").lower()
+        self.scroll_to_end = option("scroll_to_end", True)
+
+    def get(self, arg, default=None):
+        return self.original_dict.get(arg, default)
 
     def __getitem__(self, arg):
-        return self.original_dict.get(arg, None)
+        return self.get(arg)
 
 class State:
     pass
@@ -194,13 +211,20 @@ class Executor:
 
         # Prepare output panel
 
+        output_panel_settings = dict(
+            result_base_dir   = options.working_dir,
+            result_file_regex = options.file_regex,
+            result_line_regex = options.line_regex,
+            syntax            = options.syntax,
+            scroll_to_end     = options.scroll_to_end,
+            show_on_text      = options.show_output == "text"
+        )
+
         self.output_panel.reset()
-        self.output_panel.set_settings(**self.map_output_panel_settings(options))
+        self.output_panel.set_settings(**output_panel_settings)
 
         if options.show_output == "always":
             self.output_panel.show()
-
-        self.output_panel.autoshow = options.show_output == "text";
 
         # Start pipes
 
@@ -210,10 +234,7 @@ class Executor:
         else:
             pipe = final_pipe
 
-        output_consumer = AsyncStreamConsumer(proc.stdout, OutputBuffer(pipe))
-        output_consumer.on_close = self.finish;
-        output_consumer.start()
-
+        AsyncStreamConsumer(proc.stdout, OutputBuffer(pipe), on_close=self.finish).start()
         AsyncStreamConsumer(proc.stderr, ErrorBuffer(pipe)).start()
 
         self.running_state = State()
@@ -229,7 +250,7 @@ class Executor:
             return
 
         if not os.path.isabs(opt.working_dir):
-            base_path = _var(self.window, "project_path")
+            base_path = self.window.extract_variables().get("project_path")
             opt.working_dir = os.path.join(base_path, opt.working_dir)
 
 
@@ -238,7 +259,7 @@ class Executor:
             opt.cmd = ["powershell.exe", "-Command", opt.shell_cmd]
             message = "[ps:{}] " + opt.shell_cmd
         elif opt.shell_cmd:
-            opt.cmd = [os.environ["SHELL"], "-i", "-c", opt.shell_cmd]
+            opt.cmd = [os.environ["SHELL"], "-c", opt.shell_cmd]
             message = "[sh:{}] " + opt.shell_cmd
         else:
             message = "[{}] " + " ".join(opt.cmd)
@@ -278,14 +299,6 @@ class Executor:
         proc.poll()
         _log("Terminated [{}], exit code: {}", proc.pid, proc.returncode)
 
-    def map_output_panel_settings(self, options):
-        return dict(
-            result_base_dir = options.working_dir,
-            result_file_regex = options.file_regex,
-            result_line_regex = options.line_regex,
-            syntax = options.syntax
-        )
-
 ## COMMANDS ##
 
 class EraseViewCommand(sublime_plugin.TextCommand):
@@ -297,33 +310,51 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
         super().__init__(window)
         _get_executor(window)
 
+    def section(self):
+        pass
+
+    def create_pipe(self, options, variables):
+        pass
+
+    def preprocess_options(self, options, variables):
+        pass
+
     def run(self, **args):
-        options = Options(args)
-        self.preprocess_options(options)
-        pipe=self.get_pipe(options)
-        _get_executor(self.window).run(options, pipe, self.finish)
+        options = self.create_options(args)
+        variables = self.window.extract_variables()
 
-    def get_pipe(self, options):
-        pass
+        self.preprocess_options(options, variables)
+        pipe = self.create_pipe(options, variables)
 
-    def preprocess_options(self, options):
-        pass
+        _get_executor(self.window).run(options, pipe, self.on_complete)
 
-    def finish(self, errors_count):
+    def create_options(self, args):
+        options = args.copy()
+        options_override = self.window.project_data()
+
+        if not options_override:
+            return Options(options)
+
+        options_override = options_override.get("configuration", dict())
+        options_override = options_override.get("chimney", None)
+
+        if not options_override:
+            return Options(options)
+
+        if self.section() in options_override:
+            options.append(options_override[self.section()])
+
+        if "show_output" in options_override:
+            options["show_output"] = options_override["show_output"]
+
+        options = Options(options)
+
+    def on_complete(self, errors_count):
         message = "Build finished"
         if errors_count > 0:
             message += " with {} error{}".format(errors_count, "s" if errors_count > 1 else "")
 
         sublime.status_message(message)
-
-    def var(self, name, default=None):
-        return _var(self.window, name, default)
-
-    def conf(self, name, default=None):
-        project_data = self.window.project_data()
-        if not "chimney" in project_data:
-            return default
-        return project_data["chimney"].get(name, default)
 
 ## STARTUP ##
 
@@ -348,6 +379,3 @@ def _get_startupinfo():
 
 def _log(message, *params):
     print("Chimney: " + message.format(*params))
-
-def _var(window, name, default=None):
-    return window.extract_variables().get(name, default)
