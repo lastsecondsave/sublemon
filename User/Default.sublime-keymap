@@ -3,7 +3,6 @@
 
   { "keys": ["ctrl+shift+b"], "command": "unbound" },
   { "keys": ["alt+shift+w"],  "command": "unbound" },
-  { "keys": ["ctrl+;"],       "command": "unbound" },
   { "keys": ["alt+q"],        "command": "unbound" },
 
   /** COMMON **/
@@ -46,6 +45,12 @@
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
   },
 
+  { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
+
+  { "keys": ["f5"], "command": "show_at_center" },
+
+  { "keys": ["ctrl+q"], "command": "exit" },
+
   /** SEARCH WIDGET **/
 
   { "keys": ["alt+q"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
@@ -55,8 +60,6 @@
   { "keys": ["f4"],    "command": "toggle_whole_word",    "context": [{"key": "setting.is_widget"}] },
 
   /** QUICK MENU **/
-
-  { "keys": ["ctrl+q"],  "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
   { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
   { "keys": ["alt+."],   "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
