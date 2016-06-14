@@ -1,0 +1,6 @@
+<snippet>
+	<description>awk</description>
+	<tabTrigger>awk</tabTrigger>
+	<scope>source.shell</scope>
+	<content><![CDATA[awk '{$0}']]></content>
+</snippet>

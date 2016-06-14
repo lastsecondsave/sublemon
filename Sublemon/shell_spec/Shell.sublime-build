@@ -1,0 +1,5 @@
+{
+  "selector" : "source.shell",
+  "target"   : "chimney",
+  "shell_cmd": "$file"
+}
