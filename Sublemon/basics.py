@@ -1,6 +1,7 @@
 import os
 import re
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 import sys
 
 class SublemonDemoCommand(sublime_plugin.TextCommand):
@@ -35,6 +36,33 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
         content = content.replace('\\', '\\\\')
         if len(content) > initial_content_length:
             self.view.replace(edit, region, content)
+
+class ShrinkSpacesCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
+        selection = self.view.sel()
+        for region in selection:
+            point = region.end()
+            selection.subtract(region)
+            point = self.shrink(edit, point) + 1
+            selection.add(sublime.Region(point, point))
+
+    def shrink(self, edit, point):
+        score = lambda p: self.view.substr(p) == ' '
+
+        begin = point
+        while score(begin - 1):
+            begin -= 1
+
+        end = point
+        while score(end):
+            end += 1
+
+        if end - begin < 2:
+            return point
+
+        region = sublime.Region(begin, end)
+        self.view.replace(edit, region, ' ')
+        return begin
 
 class ShowFilePathCommand(sublime_plugin.WindowCommand):
     def run(self):

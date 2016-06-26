@@ -4,6 +4,10 @@
     "command": "escape_backslashes"
   },
   {
+    "caption": "Shrink Spaces",
+    "command": "shrink_spaces"
+  },
+  {
     "caption": "Toggle Indent Guides",
     "command": "toggle_indent_guides"
   },
