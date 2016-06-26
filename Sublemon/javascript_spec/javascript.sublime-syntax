@@ -198,6 +198,7 @@ contexts:
       2: support.type.javascript
       3: keyword.other.javascript
       4: entity.name.function.javascript
+      5: keyword.operator.javascript
   - match: '({{id}})\.(prototype)\b'
     captures:
       1: support.type.javascript
