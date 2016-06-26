@@ -1,4 +1,5 @@
 {
   "font_options": ["directwrite"],
   "font_size": 9,
+  "caret_extra_width": 2
 }

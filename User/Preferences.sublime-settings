@@ -13,7 +13,6 @@
 		"*.orig",
 		"*.png"
 	],
-	"caret_extra_width": 1,
 	"caret_style": "blink",
 	"color_scheme": "Packages/Disco/Disco.tmTheme",
 	"copy_with_empty_selection": false,
@@ -99,6 +98,7 @@
 	"remember_full_screen": true,
 	"scroll_past_end": true,
 	"shift_tab_unindent": true,
+	"show_definitions": false,
 	"show_encoding": true,
 	"show_full_path": false,
 	"show_line_endings": true,
