@@ -8,17 +8,53 @@ variables:
   id: (?:\b\w+\b)
 
 contexts:
-  main:
-  - include: comments
-  - include: variables
-  - include: strings
+  prototype:
+  - include: comments_pack
 
-  comments:
+  main:
+  - match: ''
+    push: expression
+
+  pop_otherwise:
+  - match: ''
+    pop: true
+
+  spaces:
+  - match: '(?=\S)'
+    pop: true
+
+  expression:
+  - match: '[\n;]'
+    pop: true
+
+  - match: '({{id}})\s*\(\)'
+    captures:
+      1: entity.name.function.shell
+
+  - match: (\$)?({{id}})(=)
+    captures:
+      1: invalid.illegal.wrong-dollar-sign
+      2: variable.user.shell
+      3: keyword.operator.shell
+
+  - match: (export)\s*(\$)?({{id}})
+    captures:
+      1: keyword.shell
+      2: invalid.illegal.wrong-dollar-sign
+      3: variable.user.shell
+    set:
+    - match: =
+      scope: keyword.operator.shell
+      set:
+      - include: pop_otherwise
+    - include: pop_otherwise
+
+  comments_pack:
   - match: ^##\s+(.+?)\s+##
     scope: comment.line.number-sign.shell
     captures:
       1: comment.mark.shell
-  - match: (?:^|(?<=\s))#.*$
+  - match: '#.*$'
     scope: comment.line.number-sign.shell
 
   strings:
