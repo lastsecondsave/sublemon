@@ -5,7 +5,10 @@ scope: source.yaml
 file_extensions: [yaml, yml]
 
 variables:
+  number:   \b(?:0x[0-9a-fA-F]+|0o[0-7]+|[-+]?[0-9]+|[-+]?(?:\.[0-9]+|[0-9]+(?:\.[0-9]*)?)(?:[eE][-+]?[0-9]+)?)
+  constant: \b(?:[Tt]rue|TRUE|[Ff]alse|FALSE|[Nn]ull|NULL|\.nan|\.N[Aa]N|[-+]?\.(?:[Ii]nf|INF))
   value_terminator: (?=\s*(?:\s#|$))
+  flow_value_terminator: (?:{{value_terminator}}|(?=[,\]\}]))
 
 contexts:
   main:
@@ -13,7 +16,11 @@ contexts:
   - include: comments
   - include: flow_yaml
   - include: keys
-  - include: scalars
+  - include: quoted_strings
+  - match: '{{number}}{{value_terminator}}'
+    scope: constant.numeric.yaml
+  - match: '{{constant}}{{value_terminator}}'
+    scope: constant.language.yaml
   - match: '^%\w+'
     scope: entity.name.directive.yaml
   - match: \S.*?{{value_terminator}}
@@ -43,7 +50,11 @@ contexts:
   - include: comments
   - include: flow_yaml
   - include: keys
-  - include: scalars
+  - include: quoted_strings
+  - match: '{{number}}{{flow_value_terminator}}'
+    scope: constant.numeric.yaml
+  - match: '{{constant}}{{flow_value_terminator}}'
+    scope: constant.language.yaml
   - match: '([^\,\]\}\s].*?)\s*(?=[\,\]\}]|\s#|$)'
     captures:
       1: string.unquoted.yaml
@@ -65,16 +76,6 @@ contexts:
   - match: (?:^|\s)(#.*$)
     captures:
       1: comment.line.number-sign.yaml
-
-  scalars:
-  - include: quoted_strings
-  - include: numbers_and_constants
-
-  numbers_and_constants:
-  - match: '\b(?:0x[0-9a-fA-F]+|0o[0-7]+|[-+]?[0-9]+|[-+]?(?:\.[0-9]+|[0-9]+(?:\.[0-9]*)?)(?:[eE][-+]?[0-9]+)?){{value_terminator}}'
-    scope: constant.numeric.yaml
-  - match: '\b(?:[Tt]rue|TRUE|[Ff]alse|FALSE|[Nn]ull|NULL|\.nan|\.N[Aa]N|[-+]?\.(?:[Ii]nf|INF)){{value_terminator}}'
-    scope: constant.language.yaml
 
   quoted_strings:
   - match: '"'

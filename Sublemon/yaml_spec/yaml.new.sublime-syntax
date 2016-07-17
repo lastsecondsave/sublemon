@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: YAML
+scope: source.yaml2
+# file_extensions: [yaml, yml]
+
+variables:
+  number:   \b(?:0x[0-9a-fA-F]+|0o[0-7]+|[-+]?[0-9]+|[-+]?(?:\.[0-9]+|[0-9]+(?:\.[0-9]*)?)(?:[eE][-+]?[0-9]+)?)
+  constant: \b(?:[Tt]rue|TRUE|[Ff]alse|FALSE|[Nn]ull|NULL|\.nan|\.N[Aa]N|[-+]?\.(?:[Ii]nf|INF))
+  value_terminator: (?=\s*(?:\s#|$))
+  flow_value_terminator: (?:{{value_terminator}}|(?=[,\]\}]))
+
+contexts:
+  main:
+
+  pop_otherwise:
+  - match: ''
+    pop: true
+
+  comments_pack:
+    match: '\s*(#.*)$'
+    captures:
+      1: comment.line.number-sign.yaml
+
+  comment:
+  - include: comments_pack
+  - include: pop_otherwise

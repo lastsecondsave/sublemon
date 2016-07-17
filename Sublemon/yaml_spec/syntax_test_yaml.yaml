@@ -1,0 +1,34 @@
+# SYNTAX TEST "Packages/Sublemon/yaml_spec/yaml.sublime-syntax"
+
+key: [123, 345]
+#     ^ meta.section.flow.yaml constant.numeric.yaml
+#          ^ meta.section.flow.yaml constant.numeric.yaml
+
+
+key: [true, false]
+#     ^ meta.section.flow.yaml constant.language.yaml
+#           ^ meta.section.flow.yaml constant.language.yaml
+
+key: [true, 'false']
+#     ^ meta.section.flow.yaml constant.language.yaml
+#           ^ meta.section.flow.yaml string.quoted.single.yaml
+
+key: 1234
+#    ^ constant.numeric.yaml
+
+key: 1234,
+#    ^ string.unquoted.yaml
+
+key: true
+#    ^ constant.language.yaml
+
+key: true,
+#    ^ string.unquoted.yaml
+
+key: #comment
+#    ^ comment.yaml
+
+'a': 'value'
+#<-- source.yaml meta.key.yaml string.quoted.single.yaml
+ #<-- source.yaml meta.key.yaml string.quoted.single.yaml
+  #<-- source.yaml meta.key.yaml string.quoted.single.yaml
