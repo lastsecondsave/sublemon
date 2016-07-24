@@ -117,18 +117,7 @@ class ToggleDrawCenteredCommand(sublime_plugin.ApplicationCommand):
         return s.get("draw_centered", False)
 
 class OpenFilePathCommand(sublime_plugin.WindowCommand):
-    WIN_PATH = re.compile(r'(?:[A-Za-z]:|\\)\\[^<>:"/|?*]+(?::\d+){0,2}')
-    NIX_PATH = re.compile(r'~?/.+')
-
     def run(self):
-        initial = sublime.get_clipboard(4096).strip()
-        if initial.find('\n') != -1:
-            initial = ""
-
-        path_pattern = self.WIN_PATH if sys.platform == "win32" else self.NIX_PATH
-        if initial and not path_pattern.match(initial):
-            initial = ""
-
         on_done = lambda x: self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
-        view = self.window.show_input_panel("File Name:", initial, on_done, None, None)
+        view = self.window.show_input_panel("File Name:", '', on_done, None, None)
         view.sel().add(sublime.Region(0, len(initial)))
