@@ -49,7 +49,8 @@
 
   { "keys": ["f5"], "command": "show_at_center" },
 
-  { "keys": ["ctrl+q"], "command": "exit" },
+  { "keys": ["ctrl+q"], "command": "close_window" },
+  { "keys": ["ctrl+shift+q"], "command": "exit" },
 
   /** SEARCH WIDGET **/
 
