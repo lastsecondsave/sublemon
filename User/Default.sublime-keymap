@@ -107,7 +107,7 @@
   { "keys": ["shift+alt+."], "command": "close_tag" },
 
   { "keys": ["alt+shift+,"], "command": "insert_snippet",
-    "args": {"name": "Packages/Snippets/xml_snippets/tag.sublime-snippet"}
+    "args": {"name": "Packages/Sublemon/snippets/xml_snippets/tag.sublime-snippet"}
   },
 
   /** PLUGINS **/
