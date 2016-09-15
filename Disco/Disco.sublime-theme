@@ -336,7 +336,6 @@
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["selected"] }],
         "color": [240, 240, 240],
-        "font.bold": true
     },
 
     // Directory label
@@ -358,7 +357,6 @@
         "class": "sidebar_label",
         "parents": [{ "class": "tree_row", "attributes": ["expanded"] }],
         "color": [240, 240, 240],
-        "font.bold": true
     },
 
     // Label for transient file (unused)
