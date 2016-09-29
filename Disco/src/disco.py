@@ -23,6 +23,10 @@ ORANGE       = "#FF9A41" # [255, 154,  65]
 DARK_ORANGE  = "#FF8147" # [255, 129,  71]
 CRIMSON      = "#E5476C" # [229,  71, 108]
 
+FOREGROUND = WHITE
+KEYWORD    = PURPLE
+STORAGE    = PINK
+
 def rule(name, scope, **settings):
   return dict(
     name = name,
@@ -32,14 +36,14 @@ def rule(name, scope, **settings):
 
 settings = dict(
   background         = '#000000',
-  foreground         = WHITE,
+  foreground         = FOREGROUND,
   caret              = CLEAR_WHITE,
   selection          = DARK_BLUE+"90",
   inactiveSelection  = DARK_BLUE,
   selectionBorder    = BLUE,
   lineHighlight      = CRIMSON+"50",
   findHighlight      = YELLOW,
-  minimapBorder      = WHITE,
+  minimapBorder      = FOREGROUND,
   bracketsForeground = DARK_ORANGE
 )
 
@@ -57,7 +61,7 @@ settings = [
   rule("Delimiter",                 """keyword.operator.dereference,
                                        meta.delimiter,
                                        punctuation.separator,
-                                       punctuation.terminator""", foreground = WHITE),
+                                       punctuation.terminator""", foreground = FOREGROUND),
 
   rule("Number and characters", "constant.numeric, constant.character", foreground = DARK_ORANGE),
   rule("String",                "string, meta.inline-expression string", foreground = GREEN),
@@ -158,33 +162,48 @@ settings = [
   rule("Git date",                     "constant.date.git", foreground = DARK_VIOLET),
 ]
 
-def group(value):
-  global current_group
-  current_group = value
+def group(lang, flavor='source'):
+  global current_lang
+  current_lang = lang
+  global current_flavor
+  current_flavor = flavor
 
 def no_group(value):
-  global current_group
-  current_group = None
+  global current_lang
+  current_lang = None
+  global current_flavor
+  current_flavor = None
 
 def rec(color, *scopes):
   for scope in scopes:
-    chunks = scope.split()
+    chunks = [current_flavor] if current_flavor != None else []
+    chunks += scope.split()
 
     for i, chunk in enumerate(chunks):
       if chunk.startswith('#'):
         chunks[i] = chunk[1:]
-      elif current_group != None:
-        chunks[i] = chunk +'.' + current_group
+      elif current_lang != None:
+        chunks[i] = chunk +'.' + current_lang
       else:
         chunks[i] = chunk
 
     settings.append(dict(scope = ' '.join(chunks), settings = dict(foreground = color)))
 
-group("python")
-rec(PURPLE, "keyword.operator.logical")
-rec(BLUE,   "entity.name.function support.function.magic",
-            "entity.name.function.decorator",
-            "entity.name.function.decorator support.function.builtin")
+group('python')
+rec(KEYWORD, 'keyword.operator.logical')
+rec(BLUE,    'entity.name.function support.function.magic',
+             'entity.name.function.decorator',
+             'entity.name.function.decorator support.function.builtin')
+
+group('js')
+rec(KEYWORD,    'meta.instance.constructor keyword.operator.new',
+                'meta.for keyword.operator')
+rec(FOREGROUND, 'support.function.dom',
+                'support.function.mutator')
+rec(STORAGE,    'variable.type')
+rec(BLUE,       'meta.object-literal.key',
+                'storage.type.function.arrow')
+rec(ORANGE,     '#support.type.object')
 
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
   plistlib.dump(dict(name="Disco", settings=settings), pfile)
