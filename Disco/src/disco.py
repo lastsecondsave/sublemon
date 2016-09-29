@@ -9,8 +9,8 @@ DARK_GRAY    = "#51515D" # [ 81,  81,  93]
 WHITE        = "#CDCDCD" # [205, 205, 205]
 CLEAR_WHITE  = "#FFFFFF" # [255, 255, 255]
 LIGHT_VIOLET = "#AAAAF0" # [170, 170, 240]
-# VIOLET       = "#B69EFF" # [182, 158, 255]
-VIOLET       = "#6699FF" # [182, 158, 255]
+VIOLET       = "#B69EFF" # [182, 158, 255]
+LIGHT_BLUE   = "#6699FF" # [182, 158, 255]
 DARK_VIOLET  = "#5E5E8E" # [94,   94, 142]
 PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
@@ -49,7 +49,7 @@ settings = [
   rule("Invalid", "invalid", background = CRIMSON),
 
   rule("Keyword",                     "keyword, storage.modifier", foreground = PURPLE),
-  rule("Symbolic operator",           "keyword.operator", foreground = VIOLET),
+  rule("Symbolic operator",           "keyword.operator", foreground = LIGHT_BLUE),
   rule("Alphanumeric operator",       "keyword.operator.alphanumeric", foreground = PURPLE),
   rule("Special symbolic operator", """keyword.operator.unary,
                                        keyword.operator.yaml,
@@ -112,11 +112,11 @@ settings = [
 
   rule("C macro definition",      "punctuation.definition.macro.c, keyword.macro.c", foreground = YELLOW),
   rule("C macro body",            "meta.macro.body.c", foreground = GREEN),
-  rule("C++ namespace separator", "punctuation.separator.namespace.c++", foreground = VIOLET),
+  rule("C++ namespace separator", "punctuation.separator.namespace.c++", foreground = LIGHT_BLUE),
 
   rule("Powershell pipe and stream",       "keyword.operator.pipe.powershell, keyword.operator.stream.powershell", foreground = DARK_ORANGE),
   rule("Powershell execute and escape",    "keyword.operator.execute.powershell, keyword.operator.escape.powershell", foreground = CRIMSON),
-  rule("Powershell static call separator", "punctuation.separator.static-call.powershell", foreground = VIOLET),
+  rule("Powershell static call separator", "punctuation.separator.static-call.powershell", foreground = LIGHT_BLUE),
   rule("Powershell embedded expression",   "punctuation.definition.expression.powershell", foreground = DARK_ORANGE),
 
   rule("INI section", "meta.section.ini, entity.name.section.ini", foreground = YELLOW),
@@ -156,14 +156,35 @@ settings = [
 
   rule("Git not commited line number", "meta.not-commited-yet.git constant.numeric.line-number", foreground = GREEN),
   rule("Git date",                     "constant.date.git", foreground = DARK_VIOLET),
-
-  # Tweaks for default syntaxes
-
-  rule("Python logical operator",         "keyword.operator.logical.python", foreground = PURPLE),
-  rule("Python function with underlines", "entity.name.function.python support.function.magic.python", foreground = BLUE),
-  rule("Python annotation",             """entity.name.function.decorator.python,
-                                           entity.name.function.decorator.python support.function.builtin.python""", foreground = YELLOW)
 ]
+
+def group(value):
+  global current_group
+  current_group = value
+
+def no_group(value):
+  global current_group
+  current_group = None
+
+def rec(color, *scopes):
+  for scope in scopes:
+    chunks = scope.split()
+
+    for i, chunk in enumerate(chunks):
+      if chunk.startswith('#'):
+        chunks[i] = chunk[1:]
+      elif current_group != None:
+        chunks[i] = chunk +'.' + current_group
+      else:
+        chunks[i] = chunk
+
+    settings.append(dict(scope = ' '.join(chunks), settings = dict(foreground = color)))
+
+group("python")
+rec(PURPLE, "keyword.operator.logical")
+rec(BLUE,   "entity.name.function support.function.magic",
+            "entity.name.function.decorator",
+            "entity.name.function.decorator support.function.builtin")
 
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
   plistlib.dump(dict(name="Disco", settings=settings), pfile)
@@ -171,7 +192,7 @@ with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
 def icon(scope, filename):
   return dict(
     scope = scope,
-    settings = dict(icon=filename)
+    settings = dict(icon = filename)
   )
 
 icons = [
