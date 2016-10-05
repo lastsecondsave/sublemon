@@ -10,11 +10,11 @@ WHITE        = "#CDCDCD" # [205, 205, 205]
 CLEAR_WHITE  = "#FFFFFF" # [255, 255, 255]
 LIGHT_VIOLET = "#AAAAF0" # [170, 170, 240]
 VIOLET       = "#B69EFF" # [182, 158, 255]
-LIGHT_BLUE   = "#6699FF" # [182, 158, 255]
 DARK_VIOLET  = "#5E5E8E" # [94,   94, 142]
 PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
-BLUE         = "#77ABFF" # [119, 171, 255]
+LIGHT_BLUE   = "#77ABFF" # [119, 171, 255]
+BLUE         = "#6699FF" # [182, 158, 255]
 DARK_BLUE    = "#264F78" # [ 38,  79, 120]
 BLUISH_BLACK = "#272728" # [ 45,  45,  52]
 GREEN        = "#C5CC4B" # [197, 204,  75]
@@ -23,9 +23,14 @@ ORANGE       = "#FF9A41" # [255, 154,  65]
 DARK_ORANGE  = "#FF8147" # [255, 129,  71]
 CRIMSON      = "#E5476C" # [229,  71, 108]
 
-FOREGROUND = WHITE
-KEYWORD    = PURPLE
-STORAGE    = PINK
+FOREGROUND  = WHITE
+KEYWORD     = PURPLE
+STORAGE     = PINK
+INDEXED     = LIGHT_BLUE
+PUNCTUATION = BLUE
+COMMENT     = GRAY
+PRIMITIVE   = DARK_ORANGE
+STRING      = GREEN
 
 def rule(name, scope, **settings):
   return dict(
@@ -34,26 +39,24 @@ def rule(name, scope, **settings):
     settings = settings
   )
 
-settings = dict(
-  background         = '#000000',
-  foreground         = FOREGROUND,
-  caret              = CLEAR_WHITE,
-  selection          = DARK_BLUE+"90",
-  inactiveSelection  = DARK_BLUE,
-  selectionBorder    = BLUE,
-  lineHighlight      = CRIMSON+"50",
-  findHighlight      = YELLOW,
-  minimapBorder      = FOREGROUND,
-  bracketsForeground = DARK_ORANGE
-)
-
 settings = [
-  dict(settings=settings),
+  dict(settings = dict(
+    background         = '#000000',
+    foreground         = FOREGROUND,
+    caret              = CLEAR_WHITE,
+    selection          = DARK_BLUE+"90",
+    inactiveSelection  = DARK_BLUE,
+    selectionBorder    = LIGHT_BLUE,
+    lineHighlight      = CRIMSON+"50",
+    findHighlight      = YELLOW,
+    minimapBorder      = FOREGROUND,
+    bracketsForeground = DARK_ORANGE
+  )),
 
-  rule("Invalid", "invalid", background = CRIMSON),
+  dict(scope = 'invalid', settings = dict(background = CRIMSON)),
 
   rule("Keyword",                     "keyword, storage.modifier", foreground = PURPLE),
-  rule("Symbolic operator",           "keyword.operator", foreground = LIGHT_BLUE),
+  rule("Symbolic operator",           "keyword.operator", foreground = BLUE),
   rule("Alphanumeric operator",       "keyword.operator.alphanumeric", foreground = PURPLE),
   rule("Special symbolic operator", """keyword.operator.unary,
                                        keyword.operator.yaml,
@@ -63,10 +66,6 @@ settings = [
                                        punctuation.separator,
                                        punctuation.terminator""", foreground = FOREGROUND),
 
-  rule("Number and characters", "constant.numeric, constant.character", foreground = DARK_ORANGE),
-  rule("String",                "string, meta.inline-expression string", foreground = GREEN),
-
-  rule("Comment",      "comment", foreground = GRAY),
   rule("Comment mark", "comment.mark", foreground = LIGHT_VIOLET),
 
   rule("Storage",                   "storage", foreground = PINK),
@@ -74,13 +73,13 @@ settings = [
   rule("Language variable",         "variable.language", foreground = ORANGE),
   rule("User-defined constant",     "constant.user", foreground = CRIMSON),
   rule("User-defined variable",     "variable.user", foreground = ORANGE),
-  rule("Entity name",               "entity.name", foreground = BLUE),
+  rule("Entity name",               "entity.name", foreground = LIGHT_BLUE),
   rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
   rule("Parameter",                 "variable.parameter", foreground = ORANGE),
   rule("Support type and function", "support.type, support.class, support.function", foreground = PINK),
   rule("Support constant",          "support.constant", foreground = ORANGE),
 
-  rule("Lambda",             "punctuation.definition.lambda, keyword.operator.lambda", foreground = BLUE),
+  rule("Lambda",             "punctuation.definition.lambda, keyword.operator.lambda", foreground = LIGHT_BLUE),
   rule("Inline expressions", "string meta.inline-expression", foreground = WHITE),
 
   rule("Doc-comment keyword and parameter", """comment.block.documentation keyword,
@@ -101,9 +100,9 @@ settings = [
   rule("Java anonymous class brackets",        "meta.class.body.anonymous.java punctuation.definition.class", foreground = CRIMSON),
   rule("Java log exception",                   "text.log.java entity.name.exception", foreground = CRIMSON),
 
-  rule("Tag", "entity.name.tag", foreground = BLUE),
+  rule("Tag", "entity.name.tag", foreground = LIGHT_BLUE),
 
-  rule("XML keywords and punctuation",   "source.xml keyword, source.xml punctuation.definition", foreground = BLUE),
+  rule("XML keywords and punctuation",   "source.xml keyword, source.xml punctuation.definition", foreground = LIGHT_BLUE),
   rule("XML attribute and doctype name", "source.xml entity.name.attribute, entity.name.doctype.element.xml", foreground = YELLOW),
   rule("XML attribute value",            "meta.attribute.xml string", foreground = GREEN),
   rule("XML CDATA brackets",             "meta.cdata.xml punctuation.definition", foreground = DARK_ORANGE),
@@ -112,15 +111,11 @@ settings = [
   rule("Diff inserted", "markup.inserted.diff, punctuation.definition.to-file.diff", foreground = GREEN),
   rule("Diff deleted",  "markup.deleted.diff, punctuation.definition.from-file.diff", foreground = CRIMSON),
   rule("Diff range",    "meta.diff.range", foreground = YELLOW),
-  rule("Diff header",   "meta.diff.header", foreground = BLUE),
-
-  rule("C macro definition",      "punctuation.definition.macro.c, keyword.macro.c", foreground = YELLOW),
-  rule("C macro body",            "meta.macro.body.c", foreground = GREEN),
-  rule("C++ namespace separator", "punctuation.separator.namespace.c++", foreground = LIGHT_BLUE),
+  rule("Diff header",   "meta.diff.header", foreground = LIGHT_BLUE),
 
   rule("Powershell pipe and stream",       "keyword.operator.pipe.powershell, keyword.operator.stream.powershell", foreground = DARK_ORANGE),
   rule("Powershell execute and escape",    "keyword.operator.execute.powershell, keyword.operator.escape.powershell", foreground = CRIMSON),
-  rule("Powershell static call separator", "punctuation.separator.static-call.powershell", foreground = LIGHT_BLUE),
+  rule("Powershell static call separator", "punctuation.separator.static-call.powershell", foreground = BLUE),
   rule("Powershell embedded expression",   "punctuation.definition.expression.powershell", foreground = DARK_ORANGE),
 
   rule("INI section", "meta.section.ini, entity.name.section.ini", foreground = YELLOW),
@@ -128,14 +123,6 @@ settings = [
   rule("Warning indicator", "meta.indicator.warning", foreground = DARK_ORANGE),
   rule("Success indicator", "meta.indicator.success", foreground = GREEN),
   rule("Log message", "text.log meta.message", foreground = YELLOW),
-
-  rule("RegExp limiters",                   "keyword.operator.or.regexp, punctuation.definition.group.regexp", foreground = YELLOW),
-  rule("RegExp character classes",        """constant.language.character-class.regexp,
-                                             source.regexp constant.character - constant.character.escape""", foreground = PURPLE),
-  rule("RegExp character classes in group", "constant.language.character-class.regexp constant.language.character-class.regexp", foreground = PINK),
-  rule("RegExp keywords",                   "source.regexp keyword.control, source.regexp keyword.operator", foreground = PINK),
-  rule("RegExp modifiers",                """keyword.modifier.regexp,
-                                             meta.group.modifier.regexp punctuation.definition.group.modifier""", foreground = CRIMSON),
 
   rule("Embedded RegExp",            "source.regexp.embedded - source.yaml", foreground = GREEN),
   rule("Embedded RegExp delimiters", "source punctuation.definition.regexp", foreground = ORANGE),
@@ -157,9 +144,6 @@ settings = [
   rule("CSS class selector",        "meta.rule.selector.css entity.name.class", foreground = CRIMSON),
   rule("CSS pseudo-class selector", "meta.rule.selector.css entity.name.pseudo-class", foreground = PURPLE),
   rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
-
-  rule("Git not commited line number", "meta.not-commited-yet.git constant.numeric.line-number", foreground = GREEN),
-  rule("Git date",                     "constant.date.git", foreground = DARK_VIOLET),
 ]
 
 def group(lang, flavor='source'):
@@ -168,7 +152,7 @@ def group(lang, flavor='source'):
   global current_flavor
   current_flavor = flavor
 
-def no_group(value):
+def no_group():
   global current_lang
   current_lang = None
   global current_flavor
@@ -189,24 +173,67 @@ def rec(color, *scopes):
 
     settings.append(dict(scope = ' '.join(chunks), settings = dict(foreground = color)))
 
+## FOUNDATION ##
+
+no_group()
+rec(COMMENT,   'comment')
+rec(PRIMITIVE, 'constant.numeric',
+               'constant.character')
+rec(STRING,    'string')
+
+## PYTHON ##
+
 group('python')
 rec(KEYWORD, 'keyword.operator.logical')
-rec(BLUE,    'entity.name.function support.function.magic',
+rec(INDEXED, 'entity.name.function support.function.magic',
              'entity.name.function.decorator',
              'entity.name.function.decorator support.function.builtin')
 
-group('js')
-rec(KEYWORD,    'meta.instance.constructor keyword.operator.new',
-                'meta.for keyword.operator')
-rec(FOREGROUND, 'support.function.dom',
-                'support.function.mutator')
-rec(STORAGE,    'variable.type')
-rec(BLUE,       'meta.object-literal.key',
-                'storage.type.function.arrow')
-rec(ORANGE,     '#support.type.object')
+## REGEXP IN PYTHON ##
 
-with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
-  plistlib.dump(dict(name="Disco", settings=settings), pfile)
+rec(YELLOW, 'source.regexp #punctuation.definition.group')
+rec(PURPLE, 'source.regexp #constant.other.character-class.set',
+            '#constant.character.character-class.regexp')
+
+## JAVASCRIPT ##
+
+group('js')
+rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
+                 'meta.for keyword.operator')
+rec(FOREGROUND,  '#support.function')
+rec(STORAGE,     'variable.type')
+rec(LIGHT_BLUE,  'meta.object-literal.key')
+rec(PUNCTUATION, 'storage.type.function.arrow')
+rec(ORANGE,      '#support.type.object')
+
+## REGEXP IN JAVASCRIPT ##
+
+rec(YELLOW, '#keyword.operator.or.regexp',
+            '#punctuation.definition.group.regexp')
+rec(PURPLE, '#keyword.operator.quantifier.regexp',
+            '#constant.other.character-class.escape.backslash.regexp')
+rec(PINK,   '#keyword.operator.quantifier.regexp')
+
+## REGEXP ##
+
+group('regexp')
+rec(YELLOW,  'keyword.operator.or',
+             'punctuation.definition.group')
+rec(PURPLE,  'constant.language.character-class',
+             'constant.character -constant.character.escape')
+rec(PINK,    'constant.language.character-class constant.language.character-class', # Character classes in group
+             '#keyword.control',
+             '#keyword.operator')
+rec(CRIMSON, '#keyword.modifier',
+             'meta.group.modifier punctuation.definition.group.modifier')
+
+## ETC ##
+
+no_group()
+rec(GREEN,       'meta.not-commited-yet.git constant.numeric.line-number')
+rec(DARK_VIOLET, 'constant.date.git')
+
+## ICONS ##
 
 def icon(scope, filename):
   return dict(
@@ -229,6 +256,9 @@ icons = [
   icon("source.yaml", "file_type_yaml"),
   icon("text.markdown, text.rfc", "file_type_markup")
 ]
+
+with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
+  plistlib.dump(dict(name="Disco", settings=settings), pfile)
 
 targetDirectory = os.path.join("..", "generated")
 shutil.rmtree(targetDirectory, ignore_errors=True)
