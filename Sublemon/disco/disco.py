@@ -55,28 +55,18 @@ settings = [
 
   dict(scope = 'invalid', settings = dict(background = CRIMSON)),
 
-  rule("Keyword",                     "keyword, storage.modifier", foreground = PURPLE),
-  rule("Symbolic operator",           "keyword.operator", foreground = BLUE),
-  rule("Alphanumeric operator",       "keyword.operator.alphanumeric", foreground = PURPLE),
   rule("Special symbolic operator", """keyword.operator.unary,
                                        keyword.operator.yaml,
                                        punctuation.separator.line""", foreground = DARK_ORANGE),
-  rule("Delimiter",                 """keyword.operator.dereference,
-                                       meta.delimiter,
-                                       punctuation.separator,
-                                       punctuation.terminator""", foreground = FOREGROUND),
 
   rule("Comment mark", "comment.mark", foreground = LIGHT_VIOLET),
 
-  rule("Storage",                   "storage", foreground = PINK),
   rule("Language constant",         "constant.language", foreground = DARK_ORANGE),
   rule("Language variable",         "variable.language", foreground = ORANGE),
   rule("User-defined constant",     "constant.user", foreground = CRIMSON),
   rule("User-defined variable",     "variable.user", foreground = ORANGE),
-  rule("Entity name",               "entity.name", foreground = LIGHT_BLUE),
   rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
   rule("Parameter",                 "variable.parameter", foreground = ORANGE),
-  rule("Support type and function", "support.type, support.class, support.function", foreground = PINK),
   rule("Support constant",          "support.constant", foreground = ORANGE),
 
   rule("Lambda",             "punctuation.definition.lambda, keyword.operator.lambda", foreground = LIGHT_BLUE),
@@ -176,11 +166,21 @@ def rec(color, *scopes):
 ## FOUNDATION ##
 
 no_group()
-rec(COMMENT,   'comment')
-rec(PRIMITIVE, 'constant.numeric',
-               'constant.character')
-rec(STRING,    'string')
-
+rec(COMMENT,     'comment')
+rec(PRIMITIVE,   'constant.numeric',
+                 'constant.character')
+rec(STRING,      'string')
+rec(STORAGE,     'storage',
+                 'support.type',
+                 'support.class',
+                 'support.function')
+rec(KEYWORD,     'keyword',
+                 'keyword.operator.alphanumeric',
+                 'storage.modifier')
+rec(PUNCTUATION, 'keyword.operator')
+rec(INDEXED,     'entity.name')
+rec(FOREGROUND,  'punctuation.separator',
+                 'punctuation.terminator')
 ## PYTHON ##
 
 group('python')
@@ -200,11 +200,11 @@ rec(PURPLE, 'source.regexp #constant.other.character-class.set',
 group('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
                  'meta.for keyword.operator')
-rec(FOREGROUND,  '#support.function')
 rec(STORAGE,     'variable.type')
 rec(LIGHT_BLUE,  'meta.object-literal.key')
 rec(PUNCTUATION, 'storage.type.function.arrow')
 rec(ORANGE,      '#support.type.object')
+rec(FOREGROUND,  '#support.function')
 
 ## REGEXP IN JAVASCRIPT ##
 
@@ -260,12 +260,11 @@ icons = [
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
   plistlib.dump(dict(name="Disco", settings=settings), pfile)
 
-targetDirectory = os.path.join("..", "generated")
-shutil.rmtree(targetDirectory, ignore_errors=True)
-os.mkdir(targetDirectory)
+shutil.rmtree("generated", ignore_errors=True)
+os.mkdir("generated")
 
 for icon in icons:
   filename = hashlib.sha1(icon["scope"].encode('ascii')).hexdigest() + ".tmPreferences"
   print("{}: {}".format(filename, icon["scope"]))
-  with open(os.path.join(targetDirectory, filename), "wb") as pfile:
+  with open(os.path.join("generated", filename), "wb") as pfile:
     plistlib.dump(icon, pfile)

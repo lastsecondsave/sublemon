@@ -14,7 +14,7 @@
 		"*.png"
 	],
 	"caret_style": "blink",
-	"color_scheme": "Packages/Disco/Disco.tmTheme",
+	"color_scheme": "Packages/Sublemon/Disco.tmTheme",
 	"copy_with_empty_selection": false,
 	"drag_text": false,
 	"draw_centered": false,
