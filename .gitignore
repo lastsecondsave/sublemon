@@ -1,11 +1,8 @@
 /*
 
-!/Disco
-/Disco/generated
-/Disco/*.tmTheme
-
 !/Sublemon
 /Sublemon/*/generated
+/Sublemon/*.tmTheme
 
 !/User
 /User/Package Control.last-run

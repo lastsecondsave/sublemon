@@ -10,12 +10,12 @@ publish() {
   popd
 }
 
-pushd "$(dirname $0)/../.."
+pushd "$(dirname $0)/.."
 
-for spy in $(find Sublemon -name '*.settings.py'); do
+for spy in $(find . -name '*.settings.py'); do
   publish $spy
 done;
 
-publish "Disco/src/disco.py"
+publish "disco/disco.py"
 
 popd

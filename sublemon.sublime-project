@@ -2,32 +2,16 @@
 	"folders":
 	[
 		{
-			"folder_exclude_patterns":
+			"file_exclude_patterns":
 			[
-				"*"
+				"*.tmTheme"
 			],
-			"name": "root",
-			"path": "."
-		},
-		{
 			"folder_exclude_patterns":
 			[
 				"generated"
 			],
 			"name": "sublemon",
 			"path": "Sublemon"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"*.tm*"
-			],
-			"folder_exclude_patterns":
-			[
-				"generated"
-			],
-			"name": "disco",
-			"path": "Disco"
 		},
 		{
 			"file_exclude_patterns":
@@ -47,8 +31,12 @@
 			"path": "Default"
 		},
 		{
-			"name": "snippets",
-			"path": "Sublemon/snippets"
+			"folder_exclude_patterns":
+			[
+				"*"
+			],
+			"name": "root",
+			"path": "."
 		}
 	]
 }
