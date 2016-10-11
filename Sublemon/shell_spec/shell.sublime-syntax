@@ -40,7 +40,7 @@ contexts:
   - include: variables
 
   variables:
-  - match: '\$(?:{{id}}|[@*])'
+  - match: '\$(?:\w+|[@*?#])\b'
     scope: variable.user.shell
-  - match: '\$\{{{id}}\}'
+  - match: '\$\{.*?\}'
     scope: variable.user.shell
