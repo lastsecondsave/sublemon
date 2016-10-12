@@ -23,14 +23,18 @@ ORANGE       = "#FF9A41" # [255, 154,  65]
 DARK_ORANGE  = "#FF8147" # [255, 129,  71]
 CRIMSON      = "#E5476C" # [229,  71, 108]
 
-FOREGROUND  = WHITE
-KEYWORD     = PURPLE
-STORAGE     = PINK
-INDEXED     = LIGHT_BLUE
-PUNCTUATION = BLUE
-COMMENT     = GRAY
-PRIMITIVE   = DARK_ORANGE
-STRING      = GREEN
+FOREGROUND        = WHITE
+KEYWORD           = PURPLE
+STORAGE           = PINK
+INDEXED           = LIGHT_BLUE
+OPERATOR          = BLUE
+PUNCTUATION       = DARK_ORANGE
+COMMENT           = GRAY
+COMMENT_HIGHLIGHT = WHITE
+PRIMITIVE         = DARK_ORANGE
+STRING            = GREEN
+META              = YELLOW
+TAG               = LIGHT_BLUE
 
 def rule(name, scope, **settings):
   return dict(
@@ -53,14 +57,6 @@ settings = [
     bracketsForeground = DARK_ORANGE
   )),
 
-  dict(scope = 'invalid', settings = dict(background = CRIMSON)),
-
-  rule("Special symbolic operator", """keyword.operator.unary,
-                                       keyword.operator.yaml,
-                                       punctuation.separator.line""", foreground = DARK_ORANGE),
-
-  rule("Comment mark", "comment.mark", foreground = LIGHT_VIOLET),
-
   rule("Language constant",         "constant.language", foreground = DARK_ORANGE),
   rule("Language variable",         "variable.language", foreground = ORANGE),
   rule("User-defined constant",     "constant.user", foreground = CRIMSON),
@@ -72,31 +68,10 @@ settings = [
   rule("Lambda",             "punctuation.definition.lambda, keyword.operator.lambda", foreground = LIGHT_BLUE),
   rule("Inline expressions", "string meta.inline-expression", foreground = WHITE),
 
-  rule("Doc-comment keyword and parameter", """comment.block.documentation keyword,
-                                               comment.block.documentation variable.parameter""", foreground = WHITE),
   rule("Doc-comment inline keyword",          "keyword.documentation.inline", foreground = DARK_GRAY),
   rule("Tags in doc-comments",                "comment.block.documentation meta.tag", foreground = DARK_VIOLET),
 
-  rule("Java package declaration",             "meta.package.java storage.type", foreground = CRIMSON),
-  rule("Java import asterisk",                 "storage.type.asterisk.java", foreground = CRIMSON),
-  rule("Java throwable declaration",           "(meta.throws.statement.java storage.type.java) -meta.generic", foreground = CRIMSON),
-  rule("Java inherited class",               """(meta.extends.statement.java storage.type.java) -meta.generic,
-                                                (meta.implements.statement.java storage.type.java) -meta.generic""", foreground = CRIMSON),
-  rule("Java assert keyword",                  "keyword.control.assert.java", foreground = CRIMSON),
-  rule("Java annotation name and parameter", """punctuation.definition.annotation.java,
-                                                meta.annotation.identifier.java storage.type,
-                                                variable.parameter.annotation.java""", foreground = YELLOW),
-  rule("Java generic type",                    "storage.type.generic.java", foreground = DARK_ORANGE),
-  rule("Java anonymous class brackets",        "meta.class.body.anonymous.java punctuation.definition.class", foreground = CRIMSON),
   rule("Java log exception",                   "text.log.java entity.name.exception", foreground = CRIMSON),
-
-  rule("Tag", "entity.name.tag", foreground = LIGHT_BLUE),
-
-  rule("XML keywords and punctuation",   "source.xml keyword, source.xml punctuation.definition", foreground = LIGHT_BLUE),
-  rule("XML attribute and doctype name", "source.xml entity.name.attribute, entity.name.doctype.element.xml", foreground = YELLOW),
-  rule("XML attribute value",            "meta.attribute.xml string", foreground = GREEN),
-  rule("XML CDATA brackets",             "meta.cdata.xml punctuation.definition", foreground = DARK_ORANGE),
-  rule("XML substitution variable",      "punctuation.definition.substitution.xml", foreground = DARK_ORANGE),
 
   rule("Diff inserted", "markup.inserted.diff, punctuation.definition.to-file.diff", foreground = GREEN),
   rule("Diff deleted",  "markup.deleted.diff, punctuation.definition.from-file.diff", foreground = CRIMSON),
@@ -136,21 +111,24 @@ settings = [
   rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
 ]
 
-def group(lang, flavor='source'):
-  global current_lang
-  current_lang = lang
-  global current_flavor
-  current_flavor = flavor
+def group(category, lang):
+  global current_lang, current_category
+  current_lang, current_category = lang, category
+
+def source(lang):
+  group('source', lang)
 
 def no_group():
-  global current_lang
-  current_lang = None
-  global current_flavor
-  current_flavor = None
+  group(None, None)
 
-def rec(color, *scopes):
+def rec(color, *scopes, attributes=None):
+  if attributes == None:
+    attributes = dict()
+
+  attributes['foreground'] = color
+
   for scope in scopes:
-    chunks = [current_flavor] if current_flavor != None else []
+    chunks = [current_category] if current_category != None else []
     chunks += scope.split()
 
     for i, chunk in enumerate(chunks):
@@ -161,7 +139,7 @@ def rec(color, *scopes):
       else:
         chunks[i] = chunk
 
-    settings.append(dict(scope = ' '.join(chunks), settings = dict(foreground = color)))
+    settings.append(dict(scope = ' '.join(chunks), settings = attributes))
 
 ## FOUNDATION ##
 
@@ -177,13 +155,15 @@ rec(STORAGE,     'storage',
 rec(KEYWORD,     'keyword',
                  'keyword.operator.alphanumeric',
                  'storage.modifier')
-rec(PUNCTUATION, 'keyword.operator')
+rec(OPERATOR,    'keyword.operator')
 rec(INDEXED,     'entity.name')
 rec(FOREGROUND,  'punctuation.separator',
                  'punctuation.terminator')
+rec(FOREGROUND,  'invalid', attributes = dict(background = CRIMSON))
+
 ## PYTHON ##
 
-group('python')
+source('python')
 rec(KEYWORD, 'keyword.operator.logical')
 rec(INDEXED, 'entity.name.function support.function.magic',
              'entity.name.function.decorator',
@@ -197,12 +177,12 @@ rec(PURPLE, 'source.regexp #constant.other.character-class.set',
 
 ## JAVASCRIPT ##
 
-group('js')
+source('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
                  'meta.for keyword.operator')
 rec(STORAGE,     'variable.type')
 rec(LIGHT_BLUE,  'meta.object-literal.key')
-rec(PUNCTUATION, 'storage.type.function.arrow')
+rec(OPERATOR,    'storage.type.function.arrow')
 rec(ORANGE,      '#support.type.object')
 rec(FOREGROUND,  '#support.function')
 
@@ -216,7 +196,7 @@ rec(PINK,   '#keyword.operator.quantifier.regexp')
 
 ## REGEXP ##
 
-group('regexp')
+source('regexp')
 rec(YELLOW,  'keyword.operator.or',
              'punctuation.definition.group')
 rec(PURPLE,  'constant.language.character-class',
@@ -226,6 +206,41 @@ rec(PINK,    'constant.language.character-class constant.language.character-clas
              '#keyword.operator')
 rec(CRIMSON, '#keyword.modifier',
              'meta.group.modifier punctuation.definition.group.modifier')
+
+## JAVA ##
+
+source('java')
+rec(META,              'punctuation.definition.annotation',
+                       'meta.annotation.identifier #storage.type',
+                       'variable.parameter.annotation')
+rec(PUNCTUATION,       '#keyword.operator.unary')
+rec(COMMENT_HIGHLIGHT, 'comment.block.documentation #keyword',
+                       'comment.block.documentation #variable.parameter')
+rec(CRIMSON,           'meta.package #storage.type',
+                       'storage.type.asterisk',
+                       'keyword.control.assert',
+                       'meta.class.body.anonymous #punctuation.definition.class',
+                       'meta.extends.statement storage.type #-meta.generic',
+                       'meta.implements.statement storage.type #-meta.generic',
+                       'meta.throws.statement storage.type #-meta.generic')
+rec(DARK_ORANGE,       'storage.type.generic')
+
+## XML ##
+
+source('xml')
+rec(TAG,         'entity.name.tag',
+                 '#keyword',
+                 '#punctuation.definition')
+rec(STRING,      'meta.attribute #string')
+rec(PUNCTUATION, 'meta.cdata #punctuation.definition')
+rec(YELLOW,      '#entity.name.attribute',
+                 'entity.name.doctype.element')
+rec(DARK_ORANGE, 'punctuation.definition.substitution')
+
+## YAML ##
+
+source('yaml')
+rec(PUNCTUATION, '#keyword.operator')
 
 ## ETC ##
 
@@ -242,19 +257,21 @@ def icon(scope, filename):
   )
 
 icons = [
-  icon("source.c++", "file_type_cpp"),
-  icon("source.css", "file_type_css"),
-  icon("source.git", "file_type_git"),
-  icon("source.groovy", "file_type_groovy"),
-  icon("source.java", "file_type_java"),
-  icon("source.java-props, source.ini", "file_type_properties"),
-  icon("source.js", "file_type_javascript"),
-  icon("source.json", "file_type_json"),
+  icon("source.c++",        "file_type_cpp"),
+  icon("source.css",        "file_type_css"),
+  icon("source.git",        "file_type_git"),
+  icon("source.groovy",     "file_type_groovy"),
+  icon("source.java",       "file_type_java"),
+  icon("source.ini",        "file_type_properties"),
+  icon("source.java-props", "file_type_properties"),
+  icon("source.js",         "file_type_javascript"),
+  icon("source.json",       "file_type_json"),
   icon("source.powershell", "file_type_powershell"),
-  icon("source.python", "file_type_python"),
-  icon("source.xml", "file_type_xml"),
-  icon("source.yaml", "file_type_yaml"),
-  icon("text.markdown, text.rfc", "file_type_markup")
+  icon("source.python",     "file_type_python"),
+  icon("source.xml",        "file_type_xml"),
+  icon("source.yaml",       "file_type_yaml"),
+  icon("text.markdown",     "file_type_markup"),
+  icon("text.rfc",          "file_type_markup")
 ]
 
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
