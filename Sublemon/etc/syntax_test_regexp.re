@@ -17,3 +17,8 @@
   \x61 \x{4312}
 # ^^^^ constant.character.hex.regexp
 #      ^^^^^^^^ constant.character.hex.regexp
+
+  \Q .^abc(\E
+# ^^ keyword.control.anchor.regexp
+#   ^^^^^^^ source.regexp
+#          ^^ keyword.control.anchor.regexp
