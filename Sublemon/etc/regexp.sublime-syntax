@@ -4,9 +4,9 @@ name: Regular Expression
 scope: source.regexp
 
 variables:
-  modifiers: \?[imsxXU]+
+  modifiers:  \?[imsxXU]+
   group_name: (?:'\w+'|<\w+>)
-  number: '[+-]?\d+'
+  number:     '[+-]?\d+'
 
 contexts:
   main:
@@ -32,6 +32,13 @@ contexts:
   regexp:
   - match: '\\[ABbKZzG]|\^|\$'
     scope: keyword.control.anchor.regexp
+  - match: \\Q
+    scope: keyword.control.anchor.regexp
+    push:
+    - match: \\E
+      scope: keyword.control.anchor.regexp
+      pop: true
+
   - match: '(?:\(\?(?:R|P&\w+|{{number}})\)|\\g(?:{{group_name}}|''{{number}}''|<{{number}}>))'
     scope: keyword.control.subroutine.regexp
   - match: '(?:\\[1-9]\d*|\(\?P=(\w+)\)|\\k{{group_name}})'
