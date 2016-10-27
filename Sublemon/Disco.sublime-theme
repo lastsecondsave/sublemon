@@ -44,7 +44,7 @@
         "layer0.opacity": 1.0,
         "layer2.texture": "Sublemon/disco/images/blue_highlight.png",
         "layer2.opacity": { "target": 0.0, "speed": 1.33, "interpolation": "smoothstep" },
-        "content_margin": [4, 4]
+        "content_margin": [4, 5]
     },
     {
         "class": "icon_button_control",
@@ -248,7 +248,7 @@
     // Row
     {
         "class": "tree_row",
-        "layer0.tint": [54, 54, 66],
+        "layer0.tint": [32, 40, 48],
         "layer0.opacity": 0.0
     },
 
@@ -262,7 +262,7 @@
     {
         "class": "tree_row",
         "attributes": ["hover"],
-        "layer0.opacity": 0.3
+        "layer0.opacity": 0.7
     },
 
     // Selected row hover
@@ -300,10 +300,9 @@
     // Sidebar container
     {
         "class": "sidebar_container",
-        "layer0.texture": "Sublemon/disco/images/sidebar_bg.png",
+        "layer0.tint": [22, 30, 38],
         "layer0.opacity": 1.0,
-        "layer0.inner_margin": [0, 0, 1, 0],
-        "content_margin": [0, 0, 1, 0]
+        "content_margin": [0, 0, 0, 0]
     },
 
     // Rows container
@@ -371,7 +370,7 @@
     // Minimap background
     {
         "class": "minimap_control",
-        "viewport_color": [255, 255, 255, 10],
+        "viewport_color": [255, 255, 255, 0],
     },
 
     {
@@ -404,10 +403,9 @@
     // Status bar container
     {
         "class": "status_bar",
-        "layer0.texture": "Sublemon/disco/images/status_bar.png",
+        "layer0.tint": [38, 79, 120],
         "layer0.opacity": 1.0,
-        "layer0.inner_margin": [2, 2],
-        "content_margin": [4, 2, 4, 0]
+        "content_margin": [2, 1, -4, 0]
     },
 
     // Button on the right side of the status bar
@@ -421,7 +419,7 @@
     {
         "class": "panel_button_control",
         "layer0.texture": "Sublemon/disco/images/panels.png",
-        "layer0.opacity": 0.7,
+        "layer0.opacity": 1.0,
         "content_margin": [12, 8]
     },
 
@@ -430,16 +428,10 @@
     // Input field
     {
         "class": "text_line_control",
-        "layer0.texture": "Sublemon/disco/images/input_field.png",
+        "layer0.tint": [27, 27, 28],
         "layer0.opacity": 1.0,
-        "layer0.inner_margin": [4, 5, 4, 3],
 
-        "layer1.texture": "Sublemon/disco/images/input_field_shadow.png",
-        "layer1.opacity": 1.0,
-        "layer1.inner_margin": [4, 5, 4, 3],
-        "tint_index": 1,
-
-        "content_margin": [3, 4, 3, 2]
+        "content_margin": [3, 5]
     },
 
     // Input field's dropdown
@@ -466,9 +458,8 @@
     // Find/replace panel
     {
         "class": "panel_control",
-        "layer0.texture": "Sublemon/disco/images/status_bar.png",
-        "layer0.inner_margin": [2, 2, 2, 2],
-        "content_margin": [0, 1],
+        "layer0.tint": [38, 79, 120],
+        "content_margin": [0, 1, 0, 0],
         "layer0.opacity": 1.0
     },
 
@@ -479,7 +470,7 @@
         "layer0.opacity": 0.6,
         "layer1.texture": "Sublemon/disco/images/dark_x_light_shadow.png",
         "layer1.opacity": 0.0,
-        "content_margin": [0, 0]
+        "content_margin": [8, 8]
     },
 
     // Close button on find/replace panel hover
@@ -497,12 +488,11 @@
         "class": "text_line_control",
         "parents": [{ "class": "overlay_control" }],
         "layer0.opacity": 0.0,
-        "layer1.opacity": 0.0,
 
         "layer2.tint": [38, 79, 120],
         "layer2.opacity": 1.0,
 
-        "content_margin": [1, 1, 1, 1]
+        "content_margin": [1, 1]
     },
 
     // Quick panel border
@@ -696,7 +686,8 @@
         "layer1.inner_margin": [2, 6],
         "layer1.opacity": 1.0,
 
-        "content_margin": [-34, 0, 3, 1],
+        // Hide scroll and list buttons
+        "content_margin": [-34, 0, -17, 1],
         "tab_overlap": 17,
         "tab_width": 180,
         "tab_min_width": 48,
@@ -931,7 +922,7 @@
         "layer0.opacity": 1.0
     },
 
-    // tab set scroll left scroll right
+    // Tabs scroll left button
     {
         "class": "scroll_tabs_left_button",
         "content_margin": [9, 7, 8, 6],
@@ -942,12 +933,15 @@
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
     },
+
+    // Tabs scroll left button on hover
     {
         "class": "scroll_tabs_left_button",
         "attributes": ["hover"],
         "layer1.opacity": 1.0
     },
 
+    // Tabs scroll right button
     {
         "class": "scroll_tabs_right_button",
         "content_margin": [9, 7, 8, 6],
@@ -958,12 +952,15 @@
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
     },
+
+    // Tabs scroll right button on hover
     {
         "class": "scroll_tabs_right_button",
         "attributes": ["hover"],
         "layer1.opacity": 1.0
     },
 
+    // Tabs drop-down button
     {
         "class": "show_tabs_dropdown_button",
         "content_margin": [9, 7, 8, 6],
@@ -974,6 +971,8 @@
         "layer1.opacity": 0.0,
         "layer1.inner_margin": 0,
     },
+
+    // Tabs drop-down button on hover
     {
         "class": "show_tabs_dropdown_button",
         "attributes": ["hover"],
