@@ -14,7 +14,7 @@ DARK_VIOLET  = "#5E5E8E" # [94,   94, 142]
 PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
 LIGHT_BLUE   = "#77ABFF" # [119, 171, 255]
-BLUE         = "#6699FF" # [182, 158, 255]
+BLUE         = "#6699FF" # [102, 153, 255]
 DARK_BLUE    = "#264F78" # [ 38,  79, 120]
 BLUISH_BLACK = "#272728" # [ 45,  45,  52]
 GREEN        = "#C5CC4B" # [197, 204,  75]
@@ -26,8 +26,8 @@ CRIMSON      = "#E5476C" # [229,  71, 108]
 FOREGROUND        = WHITE
 KEYWORD           = PURPLE
 STORAGE           = PINK
-INDEXED           = LIGHT_BLUE
-OPERATOR          = BLUE
+INDEXED           = BLUE
+OPERATOR          = LIGHT_BLUE
 PUNCTUATION       = DARK_ORANGE
 COMMENT           = GRAY
 COMMENT_HIGHLIGHT = WHITE
@@ -35,6 +35,7 @@ PRIMITIVE         = DARK_ORANGE
 STRING            = GREEN
 META              = YELLOW
 TAG               = LIGHT_BLUE
+PARAMETER         = ORANGE
 
 def rule(name, scope, **settings):
   return dict(
@@ -43,29 +44,35 @@ def rule(name, scope, **settings):
     settings = settings
   )
 
-settings = [
-  dict(settings = dict(
-    background         = '#000000',
-    foreground         = FOREGROUND,
-    caret              = CLEAR_WHITE,
-    selection          = DARK_BLUE+"90",
-    inactiveSelection  = DARK_BLUE,
-    selectionBorder    = LIGHT_BLUE,
-    lineHighlight      = CRIMSON+"50",
-    findHighlight      = YELLOW,
-    minimapBorder      = FOREGROUND,
-    bracketsForeground = DARK_ORANGE
-  )),
+theme_globals = dict(
+  background         = '#202830',
+  foreground         = FOREGROUND,
+  caret              = CLEAR_WHITE,
+  selection          = "#384868",
+  lineHighlight      = "#E5476C40",
+  findHighlight      = YELLOW,
+  minimapBorder      = FOREGROUND,
+  bracketsForeground = PUNCTUATION
+)
 
-  rule("Language constant",         "constant.language", foreground = DARK_ORANGE),
+widget_globals = dict(
+  background         = '#1B1B1C',
+  foreground         = FOREGROUND,
+  caret              = CLEAR_WHITE,
+  selection          = "#384868",
+  bracketsForeground = PUNCTUATION
+)
+
+settings = [
+  dict(settings=theme_globals),
+
+  rule("Language constant",         "constant.language", foreground = ORANGE),
   rule("Language variable",         "variable.language", foreground = ORANGE),
   rule("User-defined constant",     "constant.user", foreground = CRIMSON),
   rule("User-defined variable",     "variable.user", foreground = ORANGE),
   rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
-  rule("Parameter",                 "variable.parameter", foreground = ORANGE),
   rule("Support constant",          "support.constant", foreground = ORANGE),
 
-  rule("Lambda",             "punctuation.definition.lambda, keyword.operator.lambda", foreground = LIGHT_BLUE),
   rule("Inline expressions", "string meta.inline-expression", foreground = WHITE),
 
   rule("Doc-comment inline keyword",          "keyword.documentation.inline", foreground = DARK_GRAY),
@@ -111,20 +118,19 @@ settings = [
   rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
 ]
 
-def group(category, lang):
-  global current_lang, current_category
-  current_lang, current_category = lang, category
+widget_settings = [dict(settings=widget_globals)]
 
-def source(lang):
-  group('source', lang)
+def group(category, lang, widget):
+  global current_lang, current_category, widget_category
+  current_lang, current_category, widget_category = lang, category, widget
 
-def no_group():
-  group(None, None)
+def source(lang, widget=False):
+  group('source', lang, widget)
 
-def rec(color, *scopes, attributes=None):
-  if attributes == None:
-    attributes = dict()
+def no_group(widget=False):
+  group(None, None, widget)
 
+def rec(color, *scopes, **attributes):
   attributes['foreground'] = color
 
   for scope in scopes:
@@ -139,11 +145,14 @@ def rec(color, *scopes, attributes=None):
       else:
         chunks[i] = chunk
 
-    settings.append(dict(scope = ' '.join(chunks), settings = attributes))
+    record_settings = dict(scope=' '.join(chunks), settings=attributes)
+    settings.append(record_settings)
+    if widget_category:
+      widget_settings.append(record_settings)
 
 ## FOUNDATION ##
 
-no_group()
+no_group(widget=True)
 rec(COMMENT,     'comment')
 rec(PRIMITIVE,   'constant.numeric',
                  'constant.character')
@@ -159,7 +168,8 @@ rec(OPERATOR,    'keyword.operator')
 rec(INDEXED,     'entity.name')
 rec(FOREGROUND,  'punctuation.separator',
                  'punctuation.terminator')
-rec(FOREGROUND,  'invalid', attributes = dict(background = CRIMSON))
+rec(PARAMETER,   'variable.parameter')
+rec(FOREGROUND,  'invalid', background=CRIMSON)
 
 ## PYTHON ##
 
@@ -196,7 +206,7 @@ rec(PINK,   '#keyword.operator.quantifier.regexp')
 
 ## REGEXP ##
 
-source('regexp')
+source('regexp', widget=True)
 rec(YELLOW,  'keyword.operator.or',
              'punctuation.definition.group')
 rec(PURPLE,  'constant.language.character-class',
@@ -213,7 +223,6 @@ source('java')
 rec(META,              'punctuation.definition.annotation',
                        'meta.annotation.identifier #storage.type',
                        'variable.parameter.annotation')
-rec(PUNCTUATION,       '#keyword.operator.unary')
 rec(COMMENT_HIGHLIGHT, 'comment.block.documentation #keyword',
                        'comment.block.documentation #variable.parameter')
 rec(CRIMSON,           'meta.package #storage.type',
@@ -276,6 +285,9 @@ icons = [
 
 with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
   plistlib.dump(dict(name="Disco", settings=settings), pfile)
+
+with open(os.path.join("..", "Widget - Disco.tmTheme"), "wb") as pfile:
+  plistlib.dump(dict(name="Disco", settings=widget_settings), pfile)
 
 shutil.rmtree("generated", ignore_errors=True)
 os.mkdir("generated")
