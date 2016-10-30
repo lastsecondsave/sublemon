@@ -102,7 +102,7 @@
         "layer0.opacity": 1.0
     },
 
-    /** SCROLLBARS **/
+    /**> SCROLLBARS **/
 
     // Scrollbar's container
     {
@@ -219,7 +219,7 @@
         "layer0.tint": [205, 205, 205]
     },
 
-    /** SIDEBAR **/
+    /**> SIDEBAR **/
 
     // Disclosure button
     {
@@ -365,7 +365,7 @@
         "font.italic": true
     },
 
-    /** MINIMAP **/
+    /**> MINIMAP **/
 
     // Minimap background
     {
@@ -392,7 +392,7 @@
         "viewport_opacity": { "target": 1.0, "speed": 20.0, "interpolation": "smoothstep" },
     },
 
-    /** STATUS BAR **/
+    /**> STATUS BAR **/
 
     // Status bar border
     {
@@ -405,7 +405,7 @@
         "class": "status_bar",
         "layer0.tint": [38, 79, 120],
         "layer0.opacity": 1.0,
-        "content_margin": [2, 1, -4, 0]
+        "content_margin": [2, 1, 0, 0]
     },
 
     // Button on the right side of the status bar
@@ -423,7 +423,7 @@
         "content_margin": [12, 8]
     },
 
-    /** INPUT FIELD **/
+    /**> INPUT FIELD **/
 
     // Input field
     {
@@ -453,7 +453,7 @@
         "layer1.opacity": 1.0
     },
 
-    /** FIND/REPLACE PANEL **/
+    /**> FIND/REPLACE PANEL **/
 
     // Find/replace panel
     {
@@ -481,7 +481,7 @@
         "layer1.opacity": 1.0,
     },
 
-    /** QUICK PANEL **/
+    /**> QUICK PANEL **/
 
     // Input field in quick panel
     {
@@ -597,7 +597,7 @@
         "layer0.opacity": 1.0
     },
 
-    /** AUTO-COMPLETE PANEL **/
+    /**> AUTO-COMPLETE PANEL **/
 
     // Auto-complete panel border
     {
@@ -676,6 +676,8 @@
         "layer0.opacity": 0.0
     },
 
+    /**> TABS **/
+
     {
         "class": "tabset_control",
 
@@ -719,8 +721,6 @@
         "layer1.opacity": 1.0,
         "layer1.texture": "Sublemon/disco/images/dark_tabset_background_transparent.png"
     },
-
-    /** TABS **/
 
     {
         "class": "tab_control",
@@ -1088,7 +1088,7 @@
         "content_margin": [8, 8]
     },
 
-    /** SIDEBAR ICONS **/
+    /**> SIDEBAR ICONS **/
 
     // File icon
     {
