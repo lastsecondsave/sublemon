@@ -47,10 +47,6 @@ contexts:
     - meta_scope: comment.block.powershell
     - match: '#>'
       pop: true
-  - match: ^\s*##\s(.*?\S)\s##
-    scope: comment.line.number-sign.powershell
-    captures:
-      1: comment.mark.powershell
   - match: (?:^|(?<=\s))#.*$
     scope: comment.line.number-sign.powershell
 
@@ -149,15 +145,20 @@ contexts:
     scope: keyword.control.powershell
 
   operators:
-  - match: (-(?:(?:not)?match|[ic]?replace))\s+(')
+  - match: (-(?:(?:not)?match|[ic]?replace))\s+(?=')
     captures:
       1: keyword.operator.powershell
-      2: punctuation.definition.regexp.powershell
-    push: Packages/Sublemon/etc/regexp.sublime-syntax#embedded
-    with_prototype:
+    push:
     - match: "'"
       scope: punctuation.definition.regexp.powershell
+      push: Packages/Sublemon/etc/regexp.sublime-syntax#embedded
+      with_prototype:
+      - match: "'"
+        scope: punctuation.definition.regexp.powershell
+        pop: true
+    - match: ''
       pop: true
+
   - match: (?<=[\s()\[\]])-(?:c?eq|ne|i?[gl][te]|(not)?(match|contains|in)|b?(and|not|x?or)|split|join|[ia]s|sh[rl])\b
     scope: keyword.operator.powershell
   - match: (?:[%/*+-]?=|--%)
