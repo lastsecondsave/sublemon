@@ -150,7 +150,7 @@ def rec(color, *scopes, **attributes):
     if widget_category:
       widget_settings.append(record_settings)
 
-##> FOUNDATION ##
+## > FOUNDATION ##
 
 no_group(widget=True)
 rec(COMMENT,       'comment')
@@ -172,7 +172,7 @@ rec(PARAMETER,     'variable.parameter')
 rec(USER_CONSTANT, 'constant.user')
 rec(FOREGROUND,    'invalid', background=CRIMSON)
 
-##> PYTHON ##
+## > PYTHON ##
 
 source('python')
 rec(KEYWORD, 'keyword.operator.logical')
@@ -180,13 +180,13 @@ rec(INDEXED, 'entity.name.function support.function.magic',
              'entity.name.function.decorator',
              'entity.name.function.decorator support.function.builtin')
 
-##> REGEXP IN PYTHON ##
+## > REGEXP IN PYTHON ##
 
 rec(YELLOW, 'source.regexp #punctuation.definition.group')
 rec(PURPLE, 'source.regexp #constant.other.character-class.set',
             '#constant.character.character-class.regexp')
 
-##> JAVASCRIPT ##
+## > JAVASCRIPT ##
 
 source('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
@@ -194,10 +194,12 @@ rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
 rec(STORAGE,     'variable.type')
 rec(LIGHT_BLUE,  'meta.object-literal.key')
 rec(OPERATOR,    'storage.type.function.arrow')
-rec(ORANGE,      '#support.type.object')
+rec(ORANGE,      '#support.type.object',
+                 'meta.template.expression')
+rec(DARK_ORANGE, 'meta.template.expression #punctuation.definition.template-expression')
 rec(FOREGROUND,  '#support.function')
 
-##> REGEXP IN JAVASCRIPT ##
+## > REGEXP IN JAVASCRIPT ##
 
 rec(YELLOW, '#keyword.operator.or.regexp',
             '#punctuation.definition.group.regexp')
@@ -205,7 +207,7 @@ rec(PURPLE, '#keyword.operator.quantifier.regexp',
             '#constant.other.character-class.escape.backslash.regexp')
 rec(PINK,   '#keyword.operator.quantifier.regexp')
 
-##> REGEXP ##
+## > REGEXP ##
 
 source('regexp', widget=True)
 rec(YELLOW,  'keyword.operator.or',
@@ -218,7 +220,7 @@ rec(PINK,    'constant.language.character-class constant.language.character-clas
 rec(CRIMSON, '#keyword.modifier',
              'meta.group.modifier punctuation.definition.group.modifier')
 
-##> JAVA ##
+## > JAVA ##
 
 source('java')
 rec(META,              'punctuation.definition.annotation',
@@ -235,14 +237,17 @@ rec(CRIMSON,           'meta.package #storage.type',
                        'meta.throws.statement storage.type #-meta.generic')
 rec(DARK_ORANGE,       'storage.type.generic')
 
-##> C++ ##
+## > POWERSHELL ##
+source('powershell')
+
+## > C++ ##
 
 source('c++')
 rec(USER_CONSTANT, 'entity.name.constant.preprocessor')
 rec(KEYWORD,       'keyword.operator.word')
 rec(OPERATOR,      'punctuation.accessor')
 
-##> XML ##
+## > XML ##
 
 source('xml')
 rec(TAG,         'entity.name.tag',
@@ -254,18 +259,18 @@ rec(YELLOW,      '#entity.name.attribute',
                  'entity.name.doctype.element')
 rec(DARK_ORANGE, 'punctuation.definition.substitution')
 
-##> YAML ##
+## > YAML ##
 
 source('yaml')
 rec(PUNCTUATION, '#keyword.operator')
 
-##> ETC ##
+## > ETC ##
 
 no_group()
 rec(GREEN,       'meta.not-commited-yet.git constant.numeric.line-number')
 rec(DARK_VIOLET, 'constant.date.git')
 
-##> ICONS ##
+## > ICONS ##
 
 def icon(scope, filename):
   return dict(
