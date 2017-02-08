@@ -8,6 +8,7 @@
 /User/Package Control.last-run
 /User/Package Control.cache
 /User/Package Control.*bundle
+/User/*.crt
 
 !/Default
 
