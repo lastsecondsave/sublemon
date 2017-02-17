@@ -1,10 +1,10 @@
-// SYNTAX TEST "Packages/Sublemon/java_spec/java.sublime-syntax"
+// SYNTAX TEST "Packages/Sublemon/java_spec/java.prototype.sublime-syntax"
 
 package some.package.here.with_123;
-//<- meta.package.java
+//<- meta.package.java keyword.package.java
 //      ^ meta.package.java storage.type.package.java
 
-import static
+import static;
 //<- meta.import.java
 //     ^ meta.import.java keyword.import.static.java
 
@@ -31,6 +31,10 @@ import some.package.here.CLASS;
 import some.package.here.C;
 //                       ^ meta.import.java storage.type.java
 
+@Annotation
+// <- meta.annotation.identifier.java punctuation.definition.annotation.java
+ // <- meta.annotation.identifier.java storage.type.annotation.java
+
 @interface Annotation {
 // <- meta.class.identifier.java storage.type.modifier.java
 }
@@ -44,12 +48,15 @@ interface Interface<T> {
 //                  ^ meta.class.identifier.java meta.generic.java storage.type.generic.java
 }
 
-for (String str : strings) {
-//          ^^^ variable.parameter.java
-//              ^ keyword.operator.java
+interface AnotherInterface<java.lang.String<X>, T> {
+//                                              ^ meta.class.identifier.java meta.generic.java storage.type.generic.java
 }
 
-class ClassName extends some.package.Parent.Class<T> implements some.package.ParentClass<T>, some.package.Parent.Class<T>{
+/**
+ * Javadoc
+// ^ comment.block.documentation.java
+ */
+class ClassName extends some.package.Parent.Class<T> implements some.package.ParentClass<T>, some.package.Parent.Class<T> {
 //                                   ^ meta.extends.statement.java storage.type.java
 //                                   ^        meta.extends.statement.java storage.type.java
 //                                                                           ^ meta.implements.statement.java storage.type.java
@@ -95,5 +102,11 @@ class ClassName extends some.package.Parent.Class<T> implements some.package.Par
 //      ^ storage.type.generic.java
 
         Collections.<Integer>emptyList()
+
+        for (String str : strings) {
+        //          ^^^ variable.parameter.java
+        //              ^ keyword.operator.java
+        }
+
     }
 }

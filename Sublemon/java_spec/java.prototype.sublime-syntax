@@ -1,0 +1,273 @@
+%YAML 1.2
+---
+name: Java Prototype
+scope: source.java
+file_extensions: [prototype.java]
+# first_line_match: package\s+\w+(\.\w+)*;
+
+variables:
+  id:             (?:\b[a-zA-Z]\w*\b)
+  upper_camel_id: (?:\b[A-Z]\w*\b)
+  lower_camel_id: (?:\b[a-z]\w*\b)
+  uppercase_id:   (?:\b[A-Z][A-Z_0-9]*\b)
+
+  escape: '\\(?:[bfnrt''"\\]|u[0-9a-fA-F]{4})'
+  digits: (?:[0-9][0-9_]*)
+  decimal_number: '{{digits}}(?:\.{{digits}}?)?(?:[eE][+-]?{{digits}})?[lLfFdD]?\b'
+
+contexts:
+  prototype:
+  - include: comments_pack
+  - include: git_conflict_pack
+
+  main:
+  - include: before_class_pack
+  - include: class_declaration_pack
+
+  ## PRIMITIVES ##
+
+  pop_otherwise:
+  - match: ''
+    pop: true
+
+  spaces:
+  - match: (?=\S)
+    pop: true
+
+  semicolon:
+  - match: ;
+    pop: true
+
+  semicolon_fence:
+  - match: (?=;)
+    pop: true
+
+  open_curly_bracket_fence:
+  - match: (?=\{)
+    pop: true
+
+  ## BEFORE CLASS ##
+
+  before_class_pack:
+  - match: (^|\s)(?=(?:package|import)\b)
+    push: [semicolon, before_class_statements]
+
+  before_class_statements:
+  - match: ''
+    set: before_class_statements_ext
+    with_prototype:
+    - include: semicolon_fence
+
+  before_class_statements_ext:
+  - match: package
+    scope: keyword.package.java
+    push: [package_statement_scope, package_statement, spaces]
+  - match: import
+    scope: keyword.import.java
+    push: [import_statement_scope, import_statement, spaces]
+
+  package_statement_scope:
+  - meta_scope: meta.package.java
+  - include: pop_otherwise
+
+  package_statement:
+  - match: \.
+  - match: '{{lower_camel_id}}'
+    scope: storage.type.package.java
+  - include: pop_otherwise
+
+  import_statement_scope:
+  - meta_scope: meta.import.java
+  - include: pop_otherwise
+
+  import_statement:
+  - match: static\b
+    scope: keyword.import.static.java
+    set: [static_import_class_names, package, spaces]
+  - match: ''
+    set: [import_class_names, package]
+
+  import_class_names:
+  - match: '{{upper_camel_id}}'
+    scope: storage.type.java
+  - match: \*
+    scope: storage.type.asterisk.java
+  - include: pop_otherwise
+
+  static_import_class_names:
+  - match: \.
+  - match: '{{uppercase_id}}'
+    scope: constant.user.java
+  - include: import_class_names
+
+  ## COMMENTS ##
+
+  comments_pack:
+  - match: //.*$
+    scope: comment.line.java
+  - match: /\*\*(?!/)
+    push: [javadoc_end, javadoc_begin]
+  - match: /\*.*?\*/
+    scope: comment.block.java
+  - match: /\*
+    push:
+    - meta_scope: comment.block.java
+    - match: \*/
+      pop: true
+
+  javadoc_end:
+  - meta_scope: comment.block.documentation.java
+  - match: \*/
+    pop: true
+
+  javadoc_begin:
+  - match: ''
+    set: javadoc_ext
+    with_prototype:
+    - match: (?=\*/)
+      pop: true
+
+  javadoc_ext:
+  - match: '@(?:param)\s+[\w<>]*'
+    scope: keyword.documentation.javadoc.java
+  - match: \{\s*@(?:code|literal|link)
+    scope: keyword.documentation.inline.javadoc.java
+    push:
+    - meta_scope: no-spellcheck.java
+    - match: \}
+      scope: keyword.documentation.inline.javadoc.java
+      pop: true
+  - match: '(@author)\s+(.*)'
+    captures:
+      1: keyword.documentation.javadoc.java
+      2: no-spellcheck.java
+  - match: '@[\w.]+'
+    scope: keyword.javadoc.java
+  - match: (</?)\w+.*?(/?>)
+    scope: meta.tag.javadoc.java
+    captures:
+      1: punctuation.definition.tag.begin.javadoc
+      2: punctuation.definition.tag.end.javadoc
+
+  ## CLASS TYPE ##
+
+  package:
+  - match: ({{lower_camel_id}})\.
+    captures:
+      1: storage.type.package.java
+  - include: pop_otherwise
+
+  class_type_pack:
+  - match: (?={{lower_camel_id}}\.)
+    push: [generic, class_name, package]
+  - match: (?={{upper_camel_id}})
+    push: [generic, class_name]
+
+  class_type:
+  - match: (?={{lower_camel_id}}\.)
+    set: [generic, class_name, package]
+  - match: (?={{upper_camel_id}})
+    set: [generic, class_name]
+  - include: pop_otherwise
+
+  class_name:
+  - match: '{{upper_camel_id}}'
+    scope: storage.type.java
+  - match: '\.({{upper_camel_id}})'
+    captures:
+      1: storage.type.java
+  - include: pop_otherwise
+
+  generic:
+  - match: <
+    push:
+    - meta_scope: meta.generic.java
+    - match: '\b[A-Z]\b'
+      scope: storage.type.generic.java
+    - include: class_type_pack
+    - match: \?
+      scope: storage.type.wildcard.java
+    - match: \&
+      scope: keyword.operator.java
+    - match: \>
+      pop: true
+  - include: pop_otherwise
+
+  ## CLASS DEFINITION ##
+
+  class_declaration_pack:
+  - match: (^|\s)(?=(?:class|@?interface)\b)
+    push: [class_body, spaces, class_declaration]
+
+  class_declaration:
+  - match: ''
+    set: class_declaration_ext
+    with_prototype:
+    - include: open_curly_bracket_fence
+
+  class_declaration_ext:
+  - match: class
+    scope: storage.type.modifier.java
+    push: [implements_statement, spaces, extends_statement, spaces, class_identifier, spaces]
+  - match: '@?interface'
+    scope: storage.type.modifier.java
+    push: [extends_statement, spaces, class_identifier, spaces]
+
+  class_identifier:
+  - meta_scope: meta.class.identifier.java
+  - match: '{{upper_camel_id}}'
+    scope: entity.name.type.java
+    push: generic
+  - include: pop_otherwise
+
+  extends_statement:
+  - match: \bextends\b
+    scope: keyword.extends.java
+    set: [extends_statement_scope, another_class_type, spaces, class_type, spaces]
+  - include: pop_otherwise
+
+  extends_statement_scope:
+  - meta_scope: meta.extends.statement.java
+  - include: pop_otherwise
+
+  implements_statement:
+  - match: \bimplements\b
+    scope: keyword.implements.java
+    set: [implements_statement_scope, another_class_type, spaces, class_type, spaces]
+  - include: pop_otherwise
+
+  implements_statement_scope:
+  - meta_scope: meta.implements.statement.java
+  - include: pop_otherwise
+
+  another_class_type:
+  - match: ','
+    set: [another_class_type, spaces, class_type, spaces]
+  - include: pop_otherwise
+
+  ## CLASS BODY ##
+
+  class_body:
+  - match: \{
+    push:
+    - meta_scope: meta.class.body.java
+    - match: \}
+      pop: true
+    - include: class_body_internals_pack
+  - include: pop_otherwise
+
+  class_body_internals_pack:
+  - match: (?={{id}}\s*\()
+    push: method_declaration
+
+  ## METHODS ##
+
+  method_declaration:
+  - match: ''
+    pop: true
+
+  ## ADDONS ##
+
+  git_conflict_pack:
+  - match: ^(?:<{7}|={7}|\|{7}|>{7}).*$
+    scope: comment.git-conflict.java
