@@ -1,0 +1,6 @@
+<snippet> 
+	<description>final</description>
+	<tabTrigger>f</tabTrigger>
+	<scope>source.java</scope>
+	<content>final </content> 
+</snippet>
