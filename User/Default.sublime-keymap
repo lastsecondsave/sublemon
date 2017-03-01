@@ -115,9 +115,6 @@
   { "keys": ["alt+f6"],     "command": "toggle_selection_scope" },
   { "keys": ["ctrl+alt+z"], "command": "normalize_region_ends" },
 
-  { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 26,  "by_character": false} },
-  { "keys": ["ctrl+alt+left"],  "command": "scroll_width", "args": {"amount": -26, "by_character": false} },
-
   { "keys": ["ctrl+k", "ctrl+r"], "command": "table_of_comments" },
 
   /**> MACRO **/
