@@ -1,8 +1,15 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 set -e
 
-pushd '/opt/sublime_text_3/Packages'
+case $(uname -s) in
+  'Darwin') INSTALL_PATH='/Applications/Sublime Text.app/Contents/MacOS';;
+  'Linux')  INSTALL_PATH='/opt/sublime_text_3';;
+
+  *) echo 'Unknown OS'; exit 1;;
+esac
+
+pushd -q "$INSTALL_PATH/Packages"
 
 for package in *.sublime-package; do
   echo "Cleaning $package"
@@ -26,4 +33,4 @@ for package in *.sublime-package; do
   rm -rf "$dir"
 done
 
-popd
+popd -q
