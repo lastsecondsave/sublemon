@@ -2,6 +2,7 @@
 
 !/Sublemon
 /Sublemon/*/generated
+/Sublemon/*/__pycache__
 /Sublemon/*.tmTheme
 
 !/User
