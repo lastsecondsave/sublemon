@@ -118,6 +118,5 @@ class ToggleDrawCenteredCommand(sublime_plugin.ApplicationCommand):
 
 class OpenFilePathCommand(sublime_plugin.WindowCommand):
     def run(self):
-        on_done = lambda x: self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
-        view = self.window.show_input_panel("File Name:", '', on_done, None, None)
-        view.sel().add(sublime.Region(0, len(initial)))
+        def on_done(x): self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
+        self.window.show_input_panel("File Name:", '', on_done, None, None)
