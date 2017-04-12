@@ -1,9 +1,13 @@
 [
-  { "keys": ["shift+ctrl+pageup"],   "command": "move_tab", "args": { "position": "-1" } },
-  { "keys": ["shift+ctrl+pagedown"], "command": "move_tab", "args": { "position": "+1" } },
+  { "keys": ["shift+ctrl+pageup"],   "command": "move_tab", "args": {"position": "-1"} },
+  { "keys": ["shift+ctrl+pagedown"], "command": "move_tab", "args": {"position": "+1"} },
 
   { "keys": ["super+alt+left"],  "command": "jump_back" },
   { "keys": ["super+alt+right"], "command": "jump_forward" },
+
+  { "keys": ["super+,"], "command": "edit_settings", "args": {
+    "base_file": "${packages}/Default/Preferences.sublime-settings"}
+  },
 
   { "keys": ["super+x"], "command": "cut" },
   { "keys": ["super+c"], "command": "copy" },
