@@ -6,14 +6,14 @@ settings.cleanup()
 
 ## COMMON ##
 
-settings.scope("comment.mark",
+settings.entry("comment.mark",
   showInSymbolList = 1,
   symbolTransformation = "s/^/> /;"
 )
 
 ## SOURCE ##
 
-settings.scope("source.groovy",
+settings.entry("source.groovy",
   shellVariables = [
     dict(name = "TM_COMMENT_START",   value = "// "),
     dict(name = "TM_COMMENT_START_2", value = "/*"),
@@ -21,18 +21,18 @@ settings.scope("source.groovy",
   ]
 )
 
-settings.scope("source.ini",
+settings.entry("source.ini",
   shellVariables = [
     dict(name = "TM_COMMENT_START",   value = "; "),
     dict(name = "TM_COMMENT_START_2", value = "# ")
   ]
 )
 
-settings.scope("source.ini entity.name.section",
+settings.entry("source.ini entity.name.section",
   showInSymbolList = 1
 )
 
-settings.scope("source.unix",
+settings.entry("source.unix",
   shellVariables = [
     dict(name = "TM_COMMENT_START", value = "# ")
   ]
@@ -40,7 +40,7 @@ settings.scope("source.unix",
 
 ## TEXT ##
 
-settings.scope("text.markdown markup.heading entity.name.section",
+settings.entry("text.markdown markup.heading entity.name.section",
   showInSymbolList = 1,
   symbolTransformation = \
     r"s/\s*#*$//;" + \
@@ -48,6 +48,6 @@ settings.scope("text.markdown markup.heading entity.name.section",
     r"s/^#//;"
 )
 
-settings.scope("text.rfc entity.name.title",
+settings.entry("text.rfc entity.name.title",
   showInSymbolList = 1
 )
