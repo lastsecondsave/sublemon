@@ -1,0 +1,10 @@
+<snippet>
+	<description>case</description>
+	<tabTrigger>case</tabTrigger>
+	<scope>source.shell</scope>
+	<content>
+<![CDATA[case $1 in
+	$0
+esac]]>
+	</content>
+</snippet>
