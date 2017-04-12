@@ -4,6 +4,7 @@
   { "keys": ["ctrl+shift+b"], "command": "unbound" },
   { "keys": ["alt+shift+w"],  "command": "unbound" },
   { "keys": ["alt+q"],        "command": "unbound" },
+  { "keys": ["ctrl+;"],       "command": "unbound" },
 
   /** > COMMON **/
 
@@ -69,6 +70,8 @@
   { "keys": ["alt+;"],   "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
   { "keys": ["ctrl+f7"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
 
+  { "keys": ["ctrl+\\"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
+
   /** > PANELS **/
 
   { "keys": ["ctrl+f"],       "command": "show_panel", "args": {"panel": "find", "reverse": false, "toggle": true} },
@@ -117,8 +120,7 @@
 
   { "keys": ["alt+f6"],     "command": "toggle_selection_scope" },
   { "keys": ["ctrl+alt+z"], "command": "normalize_region_ends" },
-
-  { "keys": ["ctrl+k", "ctrl+r"], "command": "table_of_comments" },
+  { "keys": ["ctrl+'"],     "command": "table_of_comments" },
 
   /** > MACRO **/
 
