@@ -13,6 +13,8 @@
 		"*.orig",
 		"*.png"
 	],
+	"caret_extra_bottom": 0,
+	"caret_extra_top": 0,
 	"caret_style": "blink",
 	"color_scheme": "Packages/Sublemon/Disco.tmTheme",
 	"copy_with_empty_selection": false,
