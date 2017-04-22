@@ -16,13 +16,14 @@ PINK         = "#EF51AA" # [239,  81, 170]
 LIGHT_BLUE   = "#77ABFF" # [119, 171, 255]
 BLUE         = "#6699FF" # [102, 153, 255]
 DARK_BLUE    = "#264F78" # [ 38,  79, 120]
-BLUISH_BLACK = "#272728" # [ 45,  45,  52]
+BLUISH_BLACK = "#202830" # [ 32,  40,  48]
 GREEN        = "#C5CC4B" # [197, 204,  75]
 YELLOW       = "#EDC61A" # [239, 197,  45]
 ORANGE       = "#FF9A41" # [255, 154,  65]
 DARK_ORANGE  = "#FF8147" # [255, 129,  71]
 CRIMSON      = "#E5476C" # [229,  71, 108]
 
+BACKGROUND        = BLUISH_BLACK
 FOREGROUND        = WHITE
 KEYWORD           = PURPLE
 STORAGE           = PINK
@@ -46,7 +47,7 @@ def rule(name, scope, **settings):
   )
 
 theme_globals = dict(
-  background         = '#202830',
+  background         = BACKGROUND,
   foreground         = FOREGROUND,
   caret              = CLEAR_WHITE,
   selection          = "#384868",
@@ -57,7 +58,7 @@ theme_globals = dict(
 )
 
 widget_globals = dict(
-  background         = '#1B1B1C',
+  background         = BACKGROUND,
   foreground         = FOREGROUND,
   caret              = CLEAR_WHITE,
   selection          = "#384868",
