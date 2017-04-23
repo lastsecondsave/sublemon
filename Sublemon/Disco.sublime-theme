@@ -716,7 +716,7 @@
         "layer0.texture": "Theme - Default/common/dark/button.png",
         "layer0.opacity": { "target": 0.2, "speed": 4.0, "interpolation": "smoothstep" },
         "layer0.inner_margin": 4,
-        "min_size": [60, 0],
+        "min_size": [65, 0],
         "content_margin": [10, 6]
     },
     {
