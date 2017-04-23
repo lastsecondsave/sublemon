@@ -5,9 +5,11 @@ set -e
 case $(uname -s) in
   'Darwin') INSTALL_PATH='/Applications/Sublime Text.app/Contents/MacOS';;
   'Linux')  INSTALL_PATH='/opt/sublime_text_3';;
-
-  *) echo 'Unknown OS'; exit 1;;
 esac
+
+if [[ ! -d $INSTALL_PATH ]]; then
+  INSTALL_PATH="$(dirname $0)/../../../.."
+fi
 
 pushd -q "$INSTALL_PATH/Packages"
 
