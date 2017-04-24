@@ -100,18 +100,6 @@ settings = [
   rule("Embedded RegExp",            "source.regexp.embedded - source.yaml", foreground = GREEN),
   rule("Embedded RegExp delimiters", "source punctuation.definition.regexp", foreground = ORANGE),
 
-  rule("Markup italic",        "markup.italic", foreground = ORANGE),
-  rule("Markup bold",          "markup.bold", foreground = CRIMSON),
-  rule("Markup strikethrough", "markup.strikethrough", foreground = GRAY),
-  rule("Markup links",         "markup.underline.link", foreground = YELLOW),
-
-  rule("Markdown monospace",       """markup.raw.inline.markdown, punctuation.definition.block.fenced.markdown,
-                                      text.markdown markup.raw.block""", foreground = GREEN),
-  rule("Markdown punctuation",     """punctuation.definition.list.markdown, punctuation.definition.quote.markdown,
-                                      punctuation.heading.underline.markdown, punctuation.definition.image.markdown""", foreground = DARK_ORANGE),
-  rule("Markdown language marker",   "meta.fenced.language.marker.markdown", foreground = YELLOW),
-  rule("Markdown language marker",   "text.markdown entity.name.tag", foreground = PINK),
-
   rule("CSS general selector",      "meta.rule.selector.css entity.name.general", foreground = PINK),
   rule("CSS id selector",           "meta.rule.selector.css entity.name.id", foreground = YELLOW),
   rule("CSS class selector",        "meta.rule.selector.css entity.name.class", foreground = CRIMSON),
@@ -121,7 +109,7 @@ settings = [
 
 widget_settings = [dict(settings=widget_globals)]
 
-def group(category, lang, widget):
+def group(category, lang, widget=False):
   global current_lang, current_category, widget_category
   current_lang, current_category, widget_category = lang, category, widget
 
@@ -265,9 +253,46 @@ rec(DARK_ORANGE, 'punctuation.definition.substitution')
 source('yaml')
 rec(PUNCTUATION, '#keyword.operator')
 
-## > ETC ##
+## > MARKDOWN ##
+
+group('text.html', 'markdown')
+rec(PARAMETER,   'meta.link.inline.description',
+                 'meta.link.reference.literal.description',
+                 'meta.link.reference.description',
+                 'meta.image.inline.description',
+                 'meta.image.reference.description',
+                 'constant.other.reference.link')
+rec(TAG,         '#meta.tag')
+rec(PUNCTUATION, '#meta.link.inline #punctuation.definition',
+                 '#meta.link.reference #punctuation.definition',
+                 '#punctuation.definition.list_item',
+                 'markup.list.numbered.bullet',
+                 '#punctuation.definition.raw.code-fence',
+                 'punctuation.definition.blockquote',
+                 '#punctuation.definition.constant',
+                 '#punctuation.definition.image',
+                 '#punctuation.separator',
+                 'punctuation.definition.thematic-break')
+rec(STRING,      '#punctuation.definition.string')
+rec(YELLOW,      'meta.link.email.lt-gt',
+                 'meta.link.inet',
+                 '#entity.other.attribute-name.class.html')
+rec(FOREGROUND,  '#punctuation.separator.key-value.html')
+
+## > COMMON ##
 
 no_group()
+
+## >> MARKUP ##
+
+rec(STRING,  'markup.raw')
+rec(BLUE,    'markup.heading')
+rec(YELLOW,  'markup.underline.link')
+rec(PINK,    'markup.italic')
+rec(CRIMSON, 'markup.bold')
+
+## >> ETC ##
+
 rec(GREEN,       'meta.not-commited-yet.git constant.numeric.line-number')
 rec(DARK_VIOLET, 'constant.date.git')
 
