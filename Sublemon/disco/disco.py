@@ -1,8 +1,9 @@
-import hashlib
 import os
-import plistlib
 import re
-import shutil
+import sys
+
+sys.path.append("../lib")
+import settings
 
 GRAY         = "#9090A0" # [144, 144, 160]
 DARK_GRAY    = "#51515D" # [ 81,  81,  93]
@@ -15,7 +16,7 @@ PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
 LIGHT_BLUE   = "#77ABFF" # [119, 171, 255]
 BLUE         = "#6699FF" # [102, 153, 255]
-DARK_BLUE    = "#264F78" # [ 38,  79, 120]
+DARK_BLUE    = "#384868" # [ 56,  72, 104]
 BLUISH_BLACK = "#202830" # [ 32,  40,  48]
 GREEN        = "#C5CC4B" # [197, 204,  75]
 YELLOW       = "#EDC61A" # [239, 197,  45]
@@ -39,6 +40,9 @@ TAG               = LIGHT_BLUE
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
 
+def alpha(color, value):
+  return color + '{:02X}'.format(round(255 * value))
+
 def rule(name, scope, **settings):
   return dict(
     name = name,
@@ -50,8 +54,8 @@ theme_globals = dict(
   background         = BACKGROUND,
   foreground         = FOREGROUND,
   caret              = CLEAR_WHITE,
-  selection          = "#384868",
-  lineHighlight      = "#E5476C40",
+  selection          = DARK_BLUE,
+  lineHighlight      = alpha(CRIMSON, 0.2),
   findHighlight      = YELLOW,
   minimapBorder      = FOREGROUND,
   bracketsForeground = PUNCTUATION
@@ -61,13 +65,11 @@ widget_globals = dict(
   background         = BACKGROUND,
   foreground         = FOREGROUND,
   caret              = CLEAR_WHITE,
-  selection          = "#384868",
+  selection          = DARK_BLUE,
   bracketsForeground = PUNCTUATION
 )
 
-settings = [
-  dict(settings=theme_globals),
-
+theme_settings = [
   rule("Language constant",         "constant.language", foreground = ORANGE),
   rule("Language variable",         "variable.language", foreground = ORANGE),
   rule("User-defined variable",     "variable.user", foreground = ORANGE),
@@ -107,7 +109,7 @@ settings = [
   rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
 ]
 
-widget_settings = [dict(settings=widget_globals)]
+widget_settings = []
 
 def group(category, lang, widget=False):
   global current_lang, current_category, widget_category
@@ -135,7 +137,8 @@ def rec(color, *scopes, **attributes):
         chunks[i] = chunk
 
     record_settings = dict(scope=' '.join(chunks), settings=attributes)
-    settings.append(record_settings)
+
+    theme_settings.append(record_settings)
     if widget_category:
       widget_settings.append(record_settings)
 
@@ -169,7 +172,7 @@ rec(INDEXED, 'entity.name.function support.function.magic',
              'entity.name.function.decorator',
              'entity.name.function.decorator support.function.builtin')
 
-## > REGEXP IN PYTHON ##
+## >> REGEXP IN PYTHON ##
 
 rec(YELLOW, 'source.regexp #punctuation.definition.group')
 rec(PURPLE, 'source.regexp #constant.other.character-class.set',
@@ -188,7 +191,7 @@ rec(ORANGE,      '#support.type.object',
 rec(DARK_ORANGE, 'meta.template.expression #punctuation.definition.template-expression')
 rec(FOREGROUND,  '#support.function')
 
-## > REGEXP IN JAVASCRIPT ##
+## >> REGEXP IN JAVASCRIPT ##
 
 rec(YELLOW, '#keyword.operator.or.regexp',
             '#punctuation.definition.group.regexp')
@@ -227,6 +230,7 @@ rec(CRIMSON,           'meta.package #storage.type',
 rec(DARK_ORANGE,       'storage.type.generic')
 
 ## > POWERSHELL ##
+
 source('powershell')
 
 ## > C++ ##
@@ -298,41 +302,39 @@ rec(DARK_VIOLET, 'constant.date.git')
 
 ## > ICONS ##
 
-def icon(scope, filename):
-  return dict(
-    scope = scope,
-    settings = dict(icon = filename)
-  )
+icons = []
 
-icons = [
-  icon("source.c++",        "file_type_cpp"),
-  icon("source.css",        "file_type_css"),
-  icon("source.git",        "file_type_git"),
-  icon("source.groovy",     "file_type_groovy"),
-  icon("source.java",       "file_type_java"),
-  icon("source.ini",        "file_type_properties"),
-  icon("source.java-props", "file_type_properties"),
-  icon("source.js",         "file_type_javascript"),
-  icon("source.json",       "file_type_json"),
-  icon("source.powershell", "file_type_powershell"),
-  icon("source.python",     "file_type_python"),
-  icon("source.xml",        "file_type_xml"),
-  icon("source.yaml",       "file_type_yaml"),
-  icon("text.markdown",     "file_type_markup"),
-  icon("text.rfc",          "file_type_markup")
-]
+def icon(name, *scopes):
+  for scope in scopes:
+    icons.append(dict(
+      scope = scope,
+      settings = dict(icon = 'file_type_' + name)
+    ))
 
-with open(os.path.join("..", "Disco.tmTheme"), "wb") as pfile:
-  plistlib.dump(dict(name="Disco", settings=settings), pfile)
+icon('cpp', 'source.c++')
+icon('css', 'source.css')
+icon('git', 'source.git')
+icon('groovy', 'source.groovy')
+icon('java', 'source.java')
+icon('js', 'source.js')
+icon('json', 'source.json')
+icon('markup', 'text.html.markdown', 'text.rfc', 'text.restructuredtext')
+icon('powershell', 'source.powershell')
+icon('properties', 'source.ini', 'source.java-props')
+icon('python', 'source.python')
+icon('xml', 'source.xml')
+icon('yaml', 'source.yaml')
 
-with open(os.path.join("..", "Widget - Disco.tmTheme"), "wb") as pfile:
-  plistlib.dump(dict(name="Disco", settings=widget_settings), pfile)
+## > GENERATOR ##
 
-shutil.rmtree("generated", ignore_errors=True)
-os.mkdir("generated")
+theme_settings.append(dict(settings=theme_globals))
+settings.write_plist(os.path.join("..", "Disco.tmTheme"),
+    dict(name="Disco", settings=theme_settings))
 
+widget_settings.append(dict(settings=widget_globals))
+settings.write_plist(os.path.join("..", "Widget - Disco.tmTheme"),
+    dict(name="Disco", settings=widget_settings))
+
+settings.cleanup()
 for icon in icons:
-  filename = hashlib.sha1(icon["scope"].encode('ascii')).hexdigest() + ".tmPreferences"
-  print("{}: {}".format(filename, icon["scope"]))
-  with open(os.path.join("generated", filename), "wb") as pfile:
-    plistlib.dump(icon, pfile)
+  settings.generate_settings_file(icon["scope"], icon)

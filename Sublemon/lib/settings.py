@@ -3,6 +3,18 @@ import os
 import plistlib
 import shutil
 
+def encode_filename(scope):
+    return hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
+
+def write_plist(path, content):
+    with open(path, "wb") as pfile:
+        plistlib.dump(content, pfile)
+
+def generate_settings_file(scope, settings):
+    filename = encode_filename(scope)
+    print("{}: {}".format(filename, scope))
+    write_plist(os.path.join("generated", filename), settings)
+
 def cleanup():
     shutil.rmtree("generated", ignore_errors=True)
     os.mkdir("generated")
@@ -48,8 +60,4 @@ def entry(
     if len(shell_vars) > 0:
         settings['shellVariables'] = shell_vars
 
-    filename = hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
-    print("{}: {}".format(filename, scope))
-
-    with open(os.path.join("generated", filename), "wb") as pfile:
-        plistlib.dump(dict(scope=scope, settings=settings), pfile)
+    generate_settings_file(scope, dict(scope=scope, settings=settings))
