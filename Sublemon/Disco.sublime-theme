@@ -377,14 +377,14 @@
     // Quick Panel
     {
         "class": "overlay_control",
-        "layer0.tint": [27, 27, 28],
+        "layer0.tint": [22, 30, 38],
         "layer0.opacity": 1.0,
         "content_margin": 6
     },
     {
         "class": "quick_panel",
         "row_padding": [4, 2, 4, 2],
-        "layer0.tint": [27, 27, 28],
+        "layer0.tint": [22, 30, 38],
         "layer0.opacity": 1.0,
         "dark_content": true,
     },
