@@ -83,11 +83,6 @@ theme_settings = [
 
   rule("Java log exception",                   "text.log.java entity.name.exception", foreground = CRIMSON),
 
-  rule("Diff inserted", "markup.inserted.diff, punctuation.definition.to-file.diff", foreground = GREEN),
-  rule("Diff deleted",  "markup.deleted.diff, punctuation.definition.from-file.diff", foreground = CRIMSON),
-  rule("Diff range",    "meta.diff.range", foreground = YELLOW),
-  rule("Diff header",   "meta.diff.header", foreground = LIGHT_BLUE),
-
   rule("Powershell pipe and stream",       "keyword.operator.pipe.powershell, keyword.operator.stream.powershell", foreground = DARK_ORANGE),
   rule("Powershell execute and escape",    "keyword.operator.execute.powershell, keyword.operator.escape.powershell", foreground = CRIMSON),
   rule("Powershell static call separator", "punctuation.separator.static-call.powershell", foreground = BLUE),
@@ -282,6 +277,14 @@ rec(YELLOW,      'meta.link.email.lt-gt',
                  'meta.link.inet',
                  '#entity.other.attribute-name.class.html')
 rec(FOREGROUND,  '#punctuation.separator.key-value.html')
+
+## > DIFF ##
+
+source('diff')
+rec(META,    '#meta.diff.range')
+rec(BLUE,    '#meta.diff.header')
+rec(GREEN,   'markup.inserted')
+rec(CRIMSON, 'markup.deleted')
 
 ## > COMMON ##
 
