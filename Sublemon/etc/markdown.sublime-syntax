@@ -2,7 +2,7 @@
 ---
 name: GitHub Markdown
 scope: text.markdown
-file_extensions: [markdown, md]
+# file_extensions: [markdown, md]
 
 contexts:
   main:
