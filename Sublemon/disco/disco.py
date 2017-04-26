@@ -39,6 +39,7 @@ META              = YELLOW
 TAG               = LIGHT_BLUE
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
+CONSTANT          = ORANGE
 
 def alpha(color, value):
   return color + '{:02X}'.format(round(255 * value))
@@ -70,18 +71,9 @@ widget_globals = dict(
 )
 
 theme_settings = [
-  rule("Language constant",         "constant.language", foreground = ORANGE),
   rule("Language variable",         "variable.language", foreground = ORANGE),
   rule("User-defined variable",     "variable.user", foreground = ORANGE),
   rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
-  rule("Support constant",          "support.constant", foreground = ORANGE),
-
-  rule("Inline expressions", "string meta.inline-expression", foreground = WHITE),
-
-  rule("Doc-comment inline keyword",          "keyword.documentation.inline", foreground = DARK_GRAY),
-  rule("Tags in doc-comments",                "comment.block.documentation meta.tag", foreground = DARK_VIOLET),
-
-  rule("Java log exception",                   "text.log.java entity.name.exception", foreground = CRIMSON),
 
   rule("Powershell pipe and stream",       "keyword.operator.pipe.powershell, keyword.operator.stream.powershell", foreground = DARK_ORANGE),
   rule("Powershell execute and escape",    "keyword.operator.execute.powershell, keyword.operator.escape.powershell", foreground = CRIMSON),
@@ -157,6 +149,8 @@ rec(FOREGROUND,    'punctuation.separator',
                    'punctuation.terminator')
 rec(PARAMETER,     'variable.parameter')
 rec(USER_CONSTANT, 'constant.user')
+rec(CONSTANT,      'constant.language',
+                   'support.constant')
 rec(FOREGROUND,    'invalid', background=CRIMSON)
 
 ## PYTHON ##
@@ -223,6 +217,13 @@ rec(CRIMSON,           'meta.package #storage.type',
                        'meta.implements.statement storage.type #-meta.generic',
                        'meta.throws.statement storage.type #-meta.generic')
 rec(DARK_ORANGE,       'storage.type.generic')
+rec(DARK_GRAY,         '#keyword.documentation.inline')
+rec(DARK_VIOLET,       'meta.tag.javadoc')
+
+## JAVA LOG ##
+
+group('text.log', 'java')
+rec(CRIMSON, '#entity.name.exception')
 
 ## POWERSHELL ##
 
