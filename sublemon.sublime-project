@@ -16,8 +16,7 @@
 		{
 			"file_exclude_patterns":
 			[
-				"Package Control.last-run",
-				"Package Control.*bundle",
+				"Package Control.*",
 				"*.crt"
 			],
 			"folder_exclude_patterns":
@@ -30,14 +29,6 @@
 		{
 			"name": "default",
 			"path": "Default"
-		},
-		{
-			"folder_exclude_patterns":
-			[
-				"*"
-			],
-			"name": "root",
-			"path": "."
 		}
 	]
 }
