@@ -86,9 +86,6 @@ theme_settings = [
   rule("Success indicator", "meta.indicator.success", foreground = GREEN),
   rule("Log message", "text.log meta.message", foreground = YELLOW),
 
-  rule("Embedded RegExp",            "source.regexp.embedded - source.yaml", foreground = GREEN),
-  rule("Embedded RegExp delimiters", "source punctuation.definition.regexp", foreground = ORANGE),
-
   rule("CSS general selector",      "meta.rule.selector.css entity.name.general", foreground = PINK),
   rule("CSS id selector",           "meta.rule.selector.css entity.name.id", foreground = YELLOW),
   rule("CSS class selector",        "meta.rule.selector.css entity.name.class", foreground = CRIMSON),
@@ -112,14 +109,12 @@ def rec(color, *scopes, **attributes):
   attributes['foreground'] = color
 
   for scope in scopes:
-    chunks = [current_category] if current_category != None else []
+    chunks = [current_category + '.' + current_lang] if current_category != None else []
     chunks += scope.split()
 
     for i, chunk in enumerate(chunks):
-      if chunk.startswith('#'):
-        chunks[i] = chunk[1:]
-      elif current_lang != None:
-        chunks[i] = chunk +'.' + current_lang
+      if chunk.startswith('#') and current_lang != None:
+        chunks[i] = chunk[1:] + '.' + current_lang
       else:
         chunks[i] = chunk
 
@@ -163,9 +158,9 @@ rec(INDEXED, 'entity.name.function support.function.magic',
 
 ## REGEXP IN PYTHON ##
 
-rec(YELLOW, 'source.regexp #punctuation.definition.group')
-rec(PURPLE, 'source.regexp #constant.other.character-class.set',
-            '#constant.character.character-class.regexp')
+rec(YELLOW, 'source.regexp punctuation.definition.group')
+rec(PURPLE, 'source.regexp constant.other.character-class.set',
+            'constant.character.character-class.regexp')
 
 ## JAVASCRIPT ##
 
@@ -175,18 +170,18 @@ rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
 rec(STORAGE,     'variable.type')
 rec(LIGHT_BLUE,  'meta.object-literal.key')
 rec(OPERATOR,    'storage.type.function.arrow')
-rec(ORANGE,      '#support.type.object',
+rec(ORANGE,      'support.type.object',
                  'meta.template.expression')
-rec(DARK_ORANGE, 'meta.template.expression #punctuation.definition.template-expression')
-rec(FOREGROUND,  '#support.function')
+rec(DARK_ORANGE, 'meta.template.expression punctuation.definition.template-expression')
+rec(FOREGROUND,  'support.function')
 
 ## REGEXP IN JAVASCRIPT ##
 
-rec(YELLOW, '#keyword.operator.or.regexp',
-            '#punctuation.definition.group.regexp')
-rec(PURPLE, '#keyword.operator.quantifier.regexp',
-            '#constant.other.character-class.escape.backslash.regexp')
-rec(PINK,   '#keyword.operator.quantifier.regexp')
+rec(YELLOW, 'keyword.operator.or.regexp',
+            'punctuation.definition.group.regexp')
+rec(PURPLE, 'keyword.operator.quantifier.regexp',
+            'constant.other.character-class.escape.backslash.regexp')
+rec(PINK,   'keyword.operator.quantifier.regexp')
 
 ## REGEXP ##
 
@@ -196,34 +191,34 @@ rec(YELLOW,  'keyword.operator.or',
 rec(PURPLE,  'constant.language.character-class',
              'constant.character -constant.character.escape')
 rec(PINK,    'constant.language.character-class constant.language.character-class', # Character classes in group
-             '#keyword.control',
-             '#keyword.operator')
-rec(CRIMSON, '#keyword.modifier',
+             'keyword.control',
+             'keyword.operator')
+rec(CRIMSON, 'keyword.modifier',
              'meta.group.modifier punctuation.definition.group.modifier')
 
 ## JAVA ##
 
 source('java')
 rec(META,              'punctuation.definition.annotation',
-                       'meta.annotation.identifier #storage.type',
+                       'meta.annotation.identifier storage.type',
                        'variable.parameter.annotation')
-rec(COMMENT_HIGHLIGHT, 'comment.block.documentation #keyword',
-                       'comment.block.documentation #variable.parameter')
-rec(CRIMSON,           'meta.package #storage.type',
+rec(COMMENT_HIGHLIGHT, 'comment.block.documentation keyword',
+                       'comment.block.documentation variable.parameter')
+rec(CRIMSON,           'meta.package storage.type',
                        'storage.type.asterisk',
                        'keyword.control.assert',
-                       'meta.class.body.anonymous #punctuation.definition.class',
-                       'meta.extends.statement storage.type #-meta.generic',
-                       'meta.implements.statement storage.type #-meta.generic',
-                       'meta.throws.statement storage.type #-meta.generic')
+                       'meta.class.body.anonymous punctuation.definition.class',
+                       'meta.extends.statement storage.type -meta.generic',
+                       'meta.implements.statement storage.type -meta.generic',
+                       'meta.throws.statement storage.type -meta.generic')
 rec(DARK_ORANGE,       'storage.type.generic')
-rec(DARK_GRAY,         '#keyword.documentation.inline')
+rec(DARK_GRAY,         'keyword.documentation.inline')
 rec(DARK_VIOLET,       'meta.tag.javadoc')
 
 ## JAVA LOG ##
 
 group('text.log', 'java')
-rec(CRIMSON, '#entity.name.exception')
+rec(CRIMSON, 'entity.name.exception')
 
 ## POWERSHELL ##
 
@@ -240,18 +235,18 @@ rec(OPERATOR,      'punctuation.accessor')
 
 source('xml')
 rec(TAG,         'entity.name.tag',
-                 '#keyword',
-                 '#punctuation.definition')
-rec(STRING,      'meta.attribute #string')
-rec(PUNCTUATION, 'meta.cdata #punctuation.definition')
-rec(YELLOW,      '#entity.name.attribute',
+                 'keyword',
+                 'punctuation.definition')
+rec(STRING,      'meta.attribute string')
+rec(PUNCTUATION, 'meta.cdata punctuation.definition')
+rec(YELLOW,      'entity.name.attribute',
                  'entity.name.doctype.element')
 rec(DARK_ORANGE, 'punctuation.definition.substitution')
 
 ## YAML ##
 
 source('yaml')
-rec(PUNCTUATION, '#keyword.operator')
+rec(PUNCTUATION, 'keyword.operator')
 
 ## MARKDOWN ##
 
@@ -262,28 +257,28 @@ rec(PARAMETER,   'meta.link.inline.description',
                  'meta.image.inline.description',
                  'meta.image.reference.description',
                  'constant.other.reference.link')
-rec(TAG,         '#meta.tag')
-rec(PUNCTUATION, '#meta.link.inline #punctuation.definition',
-                 '#meta.link.reference #punctuation.definition',
-                 '#punctuation.definition.list_item',
+rec(TAG,         'meta.tag')
+rec(PUNCTUATION, 'meta.link.inline punctuation.definition',
+                 'meta.link.reference punctuation.definition',
+                 'punctuation.definition.list_item',
                  'markup.list.numbered.bullet',
-                 '#punctuation.definition.raw.code-fence',
+                 'punctuation.definition.raw.code-fence',
                  'punctuation.definition.blockquote',
-                 '#punctuation.definition.constant',
-                 '#punctuation.definition.image',
-                 '#punctuation.separator',
+                 'punctuation.definition.constant',
+                 'punctuation.definition.image',
+                 'punctuation.separator',
                  'punctuation.definition.thematic-break')
-rec(STRING,      '#punctuation.definition.string')
+rec(STRING,      'punctuation.definition.string')
 rec(YELLOW,      'meta.link.email.lt-gt',
                  'meta.link.inet',
-                 '#entity.other.attribute-name.class.html')
-rec(FOREGROUND,  '#punctuation.separator.key-value.html')
+                 'entity.other.attribute-name.class.html')
+rec(FOREGROUND,  'punctuation.separator.key-value.html')
 
 ## DIFF ##
 
 source('diff')
-rec(META,    '#meta.diff.range')
-rec(BLUE,    '#meta.diff.header')
+rec(META,    'meta.diff.range')
+rec(BLUE,    'meta.diff.header')
 rec(GREEN,   'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
