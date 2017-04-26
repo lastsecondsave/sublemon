@@ -29,12 +29,5 @@
   {
     "caption": "Git: Blame",
     "command": "git_blame"
-  },
-
-  /** EXPERIMENTAL **/
-
-  {
-    "caption": "Sublemon: Demo",
-    "command": "sublemon_demo"
   }
 ]

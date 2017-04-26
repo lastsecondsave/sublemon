@@ -4,13 +4,6 @@ import sublime
 import sublime_plugin
 import sys
 
-class SublemonDemoCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        selection = self.view.sel()
-        view = self.view
-        for region in selection:
-            pass
-
 class EscapeBackslashesCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         for region in self.view.sel():
