@@ -129,6 +129,7 @@
 
   { "keys": ["alt+f6"],     "command": "toggle_selection_scope" },
   { "keys": ["ctrl+alt+z"], "command": "normalize_region_ends" },
+  { "keys": ["ctrl+alt+a"], "command": "alignment" },
 
   /** MACRO **/
 
