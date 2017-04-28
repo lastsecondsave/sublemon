@@ -5,6 +5,7 @@ scope: text.log.java.maven
 
 contexts:
   main:
+
   # Compilation's error and warning
   - match: '^(?:(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
     captures:
@@ -15,13 +16,12 @@ contexts:
       5: constant.numeric.maven
       6: string.maven
 
-  # Maven 2 compilation's error
-  - match: '^(\S.+):\[(\d+),(\d+)\] error: (.*)'
+  # Compiler lints
+  - match: '(\[WARNING\]) (.*\.java): (.*)'
     captures:
-      1: entity.name.file.maven
-      2: constant.numeric.maven
-      3: constant.numeric.maven
-      4: string.maven
+      1: meta.indicator.warning.maven
+      2: entity.name.file.maven
+      3: string.maven
 
   # Summary
   - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
@@ -33,14 +33,20 @@ contexts:
     - match: '^\[\w+\] .*'
       scope: comment.maven
 
+  # Upper-case messages
+  - match: ^(\[INFO\]) ([A-Z][A-Z 0-9]+)$
+    scope: comment.maven
+    captures:
+      1: meta.indicator.info.maven
+      2: meta.message.maven
+
   # Generic maven message
-  - match: '^(?:(\[(?:ERROR|FATAL)\])|(\[WARNING\])|(\[INFO\]))\s+(\b[A-Z][A-Z 0-9]+\b)?(.*)'
+  - match: '^(?:(\[(?:ERROR|FATAL)\])|(\[WARNING\])|(\[INFO\])).*'
     scope: comment.maven
     captures:
       1: meta.indicator.error.maven
       2: meta.indicator.warning.maven
       3: meta.indicator.info.maven
-      4: meta.message.maven
 
   - include: Packages/Sublemon/java_spec/java_log.sublime-syntax#exceptions
 

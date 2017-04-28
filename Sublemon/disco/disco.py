@@ -81,10 +81,6 @@ theme_settings = [
   rule("Powershell embedded expression",   "punctuation.definition.expression.powershell", foreground = DARK_ORANGE),
 
   rule("INI section", "meta.section.ini, entity.name.section.ini", foreground = YELLOW),
-  rule("Error indicator", "meta.indicator.error", foreground = CRIMSON),
-  rule("Warning indicator", "meta.indicator.warning", foreground = DARK_ORANGE),
-  rule("Success indicator", "meta.indicator.success", foreground = GREEN),
-  rule("Log message", "text.log meta.message", foreground = YELLOW),
 
   rule("CSS general selector",      "meta.rule.selector.css entity.name.general", foreground = PINK),
   rule("CSS id selector",           "meta.rule.selector.css entity.name.id", foreground = YELLOW),
@@ -219,6 +215,14 @@ rec(DARK_VIOLET,       'meta.tag.javadoc')
 
 group('text.log', 'java')
 rec(CRIMSON, 'entity.name.exception')
+
+## LOG ##
+
+group('text', 'log')
+rec(CRIMSON, 'meta.indicator.error')
+rec(ORANGE,  'meta.indicator.warning')
+rec(GREEN,   'meta.indicator.success')
+rec(YELLOW,  'meta.message')
 
 ## POWERSHELL ##
 
