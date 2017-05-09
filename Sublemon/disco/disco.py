@@ -37,6 +37,7 @@ PRIMITIVE         = DARK_ORANGE
 STRING            = GREEN
 META              = YELLOW
 TAG               = LIGHT_BLUE
+TAG_ATTRIBUTE     = YELLOW
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
 CONSTANT          = ORANGE
@@ -81,12 +82,6 @@ theme_settings = [
   rule("Powershell embedded expression",   "punctuation.definition.expression.powershell", foreground = DARK_ORANGE),
 
   rule("INI section", "meta.section.ini, entity.name.section.ini", foreground = YELLOW),
-
-  rule("CSS general selector",      "meta.rule.selector.css entity.name.general", foreground = PINK),
-  rule("CSS id selector",           "meta.rule.selector.css entity.name.id", foreground = YELLOW),
-  rule("CSS class selector",        "meta.rule.selector.css entity.name.class", foreground = CRIMSON),
-  rule("CSS pseudo-class selector", "meta.rule.selector.css entity.name.pseudo-class", foreground = PURPLE),
-  rule("CSS important",             "keyword.other.important.css", foreground = DARK_ORANGE),
 ]
 
 widget_settings = []
@@ -162,7 +157,7 @@ rec(PURPLE, 'source.regexp constant.other.character-class.set',
 
 source('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
-                 'meta.for keyword.operator')
+                 'meta.for meta.group #keyword.operator') # 'of' and 'in' in for-cycle
 rec(STORAGE,     'variable.type')
 rec(LIGHT_BLUE,  'meta.object-literal.key')
 rec(OPERATOR,    'storage.type.function.arrow')
@@ -238,19 +233,35 @@ rec(OPERATOR,      'punctuation.accessor')
 ## XML ##
 
 source('xml')
-rec(TAG,         'entity.name.tag',
-                 'keyword',
-                 'punctuation.definition')
-rec(STRING,      'meta.attribute string')
-rec(PUNCTUATION, 'meta.cdata punctuation.definition')
-rec(YELLOW,      'entity.name.attribute',
-                 'entity.name.doctype.element')
-rec(DARK_ORANGE, 'punctuation.definition.substitution')
+rec(TAG,           'entity.name.tag',
+                   'keyword',
+                   'punctuation.definition')
+rec(STRING,        'meta.attribute string')
+rec(PUNCTUATION,   'meta.cdata punctuation.definition')
+rec(TAG_ATTRIBUTE, 'entity.name.attribute',
+                   'entity.name.doctype.element')
+rec(DARK_ORANGE,   'punctuation.definition.substitution')
 
 ## YAML ##
 
 source('yaml')
 rec(PUNCTUATION, 'keyword.operator')
+
+## CSS ##
+
+source('css')
+rec(PINK,        'meta.rule.selector entity.name.general')
+rec(YELLOW,      'meta.rule.selector entity.name.id')
+rec(CRIMSON,     'meta.rule.selector entity.name.class')
+rec(PURPLE,      'meta.rule.selector entity.name.pseudo-class')
+rec(DARK_ORANGE, 'keyword.other.important')
+
+## HTML ##
+group('text', 'html')
+rec(TAG,           'meta.tag punctuation.definition.tag',
+                   'meta.tag.sgml.doctype')
+rec(TAG_ATTRIBUTE, 'meta.tag entity.other.attribute-name')
+rec(STRING,        'meta.attribute-with-value.style source.css')
 
 ## MARKDOWN ##
 
