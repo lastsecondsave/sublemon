@@ -90,7 +90,8 @@
 		"*.xml",
 		"*.yaml",
 		"*.yml",
-		".git*"
+		".git*",
+		"Makefile"
 	],
 	"margin": 0,
 	"match_brackets_content": false,
