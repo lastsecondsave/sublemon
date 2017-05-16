@@ -146,6 +146,8 @@ rec(KEYWORD, 'keyword.operator.logical')
 rec(INDEXED, 'entity.name.function support.function.magic',
              'entity.name.function.decorator',
              'entity.name.function.decorator support.function.builtin')
+rec(META,    'meta.annotation -meta.annotation.arguments -punctuation.section',
+             'meta.annotation support.function')
 
 ## REGEXP IN PYTHON ##
 
@@ -257,6 +259,7 @@ rec(PURPLE,      'meta.rule.selector entity.name.pseudo-class')
 rec(DARK_ORANGE, 'keyword.other.important')
 
 ## HTML ##
+
 group('text', 'html')
 rec(TAG,           'meta.tag punctuation.definition.tag',
                    'meta.tag.sgml.doctype')
