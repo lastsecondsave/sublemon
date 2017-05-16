@@ -14,7 +14,8 @@
     },
     { "syntax": "Python/Python",
       "rules": [
-          { "interpreter": "python" }
+          { "interpreter": "python" },
+          { "interpreter": "pypy" }
       ]
     },
     { "syntax": "Sublemon/shell_spec/shell",
