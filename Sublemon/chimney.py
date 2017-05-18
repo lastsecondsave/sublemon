@@ -6,7 +6,6 @@ import subprocess
 import sys
 import threading
 
-## PIPES ##
 
 class Pipe:
     def output(self, line):
@@ -23,6 +22,7 @@ class Pipe:
         while hasattr(link_point, "next_pipe"):
             link_point = link_point.next_pipe
         link_point.next_pipe = next_pipe
+
 
 class OutputBuffer:
     def __init__(self, pipe, encoding="utf-8"):
@@ -64,9 +64,11 @@ class OutputBuffer:
         self.flush_buffer()
         self.pipe.flush()
 
+
 class ErrorBuffer(OutputBuffer):
     def write_to_pipe(self, text):
         self.pipe.error(text)
+
 
 class AsyncStreamConsumer(threading.Thread):
     def __init__(self, stream, consumer, on_close=None):
@@ -88,7 +90,6 @@ class AsyncStreamConsumer(threading.Thread):
         if self.on_close:
             self.on_close()
 
-## OUTPUT PANEL ##
 
 class OutputPanel:
     def __init__(self, window):
@@ -105,8 +106,8 @@ class OutputPanel:
         self.line_buffer.clear()
 
     def set_settings(self,
-            syntax=None, scroll_to_end=False, show_on_text=False,
-            **settings):
+                     syntax=None, scroll_to_end=False, show_on_text=False,
+                     **settings):
 
         for k, v in settings.items():
             if v:
@@ -139,9 +140,9 @@ class OutputPanel:
             self.line_buffer.clear()
 
         self.view.run_command('append', dict(
-            characters = characters,
-            force = True,
-            scroll_to_end = self.scroll_to_end
+            characters=characters,
+            force=True,
+            scroll_to_end=self.scroll_to_end
         ))
 
         if self.show_on_text:
@@ -150,6 +151,7 @@ class OutputPanel:
 
     def show(self):
         self.window.run_command("show_panel", {"panel": "output.exec"})
+
 
 class OutputPanelPipe(Pipe):
     def __init__(self, output_panel):
@@ -164,13 +166,12 @@ class OutputPanelPipe(Pipe):
     def flush(self):
         pass
 
-## EXECUTOR ##
 
 class Options:
     def __init__(self, options_dict):
         self.original_dict = options_dict
 
-        option = lambda x, y=None: options_dict.get(x, y)
+        def option(x, y=None): return options_dict.get(x, y)
 
         self.cmd           = option("cmd")
         self.file_regex    = option("file_regex", "")
@@ -188,8 +189,10 @@ class Options:
     def __getitem__(self, arg):
         return self.get(arg)
 
+
 class State:
     pass
+
 
 class Executor:
     def __init__(self, window):
@@ -253,7 +256,6 @@ class Executor:
             base_path = self.window.extract_variables().get("project_path")
             opt.working_dir = os.path.join(base_path, opt.working_dir)
 
-
     def start_process(self, opt):
         if opt.shell_cmd and sys.platform == "win32":
             opt.cmd = ["powershell.exe", "-Command", opt.shell_cmd]
@@ -265,7 +267,8 @@ class Executor:
             message = "[{}] " + " ".join(opt.cmd)
 
         os.chdir(opt.working_dir)
-        proc = subprocess.Popen(opt.cmd, startupinfo=_get_startupinfo(),
+        proc = subprocess.Popen(
+                opt.cmd, startupinfo=_get_startupinfo(),
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL)
 
         _log("Running " + message, proc.pid)
@@ -291,7 +294,7 @@ class Executor:
             return
 
         subprocess.Popen(["kill",  pid])
-        if self.running_state.options.shell_cmd != None:
+        if self.running_state.options.shell_cmd is not None:
             subprocess.Popen(["pkill", "-P", pid])
 
     def mark_process_terminated(self):
@@ -299,11 +302,11 @@ class Executor:
         proc.poll()
         _log("Terminated [{}], exit code: {}", proc.pid, proc.returncode)
 
-## COMMANDS ##
 
 class EraseViewCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         self.view.erase(edit, sublime.Region(0, self.view.size()))
+
 
 class ChimneyCommand(sublime_plugin.WindowCommand):
     def __init__(self, window):
@@ -352,23 +355,24 @@ class ChimneyCommand(sublime_plugin.WindowCommand):
     def on_complete(self, errors_count):
         message = "Build finished"
         if errors_count > 0:
-            message += " with {} error{}".format(errors_count, "s" if errors_count > 1 else "")
-
+            message += " with {} error{}".format(errors_count,
+                                                 "s" if errors_count > 1 else "")
         sublime.status_message(message)
 
-## STARTUP ##
 
 _executors = {}
+
 
 def _get_executor(window):
     if not window and not hasattr(window, 'id'):
         raise ValueError("invalid Window object")
 
     wid = window.id()
-    if not wid in _executors:
+    if wid not in _executors:
         _executors[wid] = Executor(window)
 
     return _executors[wid]
+
 
 def _get_startupinfo():
     startupinfo = None
@@ -376,6 +380,7 @@ def _get_startupinfo():
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     return startupinfo
+
 
 def _log(message, *params):
     print("Chimney: " + message.format(*params))
