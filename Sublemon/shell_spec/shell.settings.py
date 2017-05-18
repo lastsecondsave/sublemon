@@ -5,13 +5,13 @@ import settings
 settings.cleanup()
 
 settings.entry("source.shell",
-    increaseIndentPatterns = [
+    increase_indent_pattern = [
         r".*\{\s*$",
         r"\s*(if\s.+;\s*)?then\s*$",
         r"\s*case\s.*\sin\s*$"
     ],
-    decreaseIndentPatterns = [
+    decrease_indent_pattern = [
         r"\s*\}.*$",r"\s*(fi|esac)\s*.*$"
     ],
-    line_comment = '# '
+    line_comment = '#'
 )

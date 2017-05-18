@@ -5,10 +5,10 @@ import settings
 settings.cleanup()
 
 settings.entry("source.powershell",
-    increaseIndentPatterns = [
+    increase_indent_pattern = [
     ],
-    decreaseIndentPatterns = [
+    decrease_indent_pattern = [
     ],
-    line_comment = '# ',
+    line_comment = '#',
     block_comment = ['<#', '#>']
 )

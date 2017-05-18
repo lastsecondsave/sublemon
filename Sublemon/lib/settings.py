@@ -1,6 +1,7 @@
 import hashlib
 import os
 import plistlib
+import re
 import shutil
 
 def encode_filename(scope):
@@ -19,45 +20,49 @@ def cleanup():
     shutil.rmtree("generated", ignore_errors=True)
     os.mkdir("generated")
 
-def entry(
-        scope,
-        increaseIndentPatterns=None, decreaseIndentPatterns=None,
-        line_comment=None, line_comments=None, block_comment=None,
-        symbolTransformations=None,
-        **settings):
-    if increaseIndentPatterns != None:
-        settings['increaseIndentPattern'] = '|'.join(increaseIndentPatterns)
+TO_UPPERCASE_PATTERN = re.compile(r'_[a-z]')
 
-    if decreaseIndentPatterns != None:
-        settings['decreaseIndentPattern'] = '|'.join(decreaseIndentPatterns)
+def entry(scope, **settings):
+    shell_variables = []
+    comment_index = 1
 
-    if symbolTransformations != None:
-        settings['symbolTransformation'] = ';'.join(symbolTransformations) + ';'
+    def add_comment(variant, value):
+        name = 'TM_COMMENT_{}_{}'.format(variant, comment_index)
+        shell_variables.append({'name': name, 'value': value})
 
-    shell_vars = []
-    comment_idx = 1
+    def add_start_comment(value):
+        add_comment('START', value + ' ')
 
-    def comment_spec(variant, value):
-        return dict(
-            name = 'TM_COMMENT_{}_{}'.format(variant, comment_idx),
-            value = value
-        )
+    def add_end_comment(value):
+        add_comment('END', ' ' + value)
 
-    if line_comment != None:
-        shell_vars.append(comment_spec('START', line_comment))
-        comment_idx += 1
+    line_comments = settings.pop('line_comment', [])
+    if not isinstance(line_comments, list):
+        line_comments = [line_comments]
 
-    if line_comments != None:
-        for line_comment in line_comments:
-            shell_vars.append(comment_spec('START', line_comment))
-            comment_idx += 1
+    for line_comment in line_comments:
+        add_start_comment(line_comment)
+        comment_index += 1
 
-    if block_comment != None:
-        shell_vars.append(comment_spec('START', block_comment[0]))
-        shell_vars.append(comment_spec('END', block_comment[1]))
-        comment_idx += 1
+    if 'block_comment' in settings:
+        block_comment = settings.pop('block_comment')
+        add_start_comment(block_comment[0])
+        add_end_comment(block_comment[1])
 
-    if len(shell_vars) > 0:
-        settings['shellVariables'] = shell_vars
+    sublime_settings = {}
 
-    generate_settings_file(scope, dict(scope=scope, settings=settings))
+    if shell_variables:
+        sublime_settings['shellVariables'] = shell_variables
+
+    for k, v in settings.items():
+        k = TO_UPPERCASE_PATTERN.sub(lambda m: m.group(0)[1].upper(), k)
+
+        if isinstance(v, list):
+            if k in ['increaseIndentPattern', 'decreaseIndentPattern']:
+                v = '|'.join(v)
+            elif k == 'symbolTransformation':
+                v = ';'.join(v) + ';'
+
+        sublime_settings[k] = v
+
+    generate_settings_file(scope, dict(scope=scope, settings=sublime_settings))

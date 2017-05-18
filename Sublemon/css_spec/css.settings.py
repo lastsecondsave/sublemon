@@ -9,8 +9,8 @@ settings.entry("source.css",
 )
 
 settings.entry("source.css meta.rule.selector.css",
-  showInSymbolList = 1,
-  symbolTransformations = [
+  show_in_symbol_list = 1,
+  symbol_transformation = [
     r"s/\n/ /",
     r"s/\s{2,}/ /g",
     r"s/^@//g"
@@ -18,8 +18,8 @@ settings.entry("source.css meta.rule.selector.css",
 )
 
 settings.entry("source.css meta.at-rule.body.css meta.rule.selector.css",
-  showInSymbolList = 1,
-  symbolTransformations = [
+  show_in_symbol_list = 1,
+  symbol_transformation = [
     r"s/\n/ /",
     r"s/\s{2,}/ /g",
     r"s/^@//g",
