@@ -1,22 +1,12 @@
-import os, hashlib, plistlib, shutil
+import sys
+sys.path.append("../lib")
+import settings
 
-shutil.rmtree("generated", ignore_errors=True)
-os.mkdir("generated")
+settings.cleanup()
 
-def settings(scope, **settings):
-  filename = hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
-  print("{}: {}".format(filename, scope))
-  with open(os.path.join("generated", filename), "wb") as pfile:
-    plistlib.dump(dict(scope=scope, settings=settings), pfile)
-
-## XML ##
-
-settings("source.xml",
-  bracketIndentNextLinePattern = r"^.*<[^>]+\s*$",
-  increaseIndentPattern        = r"^.*<(?![?!])[^\/]+>\s*$",
-  decreaseIndentPattern        = r"^\s*<\/.*>\s*$",
-  shellVariables = [
-    dict(name = "TM_COMMENT_START", value = "<!-- "),
-    dict(name = "TM_COMMENT_END",   value = " -->")
-  ]
+settings.entry("source.xml",
+  increase_indent_pattern = r"^.*<(?![?!])[^\/]+>\s*$",
+  decrease_indent_pattern = r"^\s*<\/.*>\s*$",
+  bracket_indent_next_line_pattern = r"^.*<[^>]+\s*$",
+  block_comment = ['<!--', '-->']
 )
