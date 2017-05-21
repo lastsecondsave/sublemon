@@ -142,12 +142,13 @@ rec(FOREGROUND,    'invalid', background=CRIMSON)
 ## PYTHON ##
 
 source('python')
-rec(KEYWORD, 'keyword.operator.logical')
-rec(INDEXED, 'entity.name.function support.function.magic',
-             'entity.name.function.decorator',
-             'entity.name.function.decorator support.function.builtin')
-rec(META,    'meta.annotation -meta.annotation.arguments -punctuation.section',
-             'meta.annotation support.function')
+rec(KEYWORD,     'keyword.operator.logical')
+rec(INDEXED,     'entity.name.function support.function.magic',
+                 'entity.name.function.decorator',
+                 'entity.name.function.decorator support.function.builtin')
+rec(META,        'meta.annotation -meta.annotation.arguments -punctuation.section',
+                 'meta.annotation support.function')
+rec(PUNCTUATION, 'punctuation.separator.continuation.line')
 
 ## REGEXP IN PYTHON ##
 
