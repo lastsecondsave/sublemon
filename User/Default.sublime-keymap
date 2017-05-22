@@ -156,10 +156,17 @@
     ]
   },
 
-  { "keys": ["ctrl+shift+;"], "command": "run_macro_file",
+  { "keys": ["ctrl+;"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_colon.sublime-macro"},
     "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.json, source.yaml, source.python, source.css" },
+      { "key": "selector", "operator": "equal", "operand": "source.python" },
+    ]
+  },
+
+  { "keys": ["ctrl+shift+;"], "command": "run_macro_file",
+    "args": {"file": "Packages/Sublemon/macro/add_colon_same_line.sublime-macro"},
+    "context": [
+      { "key": "selector", "operator": "equal", "operand": "source.json, source.yaml, source.css" },
     ]
   },
 
@@ -221,7 +228,7 @@
   { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\$(${0:$SELECTION})"},
     "context": [
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.shell, source.powershell" }
+      { "key": "selector", "operator": "equal", "operand": "source.powershell" }
     ]
   },
 
