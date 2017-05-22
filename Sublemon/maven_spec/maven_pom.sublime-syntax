@@ -5,6 +5,9 @@ scope: source.xml source.maven
 file_extensions: [pom]
 
 contexts:
+  prototype:
+  - include: Packages/Sublemon/xml_spec/xml.sublime-syntax#prototype
+
   main:
-  - include: Packages/Sublemon/xml_spec/xml.sublime-syntax
+  - include: Packages/Sublemon/xml_spec/xml.sublime-syntax#main
 
