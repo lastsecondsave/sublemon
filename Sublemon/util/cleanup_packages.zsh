@@ -11,14 +11,18 @@ if [[ ! -d $INSTALL_PATH ]]; then
   INSTALL_PATH="$(dirname $0)/../../../.."
 fi
 
+echo "Packages directory: $(tput setaf 2)$INSTALL_PATH/Packages$(tput sgr0)"
+
 pushd -q "$INSTALL_PATH/Packages"
 
+mkdir bac
+
 for package in *.sublime-package; do
-  echo "Cleaning $package"
   dir="${package%%.sublime-package}"
+  echo "Cleaning $(tput setaf 3)$dir$(tput sgr0).sublime-package"
 
   unzip -q "$package" -d "$dir"
-  rm "$package"
+  mv "$package" bac
 
   pushd "$dir"
 
@@ -27,12 +31,16 @@ for package in *.sublime-package; do
     rm $snippet
   done
 
-  zip -rq "$package" *
-  mv "$package" ..
+  if [[ $dir == 'Python' ]]; then
+    rm -f 'Python.sublime-build'
+  fi
+
+  zip -rq "../$package" *
 
   popd
-
   rm -rf "$dir"
 done
+
+rm -rf bac
 
 popd -q
