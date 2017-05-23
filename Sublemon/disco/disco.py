@@ -72,8 +72,6 @@ widget_globals = dict(
 )
 
 theme_settings = [
-  rule("Language variable",         "variable.language", foreground = ORANGE),
-  rule("User-defined variable",     "variable.user", foreground = ORANGE),
   rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
 
   rule("Powershell pipe and stream",       "keyword.operator.pipe.powershell, keyword.operator.stream.powershell", foreground = DARK_ORANGE),
@@ -136,7 +134,10 @@ rec(FOREGROUND,    'punctuation.separator',
 rec(PARAMETER,     'variable.parameter')
 rec(USER_CONSTANT, 'constant.user')
 rec(CONSTANT,      'constant.language',
-                   'support.constant')
+                   'support.constant',
+                   'support.variable',
+                   'variable.language',
+                   'variable.user')
 rec(FOREGROUND,    'invalid', background=CRIMSON)
 
 ## PYTHON ##
