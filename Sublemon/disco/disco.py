@@ -63,14 +63,6 @@ theme_globals = dict(
   bracketsForeground = PUNCTUATION
 )
 
-widget_globals = dict(
-  background         = BACKGROUND,
-  foreground         = FOREGROUND,
-  caret              = CLEAR_WHITE,
-  selection          = DARK_BLUE,
-  bracketsForeground = PUNCTUATION
-)
-
 theme_settings = [
   rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
 
@@ -82,20 +74,18 @@ theme_settings = [
   rule("INI section", "meta.section.ini, entity.name.section.ini", foreground = YELLOW),
 ]
 
-widget_settings = []
+def group(category, lang):
+  global current_lang, current_category
+  current_lang, current_category = lang, category
 
-def group(category, lang, widget=False):
-  global current_lang, current_category, widget_category
-  current_lang, current_category, widget_category = lang, category, widget
+def source(lang):
+  group('source', lang)
 
-def source(lang, widget=False):
-  group('source', lang, widget)
+def no_group():
+  group(None, None)
 
-def no_group(widget=False):
-  group(None, None, widget)
-
-def rec(color, *scopes, **attributes):
-  attributes['foreground'] = color
+def rec(color, *scopes, **settings):
+  settings['foreground'] = color
 
   for scope in scopes:
     chunks = [current_category + '.' + current_lang] if current_category != None else []
@@ -104,18 +94,15 @@ def rec(color, *scopes, **attributes):
     for i, chunk in enumerate(chunks):
       if chunk.startswith('#') and current_lang != None:
         chunks[i] = chunk[1:] + '.' + current_lang
-      else:
-        chunks[i] = chunk
 
-    record_settings = dict(scope=' '.join(chunks), settings=attributes)
-
-    theme_settings.append(record_settings)
-    if widget_category:
-      widget_settings.append(record_settings)
+    theme_settings.append({
+      'scope':  ' '.join(chunks),
+      'settings': settings
+    })
 
 ## FOUNDATION ##
 
-no_group(widget=True)
+no_group()
 rec(COMMENT,       'comment')
 rec(PRIMITIVE,     'constant.numeric',
                    'constant.character')
@@ -180,7 +167,7 @@ rec(PINK,   'keyword.operator.quantifier.regexp')
 
 ## REGEXP ##
 
-source('regexp', widget=True)
+source('regexp')
 rec(YELLOW,  'keyword.operator.or',
              'punctuation.definition.group')
 rec(PURPLE,  'constant.language.character-class',
@@ -346,13 +333,10 @@ icon('yaml', 'source.yaml')
 
 ## GENERATOR ##
 
-theme_settings.append(dict(settings=theme_globals))
-settings.write_plist(os.path.join("..", "Disco.tmTheme"),
-    dict(name="Disco", settings=theme_settings))
-
-widget_settings.append(dict(settings=widget_globals))
-settings.write_plist(os.path.join("..", "Widget - Disco.tmTheme"),
-    dict(name="Disco", settings=widget_settings))
+theme_settings.append({'settings': theme_globals})
+settings.write_plist(
+  os.path.join('..', 'Disco.tmTheme'),
+  {'name': "Disco", 'settings': theme_settings})
 
 settings.cleanup()
 for icon in icons:
