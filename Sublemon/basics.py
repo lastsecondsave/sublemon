@@ -30,7 +30,7 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
         if len(content) > initial_content_length:
             self.view.replace(edit, region, content)
 
-class ShrinkSpacesCommand(sublime_plugin.TextCommand):
+class ShrinkWhitespaceCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         selection = self.view.sel()
         for region in selection:

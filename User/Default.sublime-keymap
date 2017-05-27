@@ -38,6 +38,7 @@
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+n"], "command": "clone_file" },
   { "keys": ["ctrl+k", "ctrl+;"], "command": "diff_changes" },
+  { "keys": ["ctrl+k", "ctrl+s"], "command": "shrink_whitespace" },
   { "keys": ["ctrl+k", "ctrl+t"], "command": "title_case" },
 
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },

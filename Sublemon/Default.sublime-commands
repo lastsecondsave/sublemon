@@ -4,8 +4,8 @@
     "command": "escape_backslashes"
   },
   {
-    "caption": "Shrink Spaces",
-    "command": "shrink_spaces"
+    "caption": "Shrink Whitespace",
+    "command": "shrink_whitespace"
   },
   {
     "caption": "Toggle Indent Guides",
