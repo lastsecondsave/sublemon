@@ -1,4 +1,5 @@
 import collections
+import copy
 import os
 import subprocess
 import sys
@@ -69,25 +70,18 @@ class Buffer(object):
         e = chunk.find('\n')
 
         while e != -1:
-            cutoff = chunk[b:e]
-            if cutoff and cutoff[-1] == '\r':
-                cutoff = cutoff[:-1]
-
-            self.buffer.append(cutoff)
-            self._flush_buffer()
+            self.buffer.append(chunk[b:e])
+            self.flush()
 
             b = e + 1
             e = chunk.find('\n', b)
 
         self.buffer.append(chunk[b:])
 
-    def _flush_buffer(self):
-        self.output(''.join(self.buffer))
-        self.buffer.clear()
-
     def flush(self):
         if self.buffer:
-            self._flush_buffer()
+            self.output(''.join(self.buffer))
+            self.buffer.clear()
 
 
 class AsyncStreamConsumer(Thread):
@@ -150,8 +144,10 @@ class OutputPanel:
         with self.line_buffer_lock:
             if len(self.line_buffer) == 0:
                 return
-            characters = '\n'.join(self.line_buffer) + '\n'
+            lines = copy.copy(self.line_buffer)
             self.line_buffer.clear()
+
+        characters = ''.join(line.replace('\r', '') + '\n' for line in lines)
 
         self.view.run_command('append', {
             'characters': characters,
