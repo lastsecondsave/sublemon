@@ -1,5 +1,4 @@
 import os
-import re
 import sys
 
 sys.path.append("../lib")
@@ -41,37 +40,22 @@ TAG_ATTRIBUTE     = YELLOW
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
 CONSTANT          = ORANGE
+INHERITED         = CRIMSON
 
 def alpha(color, value):
   return color + '{:02X}'.format(round(255 * value))
 
-def rule(name, scope, **settings):
-  return dict(
-    name = name,
-    scope = re.sub("\s{2,}", ' ', scope),
-    settings = settings
-  )
-
-theme_globals = dict(
-  background         = BACKGROUND,
-  foreground         = FOREGROUND,
-  caret              = CLEAR_WHITE,
-  selection          = DARK_BLUE,
-  lineHighlight      = alpha(CRIMSON, 0.2),
-  findHighlight      = YELLOW,
-  minimapBorder      = FOREGROUND,
-  bracketsForeground = PUNCTUATION
-)
-
 theme_settings = [
-  rule("Inherited class",           "entity.other.inherited-class", foreground = CRIMSON),
-
-  rule("Powershell pipe and stream",       "keyword.operator.pipe.powershell, keyword.operator.stream.powershell", foreground = DARK_ORANGE),
-  rule("Powershell execute and escape",    "keyword.operator.execute.powershell, keyword.operator.escape.powershell", foreground = CRIMSON),
-  rule("Powershell static call separator", "punctuation.separator.static-call.powershell", foreground = BLUE),
-  rule("Powershell embedded expression",   "punctuation.definition.expression.powershell", foreground = DARK_ORANGE),
-
-  rule("INI section", "meta.section.ini, entity.name.section.ini", foreground = YELLOW),
+  {'settings': {
+    'background'         : BACKGROUND,
+    'foreground'         : FOREGROUND,
+    'caret'              : CLEAR_WHITE,
+    'selection'          : DARK_BLUE,
+    'lineHighlight'      : alpha(CRIMSON, 0.2),
+    'findHighlight'      : YELLOW,
+    'minimapBorder'      : FOREGROUND,
+    'bracketsForeground' : PUNCTUATION
+  }}
 ]
 
 def group(category, lang):
@@ -105,7 +89,8 @@ def rec(color, *scopes, **settings):
 no_group()
 rec(COMMENT,       'comment')
 rec(PRIMITIVE,     'constant.numeric',
-                   'constant.character')
+                   'constant.character',
+                   'punctuation.separator.decimal')
 rec(STRING,        'string')
 rec(STORAGE,       'storage',
                    'support.type',
@@ -125,6 +110,7 @@ rec(CONSTANT,      'constant.language',
                    'support.variable',
                    'variable.language',
                    'variable.user')
+rec(INHERITED,     'entity.other.inherited-class')
 rec(FOREGROUND,    'invalid', background=CRIMSON)
 
 ## PYTHON ##
@@ -213,6 +199,12 @@ rec(YELLOW,  'meta.message')
 ## POWERSHELL ##
 
 source('powershell')
+rec(PUNCTUATION, 'punctuation.definition.expression',
+                 'keyword.operator.pipe',
+                 'keyword.operator.stream')
+rec(CRIMSON,     'keyword.operator.execute',
+                 'keyword.operator.escape')
+rec(OPERATOR,    'punctuation.separator.static-call')
 
 ## C++ ##
 
@@ -305,6 +297,8 @@ rec(CRIMSON, 'markup.bold')
 
 rec(GREEN,       'meta.not-commited-yet.git constant.numeric.line-number')
 rec(DARK_VIOLET, 'constant.date.git')
+rec(YELLOW,      'meta.section.ini',
+                 'entity.name.section.ini')
 
 ## ICONS ##
 
@@ -312,10 +306,10 @@ icons = []
 
 def icon(name, *scopes):
   for scope in scopes:
-    icons.append(dict(
-      scope = scope,
-      settings = dict(icon = 'file_type_' + name)
-    ))
+    icons.append({
+      'scope': scope,
+      'settings': {'icon': 'file_type_' + name}
+    })
 
 icon('cpp', 'source.c++')
 icon('css', 'source.css')
@@ -333,10 +327,8 @@ icon('yaml', 'source.yaml')
 
 ## GENERATOR ##
 
-theme_settings.append({'settings': theme_globals})
-settings.write_plist(
-  os.path.join('..', 'Disco.tmTheme'),
-  {'name': "Disco", 'settings': theme_settings})
+settings.write_plist(os.path.join('..', 'Disco.tmTheme'),
+                     {'name': "Disco", 'settings': theme_settings})
 
 settings.cleanup()
 for icon in icons:
