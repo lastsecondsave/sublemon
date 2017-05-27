@@ -1,13 +1,18 @@
 import collections
 import os
-import sublime
-import sublime_plugin
 import subprocess
 import sys
-import threading
+
+from threading import Lock, Thread
+
+import sublime
+from sublime_plugin import TextCommand, WindowCommand
 
 
-class Pipe:
+RUNNING_ON_WINDOWS = sys.platform == 'win32'
+
+
+class Pipe(object):
     def output(self, line):
         self.next_pipe.output(line)
 
@@ -19,18 +24,42 @@ class Pipe:
 
     def attach(self, next_pipe):
         link_point = self
-        while hasattr(link_point, "next_pipe"):
+        while hasattr(link_point, 'next_pipe'):
             link_point = link_point.next_pipe
         link_point.next_pipe = next_pipe
 
 
-class OutputBuffer:
-    def __init__(self, pipe, encoding="utf-8"):
-        self.buffer = ""
-        self.encoding = encoding
-        self.pipe = pipe
+class CleanEmptyLinesPipe(Pipe):
+    def __init__(self):
+        self.output_was_empty = False
+        self.error_was_empty = False
 
-    def next(self, chunk):
+    def output(self, line):
+        if line.strip():
+            if self.output_was_empty:
+                self.output_was_empty = False
+                self.next_pipe.output('')
+            self.next_pipe.output(line)
+        else:
+            self.output_was_empty = True
+
+    def error(self, line):
+        if line.strip():
+            if self.error_was_empty:
+                self.error_was_empty = False
+                self.next_pipe.error('')
+            self.next_pipe.error(line)
+        else:
+            self.error_was_empty = True
+
+
+class Buffer(object):
+    def __init__(self, output, encoding='utf-8'):
+        self.buffer = []
+        self.encoding = encoding
+        self.output = output
+
+    def write(self, chunk):
         try:
             chunk = chunk.decode(self.encoding)
         except:
@@ -41,50 +70,41 @@ class OutputBuffer:
 
         while e != -1:
             cutoff = chunk[b:e]
-            if len(cutoff) > 0 and cutoff[-1] == '\r':
+            if cutoff and cutoff[-1] == '\r':
                 cutoff = cutoff[:-1]
 
-            self.buffer += cutoff
-            self.flush_buffer(True)
+            self.buffer.append(cutoff)
+            self._flush_buffer()
 
             b = e + 1
             e = chunk.find('\n', b)
 
-        self.buffer += chunk[b:]
+        self.buffer.append(chunk[b:])
 
-    def flush_buffer(self, force=False):
-        if len(self.buffer) > 0 or force:
-            self.write_to_pipe(self.buffer)
-            self.buffer = ""
-
-    def write_to_pipe(self, text):
-        self.pipe.output(text)
+    def _flush_buffer(self):
+        self.output(''.join(self.buffer))
+        self.buffer.clear()
 
     def flush(self):
-        self.flush_buffer()
-        self.pipe.flush()
+        if self.buffer:
+            self._flush_buffer()
 
 
-class ErrorBuffer(OutputBuffer):
-    def write_to_pipe(self, text):
-        self.pipe.error(text)
-
-
-class AsyncStreamConsumer(threading.Thread):
-    def __init__(self, stream, consumer, on_close=None):
-        super().__init__(self)
+class AsyncStreamConsumer(Thread):
+    def __init__(self, stream, output, on_close=None):
+        super().__init__()
         self.stream = stream
-        self.consumer = consumer
+        self.output = output
         self.on_close = on_close
 
     def run(self):
         while True:
             chunk = os.read(self.stream.fileno(), 2**15)
-            if len(chunk) == 0:
+            if not chunk:
                 break
-            self.consumer.next(chunk)
+            self.output.write(chunk)
 
-        self.consumer.flush()
+        self.output.flush()
         self.stream.close()
 
         if self.on_close:
@@ -94,12 +114,12 @@ class AsyncStreamConsumer(threading.Thread):
 class OutputPanel:
     def __init__(self, window):
         self.window = window
-        self.view = window.create_output_panel("exec")
+        self.view = window.create_output_panel('exec')
 
-        self.line_buffer_lock = threading.Lock()
+        self.line_buffer_lock = Lock()
         self.line_buffer = collections.deque()
 
-        self.set_settings(gutter="False", scroll_past_end="False")
+        self.set_settings(gutter='False', scroll_past_end='False')
 
     def reset(self):
         self.view.run_command('erase_view')
@@ -108,7 +128,6 @@ class OutputPanel:
     def set_settings(self,
                      syntax=None, scroll_to_end=False, show_on_text=False,
                      **settings):
-
         for k, v in settings.items():
             if v:
                 self.view.settings().set(k, v)
@@ -119,18 +138,13 @@ class OutputPanel:
         self.show_on_text = show_on_text
         self.scroll_to_end = scroll_to_end
 
-        self.window.create_output_panel("exec")
-
     def append_line(self, line):
         with self.line_buffer_lock:
-            reinvalidate = len(self.line_buffer) == 0
+            invalidate = len(self.line_buffer) == 0
             self.line_buffer.append(line)
 
-        if reinvalidate:
-            self.invalidate()
-
-    def invalidate(self):
-        sublime.set_timeout(self.paint, 0)
+        if invalidate:
+            sublime.set_timeout(self.paint, 0)
 
     def paint(self):
         with self.line_buffer_lock:
@@ -139,11 +153,11 @@ class OutputPanel:
             characters = '\n'.join(self.line_buffer) + '\n'
             self.line_buffer.clear()
 
-        self.view.run_command('append', dict(
-            characters=characters,
-            force=True,
-            scroll_to_end=self.scroll_to_end
-        ))
+        self.view.run_command('append', {
+            'characters': characters,
+            'force': True,
+            'scroll_to_end': self.scroll_to_end
+        })
 
         if self.show_on_text:
             self.show()
@@ -167,41 +181,37 @@ class OutputPanelPipe(Pipe):
         pass
 
 
-class Options:
+class Options(object):
     def __init__(self, options_dict):
-        self.original_dict = options_dict
+        self.originals = options_dict
 
         def option(x, y=None): return options_dict.get(x, y)
 
-        self.cmd           = option("cmd")
-        self.file_regex    = option("file_regex", "")
         self.kill          = option("kill", False)
-        self.line_regex    = option("line_regex", "")
+        self.cmd           = option("cmd")
         self.shell_cmd     = option("shell_cmd")
+        self.file_regex    = option("file_regex", "")
+        self.line_regex    = option("line_regex", "")
         self.syntax        = option("syntax", "Packages/Text/Plain text.tmLanguage")
         self.working_dir   = option("working_dir")
-        self.show_output   = option("show_output", "text").lower()
+        self.show_output   = option("show_output", "text")
         self.scroll_to_end = option("scroll_to_end", True)
 
     def get(self, arg, default=None):
-        return self.original_dict.get(arg, default)
+        return self.originals.get(arg, default)
 
     def __getitem__(self, arg):
         return self.get(arg)
 
 
-class State:
-    pass
-
-
-class Executor:
+class Executor(object):
     def __init__(self, window):
         self.window = window
         self.output_panel = OutputPanel(window)
         self.running_state = None
-        _log("Created executor for #{}", window.id())
+        _log('Created executor for window #{}', window.id())
 
-    def run(self, options, pipe, on_complete):
+    def run(self, options, pipe):
         if self.running_state:
             self.kill_process()
 
@@ -210,9 +220,6 @@ class Executor:
 
         self.set_working_dir(options)
         proc = self.start_process(options)
-        sublime.status_message("Build started")
-
-        # Prepare output panel
 
         output_panel_settings = dict(
             result_base_dir   = options.working_dir,
@@ -229,137 +236,107 @@ class Executor:
         if options.show_output == "always":
             self.output_panel.show()
 
-        # Start pipes
+        output_pipe = OutputPanelPipe(self.output_panel)
 
-        final_pipe = OutputPanelPipe(self.output_panel)
         if pipe:
-            pipe.attach(final_pipe)
+            pipe.attach(output_pipe)
         else:
-            pipe = final_pipe
+            pipe = output_pipe
 
-        AsyncStreamConsumer(proc.stdout, OutputBuffer(pipe), on_close=self.finish).start()
-        AsyncStreamConsumer(proc.stderr, ErrorBuffer(pipe)).start()
+        AsyncStreamConsumer(proc.stdout, Buffer(pipe.output), on_close=self.finish).start()
+        AsyncStreamConsumer(proc.stderr, Buffer(pipe.error)).start()
 
-        self.running_state = State()
-        self.running_state.proc = proc
-        self.running_state.on_complete = on_complete
-        self.running_state.options = options
+        self.running_state = {'proc': proc, 'options': options, 'pipe': pipe}
 
-    def set_working_dir(self, opt):
-        if not opt.working_dir:
+    def set_working_dir(self, options):
+        if not options.working_dir:
             view = self.window.active_view()
-            if (view and view.file_name()):
-                opt.working_dir = os.path.dirname(view.file_name())
+            if view and view.file_name():
+                options.working_dir = os.path.dirname(view.file_name())
             return
 
-        if not os.path.isabs(opt.working_dir):
-            base_path = self.window.extract_variables().get("project_path")
-            opt.working_dir = os.path.join(base_path, opt.working_dir)
+        if not os.path.isabs(options.working_dir):
+            base_path = self.window.extract_variables().get('project_path')
+            options.working_dir = os.path.join(base_path, options.working_dir)
 
-    def start_process(self, opt):
-        if opt.shell_cmd and sys.platform == "win32":
-            opt.cmd = ["powershell.exe", "-Command", opt.shell_cmd]
-            message = "[ps:{}] " + opt.shell_cmd
-        elif opt.shell_cmd:
-            opt.cmd = [os.environ["SHELL"], "-c", opt.shell_cmd]
-            message = "[sh:{}] " + opt.shell_cmd
-        else:
-            message = "[{}] " + " ".join(opt.cmd)
+    def start_process(self, options):
+        if options.shell_cmd and RUNNING_ON_WINDOWS:
+            options.cmd = ["powershell.exe", "-Command", options.shell_cmd]
+        elif options.shell_cmd:
+            options.cmd = [os.environ["SHELL"], "-c", options.shell_cmd]
 
-        os.chdir(opt.working_dir)
-        proc = subprocess.Popen(
-                opt.cmd, startupinfo=_get_startupinfo(),
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL)
+        os.chdir(options.working_dir)
+        proc = subprocess.Popen(options.cmd,
+                                startupinfo=_get_startupinfo(),
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                stdin=subprocess.DEVNULL)
 
-        _log("Running " + message, proc.pid)
+        _log('→ [{}] {}', proc.pid, ' '.join(options.cmd))
         return proc
 
     def finish(self):
-        errors_count = len(self.output_panel.view.find_all_results())
-        self.running_state.on_complete(errors_count)
+        self.running_state['pipe'].flush()
 
-        if self.running_state.options.show_output == "error" and errors_count > 0:
+        show_output = self.running_state['options'].show_output
+        errors_count = len(self.output_panel.view.find_all_results())
+
+        if show_output == 'error' and errors_count > 0:
             self.output_panel.show()
 
-        self.mark_process_terminated()
+        proc = self.running_state['proc']
+        proc.poll()
+
+        if proc.returncode:
+            _log('✗ [{}] {}', proc.pid, proc.returncode)
+        else:
+            _log('✓ [{}]', proc.pid)
+
         self.running_state = None
 
     def kill_process(self):
-        pid = str(self.running_state.proc.pid)
+        pid = str(self.running_state['proc'].pid)
         _log("Killing {}", pid)
 
-        if sys.platform == "win32":
+        if RUNNING_ON_WINDOWS:
             cmd = ["taskkill", "/PID", pid]
             subprocess.Popen(cmd, startupinfo=_get_startupinfo())
             return
 
-        subprocess.Popen(["kill",  pid])
-        if self.running_state.options.shell_cmd is not None:
+        subprocess.Popen(["kill", pid])
+        if self.running_state['options'].shell_cmd is not None:
             subprocess.Popen(["pkill", "-P", pid])
 
-    def mark_process_terminated(self):
-        proc = self.running_state.proc
-        proc.poll()
-        _log("Terminated [{}], exit code: {}", proc.pid, proc.returncode)
 
-
-class EraseViewCommand(sublime_plugin.TextCommand):
+class EraseViewCommand(TextCommand):
     def run(self, edit):
         self.view.erase(edit, sublime.Region(0, self.view.size()))
 
 
-class ChimneyCommand(sublime_plugin.WindowCommand):
+class ChimneyCommand(WindowCommand):
     def __init__(self, window):
         super().__init__(window)
         _get_executor(window)
 
-    def section(self):
+    def create_pipe(self, options):
         pass
 
-    def create_pipe(self, options, variables):
+    def preprocess_options(self, options):
         pass
 
-    def preprocess_options(self, options, variables):
-        pass
+    def source_file(self):
+        return self.window.extract_variables()['file']
 
     def run(self, **args):
-        options = self.create_options(args)
-        variables = self.window.extract_variables()
+        options = Options(args)
+        self.preprocess_options(options)
 
-        self.preprocess_options(options, variables)
-        pipe = self.create_pipe(options, variables)
+        pipe = self.create_pipe(options)
 
-        _get_executor(self.window).run(options, pipe, self.on_complete)
-
-    def create_options(self, args):
-        options = args.copy()
-        options_override = self.window.project_data()
-
-        if not options_override:
-            return Options(options)
-
-        options_override = options_override.get("configuration", dict())
-        options_override = options_override.get("chimney", None)
-
-        if not options_override:
-            return Options(options)
-
-        if self.section() in options_override:
-            options.append(options_override[self.section()])
-
-        if "show_output" in options_override:
-            options["show_output"] = options_override["show_output"]
-
-        options = Options(options)
-
-    def on_complete(self, errors_count):
-        message = "Build finished"
-        if errors_count > 0:
-            message += " with {} error{}".format(errors_count,
-                                                 "s" if errors_count > 1 else "")
-        sublime.status_message(message)
+        _get_executor(self.window).run(options, pipe)
 
 
+# TODO: Some sorf of GC?
 _executors = {}
 
 
@@ -376,11 +353,11 @@ def _get_executor(window):
 
 def _get_startupinfo():
     startupinfo = None
-    if sys.platform == "win32":
+    if RUNNING_ON_WINDOWS:
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     return startupinfo
 
 
 def _log(message, *params):
-    print("Chimney: " + message.format(*params))
+    print('Chimney:', message.format(*params))
