@@ -1,16 +1,21 @@
 import os
 import re
-import sublime
-import sublime_plugin
-import sys
 
-class EscapeBackslashesCommand(sublime_plugin.TextCommand):
+import sublime
+from sublime import Region
+from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
+
+import Sublemon.lib.util as util
+
+
+class EscapeBackslashesCommand(TextCommand):
     def run(self, edit):
         for region in self.view.sel():
             self.escape(edit, region.end())
 
     def escape(self, edit, point):
-        score = lambda p: self.view.score_selector(p, 'string')
+        def score(p): return self.view.score_selector(p, 'string')
+
         if not score(point):
             return
 
@@ -22,7 +27,7 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
         while score(end):
             end += 1
 
-        region = sublime.Region(begin, end)
+        region = Region(begin, end)
         content = self.view.substr(region)
         initial_content_length = len(content)
 
@@ -30,34 +35,37 @@ class EscapeBackslashesCommand(sublime_plugin.TextCommand):
         if len(content) > initial_content_length:
             self.view.replace(edit, region, content)
 
-class ShrinkWhitespaceCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        selection = self.view.sel()
-        for region in selection:
-            point = region.end()
-            selection.subtract(region)
-            point = self.shrink(edit, point) + 1
-            selection.add(sublime.Region(point, point))
 
-    def shrink(self, edit, point):
-        score = lambda p: self.view.substr(p) == ' '
+class ShrinkWhitespaceCommand(util.RegionCommand):
+    EMPTY_LINE_PATTERN = re.compile(r'\s*$')
+
+    def process_region(self, edit, region):
+        selection = self.view.sel()
+        selection.subtract(region)
+
+        point = self.shrink_spaces(edit, region.end())
+        selection.add(Region(point, point))
+
+    def shrink_spaces(self, edit, point):
+        def is_space(p):
+            return self.view.substr(p) == ' '
 
         begin = point
-        while score(begin - 1):
+        while is_space(begin - 1):
             begin -= 1
 
         end = point
-        while score(end):
+        while is_space(end):
             end += 1
 
         if end - begin < 2:
             return point
 
-        region = sublime.Region(begin, end)
-        self.view.replace(edit, region, ' ')
-        return begin
+        self.view.replace(edit, Region(begin, end), ' ')
+        return begin + 1
 
-class ShowFilePathCommand(sublime_plugin.WindowCommand):
+
+class ShowFilePathCommand(WindowCommand):
     def run(self):
         file_path = self.window.active_view().file_name()
         if not file_path:
@@ -66,8 +74,8 @@ class ShowFilePathCommand(sublime_plugin.WindowCommand):
         prefix = None
         variables = self.window.extract_variables()
 
-        if "project" in variables:
-            settings = self.window.project_data().get("settings", dict())
+        if 'project' in variables:
+            settings = self.window.project_data().get('settings', {})
             base_path = settings.get("project_root", variables["project_path"])
 
             if file_path.startswith(base_path + os.sep):
@@ -75,30 +83,31 @@ class ShowFilePathCommand(sublime_plugin.WindowCommand):
                 prefix = variables["project_base_name"]
 
         if not prefix:
-            if sys.platform != "win32":
-                home_path = os.environ["HOME"]
-            else:
-                home_path = os.environ["HOMEDRIVE"] + os.environ["HOMEPATH"]
+            home_path = (os.environ['HOME'] if not util.RUNNING_ON_WINDOWS
+                         else os.environ['HOMEDRIVE'] + os.environ['HOMEPATH'])
 
             if file_path.startswith(home_path + os.sep):
                 file_path = file_path[len(home_path)+1:]
                 prefix = "~"
-            elif sys.platform == "win32":
+            elif util.RUNNING_ON_WINDOWS:
                 prefix = file_path[0:2].lower()
                 file_path = file_path[3:]
             else:
                 prefix = "/"
                 file_path = file_path[1:]
 
-        sublime.status_message("({}) → {}".format(prefix, file_path.replace(os.sep, " → ")))
+        sublime.status_message('({}) → {}'.format(
+            prefix, file_path.replace(os.sep, ' → ')))
 
-class ToggleIndentGuidesCommand(sublime_plugin.TextCommand):
+
+class ToggleIndentGuidesCommand(TextCommand):
     def run(self, edit):
         guides = self.view.settings().get("indent_guide_options")
-        guides = [] if len(guides) > 0 else ["draw_normal"]
+        guides = [] if guides else ["draw_normal"]
         self.view.settings().set("indent_guide_options", guides)
 
-class ToggleDrawCenteredCommand(sublime_plugin.ApplicationCommand):
+
+class ToggleDrawCenteredCommand(ApplicationCommand):
     def run(self):
         s = sublime.load_settings("Preferences.sublime-settings")
         current = s.get("draw_centered", False)
@@ -109,7 +118,9 @@ class ToggleDrawCenteredCommand(sublime_plugin.ApplicationCommand):
         s = sublime.load_settings("Preferences.sublime-settings")
         return s.get("draw_centered", False)
 
-class OpenFilePathCommand(sublime_plugin.WindowCommand):
+
+class OpenFilePathCommand(WindowCommand):
     def run(self):
-        def on_done(x): self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
+        def on_done(x):
+            self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
         self.window.show_input_panel("File Name:", '', on_done, None, None)
