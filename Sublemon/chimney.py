@@ -321,13 +321,20 @@ class ChimneyCommand(WindowCommand):
     def source_file(self):
         return self.window.extract_variables()['file']
 
-    def run(self, **args):
-        options = Options(args)
+    def run(self, **kwargs):
+        if 'update_phantoms_only' in kwargs:
+            return
+
+        options = Options(kwargs)
         self.preprocess_options(options)
 
         pipe = self.create_pipe(options)
 
         _get_executor(self.window).run(options, pipe)
+
+
+class ExecCommand(ChimneyCommand):
+    pass
 
 
 # TODO: Some sorf of GC?
