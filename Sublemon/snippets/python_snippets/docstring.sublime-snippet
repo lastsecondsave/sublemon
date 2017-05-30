@@ -1,5 +1,5 @@
 <snippet>
-	<description>function</description>
+	<description>docstring</description>
 	<tabTrigger>doc</tabTrigger>
 	<scope>source.python</scope>
 	<content>
