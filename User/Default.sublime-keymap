@@ -1,7 +1,6 @@
 [
   /** UNBOUND **/
 
-  { "keys": ["ctrl+shift+b"], "command": "unbound" },
   { "keys": ["alt+shift+w"],  "command": "unbound" },
   { "keys": ["ctrl+;"],       "command": "unbound" },
 
@@ -67,9 +66,10 @@
 
   /** QUICK MENU **/
 
-  { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
-  { "keys": ["alt+;"],   "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
-  { "keys": ["ctrl+f7"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
+  { "keys": ["alt+f12"],      "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
+  { "keys": ["alt+;"],        "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
+  { "keys": ["ctrl+f7"],      "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
+  { "keys": ["ctrl+shift+b"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
 
   { "keys": ["ctrl+\\"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
