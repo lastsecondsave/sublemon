@@ -64,7 +64,11 @@ def entry(scope, **settings):
         k = TO_UPPERCASE_PATTERN.sub(lambda m: m.group(0)[1].upper(), k)
 
         if isinstance(v, list):
-            if k in ['increaseIndentPattern', 'decreaseIndentPattern']:
+            if k in ['increaseIndentPattern',
+                     'decreaseIndentPattern',
+                     'bracketIndentNextLinePattern',
+                     'disableIndentNextLinePattern',
+                     'unIndentedLinePattern']:
                 v = '|'.join(v)
             elif k == 'symbolTransformation':
                 v = ';'.join(v) + ';'
