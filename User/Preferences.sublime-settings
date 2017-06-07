@@ -11,7 +11,8 @@
 		"*.gif",
 		"*.jpg",
 		"*.orig",
-		"*.png"
+		"*.png",
+		"*/node_modules/*"
 	],
 	"caret_extra_bottom": 0,
 	"caret_extra_top": 0,
