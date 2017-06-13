@@ -145,7 +145,7 @@
     {
         "class": "icon_file_type",
         "layer0.opacity": 1.0,
-        "content_margin": [8, 8]
+        "content_margin": [9, 8]
     },
 
     // Tabs
