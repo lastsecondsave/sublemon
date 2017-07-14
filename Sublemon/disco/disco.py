@@ -311,19 +311,16 @@ def icon(name, *scopes):
       'settings': {'icon': 'file_type_' + name}
     })
 
-icon('cpp', 'source.c++')
-icon('css', 'source.css')
-icon('git', 'source.git')
-icon('groovy', 'source.groovy')
-icon('java', 'source.java')
-icon('javascript', 'source.js')
-icon('json', 'source.json')
-icon('markup', 'text.html.markdown', 'text.rfc', 'text.restructuredtext')
-icon('powershell', 'source.powershell')
-icon('properties', 'source.ini', 'source.java-props')
-icon('python', 'source.python')
-icon('xml', 'source.xml')
-icon('yaml', 'source.yaml')
+icon('source', 'source')
+icon('text',   'text',
+               'text.html.markdown',
+               'text.rfc',
+               'text.restructuredtext')
+icon('markup', 'text.html',
+               'source.xml',
+               'source.json',
+               'source.yaml')
+icon('css',    'source.css')
 
 ## GENERATOR ##
 
