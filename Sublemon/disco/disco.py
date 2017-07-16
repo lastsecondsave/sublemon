@@ -134,7 +134,8 @@ rec(PURPLE, 'source.regexp constant.other.character-class.set',
 
 source('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
-                 'meta.for meta.group #keyword.operator') # 'of' and 'in' in for-cycle
+                 'meta.for meta.group #keyword.operator', # 'of' and 'in' in for-cycle
+                 'keyword.operator.word.new')
 rec(STORAGE,     'variable.type')
 rec(LIGHT_BLUE,  'meta.object-literal.key')
 rec(OPERATOR,    'storage.type.function.arrow')
