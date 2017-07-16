@@ -47,7 +47,7 @@ function Set-Association($Extension, $Class) {
 $SublimeItems = 'project', 'workspace'
 $SublimeFiles = 'syntax', 'settings', 'snippet', 'build', 'theme', 'keymap', 'mousemap', 'completions', 'menu', 'commands'
 $TextFiles = @(
-    'txt', 'log',
+    'txt', 'log', 'conf', 'csv',
     'md', 'markdown',
     'ini',
     'xml', 'xsd',
