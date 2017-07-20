@@ -44,7 +44,9 @@ class ShrinkWhitespaceCommand(util.RegionCommand):
         selection.subtract(region)
 
         point = region.end()
-        if EMPTY_LINE_PATTERN.match(self.view.line(point)):
+        line = self.view.substr(self.view.line(point))
+
+        if self.EMPTY_LINE_PATTERN.match(line):
             point = self.shrink_lines(edit, point)
         else:
             point = self.shrink_spaces(edit, point)
