@@ -21,6 +21,9 @@ class Pipe(object):
     def flush(self):
         self.next_pipe.flush()
 
+    def close(self):
+        pass
+
     def attach(self, next_pipe):
         link_point = self
         while hasattr(link_point, 'next_pipe'):
@@ -270,7 +273,8 @@ class Executor(object):
         return proc
 
     def finish(self):
-        self.running_state['pipe'].flush()
+        pipe = self.running_state['pipe']
+        pipe.flush()
 
         show_output = self.running_state['options'].show_output
         errors_count = len(self.output_panel.view.find_all_results())
@@ -286,6 +290,8 @@ class Executor(object):
         else:
             _log('✓ [{}]', proc.pid)
 
+        self.window.status_message('Build complete')
+        pipe.close()
         self.running_state = None
 
     def kill_process(self):
@@ -337,7 +343,6 @@ class ExecCommand(ChimneyCommand):
     pass
 
 
-# TODO: Some sorf of GC?
 _executors = {}
 
 
