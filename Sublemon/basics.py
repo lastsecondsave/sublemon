@@ -8,14 +8,12 @@ from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
 import Sublemon.lib.util as util
 
 
-class EscapeBackslashesCommand(TextCommand):
-    def run(self, edit):
-        for region in self.view.sel():
-            self.escape(edit, region.end())
+class EscapeBackslashesCommand(util.RegionCommand):
+    def process_region(self, edit, region):
+        def score(p):
+            return self.view.score_selector(p, 'string')
 
-    def escape(self, edit, point):
-        def score(p): return self.view.score_selector(p, 'string')
-
+        point = region.end()
         if not score(point):
             return
 
