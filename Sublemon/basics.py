@@ -44,17 +44,55 @@ class ShrinkWhitespaceCommand(util.RegionCommand):
         selection.subtract(region)
 
         point = region.end()
-        line = self.view.substr(self.view.line(point))
+        line = self.view.line(point)
 
-        if self.EMPTY_LINE_PATTERN.match(line):
-            point = self.shrink_lines(edit, point)
+        if self.EMPTY_LINE_PATTERN.match(self.view.substr(line)):
+            point = self.shrink_lines(edit, line)
         else:
             point = self.shrink_spaces(edit, point)
 
         selection.add(Region(point, point))
 
-    def shrink_lines(self, edit, point):
-        pass
+    def shrink_lines(self, edit, line):
+        row = self.view.rowcol(line.begin())[0]
+
+        first_row = row
+        anchor = None
+
+        while True:
+            prev_line = util.row_to_line(self.view, first_row-1)
+            if prev_line.begin() == anchor:
+                break
+
+            if not self.EMPTY_LINE_PATTERN.match(self.view.substr(prev_line)):
+                break
+
+            first_row -= 1
+            anchor = prev_line.begin()
+
+        last_row = row
+        anchor = None
+
+        while True:
+            next_line = util.row_to_line(self.view, last_row+1)
+            if next_line.end() == anchor:
+                break
+
+            if not self.EMPTY_LINE_PATTERN.match(self.view.substr(next_line)):
+                break
+
+            last_row += 1
+            anchor = next_line.end()
+
+        if first_row == last_row:
+            self.view.erase(edit, line)
+            return line.begin()
+
+        begin = util.row_to_line(self.view, first_row).begin()
+        end = util.row_to_line(self.view, last_row).end()
+
+        self.view.erase(edit, Region(begin, end))
+        return begin
 
     def shrink_spaces(self, edit, point):
         def is_space(p):
