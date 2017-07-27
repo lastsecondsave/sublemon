@@ -158,7 +158,7 @@
         "class": "icon_file_type",
         "layer0.opacity": 1.0,
         "layer0.tint": [190, 190, 190],
-        "content_margin": [9, 8]
+        "content_margin": [0, 8]
     },
     {
         "class": "icon_file_type",
