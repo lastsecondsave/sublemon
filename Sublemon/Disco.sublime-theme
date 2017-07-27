@@ -70,7 +70,7 @@
     {
         "class": "close_button",
         "parents": [{"class": "tree_row", "attributes": ["selected"]}],
-        "layer0.opacity": 0.5,
+        "layer0.opacity": 0.3,
         "content_margin": [8, 8],
     },
     {
