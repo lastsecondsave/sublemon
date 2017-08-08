@@ -2,7 +2,8 @@ import os
 import sys
 
 sys.path.append("../lib")
-import settings
+from settings import write_plist
+
 
 GRAY         = "#9090A0" # [144, 144, 160]
 DARK_GRAY    = "#51515D" # [ 81,  81,  93]
@@ -23,6 +24,7 @@ ORANGE       = "#FF9A41" # [255, 154,  65]
 DARK_ORANGE  = "#FF8147" # [255, 129,  71]
 CRIMSON      = "#E5476C" # [229,  71, 108]
 
+
 BACKGROUND        = BLUISH_BLACK
 FOREGROUND        = WHITE
 KEYWORD           = PURPLE
@@ -42,47 +44,62 @@ USER_CONSTANT     = CRIMSON
 CONSTANT          = ORANGE
 INHERITED         = CRIMSON
 
-def alpha(color, value):
-  return color + '{:02X}'.format(round(255 * value))
 
-theme_settings = [
-  {'settings': {
-    'background'         : BACKGROUND,
-    'foreground'         : FOREGROUND,
-    'caret'              : CLEAR_WHITE,
-    'selection'          : DARK_BLUE,
-    'lineHighlight'      : alpha(CRIMSON, 0.2),
-    'findHighlight'      : YELLOW,
-    'minimapBorder'      : FOREGROUND,
-    'bracketsForeground' : PUNCTUATION
-  }}
-]
+def alpha(color, value):
+    return color + '{:02X}'.format(round(255 * value))
+
 
 def group(category, lang):
-  global current_lang, current_category
-  current_lang, current_category = lang, category
+    global current_lang, current_category
+    current_lang, current_category = lang, category
+
 
 def source(lang):
-  group('source', lang)
+    group('source', lang)
+
 
 def no_group():
-  group(None, None)
+    group(None, None)
+
 
 def rec(color, *scopes, **settings):
-  settings['foreground'] = color
+    global theme_settings
 
-  for scope in scopes:
-    chunks = [current_category + '.' + current_lang] if current_category != None else []
-    chunks += scope.split()
+    settings['foreground'] = color
 
-    for i, chunk in enumerate(chunks):
-      if chunk.startswith('#') and current_lang != None:
-        chunks[i] = chunk[1:] + '.' + current_lang
+    for scope in scopes:
+        chunks = [current_category + '.' + current_lang] if current_category != None else []
+        chunks += scope.split()
 
-    theme_settings.append({
-      'scope':  ' '.join(chunks),
-      'settings': settings
-    })
+        for i, chunk in enumerate(chunks):
+            if chunk.startswith('#') and current_lang != None:
+                chunks[i] = chunk[1:] + '.' + current_lang
+
+            theme_settings.append({
+                'scope':  ' '.join(chunks),
+                'settings': settings
+            })
+
+
+def generate():
+    global theme_settings
+
+    path = os.path.join('..', 'Disco.tmTheme')
+    write_plist(path, {'name': "Disco", 'settings': theme_settings})
+
+
+theme_settings = [{
+    'settings': {
+        'background'         : BACKGROUND,
+        'foreground'         : FOREGROUND,
+        'caret'              : CLEAR_WHITE,
+        'selection'          : DARK_BLUE,
+        'lineHighlight'      : alpha(CRIMSON, 0.2),
+        'findHighlight'      : YELLOW,
+        'minimapBorder'      : FOREGROUND,
+        'bracketsForeground' : PUNCTUATION
+    }
+}]
 
 ## FOUNDATION ##
 
@@ -301,7 +318,5 @@ rec(DARK_VIOLET, 'constant.date.git')
 rec(YELLOW,      'meta.section.ini',
                  'entity.name.section.ini')
 
-## GENERATOR ##
 
-settings.write_plist(os.path.join('..', 'Disco.tmTheme'),
-                     {'name': "Disco", 'settings': theme_settings})
+generate()
