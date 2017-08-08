@@ -64,6 +64,9 @@ class MavenCommand(ChimneyCommand):
         if options['errors']:
             cmd.append('-e')
 
+        if options['mvn_opts']:
+            cmd.extend(options['mvn_opts'])
+
         cmd.extend(options['mvn_cmd'])
 
         options.shell_cmd = ' '.join(cmd)
