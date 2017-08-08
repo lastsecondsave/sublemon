@@ -301,33 +301,7 @@ rec(DARK_VIOLET, 'constant.date.git')
 rec(YELLOW,      'meta.section.ini',
                  'entity.name.section.ini')
 
-## ICONS ##
-
-icons = []
-
-def icon(name, *scopes):
-  for scope in scopes:
-    icons.append({
-      'scope': scope,
-      'settings': {'icon': 'file_type_' + name}
-    })
-
-icon('source', 'source')
-icon('text',   'text',
-               'text.html.markdown',
-               'text.rfc',
-               'text.restructuredtext')
-icon('markup', 'text.html',
-               'source.xml',
-               'source.json',
-               'source.yaml')
-icon('css',    'source.css')
-
 ## GENERATOR ##
 
 settings.write_plist(os.path.join('..', 'Disco.tmTheme'),
                      {'name': "Disco", 'settings': theme_settings})
-
-settings.cleanup()
-for icon in icons:
-  settings.generate_settings_file(icon["scope"], icon)
