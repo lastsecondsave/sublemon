@@ -153,18 +153,6 @@ class ToggleIndentGuidesCommand(TextCommand):
         self.view.settings().set("indent_guide_options", guides)
 
 
-class ToggleDrawCenteredCommand(ApplicationCommand):
-    def run(self):
-        s = sublime.load_settings("Preferences.sublime-settings")
-        current = s.get("draw_centered", False)
-        s.set("draw_centered", not current)
-        sublime.save_settings("Preferences.sublime-settings")
-
-    def is_checked(self):
-        s = sublime.load_settings("Preferences.sublime-settings")
-        return s.get("draw_centered", False)
-
-
 class OpenFilePathCommand(WindowCommand):
     def run(self):
         def on_done(x):

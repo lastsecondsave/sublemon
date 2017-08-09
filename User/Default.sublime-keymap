@@ -44,7 +44,6 @@
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_indent_guides" },
   { "keys": ["ctrl+k", "ctrl+/"], "command": "toggle_setting", "args": {"setting": "word_wrap"}},
-  { "keys": ["ctrl+k", "ctrl+q"], "command": "toggle_draw_centered" },
 
   { "keys": ["escape"], "command": "hide_panel", "args": {"cancel": true},
     "context": [
