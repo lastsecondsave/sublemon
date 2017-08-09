@@ -1,0 +1,9 @@
+<snippet>
+	<description>for</description>
+	<tabTrigger>for</tabTrigger>
+	<scope>source.python</scope>
+	<content>
+<![CDATA[for $1 in $2:
+	$0]]>
+</content>
+</snippet>

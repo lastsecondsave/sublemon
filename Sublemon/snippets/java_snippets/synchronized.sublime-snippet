@@ -1,0 +1,10 @@
+<snippet>
+	<description>synchronized</description>
+	<tabTrigger>syns</tabTrigger>
+	<scope>source.java</scope>
+	<content>
+<![CDATA[synchronized (${1:this}) {
+	${0:$SELECTION}
+}]]>
+	</content>
+</snippet>
