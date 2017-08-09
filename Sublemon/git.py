@@ -31,7 +31,7 @@ class GitLogCommand(ChimneyCommand):
         return GitLogPipe()
 
     def preprocess_options(self, options):
-        template = "git log -50 --follow --no-merges --date=short --format='{}' -- '{}'"
+        template = "git log -200 --follow --no-merges --date=short --format='{}' -- '{}'"
 
         options.shell_cmd = template.format("%h %ad %an → %s", self.source_file())
         options.syntax = "Packages/Sublemon/git_spec/git_log.sublime-syntax"
