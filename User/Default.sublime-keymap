@@ -15,8 +15,6 @@
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
   { "keys": ["shift+alt+z"],  "command": "reveal_in_side_bar" },
 
-  { "keys": ["ctrl+k", "ctrl+;"], "command": "clone_file" },
-
   { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "brackets"} },
 
   { "keys": ["alt+z"], "command": "jump_back" },
