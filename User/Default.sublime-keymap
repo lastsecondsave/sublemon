@@ -30,7 +30,8 @@
   { "keys": ["ctrl+alt+s"],   "command": "prompt_save_as" },
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
 
-  { "keys": ["alt+/"],  "command": "show_file_path" },
+  { "keys": ["alt+/"],      "command": "show_file_path" },
+  { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
 
   { "keys": ["f1"], "command": "prev_bookmark" },
 
@@ -46,7 +47,15 @@
   { "keys": ["ctrl+k", "ctrl+q"], "command": "toggle_draw_centered" },
 
   { "keys": ["escape"], "command": "hide_panel", "args": {"cancel": true},
-    "context": [{"key": "setting.is_widget", "operator": "equal", "operand": true}]
+    "context": [
+      {"key": "setting.is_widget", "operator": "equal", "operand": true}
+    ]
+  },
+
+  { "keys": ["shift+escape"], "command": "last_single_selection",
+    "context": [
+      {"key": "num_selections", "operator": "not_equal", "operand": 1}
+    ]
   },
 
   { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
@@ -130,7 +139,6 @@
   /** PLUGINS **/
 
   { "keys": ["alt+f6"],     "command": "toggle_selection_scope" },
-  { "keys": ["ctrl+alt+z"], "command": "normalize_region_ends" },
   { "keys": ["ctrl+alt+a"], "command": "alignment" },
 
   /** MACRO **/

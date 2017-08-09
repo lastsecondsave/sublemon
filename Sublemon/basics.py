@@ -170,3 +170,45 @@ class OpenFilePathCommand(WindowCommand):
         def on_done(x):
             self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
         self.window.show_input_panel("File Name:", '', on_done, None, None)
+
+
+class StreamlineRegionsCommand(TextCommand):
+    def run(self, edit):
+        selection = self.view.sel()
+        regions = [r for r in selection if not r.empty()]
+
+        if not regions:
+            return
+
+        left, right = self.aligment(regions)
+
+        if left == 0 or right == 0:
+            replacement = [Region(r.b, r.a) for r in regions]
+        elif left <= right:
+            replacement = [Region(r.begin(), r.end()) for r in regions]
+        else:
+            replacement = [Region(r.end(), r.begin()) for r in regions]
+
+        for r in regions:
+            selection.subtract(r)
+
+        selection.add_all(replacement)
+
+    def aligment(self, regions):
+        left, right = 0, 0
+
+        for r in regions:
+            if r.a < r.b:
+                left += 1
+            else:
+                right += 1
+
+        return left, right
+
+
+class LastSingleSelection(TextCommand):
+    def run(self, edit):
+        selection = self.view.sel()
+        regions = [r for r in selection]
+        for region in regions[:-1]:
+            selection.subtract(region)
