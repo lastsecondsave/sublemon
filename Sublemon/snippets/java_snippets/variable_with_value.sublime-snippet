@@ -1,0 +1,6 @@
+<snippet>
+	<description>variable with value</description>
+	<tabTrigger>varv</tabTrigger>
+	<scope>source.java</scope>
+	<content><![CDATA[${1:String} ${2:${1/./\l$0/}} = ${3:null}]]></content>
+</snippet>

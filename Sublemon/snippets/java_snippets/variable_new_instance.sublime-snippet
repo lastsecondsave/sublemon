@@ -2,5 +2,5 @@
 	<description>variable new</description>
 	<tabTrigger>varn</tabTrigger>
 	<scope>source.java</scope>
-	<content><![CDATA[${1:String} ${2:${1/./\l$0/}} = new $1($3);]]></content>
+	<content><![CDATA[${1:String} ${2:${1/./\l$0/}} = new $1($3)]]></content>
 </snippet>
