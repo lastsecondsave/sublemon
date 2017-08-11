@@ -186,7 +186,7 @@ class StreamlineRegionsCommand(TextCommand):
         left, right = 0, 0
 
         for r in regions:
-            if r.a < r.b:
+            if r.a > r.b:
                 left += 1
             else:
                 right += 1
