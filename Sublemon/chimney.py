@@ -8,7 +8,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import TextCommand, WindowCommand
 
-import Sublemon.lib.util as util
+import Sublemon.lib.plugin_util as util
 
 
 class Pipe(object):
