@@ -1,6 +1,0 @@
-<snippet>
-	<description>parameter</description>
-	<tabTrigger>pm</tabTrigger>
-	<scope>meta.method.parameters.java</scope>
-	<content><![CDATA[${1:String} ${2:${1/./\l$0/}}]]></content>
-</snippet>
