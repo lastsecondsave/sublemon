@@ -5,7 +5,7 @@ import sublime
 from sublime import Region
 from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
 
-import Sublemon.lib.util as util
+import Sublemon.lib.plugin_util as util
 
 
 class EscapeBackslashesCommand(util.RegionCommand):
