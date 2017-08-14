@@ -1,10 +1,10 @@
 import sys
 sys.path.append("../lib")
-import settings
+from settings import setup, settings
 
-settings.cleanup()
+setup()
 
-settings.entry("source.xml",
+settings("source.xml",
   increase_indent_pattern = r"^.*<(?![?!])[^\/]+>\s*$",
   decrease_indent_pattern = r"^\s*<\/.*>\s*$",
   bracket_indent_next_line_pattern = r"^.*<[^>]+\s*$",

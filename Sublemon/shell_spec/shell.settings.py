@@ -1,10 +1,10 @@
 import sys
 sys.path.append("../lib")
-import settings
+from settings import setup, settings
 
-settings.cleanup()
+setup()
 
-settings.entry("source.shell",
+settings("source.shell",
     increase_indent_pattern = [
         r".*\{\s*$",
         r"\s*(if\s.+;\s*)?then\s*$",

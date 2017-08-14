@@ -1,10 +1,10 @@
 import sys
 sys.path.append("../lib")
-import settings
+from settings import setup, settings
 
-settings.cleanup()
+setup()
 
-settings.entry("source.powershell",
+settings("source.powershell",
     increase_indent_pattern = [
     ],
     decrease_indent_pattern = [

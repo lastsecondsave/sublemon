@@ -5,7 +5,11 @@ import re
 import shutil
 
 
-def encode_filename(scope):
+TARGET_DIRECTORY = '.generated_settings'
+TO_UPPERCASE_PATTERN = re.compile(r'_[a-z]')
+
+
+def generate_filename(scope):
     return hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
 
 
@@ -15,20 +19,18 @@ def write_plist(path, content):
 
 
 def generate_settings_file(scope, settings):
-    filename = encode_filename(scope)
+    filename = generate_filename(scope)
     print("{}: {}".format(filename, scope))
-    write_plist(os.path.join("generated", filename), settings)
+    write_plist(os.path.join(TARGET_DIRECTORY, filename), settings)
 
 
-def cleanup():
+def setup():
     shutil.rmtree("generated", ignore_errors=True)
-    os.mkdir("generated")
+    shutil.rmtree(TARGET_DIRECTORY, ignore_errors=True)
+    os.mkdir(TARGET_DIRECTORY)
 
 
-TO_UPPERCASE_PATTERN = re.compile(r'_[a-z]')
-
-
-def entry(scope, **settings):
+def settings(scope, **settings):
     shell_variables = []
     comment_index = 1
 
@@ -75,4 +77,4 @@ def entry(scope, **settings):
 
         sublime_settings[k] = v
 
-    generate_settings_file(scope, dict(scope=scope, settings=sublime_settings))
+    generate_settings_file(scope, {'scope': scope, 'settings': sublime_settings})
