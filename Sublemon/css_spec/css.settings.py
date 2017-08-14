@@ -1,14 +1,14 @@
 import sys
 sys.path.append("../lib")
-import settings
+from settings import setup, settings
 
-settings.cleanup()
+setup()
 
-settings.entry("source.css",
+settings("source.css",
   block_comment = ['/*', '*/']
 )
 
-settings.entry("source.css meta.rule.selector.css",
+settings("source.css meta.rule.selector.css",
   show_in_symbol_list = 1,
   symbol_transformation = [
     r"s/\n/ /",
@@ -17,7 +17,7 @@ settings.entry("source.css meta.rule.selector.css",
   ]
 )
 
-settings.entry("source.css meta.at-rule.body.css meta.rule.selector.css",
+settings("source.css meta.at-rule.body.css meta.rule.selector.css",
   show_in_symbol_list = 1,
   symbol_transformation = [
     r"s/\n/ /",

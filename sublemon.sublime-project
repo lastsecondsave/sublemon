@@ -8,7 +8,7 @@
 			],
 			"folder_exclude_patterns":
 			[
-				"generated"
+				".generated*"
 			],
 			"name": "sublemon",
 			"path": "Sublemon"

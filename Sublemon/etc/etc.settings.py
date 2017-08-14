@@ -1,21 +1,21 @@
 import sys
 sys.path.append("../lib")
-import settings
+from settings import setup, settings
 
-settings.cleanup()
+setup()
 
-settings.entry("source.ini",
+settings("source.ini",
   line_comment = [';', '#']
 )
 
-settings.entry("source.ini entity.name.section",
+settings("source.ini entity.name.section",
   show_in_symbol_list = 1
 )
 
-settings.entry("source.unix",
+settings("source.unix",
   line_comment = '#'
 )
 
-settings.entry("text.rfc entity.name.title",
+settings("text.rfc entity.name.title",
   show_in_symbol_list = 1
 )

@@ -33,6 +33,6 @@ icon('markup',
 icon('css',
      'source.css')
 
-settings.cleanup()
+settings.setup()
 for icon in icons:
     settings.generate_settings_file(icon['scope'], icon)
