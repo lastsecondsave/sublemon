@@ -11,25 +11,29 @@ if [[ ! -d $INSTALL_PATH ]]; then
   INSTALL_PATH="$(dirname $0)/../../../.."
 fi
 
-echo "Packages directory: $(tput setaf 2)$INSTALL_PATH/Packages$(tput sgr0)"
+PACKAGES_DIRECTORY="$INSTALL_PATH/Packages"
+TEMP_DIRECTORY='/tmp/sublemon'
 
-pushd -q "$INSTALL_PATH/Packages"
+echo "Packages directory: $(tput setaf 2)$PACKAGES_DIRECTORY$(tput sgr0)"
 
-mkdir bac
+rm -rf $TEMP_DIRECTORY
+mkdir $TEMP_DIRECTORY
+
+cp $PACKAGES_DIRECTORY/*.sublime-package $TEMP_DIRECTORY
+
+pushd $TEMP_DIRECTORY
 
 for package in *.sublime-package; do
   dir="${package%%.sublime-package}"
   echo "Cleaning $(tput setaf 3)$dir$(tput sgr0).sublime-package"
 
   unzip -q "$package" -d "$dir"
-  mv "$package" bac
+  rm "$package"
 
   pushd "$dir"
 
   rm -rf 'Snippets'
-  for snippet in $(find . -name '*.sublime-snippet'); do
-    rm $snippet
-  done
+  find . -name '*.sublime-snippet' -exec rm -f {} +
 
   if [[ $dir == 'Python' ]]; then
     rm -f 'Python.sublime-build'
@@ -41,6 +45,7 @@ for package in *.sublime-package; do
   rm -rf "$dir"
 done
 
-rm -rf bac
+popd
 
-popd -q
+cp $TEMP_DIRECTORY/*.sublime-package $PACKAGES_DIRECTORY
+rm -rf $TEMP_DIRECTORY
