@@ -1,8 +1,0 @@
-<snippet>
-	<description>if null (one line)</description>
-	<tabTrigger>iffn</tabTrigger>
-	<scope>source.java</scope>
-	<content>
-<![CDATA[if (${1:value} == null) { $0 }]]>
-	</content>
-</snippet>

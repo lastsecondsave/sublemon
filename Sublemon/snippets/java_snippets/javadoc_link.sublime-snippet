@@ -1,6 +1,0 @@
-<snippet>
-	<description>@link</description>
-	<scope>comment.block.documentation.java</scope>
-	<tabTrigger>link</tabTrigger>
-	<content><![CDATA[{@link ${1:$SELECTION}}$0]]></content>
-</snippet>

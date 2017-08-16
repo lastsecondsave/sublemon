@@ -1,6 +1,0 @@
-<snippet>
-	<description>@code</description>
-	<scope>comment.block.documentation.java</scope>
-	<tabTrigger>code</tabTrigger>
-	<content><![CDATA[{@code ${1:$SELECTION}}$0]]></content>
-</snippet>

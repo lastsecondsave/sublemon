@@ -1,6 +1,0 @@
-<snippet>
-	<description>throw new Exception</description>
-	<scope>source.java</scope>
-	<tabTrigger>throw</tabTrigger>
-	<content><![CDATA[throw new ${1:Exception}($2);]]></content>
-</snippet>
