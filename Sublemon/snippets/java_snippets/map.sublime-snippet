@@ -1,6 +1,0 @@
-<snippet>
-	<description>Map&lt;&gt;</description>
-	<scope>meta.class.body.java</scope>
-	<tabTrigger>Map</tabTrigger>
-	<content><![CDATA[Map<${1:String}, ${2:String}> ]]></content>
-</snippet>

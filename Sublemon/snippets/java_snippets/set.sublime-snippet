@@ -1,6 +1,0 @@
-<snippet>
-	<description>Set&lt;&gt;</description>
-	<scope>meta.class.body.java</scope>
-	<tabTrigger>Set</tabTrigger>
-	<content><![CDATA[Set<${1:String}> ]]></content>
-</snippet>

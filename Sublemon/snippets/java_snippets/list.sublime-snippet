@@ -1,6 +1,0 @@
-<snippet>
-	<description>List&lt;&gt;</description>
-	<scope>meta.class.body.java</scope>
-	<tabTrigger>List</tabTrigger>
-	<content><![CDATA[List<${1:String}> ]]></content>
-</snippet>

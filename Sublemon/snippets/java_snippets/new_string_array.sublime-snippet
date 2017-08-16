@@ -1,6 +1,0 @@
-<snippet>
-	<description>new String[] {}</description>
-	<tabTrigger>sta</tabTrigger>
-	<scope>source.java</scope>
-	<content><![CDATA[new String[] {${0:$SELECTION}}]]></content>
-</snippet>
