@@ -15,7 +15,9 @@ snippet(tabTrigger='pu',  content='public ')
 snippet(tabTrigger='pro', content='protected ')
 
 snippet(tabTrigger='im', content='import ')
-snippet(tabTrigger='th', content='throws ')
+
+snippet(tabTrigger='th',  content='throws ')
+snippet(tabTrigger='ret', content='return ')
 
 ## ONE-LINERS ##
 
@@ -29,6 +31,10 @@ snippet(tabTrigger='con', description='continue', content=
 
 snippet(tabTrigger='this', description='this.x = x', content=
 'this.$1 = $1;'
+)
+
+snippet(tabTrigger='rtt', description='return this', content=
+'return this;'
 )
 
 snippet(tabTrigger='var', description='variable', content=
@@ -83,7 +89,74 @@ snippet(tabTrigger='link', description='@link', scope='comment.block.documentati
 '{@link ${1:$SELECTION}}$0'
 )
 
+snippet(tabTrigger='td', description='TODO', content=
+'// TODO: '
+)
+
 ## BLOCKS ##
+
+snippet(tabTrigger='if', description='if', content=
+"""
+if ($1) {
+    $0
+}
+""")
+
+snippet(tabTrigger='else', description='else', content=
+"""
+else {
+    $0
+}
+""")
+
+snippet(tabTrigger='elif', description='else if', content=
+"""
+else if ($1) {
+    $0
+}
+""")
+
+snippet(tabTrigger='switch', description='switch', content=
+"""
+switch ($1) {
+    $0
+}
+""")
+
+snippet(tabTrigger='while', description='while', content=
+"""
+while ($1) {
+    $0
+}
+""")
+
+snippet(tabTrigger='for', description='for', content=
+"""
+for ($1; $2; $3) {
+    $0
+}
+""")
+
+snippet(tabTrigger='fore', description='for each', content=
+"""
+for ($1 : $2) {
+    $0
+}
+""")
+
+snippet(tabTrigger='fori', description='for i', content=
+"""
+for (int ${1:i} = 0; $1 < ${2:imax}; ${3:$1++}) {
+    $0
+}
+""")
+
+snippet(tabTrigger='form', description='for imax', content=
+"""
+for (int ${1:i} = 0, $1max = ${2:count}; $1 < $1max; ${3:$1++}) {
+    $0
+}
+""")
 
 snippet(tabTrigger='fort', description='for iterator', content=
 """
@@ -146,6 +219,13 @@ interface ${TM_FILENAME/(.*?)(\..+)/$1/}$1 {
 snippet(tabTrigger='ctor', description='constructor', content=
 r"""
 ${TM_FILENAME/(.*?)(\..+)/$1/}($1) {
+    $0
+}
+""")
+
+snippet(tabTrigger='fun', description='method', content=
+"""
+${1:void} ${2:run}($3) {
     $0
 }
 """)

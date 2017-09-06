@@ -1,6 +1,0 @@
-<snippet>
-	<description>if (one line)</description>
-	<tabTrigger>iff</tabTrigger>
-	<scope>source.java, source.js, source.c++, source.powershell</scope>
-	<content><![CDATA[if ($1) { $0 }]]></content>
-</snippet>
