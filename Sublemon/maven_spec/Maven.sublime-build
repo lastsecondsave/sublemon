@@ -9,10 +9,11 @@
     { "name"   : "Clean",
       "mvn_cmd": ["clean"]
     },
-    { "name"   : "Compile → Exec",
-      "mvn_cmd": ["compile", "exec:java"],
-      "quiet"  : true,
-      "errors" : true
+    { "name"       : "Compile → Exec",
+      "mvn_cmd"    : ["compile", "exec:java"],
+      "show_output": "text",
+      "quiet"      : true,
+      "errors"     : true
     },
     { "name"   : "Test",
       "mvn_cmd": ["test"],
