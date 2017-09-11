@@ -1,6 +1,0 @@
-<snippet>
-	<description>self.x = x</description>
-	<tabTrigger>self</tabTrigger>
-	<scope>source.python</scope>
-	<content><![CDATA[self.$1 = $1]]></content>
-</snippet>

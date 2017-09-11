@@ -1,9 +1,0 @@
-<snippet>
-	<description>__init__</description>
-	<tabTrigger>init</tabTrigger>
-	<scope>source.python</scope>
-	<content>
-<![CDATA[def __init__(self$1):
-	$0]]>
-</content>
-</snippet>

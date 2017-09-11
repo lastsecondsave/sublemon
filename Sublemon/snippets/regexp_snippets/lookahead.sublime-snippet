@@ -1,6 +1,0 @@
-<snippet>
-	<description>Lookahead</description>
-	<scope>source.regexp</scope>
-	<tabTrigger>=</tabTrigger>
-	<content><![CDATA[(?=${0:$SELECTION})]]></content>
-</snippet>

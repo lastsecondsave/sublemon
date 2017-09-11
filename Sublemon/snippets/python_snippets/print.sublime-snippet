@@ -1,6 +1,0 @@
-<snippet>
-	<description>print</description>
-	<tabTrigger>pl</tabTrigger>
-	<scope>source.python</scope>
-	<content><![CDATA[print(${0:$SELECTION})]]></content>
-</snippet>

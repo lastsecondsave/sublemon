@@ -1,6 +1,0 @@
-<snippet>
-	<description>Tag</description>
-	<tabTrigger><![CDATA[<]]></tabTrigger>
-	<scope>source.xml</scope>
-	<content><![CDATA[<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>]]></content>
-</snippet>

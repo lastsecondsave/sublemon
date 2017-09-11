@@ -1,6 +1,0 @@
-<snippet>
-	<description>Empty Tag</description>
-	<tabTrigger><![CDATA[>]]></tabTrigger>
-	<scope>source.xml</scope>
-	<content><![CDATA[<${1:name}/>]]></content>
-</snippet>
