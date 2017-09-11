@@ -1,9 +1,0 @@
-<snippet>
-	<description>while</description>
-	<tabTrigger>while</tabTrigger>
-	<scope>source.python</scope>
-	<content>
-<![CDATA[while $1:
-	$0]]>
-</content>
-</snippet>
