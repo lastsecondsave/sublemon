@@ -1,0 +1,83 @@
+--- Python.sublime-syntax
++++ Python.sublime-syntax
+@@ -1148,7 +1148,7 @@
+               scope: punctuation.definition.string.end.python
+               set: after-expression
+             - match: ''
+-              push: scope:source.regexp.python
++              push: scope:text.plain
+               with_prototype:
+                 - match: '(?=""")'
+                   pop: true
+@@ -1164,7 +1164,7 @@
+           scope: punctuation.definition.string.end.python
+           set: after-expression
+         - match: ''
+-          push: scope:source.regexp.python
++          push: scope:text.plain
+           with_prototype:
+             - match: '(?=""")'
+               pop: true
+@@ -1288,7 +1288,7 @@
+           set: after-expression
+         - include: line-continuation-inside-string
+         - match: ''
+-          push: scope:source.regexp.python
++          push: scope:text.plain
+           with_prototype:
+             - match: '(?="|\n)'
+               pop: true
+@@ -1305,7 +1305,7 @@
+           set: after-expression
+         - include: line-continuation-inside-string
+         - match: ''
+-          push: scope:source.regexp.python
++          push: scope:text.plain
+           with_prototype:
+             - match: '(?="|\n)'
+               pop: true
+@@ -1432,7 +1432,7 @@
+               scope: punctuation.definition.string.end.python
+               set: after-expression
+             - match: ''
+-              push: scope:source.regexp.python
++              push: scope:text.plain
+               with_prototype:
+                 - match: (?=''')
+                   pop: true
+@@ -1448,7 +1448,7 @@
+           scope: punctuation.definition.string.end.python
+           set: after-expression
+         - match: ''
+-          push: scope:source.regexp.python
++          push: scope:text.plain
+           with_prototype:
+             - match: (?=''')
+               pop: true
+@@ -1572,7 +1572,7 @@
+           set: after-expression
+         - include: line-continuation-inside-string
+         - match: ''
+-          push: scope:source.regexp.python
++          push: scope:text.plain
+           with_prototype:
+             - match: '(?=''|\n)'
+               pop: true
+@@ -1589,7 +1589,7 @@
+           set: after-expression
+         - include: line-continuation-inside-string
+         - match: ''
+-          push: scope:source.regexp.python
++          push: scope:text.plain
+           with_prototype:
+             - match: '(?=''|\n)'
+               pop: true
+@@ -1632,7 +1632,7 @@
+           set: after-expression
+         - include: line-continuation-inside-string
+         - match: ''
+-          push: scope:source.sql
++          push: scope:text.plain
+           with_prototype:
+             - match: '(?=''|\n)'
+               pop: true
