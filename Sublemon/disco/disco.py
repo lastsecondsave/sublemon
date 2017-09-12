@@ -141,12 +141,6 @@ rec(META,        'meta.annotation -meta.annotation.arguments -punctuation.sectio
                  'meta.annotation support.function')
 rec(PUNCTUATION, 'punctuation.separator.continuation.line')
 
-## REGEXP IN PYTHON ##
-
-rec(YELLOW, 'source.regexp punctuation.definition.group')
-rec(PURPLE, 'source.regexp constant.other.character-class.set',
-            'constant.character.character-class.regexp')
-
 ## JAVASCRIPT ##
 
 source('js')
