@@ -7,14 +7,11 @@ from settings import write_plist
 
 GRAY         = "#9090A0" # [144, 144, 160]
 DARK_GRAY    = "#51515D" # [ 81,  81,  93]
-WHITE        = "#CDCDCD" # [205, 205, 205]
-CLEAR_WHITE  = "#FFFFFF" # [255, 255, 255]
-LIGHT_VIOLET = "#AAAAF0" # [170, 170, 240]
-VIOLET       = "#B69EFF" # [182, 158, 255]
-DARK_VIOLET  = "#5E5E8E" # [94,   94, 142]
+WHITE        = "#C0C0C0" # [192, 192, 192]
+CLEAR_WHITE  = "#F3F3F3" # [243, 243, 243]
+DARK_VIOLET  = "#5E5E8E" # [ 94   94, 142]
 PURPLE       = "#E572D2" # [229, 114, 210]
 PINK         = "#EF51AA" # [239,  81, 170]
-LIGHT_BLUE   = "#77ABFF" # [119, 171, 255]
 BLUE         = "#6699FF" # [102, 153, 255]
 DARK_BLUE    = "#384868" # [ 56,  72, 104]
 BLUISH_BLACK = "#202830" # [ 32,  40,  48]
@@ -30,14 +27,14 @@ FOREGROUND        = WHITE
 KEYWORD           = PURPLE
 STORAGE           = PINK
 INDEXED           = BLUE
-OPERATOR          = LIGHT_BLUE
+OPERATOR          = CLEAR_WHITE
 PUNCTUATION       = DARK_ORANGE
 COMMENT           = GRAY
 COMMENT_HIGHLIGHT = WHITE
 PRIMITIVE         = DARK_ORANGE
 STRING            = GREEN
 META              = YELLOW
-TAG               = LIGHT_BLUE
+TAG               = BLUE
 TAG_ATTRIBUTE     = YELLOW
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
@@ -148,7 +145,7 @@ rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
                  'meta.for meta.group #keyword.operator', # 'of' and 'in' in for-cycle
                  'keyword.operator.word.new')
 rec(STORAGE,     'variable.type')
-rec(LIGHT_BLUE,  'meta.object-literal.key')
+rec(BLUE,        'meta.object-literal.key')
 rec(OPERATOR,    'storage.type.function.arrow')
 rec(ORANGE,      'support.type.object',
                  'meta.template.expression')
@@ -217,6 +214,8 @@ rec(PUNCTUATION, 'punctuation.definition.expression',
 rec(CRIMSON,     'keyword.operator.execute',
                  'keyword.operator.escape')
 rec(OPERATOR,    'punctuation.separator.static-call')
+rec(CONSTANT,    'string.quoted.double variable.user')
+rec(FOREGROUND,  'variable.user')
 
 ## C++ ##
 
