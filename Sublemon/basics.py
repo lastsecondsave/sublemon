@@ -209,3 +209,51 @@ class LastSingleSelectionCommand(TextCommand):
         regions = [r for r in selection]
         for region in regions[:-1]:
             selection.subtract(region)
+
+
+class SelectWithMarkersCommand(TextCommand):
+    def run(self, edit, left, right):
+        selection = self.view.sel()
+        for region in selection:
+            replacement = self.expand_region(region.end(), left, right)
+            if replacement:
+                selection.add(replacement)
+
+    def expand_region(self, point, left_marker, right_marker):
+        lmlen = len(left_marker)
+        left = point - lmlen
+
+        while left_marker != self.view.substr(Region(left, left+lmlen)):
+            left -= 1
+            if left < 0:
+                return None
+
+        rmlen = len(right_marker)
+        right = point + rmlen
+
+        while right_marker != self.view.substr(Region(right-rmlen, right)):
+            right += 1
+            if right > self.view.size():
+                return None
+
+        return Region(left+lmlen, right-rmlen)
+
+
+class SelectWithCustomMarkersCommand(WindowCommand):
+    def run(self):
+        def on_done(x):
+            if x.strip():
+                markers = self.split_markers(x)
+                self.window.active_view().run_command(
+                    'select_with_markers',
+                    {'left': markers[0], 'right': markers[1]})
+
+        self.window.show_input_panel(
+            'Selection markers:', '', on_done, None, None)
+
+    def split_markers(self, markers):
+        i = markers.find(' ')
+        if i < 0:
+            i = int(len(markers) / 2)
+
+        return (markers[0:i], markers[i:].strip())

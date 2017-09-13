@@ -38,6 +38,7 @@
   { "keys": ["ctrl+k", "ctrl+;"], "command": "diff_changes" },
   { "keys": ["ctrl+k", "ctrl+s"], "command": "shrink_whitespace" },
   { "keys": ["ctrl+k", "ctrl+t"], "command": "title_case" },
+  { "keys": ["ctrl+k", "ctrl+e"], "command": "select_with_custom_markers" },
 
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_indent_guides" },
