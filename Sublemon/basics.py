@@ -5,23 +5,24 @@ import sublime
 from sublime import Region
 from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
 
-import Sublemon.lib.plugin_util as util
 
+class EscapeBackslashesCommand(TextCommand):
+    def run(self, edit):
+        for region in self.view.sel():
+            self.escape(edit, region.end())
 
-class EscapeBackslashesCommand(util.RegionCommand):
-    def process_region(self, edit, region):
+    def escape(self, edit, point):
         def score(p):
             return self.view.score_selector(p, 'string')
 
-        point = region.end()
         if not score(point):
             return
 
-        begin = point
+        (begin, end) = (point, point + 1)
+
         while score(begin - 1):
             begin -= 1
 
-        end = point + 1
         while score(end):
             end += 1
 
@@ -34,49 +35,55 @@ class EscapeBackslashesCommand(util.RegionCommand):
             self.view.replace(edit, region, content)
 
 
-class ShrinkWhitespaceCommand(util.RegionCommand):
+class ShrinkWhitespaceCommand(TextCommand):
     EMPTY_LINE_PATTERN = re.compile(r'\s*$')
 
-    def process_region(self, edit, region):
+    def run(self, edit):
         selection = self.view.sel()
-        selection.subtract(region)
+        for region in selection:
+            selection.subtract(region)
+            selection.add(self.shrink(edit, region.end()))
 
-        point = region.end()
+    def is_empty_line(self, line_region):
+        return self.EMPTY_LINE_PATTERN.match(self.view.substr(line_region))
+
+    def shrink(self, edit, point):
         line = self.view.line(point)
 
-        if self.EMPTY_LINE_PATTERN.match(self.view.substr(line)):
+        if self.is_empty_line(line):
             point = self.shrink_lines(edit, line)
         else:
             point = self.shrink_spaces(edit, point)
 
-        selection.add(Region(point, point))
+        return Region(point, point)
+
+    def row_to_line(self, row):
+        return self.view.line(self.view.text_point(row, 0))
 
     def shrink_lines(self, edit, line):
         row = self.view.rowcol(line.begin())[0]
 
-        first_row = row
-        anchor = None
+        first_row, anchor = (row, None)
 
         while True:
-            prev_line = util.row_to_line(self.view, first_row-1)
+            prev_line = self.row_to_line(first_row-1)
             if prev_line.begin() == anchor:
                 break
 
-            if not self.EMPTY_LINE_PATTERN.match(self.view.substr(prev_line)):
+            if not self.is_empty_line(prev_line):
                 break
 
             first_row -= 1
             anchor = prev_line.begin()
 
-        last_row = row
-        anchor = None
+        last_row, anchor = (row, None)
 
         while True:
-            next_line = util.row_to_line(self.view, last_row+1)
+            next_line = self.row_to_line(last_row+1)
             if next_line.end() == anchor:
                 break
 
-            if not self.EMPTY_LINE_PATTERN.match(self.view.substr(next_line)):
+            if not self.is_empty_line(next_line):
                 break
 
             last_row += 1
@@ -86,8 +93,8 @@ class ShrinkWhitespaceCommand(util.RegionCommand):
             self.view.erase(edit, line)
             return line.begin()
 
-        begin = util.row_to_line(self.view, first_row).begin()
-        end = util.row_to_line(self.view, last_row).end()
+        begin = self.row_to_line(first_row).begin()
+        end = self.row_to_line(last_row).end()
 
         self.view.erase(edit, Region(begin, end))
         return begin
@@ -112,6 +119,8 @@ class ShrinkWhitespaceCommand(util.RegionCommand):
 
 
 class ShowFilePathCommand(WindowCommand):
+    RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
+
     def run(self):
         file_path = self.window.active_view().file_name()
         if not file_path:
@@ -129,13 +138,13 @@ class ShowFilePathCommand(WindowCommand):
                 prefix = variables["project_base_name"]
 
         if not prefix:
-            home_path = (os.environ['HOME'] if not util.RUNNING_ON_WINDOWS
+            home_path = (os.environ['HOME'] if not self.RUNNING_ON_WINDOWS
                          else os.environ['HOMEDRIVE'] + os.environ['HOMEPATH'])
 
             if file_path.startswith(home_path + os.sep):
                 file_path = file_path[len(home_path)+1:]
                 prefix = "~"
-            elif util.RUNNING_ON_WINDOWS:
+            elif self.RUNNING_ON_WINDOWS:
                 prefix = file_path[0:2].lower()
                 file_path = file_path[3:]
             else:
@@ -194,7 +203,7 @@ class StreamlineRegionsCommand(TextCommand):
         return left, right
 
 
-class LastSingleSelection(TextCommand):
+class LastSingleSelectionCommand(TextCommand):
     def run(self, edit):
         selection = self.view.sel()
         regions = [r for r in selection]
