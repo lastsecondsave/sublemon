@@ -28,6 +28,8 @@
   { "keys": ["ctrl+alt+s"],   "command": "prompt_save_as" },
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
 
+  { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
+
   { "keys": ["alt+/"],      "command": "show_file_path" },
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
 
