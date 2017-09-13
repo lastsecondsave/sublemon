@@ -199,6 +199,7 @@
 
   { "keys": ["("], "command": "insert_snippet", "args": {"contents": "($0)"},
     "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
       { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
@@ -207,6 +208,7 @@
 
   { "keys": ["["], "command": "insert_snippet", "args": {"contents": "[$0]"},
     "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
       { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|;|\\}|$)", "match_all": true }
@@ -215,6 +217,7 @@
 
   { "keys": ["{"], "command": "insert_snippet", "args": {"contents": "{$0}"},
     "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "preceding_text", "operator": "not_regex_contains", "operand": "\\\\$", "match_all": true },
       { "key": "following_text", "operator": "regex_contains", "operand": "^(?:\t| |\\)|]|\\}|$)", "match_all": true }
@@ -223,6 +226,7 @@
 
   { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"},
     "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "[A-Z][a-z]*$", "match_all": true }
@@ -231,6 +235,7 @@
 
   { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<$0>"},
     "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "[A-Z][a-z]*$", "match_all": true }
@@ -239,6 +244,7 @@
 
   { "keys": [">"], "command": "move", "args": {"by": "characters", "forward": true},
     "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java" },
       { "key": "following_text", "operator": "regex_contains", "operand": "^>", "match_all": true }
