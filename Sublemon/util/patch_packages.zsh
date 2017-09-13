@@ -29,7 +29,13 @@ pushd $TEMP_DIRECTORY
 
 for package in *.sublime-package; do
   dir="${package%%.sublime-package}"
-  echo "Cleaning $(tput setaf 3)$dir$(tput sgr0).sublime-package"
+
+  if [[ $(unzip -l $package | grep '__patched__') ]]; then
+    echo "Skipping $(tput setaf 1)$dir$(tput sgr0).sublime-package"
+    continue
+  fi
+
+  echo "Processing $(tput setaf 3)$dir$(tput sgr0).sublime-package"
 
   unzip -q "$package" -d "$dir"
   rm "$package"
@@ -54,10 +60,11 @@ for package in *.sublime-package; do
     cp 'Default (Windows).sublime-keymap' 'Default (Linux).sublime-keymap'
   fi
 
+  touch '__patched__'
+
   zip -rq "../$package" *
 
   popd
-  rm -rf "$dir"
 done
 
 popd
