@@ -94,8 +94,6 @@ contexts:
       scope: keyword.other.important.css
     - include: constants
     - include: support
-    - match: '[\w-]+'
-      scope: support.constant.css
 
   constants:
   - match: '-?\d+(?:\.\d+)?(?:%|px|pt|em|s)?'
