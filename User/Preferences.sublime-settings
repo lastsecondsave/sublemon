@@ -96,6 +96,7 @@
 	],
 	"margin": 0,
 	"match_brackets_content": false,
+	"match_brackets_angle": true,
 	"minimap_scroll_to_clicked_text": true,
 	"move_to_limit_on_up_down": true,
 	"open_files_in_new_window": false,

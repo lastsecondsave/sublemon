@@ -229,7 +229,7 @@
       { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java" },
-      { "key": "preceding_text", "operator": "regex_contains", "operand": "[A-Z][a-z]*$", "match_all": true }
+      { "key": "preceding_text", "operator": "regex_contains", "operand": "[A-Z][a-z]*(<.*>)?$", "match_all": true }
     ]
   },
 
