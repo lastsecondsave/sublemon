@@ -8,6 +8,8 @@ scope('source.python')
 
 ## KEYWORDS ##
 
+snippet(tabTrigger='ret', content='return ')
+
 ## ONE-LINERS ##
 
 snippet(tabTrigger='pl', description='print', content=

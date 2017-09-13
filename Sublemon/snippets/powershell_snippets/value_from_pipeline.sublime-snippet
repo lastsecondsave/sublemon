@@ -1,6 +1,0 @@
-<snippet>
-	<description>ValueFromPipeline</description>
-	<tabTrigger>valp</tabTrigger>
-	<scope>meta.parameter.powershell</scope>
-	<content>ValueFromPipeline</content>
-</snippet>

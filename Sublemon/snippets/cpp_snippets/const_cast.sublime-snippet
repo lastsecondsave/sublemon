@@ -1,6 +1,0 @@
-<snippet>
-	<description>const_cast</description>
-	<tabTrigger>coc</tabTrigger>
-	<scope>source.c++</scope>
-	<content><![CDATA[const_cast<$1>($2)]]></content>
-</snippet>

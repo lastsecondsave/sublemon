@@ -223,7 +223,7 @@ ${TM_FILENAME/(.*?)(\..+)/$1/}($1) {
 }
 """)
 
-snippet(tabTrigger='fun', description='method', content=
+snippet(tabTrigger='ff', description='method', content=
 """
 ${1:void} ${2:run}($3) {
     $0
