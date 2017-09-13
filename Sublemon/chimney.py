@@ -8,7 +8,8 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import TextCommand, WindowCommand
 
-import Sublemon.lib.plugin_util as util
+
+RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
 
 class Pipe(object):
@@ -257,7 +258,7 @@ class Executor(object):
             options.working_dir = os.path.join(base_path, options.working_dir)
 
     def start_process(self, options):
-        if options.shell_cmd and util.RUNNING_ON_WINDOWS:
+        if options.shell_cmd and RUNNING_ON_WINDOWS:
             options.cmd = ["powershell.exe", "-Command", options.shell_cmd]
         elif options.shell_cmd:
             options.cmd = [os.environ["SHELL"], "-c", options.shell_cmd]
@@ -298,7 +299,7 @@ class Executor(object):
         pid = str(self.running_state['proc'].pid)
         _log("Killing {}", pid)
 
-        if util.RUNNING_ON_WINDOWS:
+        if RUNNING_ON_WINDOWS:
             cmd = ["taskkill", "/PID", pid]
             subprocess.Popen(cmd, startupinfo=_get_startupinfo())
             return
@@ -359,7 +360,7 @@ def _get_executor(window):
 
 def _get_startupinfo():
     startupinfo = None
-    if util.RUNNING_ON_WINDOWS:
+    if RUNNING_ON_WINDOWS:
         startupinfo = subprocess.STARTUPINFO()
         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
     return startupinfo
