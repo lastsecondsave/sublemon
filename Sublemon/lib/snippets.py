@@ -4,7 +4,6 @@ import shutil
 
 import xml.etree.ElementTree as ET
 
-
 TARGET_DIRECTORY = '.generated_snippets'
 
 

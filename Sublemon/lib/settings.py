@@ -4,7 +4,6 @@ import plistlib
 import re
 import shutil
 
-
 TARGET_DIRECTORY = '.generated_settings'
 TO_UPPERCASE_PATTERN = re.compile(r'_[a-z]')
 

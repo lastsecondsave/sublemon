@@ -8,7 +8,6 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import TextCommand, WindowCommand
 
-
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
 

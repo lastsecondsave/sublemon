@@ -2,7 +2,6 @@ import re
 
 from Sublemon.chimney import Pipe, ChimneyCommand
 
-
 DASHES_PATTERN        = re.compile(r'\[INFO\] -+$')
 SUMMARY_PATTERN       = re.compile(r'\[ERROR\] Failed to execute goal.*')
 SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
