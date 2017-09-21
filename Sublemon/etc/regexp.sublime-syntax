@@ -106,6 +106,8 @@ contexts:
   characters:
   - match: '\\[wWsSdDhHvVXt]'
     scope: constant.language.character-class.regexp
+  - match: '\[:\w+:\]'
+    scope: constant.language.character-class.regexp
   - match: '\\p([A-Za-z]|\{[A-Za-z]+\})'
     scope: constant.character.unicode.regexp
   - match: '\\x([0-9A-F]{2}|\{[0-9A-F]+\})'
