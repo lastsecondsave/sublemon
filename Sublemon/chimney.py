@@ -134,6 +134,8 @@ class OutputPanel:
         self.show_on_text = show_on_text
         self.scroll_to_end = scroll_to_end
 
+        self.window.create_output_panel('exec')
+
     def append_line(self, line):
         with self.line_buffer_lock:
             invalidate = len(self.line_buffer) == 0
