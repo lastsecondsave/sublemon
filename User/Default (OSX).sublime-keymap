@@ -11,5 +11,7 @@
 
   { "keys": ["super+x"], "command": "cut" },
   { "keys": ["super+c"], "command": "copy" },
-  { "keys": ["super+v"], "command": "paste" }
+  { "keys": ["super+v"], "command": "paste" },
+
+  { "keys": ["super+q"], "command": "exit" }
 ]
