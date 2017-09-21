@@ -62,9 +62,6 @@
 
   { "keys": ["f5"], "command": "show_at_center" },
 
-  { "keys": ["ctrl+q"], "command": "close_window" },
-  { "keys": ["ctrl+shift+q"], "command": "exit" },
-
   /** SEARCH WIDGET **/
 
   { "keys": ["alt+q"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
@@ -80,7 +77,7 @@
   { "keys": ["ctrl+f7"],      "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
   { "keys": ["ctrl+shift+b"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
 
-  { "keys": ["ctrl+\\"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
+  { "keys": ["ctrl+q"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
 
   /** PANELS **/
 
