@@ -5,21 +5,21 @@ sys.path.append("../lib")
 from settings import write_plist
 
 
-GRAY         = "#9090A0" # [144, 144, 160]
-DARK_GRAY    = "#51515D" # [ 81,  81,  93]
-WHITE        = "#C0C0C0" # [192, 192, 192]
-CLEAR_WHITE  = "#F3F3F3" # [243, 243, 243]
-DARK_VIOLET  = "#5E5E8E" # [ 94   94, 142]
-PURPLE       = "#E572D2" # [229, 114, 210]
-PINK         = "#EF51AA" # [239,  81, 170]
-BLUE         = "#6699FF" # [102, 153, 255]
-DARK_BLUE    = "#384868" # [ 56,  72, 104]
-BLUISH_BLACK = "#202830" # [ 32,  40,  48]
-GREEN        = "#C5CC4B" # [197, 204,  75]
-YELLOW       = "#EDC61A" # [239, 197,  45]
-ORANGE       = "#FF9A41" # [255, 154,  65]
-DARK_ORANGE  = "#FF8147" # [255, 129,  71]
-CRIMSON      = "#E5476C" # [229,  71, 108]
+GRAY         = "#9090A0"
+DARK_GRAY    = "#51515D"
+WHITE        = "#C4C4C4"
+CLEAR_WHITE  = "#FFFFFF"
+DARK_VIOLET  = "#5E5E8E"
+PURPLE       = "#E572D2"
+PINK         = "#EF51AA"
+BLUE         = "#6699FF"
+DARK_BLUE    = "#384868"
+BLUISH_BLACK = "#202830"
+GREEN        = "#C5CC4B"
+YELLOW       = "#EDC61A"
+ORANGE       = "#FF9A41"
+DARK_ORANGE  = "#FF8147"
+CRIMSON      = "#E5476C"
 
 
 BACKGROUND        = BLUISH_BLACK
