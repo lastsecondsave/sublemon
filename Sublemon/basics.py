@@ -243,17 +243,16 @@ class SelectWithCustomMarkersCommand(WindowCommand):
     def run(self):
         def on_done(x):
             if x.strip():
-                markers = self.split_markers(x)
                 self.window.active_view().run_command(
-                    'select_with_markers',
-                    {'left': markers[0], 'right': markers[1]})
+                    'select_with_markers', self.split_markers(x))
 
         self.window.show_input_panel(
             'Selection markers:', '', on_done, None, None)
 
     def split_markers(self, markers):
         i = markers.find(' ')
-        if i < 0:
-            i = int(len(markers) / 2)
 
-        return (markers[0:i], markers[i:].strip())
+        b1 = i if i >= 0 else int(len(markers) / 2)
+        b2 = i + 1 if i >= 0 else b1
+
+        return {'left': markers[0:b1], 'right': markers[b2:]}
