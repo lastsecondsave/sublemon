@@ -217,6 +217,12 @@ rec(OPERATOR,    'punctuation.separator.static-call')
 rec(CONSTANT,    'string.quoted.double variable.user')
 rec(FOREGROUND,  'variable.user')
 
+## SHELL ##
+
+source('shell')
+rec(KEYWORD,     'punctuation.definition.command-substitution')
+rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section')
+
 ## C++ ##
 
 source('c++')
