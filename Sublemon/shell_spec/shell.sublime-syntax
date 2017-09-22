@@ -4,43 +4,108 @@ name: Shell
 scope: source.shell
 file_extensions: [sh, bash, zsh]
 
-variables:
-  id: (?:\b\w+\b)
-
 contexts:
   main:
+  - include: expression
+
+  expression:
   - include: comments
-  - include: variables
+  - include: builtins
+  - include: assignment_statement
+  - include: command_substitution
   - include: strings
+  - include: functions
+  - include: tokens
+
+  pop_otherwise:
+  - match: ''
+    pop: true
 
   comments:
-  - match: ^##\s+(.+?)\s+##
-    scope: comment.line.number-sign.shell
+  - match: (?:^|\s)(#).*$
     captures:
-      1: comment.mark.shell
-  - match: (?:^|(?<=\s))#.*$
-    scope: comment.line.number-sign.shell
+      1: punctuation.definition.comment.shell
+    scope: comment.line.shell
 
   strings:
-  - match: "'.*?'"
-    scope: string.quoted.single.shell
   - match: "'"
+    scope: punctuation.definition.string.begin.shell
     push:
     - meta_scope: string.quoted.single.shell
     - match: "'"
+      scope: punctuation.definition.string.end.shell
       pop: true
   - match: '"'
+    scope: punctuation.definition.string.begin.shell
     push:
     - meta_scope: string.quoted.double.shell
     - match: '"'
+      scope: punctuation.definition.string.end.shell
       pop: true
-    - include: string-internals
+    - include: command_substitution
 
-  string-internals:
-  - include: variables
+  tokens:
+  - match: '[^\s''";\(\)]+'
+    scope: token.shell
 
-  variables:
-  - match: '\$(?:\w+|[@*?#])\b'
-    scope: variable.user.shell
-  - match: '\$\{.*?\}'
-    scope: variable.user.shell
+  command_substitution:
+  - match: (\$)(\()
+    captures:
+      1: punctuation.definition.command-substitution.shell
+      2: punctuation.section.block.begin.shell
+    push:
+    - meta_scope: meta.block.command-substitution.braces.shell
+    - match: \)
+      scope: punctuation.section.block.end.shell
+      pop: true
+    - include: expression
+  - match: '`'
+    scope: punctuation.section.block.begin.shell
+    push:
+    - meta_scope: meta.block.command-substitution.back-quote.shell
+    - match: '`'
+      scope: punctuation.section.block.end.shell
+      pop: true
+    - include: expression
+
+  builtins:
+  - match: (alias)\s+(\b[[:alnum:]_-]+\b)(=)
+    captures:
+      1: storage.type.alias.shell
+      2: entity.name.alias.shell
+      3: keyword.operator.assignment.shell
+    push: value_after_equals
+  - match: (unalias)\s+(\b[[:alnum:]_-]+\b)
+    captures:
+      1: support.function.builtin.unalias.shell
+      2: variable.other.alias.shell
+
+  assignment_statement:
+  - match: (\b[[:alpha:]_][[:alnum:]_]*\b)(=)
+    captures:
+      1: variable.parameter.shell
+      2: keyword.operator.assignment.shell
+    push: value_after_equals
+
+  value_after_equals:
+    - include: strings
+    - include: command_substitution
+    - include: tokens
+    - include: pop_otherwise
+
+  functions:
+  - match: '(?:(function)\s+)?(\b[[:alnum:]_-]+\b)\s*(\()(\))'
+    captures:
+      1: storage.type.function.shell
+      2: entity.name.function.shell
+      3: punctuation.section.parens.begin.shell
+      4: punctuation.section.parens.end.shell
+    push:
+    - match: \{
+      scope: punctuation.section.block.begin.shell
+      set:
+      - meta_scope: meta.block.function.shell
+      - match: \}
+        scope: punctuation.section.block.end.shell
+        pop: true
+      - include: expression
