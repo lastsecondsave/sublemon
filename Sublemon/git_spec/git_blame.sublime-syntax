@@ -6,27 +6,13 @@ hidden: true
 
 contexts:
   main:
-  - match: '^0{6,}'
-    scope: comment.git
-    push: [new_code, badge]
-  - match: '^\^?[0-9a-f]{6,}'
-    scope: constant.numeric.hash.git
-    push: badge
+  - match: ^([0-9a-f]+) (.*?)\s+(\d{4}-\d{2}-\d{2})\s*(\d+)
+    captures:
+      1: constant.numeric.hash.git
+      2: entity.name.author.git
+      3: constant.date.git
+      4: constant.numeric.line-number.git
 
-  new_code:
-  - meta_scope: meta.not-commited-yet.git
-  - match: ''
-    pop: true
-
-  badge:
-  - match: \(
-    set:
-    - match: \)
-      pop: true
-    - match: Not Committed Yet\s+
-      scope: comment.git
-    - match: (?:(.+)\s+)?(\d{4}-\d{2}-\d{2})\s+(\d+)
-      captures:
-        1: entity.name.author.git
-        2: constant.date.git
-        3: constant.numeric.line-number.git
+  - match: ^\s+(\d+)
+    captures:
+      1: constant.numeric.line-number.git
