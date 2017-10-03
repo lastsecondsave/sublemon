@@ -38,7 +38,7 @@ TAG               = BLUE
 TAG_ATTRIBUTE     = YELLOW
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
-CONSTANT          = ORANGE
+VARIABLE          = ORANGE
 INHERITED         = CRIMSON
 
 
@@ -104,6 +104,7 @@ no_group()
 rec(COMMENT,       'comment')
 rec(PRIMITIVE,     'constant.numeric',
                    'constant.character',
+                   'constant.language',
                    'punctuation.separator.decimal')
 rec(STRING,        'string')
 rec(STORAGE,       'storage',
@@ -119,11 +120,10 @@ rec(FOREGROUND,    'punctuation.separator',
                    'punctuation.terminator')
 rec(PARAMETER,     'variable.parameter')
 rec(USER_CONSTANT, 'constant.user')
-rec(CONSTANT,      'constant.language',
-                   'support.constant',
-                   'support.variable',
+rec(VARIABLE,      'variable.other',
                    'variable.language',
-                   'variable.user')
+                   'support.constant',
+                   'support.variable')
 rec(INHERITED,     'entity.other.inherited-class')
 rec(FOREGROUND,    'invalid', background=CRIMSON)
 
@@ -214,7 +214,7 @@ rec(PUNCTUATION, 'punctuation.definition.expression',
 rec(CRIMSON,     'keyword.operator.execute',
                  'keyword.operator.escape')
 rec(OPERATOR,    'punctuation.separator.static-call')
-rec(CONSTANT,    'string.quoted.double variable.user')
+rec(VARIABLE,    'string.quoted.double variable.user')
 rec(FOREGROUND,  'variable.user')
 
 ## SHELL ##
