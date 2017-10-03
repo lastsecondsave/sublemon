@@ -4,18 +4,55 @@ name: Shell
 scope: source.shell
 file_extensions: [sh, bash, zsh]
 
+variables:
+  function_id: \b[[:alnum:]_-]+\b
+  variable_id: \b[[:alpha:]_][[:alnum:]_]*\b
+  word_end: (?=\s|$)
+
 contexts:
   main:
   - include: expression
 
   expression:
+  - include: predefined_expressions
+  - match: (?=\S)
+    push:
+    - include: parameters
+
+  predefined_expressions:
   - include: comments
-  - include: builtins
+  - include: builtin_operators
+  - include: builtin_functions
   - include: assignment_statement
-  - include: command_substitution
-  - include: strings
   - include: functions
-  - include: tokens
+
+  expression_tokens:
+  - include: strings
+  - include: command_substitution
+  - include: parameter_expansion
+  - include: comments
+  - include: escapes
+
+  expression_terminator:
+  - match: (\\)$
+    captures:
+      1: punctuation.separator.continuation.shell
+  - match: $|(;)
+    captures:
+      1: punctuation.terminator.shell
+    pop: true
+  - match: \|\||&&
+    scope: keyword.operator.logical.shell
+    pop: true
+  - match: \|
+    scope: keyword.operator.pipe.shell
+    pop: true
+  - match: '(?=[\)\}`])'
+    pop: true
+
+  parameters:
+  - include: expression_terminator
+  - include: expression_tokens
 
   pop_otherwise:
   - match: ''
@@ -26,6 +63,14 @@ contexts:
     captures:
       1: punctuation.definition.comment.shell
     scope: comment.line.shell
+
+  tokens:
+  - match: '[^\s''";\(\)`]+'
+    scope: token.shell
+
+  escapes:
+  - match: \\.
+    scope: constant.character.escape.shell
 
   strings:
   - match: "'"
@@ -42,11 +87,9 @@ contexts:
     - match: '"'
       scope: punctuation.definition.string.end.shell
       pop: true
+    - include: escapes
     - include: command_substitution
-
-  tokens:
-  - match: '[^\s''";\(\)]+'
-    scope: token.shell
+    - include: parameter_expansion
 
   command_substitution:
   - match: (\$)(\()
@@ -68,33 +111,75 @@ contexts:
       pop: true
     - include: expression
 
-  builtins:
-  - match: (alias)\s+(\b[[:alnum:]_-]+\b)(=)
+  parameter_expansion:
+  - match: (\$)(\{)
+    captures:
+      1: punctuation.definition.parameter-expansion.shell
+      2: punctuation.section.block.begin.shell
+    push:
+    - meta_scope: meta.block.parameter-expansion.shell
+    - match: \}
+      scope: punctuation.section.block.end.shell
+      pop: true
+    - include: expression_tokens
+
+  builtin_operators:
+  - match: \b(if|elif|else|then|do|while|shift){{word_end}}
+    scope: keyword.control.shell
+  - match: \b(return|fi|done|esac){{word_end}}
+    scope: keyword.control.shell
+    push:
+    - include: comments
+    - include: expression_terminator
+  - match: \b(for)\s+({{variable_id}})\s+(in){{word_end}}
+    captures:
+      1: keyword.control.shell
+      2: variable.parameter.shell
+      3: keyword.control.shell
+  - match: \b(case){{word_end}}
+    scope: keyword.control.shell
+    push:
+    - match: (?=\S)
+      set:
+      - match: \b(in){{word_end}}
+        scope: keyword.control.shell
+        pop: true
+      - include: parameters
+
+  builtin_functions:
+  - match: \b(local|global|export|source){{word_end}}
+    scope: storage.type.shell
+    push:
+    - include: assignment_statement
+    - include: parameters
+  - match: \b(echo|cd|pushd|popd|eval|unset|sleep){{word_end}}
+    scope: support.function.shell
+    push: parameters
+  - match: \b(alias)\s+({{function_id}})(=)
     captures:
       1: storage.type.alias.shell
       2: entity.name.alias.shell
       3: keyword.operator.assignment.shell
-    push: value_after_equals
-  - match: (unalias)\s+(\b[[:alnum:]_-]+\b)
+    push: assigned_value
+  - match: \b(unalias)\s+({{function_id}})
     captures:
       1: support.function.builtin.unalias.shell
       2: variable.other.alias.shell
 
   assignment_statement:
-  - match: (\b[[:alpha:]_][[:alnum:]_]*\b)(=)
+  - match: ({{variable_id}})(=)
     captures:
       1: variable.parameter.shell
       2: keyword.operator.assignment.shell
-    push: value_after_equals
+    push: assigned_value
 
-  value_after_equals:
-    - include: strings
-    - include: command_substitution
-    - include: tokens
-    - include: pop_otherwise
+  assigned_value:
+  - include: expression_tokens
+  - include: tokens
+  - include: pop_otherwise
 
   functions:
-  - match: '(?:(function)\s+)?(\b[[:alnum:]_-]+\b)\s*(\()(\))'
+  - match: '(?:(function)\s+)?({{function_id}})\s*(\()(\))'
     captures:
       1: storage.type.function.shell
       2: entity.name.function.shell
