@@ -166,7 +166,7 @@
   { "keys": ["ctrl+;"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_colon.sublime-macro"},
     "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.python" },
+      { "key": "selector", "operator": "equal", "operand": "source.python, source.yaml" },
     ]
   },
 

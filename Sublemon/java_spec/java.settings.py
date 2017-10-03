@@ -7,7 +7,6 @@ setup()
 settings("source.java",
   increase_indent_pattern = [
     r".*[\{\[]\s*$",        # '{' and '[' braces
-    r"\s*+[^.@].*\)\s*$",   # ')' at the end and no ';'
     r".*[=]\s*$"            # '=' at the end
   ],
   decrease_indent_pattern = [
