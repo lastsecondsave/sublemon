@@ -4,7 +4,7 @@ from snippets import setup, scope, snippet
 
 setup()
 
-scope('source.xml')
+scope('text.xml')
 
 snippet(tabTrigger='<', description='tag', content=
 '<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>'
@@ -14,7 +14,7 @@ snippet(tabTrigger='>', description='empty tag', content=
 '<${1:name}/>'
 )
 
-snippet(tabTrigger='a', description='attribute', scope='source.xml meta.tag.xml', content=
+snippet(tabTrigger='a', description='attribute', scope='text.xml meta.tag', content=
 '${1:name}="$2"'
 )
 

@@ -1,13 +1,19 @@
 %YAML 1.2
 ---
 name: Maven Pom File
-scope: source.xml source.maven
+scope: text.xml.pom
 file_extensions: [pom]
 
 contexts:
-  prototype:
-  - include: Packages/Sublemon/xml_spec/xml.sublime-syntax#prototype
-
   main:
-  - include: Packages/Sublemon/xml_spec/xml.sublime-syntax#main
-
+  - match: ''
+    push: scope:text.xml
+    with_prototype:
+    - match: '(\$\{)(.*?)(?:(:)(.*?))?(\})'
+      scope: meta.block.substitution.pom
+      captures:
+        1: punctuation.section.block.begin.pom
+        2: variable.other.substitution.pom
+        3: punctuation.definition.separator.pom
+        4: variable.other.substitution.pom
+        5: punctuation.section.block.end.pom
