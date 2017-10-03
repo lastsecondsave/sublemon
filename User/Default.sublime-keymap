@@ -116,14 +116,14 @@
 
   { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "tag"},
     "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.xml" }
+      { "key": "selector", "operator": "equal", "operand": "text.xml" }
     ]
   },
 
   { "keys": ["shift+alt+a"], "command": "expand_selection", "args": {"to": "tag"} },
   { "keys": ["shift+alt+a"], "command": "expand_selection", "args": {"to": "brackets"},
     "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.xml" }
+      { "key": "selector", "operator": "equal", "operand": "text.xml" }
     ]
   },
 
@@ -261,7 +261,7 @@
   { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\${${0:$SELECTION}}"},
     "context": [
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.xml" }
+      { "key": "selector", "operator": "equal", "operand": "text.xml" }
     ]
   }
 ]

@@ -62,7 +62,6 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		".git",
 		"CSS",
 		"Java",
 		"Objective-C",
@@ -70,7 +69,6 @@
 		"Regular Expressions",
 		"ShellScript",
 		"Vintage",
-		"XML",
 		"YAML"
 	],
 	"indent_guide_options":

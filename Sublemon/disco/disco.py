@@ -230,18 +230,6 @@ rec(USER_CONSTANT, 'entity.name.constant.preprocessor')
 rec(KEYWORD,       'keyword.operator.word')
 rec(OPERATOR,      'punctuation.accessor')
 
-## XML ##
-
-source('xml')
-rec(TAG,           'entity.name.tag',
-                   'keyword',
-                   'punctuation.definition')
-rec(STRING,        'meta.attribute string')
-rec(PUNCTUATION,   'meta.cdata punctuation.definition')
-rec(TAG_ATTRIBUTE, 'entity.name.attribute',
-                   'entity.name.doctype.element')
-rec(DARK_ORANGE,   'punctuation.definition.substitution')
-
 ## YAML ##
 
 source('yaml')
@@ -255,6 +243,19 @@ rec(YELLOW,      'meta.rule.selector entity.name.id')
 rec(CRIMSON,     'meta.rule.selector entity.name.class')
 rec(PURPLE,      'meta.rule.selector entity.name.pseudo-class')
 rec(DARK_ORANGE, 'keyword.other.important')
+
+## XML ##
+
+group('text', 'xml')
+rec(TAG,           'meta.tag punctuation.definition.tag')
+rec(TAG_ATTRIBUTE, 'meta.tag entity.other.attribute-name')
+rec(PUNCTUATION,   'string.unquoted.cdata punctuation')
+rec(FOREGROUND,    'string.unquoted.cdata')
+rec(VARIABLE,      'meta.tag.sgml.doctype variable')
+rec(CRIMSON,       'meta.tag.sgml.doctype keyword',
+                   'meta.tag.sgml.doctype punctuation.definition.tag')
+rec(DARK_ORANGE,   'meta.block.substitution punctuation -comment.block')
+rec(COMMENT,       'comment.block meta.block.substitution variable.other')
 
 ## HTML ##
 
