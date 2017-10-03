@@ -220,8 +220,12 @@ rec(FOREGROUND,  'variable.user')
 ## SHELL ##
 
 source('shell')
-rec(KEYWORD,     'punctuation.definition.command-substitution')
-rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section')
+rec(KEYWORD,     'punctuation.definition.command-substitution',
+                 'punctuation.definition.parameter-expansion')
+rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section',
+                 'meta.block.parameter-expansion punctuation.section',
+                 'keyword.operator.pipe',
+                 'punctuation.separator.continuation')
 
 ## C++ ##
 
