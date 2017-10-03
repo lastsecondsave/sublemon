@@ -37,7 +37,7 @@ snippet(tabTrigger='rtt', description='return this', content=
 'return this;'
 )
 
-snippet(tabTrigger='var', description='variable', content=
+snippet(tabTrigger='vv', description='variable', content=
 '${1:String} ${2:${1/./\l$0/}}'
 )
 
