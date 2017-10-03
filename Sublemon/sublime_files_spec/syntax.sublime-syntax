@@ -73,4 +73,4 @@ contexts:
 
   variables:
   - match: '{{[A-Za-z0-9_]+}}'
-    scope: variable.user.sublime-syntax
+    scope: variable.other.sublime-syntax
