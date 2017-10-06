@@ -9,14 +9,25 @@ $(echo 'a')
 # <- punctuation.section.block.begin.shell
 #        ^ punctuation.section.block.end.shell
 
+xxx
+# <- variable.function
+
+aaa'bbb'ccc
+# <- -variable.function
+#  ^^^^^^^^ -variable.function
+
+xxx \
+  yyy
+# ^^^ -variable.function
+
 a='23'b='43'#c='42'
-# <- variable.parameter.shell
+# <- variable.other.shell
  # <- keyword.operator.assignment.shell
-#     ^ -variable.parameter.shell
+#     ^ -variable.other.shell
 #      ^ -keyword.operator.assignment.shell
 
 x="xxx$(a='23')ccc"
-# <- variable.parameter.shell
+# <- variable.other.shell
  # <- keyword.operator.assignment.shell
 #     ^ punctuation.definition.command-substitution.shell
 #      ^ punctuation.section.block.begin.shell
@@ -24,7 +35,7 @@ x="xxx$(a='23')ccc"
 #        ^ keyword.operator.assignment.shell
 
 y=
-# <- variable.parameter.shell
+# <- variable.other.shell
  # <- keyword.operator.assignment.shell
 
 z=$(sss)
@@ -54,17 +65,31 @@ ${xxx_yyy}
 #        ^ punctuation.section.block.end
 #^^^^^^^^^ meta.block.parameter-expansion
 
-if echo cd
+  if echo cd
+# ^^ keyword.control
+#    ^^^^ support.function
+#         ^^ -keyword -support -variable
 
 if if echo cd
+#  ^^ keyword.control
+#     ^^^^ support.function
+#          ^^ -keyword -support -variable
 
-echo if
+  echo if
+# ^^^^ support.function
+#      ^^ -keyword -support -variable
 
-echo cd '~/x/y/z'
+  echo cd '~/x/y/z'
+# ^^^^ support.function
+#      ^^ -keyword -support -variable
+#         ^^^^^^^^^ string.quoted
 
 cd ~/x/cd/z
+# <- variable.function
+#  ^^^^^^^^ -keyword -support -variable
 
 echo 'aaa' echo
+#          ^^^^ -keyword -support -variable
 
 echo 'aaa' | echo
 #          ^ keyword.operator.pipe
@@ -74,6 +99,9 @@ echo 'aaa' || echo
 
 echo 'aaa' && echo
 #          ^^ keyword.operator.logical
+
+echo 'aaa' && cd /a/b/c
+#             ^^ variable.function
 
 if.
 # <- -keyword
@@ -88,3 +116,17 @@ return 'aaa' #xxx
 
 echo \; echo
 #    ^^ constant.character.escape
+
+while true; do
+#     ^^^^ constant.language
+#         ^ punctuation.terminator
+#           ^^ keyword.control
+
+. /path/to/script
+# <- storage.type
+
+echo 'sss' >> echo; echo xxx
+#          ^^ keyword.operator.redirection
+#             ^^^^ -support
+#                 ^ punctuation.terminator
+#                   ^^^^ support.function

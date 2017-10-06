@@ -225,6 +225,7 @@ rec(KEYWORD,     'punctuation.definition.command-substitution',
 rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section',
                  'meta.block.parameter-expansion punctuation.section',
                  'keyword.operator.pipe',
+                 'keyword.operator.logical',
                  'punctuation.separator.continuation')
 
 ## C++ ##

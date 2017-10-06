@@ -3,21 +3,23 @@
 name: Shell
 scope: source.shell
 file_extensions: [sh, bash, zsh]
+first_line_match: '#!/.*'
 
 variables:
   function_id: \b[[:alnum:]_-]+\b
   variable_id: \b[[:alpha:]_][[:alnum:]_]*\b
-  word_end: (?=\s|$)
+  word_end: (?=[\s\)\]]|$)
 
 contexts:
   main:
-  - include: expression
+  - include: expressions
 
-  expression:
+  expressions:
   - include: predefined_expressions
   - match: (?=\S)
     push:
     - include: parameters
+    - include: programs
 
   predefined_expressions:
   - include: comments
@@ -28,16 +30,16 @@ contexts:
 
   expression_tokens:
   - include: strings
+  - include: builtin_constants
   - include: command_substitution
   - include: parameter_expansion
   - include: comments
   - include: escapes
+  - match: '[\{\}\[\]!=]'
 
-  expression_terminator:
-  - match: (\\)$
-    captures:
-      1: punctuation.separator.continuation.shell
-  - match: $|(;)
+  expression_terminators:
+  - include: separator_continuation
+  - match: \n|(;)
     captures:
       1: punctuation.terminator.shell
     pop: true
@@ -47,12 +49,39 @@ contexts:
   - match: \|
     scope: keyword.operator.pipe.shell
     pop: true
+  - include: pop_before_brackets
+
+  inner_expression_terminators:
+  - include: separator_continuation
+  - include: pop_before_brackets
+  - match: (?=[;|&]|\n)
+    pop: true
+
+  separator_continuation:
+  - match: (\\)\n
+    captures:
+      1: punctuation.separator.continuation.shell
+
+  pop_before_brackets:
   - match: '(?=[\)\}`])'
     pop: true
 
+  programs:
+  - match: '[^\s''";\(\)`/]+(?=\s)'
+    scope: variable.function.shell
+    push: inner_parameters
+  - match: '[^\s''";\(\)`/]+'
+    push: inner_parameters
+
   parameters:
-  - include: expression_terminator
+  - include: expression_terminators
   - include: expression_tokens
+  - include: redirections
+
+  inner_parameters:
+  - include: inner_expression_terminators
+  - include: expression_tokens
+  - include: redirections
 
   pop_otherwise:
   - match: ''
@@ -101,7 +130,7 @@ contexts:
     - match: \)
       scope: punctuation.section.block.end.shell
       pop: true
-    - include: expression
+    - include: expressions
   - match: '`'
     scope: punctuation.section.block.begin.shell
     push:
@@ -109,7 +138,7 @@ contexts:
     - match: '`'
       scope: punctuation.section.block.end.shell
       pop: true
-    - include: expression
+    - include: expressions
 
   parameter_expansion:
   - match: (\$)(\{)
@@ -123,14 +152,18 @@ contexts:
       pop: true
     - include: expression_tokens
 
+  builtin_constants:
+  - match: true|false
+    scope: constant.language.shell
+
   builtin_operators:
-  - match: \b(if|elif|else|then|do|while|shift){{word_end}}
+  - match: \b(if|elif|else|then|do|while|shift|break|continue){{word_end}}
     scope: keyword.control.shell
   - match: \b(return|fi|done|esac){{word_end}}
     scope: keyword.control.shell
     push:
     - include: comments
-    - include: expression_terminator
+    - include: expression_terminators
   - match: \b(for)\s+({{variable_id}})\s+(in){{word_end}}
     captures:
       1: keyword.control.shell
@@ -147,12 +180,12 @@ contexts:
       - include: parameters
 
   builtin_functions:
-  - match: \b(local|global|export|source){{word_end}}
+  - match: (\b(local|global|export|source)|\.){{word_end}}
     scope: storage.type.shell
     push:
     - include: assignment_statement
     - include: parameters
-  - match: \b(echo|cd|pushd|popd|eval|unset|sleep){{word_end}}
+  - match: \b(echo|eval|unset|sleep|exit){{word_end}}
     scope: support.function.shell
     push: parameters
   - match: \b(alias)\s+({{function_id}})(=)
@@ -169,9 +202,11 @@ contexts:
   assignment_statement:
   - match: ({{variable_id}})(=)
     captures:
-      1: variable.parameter.shell
+      1: variable.other.shell
       2: keyword.operator.assignment.shell
-    push: assigned_value
+    push:
+    - include: arrays
+    - include: assigned_value
 
   assigned_value:
   - include: expression_tokens
@@ -186,11 +221,31 @@ contexts:
       3: punctuation.section.parens.begin.shell
       4: punctuation.section.parens.end.shell
     push:
+    - meta_scope: meta.function.shell
     - match: \{
       scope: punctuation.section.block.begin.shell
       set:
-      - meta_scope: meta.block.function.shell
+      - meta_scope: meta.function.shell meta.block.function.shell
       - match: \}
         scope: punctuation.section.block.end.shell
         pop: true
-      - include: expression
+      - include: expressions
+
+  arrays:
+  - match: \(
+    scope: punctuation.section.group.begin.shell
+    push:
+    - meta_scope: meta.group.array.shell
+    - match: \)
+      pop: true
+    - include: expression_tokens
+
+  redirections:
+  - match: (?=\d*>)
+    set:
+    - match: '(\d*)(>>?)(&\d*)?'
+      scope: meta.redirection.shell
+      captures:
+        2: keyword.operator.redirection.shell
+    - include: inner_expression_terminators
+    - include: expression_tokens
