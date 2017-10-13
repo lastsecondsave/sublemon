@@ -13,5 +13,7 @@
   { "keys": ["super+c"], "command": "copy" },
   { "keys": ["super+v"], "command": "paste" },
 
+  { "keys": ["super+f2"], "command": "toggle_bookmark" },
+
   { "keys": ["super+q"], "command": "exit" }
 ]
