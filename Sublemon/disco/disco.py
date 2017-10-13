@@ -90,6 +90,7 @@ theme_settings = [{
         'background'         : BACKGROUND,
         'foreground'         : FOREGROUND,
         'caret'              : CLEAR_WHITE,
+        'highlight'          : CLEAR_WHITE,
         'selection'          : DARK_BLUE,
         'lineHighlight'      : alpha(CRIMSON, 0.2),
         'findHighlight'      : YELLOW,
@@ -98,36 +99,49 @@ theme_settings = [{
     }
 }]
 
-## FOUNDATION ##
+#### FOUNDATION ####
 
 no_group()
-rec(COMMENT,       'comment')
-rec(PRIMITIVE,     'constant.numeric',
-                   'constant.character',
-                   'constant.language',
-                   'punctuation.separator.decimal')
-rec(STRING,        'string')
-rec(STORAGE,       'storage',
-                   'support.type',
-                   'support.class',
-                   'support.function')
-rec(KEYWORD,       'keyword',
-                   'keyword.operator.alphanumeric',
-                   'storage.modifier')
-rec(OPERATOR,      'keyword.operator')
-rec(INDEXED,       'entity.name')
-rec(FOREGROUND,    'punctuation.separator',
-                   'punctuation.terminator')
-rec(PARAMETER,     'variable.parameter')
-rec(USER_CONSTANT, 'constant.user')
-rec(VARIABLE,      'variable.other',
-                   'variable.language',
-                   'support.constant',
-                   'support.variable')
-rec(INHERITED,     'entity.other.inherited-class')
-rec(FOREGROUND,    'invalid', background=CRIMSON)
+rec(COMMENT,
+    'comment')
+rec(PRIMITIVE,
+    'constant.numeric',
+    'constant.character',
+    'constant.language',
+    'punctuation.separator.decimal')
+rec(STRING,
+    'string')
+rec(STORAGE,
+    'storage',
+    'support.type',
+    'support.class',
+    'support.function')
+rec(KEYWORD,
+    'keyword',
+    'keyword.operator.alphanumeric',
+    'storage.modifier')
+rec(OPERATOR,
+    'keyword.operator')
+rec(INDEXED,
+    'entity.name')
+rec(FOREGROUND,
+    'punctuation.separator',
+    'punctuation.terminator')
+rec(PARAMETER,
+    'variable.parameter')
+rec(USER_CONSTANT,
+    'constant.user')
+rec(VARIABLE,
+    'variable.language',
+    'support.constant',
+    'support.variable')
+rec(INHERITED,
+    'entity.other.inherited-class')
+rec(FOREGROUND,
+    'invalid',
+    background=CRIMSON)
 
-## PYTHON ##
+#### PYTHON ####
 
 source('python')
 rec(KEYWORD,     'keyword.operator.logical')
@@ -138,7 +152,7 @@ rec(META,        'meta.annotation -meta.annotation.arguments -punctuation.sectio
                  'meta.annotation support.function')
 rec(PUNCTUATION, 'punctuation.separator.continuation.line')
 
-## JAVASCRIPT ##
+#### JAVASCRIPT ####
 
 source('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
@@ -152,7 +166,7 @@ rec(ORANGE,      'support.type.object',
 rec(DARK_ORANGE, 'meta.template.expression punctuation.definition.template-expression')
 rec(FOREGROUND,  'support.function')
 
-## REGEXP IN JAVASCRIPT ##
+#### REGEXP IN JAVASCRIPT ####
 
 rec(YELLOW, 'keyword.operator.or.regexp',
             'punctuation.definition.group.regexp')
@@ -160,7 +174,7 @@ rec(PURPLE, 'keyword.operator.quantifier.regexp',
             'constant.other.character-class.escape.backslash.regexp')
 rec(PINK,   'keyword.operator.quantifier.regexp')
 
-## REGEXP ##
+#### REGEXP ####
 
 source('regexp')
 rec(YELLOW,  'keyword.operator.or',
@@ -173,7 +187,7 @@ rec(PINK,    'constant.language.character-class constant.language.character-clas
 rec(CRIMSON, 'keyword.modifier',
              'meta.group.modifier punctuation.definition.group.modifier')
 
-## JAVA ##
+#### JAVA ####
 
 source('java')
 rec(META,              'punctuation.definition.annotation',
@@ -192,12 +206,12 @@ rec(DARK_ORANGE,       'storage.type.generic')
 rec(DARK_GRAY,         'keyword.documentation.inline')
 rec(DARK_VIOLET,       'meta.tag.javadoc')
 
-## JAVA LOG ##
+#### JAVA LOG ####
 
 group('text.log', 'java')
 rec(CRIMSON, 'entity.name.exception')
 
-## LOG ##
+#### LOG ####
 
 group('text', 'log')
 rec(CRIMSON, 'meta.indicator.error')
@@ -205,7 +219,7 @@ rec(ORANGE,  'meta.indicator.warning')
 rec(GREEN,   'meta.indicator.success')
 rec(YELLOW,  'meta.message')
 
-## POWERSHELL ##
+#### POWERSHELL ####
 
 source('powershell')
 rec(PUNCTUATION, 'punctuation.definition.expression',
@@ -217,30 +231,32 @@ rec(OPERATOR,    'punctuation.separator.static-call')
 rec(VARIABLE,    'string.quoted.double variable.user')
 rec(FOREGROUND,  'variable.user')
 
-## SHELL ##
+#### SHELL ####
 
 source('shell')
 rec(KEYWORD,     'punctuation.definition.command-substitution',
                  'punctuation.definition.parameter-expansion')
+rec(VARIABLE,    'variable.other.definition')
 rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section',
                  'meta.block.parameter-expansion punctuation.section',
                  'keyword.operator.pipe',
                  'keyword.operator.logical',
                  'punctuation.separator.continuation')
 
-## C++ ##
+#### C++ ####
 
 source('c++')
 rec(USER_CONSTANT, 'entity.name.constant.preprocessor')
 rec(KEYWORD,       'keyword.operator.word')
 rec(OPERATOR,      'punctuation.accessor')
 
-## YAML ##
+#### YAML ####
 
 source('yaml')
 rec(PUNCTUATION, 'keyword.operator')
+rec(VARIABLE,    'variable.other')
 
-## CSS ##
+#### CSS ####
 
 source('css')
 rec(PINK,        'meta.rule.selector entity.name.general')
@@ -249,7 +265,7 @@ rec(CRIMSON,     'meta.rule.selector entity.name.class')
 rec(PURPLE,      'meta.rule.selector entity.name.pseudo-class')
 rec(DARK_ORANGE, 'keyword.other.important')
 
-## XML ##
+#### XML ####
 
 group('text', 'xml')
 rec(TAG,           'meta.tag punctuation.definition.tag')
@@ -262,7 +278,7 @@ rec(CRIMSON,       'meta.tag.sgml.doctype keyword',
 rec(DARK_ORANGE,   'meta.block.substitution punctuation -comment.block')
 rec(COMMENT,       'comment.block meta.block.substitution variable.other')
 
-## HTML ##
+#### HTML ####
 
 group('text', 'html')
 rec(TAG,           'meta.tag punctuation.definition.tag',
@@ -270,7 +286,7 @@ rec(TAG,           'meta.tag punctuation.definition.tag',
 rec(TAG_ATTRIBUTE, 'meta.tag entity.other.attribute-name')
 rec(STRING,        'meta.attribute-with-value.style source.css')
 
-## MARKDOWN ##
+#### MARKDOWN ####
 
 group('text.html', 'markdown')
 rec(PARAMETER,   'meta.link.inline.description',
@@ -280,8 +296,8 @@ rec(PARAMETER,   'meta.link.inline.description',
                  'meta.image.reference.description',
                  'constant.other.reference.link')
 rec(TAG,         'meta.tag')
-rec(PUNCTUATION, 'meta.link.inline punctuation.definition',
-                 'meta.link.reference punctuation.definition',
+rec(PUNCTUATION, 'meta.link.inline punctuation.definition.link',
+                 'meta.link.reference punctuation.definition.link',
                  'punctuation.definition.list_item',
                  'markup.list.numbered.bullet',
                  'punctuation.definition.raw.code-fence',
@@ -291,12 +307,12 @@ rec(PUNCTUATION, 'meta.link.inline punctuation.definition',
                  'punctuation.separator',
                  'punctuation.definition.thematic-break')
 rec(STRING,      'punctuation.definition.string')
-rec(YELLOW,      'meta.link.email.lt-gt',
-                 'meta.link.inet',
+rec(YELLOW,      'meta.link',
+                 'meta.image',
                  'entity.other.attribute-name.class.html')
 rec(FOREGROUND,  'punctuation.separator.key-value.html')
 
-## DIFF ##
+#### DIFF ####
 
 source('diff')
 rec(META,    'meta.diff.range')
@@ -304,19 +320,19 @@ rec(BLUE,    'meta.diff.header')
 rec(GREEN,   'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
-## COMMON ##
+#### COMMON ####
 
 no_group()
 
-## MARKUP ##
+#### MARKUP ####
 
 rec(STRING,  'markup.raw')
 rec(BLUE,    'markup.heading')
 rec(YELLOW,  'markup.underline.link')
-rec(PINK,    'markup.italic')
+rec(ORANGE,  'markup.italic')
 rec(CRIMSON, 'markup.bold')
 
-## ETC ##
+#### ETC ####
 
 rec(GREEN,       'meta.not-commited-yet.git constant.numeric.line-number')
 rec(DARK_VIOLET, 'constant.date.git')
