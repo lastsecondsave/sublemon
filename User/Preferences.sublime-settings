@@ -57,7 +57,7 @@
 		"__pycache__",
 		"target"
 	],
-	"font_face": "PragmataPro Mono",
+	"font_face": "PragmataPro",
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
