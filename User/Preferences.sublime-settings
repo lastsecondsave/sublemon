@@ -63,7 +63,6 @@
 	"ignored_packages":
 	[
 		"CSS",
-		"Java",
 		"Objective-C",
 		"Rails",
 		"Regular Expressions",
