@@ -190,21 +190,35 @@ rec(CRIMSON, 'keyword.modifier',
 #### JAVA ####
 
 source('java')
-rec(META,              'punctuation.definition.annotation',
-                       'meta.annotation.identifier storage.type',
-                       'variable.parameter.annotation')
-rec(COMMENT_HIGHLIGHT, 'comment.block.documentation keyword',
-                       'comment.block.documentation variable.parameter')
-rec(CRIMSON,           'meta.package storage.type',
-                       'storage.type.asterisk',
-                       'keyword.control.assert',
-                       'meta.class.body.anonymous punctuation.definition.class',
-                       'meta.extends.statement storage.type -meta.generic',
-                       'meta.implements.statement storage.type -meta.generic',
-                       'meta.throws.statement storage.type -meta.generic')
-rec(DARK_ORANGE,       'storage.type.generic')
-rec(DARK_GRAY,         'keyword.documentation.inline')
-rec(DARK_VIOLET,       'meta.tag.javadoc')
+rec(META,
+    'punctuation.definition.annotation',
+    'variable.annotation.java',
+    'meta.annotation variable.parameter')
+rec(COMMENT_HIGHLIGHT,
+    'comment.block.documentation keyword',
+    'comment.block.documentation variable.parameter')
+rec(USER_CONSTANT,
+    'entity.name.constant',
+    'constant.other')
+rec(CRIMSON,
+    'support.other.package',)
+rec(DARK_VIOLET,
+    'text.html constant.character.entity',
+    'text.html meta.tag punctuation',
+    'text.html meta.tag punctuation.separator',
+    'text.html meta.tag punctuation.definition.tag',
+    'text.html meta.tag string',
+    'text.html meta.attribute-with-value.style source.css',
+    'text.html meta.tag entity.other.attribute-name',
+    'text.html meta.tag entity.name')
+rec(DARK_GRAY,
+    'meta.directive keyword',
+    'meta.directive punctuation.definition')
+rec(COMMENT,
+    'meta.directive markup.raw',
+    'meta.directive markup.underline.link')
+rec(FOREGROUND,
+    'storage.modifier.array')
 
 #### JAVA LOG ####
 
