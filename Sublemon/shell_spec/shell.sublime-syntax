@@ -8,7 +8,7 @@ first_line_match: '#!/.*'
 variables:
   function_id: \b[[:alnum:]_-]+\b
   variable_id: \b[[:alpha:]_][[:alnum:]_]*\b
-  word_end: (?=[\s\)\]]|$)
+  word_end: (?=[\s\)\];]|$)
 
 contexts:
   main:
