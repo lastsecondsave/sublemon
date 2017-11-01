@@ -273,11 +273,11 @@ rec(VARIABLE,    'variable.other')
 #### CSS ####
 
 source('css')
-rec(PINK,        'meta.rule.selector entity.name.general')
-rec(YELLOW,      'meta.rule.selector entity.name.id')
-rec(CRIMSON,     'meta.rule.selector entity.name.class')
-rec(PURPLE,      'meta.rule.selector entity.name.pseudo-class')
-rec(DARK_ORANGE, 'keyword.other.important')
+rec(PRIMITIVE,
+    'constant.numeric keyword.other',
+    'constant.other.color')
+rec(TAG_ATTRIBUTE,
+    'entity.other.attribute-name')
 
 #### XML ####
 
