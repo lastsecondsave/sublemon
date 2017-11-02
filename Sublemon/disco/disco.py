@@ -119,6 +119,7 @@ rec(STORAGE,
 rec(KEYWORD,
     'keyword',
     'keyword.operator.alphanumeric',
+    'keyword.operator.word',
     'storage.modifier')
 rec(OPERATOR,
     'keyword.operator')
@@ -139,7 +140,7 @@ rec(INHERITED,
     'entity.other.inherited-class')
 rec(FOREGROUND,
     'invalid',
-    background=CRIMSON)
+    background=alpha(CRIMSON, 0.5))
 
 #### PYTHON ####
 
@@ -200,8 +201,12 @@ rec(COMMENT_HIGHLIGHT,
 rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other')
+rec(STORAGE,
+    'keyword.operator.wildcard',
+    'support.class punctuation.accessor.dot',
+    'constant.other punctuation.accessor.dot')
 rec(CRIMSON,
-    'support.other.package',)
+    'support.other.package')
 rec(DARK_VIOLET,
     'text.html constant.character.entity',
     'text.html meta.tag punctuation',
@@ -216,9 +221,12 @@ rec(DARK_GRAY,
     'meta.directive punctuation.definition')
 rec(COMMENT,
     'meta.directive markup.raw',
-    'meta.directive markup.underline.link')
+    'meta.directive markup.underline.link',
+    'meta.directive.link string.other.link.title',
+    'meta.directive.linkplain string.other.link.title')
 rec(FOREGROUND,
-    'storage.modifier.array')
+    'storage.modifier.array',
+    'storage.type.function.anonymous')
 
 #### JAVA LOG ####
 
@@ -278,19 +286,32 @@ rec(PRIMITIVE,
     'constant.other.color')
 rec(TAG_ATTRIBUTE,
     'entity.other.attribute-name')
+rec(FOREGROUND,
+    'support.function')
+rec(CRIMSON,
+    'support.type.vendor-prefix')
 
 #### XML ####
 
 group('text', 'xml')
-rec(TAG,           'meta.tag punctuation.definition.tag')
-rec(TAG_ATTRIBUTE, 'meta.tag entity.other.attribute-name')
-rec(PUNCTUATION,   'string.unquoted.cdata punctuation')
-rec(FOREGROUND,    'string.unquoted.cdata')
-rec(VARIABLE,      'meta.tag.sgml.doctype variable')
-rec(CRIMSON,       'meta.tag.sgml.doctype keyword',
-                   'meta.tag.sgml.doctype punctuation.definition.tag')
-rec(DARK_ORANGE,   'meta.block.substitution punctuation -comment.block')
-rec(COMMENT,       'comment.block meta.block.substitution variable.other')
+rec(TAG,
+    'meta.tag punctuation.definition.tag')
+rec(TAG_ATTRIBUTE,
+    'meta.tag entity.other.attribute-name')
+rec(PUNCTUATION,
+    'string.unquoted.cdata punctuation')
+rec(FOREGROUND,
+    'string.unquoted.cdata')
+rec(VARIABLE,
+    'meta.tag.sgml.doctype variable',
+    'variable.other.substitution')
+rec(CRIMSON,
+    'meta.tag.sgml.doctype keyword',
+    'meta.tag.sgml.doctype punctuation.definition.tag')
+rec(DARK_ORANGE,
+    'meta.block.substitution punctuation -comment.block')
+rec(COMMENT,
+    'comment.block meta.block.substitution variable.other')
 
 #### HTML ####
 
