@@ -1,13 +1,13 @@
 # SYNTAX TEST "Packages/Sublemon/shell_spec/shell.sublime-syntax"
 
 $(echo 'a')
-# <- punctuation.definition.command-substitution.shell
- # <- punctuation.section.block.begin.shell
-#         ^ punctuation.section.block.end.shell
+# <- punctuation.definition.command-substitution
+ # <- punctuation.section.block.begin
+#         ^ punctuation.section.block.end
 
 `echo 'a'`
-# <- punctuation.section.block.begin.shell
-#        ^ punctuation.section.block.end.shell
+# <- punctuation.section.block.begin
+#        ^ punctuation.section.block.end
 
 xxx
 # <- variable.function
@@ -21,22 +21,22 @@ xxx \
 # ^^^ -variable.function
 
 a='23'b='43'#c='42'
-# <- variable.other.shell
- # <- keyword.operator.assignment.shell
-#     ^ -variable.other.shell
-#      ^ -keyword.operator.assignment.shell
+# <- variable.other
+ # <- keyword.operator.assignment
+#     ^ -variable.other
+#      ^ -keyword.operator.assignment
 
 x="xxx$(a='23')ccc"
-# <- variable.other.shell
- # <- keyword.operator.assignment.shell
-#     ^ punctuation.definition.command-substitution.shell
-#      ^ punctuation.section.block.begin.shell
-#             ^ punctuation.section.block.end.shell
-#        ^ keyword.operator.assignment.shell
+# <- variable.other
+ # <- keyword.operator.assignment
+#     ^ punctuation.definition.command-substitution
+#      ^ punctuation.section.block.begin
+#             ^ punctuation.section.block.end
+#        ^ keyword.operator.assignment
 
 y=
-# <- variable.other.shell
- # <- keyword.operator.assignment.shell
+# <- variable.other
+ # <- keyword.operator.assignment
 
 z=$(sss)
 
@@ -48,9 +48,9 @@ s)
  # <- punctuation.section.block.end
 
 alias xyz="echo xyz"
-# <- storage.type.alias.shell
-#     ^^^ entity.name.alias.shell
-#        ^ keyword.operator.assignment.shell
+# <- storage.type.alias
+#     ^^^ entity.name.alias
+#        ^ keyword.operator.assignment
 
 unalias xyz
 # <- support.function.builtin

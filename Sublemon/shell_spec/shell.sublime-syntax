@@ -35,7 +35,7 @@ contexts:
   - include: parameter_expansion
   - include: comments
   - include: escapes
-  - match: '[\{\}\[\]!=]'
+  - match: '[\{\}\[\]]|!=|=='
 
   expression_terminators:
   - include: separator_continuation
@@ -202,7 +202,7 @@ contexts:
   assignment_statement:
   - match: ({{variable_id}})(=)
     captures:
-      1: variable.other.shell
+      1: variable.other.definition.shell
       2: keyword.operator.assignment.shell
     push:
     - include: arrays
