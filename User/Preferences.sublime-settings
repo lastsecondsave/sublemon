@@ -17,7 +17,7 @@
 	"caret_extra_bottom": 0,
 	"caret_extra_top": 0,
 	"caret_style": "blink",
-	"color_scheme": "Packages/Sublemon/Disco.tmTheme",
+	"color_scheme": "Packages/Sublemon/Disco.sublime-color-scheme",
 	"copy_with_empty_selection": false,
 	"drag_text": false,
 	"draw_minimap_border": true,

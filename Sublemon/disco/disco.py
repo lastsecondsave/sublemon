@@ -1,8 +1,16 @@
 import os
-import sys
+import json
 
-sys.path.append("../lib")
-from settings import write_plist
+
+class Style:
+    def __init__(self, foreground=None, **settings):
+        self.settings = settings
+        if foreground:
+            self.settings['foreground'] = foreground
+
+
+def alpha(color, value):
+    return 'color({} alpha({}))'.format(color, value)
 
 
 GRAY         = "#9090A0"
@@ -22,97 +30,99 @@ DARK_ORANGE  = "#FF8147"
 CRIMSON      = "#E5476C"
 
 
-BACKGROUND        = BLUISH_BLACK
-FOREGROUND        = WHITE
-KEYWORD           = PURPLE
-STORAGE           = PINK
-INDEXED           = BLUE
-OPERATOR          = WHITE
-PUNCTUATION       = DARK_ORANGE
-COMMENT           = GRAY
-COMMENT_HIGHLIGHT = WHITE
-PRIMITIVE         = DARK_ORANGE
-STRING            = GREEN
-META              = YELLOW
-TAG               = BLUE
-TAG_ATTRIBUTE     = YELLOW
-PARAMETER         = ORANGE
-USER_CONSTANT     = CRIMSON
-VARIABLE          = ORANGE
+BACKGROUND = Style(BLUISH_BLACK)
+FOREGROUND = Style(WHITE)
+KEYWORD = Style(PURPLE)
+STORAGE = Style(PINK)
+INDEXED = Style(BLUE)
+OPERATOR = Style(WHITE)
+PUNCTUATION = Style(DARK_ORANGE)
+COMMENT = Style(GRAY)
+COMMENT_HIGHLIGHT = Style(WHITE)
+PRIMITIVE = Style(DARK_ORANGE)
+STRING = Style(GREEN)
+META = Style(YELLOW)
+TAG = Style(BLUE)
+TAG_ATTRIBUTE = Style(YELLOW)
+PARAMETER = Style(ORANGE)
+USER_CONSTANT = Style(CRIMSON)
+VARIABLE = Style(ORANGE)
+SUPPORT = Style(PINK)
+INVALID = Style(foreground=CLEAR_WHITE,
+                background=alpha(CRIMSON, 0.5))
 
 
-def alpha(color, value):
-    return color + '{:02X}'.format(round(255 * value))
+def sec(scope=None):
+    global global_scope
+    global_scope = scope
 
 
-def group(category, lang):
-    global current_lang, current_category
-    current_lang, current_category = lang, category
+def src(lang):
+    sec('source.' + lang)
 
 
-def source(lang):
-    group('source', lang)
+def txt(lang):
+    sec('text.' + lang)
 
 
-def no_group():
-    group(None, None)
+def rec(style, *scopes):
+    global global_scope
+    global color_scheme
 
-
-def rec(color, *scopes, **settings):
-    global theme_settings
-
-    settings['foreground'] = color
+    if type(style) is not Style:
+        style = Style(style)
 
     for scope in scopes:
-        chunks = [current_category + '.' + current_lang] if current_category != None else []
-        chunks += scope.split()
+        if global_scope:
+            scope = '{} {}'.format(global_scope, scope)
 
-        for i, chunk in enumerate(chunks):
-            if chunk.startswith('#') and current_lang != None:
-                chunks[i] = chunk[1:] + '.' + current_lang
-
-            theme_settings.append({
-                'scope':  ' '.join(chunks),
-                'settings': settings
-            })
+        color_scheme['rules'].append(dict(style.settings, scope=scope))
 
 
 def generate():
-    global theme_settings
+    global color_scheme
 
-    path = os.path.join('..', 'Disco.tmTheme')
-    write_plist(path, {'name': "Disco", 'settings': theme_settings})
+    path = os.path.join('..', 'Disco.sublime-color-scheme')
+    with open(path, 'w') as json_file:
+        json.dump(color_scheme, json_file, indent=2)
 
 
-theme_settings = [{
-    'settings': {
-        'background'         : BACKGROUND,
-        'foreground'         : FOREGROUND,
-        'caret'              : CLEAR_WHITE,
-        'highlight'          : CLEAR_WHITE,
-        'selection'          : DARK_BLUE,
-        'lineHighlight'      : alpha(CRIMSON, 0.2),
-        'findHighlight'      : YELLOW,
-        'minimapBorder'      : FOREGROUND,
-        'bracketsForeground' : PUNCTUATION
-    }
-}]
+color_scheme = {
+    'name': 'Disco',
+
+    'globals': {
+        'background' : BLUISH_BLACK,
+        'foreground' : WHITE,
+        'caret' : CLEAR_WHITE,
+        'highlight' : CLEAR_WHITE,
+        'selection' : DARK_BLUE,
+        'line_highlight' : alpha(CRIMSON, 0.2),
+        'find_highlight' : YELLOW,
+        'minimapBorder' : CLEAR_WHITE,
+        'brackets_foreground' : DARK_ORANGE
+    },
+
+    'rules': []
+}
+
+global_scope = None
 
 #### FOUNDATION ####
 
-no_group()
 rec(COMMENT,
     'comment')
 rec(PRIMITIVE,
     'constant.numeric',
     'constant.character',
     'constant.language',
+    'storage.type.numeric',
     'punctuation.separator.decimal')
 rec(STRING,
     'string')
 rec(STORAGE,
     'storage',
-    'entity.other.inherited-class',
+    'entity.other.inherited-class')
+rec(SUPPORT,
     'support.type',
     'support.class',
     'support.function')
@@ -127,7 +137,8 @@ rec(INDEXED,
     'entity.name')
 rec(FOREGROUND,
     'punctuation.separator',
-    'punctuation.terminator')
+    'punctuation.terminator',
+    'punctuation.accessor')
 rec(PARAMETER,
     'variable.parameter')
 rec(USER_CONSTANT,
@@ -136,26 +147,36 @@ rec(VARIABLE,
     'variable.language',
     'support.constant',
     'support.variable')
-rec(FOREGROUND,
-    'invalid',
-    background=alpha(CRIMSON, 0.5))
+rec(PUNCTUATION,
+    'punctuation.separator.continuation')
+rec(INVALID,
+    'invalid')
+
+#### MARKUP ####
+
+rec(STRING, 'markup.raw')
+rec(BLUE, 'markup.heading')
+rec(YELLOW, 'markup.underline.link')
+rec(ORANGE, 'markup.italic')
+rec(CRIMSON, 'markup.bold')
 
 #### PYTHON ####
 
-source('python')
-rec(KEYWORD,     'keyword.operator.logical')
-rec(INDEXED,     'entity.name.function support.function.magic',
-                 'entity.name.function.decorator',
-                 'entity.name.function.decorator support.function.builtin')
-rec(META,        'meta.annotation -meta.annotation.arguments -punctuation.section',
-                 'meta.annotation support.function')
-rec(PUNCTUATION, 'punctuation.separator.continuation.line')
+src('python')
+rec(KEYWORD,
+    'keyword.operator.logical')
+rec(INDEXED,
+    'entity.name.function support.function.magic',
+    'entity.name.function.decorator',
+    'entity.name.function.decorator support.function.builtin')
+rec(META,
+    'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 
 #### JAVASCRIPT ####
 
-source('js')
+src('js')
 rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
-                 'meta.for meta.group #keyword.operator', # 'of' and 'in' in for-cycle
+                 'meta.for meta.group keyword.operator', # 'of' and 'in' in for-cycle
                  'keyword.operator.word.new')
 rec(STORAGE,     'variable.type')
 rec(BLUE,        'meta.object-literal.key')
@@ -175,7 +196,7 @@ rec(PINK,   'keyword.operator.quantifier.regexp')
 
 #### REGEXP ####
 
-source('regexp')
+src('regexp')
 rec(YELLOW,  'keyword.operator.or',
              'punctuation.definition.group')
 rec(PURPLE,  'constant.language.character-class',
@@ -188,21 +209,18 @@ rec(CRIMSON, 'keyword.modifier',
 
 #### JAVA ####
 
-source('java')
+src('java')
 rec(META,
     'punctuation.definition.annotation',
     'variable.annotation.java',
     'meta.annotation variable.parameter')
 rec(COMMENT_HIGHLIGHT,
-    'comment.block.documentation keyword',
-    'comment.block.documentation variable.parameter')
+    'comment.block.documentation & (keyword | variable.parameter)')
 rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other')
 rec(STORAGE,
-    'keyword.operator.wildcard',
-    'support.class punctuation.accessor.dot',
-    'constant.other punctuation.accessor.dot')
+    'keyword.operator.wildcard')
 rec(CRIMSON,
     'support.other.package')
 rec(DARK_VIOLET,
@@ -211,9 +229,10 @@ rec(DARK_VIOLET,
     'text.html meta.tag punctuation.separator',
     'text.html meta.tag punctuation.definition.tag',
     'text.html meta.tag string',
-    'text.html meta.attribute-with-value.style source.css',
     'text.html meta.tag entity.other.attribute-name',
-    'text.html meta.tag entity.name')
+    'text.html meta.tag entity.name',
+    'text.html meta.tag.inline',
+    'text.html meta.attribute-with-value.style source.css')
 rec(DARK_GRAY,
     'meta.directive keyword',
     'meta.directive punctuation.definition')
@@ -225,16 +244,16 @@ rec(COMMENT,
     'markup.underline.link')
 rec(FOREGROUND,
     'storage.modifier.array',
-    'storage.type.function.anonymous',)
+    'storage.type.function.anonymous')
 
 #### JAVA LOG ####
 
-group('text.log', 'java')
+txt('log.java')
 rec(CRIMSON, 'entity.name.exception')
 
 #### LOG ####
 
-group('text', 'log')
+txt('log')
 rec(CRIMSON, 'meta.indicator.error')
 rec(ORANGE,  'meta.indicator.warning')
 rec(GREEN,   'meta.indicator.success')
@@ -242,7 +261,7 @@ rec(YELLOW,  'meta.message')
 
 #### POWERSHELL ####
 
-source('powershell')
+src('powershell')
 rec(PUNCTUATION, 'punctuation.definition.expression',
                  'keyword.operator.pipe',
                  'keyword.operator.stream')
@@ -254,7 +273,7 @@ rec(FOREGROUND,  'variable.user')
 
 #### SHELL ####
 
-source('shell')
+src('shell')
 rec(KEYWORD,     'punctuation.definition.command-substitution',
                  'punctuation.definition.parameter-expansion')
 rec(VARIABLE,    'variable.other.definition')
@@ -266,20 +285,20 @@ rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section',
 
 #### C++ ####
 
-source('c++')
+src('c++')
 rec(USER_CONSTANT, 'entity.name.constant.preprocessor')
 rec(KEYWORD,       'keyword.operator.word')
 rec(OPERATOR,      'punctuation.accessor')
 
 #### YAML ####
 
-source('yaml')
+src('yaml')
 rec(PUNCTUATION, 'keyword.operator')
 rec(VARIABLE,    'variable.other')
 
 #### CSS ####
 
-source('css')
+src('css')
 rec(PRIMITIVE,
     'constant.numeric keyword.other',
     'constant.other.color')
@@ -292,7 +311,7 @@ rec(CRIMSON,
 
 #### XML ####
 
-group('text', 'xml')
+txt('xml')
 rec(TAG,
     'meta.tag punctuation.definition.tag')
 rec(TAG_ATTRIBUTE,
@@ -305,8 +324,7 @@ rec(VARIABLE,
     'meta.tag.sgml.doctype variable',
     'variable.other.substitution')
 rec(CRIMSON,
-    'meta.tag.sgml.doctype keyword',
-    'meta.tag.sgml.doctype punctuation.definition.tag')
+    'meta.tag.sgml.doctype & (keyword | punctuation.definition.tag)')
 rec(DARK_ORANGE,
     'meta.block.substitution punctuation -comment.block')
 rec(COMMENT,
@@ -314,15 +332,18 @@ rec(COMMENT,
 
 #### HTML ####
 
-group('text', 'html')
-rec(TAG,           'meta.tag punctuation.definition.tag',
-                   'meta.tag.sgml.doctype')
-rec(TAG_ATTRIBUTE, 'meta.tag entity.other.attribute-name')
-rec(STRING,        'meta.attribute-with-value.style source.css')
+txt('html')
+rec(TAG,
+    'meta.tag punctuation.definition.tag',
+    'meta.tag.sgml.doctype')
+rec(TAG_ATTRIBUTE,
+    'meta.tag entity.other.attribute-name')
+rec(STRING,
+    'meta.attribute-with-value.style source.css')
 
 #### MARKDOWN ####
 
-group('text.html', 'markdown')
+txt('html.markdown')
 rec(PARAMETER,   'meta.link.inline.description',
                  'meta.link.reference.literal.description',
                  'meta.link.reference.description',
@@ -348,30 +369,20 @@ rec(FOREGROUND,  'punctuation.separator.key-value.html')
 
 #### DIFF ####
 
-source('diff')
+src('diff')
 rec(META,    'meta.diff.range')
 rec(BLUE,    'meta.diff.header')
 rec(GREEN,   'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
-#### COMMON ####
-
-no_group()
-
-#### MARKUP ####
-
-rec(STRING,  'markup.raw')
-rec(BLUE,    'markup.heading')
-rec(YELLOW,  'markup.underline.link')
-rec(ORANGE,  'markup.italic')
-rec(CRIMSON, 'markup.bold')
-
 #### ETC ####
 
-rec(GREEN,       'meta.not-commited-yet.git constant.numeric.line-number')
-rec(DARK_VIOLET, 'constant.date.git')
-rec(YELLOW,      'meta.section.ini',
-                 'entity.name.section.ini')
+sec()
+rec(YELLOW,
+    'meta.section.ini',
+    'entity.name.section.ini')
 
+rec(DARK_VIOLET, 'constant.date.git')
+rec([GREEN, PINK], 'text.git.blame constant.numeric.hash')
 
 generate()

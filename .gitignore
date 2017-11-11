@@ -3,7 +3,7 @@
 !/Sublemon
 /Sublemon/*/.generated*
 /Sublemon/*/__pycache__
-/Sublemon/*.tmTheme
+/Sublemon/Disco.sublime-color-scheme
 
 !/User
 /User/Package Control.last-run
