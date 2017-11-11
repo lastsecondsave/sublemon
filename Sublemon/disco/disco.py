@@ -39,7 +39,6 @@ TAG_ATTRIBUTE     = YELLOW
 PARAMETER         = ORANGE
 USER_CONSTANT     = CRIMSON
 VARIABLE          = ORANGE
-INHERITED         = CRIMSON
 
 
 def alpha(color, value):
@@ -113,6 +112,7 @@ rec(STRING,
     'string')
 rec(STORAGE,
     'storage',
+    'entity.other.inherited-class',
     'support.type',
     'support.class',
     'support.function')
@@ -136,8 +136,6 @@ rec(VARIABLE,
     'variable.language',
     'support.constant',
     'support.variable')
-rec(INHERITED,
-    'entity.other.inherited-class')
 rec(FOREGROUND,
     'invalid',
     background=alpha(CRIMSON, 0.5))
@@ -223,10 +221,11 @@ rec(COMMENT,
     'meta.directive markup.raw',
     'meta.directive markup.underline.link',
     'meta.directive.link string.other.link.title',
-    'meta.directive.linkplain string.other.link.title')
+    'meta.directive.linkplain string.other.link.title',
+    'markup.underline.link')
 rec(FOREGROUND,
     'storage.modifier.array',
-    'storage.type.function.anonymous')
+    'storage.type.function.anonymous',)
 
 #### JAVA LOG ####
 
