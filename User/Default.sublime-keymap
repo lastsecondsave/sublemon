@@ -181,7 +181,7 @@
   { "keys": ["ctrl+,"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"},
     "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.java, source.js, source.c++, source.json, source.css" },
+      { "key": "selector", "operator": "equal", "operand": "source - comment" },
     ]
   },
 
@@ -249,6 +249,13 @@
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java" },
       { "key": "following_text", "operator": "regex_contains", "operand": "^>", "match_all": true }
+    ]
+  },
+
+  { "keys": ["`"], "command": "insert_snippet", "args": {"contents": "`${0:$SELECTION}`"},
+    "context": [
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
     ]
   },
 
