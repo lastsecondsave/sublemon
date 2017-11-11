@@ -54,8 +54,8 @@ for package in *.sublime-package; do
     rm -f 'Java.sublime-completions'
 
   elif [[ $dir == 'Default' ]]; then
-    patch -b 'Default (Windows).sublime-keymap' \
-        "$SUBLEMON_DIRECTORY/etc/Default (Windows).sublime-keymap.patch"
+    # patch -b 'Default (Windows).sublime-keymap' \
+    #     "$SUBLEMON_DIRECTORY/etc/Default (Windows).sublime-keymap.patch"
 
     cp 'Default (OSX).sublime-keymap' 'Default (OSX).sublime-keymap.orig'
     cp 'Default (Linux).sublime-keymap' 'Default (Linux).sublime-keymap.orig'
