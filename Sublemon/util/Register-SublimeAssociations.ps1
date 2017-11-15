@@ -1,5 +1,4 @@
 $RootKey = 'hkcu:'
-# $Workaround = $True
 
 $SublimeExe = '"c:\Software\Sublime Text 3\sublime_text.exe"'
 $SublimeNode = "$RootKey\Software\SublimeText"
@@ -23,8 +22,7 @@ function New-ClassDefinition($Name, $Icon) {
     New-Item "$RootKey\Software\Classes\$Name\shell\open"
     New-Item "$RootKey\Software\Classes\$Name\shell\open\command"
 
-    $Exe = if ($Workaround) { 'notepad.exe' } else { $SublimeExe }
-    Set-ItemProperty "$RootKey\Software\Classes\$Name\shell\open\command" -Name $Default -Value "$Exe `"%1`""
+    Set-ItemProperty "$RootKey\Software\Classes\$Name\shell\open\command" -Name $Default -Value "$SublimeExe `"%1`""
 }
 
 function Set-Association($Extension, $Class) {
@@ -39,13 +37,18 @@ function Set-Association($Extension, $Class) {
 
     New-Item "$SublimeNode\Capabilities"
     Set-ItemProperty "$SublimeNode\Capabilities" -Name ApplicationName -Value 'Sublime Text'
-    Set-ItemProperty "$SublimeNode\Capabilities" -Name ApplicationDescription -Value 'The thing that makes your life better'
+    Set-ItemProperty "$SublimeNode\Capabilities" -Name ApplicationDescription -Value 'A sophisticated text editor for code, markup and prose'
 
     New-Item "$SublimeNode\Capabilities\FileAssociations"
 } | Out-Null
 
 $SublimeItems = 'project', 'workspace'
-$SublimeFiles = 'syntax', 'settings', 'snippet', 'build', 'theme', 'keymap', 'mousemap', 'completions', 'menu', 'commands'
+$SublimeFiles = @(
+    'settings', 'keymap', 'mousemap',
+    'menu', 'commands',
+    'theme', 'color-scheme',
+    'syntax', 'completions', 'snippet', 'build'
+)
 $TextFiles = @(
     'txt', 'log', 'conf', 'csv',
     'md', 'markdown',
@@ -58,7 +61,7 @@ $TextFiles = @(
     'go',
     'py',
     'ps1', 'psm1',
-    'sh',
+    'sh', 'zsh',
     'sql',
     'css',
     'gitignore', 'gitattributes'
