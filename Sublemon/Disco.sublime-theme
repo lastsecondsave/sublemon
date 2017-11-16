@@ -18,19 +18,18 @@
     {
         "class": "tree_row",
         "attributes": ["!hover"],
+        "layer0.tint": [84, 84, 94],
         "layer0.opacity": 0.0,
     },
     {
         "class": "tree_row",
         "attributes": ["selectable", "hover"],
-        "layer0.tint": [54, 54, 66],
-        "layer0.opacity": 0.3
+        "layer0.opacity": 0.1
     },
     {
         "class": "tree_row",
         "attributes": ["selected"],
-        "layer0.tint": [38, 79, 120],
-        "layer0.opacity": 1.0,
+        "layer0.opacity": 0.5,
     },
     {
         "class": "sidebar_heading",
@@ -388,7 +387,7 @@
     {
         "class": "overlay_control",
         "layer0.tint": [84, 84, 94],
-        "layer0.opacity": 0.9,
+        "layer0.opacity": 0.8,
         "content_margin": 4
     },
     {
@@ -400,35 +399,33 @@
     },
     {
         "class": "mini_quick_panel_row",
-        "layer0.tint": [38, 79, 120],
+        "layer0.tint": [84, 84, 94],
         "layer0.opacity": 0.0
     },
     {
         "class": "mini_quick_panel_row",
         "attributes": ["selected"],
-        "layer0.opacity": 0.5
+        "layer0.opacity": 0.3
     },
     {
         "class": "mini_quick_panel_row",
         "attributes": ["hover", "!selected"],
-        "layer0.tint": [54, 54, 66],
-        "layer0.opacity": 0.2
+        "layer0.opacity": 0.1
     },
     {
         "class": "quick_panel_row",
-        "layer0.tint": [38, 79, 120],
+        "layer0.tint": [84, 84, 94],
         "layer0.opacity": 0.0
     },
     {
         "class": "quick_panel_row",
         "attributes": ["selected"],
-        "layer0.opacity": 0.5
+        "layer0.opacity": 0.3
     },
     {
         "class": "quick_panel_row",
         "attributes": ["hover", "!selected"],
-        "layer0.tint": [54, 54, 66],
-        "layer0.opacity": 0.2
+        "layer0.opacity": 0.1
     },
     {
         "class": "quick_panel_label",
@@ -448,6 +445,17 @@
         "match_fg": [210, 210, 210],
         "selected_fg": [131, 132, 149],
         "selected_match_fg": [210, 210, 210]
+    },
+    {
+        "class": "quick_panel",
+        "parents": [{"class": "switch_project_window"}],
+        "layer0.opacity": 1.0
+    },
+    {
+        "class": "quick_panel_row",
+        "parents": [{"class": "switch_project_window"}],
+        "attributes": ["selected"],
+        "layer0.opacity": 0.5
     },
 
     // Views
