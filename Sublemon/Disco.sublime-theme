@@ -13,7 +13,7 @@
         "indent_offset": 14,
         "indent_top_level": false,
         "dark_content": true,
-        "spacer_rows": true
+        "spacer_rows": false
     },
     {
         "class": "tree_row",
@@ -63,57 +63,55 @@
     // Open Files Icons
     {
         "class": "close_button",
-        "layer0.texture": "Theme - Default/common/circle.png",
-        "layer0.opacity": 0.2,
-        "content_margin": [8, 8],
-    },
-    {
-        "class": "close_button",
-        "parents": [{"class": "tree_row", "attributes": ["selected"]}],
-        "layer0.opacity": 0.3,
+        "layer0.texture": "Theme - Default/common/dark/open_file_close.png",
+        "layer0.opacity": { "target": 0.3, "speed": 4.0, "interpolation": "smoothstep" },
         "content_margin": [8, 8],
     },
     {
         "class": "close_button",
         "attributes": ["hover"],
-        "layer0.texture": "Theme - Default/common/dark/open_file_close.png",
-        "layer0.opacity": 1.0
+        "layer0.opacity": { "target": 0.6, "speed": 4.0, "interpolation": "smoothstep" }
     },
     {
         "class": "close_button",
         "attributes": ["dirty"],
-        "layer0.opacity": 1.0
+        "layer0.texture": "Theme - Default/common/dark/open_file_dirty.png",
+    },
+    {
+        "class": "close_button",
+        "attributes": ["hover", "dirty"],
+        "layer0.texture": "Theme - Default/common/dark/open_file_close.png",
     },
 
     // Folder & File Icons
     {
         "class": "disclosure_button_control",
-        "layer0.texture": "Theme - Default/common/circle.png",
-        "layer0.opacity": { "target": 0.2, "speed": 4.0, "interpolation": "smoothstep" },
+        "layer0.texture": "Theme - Default/common/dark/disclosure_unexpanded.png",
+        "layer0.opacity": { "target": 0.3, "speed": 4.0, "interpolation": "smoothstep" },
         "content_margin": [8, 8]
     },
     {
         "class": "disclosure_button_control",
         "parents": [{"class": "tree_row", "attributes": ["expanded"]}],
-        "layer0.opacity": { "target": 0.8, "speed": 4.0, "interpolation": "smoothstep" },
+        "layer0.texture": "Theme - Default/common/dark/disclosure_expanded.png",
     },
     {
         "class": "disclosure_button_control",
-        "attributes": ["hover", "!expanded"],
+        "attributes": ["hover"],
         "layer0.opacity": { "target": 0.5, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
         "class": "icon_folder",
         "layer0.texture": "Theme - Default/common/dark/folder_closed.png",
         "layer0.opacity": 0.3,
-        "content_margin": [0, 8]
+        "content_margin": [9, 8]
     },
     {
         "class": "icon_folder",
         "parents": [{"class": "tree_row", "attributes": ["expanded"]}],
         "layer0.texture": "Theme - Default/common/dark/folder_open.png",
         "layer0.opacity": 0.3,
-        "content_margin": [0, 8]
+        "content_margin": [9, 8]
     },
     {
         "class": "icon_folder_loading",
@@ -150,20 +148,14 @@
     },
     {
         "class": "icon_folder_dup",
-        "layer0.texture": "Theme - Default/common/light/symlink.png",
+        "layer0.texture": "Theme - Default/common/dark/symlink.png",
         "layer0.opacity": 0.3,
         "content_margin": [9, 8]
     },
     {
         "class": "icon_file_type",
-        "layer0.opacity": 1.0,
-        "layer0.tint": [190, 190, 190],
+        "layer0.opacity": 0.5,
         "content_margin": [0, 8]
-    },
-    {
-        "class": "icon_file_type",
-        "parents": [{"class": "tree_row", "attributes": ["selected"]}],
-        "layer0.tint": [255, 255, 255],
     },
 
     // Tabs
@@ -191,7 +183,7 @@
         "layer2.texture": "Theme - Default/common/tab_highlight.png",
         "layer2.inner_margin": [19, 0, 19, 0],
         "layer2.opacity": 0.0,
-        "layer3.texture": "Theme - Default/common/light/tab_border.png",
+        "layer3.texture": "Theme - Default/common/dark/tab_border.png",
         "layer3.inner_margin": [19, 0, 19, 0],
         "layer3.opacity": 0.2,
         "tint_index": 1,
@@ -319,7 +311,7 @@
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_light"]}],
-        "layer0.texture": "Theme - Default/common/light/tab_close.png",
+        "layer0.texture": "Theme - Default/common/dark/tab_close.png",
     },
     {
         "class": "tab_close_button",
@@ -329,7 +321,7 @@
     {
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_light", "dirty"]}],
-        "layer0.texture": "Theme - Default/common/light/tab_dirty.png",
+        "layer0.texture": "Theme - Default/common/dark/tab_dirty.png",
     },
     {
         "class": "tab_close_button",
@@ -352,11 +344,11 @@
         "class": "tab_close_button",
         "parents": [{"class": "tab_control", "attributes": ["file_light"]}],
         "attributes": ["hover"],
-        "layer0.texture": "Theme - Default/common/light/tab_close.png",
+        "layer0.texture": "Theme - Default/common/dark/tab_close.png",
     },
     {
         "class": "scroll_tabs_left_button",
-        "layer0.texture": "Theme - Default/common/light/tab_scroll_left.png",
+        "layer0.texture": "Theme - Default/common/dark/tab_scroll_left.png",
         "content_margin": [9, 10]
     },
     {
@@ -371,7 +363,7 @@
     },
     {
         "class": "scroll_tabs_right_button",
-        "layer0.texture": "Theme - Default/common/light/tab_scroll_right.png",
+        "layer0.texture": "Theme - Default/common/dark/tab_scroll_right.png",
         "layer0.opacity": { "target": 0.6, "speed": 4.0, "interpolation": "smoothstep" },
         "content_margin": [9, 10]
     },
@@ -382,7 +374,7 @@
     },
     {
         "class": "show_tabs_dropdown_button",
-        "layer0.texture": "Theme - Default/common/light/tab_dropdown.png",
+        "layer0.texture": "Theme - Default/common/dark/tab_dropdown.png",
         "layer0.opacity": { "target": 0.7, "speed": 4.0, "interpolation": "smoothstep" },
         "content_margin": [9, 10]
     },
@@ -395,15 +387,15 @@
     // Quick Panel
     {
         "class": "overlay_control",
-        "layer0.tint": [22, 30, 38],
-        "layer0.opacity": 1.0,
-        "content_margin": 6
+        "layer0.tint": [84, 84, 94],
+        "layer0.opacity": 0.9,
+        "content_margin": 4
     },
     {
         "class": "quick_panel",
         "row_padding": [4, 2, 4, 2],
         "layer0.tint": [22, 30, 38],
-        "layer0.opacity": 1.0,
+        "layer0.opacity": 0.7,
         "dark_content": true,
     },
     {
@@ -414,13 +406,13 @@
     {
         "class": "mini_quick_panel_row",
         "attributes": ["selected"],
-        "layer0.opacity": 1.0
+        "layer0.opacity": 0.5
     },
     {
         "class": "mini_quick_panel_row",
         "attributes": ["hover", "!selected"],
         "layer0.tint": [54, 54, 66],
-        "layer0.opacity": 0.3
+        "layer0.opacity": 0.2
     },
     {
         "class": "quick_panel_row",
@@ -430,13 +422,13 @@
     {
         "class": "quick_panel_row",
         "attributes": ["selected"],
-        "layer0.opacity": 1.0
+        "layer0.opacity": 0.5
     },
     {
         "class": "quick_panel_row",
         "attributes": ["hover", "!selected"],
         "layer0.tint": [54, 54, 66],
-        "layer0.opacity": 0.3
+        "layer0.opacity": 0.2
     },
     {
         "class": "quick_panel_label",
@@ -522,13 +514,13 @@
     {
         "class": "fold_button_control",
         "parents": [{"class": "text_area_control", "attributes": ["file_light"]}],
-        "layer0.texture": "Theme - Default/common/light/fold_closed.png",
+        "layer0.texture": "Theme - Default/common/dark/fold_closed.png",
     },
     {
         "class": "fold_button_control",
         "parents": [{"class": "text_area_control", "attributes": ["file_light"]}],
         "attributes": ["expanded"],
-        "layer0.texture": "Theme - Default/common/light/fold_opened.png",
+        "layer0.texture": "Theme - Default/common/dark/fold_opened.png",
     },
     {
         "class": "popup_control",
@@ -709,6 +701,7 @@
         "layer0.inner_margin": 4,
         "layer0.opacity": 1.0,
         "layer0.tint": [32, 40, 48],
+        "color_scheme_tint": [32, 40, 48],
         "content_margin": [4, 3, 4, 4]
     },
     {
