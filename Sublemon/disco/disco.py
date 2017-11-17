@@ -74,7 +74,7 @@ def rec(style, *scopes):
 
     for scope in scopes:
         if global_scope:
-            scope = '{} {}'.format(global_scope, scope)
+            scope = ' '.join([global_scope, scope])
 
         color_scheme['rules'].append(dict(style.settings, scope=scope))
 
@@ -171,6 +171,8 @@ rec(INDEXED,
     'entity.name.function.decorator support.function.builtin')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
+rec(Style(foreground=GREEN, background=alpha(CLEAR_WHITE, 0.1)),
+    'string keyword', 'string keyword.operator')
 
 #### JAVASCRIPT ####
 
@@ -221,6 +223,8 @@ rec(USER_CONSTANT,
     'constant.other')
 rec(STORAGE,
     'keyword.operator.wildcard')
+rec(PRIMITIVE,
+    'string.quoted.single')
 rec(CRIMSON,
     'support.other.package')
 rec(DARK_VIOLET,
@@ -324,7 +328,8 @@ rec(VARIABLE,
     'meta.tag.sgml.doctype variable',
     'variable.other.substitution')
 rec(CRIMSON,
-    'meta.tag.sgml.doctype & (keyword | punctuation.definition.tag)')
+    'meta.tag.sgml keyword',
+    'meta.tag.sgml punctuation.definition.tag')
 rec(DARK_ORANGE,
     'meta.block.substitution punctuation -comment.block')
 rec(COMMENT,
