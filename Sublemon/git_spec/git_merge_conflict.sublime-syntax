@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: Git Merge Conflict
+scope: text.git.merge-conflict
+
+contexts:
+  main:
+  - match: '<<<<<<< .*\n'
+    scope: meta.upsteam
+  - match: =======\n
+    scope: meta.separator
+  - match: '>>>>>>> .*\n'
+    scope: meta.changes
