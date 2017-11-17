@@ -329,6 +329,9 @@ class ChimneyCommand(WindowCommand):
     def source_file(self):
         return self.window.extract_variables()['file']
 
+    def startup_message(self, options):
+        return 'Build started'
+
     def run(self, **kwargs):
         if 'update_phantoms_only' in kwargs:
             return
@@ -337,6 +340,8 @@ class ChimneyCommand(WindowCommand):
         self.preprocess_options(options)
 
         pipe = self.create_pipe(options)
+
+        self.window.status_message(self.startup_message(options))
 
         _get_executor(self.window).run(options, pipe)
 
