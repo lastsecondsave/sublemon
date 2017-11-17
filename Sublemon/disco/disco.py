@@ -375,6 +375,13 @@ rec(BLUE,    'meta.diff.header')
 rec(GREEN,   'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
+txt('git.merge-conflict')
+rec(Style(foreground=CLEAR_WHITE, background=alpha(YELLOW, 0.2)),
+    'meta.upsteam',
+    'meta.changes')
+rec(Style(foreground=CLEAR_WHITE, background=alpha(DARK_ORANGE, 0.2)),
+    'meta.separator')
+
 #### ETC ####
 
 sec()
