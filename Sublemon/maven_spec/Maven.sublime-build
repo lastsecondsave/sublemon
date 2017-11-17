@@ -2,21 +2,21 @@
   "selector"   : "source.maven",
   "keyfiles"   : ["pom.xml"],
   "target"     : "maven",
-  "mvn_cmd"    : ["compile"],
+  "mvn_cmd"    : "compile",
   "show_output": "error",
 
   "variants": [
     { "name"   : "Clean",
-      "mvn_cmd": ["clean"]
+      "mvn_cmd": "clean"
     },
     { "name"       : "Compile → Exec",
-      "mvn_cmd"    : ["compile", "exec:java"],
+      "mvn_cmd"    : "compile exec:java",
       "show_output": "text",
       "quiet"      : true,
       "errors"     : true
     },
     { "name"   : "Test",
-      "mvn_cmd": ["test"],
+      "mvn_cmd": "test",
       "quiet"  : true
     }
   ]

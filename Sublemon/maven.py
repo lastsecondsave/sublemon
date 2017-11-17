@@ -9,7 +9,7 @@ SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
 STATUS_PATTERN = re.compile(r'\[INFO\] BUILD (FAILURE|SUCCESS)$')
 TIME_PATTERN   = re.compile(r'\[INFO\] Total time:')
 
-FILE_REGEX = r'^(?:\[(?:ERROR|WARNING)\] )?(\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
+FILE_REGEX = r'^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
 
 
 class MavenPipe(Pipe):
@@ -63,10 +63,13 @@ class MavenCommand(ChimneyCommand):
         if options['errors']:
             cmd.append('-e')
 
-        if options['mvn_opts']:
-            cmd.extend(options['mvn_opts'])
+        if options['mvn_global_opts']:
+            cmd.append(options['mvn_global_opts'])
 
-        cmd.extend(options['mvn_cmd'])
+        if options['mvn_opts']:
+            cmd.append(options['mvn_opts'])
+
+        cmd.append(options['mvn_cmd'])
 
         options.shell_cmd = ' '.join(cmd)
         options.syntax = 'Packages/Sublemon/maven_spec/maven_build.sublime-syntax'
@@ -77,3 +80,6 @@ class MavenCommand(ChimneyCommand):
             is_pom = variables['file_name'] == 'pom.xml'
 
             options.working_dir = variables['file_path' if is_pom else 'folder']
+
+    def startup_message(self, options):
+        return 'Started ' + options.shell_cmd
