@@ -81,11 +81,11 @@ snippet(tabTrigger='sw', description='@SuppressWarnings', content=
 '@SuppressWarnings("${1:unchecked}")'
 )
 
-snippet(tabTrigger='code', description='@code', scope='comment.block.documentation.java', content=
+snippet(tabTrigger='code', description='@code', scope='comment.block.documentation.javadoc', content=
 '{@code ${1:$SELECTION}}$0'
 )
 
-snippet(tabTrigger='link', description='@link', scope='comment.block.documentation.java', content=
+snippet(tabTrigger='link', description='@link', scope='comment.block.documentation.javadoc', content=
 '{@link ${1:$SELECTION}}$0'
 )
 
