@@ -13,21 +13,25 @@ def alpha(color, value):
     return 'color({} alpha({}))'.format(color, value)
 
 
-GRAY         = "#9090A0"
-DARK_GRAY    = "#51515D"
 WHITE        = "#C4C4C4"
 CLEAR_WHITE  = "#FFFFFF"
-DARK_VIOLET  = "#5E5E8E"
+
+GRAY         = "#9090A0"
 PURPLE       = "#E572D2"
 PINK         = "#EF51AA"
 BLUE         = "#6699FF"
-DARK_BLUE    = "#384868"
-BLUISH_BLACK = "#202830"
 GREEN        = "#C5CC4B"
 YELLOW       = "#EDC61A"
 ORANGE       = "#FF9A41"
 DARK_ORANGE  = "#FF8147"
 CRIMSON      = "#E5476C"
+
+BLUISH_BLACK = "#202830"
+DARK_BLUE    = "#384868"
+
+FADED_GRAY   = "#51515D"
+FADED_VIOLET = "#5E5E8E"
+FADED_GREEN  = "#949B43"
 
 
 BACKGROUND = Style(BLUISH_BLACK)
@@ -142,7 +146,8 @@ rec(FOREGROUND,
 rec(PARAMETER,
     'variable.parameter')
 rec(USER_CONSTANT,
-    'constant.user')
+    'constant.user',
+    'variable.other.constant')
 rec(VARIABLE,
     'variable.language',
     'support.constant',
@@ -171,8 +176,10 @@ rec(INDEXED,
     'entity.name.function.decorator support.function.builtin')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
-rec(Style(foreground=GREEN, background=alpha(CLEAR_WHITE, 0.1)),
-    'string keyword', 'string keyword.operator')
+rec(STRING,
+    'string keyword.operator')
+rec(FADED_GREEN,
+    'string keyword')
 
 #### JAVASCRIPT ####
 
@@ -227,7 +234,7 @@ rec(PRIMITIVE,
     'string.quoted.single')
 rec(CRIMSON,
     'support.other.package')
-rec(DARK_VIOLET,
+rec(FADED_VIOLET,
     'text.html constant.character.entity',
     'text.html meta.tag punctuation',
     'text.html meta.tag punctuation.separator',
@@ -237,7 +244,7 @@ rec(DARK_VIOLET,
     'text.html meta.tag entity.name',
     'text.html meta.tag.inline',
     'text.html meta.attribute-with-value.style source.css')
-rec(DARK_GRAY,
+rec(FADED_GRAY,
     'meta.directive keyword',
     'meta.directive punctuation.definition')
 rec(COMMENT,
@@ -381,10 +388,9 @@ rec(GREEN,   'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
 txt('git.merge-conflict')
-rec(Style(foreground=CLEAR_WHITE, background=alpha(YELLOW, 0.2)),
+rec(Style(foreground=CLEAR_WHITE, background=alpha(CLEAR_WHITE, 0.2)),
     'meta.upsteam',
-    'meta.changes')
-rec(Style(foreground=CLEAR_WHITE, background=alpha(DARK_ORANGE, 0.2)),
+    'meta.changes',
     'meta.separator')
 
 #### ETC ####
@@ -394,7 +400,7 @@ rec(YELLOW,
     'meta.section.ini',
     'entity.name.section.ini')
 
-rec(DARK_VIOLET, 'constant.date.git')
+rec(FADED_VIOLET, 'constant.date.git')
 rec([GREEN, PINK], 'text.git.blame constant.numeric.hash')
 
 generate()
