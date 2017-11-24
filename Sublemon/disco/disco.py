@@ -222,6 +222,7 @@ src('java')
 rec(META,
     'punctuation.definition.annotation',
     'variable.annotation.java',
+    'meta.annotation meta.package',
     'meta.annotation variable.parameter')
 rec(COMMENT_HIGHLIGHT,
     'comment.block.documentation & (keyword | variable.parameter)')
@@ -229,11 +230,13 @@ rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other')
 rec(STORAGE,
-    'keyword.operator.wildcard')
+    'keyword.operator.wildcard',
+    'meta.package')
 rec(PRIMITIVE,
     'string.quoted.single')
 rec(CRIMSON,
-    'support.other.package')
+    'entity.name.package meta.package',
+    'keyword.operator.asterisk')
 rec(FADED_VIOLET,
     'text.html constant.character.entity',
     'text.html meta.tag punctuation',
