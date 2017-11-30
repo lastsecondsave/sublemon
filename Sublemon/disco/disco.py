@@ -197,24 +197,36 @@ rec(FOREGROUND,  'support.function')
 
 #### REGEXP IN JAVASCRIPT ####
 
-rec(YELLOW, 'keyword.operator.or.regexp',
-            'punctuation.definition.group.regexp')
-rec(PURPLE, 'keyword.operator.quantifier.regexp',
-            'constant.other.character-class.escape.backslash.regexp')
-rec(PINK,   'keyword.operator.quantifier.regexp')
+rec(YELLOW,
+    'string.regexp punctuation.definition.group',
+    'keyword.operator.or.regexp')
+rec(PURPLE,
+    'string.regexp constant.other.character-class')
+rec(PINK,
+    'string.regexp && (keyword.control | keyword.operator)',
+    'constant.other.character-class.set.regexp constant.other.character-class.escape')
 
 #### REGEXP ####
 
 src('regexp')
-rec(YELLOW,  'keyword.operator.or',
-             'punctuation.definition.group')
-rec(PURPLE,  'constant.language.character-class',
-             'constant.character -constant.character.escape')
-rec(PINK,    'constant.language.character-class constant.language.character-class', # Character classes in group
-             'keyword.control',
-             'keyword.operator')
-rec(CRIMSON, 'keyword.modifier',
-             'meta.group.modifier punctuation.definition.group.modifier')
+rec(TAG,
+    'meta.group keyword.other.named-capture-group punctuation.definition.capture-group-name')
+rec(YELLOW,
+    'keyword.control.group',
+    'keyword.other.conditional',
+    'constant.other.assertion',
+    'keyword.operator.alternation',
+    'keyword.other.named-capture-group')
+rec(PURPLE,
+    'meta.set',
+    'keyword.control.set',
+    'keyword.control.character-class')
+rec(PINK,
+    'meta.set keyword.control.character-class',
+    'keyword.control',
+    'keyword.operator')
+rec(CRIMSON,
+    'storage.modifier.mode')
 
 #### JAVA ####
 
