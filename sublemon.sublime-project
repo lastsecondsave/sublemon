@@ -4,7 +4,7 @@
 		{
 			"file_exclude_patterns":
 			[
-				"*.tmTheme"
+				"Disco.sublime-color-scheme"
 			],
 			"folder_exclude_patterns":
 			[
