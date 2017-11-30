@@ -44,14 +44,16 @@ for package in *.sublime-package; do
 
   rm -rf 'Snippets'
   find . -name '*.sublime-snippet' -exec rm -f {} +
+  find . -name '*.sublime-completions' -exec rm -f {} +
 
   if [[ $dir == 'Python' ]]; then
     rm -f 'Python.sublime-build'
-    patch -b 'Python.sublime-syntax' \
-        "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
+    # patch -b 'Python.sublime-syntax' \
+    #     "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
 
   elif [[ $dir == 'Java' ]]; then
-    rm -f 'Java.sublime-completions'
+    rm -f 'JavaC.sublime-build' \
+          'Ant.sublime-build'
 
   elif [[ $dir == 'Default' ]]; then
     # patch -b 'Default (Windows).sublime-keymap' \
