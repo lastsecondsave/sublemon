@@ -33,8 +33,7 @@
   { "keys": ["alt+/"],      "command": "show_file_path" },
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
 
-  { "keys": ["f1"], "command":       "prev_bookmark" },
-  { "keys": ["shift+f1"], "command": "toggle_bookmark" },
+  { "keys": ["f1"], "command": "prev_bookmark" },
 
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+n"], "command": "clone_file" },
@@ -97,8 +96,6 @@
       { "key": "panel_visible" }
     ]
   },
-
-  { "keys": ["alt+q"], "command": "hide_panel" },
 
   /** BUILD **/
 
