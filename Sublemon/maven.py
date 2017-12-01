@@ -1,3 +1,4 @@
+import os.path
 import re
 
 from Sublemon.chimney import Pipe, ChimneyCommand
@@ -52,7 +53,17 @@ class MavenCommand(ChimneyCommand):
         return MavenPipe(self.window)
 
     def preprocess_options(self, options):
-        cmd = ['mvn']
+        if options.working_dir is None:
+            variables = self.window.extract_variables()
+            is_pom = variables['file_name'] == 'pom.xml'
+            options.working_dir = variables['file_path' if is_pom else 'folder']
+
+        cmd = []
+
+        if os.path.exists(os.path.join(options.working_dir, '.jenv-version')):
+            cmd.append('jenv exec')
+
+        cmd.append('mvn')
 
         if options['offline']:
             cmd.append('-o')
@@ -74,12 +85,6 @@ class MavenCommand(ChimneyCommand):
         options.shell_cmd = ' '.join(cmd)
         options.syntax = 'Packages/Sublemon/maven_spec/maven_build.sublime-syntax'
         options.file_regex = FILE_REGEX
-
-        if options.working_dir is None:
-            variables = self.window.extract_variables()
-            is_pom = variables['file_name'] == 'pom.xml'
-
-            options.working_dir = variables['file_path' if is_pom else 'folder']
 
     def startup_message(self, options):
         return 'Started ' + options.shell_cmd
