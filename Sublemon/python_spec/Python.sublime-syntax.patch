@@ -1,25 +1,6 @@
---- Python.sublime-syntax
-+++ Python.sublime-syntax
-@@ -1213,31 +1213,12 @@
-         2: meta.string.python string.quoted.double.block.python punctuation.definition.string.begin.python
-       push:
-         - meta_content_scope: meta.string.python string.quoted.double.block.python
--        - match: '(?={{sql_indicator}})'
--          set:
--            - meta_scope: meta.string.python string.quoted.double.block.python
--            - match: '"""'
--              scope: punctuation.definition.string.end.python
--              set: after-expression
--            - match: ''
--              push: scope:source.sql
--              with_prototype:
--                - match: '(?=""")'
--                  pop: true
--                - include: escaped-unicode-char
--                - include: constant-placeholder
-         - match: '(?=\S)'
-           set:
-             - meta_scope: meta.string.python string.quoted.double.block.python
+--- Python.sublime-syntax.orig  2017-12-01 13:00:22.000000000 +0300
++++ Python.sublime-syntax 2017-12-01 13:02:27.000000000 +0300
+@@ -1232,12 +1232,7 @@
              - match: '"""'
                scope: punctuation.definition.string.end.python
                set: after-expression
@@ -29,10 +10,11 @@
 -                - match: '(?=""")'
 -                  pop: true
 -                - include: escaped-unicode-char
++            - include: escaped-unicode-char
      # Triple-quoted raw string, bytes, will use regex
      - match: '([bB]r|r[bB])(""")'
        captures:
-@@ -1248,9 +1229,6 @@
+@@ -1248,9 +1243,6 @@
          - match: '"""'
            scope: punctuation.definition.string.end.python
            set: after-expression
@@ -42,7 +24,7 @@
      # Triple-quoted raw f-string
      - match: ((?i)fr|rf)(""")
        captures:
-@@ -1370,12 +1348,6 @@
+@@ -1370,12 +1362,6 @@
            scope: punctuation.definition.string.end.python
            set: after-expression
          - include: line-continuation-inside-string
@@ -55,7 +37,7 @@
      # Single-line raw string, bytes, treated as regex
      - match: '([bB]r|r[bB])(")'
        captures:
-@@ -1387,9 +1359,6 @@
+@@ -1387,9 +1373,6 @@
            scope: punctuation.definition.string.end.python
            set: after-expression
          - include: line-continuation-inside-string
@@ -65,27 +47,7 @@
      # Single-line raw f-string
      - match: ((?i)fr|rf)(")
        captures:
-@@ -1492,32 +1461,12 @@
-         2: meta.string.python string.quoted.single.block.python punctuation.definition.string.begin.python
-       push:
-         - meta_content_scope: meta.string.python string.quoted.single.block.python
--        - match: '(?={{sql_indicator}})'
--          set:
--            - meta_scope: meta.string.python string.quoted.single.block.python
--            - match: "'''"
--              scope: punctuation.definition.string.end.python
--              set: after-expression
--            - match: ''
--              push: scope:source.sql
--              with_prototype:
--                - match: (?=''')
--                  pop: true
--                - include: escaped-unicode-char
--                - include: escaped-char
--                - include: constant-placeholder
-         - match: '(?=\S)'
-           set:
-             - meta_scope: meta.string.python string.quoted.single.block.python
+@@ -1512,12 +1495,7 @@
              - match: "'''"
                scope: punctuation.definition.string.end.python
                set: after-expression
@@ -95,10 +57,11 @@
 -                - match: (?=''')
 -                  pop: true
 -                - include: escaped-unicode-char
++            - include: escaped-unicode-char
      # Triple-quoted raw string, bytes, will use regex
      - match: ([bB]r|r[bB])(''')
        captures:
-@@ -1528,9 +1477,6 @@
+@@ -1528,9 +1506,6 @@
          - match: "'''"
            scope: punctuation.definition.string.end.python
            set: after-expression
@@ -108,7 +71,7 @@
      # Triple-quoted raw f-string
      - match: ((?i)fr|rf)(''')
        captures:
-@@ -1650,12 +1596,6 @@
+@@ -1650,12 +1625,6 @@
            scope: punctuation.definition.string.end.python
            set: after-expression
          - include: line-continuation-inside-string
@@ -121,7 +84,7 @@
      # Single-line raw string, bytes, treated as regex
      - match: '([bB]r|r[bB])('')'
        captures:
-@@ -1667,12 +1607,6 @@
+@@ -1667,12 +1636,6 @@
            scope: punctuation.definition.string.end.python
            set: after-expression
          - include: line-continuation-inside-string
