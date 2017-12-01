@@ -48,8 +48,8 @@ for package in *.sublime-package; do
 
   if [[ $dir == 'Python' ]]; then
     rm -f 'Python.sublime-build'
-    # patch -b 'Python.sublime-syntax' \
-    #     "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
+    patch -b 'Python.sublime-syntax' \
+        "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
 
   elif [[ $dir == 'Java' ]]; then
     rm -f 'JavaC.sublime-build' \
