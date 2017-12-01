@@ -1,11 +1,16 @@
 {
-  "selector"   : "source.maven",
-  "keyfiles"   : ["pom.xml"],
-  "target"     : "maven",
-  "mvn_cmd"    : "compile",
-  "show_output": "error",
+  "selector"       : "source.maven",
+  "keyfiles"       : ["pom.xml"],
+  "target"         : "maven",
+  "mvn_cmd"        : "compile",
+  "mvn_global_opts": "--no-snapshot-updates",
+  "show_output"    : "error",
 
   "variants": [
+    { "name"       : "Version",
+      "mvn_cmd"    : "-version",
+      "show_output": "text"
+    },
     { "name"   : "Clean",
       "mvn_cmd": "clean"
     },
