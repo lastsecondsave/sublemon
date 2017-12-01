@@ -93,6 +93,10 @@ snippet(tabTrigger='td', description='TODO', content=
 '// TODO: '
 )
 
+snippet(tabTrigger='ima', description='import *', content=
+'import ${0}.*;'
+)
+
 ## BLOCKS ##
 
 snippet(tabTrigger='if', description='if', content=
@@ -204,14 +208,14 @@ synchronized (${1:this}) {
 
 snippet(tabTrigger='class', description='class', content=
 r"""
-class ${TM_FILENAME/(.*?)(\..+)/$1/}$1 {
+class ${1:${TM_FILENAME/(.*?)(\..+)/$1/}} {
     $0
 }
 """)
 
 snippet(tabTrigger='interface', description='interface', content=
 r"""
-interface ${TM_FILENAME/(.*?)(\..+)/$1/}$1 {
+interface ${1:${TM_FILENAME/(.*?)(\..+)/$1/}} {
     $0
 }
 """)
