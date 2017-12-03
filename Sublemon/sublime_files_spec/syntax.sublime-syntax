@@ -10,11 +10,11 @@ contexts:
   - match: '(?=^  [\w-]+:(\s+#|\s*$))'
     push:
     - meta_scope: meta.context.sublime-syntax
-    - match: ((?=#)|$)
-      pop: true
     - include: Packages/Sublemon/yaml_spec/yaml.sublime-syntax#keys
+    with_prototype:
+    - match: (?=\s+#)|$
+      pop: true
 
-  # Sections 'contexts' and 'variables'
   - match: '^(contexts)(:)'
     captures:
       1: entity.name.key.yaml
@@ -41,14 +41,13 @@ contexts:
   - include: Packages/Sublemon/yaml_spec/yaml.sublime-syntax
 
   regexp-records:
-  - match: ((?:match|escape|symbolTransformation|cancelCompletion|first_line_match|\w+(?:Pattern|Match)))(:)
+  - match: (match|escape|first_line_match)(:)
     captures:
       1: entity.name.key.yaml
       2: punctuation.separator.mapping.yaml
     push: regexp-value
 
   regexp-value:
-  # Multi-lined value
   - match: \s+([>\|]-?)\s*(#.*)?$
     captures:
       1: keyword.operator.yaml
@@ -62,20 +61,45 @@ contexts:
       - match: ^(?=\s*-?\s*\w+:)
         pop: true
       - include: variables
-  # Single-lined value
-  - match: \s+(['"])?
-    captures:
-      1: string.quoted.yaml
+  - match: "'"
+    scope: string.quoted.yaml
     set:
-    - meta_scope: source.regexp.embedded
-    - include: scope:source.regexp
+    - - match: (')|(\n)
+        captures:
+          1: string.quoted.yaml
+          2: invalid.illegal.newline.yaml
+        pop: true
+    - - match: ''
+        set: scope:source.regexp
+        with_prototype:
+        - include: variables
+        - match: "''"
+        - match: (?='|\n)
+          pop: true
+  - match: '"'
+    scope: string.quoted.yaml
+    set:
+    - - match: (")|(\n)
+        captures:
+          1: string.quoted.yaml
+          2: invalid.illegal.newline.yaml
+        pop: true
+    - - match: ''
+        set: scope:source.regexp
+        with_prototype:
+        - include: variables
+        - include: Packages/Sublemon/yaml_spec/yaml.sublime-syntax#double_quoted_escapes
+        - match: (?="|\n)
+          pop: true
+  - match: (?=\S)
+    set: scope:source.regexp
     with_prototype:
-    - match: (\1)?\s*(?=\s#|$)
-      captures:
-        1: string.quoted.yaml
-      pop: true
     - include: variables
+    - match: (?=\n|\s+#)
+      pop: true
+  - match: $
+    pop: true
 
   variables:
   - match: '{{[A-Za-z0-9_]+}}'
-    scope: variable.other.sublime-syntax
+    scope: variable.other.substitution.sublime-syntax

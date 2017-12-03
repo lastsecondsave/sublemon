@@ -319,8 +319,10 @@ rec(OPERATOR,      'punctuation.accessor')
 #### YAML ####
 
 src('yaml')
-rec(PUNCTUATION, 'keyword.operator')
-rec(VARIABLE,    'variable.other')
+rec(PUNCTUATION,
+    'keyword.operator')
+rec(VARIABLE,
+    'variable.other.substitution.sublime-syntax')
 
 #### CSS ####
 

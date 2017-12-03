@@ -98,6 +98,9 @@ contexts:
   - match: '"'
     scope: punctuation.definition.string.yaml
     pop: true
+  - include: double_quoted_escapes
+
+  double_quoted_escapes:
   - match: '\\[0abtnvfre"/\\N_LP ]'
     scope: constant.character.escape.yaml
   - match: '\\(?:x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4}|U[0-9a-fA-F]{8})'
@@ -109,7 +112,7 @@ contexts:
   - match: (?=".+?":\s)
     push:
     - meta_scope: meta.key.yaml
-    - match: \s*(:)\s
+    - match: \s*(:)
       captures:
         1: punctuation.separator.mapping.yaml
       pop: true
@@ -124,7 +127,7 @@ contexts:
       1: string.quoted.single.yaml
       2: entity.name.key.yaml
       3: punctuation.separator.mapping.yaml
-  - match: '([^\s''"].*?)\s*(:)(?:\s|$)'
+  - match: '([^\s''"].*?)\s*(:)(?=\s|$)'
     scope: meta.key.yaml
     captures:
       1: entity.name.key.yaml
