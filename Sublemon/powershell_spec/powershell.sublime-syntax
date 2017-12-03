@@ -151,11 +151,9 @@ contexts:
     push:
     - match: "'"
       scope: punctuation.definition.regexp.powershell
-      push: Packages/Sublemon/etc/regexp.sublime-syntax#embedded
-      with_prototype:
-      - match: "'"
-        scope: punctuation.definition.regexp.powershell
-        pop: true
+      embed: scope:source.regexp
+      escape: "'"
+      escape_scope: punctuation.definition.regexp.powershell
     - match: ''
       pop: true
 
