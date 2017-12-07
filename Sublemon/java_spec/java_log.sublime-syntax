@@ -4,7 +4,8 @@ name: Java Log
 scope: text.log.java
 
 variables:
-  small_id: (?:\b[a-z]\w*\b)
+  lowercase_id: (?:[_$]*\p{Ll}[\p{Ll}\p{N}_$]*)
+  classcase_id: (?:\p{Lu}[\p{L}\p{N}_$]*)
 
 contexts:
   main:
@@ -14,32 +15,14 @@ contexts:
       1: meta.indicator.error.java
       2: meta.indicator.warning.java
 
-  - include: exceptions
-
-  exceptions:
-  - match: '^((?:org\.)?junit\.(framework\.)?\w+|java\.lang\.AssertionError):'
+  - match: '(?:(Caused by): )?((?:{{lowercase_id}}\.)+{{classcase_id}}(?:Exception|Error|Failure))(?:: )?(.*)'
     captures:
-      1: entity.name.exception.java
-    push: junit_result_string
-  - match: '(Caused by: )?((?:{{small_id}}\.)+(?:[A-Z]\w*)?(?:Exception|Error|Failure))\b(?:: (.*))?'
-    scope: meta.exception.java
-    captures:
-      1: meta.message.java
+      1: constant.language.java
       2: entity.name.exception.java
       3: string.java
-  - match: '^\s*at [\w\.\$<>]+\((.*):(.*)\)'
-    scope: meta.exception.java
-    captures:
-      1: entity.name.file.java
-      2: constant.numeric.java
 
-  junit_result_string:
-  - match: (?=^\s+at\b)
-    pop: true
-  - match: '\b(expected|but was):'
+  - match: ^\s* at (?:{{lowercase_id}}\.)*({{classcase_id}}).+\((?:(.*):(.*)|.*)\)
     captures:
-      1: keyword.junit.java
-  - match: '[\[\]]'
-    scope: constant.character.java
-  - match: .
-    scope: string.java
+      1: support.class.java
+      2: entity.name.file.java
+      3: constant.numeric.java
