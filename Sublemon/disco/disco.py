@@ -350,7 +350,7 @@ rec(FOREGROUND,
     'string.unquoted.cdata')
 rec(VARIABLE,
     'meta.tag.sgml.doctype variable',
-    'variable.other.substitution')
+    'variable.other.substitution -comment')
 rec(CRIMSON,
     'meta.tag.sgml keyword',
     'meta.tag.sgml punctuation.definition.tag')
