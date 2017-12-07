@@ -3,12 +3,12 @@ import re
 
 from Sublemon.chimney import Pipe, ChimneyCommand
 
-DASHES_PATTERN        = re.compile(r'\[INFO\] -+$')
-SUMMARY_PATTERN       = re.compile(r'\[ERROR\] Failed to execute goal.*')
+DASHES_PATTERN = re.compile(r'\[INFO\] -+$')
+COMPILATION_FAILURE_PATTERN = re.compile(r'\[ERROR\] Failed to execute goal.*Compilation failure')
 SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
 
 STATUS_PATTERN = re.compile(r'\[INFO\] BUILD (FAILURE|SUCCESS)$')
-TIME_PATTERN   = re.compile(r'\[INFO\] Total time:')
+TIME_PATTERN = re.compile(r'\[INFO\] Total time:')
 
 FILE_REGEX = r'^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
 
@@ -21,7 +21,7 @@ class MavenPipe(Pipe):
         self.time = None
 
     def output(self, line):
-        if SUMMARY_PATTERN.match(line):
+        if COMPILATION_FAILURE_PATTERN.match(line):
             self.skip = True
 
         if self.skip and SKIPPED_LINES_PATTERN.match(line):
