@@ -14,6 +14,9 @@
     { "name"   : "Clean",
       "mvn_cmd": "clean"
     },
+    { "name"   : "Clean → Compile",
+      "mvn_cmd": "clean compile"
+    },
     { "name"       : "Compile → Exec",
       "mvn_cmd"    : "compile exec:java",
       "show_output": "text",
@@ -23,6 +26,16 @@
     { "name"   : "Test",
       "mvn_cmd": "test",
       "quiet"  : true
+    },
+    { "name"   : "Clean → Test",
+      "mvn_cmd": "clean test",
+      "quiet"  : true
+    },
+    { "name"   : "Package",
+      "mvn_cmd": "package"
+    },
+    { "name"   : "Clean → Package",
+      "mvn_cmd": "clean package"
     }
   ]
 }
