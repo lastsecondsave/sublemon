@@ -79,7 +79,9 @@ contexts:
   quoted_strings:
   - match: '"'
     scope: punctuation.definition.string.yaml
-    push: double_quoted_strings
+    push:
+    - meta_scope: string.quoted.double.yaml
+    - include: double_quoted_strings
   - match: (').*(')
     scope: string.quoted.single.yaml
     captures:
@@ -94,7 +96,6 @@ contexts:
       pop: true
 
   double_quoted_strings:
-  - meta_scope: string.quoted.double.yaml
   - match: '"'
     scope: punctuation.definition.string.yaml
     pop: true
