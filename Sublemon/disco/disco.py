@@ -30,6 +30,7 @@ BLUISH_BLACK = "#202830"
 DARK_BLUE    = "#384868"
 
 FADED_GRAY   = "#51515D"
+FADED_WHITE  = "#B0B1B1"
 FADED_VIOLET = "#5E5E8E"
 FADED_GREEN  = "#949B43"
 
@@ -261,11 +262,11 @@ rec(FADED_VIOLET,
     'text.html meta.tag.inline',
     'text.html meta.attribute-with-value.style source.css')
 rec(FADED_GRAY,
-    'meta.inline-tag keyword',
-    'punctuation.section.inline-tag')
+    'meta.inline-tag & (keyword.other | punctuation.section)')
+rec(FADED_WHITE,
+    'markup.underline.link')
 rec(COMMENT,
-    'markup.raw',
-    'markup.underline.link'),
+    'markup.raw'),
 rec(FOREGROUND,
     'storage.modifier.array',
     'storage.type.function.anonymous')
