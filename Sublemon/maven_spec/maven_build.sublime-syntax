@@ -24,14 +24,11 @@ contexts:
       3: string.maven
 
   # Summary
-  - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)$'
+  - match: '^(\[ERROR\]) (Failed to execute goal .*?: )(.*)'
     captures:
       1: meta.indicator.error.maven
       2: meta.message.maven
       3: string.maven
-    push:
-    - match: '^\[\w+\] .*'
-      scope: comment.maven
 
   # Upper-case messages
   - match: ^(\[INFO\]) ([A-Z][A-Z 0-9]+)$
@@ -49,10 +46,7 @@ contexts:
       3: meta.indicator.info.maven
 
   - match: ^(?!\[(?:INFO|ERROR|FATAL|WARNING)\])
-    push: plain_text
-    with_prototype:
+    push:
     - match: ^(?=\[(?:INFO|ERROR|FATAL|WARNING)\])
       pop: true
-
-  plain_text:
-  - include: Packages/Sublemon/java_spec/java_log.sublime-syntax
+    - include: Packages/Sublemon/java_spec/java_log.sublime-syntax
