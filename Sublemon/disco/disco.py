@@ -237,7 +237,8 @@ rec(META,
     'meta.annotation meta.package',
     'meta.annotation variable.parameter')
 rec(COMMENT_HIGHLIGHT,
-    'comment.block.documentation & (keyword | variable.parameter)')
+    'comment.block.documentation keyword',
+    'meta.block-tag variable.parameter')
 rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other')
@@ -260,14 +261,11 @@ rec(FADED_VIOLET,
     'text.html meta.tag.inline',
     'text.html meta.attribute-with-value.style source.css')
 rec(FADED_GRAY,
-    'meta.directive keyword',
-    'meta.directive punctuation.definition')
+    'meta.inline-tag keyword',
+    'punctuation.section.inline-tag')
 rec(COMMENT,
-    'meta.directive markup.raw',
-    'meta.directive markup.underline.link',
-    'meta.directive.link string.other.link.title',
-    'meta.directive.linkplain string.other.link.title',
-    'markup.underline.link')
+    'markup.raw',
+    'markup.underline.link'),
 rec(FOREGROUND,
     'storage.modifier.array',
     'storage.type.function.anonymous')
