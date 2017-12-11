@@ -146,9 +146,6 @@ rec(FOREGROUND,
     'punctuation.accessor')
 rec(PARAMETER,
     'variable.parameter')
-rec(USER_CONSTANT,
-    'constant.user',
-    'variable.other.constant')
 rec(VARIABLE,
     'variable.language',
     'support.constant',
