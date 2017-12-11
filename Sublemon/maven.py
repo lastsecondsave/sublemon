@@ -1,11 +1,17 @@
 import os.path
 import re
 
+import sublime
+
 from Sublemon.chimney import Pipe, ChimneyCommand
+
+
+RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
 DASHES_PATTERN = re.compile(r'\[INFO\] -+$')
 COMPILATION_FAILURE_PATTERN = re.compile(r'\[ERROR\] Failed to execute goal.*Compilation failure')
 SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
+DRIVE_LETTER_PATTERN  = re.compile(r'\[(?:ERROR|WARNING)\] /[A-Z]:')
 
 STATUS_PATTERN = re.compile(r'\[INFO\] BUILD (FAILURE|SUCCESS)$')
 TIME_PATTERN = re.compile(r'\[INFO\] Total time:')
@@ -36,9 +42,10 @@ class MavenPipe(Pipe):
         if TIME_PATTERN.match(line):
             self.time = line[7:]
 
-        i = line.rfind('\r')
-        if i != -1:
-            line = line[i+1:]
+        if RUNNING_ON_WINDOWS:
+            match = DRIVE_LETTER_PATTERN.match(line)
+            if match:
+                line = line[:match.end()-1] + line[match.end():]
 
         self.next_pipe.output(line)
 
