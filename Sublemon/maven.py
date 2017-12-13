@@ -70,7 +70,7 @@ class MavenCommand(ChimneyCommand):
         if os.path.exists(os.path.join(options.working_dir, '.jenv-version')):
             cmd.append('jenv exec')
 
-        cmd.append('mvn')
+        cmd.append('mvn -B')
 
         if options['offline']:
             cmd.append('-o')
