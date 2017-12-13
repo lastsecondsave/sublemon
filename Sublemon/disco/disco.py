@@ -30,7 +30,8 @@ BLUISH_BLACK = "#202830"
 DARK_BLUE    = "#384868"
 
 FADED_GRAY   = "#51515D"
-FADED_WHITE  = "#B0B1B1"
+FADED_WHITE  = "#B0B0B0"
+FADED_BLUE   = "#41415D"
 FADED_VIOLET = "#5E5E8E"
 FADED_GREEN  = "#949B43"
 
@@ -249,13 +250,14 @@ rec(CRIMSON,
     'entity.name.package meta.package',
     'keyword.operator.asterisk')
 rec(FADED_VIOLET,
+    'text.html meta.tag entity.name',
     'text.html constant.character.entity',
+    'text.html meta.tag punctuation.definition.tag')
+rec(FADED_BLUE,
     'text.html meta.tag punctuation',
     'text.html meta.tag punctuation.separator',
-    'text.html meta.tag punctuation.definition.tag',
     'text.html meta.tag string',
     'text.html meta.tag entity.other.attribute-name',
-    'text.html meta.tag entity.name',
     'text.html meta.tag.inline',
     'text.html meta.attribute-with-value.style source.css')
 rec(FADED_GRAY,
