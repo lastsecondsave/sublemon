@@ -232,8 +232,8 @@ rec(CRIMSON,
 src('java')
 rec(META,
     'punctuation.definition.annotation',
-    'variable.annotation.java',
-    'meta.annotation meta.package',
+    'variable.annotation',
+    'variable.annotation.package',
     'meta.annotation variable.parameter')
 rec(COMMENT_HIGHLIGHT,
     'comment.block.documentation keyword',
@@ -242,13 +242,14 @@ rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other')
 rec(STORAGE,
-    'keyword.operator.wildcard',
-    'meta.package')
+    'keyword.operator.wildcard')
 rec(PRIMITIVE,
     'string.quoted.single')
 rec(CRIMSON,
-    'entity.name.package meta.package',
-    'keyword.operator.asterisk')
+    'entity.name.package',
+    'keyword.operator.wildcard.asterisk',
+    'punctuation.section.block.begin.anonymous-class',
+    'punctuation.section.block.end.anonymous-class')
 rec(FADED_VIOLET,
     'text.html meta.tag entity.name',
     'text.html constant.character.entity',
