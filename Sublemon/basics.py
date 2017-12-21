@@ -158,7 +158,7 @@ class ShowFilePathCommand(WindowCommand):
 class ToggleIndentGuidesCommand(TextCommand):
     def run(self, edit):
         guides = self.view.settings().get("indent_guide_options")
-        guides = [] if guides else ["draw_normal"]
+        guides = [] if guides else ["draw_normal", "draw_active"]
         self.view.settings().set("indent_guide_options", guides)
 
 
