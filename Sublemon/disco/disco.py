@@ -233,7 +233,6 @@ src('java')
 rec(META,
     'punctuation.definition.annotation',
     'variable.annotation',
-    'variable.annotation.package',
     'meta.annotation variable.parameter')
 rec(COMMENT_HIGHLIGHT,
     'comment.block.documentation keyword',
@@ -248,8 +247,7 @@ rec(PRIMITIVE,
 rec(CRIMSON,
     'entity.name.package',
     'keyword.operator.wildcard.asterisk',
-    'punctuation.section.block.begin.anonymous-class',
-    'punctuation.section.block.end.anonymous-class')
+    'meta.class.body.anonymous.java punctuation.section.braces')
 rec(FADED_VIOLET,
     'text.html meta.tag entity.name',
     'text.html constant.character.entity',
