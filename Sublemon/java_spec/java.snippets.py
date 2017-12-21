@@ -73,6 +73,10 @@ snippet(tabTrigger='Map', description='Map<>', content=
 'Map<${1:String}, ${2:String}> '
 )
 
+snippet(tabTrigger='Optional', description='Optional<>', content=
+'Optional<${1:String}> '
+)
+
 snippet(tabTrigger='over', description='@Override', content=
 '@Override'
 )
