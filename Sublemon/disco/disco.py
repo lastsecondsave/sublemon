@@ -258,7 +258,9 @@ rec(FADED_BLUE,
     'text.html meta.tag string',
     'text.html meta.tag entity.other.attribute-name',
     'text.html meta.tag.inline',
-    'text.html meta.attribute-with-value.style source.css')
+    'source.css support.type',
+    'source.css support.constant',
+    'source.css string.quoted.single')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
 rec(FADED_WHITE,
@@ -370,28 +372,34 @@ rec(STRING,
 #### MARKDOWN ####
 
 txt('html.markdown')
-rec(PARAMETER,   'meta.link.inline.description',
-                 'meta.link.reference.literal.description',
-                 'meta.link.reference.description',
-                 'meta.image.inline.description',
-                 'meta.image.reference.description',
-                 'constant.other.reference.link')
-rec(TAG,         'meta.tag')
-rec(PUNCTUATION, 'meta.link.inline punctuation.definition.link',
-                 'meta.link.reference punctuation.definition.link',
-                 'punctuation.definition.list_item',
-                 'markup.list.numbered.bullet',
-                 'punctuation.definition.raw.code-fence',
-                 'punctuation.definition.blockquote',
-                 'punctuation.definition.constant',
-                 'punctuation.definition.image',
-                 'punctuation.separator',
-                 'punctuation.definition.thematic-break')
-rec(STRING,      'punctuation.definition.string')
-rec(YELLOW,      'meta.link',
-                 'meta.image',
-                 'entity.other.attribute-name.class.html')
-rec(FOREGROUND,  'punctuation.separator.key-value.html')
+rec(PARAMETER,
+    'meta.link.inline.description',
+    'meta.link.reference.literal.description',
+    'meta.link.reference.description',
+    'meta.image.inline.description',
+    'meta.image.reference.description',
+    'constant.other.reference.link',
+    'entity.name.reference.link.markdown')
+rec(TAG,
+    'meta.tag')
+rec(PUNCTUATION,
+    'meta.link.inline punctuation.definition.link',
+    'meta.link.reference punctuation.definition.link',
+    'punctuation.definition.list_item',
+    'markup.list.numbered.bullet',
+    'punctuation.definition.blockquote',
+    'punctuation.definition.constant',
+    'punctuation.definition.image',
+    'punctuation.separator',
+    'punctuation.definition.thematic-break')
+rec(STRING,
+    'punctuation.definition.string')
+rec(YELLOW,
+    'meta.link',
+    'meta.image',
+    'entity.other.attribute-name.class.html')
+rec(FOREGROUND,
+    'punctuation.separator.key-value.html')
 
 #### DIFF ####
 
