@@ -152,7 +152,7 @@ rec(VARIABLE,
     'support.constant',
     'support.variable')
 rec(PUNCTUATION,
-    'punctuation.separator.continuation')
+    'punctuation.separator.continuation -source.c++')
 rec(INVALID,
     'invalid')
 
@@ -245,7 +245,7 @@ rec(STORAGE,
 rec(PRIMITIVE,
     'string.quoted.single')
 rec(CRIMSON,
-    'entity.name.package',
+    'entity.name.namespace',
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
 rec(FADED_VIOLET,
@@ -256,6 +256,7 @@ rec(FADED_BLUE,
     'text.html meta.tag punctuation',
     'text.html meta.tag punctuation.separator',
     'text.html meta.tag string',
+    'text.html meta.tag string.quoted.single',
     'text.html meta.tag entity.other.attribute-name',
     'text.html meta.tag.inline',
     'source.css support.type',
@@ -269,7 +270,13 @@ rec(COMMENT,
     'markup.raw'),
 rec(FOREGROUND,
     'storage.modifier.array',
+    'support.function.import',
     'storage.type.function.anonymous')
+
+#### JAVA PROPERTIES ####
+
+src('java-props')
+rec(FOREGROUND, 'string.unquoted')
 
 #### JAVA LOG ####
 
@@ -305,15 +312,17 @@ rec(VARIABLE,    'variable.other.definition')
 rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section',
                  'meta.block.parameter-expansion punctuation.section',
                  'keyword.operator.pipe',
-                 'keyword.operator.logical',
-                 'punctuation.separator.continuation')
+                 'keyword.operator.logical')
 
 #### C++ ####
 
 src('c++')
-rec(USER_CONSTANT, 'entity.name.constant.preprocessor')
-rec(KEYWORD,       'keyword.operator.word')
-rec(OPERATOR,      'punctuation.accessor')
+rec(USER_CONSTANT,
+    'entity.name.constant.preprocessor')
+rec(META,
+    'meta.preprocessor keyword')
+rec(KEYWORD,
+    'keyword.operator.word')
 
 #### YAML ####
 
