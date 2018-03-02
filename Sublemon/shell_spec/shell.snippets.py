@@ -1,33 +1,28 @@
 import sys
 sys.path.append('../lib')
-from snippets import setup, scope, snippet
+from snippets import Snippets
 
-setup()
+sh = Snippets('source.shell')
 
-scope('source.shell')
+sh.awk = ('awk', "awk '{$0}'")
 
-snippet(tabTrigger='awk', description='awk', content=
-"awk '{$0}'"
-)
-
-snippet(tabTrigger='case', description='case', content=
+sh.case = ('case',
 """
 case $1 in
     $0
 esac
 """)
 
-snippet(tabTrigger='if', description='if', content=
+sh['if'] = ('if',
 """
 if [[ $1 ]]; then
     $0
 fi
 """)
 
-snippet(tabTrigger='ff', description='function', content=
+sh.ff = ('function',
 """
 $1() {
     $0
 }
 """)
-

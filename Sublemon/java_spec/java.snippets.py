@@ -1,272 +1,104 @@
 import sys
 sys.path.append('../lib')
-from snippets import setup, scope, snippet
+from snippets import Snippets
 
-setup()
+FILENAME = r'${TM_FILENAME/(.*?)(\..+)/$1/}'
 
-scope('source.java')
+java = Snippets('source.java')
+pre = java.with_suffix(' ')
+bl = java.with_suffix(' {\n\t$0\n}')
+javadoc = java.subscope('comment.block.documentation.javadoc')
 
-## KEYWORDS ##
+pre.f = 'final'
+pre.st = 'static'
+pre.pr = 'private'
+pre.pu = 'public'
+pre.pro = 'protected'
+pre.th = 'throws'
 
-snippet(tabTrigger='f',   content='final ')
-snippet(tabTrigger='st',  content='static ')
-snippet(tabTrigger='pr',  content='private ')
-snippet(tabTrigger='pu',  content='public ')
-snippet(tabTrigger='pro', content='protected ')
+pre.im = 'import'
+java.ima = ('import *', 'import $0.*;')
 
-snippet(tabTrigger='im', content='import ')
+java.sf = ('static final CONSTANT', 'static final ${1:String} ${2:CONSTANT} = ${3:null};')
+java.con = ('continue', 'continue;')
+java.this = ('this.x = x', 'this.$1 = $1;')
 
-snippet(tabTrigger='th',  content='throws ')
-snippet(tabTrigger='ret', content='return ')
+pre.ret = 'return'
+java.rtt = ('return this', 'return this;')
+java.te = ('throw new Exception', 'throw new ${1:Exception}($2);')
 
-## ONE-LINERS ##
+java.vv = ('variable', '${1:String} ${2:${1/./\l$0/}}')
+java.varn = ('variable new', '${1:String} ${2:${1/./\l$0/}} = new $1($3)')
+java.varv = ('variable with value', '${1:String} ${2:${1/./\l$0/}} = ${3:null}')
 
-snippet(tabTrigger='const', description='static final CONSTANT', content=
-'static final ${1:String} ${2:CONSTANT} = ${3:null};'
-)
+java.pl = ('println', 'System.out.println(${0:$SELECTION});')
+java.lgg = ('logger', 'private static final Logger log = LoggerFactory.getLogger(' + FILENAME + '.class);')
 
-snippet(tabTrigger='con', description='continue', content=
-'continue;'
-)
+pre.List = ('List<>', 'List<${1:String}>')
+pre.Set = ('Set<>', 'Set<${1:String}>')
+pre.Map = ('Map<>', 'Map<${1:String}, ${2:String}>')
 
-snippet(tabTrigger='this', description='this.x = x', content=
-'this.$1 = $1;'
-)
+pre.Optional = ('Optional<>', 'Optional<${1:String}>')
+java.opo = ('Optional.of()', 'Optional.of(${0:$SELECTION})')
+java.opn = ('Optional.ofNullable()', 'Optional.ofNullable(${0:$SELECTION})')
 
-snippet(tabTrigger='rtt', description='return this', content=
-'return this;'
-)
+java.over = '@Override'
+java.sw = ('@SuppressWarnings', '@SuppressWarnings("${1:unchecked}")')
 
-snippet(tabTrigger='vv', description='variable', content=
-'${1:String} ${2:${1/./\l$0/}}'
-)
+javadoc['@code'] = ('@code', '{@code ${1:$SELECTION}}$0')
+javadoc['@link'] = ('@link', '{@link ${1:$SELECTION}}$0')
 
-snippet(tabTrigger='varn', description='variable new', content=
-'${1:String} ${2:${1/./\l$0/}} = new $1($3)'
-)
+java.td = ('TODO', '// TODO: ')
+java.fm = ('FIXME', '// FIXME: ')
 
-snippet(tabTrigger='varv', description='variable with value', content=
-'${1:String} ${2:${1/./\l$0/}} = ${3:null}'
-)
+bl['if'] = ('if', 'if ($1)')
+bl['else'] = 'else'
+bl['elif'] = ('else if', 'else if ($1)')
+bl['switch'] = ('switch', 'switch ($1)')
+bl['while'] = ('while', 'while ($1)')
 
-snippet(tabTrigger='te', description='throw new Exception', content=
-'throw new ${1:Exception}($2);'
-)
+bl['for'] = ('for', 'for ($1; $2; $3)')
+bl['fore'] = ('for each', 'for ($1 : $2)')
+bl['fori'] = ('for i', 'for (int ${1:i} = 0; $1 < ${2:imax}; ${3:$1++})')
+bl['form'] = ('for imax', 'for (int ${1:i} = 0, $1max = ${2:count}; $1 < $1max; ${3:$1++})')
+bl['fort'] = ('for iterator', 'for (Iterator<$1> ${2:itr} = ${3:list}.iterator(); $2.hasNext(); )')
+bl['try'] = 'try'
+bl['trr'] = ('try with resources', 'try ($1)')
+bl['catch'] = ('catch', 'catch (${1:Exception} e)')
+bl['finally'] = 'finally'
 
-snippet(tabTrigger='pl', description='println', content=
-'System.out.println(${0:$SELECTION});'
-)
+bl.syn = ('synchronized', 'synchronized (${1:this})')
 
-snippet(tabTrigger='log', description='logger', content=
-r'private static final Logger LOG = LoggerFactory.getLogger(${1:${TM_FILENAME/(.*?)(\..+)/$1/}}.class);'
-)
+bl['class'] = ('class', 'class ${1:' + FILENAME + '}')
+bl['interface'] = ('interface', 'interface ${1:' + FILENAME + '}')
+bl['enum'] = ('enum', 'enum ${1:' + FILENAME + '}')
 
-snippet(tabTrigger='List', description='List<>', content=
-'List<${1:String}> '
-)
+bl.ctor = ('constructor', FILENAME + '($1)')
+bl.ff = ('method', '${1:void} ${2:run}($3)')
+bl.main = ('main', 'public static void main(String[] args)')
 
-snippet(tabTrigger='Set', description='Set<>', content=
-'Set<${1:String}> '
-)
-
-snippet(tabTrigger='Map', description='Map<>', content=
-'Map<${1:String}, ${2:String}> '
-)
-
-snippet(tabTrigger='Optional', description='Optional<>', content=
-'Optional<${1:String}> '
-)
-
-snippet(tabTrigger='over', description='@Override', content=
-'@Override'
-)
-
-snippet(tabTrigger='sw', description='@SuppressWarnings', content=
-'@SuppressWarnings("${1:unchecked}")'
-)
-
-snippet(tabTrigger='code', description='@code', scope='comment.block.documentation.javadoc', content=
-'{@code ${1:$SELECTION}}$0'
-)
-
-snippet(tabTrigger='link', description='@link', scope='comment.block.documentation.javadoc', content=
-'{@link ${1:$SELECTION}}$0'
-)
-
-snippet(tabTrigger='td', description='TODO', content=
-'// TODO: '
-)
-
-snippet(tabTrigger='ima', description='import *', content=
-'import ${0}.*;'
-)
-
-## BLOCKS ##
-
-snippet(tabTrigger='if', description='if', content=
-"""
-if ($1) {
-    $0
-}
-""")
-
-snippet(tabTrigger='else', description='else', content=
-"""
-else {
-    $0
-}
-""")
-
-snippet(tabTrigger='elif', description='else if', content=
-"""
-else if ($1) {
-    $0
-}
-""")
-
-snippet(tabTrigger='switch', description='switch', content=
-"""
-switch ($1) {
-    $0
-}
-""")
-
-snippet(tabTrigger='while', description='while', content=
-"""
-while ($1) {
-    $0
-}
-""")
-
-snippet(tabTrigger='for', description='for', content=
-"""
-for ($1; $2; $3) {
-    $0
-}
-""")
-
-snippet(tabTrigger='fore', description='for each', content=
-"""
-for ($1 : $2) {
-    $0
-}
-""")
-
-snippet(tabTrigger='fori', description='for i', content=
-"""
-for (int ${1:i} = 0; $1 < ${2:imax}; ${3:$1++}) {
-    $0
-}
-""")
-
-snippet(tabTrigger='form', description='for imax', content=
-"""
-for (int ${1:i} = 0, $1max = ${2:count}; $1 < $1max; ${3:$1++}) {
-    $0
-}
-""")
-
-snippet(tabTrigger='fort', description='for iterator', content=
-"""
-for (Iterator<$1> ${2:itr} = ${3:list}.iterator(); $2.hasNext(); ) {
-    $0
-}
-""")
-
-snippet(tabTrigger='try', description='try', content=
-"""
-try {
-    $0
-}
-""")
-
-snippet(tabTrigger='tryr', description='try with resources', content=
-"""
-try ($1) {
-    $0
-}
-""")
-
-snippet(tabTrigger='catch', description='catch', content=
-"""
-catch (${1:Exception} e) {
-    $0
-}
-""")
-
-snippet(tabTrigger='finally', description='finally', content=
-"""
-finally {
-    $0
-}
-""")
-
-snippet(tabTrigger='syn', description='synchronized', content=
-"""
-synchronized (${1:this}) {
-    $0
-}
-""")
-
-## GISTS ##
-
-snippet(tabTrigger='class', description='class', content=
-r"""
-class ${1:${TM_FILENAME/(.*?)(\..+)/$1/}} {
-    $0
-}
-""")
-
-snippet(tabTrigger='interface', description='interface', content=
-r"""
-interface ${1:${TM_FILENAME/(.*?)(\..+)/$1/}} {
-    $0
-}
-""")
-
-snippet(tabTrigger='ctor', description='constructor', content=
-r"""
-${TM_FILENAME/(.*?)(\..+)/$1/}($1) {
-    $0
-}
-""")
-
-snippet(tabTrigger='ff', description='method', content=
-"""
-${1:void} ${2:run}($3) {
-    $0
-}
-""")
-
-snippet(tabTrigger='main', description='main', content=
-r"""
-public static void main(String[] args) {
-    $0
-}
-""")
-
-snippet(tabTrigger='jd', description='javadoc', content=
+java.jd = ('javadoc',
 r"""
 /**
 ${SELECTION/^\s*/ * /mg}$0
  */
 """)
 
-snippet(tabTrigger='get', description='getter', content=
+java.get = ('getter',
 r"""
 public ${1:String} ${1/boolean|(.*)/(?1:get:is)/}${2/./\u$0/}() {
     return ${2:property};
 }
 """)
 
-snippet(tabTrigger='set', description='setter', content=
+java.set = ('setter',
 r"""
 public void set${2/./\u$0/}(${1:String} ${2/.*/$0/}) {
     this.${2:property} = ${2/.*/$0/};
 }
 """)
 
-snippet(tabTrigger='gs', description='getter-setter', content=
+java.gs = ('getter-setter',
 r"""
 public ${1:String} ${1/boolean|(.*)/(?1:get:is)/}${2/./\u$0/}() {
     return ${2:property};
