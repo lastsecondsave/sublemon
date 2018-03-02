@@ -1,19 +1,9 @@
 import sys
 sys.path.append('../lib')
-from snippets import setup, scope, snippet
+from snippets import Snippets
 
-setup()
+regexp = Snippets('source.regexp')
 
-scope('source.regexp')
-
-snippet(tabTrigger='>', description='atomic group', content=
-'(?>${0:$SELECTION})'
-)
-
-snippet(tabTrigger='=', description='lookahead', content=
-'(?=${0:$SELECTION})'
-)
-
-snippet(tabTrigger=':', description='non-capturing group', content=
-'(?:${0:$SELECTION})'
-)
+regexp['>'] = ('atomic group', '(?>${0:$SELECTION})')
+regexp['='] = ('lookahead', '(?=${0:$SELECTION})')
+regexp[':'] = ('non-capturing group', '(?:${0:$SELECTION})')

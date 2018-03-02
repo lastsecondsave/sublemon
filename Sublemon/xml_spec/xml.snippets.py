@@ -1,27 +1,15 @@
 import sys
 sys.path.append('../lib')
-from snippets import setup, scope, snippet
+from snippets import Snippets
 
-setup()
+xml = Snippets('text.xml')
 
-scope('text.xml')
+xml['<'] = ('tag', '<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>')
+xml['>'] = ('empty tag', '<${1:name}/>')
 
-snippet(tabTrigger='<', description='tag', content=
-'<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>'
-)
+xml.cdata = ('CDATA', '<![CDATA[${0:$SELECTION}]]>')
+xml.xml = ('xml declaration', '<?xml version="1.0" encoding="UTF-8"?>')
 
-snippet(tabTrigger='>', description='empty tag', content=
-'<${1:name}/>'
-)
+tag = xml.subscope('meta.tag')
 
-snippet(tabTrigger='a', description='attribute', scope='text.xml meta.tag', content=
-'${1:name}="$2"'
-)
-
-snippet(tabTrigger='cdata', description='CDATA', content=
-'<![CDATA[${0:$SELECTION}]]>'
-)
-
-snippet(tabTrigger='xml', description='xml declaration', content=
-'<?xml version="1.0" encoding="UTF-8"?>'
-)
+tag.a = ('attribute', '${1:name}="$2"')

@@ -1,66 +1,23 @@
 import sys
 sys.path.append('../lib')
-from snippets import setup, scope, snippet
+from snippets import Snippets
 
-setup()
+py = Snippets('source.python')
+kw = py.with_suffix(' ')
+bl = py.with_suffix(':\n\t$0\n')
 
-scope('source.python')
+kw.ret = 'return'
 
-## KEYWORDS ##
+py.pl = ('print', 'print(${0:$SELECTION})')
+py['self'] = 'self.'
 
-snippet(tabTrigger='ret', content='return ')
+py.ss = ('self.x = x', 'self.$1 = $1')
+py.doc = ('docstring', '"""\n\t$0\n"""')
 
-## ONE-LINERS ##
+bl['def'] = ('function', 'def ${1:run}($2)')
 
-snippet(tabTrigger='pl', description='print', content=
-'print(${0:$SELECTION})'
-)
-
-snippet(tabTrigger='self', description='self.x = x', content=
-'self.$1 = $1'
-)
-
-## BLOCKS ##
-
-snippet(tabTrigger='def', description='function', content=
-"""
-def ${1:run}($2):
-    $0
-""")
-
-snippet(tabTrigger='doc', description='docstring', content=
-'''
-"""
-$0
-"""
-''')
-
-snippet(tabTrigger='if', description='if', content=
-"""
-if $1:
-    $0
-""")
-
-snippet(tabTrigger='else', description='else', content=
-"""
-else:
-    $0
-""")
-
-snippet(tabTrigger='elif', description='elif', content=
-"""
-elif $1:
-    $0
-""")
-
-snippet(tabTrigger='while', description='while', content=
-"""
-while $1:
-    $0
-""")
-
-snippet(tabTrigger='for', description='for', content=
-"""
-for $1 in $2:
-    $0
-""")
+bl['if'] = ('if', 'if $1')
+bl['else'] = 'else'
+bl['elif'] = ('elif', 'elif $1')
+bl['while'] = ('while', 'while $1')
+bl['for'] = ('for', 'for $1 in $2')
