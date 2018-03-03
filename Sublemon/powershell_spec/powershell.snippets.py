@@ -1,61 +1,24 @@
 import sys
 sys.path.append('../lib')
-from snippets import setup, scope, snippet
+from snippets import Snippets
 
-setup()
+ps = Snippets('source.powershell')
+bl = ps.with_suffix(' {\n\t$0\n}')
 
-scope('source.powershell')
+ps['%'] = ('ForEach-Object', '%{ ${0:$SELECTION} }')
+ps['?'] = ('Where-Object', '?{ ${0:$SELECTION} }')
 
-## KEYWORDS ##
+bl.begin = 'begin'
+bl.process = 'process'
+bl.end = 'end'
 
-snippet(tabTrigger='man', content='Mandatory')
-snippet(tabTrigger='valp', content='ValueFromPipeline')
+bl.ff = ('function', 'function ${1:run}')
 
-## ONE-LINERS ##
+ps.pm = ('Parameter', '[Parameter($1)]$0')
+ps.man = 'Mandatory'
+ps.valp = 'ValueFromPipeline'
 
-snippet(tabTrigger='%', description='ForEach-Object', content=
-'%{ ${0:$SELECTION} }'
-)
-
-snippet(tabTrigger='?', description='Where-Object', content=
-'?{ ${0:$SELECTION} }'
-)
-
-snippet(tabTrigger='pm', description='Parameter', content=
-'[Parameter($1)]$0'
-)
-
-## BLOCKS ##
-
-snippet(tabTrigger='begin', description='begin', content=
-"""
-begin {
-    $0
-}
-""")
-
-snippet(tabTrigger='process', description='process', content=
-"""
-process {
-    $0
-}
-""")
-
-snippet(tabTrigger='end', description='end', content=
-"""
-end {
-    $0
-}
-""")
-
-snippet(tabTrigger='fun', description='function', content=
-"""
-function ${1:run} {
-    $0
-}
-""")
-
-snippet(tabTrigger='param', description='param', content=
+ps.param = ('param',
 """
 param (
     $0
