@@ -21,6 +21,5 @@ for snippets in $(find . -name '*.snippets.py'); do
 done
 
 publish "disco/disco.py"
-publish "disco/icons.py"
 
 popd
