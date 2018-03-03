@@ -23,13 +23,15 @@
       "quiet"      : true,
       "errors"     : true
     },
-    { "name"   : "Test",
-      "mvn_cmd": "test",
-      "quiet"  : true
+    { "name"       : "Test",
+      "mvn_cmd"    : "test",
+      "show_output": "text",
+      "quiet"      : true
     },
-    { "name"   : "Clean → Test",
-      "mvn_cmd": "clean test",
-      "quiet"  : true
+    { "name"       : "Clean → Test",
+      "mvn_cmd"    : "clean test",
+      "show_output": "text",
+      "quiet"      : true
     },
     { "name"   : "Package",
       "mvn_cmd": "package"
