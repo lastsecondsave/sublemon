@@ -15,19 +15,29 @@ contexts:
     captures:
       1: entity.name.section.ini
 
-  - match: ^\s*(.*?)\s*=
+  - match: ^\s*(.*?)\s*(=)\s*
     captures:
       1: entity.name.key.ini
+      2: punctuation.separator.ini
     push:
     - match: '"'
+      scope: punctuation.definition.string.begin.ini
       set:
-      - meta_scope: string.quoted.ini
-      - match: $
-        pop: true
+      - meta_scope: string.quoted.double.ini
       - include: escapes
+      - match: '"'
+        scope: punctuation.definition.string.end.ini
+        pop: true
+      - match: \n
+        scope: invalid.illegal.ini
+        pop: true
     - match: ''
-      pop: true
+      set:
+      - meta_scope: string.unquoted.ini
+      - include: escapes
+      - match: \n
+        pop: true
 
   escapes:
-  - match: '\\[\\;"trn]'
+  - match: \\[\\;"trn]
     scope: constant.character.escape.ini

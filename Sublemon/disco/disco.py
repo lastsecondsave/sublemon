@@ -424,12 +424,15 @@ rec(Style(foreground=CLEAR_WHITE, background=alpha(CLEAR_WHITE, 0.2)),
     'meta.changes',
     'meta.separator')
 
-#### ETC ####
+#### INI ####
 
-sec()
+src('ini')
 rec(YELLOW,
-    'meta.section.ini',
-    'entity.name.section.ini')
+    'meta.section',
+    'entity.name.section')
+rec(FOREGROUND, 'string.unquoted')
+
+#### ETC ####
 
 rec(FADED_VIOLET, 'constant.date.git')
 rec([GREEN, PINK], 'text.git.blame constant.numeric.hash')
