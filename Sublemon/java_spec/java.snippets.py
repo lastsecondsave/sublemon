@@ -45,8 +45,8 @@ java.opn = ('Optional.ofNullable()', 'Optional.ofNullable(${0:$SELECTION})')
 java.over = '@Override'
 java.sw = ('@SuppressWarnings', '@SuppressWarnings("${1:unchecked}")')
 
-javadoc['@code'] = ('@code', '{@code ${1:$SELECTION}}$0')
-javadoc['@link'] = ('@link', '{@link ${1:$SELECTION}}$0')
+javadoc.code = ('@code', '{@code ${1:$SELECTION}}$0')
+javadoc.link = ('@link', '{@link ${1:$SELECTION}}$0')
 
 java.td = ('TODO', '// TODO: ')
 java.fm = ('FIXME', '// FIXME: ')
