@@ -12,6 +12,8 @@ publish() {
 
 pushd "$(dirname $0)/.."
 
+find . -type d -name '.generated_*' -exec rm -rf {} +
+
 for settings in $(find . -name '*.settings.py'); do
   publish $settings
 done
