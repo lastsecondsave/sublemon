@@ -1,9 +1,9 @@
 %YAML 1.2
 ---
-name: Shell
+name: Shell (Sublemon)
 scope: source.shell
-file_extensions: [sh, bash, zsh]
-first_line_match: '#!/.*'
+# file_extensions: [sh, bash, zsh]
+# first_line_match: '#!/.*'
 
 variables:
   function_id: \b[[:alnum:]_-]+\b

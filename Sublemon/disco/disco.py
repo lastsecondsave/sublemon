@@ -306,13 +306,21 @@ rec(FOREGROUND,  'variable.user')
 #### SHELL ####
 
 src('shell')
-rec(KEYWORD,     'punctuation.definition.command-substitution',
-                 'punctuation.definition.parameter-expansion')
-rec(VARIABLE,    'variable.other.definition')
-rec(PUNCTUATION, 'meta.block.command-substitution punctuation.section',
-                 'meta.block.parameter-expansion punctuation.section',
-                 'keyword.operator.pipe',
-                 'keyword.operator.logical')
+rec(VARIABLE,
+    'variable.other.readwrite.assignment')
+rec(PUNCTUATION,
+    'punctuation.definition.variable',
+    'punctuation.section.group',
+    'string punctuation.section.parens',
+    'punctuation.section.expansion.parameter',
+    'keyword.operator.expansion',
+    'keyword.operator.logical.pipe',
+    'keyword.operator.assignment.redirection')
+rec(FOREGROUND,
+    'keyword.control.case.item',
+    'support.function.double-brace',
+    'support.function.test',
+    'variable.language.tilde')
 
 #### C++ ####
 
