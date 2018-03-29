@@ -80,8 +80,8 @@ class Buffer(object):
         self.buffer.append(chunk[b:])
 
     def crop(self, chunk, b, e):
-        cr = e > 0 and chunk[e-1] == '\r'
-        e = e - 1 if cr else e
+        while e > 0 and chunk[e-1] == '\r':
+            e = e - 1
         return chunk[b:e]
 
     def flush(self):
@@ -155,10 +155,8 @@ class OutputPanel:
             lines = copy.copy(self.line_buffer)
             self.line_buffer.clear()
 
-        characters = ''.join(line.replace('\r', '') + '\n' for line in lines)
-
         self.view.run_command('append', {
-            'characters': characters,
+            'characters': '\n'.join(lines) + '\n',
             'force': True,
             'scroll_to_end': self.scroll_to_end
         })
