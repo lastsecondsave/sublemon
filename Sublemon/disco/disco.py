@@ -426,11 +426,30 @@ rec(BLUE,    'meta.diff.header')
 rec(GREEN,   'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
+#### GIT ####
+
+txt('git.config')
+rec(YELLOW,
+    'meta.brackets',
+    'entity.name.section')
+rec(INDEXED,
+    'variable.other.readwrite')
+
 txt('git.merge-conflict')
 rec(Style(foreground=CLEAR_WHITE, background=alpha(CLEAR_WHITE, 0.2)),
     'meta.upsteam',
     'meta.changes',
     'meta.separator')
+
+txt('git.ignore')
+rec(PUNCTUATION,
+    'keyword.operator')
+rec(FOREGROUND,
+    'entity.name')
+
+txt('git')
+rec(FADED_VIOLET, 'constant.date')
+rec([GREEN, PINK], 'constant.numeric.hash')
 
 #### INI ####
 
@@ -439,10 +458,5 @@ rec(YELLOW,
     'meta.section',
     'entity.name.section')
 rec(FOREGROUND, 'string.unquoted')
-
-#### ETC ####
-
-rec(FADED_VIOLET, 'constant.date.git')
-rec([GREEN, PINK], 'text.git.blame constant.numeric.hash')
 
 generate()
