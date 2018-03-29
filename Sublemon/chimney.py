@@ -10,6 +10,10 @@ from sublime_plugin import TextCommand, WindowCommand
 
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
+STARTUPINFO = subprocess.STARTUPINFO()
+if RUNNING_ON_WINDOWS:
+    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
 
 class Pipe(object):
     def output(self, line):
@@ -269,7 +273,7 @@ class Executor(object):
 
         os.chdir(options.working_dir)
         proc = subprocess.Popen(options.cmd,
-                                startupinfo=_get_startupinfo(),
+                                startupinfo=STARTUPINFO,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 stdin=subprocess.DEVNULL)
@@ -305,7 +309,7 @@ class Executor(object):
 
         if RUNNING_ON_WINDOWS:
             cmd = ["taskkill", "/PID", pid]
-            subprocess.Popen(cmd, startupinfo=_get_startupinfo())
+            subprocess.Popen(cmd, startupinfo=STARTUPINFO)
             return
 
         subprocess.Popen(["kill", pid])
@@ -365,14 +369,6 @@ def _get_executor(window):
         _executors[wid] = Executor(window)
 
     return _executors[wid]
-
-
-def _get_startupinfo():
-    startupinfo = None
-    if RUNNING_ON_WINDOWS:
-        startupinfo = subprocess.STARTUPINFO()
-        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    return startupinfo
 
 
 def _log(message, *params):
