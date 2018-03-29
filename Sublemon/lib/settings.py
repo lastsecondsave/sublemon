@@ -12,24 +12,16 @@ def generate_filename(scope):
     return hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
 
 
-def write_plist(path, content):
+def generate_settings_file(scope, content):
+    filename = generate_filename(scope)
+    print("{}: {}".format(filename, scope))
+
+    path = os.path.join(TARGET_DIRECTORY, filename)
     with open(path, "wb") as pfile:
         plistlib.dump(content, pfile)
 
 
-def generate_settings_file(scope, settings):
-    filename = generate_filename(scope)
-    print("{}: {}".format(filename, scope))
-    write_plist(os.path.join(TARGET_DIRECTORY, filename), settings)
-
-
-def setup():
-    shutil.rmtree("generated", ignore_errors=True)
-    shutil.rmtree(TARGET_DIRECTORY, ignore_errors=True)
-    os.mkdir(TARGET_DIRECTORY)
-
-
-def settings(scope, **settings):
+def settings(scope, **custom_settings):
     shell_variables = []
     comment_index = 1
 
@@ -43,7 +35,7 @@ def settings(scope, **settings):
     def add_end_comment(value):
         add_comment('END', ' ' + value)
 
-    line_comments = settings.pop('line_comment', [])
+    line_comments = custom_settings.pop('line_comment', [])
     if not isinstance(line_comments, list):
         line_comments = [line_comments]
 
@@ -51,8 +43,8 @@ def settings(scope, **settings):
         add_start_comment(line_comment)
         comment_index += 1
 
-    if 'block_comment' in settings:
-        block_comment = settings.pop('block_comment')
+    if 'block_comment' in custom_settings:
+        block_comment = custom_settings.pop('block_comment')
         add_start_comment(block_comment[0])
         add_end_comment(block_comment[1])
 
@@ -61,7 +53,7 @@ def settings(scope, **settings):
     if shell_variables:
         sublime_settings['shellVariables'] = shell_variables
 
-    for k, v in settings.items():
+    for k, v in custom_settings.items():
         k = TO_UPPERCASE_PATTERN.sub(lambda m: m.group(0)[1].upper(), k)
 
         if isinstance(v, list):
@@ -77,3 +69,7 @@ def settings(scope, **settings):
         sublime_settings[k] = v
 
     generate_settings_file(scope, {'scope': scope, 'settings': sublime_settings})
+
+
+shutil.rmtree(TARGET_DIRECTORY, ignore_errors=True)
+os.mkdir(TARGET_DIRECTORY)

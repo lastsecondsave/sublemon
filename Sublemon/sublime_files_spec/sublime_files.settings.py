@@ -1,8 +1,6 @@
 import sys
 sys.path.append("../lib")
-from settings import setup, settings
-
-setup()
+from settings import settings
 
 settings("meta.context.sublime-syntax entity.name.key",
     show_in_symbol_list=1,
