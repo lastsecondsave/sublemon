@@ -46,25 +46,26 @@ for package in *.sublime-package; do
   find . -name '*.sublime-snippet' -exec rm -f {} +
   find . -name '*.sublime-completions' -exec rm -f {} +
 
-  if [[ $dir == 'Python' ]]; then
-    rm -f 'Python.sublime-build'
-    patch -b 'Python.sublime-syntax' \
-        "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
+  case $dir in
+    'Python')
+      rm -f 'Python.sublime-build'
+      patch -b 'Python.sublime-syntax' \
+          "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
+      ;;
 
-  elif [[ $dir == 'Java' ]]; then
-    rm -f 'JavaC.sublime-build' \
-          'Ant.sublime-build'
+    'Java')
+      rm -f 'JavaC.sublime-build' \
+            'Ant.sublime-build'
+      ;;
 
-  elif [[ $dir == 'Default' ]]; then
-    # patch -b 'Default (Windows).sublime-keymap' \
-    #     "$SUBLEMON_DIRECTORY/etc/Default (Windows).sublime-keymap.patch"
+    'Default')
+      cp 'Default (OSX).sublime-keymap' 'Default (OSX).sublime-keymap.orig'
+      cp 'Default (Linux).sublime-keymap' 'Default (Linux).sublime-keymap.orig'
 
-    cp 'Default (OSX).sublime-keymap' 'Default (OSX).sublime-keymap.orig'
-    cp 'Default (Linux).sublime-keymap' 'Default (Linux).sublime-keymap.orig'
-
-    cp 'Default (Windows).sublime-keymap' 'Default (OSX).sublime-keymap'
-    cp 'Default (Windows).sublime-keymap' 'Default (Linux).sublime-keymap'
-  fi
+      cp 'Default (Windows).sublime-keymap' 'Default (OSX).sublime-keymap'
+      cp 'Default (Windows).sublime-keymap' 'Default (Linux).sublime-keymap'
+      ;;
+  esac
 
   touch '__patched__'
 
