@@ -118,7 +118,7 @@ class GitBlameCommand(ChimneyCommand):
             if to_col > 0:
                 to_line += 1
 
-            cmd += " -L {},{}".format(from_line, to_line)
+            cmd += " -L '{},{}'".format(from_line, to_line)
 
         options.shell_cmd = cmd + " -- '{}'".format(self.source_file())
         options.syntax = "Packages/Sublemon/git_spec/git_blame.sublime-syntax"
