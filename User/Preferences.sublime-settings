@@ -93,6 +93,8 @@
 		".git*",
 		"Makefile"
 	],
+	"line_padding_bottom": 0,
+	"line_padding_top": 0,
 	"margin": 0,
 	"match_brackets_content": false,
 	"minimap_scroll_to_clicked_text": true,
@@ -109,5 +111,6 @@
 	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
+	"update_check": true,
 	"word_wrap": false
 }
