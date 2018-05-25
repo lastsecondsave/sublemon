@@ -20,7 +20,7 @@
 	"color_scheme": "Packages/Sublemon/Disco.sublime-color-scheme",
 	"copy_with_empty_selection": false,
 	"drag_text": false,
-	"draw_minimap_border": true,
+	"draw_minimap_border": false,
 	"enable_tab_scrolling": true,
 	"enable_telemetry": "disabled",
 	"ensure_newline_at_eof_on_save": true,
