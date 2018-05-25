@@ -1,6 +1,6 @@
 $RootKey = 'hkcu:'
 
-$SublimeExe = '"c:\Software\Sublime Text 3\sublime_text.exe"'
+$SublimeExe = '"' + $env:USERPROFILE + '\Software\Sublime Text 3\sublime_text.exe"'
 $SublimeNode = "$RootKey\Software\SublimeText"
 
 $Default = '(Default)'
