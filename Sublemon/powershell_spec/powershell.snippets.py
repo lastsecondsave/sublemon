@@ -12,6 +12,9 @@ bl.begin = 'begin'
 bl.process = 'process'
 bl.end = 'end'
 
+bl['if'] = ('if', 'if ($1)')
+ps['iff'] = ('if (one-line)', 'if ($1) { $0 }')
+
 bl.ff = ('function', 'function ${1:run}')
 
 ps.pm = ('Parameter', '[Parameter($1)]$0')
