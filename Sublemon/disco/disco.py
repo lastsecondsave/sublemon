@@ -336,9 +336,20 @@ rec(KEYWORD,
 
 src('yaml')
 rec(PUNCTUATION,
-    'keyword.operator')
+    'punctuation.definition.block.sequence.item',
+    'entity.other.document',
+    'keyword.control.flow.block-scalar',
+    'storage.modifier.chomping-indicator')
 rec(VARIABLE,
-    'variable.other.substitution.sublime-syntax')
+    'variable.other.substitution.sublime-syntax',
+    'variable.other.alias',
+    'punctuation.definition.alias')
+rec(TAG,
+    'punctuation.definition.directive.begin',
+    'keyword.other.directive.yaml')
+rec(CRIMSON,
+    'entity.name.other.anchor',
+    'punctuation.definition.anchor')
 
 #### CSS ####
 
