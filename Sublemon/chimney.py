@@ -75,18 +75,20 @@ class Buffer(object):
         e = chunk.find('\n')
 
         while e != -1:
-            self.buffer.append(self.crop(chunk, b, e))
+            self.append_to_buffer(chunk, b, e)
             self.flush()
 
             b = e + 1
             e = chunk.find('\n', b)
 
-        self.buffer.append(chunk[b:])
+        self.append_to_buffer(chunk, b, len(chunk))
 
-    def crop(self, chunk, b, e):
+    def append_to_buffer(self, chunk, b, e):
         while e > 0 and chunk[e-1] == '\r':
             e = e - 1
-        return chunk[b:e]
+        line = chunk[b:e]
+        if line:
+            self.buffer.append(line)
 
     def flush(self):
         if self.buffer:
