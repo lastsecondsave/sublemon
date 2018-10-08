@@ -1,42 +1,34 @@
 {
-  "selector"       : "source.maven",
-  "keyfiles"       : ["pom.xml"],
-  "target"         : "maven",
-  "mvn_cmd"        : "compile",
+  "selector": "source.maven",
+  "keyfiles": ["pom.xml"],
+  "target": "maven",
+  "mvn_cmd": "compile",
   "mvn_global_opts": "--no-snapshot-updates",
-  "show_output"    : "error",
 
   "variants": [
-    { "name"       : "Version",
-      "mvn_cmd"    : "-version",
-      "show_output": "text"
+    { "name": "Version",
+      "mvn_cmd": "-version",
     },
-    { "name"   : "Clean",
+    { "name": "Clean",
       "mvn_cmd": "clean"
     },
-    { "name"   : "Clean → Compile",
+    { "name": "Clean → Compile",
       "mvn_cmd": "clean compile"
     },
-    { "name"       : "Compile → Exec",
-      "mvn_cmd"    : "compile exec:java",
-      "show_output": "text",
-      "quiet"      : true,
-      "errors"     : true
+    { "name": "Compile → Exec",
+      "mvn_cmd": "compile exec:java",
+      "no_log": true
     },
-    { "name"       : "Test",
-      "mvn_cmd"    : "test",
-      "show_output": "text",
-      "quiet"      : true
+    { "name": "Test",
+      "mvn_cmd": "test",
     },
-    { "name"       : "Clean → Test",
-      "mvn_cmd"    : "clean test",
-      "show_output": "text",
-      "quiet"      : true
+    { "name": "Clean → Test",
+      "mvn_cmd": "clean test",
     },
-    { "name"   : "Package",
+    { "name": "Package",
       "mvn_cmd": "package"
     },
-    { "name"   : "Clean → Package",
+    { "name": "Clean → Package",
       "mvn_cmd": "clean package"
     }
   ]
