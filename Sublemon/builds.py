@@ -1,4 +1,4 @@
-from Sublemon.chimney import Pipe, ChimneyCommand
+from Sublemon.chimney import ChimneyCommand
 
 
 class PowershellCommand(ChimneyCommand):
