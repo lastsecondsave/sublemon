@@ -5,7 +5,7 @@ import sublime
 
 from Sublemon.chimney import ChimneyCommand, ChimneyCommandListener, RUNNING_ON_WINDOWS
 
-DASHES_PATTERN = re.compile(r'\[INFO\] -+$')
+DASHES_PATTERN = re.compile(r'\[INFO\] -{5,}.*')
 COMPILATION_FAILURE_PATTERN = re.compile(r'\[ERROR\] Failed to execute goal.*Compilation failure')
 SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
 DRIVE_LETTER_PATTERN = re.compile(r'\[(?:ERROR|WARNING)\] /[A-Z]:')
@@ -30,7 +30,7 @@ class MavenCommand(ChimneyCommand):
         if options['offline']:
             cmd.append('-o')
 
-        if options['no_log']:
+        if options['no_info_messages']:
             cmd.append('-q')
             cmd.append('-e')
 
