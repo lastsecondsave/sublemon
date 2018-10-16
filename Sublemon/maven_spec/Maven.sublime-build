@@ -17,7 +17,7 @@
     },
     { "name": "Compile → Exec",
       "mvn_cmd": "compile exec:java",
-      "no_log": true
+      "no_info_messages": true
     },
     { "name": "Test",
       "mvn_cmd": "test",
