@@ -139,7 +139,7 @@ class Options:
         self.scroll_to_end = self.get('scroll_to_end', True)
         self.working_dir = self.get('working_dir')
 
-        self.source_file = window.extract_variables().get('file')
+        self.source_file = '"{}"'.format(window.extract_variables().get('file'))
 
     def get(self, arg, default=None):
         return self.originals.get(arg, default)

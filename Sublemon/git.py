@@ -5,13 +5,13 @@ from Sublemon.chimney import ChimneyCommand, ChimneyCommandListener
 
 class GitDiffCommand(ChimneyCommand):
     def preprocess_options(self, options):
-        options.shell_cmd = "git diff -- '{}'".format(options.source_file)
+        options.shell_cmd = "git diff -- {}".format(options.source_file)
         options.syntax = "Packages/Diff/Diff.tmLanguage"
 
 
 class GitLogCommand(ChimneyCommand):
     def preprocess_options(self, options):
-        template = "git log -200 --follow --no-merges --date=short --format='{}' -- '{}'"
+        template = "git log -200 --follow --no-merges --date=short --format='{}' -- {}"
 
         options.shell_cmd = template.format("%h %ad %an → %s", options.source_file)
         options.syntax = "Packages/Sublemon/git_spec/git_log.sublime-syntax"
@@ -69,7 +69,7 @@ class GitBlameCommand(ChimneyCommand):
 
             cmd += " -L '{},{}'".format(from_line, to_line)
 
-        options.shell_cmd = cmd + " -- '{}'".format(options.source_file)
+        options.shell_cmd = cmd + " -- {}".format(options.source_file)
         options.syntax = "Packages/Sublemon/git_spec/git_blame.sublime-syntax"
         options.scroll_to_end = False
 
