@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: Pylint Output
+scope: text.log.pylint
+
+contexts:
+  main:
+    - match: '^(.+?):(\d+):(\d+): (\w\d+):'
+      captures:
+        1: entity.name.file.pylint
+        2: constant.numeric.maven
+        3: constant.numeric.maven
+        4: constant.language.classifier.pylint

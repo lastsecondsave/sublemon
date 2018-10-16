@@ -13,11 +13,16 @@
     },
     {
       "name": "pylint",
-      "shell_cmd": "python -m pylint \"${file}\"",
+      "target": "pylint",
+      "disable": [
+        "missing-docstring",
+        "too-few-public-methods"
+      ]
     },
     {
-      "name": "pep8",
-      "shell_cmd": "python -m pep8 \"${file}\"",
+      "name": "pycodestyle",
+      "shell_cmd": "python -m pycodestyle \"${file}\"",
+      "file_regex": "(.+?):(\\d+):(\\d+): (.*)"
     }
   ]
 }

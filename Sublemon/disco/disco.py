@@ -54,6 +54,7 @@ PARAMETER = Style(ORANGE)
 USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
 SUPPORT = Style(PINK)
+RAINBOW = Style([GREEN, PINK])
 INVALID = Style(foreground=CLEAR_WHITE,
                 background=alpha(CRIMSON, 0.5))
 
@@ -75,7 +76,7 @@ def rec(style, *scopes):
     global global_scope
     global color_scheme
 
-    if type(style) is not Style:
+    if not isinstance(style, Style):
         style = Style(style)
 
     for scope in scopes:
@@ -91,6 +92,8 @@ def generate():
     path = os.path.join('..', 'Disco.sublime-color-scheme')
     with open(path, 'w') as json_file:
         json.dump(color_scheme, json_file, indent=2)
+
+    print('Generated {}'.format(path))
 
 
 color_scheme = {
@@ -180,6 +183,11 @@ rec(STRING,
 rec(FADED_GREEN,
     'string keyword')
 
+#### PYLINT ####
+
+txt('log.pylint')
+rec(RAINBOW, 'constant.language.classifier')
+
 #### JAVASCRIPT ####
 
 src('js')
@@ -267,7 +275,7 @@ rec(FADED_GRAY,
 rec(FADED_WHITE,
     'markup.underline.link')
 rec(COMMENT,
-    'markup.raw'),
+    'markup.raw')
 rec(FOREGROUND,
     'storage.modifier.array',
     'support.function.import',
@@ -460,7 +468,7 @@ rec(FOREGROUND,
 
 txt('git')
 rec(FADED_VIOLET, 'constant.date')
-rec([GREEN, PINK], 'constant.numeric.hash')
+rec(RAINBOW, 'constant.numeric.hash')
 
 #### INI ####
 
