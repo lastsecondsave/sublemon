@@ -1,17 +1,19 @@
 import hashlib
 import os
+import re
 import shutil
 
 import xml.etree.ElementTree as ET
 
-TARGET_DIRECTORY = '.generated_snippets'
+_TARGET_DIRECTORY = '.generated_snippets'
+_CLEANUP = re.compile(r'(\$(\{[^\}]+?\}|\d)\s*)|[\t\n]|\s*:\n')
 
 
-def generate_filename(content):
+def _generate_filename(content):
     return hashlib.sha1(content.encode('ascii')).hexdigest() + ".sublime-snippet"
 
 
-def write_snippet(scope, tab_trigger, content, description):
+def _write_snippet(scope, tab_trigger, content, description):
     content = content.replace('    ', '\t')
     if content[0] == '\n':
         content = content[1:]
@@ -24,10 +26,10 @@ def write_snippet(scope, tab_trigger, content, description):
     ET.SubElement(root, 'scope').text = scope
     ET.SubElement(root, 'content').text = content
 
-    filename = generate_filename(scope + content)
+    filename = _generate_filename(scope + content)
     print("{}: {}".format(filename, description))
 
-    ET.ElementTree(root).write(os.path.join(TARGET_DIRECTORY, filename))
+    ET.ElementTree(root).write(os.path.join(_TARGET_DIRECTORY, filename))
 
 
 class Snippets:
@@ -41,28 +43,28 @@ class Snippets:
         return Snippets(**conf)
 
     def with_prefix(self, prefix):
-        return self._mutate(prefix=prefix)
+        return self._mutate(prefix=prefix + self.prefix)
 
     def with_suffix(self, suffix):
-        return self._mutate(suffix=suffix)
+        return self._mutate(suffix=self.suffix + suffix)
 
     def subscope(self, scope):
         return self._mutate(scope=self.scope + ' ' + scope)
 
     def add(self, tab_trigger, content):
-        conf = dict(tab_trigger=tab_trigger, scope=self.scope)
+        is_tuple = isinstance(content, tuple)
 
-        if isinstance(content, tuple):
-            write_snippet(**conf,
-                          description=content[0],
-                          content=self.format_content(content[1]))
-        else:
-            write_snippet(**conf,
-                          description=content.strip(),
-                          content=self.format_content(content))
+        snippet = content[1] if is_tuple else content
+        snippet = self.prefix + snippet + self.suffix
 
-    def format_content(self, content):
-        return self.prefix + content + self.suffix
+        def generate_description():
+            return _CLEANUP.sub('', snippet).strip()
+
+        description = content[0] if is_tuple else generate_description()
+
+        snippet = snippet.replace('$FILENAME', r'${TM_FILENAME/(.*?)(\..+)/$1/}')
+
+        _write_snippet(self.scope, tab_trigger, snippet, description)
 
     def __setattr__(self, name, value):
         self.add(name, value)
@@ -70,6 +72,21 @@ class Snippets:
     def __setitem__(self, name, value):
         self.add(name, value)
 
+    def with_braces(self):
+        return self.with_suffix(' {\n\t$0\n}')
 
-shutil.rmtree(TARGET_DIRECTORY, ignore_errors=True)
-os.mkdir(TARGET_DIRECTORY)
+    def with_same_line_braces(self):
+        return self.with_suffix(' { $0 }')
+
+    def with_selection_in_parentheses(self):
+        return self.with_suffix('(${0:$SELECTION})')
+
+    def with_space(self):
+        return self.with_suffix(' ')
+
+    def with_semicolon(self):
+        return self.with_suffix(';')
+
+
+shutil.rmtree(_TARGET_DIRECTORY, ignore_errors=True)
+os.mkdir(_TARGET_DIRECTORY)
