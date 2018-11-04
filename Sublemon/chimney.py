@@ -89,6 +89,7 @@ class OutputPanel:
 
         view_settings.set('gutter', False)
         view_settings.set('scroll_past_end', False)
+        view_settings.set('word_wrap', True)
 
         for key, val in settings.items():
             if val:
