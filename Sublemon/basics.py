@@ -5,6 +5,9 @@ import sublime
 from sublime import Region
 from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
 
+RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
+HOME_PATH = os.environ['USERPROFILE' if RUNNING_ON_WINDOWS else 'HOME']
+TMP_PATH = os.environ['TMP'] if RUNNING_ON_WINDOWS else '/tmp'
 
 class EscapeBackslashesCommand(TextCommand):
     def run(self, edit):
@@ -119,8 +122,6 @@ class ShrinkWhitespaceCommand(TextCommand):
 
 
 class ShowFilePathCommand(WindowCommand):
-    RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
-
     def run(self):
         file_path = self.window.active_view().file_name()
         if not file_path:
@@ -133,26 +134,53 @@ class ShowFilePathCommand(WindowCommand):
             settings = self.window.project_data().get('settings', {})
             base_path = settings.get("project_root", variables["project_path"])
 
-            if file_path.startswith(base_path + os.sep):
+            if path_starts_with(file_path, base_path):
                 file_path = file_path[len(base_path)+1:]
                 prefix = variables["project_base_name"]
 
         if not prefix:
-            home_path = (os.environ['HOME'] if not self.RUNNING_ON_WINDOWS
-                         else os.environ['HOMEDRIVE'] + os.environ['HOMEPATH'])
-
-            if file_path.startswith(home_path + os.sep):
-                file_path = file_path[len(home_path)+1:]
+            if path_starts_with(file_path, HOME_PATH):
+                file_path = file_path[len(HOME_PATH)+1:]
                 prefix = "~"
-            elif self.RUNNING_ON_WINDOWS:
+            elif RUNNING_ON_WINDOWS:
                 prefix = file_path[0:2].lower()
                 file_path = file_path[3:]
             else:
                 prefix = "/"
                 file_path = file_path[1:]
 
-        sublime.status_message('({}) → {}'.format(
-            prefix, file_path.replace(os.sep, ' → ')))
+        sublime.status_message('{} / {}'.format(prefix, file_path.replace(os.sep, ' / ')))
+
+
+class OpenFilePathCommand(WindowCommand):
+    def run(self):
+        def on_done(path):
+            path = path.strip()
+
+            if RUNNING_ON_WINDOWS:
+                path = path.replace('/', '\\')
+
+            if path_starts_with(path, '~'):
+                path = HOME_PATH + path[1:]
+            elif path_starts_with(path, '@'):
+                folder = self.window.extract_variables().get('folder')
+                if folder:
+                    path = folder + path[1:]
+                else:
+                    sublime.status_message('Not in project')
+                    return
+            elif path_starts_with(path, '#'):
+                tmp = os.path.join(TMP_PATH, 'sublemon')
+                os.makedirs(tmp, exist_ok=True)
+                path = tmp + path[1:]
+
+            self.window.open_file(path, sublime.ENCODED_POSITION)
+
+        self.window.show_input_panel("File Name:", '', on_done, None, None)
+
+
+def path_starts_with(path, prefix):
+    return path.startswith(prefix + os.sep)
 
 
 class ToggleIndentGuidesCommand(TextCommand):
@@ -160,13 +188,14 @@ class ToggleIndentGuidesCommand(TextCommand):
         guides = self.view.settings().get("indent_guide_options")
         guides = [] if guides else ["draw_normal", "draw_active"]
         self.view.settings().set("indent_guide_options", guides)
+        sublime.status_message('indent guides ' + ('on' if guides else 'off'))
 
 
-class OpenFilePathCommand(WindowCommand):
-    def run(self):
-        def on_done(x):
-            self.window.open_file(x.strip(), sublime.ENCODED_POSITION)
-        self.window.show_input_panel("File Name:", '', on_done, None, None)
+class ToggleSettingVerboseCommand(TextCommand):
+    def run(self, edit, setting):
+        was_active = self.view.settings().get(setting)
+        self.view.run_command('toggle_setting', dict(setting=setting))
+        sublime.status_message(setting.replace('_', ' ') + ' ' + ('off' if was_active else 'on'))
 
 
 class StreamlineRegionsCommand(TextCommand):
@@ -177,7 +206,13 @@ class StreamlineRegionsCommand(TextCommand):
         if not regions:
             return
 
-        left, right = self.aligment(regions)
+        left, right = 0, 0
+
+        for r in regions:
+            if r.a > r.b:
+                left += 1
+            else:
+                right += 1
 
         if left == 0 or right == 0:
             replacement = [Region(r.b, r.a) for r in regions]
@@ -190,17 +225,6 @@ class StreamlineRegionsCommand(TextCommand):
             selection.subtract(r)
 
         selection.add_all(replacement)
-
-    def aligment(self, regions):
-        left, right = 0, 0
-
-        for r in regions:
-            if r.a > r.b:
-                left += 1
-            else:
-                right += 1
-
-        return left, right
 
 
 class LastSingleSelectionCommand(TextCommand):
@@ -244,15 +268,16 @@ class SelectWithCustomMarkersCommand(WindowCommand):
         def on_done(x):
             if x.strip():
                 self.window.active_view().run_command(
-                    'select_with_markers', self.split_markers(x))
+                    'select_with_markers', split_markers(x))
 
         self.window.show_input_panel(
             'Selection markers:', '', on_done, None, None)
 
-    def split_markers(self, markers):
-        i = markers.find(' ')
 
-        b1 = i if i >= 0 else int(len(markers) / 2)
-        b2 = i + 1 if i >= 0 else b1
+def split_markers(markers):
+    i = markers.find(' ')
 
-        return {'left': markers[0:b1], 'right': markers[b2:]}
+    b1 = i if i >= 0 else int(len(markers) / 2)
+    b2 = i + 1 if i >= 0 else b1
+
+    return {'left': markers[0:b1], 'right': markers[b2:]}
