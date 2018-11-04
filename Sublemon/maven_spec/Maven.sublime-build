@@ -9,14 +9,14 @@
     { "name": "Version",
       "mvn_cmd": "-version",
     },
-    { "name": "Clean",
-      "mvn_cmd": "clean"
-    },
     { "name": "Clean → Compile",
       "mvn_cmd": "clean compile"
     },
     { "name": "Compile → Exec",
-      "mvn_cmd": "compile exec:java",
+      "mvn_cmd": "compile exec:java"
+    },
+    { "name": "Exec",
+      "mvn_cmd": "exec:java",
       "no_info_messages": true
     },
     { "name": "Test",
@@ -24,12 +24,6 @@
     },
     { "name": "Clean → Test",
       "mvn_cmd": "clean test",
-    },
-    { "name": "Package",
-      "mvn_cmd": "package"
-    },
-    { "name": "Clean → Package",
-      "mvn_cmd": "clean package"
     }
   ]
 }
