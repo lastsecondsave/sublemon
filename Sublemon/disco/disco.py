@@ -291,6 +291,11 @@ rec(FOREGROUND, 'string.unquoted')
 txt('log.java')
 rec(CRIMSON, 'entity.name.exception')
 
+#### GROOVY ####
+
+src('groovy')
+rec(META, 'storage.type.annotation')
+
 #### LOG ####
 
 txt('log')
