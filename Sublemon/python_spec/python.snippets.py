@@ -7,7 +7,7 @@ py = Snippets('source.python')
 py_sp = py.with_space()
 py_bl = py.with_suffix(':\n\t$0\n')
 
-py_sp.rt = 'return'
+py_sp.ret = 'return'
 
 py.stm = '@staticmethod'
 

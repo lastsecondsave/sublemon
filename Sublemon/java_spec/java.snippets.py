@@ -23,7 +23,8 @@ java.sf = ('static final CONSTANT', 'static final ${1:String} ${2:CONSTANT} = ${
 java_sc.con = 'continue'
 java.tt = ('this.x = x', 'this.$1 = $1;')
 
-java_sp.rt = 'return'
+java_sp.ret = 'return'
+java_sc.rt = 'return'
 java_sc.rtt = 'return this'
 java.te = ('throw new Exception();', 'throw new ${1:Exception}($2);')
 java.tre = 'throw new RuntimeException($1);'
