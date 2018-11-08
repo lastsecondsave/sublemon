@@ -97,7 +97,7 @@ java.geto = (':optional: getX() {}', getter.replace('public ${1:String}', 'publi
 
 java.set = ('setX() {}', setter)
 
-java.gs = ('getX + setX', getter + '\n' + setter)
+java.gs = ('getX + setX', getter + setter)
 
 java.jd = ('javadoc',
 r"""
