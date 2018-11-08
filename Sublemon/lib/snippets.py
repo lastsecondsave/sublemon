@@ -39,7 +39,8 @@ class Snippets:
         object.__setattr__(self, 'suffix', suffix)
 
     def _mutate(self, **kwargs):
-        conf = {**self.__dict__, **kwargs}
+        conf = self.__dict__.copy()
+        conf.update(kwargs)
         return Snippets(**conf)
 
     def with_prefix(self, prefix):
