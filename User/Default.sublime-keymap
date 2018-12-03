@@ -2,7 +2,6 @@
   /** UNBOUND **/
 
   { "keys": ["alt+shift+w"],  "command": "unbound" },
-  { "keys": ["ctrl+;"],       "command": "unbound" },
 
   /** COMMON **/
 
@@ -61,7 +60,7 @@
 
   /** SEARCH WIDGET **/
 
-  { "keys": ["alt+q"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
+  { "keys": ["alt+s"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
   { "keys": ["alt+b"], "command": "toggle_use_buffer",    "context": [{"key": "setting.is_widget"}] },
   { "keys": ["f1"],    "command": "toggle_regex",         "context": [{"key": "setting.is_widget"}] },
   { "keys": ["f2"],    "command": "toggle_case_sensitive","context": [{"key": "setting.is_widget"}] },
@@ -102,6 +101,7 @@
   /** BUILD **/
 
   { "keys": ["f7"],            "command": "build" },
+  { "keys": ["ctrl+alt+b"],    "command": "build" },
   { "keys": ["ctrl+shift+f7"], "command": "build", "args": {"select": true} },
 
   { "keys": ["ctrl+alt+f7"], "command": "exec", "args": {"kill": true} },
@@ -150,32 +150,12 @@
     ]
   },
 
-  { "keys": ["ctrl+;"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"},
-    "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.java, source.js, source.c++" },
-    ]
+  { "keys": ["alt+ctrl+;"], "command": "run_macro_file",
+    "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"}
   },
 
-  { "keys": ["ctrl+;"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/macro/add_colon.sublime-macro"},
-    "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.python, source.yaml" },
-    ]
-  },
-
-  { "keys": ["ctrl+shift+;"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/macro/add_colon_same_line.sublime-macro"},
-    "context": [
-      { "key": "selector", "operator": "equal", "operand": "source.json, source.yaml, source.css" },
-    ]
-  },
-
-  { "keys": ["ctrl+,"], "command": "run_macro_file",
+  { "keys": ["alt+ctrl+,"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"},
-    "context": [
-      { "key": "selector", "operator": "equal", "operand": "source - comment" },
-    ]
   },
 
   { "keys": ["ctrl+k", "ctrl+j"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete to BOL.sublime-macro"} },
@@ -222,20 +202,6 @@
     "context": [
       { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-    ]
-  },
-
-  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\$(${0:$SELECTION})"},
-    "context": [
-      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.powershell" }
-    ]
-  },
-
-  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\${${0:$SELECTION}}"},
-    "context": [
-      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "text.xml" }
     ]
   }
 ]
