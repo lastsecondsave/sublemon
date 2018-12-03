@@ -188,14 +188,20 @@ class ToggleIndentGuidesCommand(TextCommand):
         guides = self.view.settings().get("indent_guide_options")
         guides = [] if guides else ["draw_normal", "draw_active"]
         self.view.settings().set("indent_guide_options", guides)
-        sublime.status_message('indent guides ' + ('on' if guides else 'off'))
+        show_setting_status('indent guides', guides)
 
 
 class ToggleSettingVerboseCommand(TextCommand):
     def run(self, edit, setting):
         was_active = self.view.settings().get(setting)
         self.view.run_command('toggle_setting', dict(setting=setting))
-        sublime.status_message(setting.replace('_', ' ') + ' ' + ('off' if was_active else 'on'))
+        show_setting_status(setting, not was_active)
+
+
+def show_setting_status(setting, active):
+    status = 'ON' if active else 'OFF'
+    setting = setting.replace('_', ' ').title()
+    sublime.status_message('{}: {}'.format(setting, status))
 
 
 class StreamlineRegionsCommand(TextCommand):
