@@ -209,8 +209,10 @@ rec(RAINBOW, 'constant.language.classifier')
 #### JAVASCRIPT ####
 
 src('js')
-rec(BLUE,
+rec(TAG,
     'meta.object-literal.key')
+rec(STORAGE,
+    'variable.type')
 rec(OPERATOR,
     'storage.type.function.arrow')
 rec(STRING,
