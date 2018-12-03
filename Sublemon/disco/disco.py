@@ -22,7 +22,7 @@ PINK         = "#EF51AA"
 BLUE         = "#6699FF"
 GREEN        = "#C5CC4B"
 YELLOW       = "#EDC61A"
-ORANGE       = "#FF9A41"
+ORANGE       = "#FFAD3A"
 DARK_ORANGE  = "#FF8147"
 CRIMSON      = "#E5476C"
 
@@ -48,6 +48,7 @@ COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
 META = Style(YELLOW)
+META_CHARACTER = Style(CRIMSON)
 TAG = Style(BLUE)
 TAG_ATTRIBUTE = Style(YELLOW)
 PARAMETER = Style(ORANGE)
@@ -57,6 +58,10 @@ SUPPORT = Style(PINK)
 RAINBOW = Style([GREEN, PINK])
 INVALID = Style(foreground=CLEAR_WHITE,
                 background=alpha(CRIMSON, 0.5))
+
+REGEXP_GROUP = Style(CRIMSON)
+REGEXP_CHARACTER_CLASS = Style(PURPLE)
+REGEXP_CONTROL = Style(PINK)
 
 
 def sec(scope=None):
@@ -90,6 +95,8 @@ def generate():
     global color_scheme
 
     path = os.path.join('..', 'Disco.sublime-color-scheme')
+    path = os.path.abspath(path)
+
     with open(path, 'w') as json_file:
         json.dump(color_scheme, json_file, indent=2)
 
@@ -126,6 +133,8 @@ rec(PRIMITIVE,
     'constant.language',
     'storage.type.numeric',
     'punctuation.separator.decimal')
+rec(PRIMITIVE,
+    'constant.character.escape')
 rec(STRING,
     'string')
 rec(STORAGE,
@@ -183,6 +192,15 @@ rec(STRING,
 rec(FADED_GREEN,
     'string keyword')
 
+#### REGEXP IN PYTHON ####
+
+rec(REGEXP_GROUP,
+    'source.regexp punctuation.definition.group',
+    'source.regexp keyword.operator.or')
+rec(REGEXP_CHARACTER_CLASS,
+    'source.regexp constant.character.character-class',
+    'source.regexp constant.other.character-class.set')
+
 #### PYLINT ####
 
 txt('log.pylint')
@@ -191,25 +209,28 @@ rec(RAINBOW, 'constant.language.classifier')
 #### JAVASCRIPT ####
 
 src('js')
-rec(KEYWORD,     'meta.instance.constructor keyword.operator.new',
-                 'meta.for meta.group keyword.operator', # 'of' and 'in' in for-cycle
-                 'keyword.operator.word.new')
-rec(STORAGE,     'variable.type')
-rec(BLUE,        'meta.object-literal.key')
-rec(OPERATOR,    'storage.type.function.arrow')
-rec(ORANGE,      'support.type.object',
-                 'meta.template.expression')
-rec(DARK_ORANGE, 'meta.template.expression punctuation.definition.template-expression')
-rec(FOREGROUND,  'support.function')
+rec(BLUE,
+    'meta.object-literal.key')
+rec(OPERATOR,
+    'storage.type.function.arrow')
+rec(STRING,
+    'meta.template.expression')
+rec(VARIABLE,
+    'support.type.object.dom')
+rec(PUNCTUATION,
+    'punctuation.definition.template-expression')
+rec(FOREGROUND,
+    'support.function',
+    'support.constant.dom')
 
 #### REGEXP IN JAVASCRIPT ####
 
-rec(YELLOW,
+rec(REGEXP_GROUP,
     'string.regexp punctuation.definition.group',
     'keyword.operator.or.regexp')
-rec(PURPLE,
+rec(REGEXP_CHARACTER_CLASS,
     'string.regexp constant.other.character-class')
-rec(PINK,
+rec(REGEXP_CONTROL,
     'string.regexp && (keyword.control | keyword.operator)',
     'constant.other.character-class.set.regexp constant.other.character-class.escape')
 
@@ -218,21 +239,20 @@ rec(PINK,
 src('regexp')
 rec(TAG,
     'meta.group keyword.other.named-capture-group punctuation.definition.capture-group-name')
-rec(YELLOW,
+rec(REGEXP_GROUP,
     'keyword.control.group',
     'keyword.other.conditional',
     'constant.other.assertion',
     'keyword.operator.alternation',
     'keyword.other.named-capture-group')
-rec(PURPLE,
+rec(REGEXP_CHARACTER_CLASS,
     'meta.set',
     'keyword.control.set',
     'keyword.control.character-class')
-rec(PINK,
+rec(REGEXP_CONTROL,
     'meta.set keyword.control.character-class',
     'keyword.control',
-    'keyword.operator')
-rec(CRIMSON,
+    'keyword.operator',
     'storage.modifier.mode')
 
 #### JAVA ####
@@ -249,27 +269,17 @@ rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other')
 rec(STORAGE,
-    'keyword.operator.wildcard')
+    'keyword.operator.wildcard',
+    'keyword.other.package')
 rec(PRIMITIVE,
     'string.quoted.single')
-rec(CRIMSON,
-    'entity.name.namespace',
+rec(META_CHARACTER,
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
 rec(FADED_VIOLET,
     'text.html meta.tag entity.name',
     'text.html constant.character.entity',
     'text.html meta.tag punctuation.definition.tag')
-rec(FADED_BLUE,
-    'text.html meta.tag punctuation',
-    'text.html meta.tag punctuation.separator',
-    'text.html meta.tag string',
-    'text.html meta.tag string.quoted.single',
-    'text.html meta.tag entity.other.attribute-name',
-    'text.html meta.tag.inline',
-    'source.css support.type',
-    'source.css support.constant',
-    'source.css string.quoted.single')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
 rec(FADED_WHITE,
@@ -304,28 +314,43 @@ rec(ORANGE,  'meta.indicator.warning')
 rec(GREEN,   'meta.indicator.success')
 rec(YELLOW,  'meta.message')
 
+#### C# ####
+
+src('cs')
+rec(KEYWORD,
+    'keyword.operator.new')
+rec(FADED_VIOLET,
+    'comment.block.documentation punctuation.definition.tag',
+    'comment.block.documentation entity.name.tag',
+    'comment.block.documentation entity.other',
+    'comment.block.documentation punctuation.separator')
+rec(FOREGROUND,
+    'comment.block.documentation string.quoted.double')
+
 #### POWERSHELL ####
 
 src('powershell')
-rec(PUNCTUATION, 'punctuation.definition.expression',
-                 'keyword.operator.pipe',
-                 'keyword.operator.stream')
-rec(CRIMSON,     'keyword.operator.execute',
-                 'keyword.operator.escape')
-rec(OPERATOR,    'punctuation.separator.static-call')
-rec(VARIABLE,    'string.quoted.double variable.user')
-rec(FOREGROUND,  'variable.user')
+rec(PUNCTUATION,
+    'punctuation.definition.expression',
+    'keyword.operator.pipe',
+    'keyword.operator.stream',
+    'keyword.operator.escape')
+rec(META_CHARACTER,
+    'keyword.operator.execute')
+rec(OPERATOR,
+    'punctuation.separator.static-call')
+rec(VARIABLE,
+    'string.quoted.double variable.user')
+rec(FOREGROUND,
+    'variable.user')
 
 #### SHELL ####
 
 src('shell')
-rec(VARIABLE,
-    'variable.other.readwrite.assignment')
+rec(META_CHARACTER,
+    'punctuation.definition.variable')
 rec(PUNCTUATION,
-    'punctuation.definition.variable',
-    'punctuation.section.group',
-    'string punctuation.section.parens',
-    'punctuation.section.expansion.parameter',
+    'meta.group.expansion punctuation.section',
     'keyword.operator.expansion',
     'keyword.operator.logical.pipe',
     'keyword.operator.assignment.redirection')
@@ -333,7 +358,8 @@ rec(FOREGROUND,
     'keyword.control.case.item',
     'support.function.double-brace',
     'support.function.test',
-    'variable.language.tilde')
+    'variable.language.tilde',
+    'variable.parameter.option')
 
 #### C++ ####
 
@@ -360,7 +386,7 @@ rec(VARIABLE,
 rec(TAG,
     'punctuation.definition.directive.begin',
     'keyword.other.directive.yaml')
-rec(CRIMSON,
+rec(META_CHARACTER,
     'entity.name.other.anchor',
     'punctuation.definition.anchor')
 
