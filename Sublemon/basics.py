@@ -191,6 +191,18 @@ class ToggleIndentGuidesCommand(TextCommand):
         show_setting_status('indent guides', guides)
 
 
+class ToggleLigaturesCommand(TextCommand):
+    def run(self, edit):
+        font_options = self.view.settings().get("font_options")
+        enable = "no_calt" in font_options
+        if enable:
+            font_options.remove("no_calt")
+        else:
+            font_options.append("no_calt")
+        self.view.settings().set("font_options", font_options)
+        show_setting_status('ligatires', enable)
+
+
 class ToggleSettingVerboseCommand(TextCommand):
     def run(self, edit, setting):
         was_active = self.view.settings().get(setting)
