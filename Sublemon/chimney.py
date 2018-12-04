@@ -292,7 +292,7 @@ class ChimneyCommand(WindowCommand):
         options = Options(kwargs, self.window)
         self.preprocess_options(options)
 
-        if not options.cmd and not options.shell_cmd:
+        if not options.cmd and not options.shell_cmd and not options.kill:
             self.window.status_message("No command to run")
             return
 
