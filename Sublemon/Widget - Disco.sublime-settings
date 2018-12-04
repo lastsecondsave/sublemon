@@ -1,3 +1,6 @@
 {
-  "color_scheme": "Packages/Sublemon/Disco.sublime-color-scheme"
+  "color_scheme": "Packages/Sublemon/Disco.sublime-color-scheme",
+  "font_options": [
+    "no_calt"
+  ]
 }
