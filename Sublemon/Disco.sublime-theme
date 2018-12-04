@@ -1018,11 +1018,11 @@
     },
     {
       "class": "status_container",
-      "content_margin": [0, 2, 0, 2],
+      "content_margin": [0, 0],
     },
     {
       "class": "status_button",
-      "content_margin": [10, 2, 10, 2],
+      "content_margin": [10, 0],
       "min_size": [25, 0]
     },
     {
