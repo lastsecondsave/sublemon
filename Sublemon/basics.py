@@ -9,6 +9,7 @@ RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 HOME_PATH = os.environ['USERPROFILE' if RUNNING_ON_WINDOWS else 'HOME']
 TMP_PATH = os.environ['TMP'] if RUNNING_ON_WINDOWS else '/tmp'
 
+
 class EscapeBackslashesCommand(TextCommand):
     def run(self, edit):
         for region in self.view.sel():
@@ -185,10 +186,10 @@ def path_starts_with(path, prefix):
 
 class ToggleIndentGuidesCommand(TextCommand):
     def run(self, edit):
-        guides = self.view.settings().get("indent_guide_options")
-        guides = [] if guides else ["draw_normal", "draw_active"]
-        self.view.settings().set("indent_guide_options", guides)
-        show_setting_status('indent guides', guides)
+        guide_options = self.view.settings().get("indent_guide_options")
+        guide_options = [] if guide_options else ["draw_normal", "draw_active"]
+        self.view.settings().set("indent_guide_options", guide_options)
+        show_setting_status('indent guides', guide_options)
 
 
 class ToggleLigaturesCommand(TextCommand):
@@ -205,9 +206,9 @@ class ToggleLigaturesCommand(TextCommand):
 
 class ToggleSettingVerboseCommand(TextCommand):
     def run(self, edit, setting):
-        was_active = self.view.settings().get(setting)
+        was_enabled = self.view.settings().get(setting)
         self.view.run_command('toggle_setting', dict(setting=setting))
-        show_setting_status(setting, not was_active)
+        show_setting_status(setting, not was_enabled)
 
 
 def show_setting_status(setting, active):
@@ -283,10 +284,10 @@ class SelectWithMarkersCommand(TextCommand):
 
 class SelectWithCustomMarkersCommand(WindowCommand):
     def run(self):
-        def on_done(x):
-            if x.strip():
+        def on_done(markers):
+            if markers.strip():
                 self.window.active_view().run_command(
-                    'select_with_markers', split_markers(x))
+                    'select_with_markers', split_markers(markers))
 
         self.window.show_input_panel(
             'Selection markers:', '', on_done, None, None)
