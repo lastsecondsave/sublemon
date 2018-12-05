@@ -226,7 +226,7 @@ class Executor:
 
     def start_process(self, options, working_dir):
         if options.shell_cmd and RUNNING_ON_WINDOWS:
-            options.cmd = ['powershell.exe', '-Command', options.shell_cmd]
+            options.cmd = ['powershell.exe', '-NoProfile', '-Command', options.shell_cmd]
         elif options.shell_cmd:
             options.cmd = [os.environ['SHELL'], '-c', options.shell_cmd]
 
