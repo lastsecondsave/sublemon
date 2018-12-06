@@ -139,6 +139,7 @@ class Options:
         self.syntax = self.get('syntax', 'Packages/Text/Plain text.tmLanguage')
         self.scroll_to_end = self.get('scroll_to_end', True)
         self.working_dir = self.get('working_dir')
+        self.env = self.get("env")
 
         self.source_file = '"{}"'.format(window.extract_variables().get('file'))
 
@@ -225,20 +226,36 @@ class Executor:
         return working_dir
 
     def start_process(self, options, working_dir):
-        if options.shell_cmd and RUNNING_ON_WINDOWS:
-            options.cmd = ['powershell.exe', '-NoProfile', '-Command', options.shell_cmd]
-        elif options.shell_cmd:
-            options.cmd = [os.environ['SHELL'], '-c', options.shell_cmd]
+        if options.shell_cmd:
+            if RUNNING_ON_WINDOWS:
+                cmd = ['powershell.exe', '-NoProfile', '-Command']
+            else:
+                cmd = [os.environ['SHELL'], '-c']
+
+            cmd.append(options.shell_cmd)
+        else:
+            cmd = options.cmd
+
+        if options.env:
+            env = os.environ.copy()
+            env.update({k: os.path.expandvars(v) for k, v in options.env.items()})
+        else:
+            env = os.environ
 
         os.chdir(working_dir)
-        process = subprocess.Popen(options.cmd,
+
+        process = subprocess.Popen(cmd,
                                    startupinfo=STARTUPINFO,
+                                   env=env,
                                    stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE,
                                    stdin=subprocess.DEVNULL)
 
-        _log('→ [{}] {}', process.pid, ' '.join(options.cmd))
-        self.window.status_message('Build started: ' + options.shell_cmd)
+        _log('→ [{}] {}', process.pid, ' '.join(cmd))
+
+        message = 'Build started: {}'.format(
+            options.shell_cmd if options.shell_cmd else ' '.join(cmd))
+        self.window.status_message(message)
 
         return process
 
