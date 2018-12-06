@@ -2,6 +2,8 @@
   /** UNBOUND **/
 
   { "keys": ["alt+shift+w"],  "command": "unbound" },
+  { "keys": ["ctrl+="],       "command": "unbound" },
+  { "keys": ["ctrl+-"],       "command": "unbound" },
 
   /** COMMON **/
 
