@@ -156,7 +156,7 @@ class ShowFilePathCommand(WindowCommand):
 class OpenFilePathCommand(WindowCommand):
     def run(self):
         def on_done(path):
-            path = path.strip()
+            path = os.path.expandvars(path).strip()
 
             if RUNNING_ON_WINDOWS:
                 path = path.replace('/', '\\')
