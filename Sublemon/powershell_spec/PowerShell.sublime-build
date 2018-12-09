@@ -1,5 +1,11 @@
 {
-  "selector" : "source.powershell",
-  "target"   : "chimney",
-  "shell_cmd": "&'$file'"
+  "selector": "source.powershell",
+  "file_regex": "At (.+\\.ps1):(\\d+) char:(\\d+)",
+  "cmd": ["powershell", "-File", "$file"],
+
+  "variants": [
+    { "name": "No Profile",
+      "cmd": ["powershell", "-NoProfile", "-File", "$file"]
+    }
+  ]
 }
