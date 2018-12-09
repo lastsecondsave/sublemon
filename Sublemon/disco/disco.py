@@ -38,6 +38,7 @@ FADED_GREEN  = "#949B43"
 
 BACKGROUND = Style(BLUISH_BLACK)
 FOREGROUND = Style(WHITE)
+
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
@@ -56,7 +57,6 @@ USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
 VARIABLE_MARKER = Style(DARK_ORANGE)
 
-SUPPORT = Style(PINK)
 RAINBOW = Style([GREEN, PINK])
 INVALID = Style(foreground=CLEAR_WHITE,
                 background=alpha(CRIMSON, 0.5))
@@ -141,11 +141,9 @@ rec(STRING,
     'string')
 rec(STORAGE,
     'storage',
-    'entity.other.inherited-class')
-rec(SUPPORT,
     'support.type',
     'support.class',
-    'support.function')
+    'entity.other.inherited-class')
 rec(KEYWORD,
     'keyword',
     'keyword.operator.alphanumeric',
@@ -184,9 +182,7 @@ src('python')
 rec(KEYWORD,
     'keyword.operator.logical')
 rec(INDEXED,
-    'entity.name.function support.function.magic',
-    'entity.name.function.decorator',
-    'entity.name.function.decorator support.function.builtin')
+    'entity.name.function.decorator')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(STRING,
@@ -223,9 +219,6 @@ rec(VARIABLE,
     'support.type.object.dom')
 rec(PUNCTUATION,
     'punctuation.definition.template-expression')
-rec(FOREGROUND,
-    'support.function',
-    'support.constant.dom')
 
 #### REGEXP IN JAVASCRIPT ####
 
@@ -292,7 +285,6 @@ rec(COMMENT,
     'markup.raw')
 rec(FOREGROUND,
     'storage.modifier.array',
-    'support.function.import',
     'storage.type.function.anonymous')
 
 #### JAVA PROPERTIES ####
@@ -362,8 +354,6 @@ rec(PUNCTUATION,
     'keyword.operator.assignment.redirection')
 rec(FOREGROUND,
     'keyword.control.case.item',
-    'support.function.double-brace',
-    'support.function.test',
     'variable.language.tilde',
     'variable.parameter.option')
 
