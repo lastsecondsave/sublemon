@@ -7,7 +7,7 @@ from collections import deque
 from threading import Lock, Thread
 
 import sublime
-from sublime_plugin import TextCommand, WindowCommand
+from sublime_plugin import WindowCommand
 
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
@@ -226,36 +226,34 @@ class Executor:
         return working_dir
 
     def start_process(self, options, working_dir):
+        process_params = dict(
+            startupinfo=STARTUPINFO,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            stdin=subprocess.DEVNULL)
+
         if options.shell_cmd:
             if RUNNING_ON_WINDOWS:
-                cmd = ['powershell.exe', '-NoProfile', '-Command']
+                cmd = options.shell_cmd
+                process_params['shell'] = True
             else:
-                cmd = [os.environ['SHELL'], '-c']
-
-            cmd.append(options.shell_cmd)
+                cmd = [os.environ['SHELL'], '-c', options.shell_cmd]
         else:
             cmd = options.cmd
 
         if options.env:
             env = os.environ.copy()
             env.update({k: os.path.expandvars(v) for k, v in options.env.items()})
-        else:
-            env = os.environ
+            process_params['env'] = env
 
         os.chdir(working_dir)
 
-        process = subprocess.Popen(cmd,
-                                   startupinfo=STARTUPINFO,
-                                   env=env,
-                                   stdout=subprocess.PIPE,
-                                   stderr=subprocess.PIPE,
-                                   stdin=subprocess.DEVNULL)
+        process = subprocess.Popen(cmd, **process_params)
 
-        _log('→ [{}] {}', process.pid, ' '.join(cmd))
+        cmd = cmd if isinstance(cmd, str) else ' '.join(cmd)
 
-        message = 'Build started: {}'.format(
-            options.shell_cmd if options.shell_cmd else ' '.join(cmd))
-        self.window.status_message(message)
+        _log('→ [{}] {}', process.pid, cmd)
+        self.window.status_message('Build started: {}'.format(cmd))
 
         return process
 
@@ -270,11 +268,6 @@ class Executor:
         else:
             os.killpg(process.pid, signal.SIGTERM)
             process.terminate()
-
-
-class EraseViewCommand(TextCommand):
-    def run(self, edit):
-        self.view.erase(edit, sublime.Region(0, self.view.size()))
 
 
 class ChimneyCommandListener:
