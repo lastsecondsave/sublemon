@@ -54,6 +54,8 @@ TAG_ATTRIBUTE = Style(YELLOW)
 PARAMETER = Style(ORANGE)
 USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
+VARIABLE_MARKER = Style(DARK_ORANGE)
+
 SUPPORT = Style(PINK)
 RAINBOW = Style([GREEN, PINK])
 INVALID = Style(foreground=CLEAR_WHITE,
@@ -332,24 +334,26 @@ rec(FOREGROUND,
 #### POWERSHELL ####
 
 src('powershell')
+rec(VARIABLE_MARKER,
+    'punctuation.definition.variable')
+rec(KEYWORD,
+    'keyword.operator.comparison')
 rec(PUNCTUATION,
-    'punctuation.definition.expression',
-    'keyword.operator.pipe',
-    'keyword.operator.stream',
-    'keyword.operator.escape')
-rec(META_CHARACTER,
-    'keyword.operator.execute')
-rec(OPERATOR,
-    'punctuation.separator.static-call')
+    'keyword.operator.other',
+    'string.quoted.double punctuation.section.group -interpolated',
+    'string.quoted.double punctuation.section.braces -interpolated')
+rec(META,
+    'support.function.attribute',
+    'meta.attribute variable.parameter.attribute')
 rec(VARIABLE,
-    'string.quoted.double variable.user')
+    'variable storage.modifier.scope')
 rec(FOREGROUND,
-    'variable.user')
+    'variable.other.member')
 
 #### SHELL ####
 
 src('shell')
-rec(META_CHARACTER,
+rec(VARIABLE_MARKER,
     'punctuation.definition.variable')
 rec(PUNCTUATION,
     'meta.group.expansion punctuation.section',
