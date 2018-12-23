@@ -55,7 +55,7 @@ $TextFiles = @(
     'ini',
     'xml', 'xsd',
     'yaml', 'yml',
-    'java', 'properties', 'groovy', 'clj', 'gradle',
+    'java', 'properties', 'groovy', 'clj', 'gradle', 'kt',
     'js', 'json',
     'c', 'cpp', 'cu', 'h', 'hpp',
     'go',
