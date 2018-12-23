@@ -3,10 +3,17 @@ import json
 
 
 class Style:
-    def __init__(self, foreground=None, **settings):
+    def __init__(self, foreground=None, font_style=None, **settings):
         self.settings = settings
         if foreground:
             self.settings['foreground'] = foreground
+        if font_style:
+            self.settings['font_style'] = font_style
+
+    def __add__(self, other):
+        settings = self.settings.copy()
+        settings.update(other.settings)
+        return Style(**settings)
 
 
 def alpha(color, value):
@@ -30,14 +37,15 @@ BLUISH_BLACK = "#202830"
 DARK_BLUE    = "#384868"
 
 FADED_GRAY   = "#51515D"
-FADED_WHITE  = "#B0B0B0"
-FADED_BLUE   = "#41415D"
 FADED_VIOLET = "#5E5E8E"
-FADED_GREEN  = "#949B43"
 
 
 BACKGROUND = Style(BLUISH_BLACK)
 FOREGROUND = Style(WHITE)
+
+ITALIC = Style(font_style='italic')
+BOLD = Style(font_style='bold')
+BOLD_ITALIC = Style(font_style='bold italic')
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
@@ -185,10 +193,16 @@ rec(INDEXED,
     'entity.name.function.decorator')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
+rec(ITALIC,
+    'meta.annotation')
+rec(BOLD,
+    'support.function -support.function.magic')
 rec(STRING,
     'string keyword.operator')
-rec(FADED_GREEN,
-    'string keyword')
+rec(STRING + BOLD_ITALIC,
+    'string source.sql keyword')
+rec(STRING + ITALIC,
+    'string source.sql storage')
 
 #### REGEXP IN PYTHON ####
 
@@ -210,7 +224,8 @@ src('js')
 rec(TAG,
     'meta.object-literal.key')
 rec(STORAGE,
-    'variable.type')
+    'variable.type',
+    'support.constant.builtin')
 rec(OPERATOR,
     'storage.type.function.arrow')
 rec(STRING,
@@ -219,6 +234,8 @@ rec(VARIABLE,
     'support.type.object.dom')
 rec(PUNCTUATION,
     'punctuation.definition.template-expression')
+rec(FOREGROUND,
+    'meta.binding.name variable.other.readwrite')
 
 #### REGEXP IN JAVASCRIPT ####
 
@@ -276,16 +293,20 @@ rec(META_CHARACTER,
 rec(FADED_VIOLET,
     'text.html meta.tag entity.name',
     'text.html constant.character.entity',
+    'constant.character.entity.named punctuation.terminator.entity',
     'text.html meta.tag punctuation.definition.tag')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
-rec(FADED_WHITE,
+rec(COMMENT + ITALIC,
     'markup.underline.link')
 rec(COMMENT,
     'markup.raw')
 rec(FOREGROUND,
     'storage.modifier.array',
     'storage.type.function.anonymous')
+rec(ITALIC,
+    'meta.annotation',
+    'variable.parameter.javadoc')
 
 #### JAVA PROPERTIES ####
 
@@ -328,8 +349,6 @@ rec(FOREGROUND,
 src('powershell')
 rec(VARIABLE_MARKER,
     'punctuation.definition.variable')
-rec(KEYWORD,
-    'keyword.operator.comparison')
 rec(PUNCTUATION,
     'keyword.operator.other',
     'string.quoted.double punctuation.section.group -interpolated',
@@ -337,6 +356,11 @@ rec(PUNCTUATION,
 rec(META,
     'support.function.attribute',
     'meta.attribute variable.parameter.attribute')
+rec(ITALIC,
+    'meta.attribute - punctuation.section.bracket',
+    'keyword.operator.comparison')
+rec(STRING,
+    'string keyword.operator')
 rec(VARIABLE,
     'variable storage.modifier.scope')
 rec(FOREGROUND,
