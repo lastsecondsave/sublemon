@@ -60,8 +60,6 @@
 	"font_face": "PragmataPro Mono Liga",
 	"font_options":
 	[
-		"no_bold",
-		"no_italic"
 	],
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
