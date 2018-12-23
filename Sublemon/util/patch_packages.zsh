@@ -47,12 +47,6 @@ for package in *.sublime-package; do
   find . -name '*.sublime-completions' -exec rm -f {} +
 
   case $dir in
-    'Python')
-      rm -f 'Python.sublime-build'
-      patch -b 'Python.sublime-syntax' \
-          "$SUBLEMON_DIRECTORY/python_spec/Python.sublime-syntax.patch"
-      ;;
-
     'Java')
       rm -f 'JavaC.sublime-build' \
             'Ant.sublime-build'
