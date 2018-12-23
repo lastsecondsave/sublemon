@@ -15,6 +15,11 @@ class Style:
         settings.update(other.settings)
         return Style(**settings)
 
+    def __radd__(self, other):
+        settings = self.settings.copy()
+        settings['foreground'] = other
+        return Style(**settings)
+
 
 def alpha(color, value):
     return 'color({} alpha({}))'.format(color, value)
@@ -47,6 +52,8 @@ ITALIC = Style(font_style='italic')
 BOLD = Style(font_style='bold')
 BOLD_ITALIC = Style(font_style='bold italic')
 
+FADED_HIGHLIGHT = Style(background=alpha(FADED_GRAY, 0.5))
+
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
@@ -57,7 +64,6 @@ COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
 META = Style(YELLOW)
-META_CHARACTER = Style(CRIMSON)
 TAG = Style(BLUE)
 TAG_ATTRIBUTE = Style(YELLOW)
 PARAMETER = Style(ORANGE)
@@ -66,10 +72,9 @@ VARIABLE = Style(ORANGE)
 VARIABLE_MARKER = Style(DARK_ORANGE)
 
 RAINBOW = Style([GREEN, PINK])
-INVALID = Style(foreground=CLEAR_WHITE,
-                background=alpha(CRIMSON, 0.5))
+INVALID = Style(CLEAR_WHITE, background=alpha(CRIMSON, 0.5))
 
-REGEXP_GROUP = Style(CRIMSON)
+REGEXP_GROUP = Style(ORANGE)
 REGEXP_CHARACTER_CLASS = Style(PURPLE)
 REGEXP_CONTROL = Style(PINK)
 
@@ -221,7 +226,7 @@ rec(RAINBOW, 'constant.language.classifier')
 #### JAVASCRIPT ####
 
 src('js')
-rec(TAG,
+rec(TAG + ITALIC,
     'meta.object-literal.key')
 rec(STORAGE,
     'variable.type',
@@ -287,7 +292,7 @@ rec(STORAGE,
     'keyword.other.package')
 rec(PRIMITIVE,
     'string.quoted.single')
-rec(META_CHARACTER,
+rec(CRIMSON,
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
 rec(FADED_VIOLET,
@@ -401,12 +406,14 @@ rec(PUNCTUATION,
     'storage.modifier.chomping-indicator')
 rec(VARIABLE,
     'variable.other.substitution.sublime-syntax',
-    'variable.other.alias',
     'punctuation.definition.alias')
 rec(TAG,
     'punctuation.definition.directive.begin',
+    'constant.language.merge',
     'keyword.other.directive.yaml')
-rec(META_CHARACTER,
+rec(CRIMSON + ITALIC,
+    'variable.other.alias',
+    'punctuation.definition.alias',
     'entity.name.other.anchor',
     'punctuation.definition.anchor')
 
@@ -422,6 +429,8 @@ rec(FOREGROUND,
     'support.function')
 rec(CRIMSON,
     'support.type.vendor-prefix')
+rec(ITALIC,
+    'support.type.property-name')
 
 #### XML ####
 
@@ -437,9 +446,10 @@ rec(FOREGROUND,
 rec(VARIABLE,
     'meta.tag.sgml.doctype variable',
     'variable.other.substitution -comment')
-rec(CRIMSON,
-    'meta.tag.sgml keyword',
-    'meta.tag.sgml punctuation.definition.tag')
+rec(ITALIC,
+    'meta.tag.sgml -comment')
+rec(TAG + BOLD_ITALIC,
+    'meta.tag.sgml.doctype keyword')
 rec(DARK_ORANGE,
     'meta.block.substitution punctuation -comment.block')
 rec(COMMENT,
@@ -506,10 +516,12 @@ rec(INDEXED,
     'variable.other.readwrite')
 
 txt('git.merge-conflict')
-rec(Style(foreground=CLEAR_WHITE, background=alpha(CLEAR_WHITE, 0.2)),
+rec(FADED_HIGHLIGHT,
     'meta.upsteam',
     'meta.changes',
     'meta.separator')
+rec(CLEAR_WHITE + BOLD,
+    'variable.other.branch')
 
 txt('git.ignore')
 rec(PUNCTUATION,
