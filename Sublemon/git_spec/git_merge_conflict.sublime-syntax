@@ -5,9 +5,13 @@ scope: text.git.merge-conflict
 
 contexts:
   main:
-  - match: '<<<<<<< .*\n'
+  - match: '<<<<<<< (.*)\n'
     scope: meta.upsteam
+    captures:
+      1: variable.other.branch.git.merge-conflict
   - match: =======\n
     scope: meta.separator
-  - match: '>>>>>>> .*\n'
+  - match: '>>>>>>> (.*)\n'
     scope: meta.changes
+    captures:
+      1: variable.other.branch.git.merge-conflict
