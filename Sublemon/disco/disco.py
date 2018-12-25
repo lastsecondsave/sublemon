@@ -501,9 +501,10 @@ rec(FOREGROUND,
 #### DIFF ####
 
 src('diff')
-rec(META,    'meta.diff.range')
-rec(BLUE,    'meta.diff.header')
-rec(GREEN,   'markup.inserted')
+rec(META + ITALIC, 'meta.diff.range')
+rec(CLEAR_WHITE + BOLD_ITALIC, 'entity.name.section')
+rec(BLUE, 'meta.diff.header')
+rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
 #### GIT ####
