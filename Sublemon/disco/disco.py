@@ -356,6 +356,7 @@ rec(VARIABLE_MARKER,
     'punctuation.definition.variable')
 rec(PUNCTUATION,
     'keyword.operator.other',
+    'variable.other punctuation.section.braces',
     'string.quoted.double punctuation.section.group -interpolated',
     'string.quoted.double punctuation.section.braces -interpolated')
 rec(META,
@@ -363,13 +364,14 @@ rec(META,
     'meta.attribute variable.parameter.attribute')
 rec(ITALIC,
     'meta.attribute - punctuation.section.bracket',
-    'keyword.operator.comparison')
-rec(STRING,
-    'string keyword.operator')
+    'keyword.operator.comparison',
+    'keyword.operator.logical',
+    'keyword.operator.unary')
 rec(VARIABLE,
     'variable storage.modifier.scope')
 rec(FOREGROUND,
-    'variable.other.member')
+    'string.quoted.double interpolated.complex -string.quoted.single',
+    'support.constant variable.other')
 
 #### SHELL ####
 
@@ -384,7 +386,8 @@ rec(PUNCTUATION,
 rec(FOREGROUND,
     'keyword.control.case.item',
     'variable.language.tilde',
-    'variable.parameter.option')
+    'variable.parameter.option',
+    'string.quoted.double meta.group.expansion.command -string.quoted.single')
 
 #### C++ ####
 
@@ -450,7 +453,7 @@ rec(ITALIC,
     'meta.tag.sgml -comment')
 rec(TAG + BOLD_ITALIC,
     'meta.tag.sgml.doctype keyword')
-rec(DARK_ORANGE,
+rec(PUNCTUATION,
     'meta.block.substitution punctuation -comment.block')
 rec(COMMENT,
     'comment.block meta.block.substitution variable.other')
