@@ -309,10 +309,6 @@ class ChimneyCommand(WindowCommand):
         _get_executor(self.window).run(options, self.get_listener())
 
 
-class ExecCommand(ChimneyCommand):
-    pass
-
-
 _EXECUTORS = {}
 
 
