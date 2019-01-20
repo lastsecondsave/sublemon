@@ -521,8 +521,7 @@ rec(INDEXED,
 
 txt('git.merge-conflict')
 rec(FADED_HIGHLIGHT,
-    'meta.upsteam',
-    'meta.changes',
+    'meta.branch',
     'meta.separator')
 rec(CLEAR_WHITE + BOLD,
     'variable.other.branch')
