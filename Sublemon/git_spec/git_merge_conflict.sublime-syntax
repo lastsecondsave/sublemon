@@ -5,13 +5,9 @@ scope: text.git.merge-conflict
 
 contexts:
   main:
-  - match: '<<<<<<< (.*)\n'
-    scope: meta.upsteam
+  - match: '^(?:<{7}|>{7}|\|{7})\s+(.*)\n'
+    scope: meta.branch.git.merge-conflict
     captures:
       1: variable.other.branch.git.merge-conflict
-  - match: =======\n
-    scope: meta.separator
-  - match: '>>>>>>> (.*)\n'
-    scope: meta.changes
-    captures:
-      1: variable.other.branch.git.merge-conflict
+  - match: ^={7}\n
+    scope: meta.separator.git.merge-conflict
