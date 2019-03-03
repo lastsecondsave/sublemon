@@ -122,15 +122,20 @@ color_scheme = {
     'name': 'Disco',
 
     'globals': {
-        'background' : BLUISH_BLACK,
-        'foreground' : WHITE,
-        'caret' : CLEAR_WHITE,
-        'highlight' : CLEAR_WHITE,
-        'selection' : DARK_BLUE,
-        'line_highlight' : alpha(CRIMSON, 0.2),
-        'find_highlight' : YELLOW,
-        'minimapBorder' : CLEAR_WHITE,
-        'brackets_foreground' : DARK_ORANGE
+        'background': BLUISH_BLACK,
+        'foreground': WHITE,
+        'caret': CLEAR_WHITE,
+        'highlight': CLEAR_WHITE,
+        'selection': DARK_BLUE,
+        'line_highlight': alpha(CRIMSON, 0.2),
+        'find_highlight': YELLOW,
+        'minimapBorder': CLEAR_WHITE,
+        'brackets_foreground': DARK_ORANGE,
+
+        'line_diff_width': '1',
+        'line_diff_added': alpha(DARK_ORANGE, 0.5),
+        'line_diff_modified': alpha(GREEN, 0.5),
+        'line_diff_deleted': alpha(CRIMSON, 0.5)
     },
 
     'rules': []
@@ -188,6 +193,13 @@ rec(BLUE, 'markup.heading')
 rec(YELLOW, 'markup.underline.link')
 rec(ORANGE, 'markup.italic')
 rec(CRIMSON, 'markup.bold')
+
+#### INLINE DIFF ####
+
+rec(Style(background=alpha(GREEN, 0)), 'diff.inserted')
+rec(Style(background=alpha(FADED_VIOLET, 0.5)), 'diff.inserted.char')
+rec(Style(foreground=GRAY, background=alpha(FADED_GRAY, 0.3)), 'diff.deleted')
+rec(Style(background=alpha(CRIMSON, 0.5)), 'diff.deleted.char')
 
 #### PYTHON ####
 
@@ -509,6 +521,7 @@ rec(CLEAR_WHITE + BOLD_ITALIC, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
+rec(CRIMSON, 'markup.changed')
 
 #### GIT ####
 
