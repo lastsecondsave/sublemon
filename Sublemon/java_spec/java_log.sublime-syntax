@@ -15,7 +15,7 @@ contexts:
       1: meta.indicator.error.java
       2: meta.indicator.warning.java
 
-  - match: '(?:(Caused by): )?((?:{{lowercase_id}}\.)+{{classcase_id}}(?:Exception|Error|Failure))(?:: )?(.*)'
+  - match: '(?:(Caused by): )?((?:{{lowercase_id}}\.)+{{classcase_id}}(?:Exception|Error|Failure)):?\s+(.*)'
     captures:
       1: constant.language.java
       2: entity.name.exception.java
