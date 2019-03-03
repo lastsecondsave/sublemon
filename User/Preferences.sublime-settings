@@ -52,6 +52,7 @@
 		".git",
 		".gradle",
 		".idea",
+		".mvn",
 		".sublime",
 		".svn",
 		"__pycache__",
