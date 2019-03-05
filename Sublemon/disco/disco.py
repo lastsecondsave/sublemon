@@ -45,7 +45,7 @@ FADED_GRAY   = "#51515D"
 FADED_VIOLET = "#5E5E8E"
 
 
-BACKGROUND = Style(BLUISH_BLACK)
+BACKGROUND = Style(background=BLUISH_BLACK)
 FOREGROUND = Style(WHITE)
 
 ITALIC = Style(font_style='italic')
@@ -129,7 +129,7 @@ color_scheme = {
         'selection': DARK_BLUE,
         'line_highlight': alpha(CRIMSON, 0.2),
         'find_highlight': YELLOW,
-        'minimapBorder': CLEAR_WHITE,
+        'minimap_border': CLEAR_WHITE,
         'brackets_foreground': DARK_ORANGE,
 
         'line_diff_width': '1',
@@ -196,9 +196,9 @@ rec(CRIMSON, 'markup.bold')
 
 #### INLINE DIFF ####
 
-rec(Style(background=alpha(GREEN, 0)), 'diff.inserted')
+rec(BACKGROUND, 'diff.inserted')
 rec(Style(background=alpha(FADED_VIOLET, 0.5)), 'diff.inserted.char')
-rec(Style(foreground=GRAY, background=alpha(FADED_GRAY, 0.3)), 'diff.deleted')
+rec(GRAY + ITALIC + BACKGROUND, 'diff.deleted')
 rec(Style(background=alpha(CRIMSON, 0.5)), 'diff.deleted.char')
 
 #### PYTHON ####
