@@ -61,7 +61,9 @@
 	"font_face": "PragmataPro Mono Liga",
 	"font_options":
 	[
+		"directwrite"
 	],
+	"font_size": 10,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
