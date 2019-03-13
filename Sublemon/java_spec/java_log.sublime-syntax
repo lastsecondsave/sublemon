@@ -9,11 +9,11 @@ variables:
 
 contexts:
   main:
-  - match: ^.* \b(?:INFO|(ERROR)|(WARN(?:ING)?))\b
-    scope: comment.log.java
-    captures:
-      1: meta.indicator.error.java
-      2: meta.indicator.warning.java
+  - match: \b(?:ERROR|FATAL)\b
+    scope: meta.indicator.error.java
+
+  - match: \bWARN(?:ING)?\b
+    scope: meta.indicator.warning.java
 
   - match: '(?:(Caused by): )?((?:{{lowercase_id}}\.)+{{classcase_id}}(?:Exception|Error|Failure)):?\s+(.*)'
     captures:
@@ -21,8 +21,9 @@ contexts:
       2: entity.name.exception.java
       3: string.java
 
-  - match: ^\s* at (?:{{lowercase_id}}\.)*({{classcase_id}}).+\((?:(.*):(.*)|.*)\)
+  - match: \bat (?:{{lowercase_id}}\.)*({{classcase_id}}).+\((?:(.*):(.*)|.*)\)(.*)
     captures:
       1: support.class.java
       2: entity.name.file.java
       3: constant.numeric.java
+      4: comment.java
