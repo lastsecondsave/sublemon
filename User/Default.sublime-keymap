@@ -4,6 +4,7 @@
   { "keys": ["alt+shift+w"],  "command": "unbound" },
   { "keys": ["ctrl+="],       "command": "unbound" },
   { "keys": ["ctrl+-"],       "command": "unbound" },
+  { "keys": ["ctrl+shift+-"], "command": "unbound" },
 
   /** COMMON **/
 
@@ -60,6 +61,9 @@
   },
 
   { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
+
+  { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
+  { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
 
   /** SEARCH WIDGET **/
 
