@@ -27,7 +27,6 @@ def alpha(color, value):
 
 WHITE        = "#C4C4C4"
 CLEAR_WHITE  = "#FFFFFF"
-
 GRAY         = "#9090A0"
 PURPLE       = "#E572D2"
 PINK         = "#EF51AA"
@@ -53,6 +52,7 @@ BOLD = Style(font_style='bold')
 BOLD_ITALIC = Style(font_style='bold italic')
 
 FADED_HIGHLIGHT = Style(background=alpha(FADED_GRAY, 0.5))
+INVALID_HIGHLIGHT = Style(background=alpha(CRIMSON, 0.5))
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
@@ -72,7 +72,7 @@ VARIABLE = Style(ORANGE)
 VARIABLE_MARKER = Style(DARK_ORANGE)
 
 RAINBOW = Style([GREEN, PINK])
-INVALID = Style(CLEAR_WHITE, background=alpha(CRIMSON, 0.5))
+INVALID = CLEAR_WHITE + INVALID_HIGHLIGHT
 
 REGEXP_GROUP = Style(ORANGE)
 REGEXP_CHARACTER_CLASS = Style(PURPLE)
@@ -132,10 +132,10 @@ color_scheme = {
         'minimap_border': CLEAR_WHITE,
         'brackets_foreground': DARK_ORANGE,
 
-        'line_diff_width': '1',
-        'line_diff_added': alpha(DARK_ORANGE, 0.5),
-        'line_diff_modified': alpha(GREEN, 0.5),
-        'line_diff_deleted': alpha(CRIMSON, 0.5)
+        'line_diff_width': '2',
+        'line_diff_added': alpha(FADED_GRAY, 0.5),
+        'line_diff_modified': alpha(FADED_VIOLET, 0.5),
+        'line_diff_deleted': alpha(FADED_VIOLET, 0.5)
     },
 
     'rules': []
@@ -191,15 +191,15 @@ rec(INVALID,
 rec(STRING, 'markup.raw')
 rec(BLUE, 'markup.heading')
 rec(YELLOW, 'markup.underline.link')
-rec(ORANGE, 'markup.italic')
-rec(CRIMSON, 'markup.bold')
+rec(ITALIC, 'markup.italic -punctuation')
+rec(BOLD, 'markup.bold -punctuation')
 
 #### INLINE DIFF ####
 
 rec(BACKGROUND, 'diff.inserted')
-rec(Style(background=alpha(FADED_VIOLET, 0.5)), 'diff.inserted.char')
+rec(Style(background=FADED_GRAY), 'diff.inserted.char')
 rec(GRAY + ITALIC + BACKGROUND, 'diff.deleted')
-rec(Style(background=alpha(CRIMSON, 0.5)), 'diff.deleted.char')
+rec(INVALID_HIGHLIGHT, 'diff.deleted.char')
 
 #### PYTHON ####
 
@@ -344,9 +344,9 @@ rec(META, 'storage.type.annotation')
 
 txt('log')
 rec(CRIMSON, 'meta.indicator.error')
-rec(ORANGE,  'meta.indicator.warning')
-rec(GREEN,   'meta.indicator.success')
-rec(YELLOW,  'meta.message')
+rec(ORANGE, 'meta.indicator.warning')
+rec(GREEN, 'meta.indicator.success')
+rec(YELLOW, 'meta.message')
 
 #### C# ####
 
@@ -510,6 +510,9 @@ rec(YELLOW,
     'meta.link',
     'meta.image',
     'entity.other.attribute-name.class.html')
+rec(FADED_GRAY,
+    'punctuation.definition.bold',
+    'punctuation.definition.italic')
 rec(FOREGROUND,
     'punctuation.separator.key-value.html')
 
