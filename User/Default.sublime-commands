@@ -1,0 +1,11 @@
+[
+  { "caption": "Escape Backslashes", "command": "escape_backslashes" },
+  { "caption": "Shrink Whitespace", "command": "shrink_whitespace" },
+
+  { "caption": "Indent Guides: Toggle", "command": "toggle_indent_guides" },
+  { "caption": "Ligatures: Toggle", "command": "toggle_ligatures" },
+
+  { "caption": "Git: Diff", "command": "git_diff" },
+  { "caption": "Git: Log", "command": "git_log" },
+  { "caption": "Git: Blame", "command": "git_blame "}
+]
