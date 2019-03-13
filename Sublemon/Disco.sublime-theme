@@ -1,7 +1,21 @@
 {
   "variables": {
-    "panel_blue": [38, 79, 120],
-    "totally_white": [255, 255, 255],
+    "WHITE": "#C4C4C4",
+    "CLEAR_WHITE": "#FFFFFF",
+    "GRAY": "#9090A0",
+    "PURPLE": "#E572D2",
+    "PINK": "#EF51AA",
+    "BLUE": "#6699FF",
+    "GREEN": "#C5CC4B",
+    "YELLOW": "#EDC61A",
+    "ORANGE": "#FFAD3A",
+    "DARK_ORANGE": "#FF8147",
+    "CRIMSON": "#E5476C",
+
+    "FADED_GRAY": "#51515D",
+    "FADED_VIOLET": "#5E5E8E",
+
+    "panel_blue": "#264F78",
 
     "qp_background": [84, 84, 94],
     "qp_label": [210, 210, 210],
@@ -174,7 +188,7 @@
       "class": "vcs_status_badge",
       "parents": [{"class": "file_system_entry", "attributes": ["untracked"]}],
       "layer0.texture": "Theme - Default/common/status_untracked.png",
-      "layer0.tint": "grey",
+      "layer0.tint": "var(FADED_GRAY)",
       "layer0.opacity": 1.0,
       "content_margin": 6
     },
@@ -182,7 +196,7 @@
       "class": "vcs_status_badge",
       "parents": [{"class": "file_system_entry", "attributes": ["modified"]}],
       "layer0.texture": "Theme - Default/common/status_modified.png",
-      "layer0.tint": "color(var(--bluish) min-contrast(rgb(235, 237, 239) 2.5))",
+      "layer0.tint": "var(FADED_VIOLET)",
       "layer0.opacity": 1.0,
       "content_margin": 6
     },
@@ -190,7 +204,7 @@
       "class": "vcs_status_badge",
       "parents": [{"class": "file_system_entry", "attributes": ["staged"]}],
       "layer0.texture": "Theme - Default/common/status_staged.png",
-      "layer0.tint": "color(var(--bluish) min-contrast(rgb(235, 237, 239) 2.5))",
+      "layer0.tint": "var(FADED_VIOLET)",
       "layer0.opacity": 1.0,
       "content_margin": 6
     },
@@ -198,7 +212,7 @@
       "class": "vcs_status_badge",
       "parents": [{"class": "file_system_entry", "attributes": ["added"]}],
       "layer0.texture": "Theme - Default/common/status_staged.png",
-      "layer0.tint": "color(var(--greenish) min-contrast(rgb(235, 237, 239) 2.5))",
+      "layer0.tint": "var(FADED_GRAY)",
       "layer0.opacity": 1.0,
       "content_margin": 6
     },
@@ -206,7 +220,7 @@
       "class": "vcs_status_badge",
       "parents": [{"class": "file_system_entry", "attributes": ["unmerged"]}],
       "layer0.texture": "Theme - Default/common/status_unmerged.png",
-      "layer0.tint": "color(var(--orangish) min-contrast(rgb(235, 237, 239) 2.5))",
+      "layer0.tint": "var(CRIMSON)",
       "layer0.opacity": 1.0,
       "content_margin": 6
     },
@@ -338,7 +352,7 @@
     {
       "class": "tab_label",
       "parents": [{"class": "tab_control", "attributes": ["selected"]}],
-      "fg": "var(totally_white)"
+      "fg": "var(CLEAR_WHITE)"
     },
     {
       "class": "tab_label",
@@ -490,7 +504,7 @@
       "class": "quick_panel_label",
       "fg": "var(qp_label)",
       "match_fg": "var(qp_match)",
-      "selected_fg": "var(totally_white)",
+      "selected_fg": "var(CLEAR_WHITE)",
       "selected_match_fg": "var(qp_match)"
     },
     {
@@ -630,7 +644,7 @@
       "class": "auto_complete_label",
       "fg": "var(qp_label)",
       "match_fg": "var(qp_match)",
-      "selected_fg": "var(totally_white)",
+      "selected_fg": "var(CLEAR_WHITE)",
       "selected_match_fg": "var(qp_match)",
       "fg_blend": false
     },
@@ -976,7 +990,7 @@
     // Labels
     {
       "class": "label_control",
-      "fg": "var(totally_white)",
+      "fg": "var(CLEAR_WHITE)",
       "font.size": 12
     },
     {
@@ -988,7 +1002,7 @@
     // Tool tips
     {
       "class": "tool_tip_control",
-      "layer0.tint": "var(totally_white)",
+      "layer0.tint": "var(CLEAR_WHITE)",
       "layer0.opacity": 0.9,
       "content_margin": [8, 3, 8, 3]
     },
@@ -1029,7 +1043,7 @@
       "class": "label_control",
       "parents": [{"class": "status_bar"}],
       "font.size": 11,
-      "color": "var(totally_white)"
+      "color": "var(CLEAR_WHITE)"
     },
     {
       "class": "vcs_status",
@@ -1038,15 +1052,15 @@
     {
       "class": "vcs_branch_icon",
       "layer0.texture": "Theme - Default/common/branch.png",
-      "layer0.tint": "color(var(totally_white) a(0.8))",
+      "layer0.tint": "color(var(CLEAR_WHITE) a(0.8))",
       "layer0.opacity": 1.0,
       "content_margin": [6, 11]
     },
     {
       "class": "vcs_changes_annotation",
       "font.size": 9,
-      "color": "var(totally_white)",
-      "border_color": "color(var(totally_white) a(0.6))",
+      "color": "var(CLEAR_WHITE)",
+      "border_color": "color(var(CLEAR_WHITE) a(0.6))",
       "content_margin": [3, 1, 3, 0]
     }
   ]
