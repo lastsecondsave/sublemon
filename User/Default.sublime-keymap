@@ -18,7 +18,6 @@
   { "keys": ["ctrl+alt+left"], "command": "scroll_width", "args": {"amount": -20} },
 
   { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
-  { "keys": ["ctrl+alt+."], "command": "open_file" , "args": {"file": "${project}"} },
 
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
   { "keys": ["shift+alt+z"],  "command": "reveal_in_side_bar" },
@@ -41,6 +40,8 @@
 
   { "keys": ["alt+/"],      "command": "show_file_path" },
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
+
+  { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+n"], "command": "clone_file" },
