@@ -197,7 +197,7 @@ rec(BOLD, 'markup.bold -punctuation')
 #### INLINE DIFF ####
 
 rec(BACKGROUND, 'diff.inserted')
-rec(Style(background=FADED_GRAY), 'diff.inserted.char')
+rec(FADED_HIGHLIGHT, 'diff.inserted.char')
 rec(GRAY + ITALIC + BACKGROUND, 'diff.deleted')
 rec(INVALID_HIGHLIGHT, 'diff.deleted.char')
 
