@@ -17,10 +17,12 @@
 
     "panel_blue": "#264F78",
 
-    "qp_background": [84, 84, 94],
-    "qp_label": [210, 210, 210],
-    "qp_path_label": [131, 132, 149],
-    "qp_match": [119, 171, 255]
+    "qp_background": "#54545E",
+    "qp_label": "#D2D2D2",
+    "qp_path_label": "#838495",
+    "qp_match": "#77ABFF",
+
+    "sidebar_label": "#838495"
   },
 
   "rules": [
@@ -65,7 +67,7 @@
     },
     {
       "class": "sidebar_label",
-      "fg": [131, 132, 149],
+      "fg": "var(sidebar_label)",
       "font.size": 12
     },
     {
@@ -227,7 +229,7 @@
     {
       "class": "sidebar_label",
       "parents": [{"class": "file_system_entry", "attributes": ["ignored"]}],
-      "color": "#999"
+      "color": "color(var(sidebar_label) alpha(0.6))"
     },
 
     // Tabs
