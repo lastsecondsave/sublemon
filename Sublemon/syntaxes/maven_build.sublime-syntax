@@ -49,4 +49,4 @@ contexts:
     push:
     - match: ^(?=\[(?:INFO|ERROR|FATAL|WARNING)\])
       pop: true
-    - include: Packages/Sublemon/java_spec/java_log.sublime-syntax
+    - include: Packages/Sublemon/syntaxes/java_log.sublime-syntax
