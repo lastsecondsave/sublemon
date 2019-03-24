@@ -20,7 +20,7 @@ class MavenCommand(ChimneyCommand):
     def preprocess_options(self, options):
         if not options.working_dir:
             variables = self.window.extract_variables()
-            is_pom = variables['file_name'] == 'pom.xml'
+            is_pom = variables.get('file_name', '') == 'pom.xml'
             options.working_dir = variables['file_path' if is_pom else 'folder']
 
         cmd = []
@@ -43,7 +43,7 @@ class MavenCommand(ChimneyCommand):
         cmd.append(options['mvn_cmd'])
 
         options.shell_cmd = ' '.join(cmd)
-        options.syntax = 'Packages/Sublemon/maven_spec/maven_build.sublime-syntax'
+        options.syntax = 'maven_build'
         options.file_regex = FILE_REGEX
 
     def get_listener(self):

@@ -14,7 +14,7 @@ class GitLogCommand(ChimneyCommand):
         template = 'git log -200 --follow --no-merges --date=short --format="{}" -- {}'
 
         options.shell_cmd = template.format("%h %ad %an → %s", options.source_file)
-        options.syntax = "Packages/Sublemon/git_spec/git_log.sublime-syntax"
+        options.syntax = "git_log"
         options.scroll_to_end = False
 
     def get_listener(self):
@@ -70,7 +70,7 @@ class GitBlameCommand(ChimneyCommand):
             cmd += ' -L "{},{}"'.format(from_line, to_line)
 
         options.shell_cmd = cmd + " -- {}".format(options.source_file)
-        options.syntax = "Packages/Sublemon/git_spec/git_blame.sublime-syntax"
+        options.syntax = "git_blame"
         options.scroll_to_end = False
 
     def get_listener(self):

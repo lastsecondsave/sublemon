@@ -282,6 +282,12 @@ class ChimneyCommandListener:
         pass
 
 
+class ChimneyBuildError(Exception):
+    def __init__(self, message=None):
+        super().__init__()
+        self.message = message
+
+
 class ChimneyCommand(WindowCommand):
     def __init__(self, window):
         super().__init__(window)
@@ -298,11 +304,20 @@ class ChimneyCommand(WindowCommand):
             return
 
         options = Options(kwargs, self.window)
-        self.preprocess_options(options)
+
+        try:
+            self.preprocess_options(options)
+        except ChimneyBuildError as err:
+            msg = list(filter(None, ['Build error', err.message]))
+            self.window.status_message(': '.join(msg))
+            return
 
         if not options.cmd and not options.shell_cmd and not options.kill:
-            self.window.status_message("No command to run")
+            self.window.status_message('Build error: No command')
             return
+
+        if '.sublime-syntax' not in options.syntax and '.tmLanguage' not in options.syntax:
+            options.syntax = 'Packages/Sublemon/syntaxes/' + options.syntax + '.sublime-syntax'
 
         _get_executor(self.window).run(options, self.get_listener())
 
