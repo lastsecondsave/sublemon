@@ -1,24 +1,9 @@
-import hashlib
 import os
 import plistlib
 import re
 import shutil
 
-TARGET_DIRECTORY = '.generated_settings'
-TO_UPPERCASE_PATTERN = re.compile(r'_[a-z]')
-
-
-def generate_filename(scope):
-    return hashlib.sha1(scope.encode('ascii')).hexdigest() + ".tmPreferences"
-
-
-def generate_settings_file(scope, content):
-    filename = generate_filename(scope)
-    print("{}: {}".format(filename, scope))
-
-    path = os.path.join(TARGET_DIRECTORY, filename)
-    with open(path, "wb") as pfile:
-        plistlib.dump(content, pfile)
+TARGET_DIRECTORY = '.generated'
 
 
 def settings(scope, **custom_settings):
@@ -53,8 +38,10 @@ def settings(scope, **custom_settings):
     if shell_variables:
         sublime_settings['shellVariables'] = shell_variables
 
+    to_uppercase_pattern = re.compile(r'_[a-z]')
+
     for k, v in custom_settings.items():
-        k = TO_UPPERCASE_PATTERN.sub(lambda m: m.group(0)[1].upper(), k)
+        k = to_uppercase_pattern.sub(lambda m: m.group(0)[1].upper(), k)
 
         if isinstance(v, list):
             if k in ['increaseIndentPattern',
@@ -68,8 +55,41 @@ def settings(scope, **custom_settings):
 
         sublime_settings[k] = v
 
-    generate_settings_file(scope, {'scope': scope, 'settings': sublime_settings})
+    path = os.path.join(TARGET_DIRECTORY, scope + '.tmPreferences')
+    path = os.path.abspath(path)
+
+    with open(path, "wb") as pfile:
+        plistlib.dump({'scope': scope, 'settings': sublime_settings}, pfile)
+
+    print('Generated', path)
 
 
 shutil.rmtree(TARGET_DIRECTORY, ignore_errors=True)
 os.mkdir(TARGET_DIRECTORY)
+
+
+settings("meta.context.sublime-syntax entity.name.key",
+    show_in_symbol_list=1,
+    show_in_indexed_symbol_list=1
+)
+
+settings("source.ini",
+    line_comment = [';', '#']
+)
+
+settings("source.ini entity.name.section",
+    show_in_symbol_list = 1
+)
+
+settings("source.unix",
+    line_comment = '#'
+)
+
+settings("text.rfc entity.name.title",
+    show_in_symbol_list = 1
+)
+
+settings("source.powershell",
+    line_comment = '#',
+    block_comment = ['<#', '#>']
+)

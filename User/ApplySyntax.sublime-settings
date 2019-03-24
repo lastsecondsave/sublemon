@@ -2,7 +2,7 @@
   "default_syntaxes": [],
 
   "syntaxes": [
-    { "syntax": "Sublemon/maven_spec/maven_pom",
+    { "syntax": "Sublemon/syntaxes/maven_pom",
       "rules": [
           { "file_path": ".*(\\\\|\/)pom\\.xml$" }
       ]
@@ -13,7 +13,7 @@
           { "interpreter": "pypy" }
       ]
     },
-    { "syntax": "Sublemon/etc/unix_config",
+    { "syntax": "Sublemon/syntaxes/unix_config",
       "rules": [
           { "file_path": ".*(\\\\|\/)Dockerfile" }
       ]
