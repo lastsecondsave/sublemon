@@ -8,11 +8,8 @@
 
   /** COMMON **/
 
-  { "keys": ["alt+up"],   "command": "swap_line_up" },
-  { "keys": ["alt+down"], "command": "swap_line_down" },
-
-  { "keys": ["shift+alt+up"], "command": "select_lines", "args": {"forward": false} },
-  { "keys": ["shift+alt+down"], "command": "select_lines", "args": {"forward": true} },
+  { "keys": ["alt+up"], "command": "select_lines", "args": {"forward": false} },
+  { "keys": ["alt+down"], "command": "select_lines", "args": {"forward": true} },
 
   { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 20} },
   { "keys": ["ctrl+alt+left"], "command": "scroll_width", "args": {"amount": -20} },
@@ -49,6 +46,7 @@
   { "keys": ["ctrl+k", "ctrl+s"], "command": "shrink_whitespace" },
   { "keys": ["ctrl+k", "ctrl+t"], "command": "title_case" },
   { "keys": ["ctrl+k", "ctrl+e"], "command": "select_with_custom_markers" },
+  { "keys": ["ctrl+k", "ctrl+i"], "command": "reindent", "args": {"single_line": false} },
 
   { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_indent_guides" },
@@ -70,9 +68,6 @@
 
   { "keys": ["alt+s"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
   { "keys": ["alt+b"], "command": "toggle_use_buffer",    "context": [{"key": "setting.is_widget"}] },
-  { "keys": ["f1"],    "command": "toggle_regex",         "context": [{"key": "setting.is_widget"}] },
-  { "keys": ["f2"],    "command": "toggle_case_sensitive","context": [{"key": "setting.is_widget"}] },
-  { "keys": ["f4"],    "command": "toggle_whole_word",    "context": [{"key": "setting.is_widget"}] },
 
   /** QUICK MENU **/
 
