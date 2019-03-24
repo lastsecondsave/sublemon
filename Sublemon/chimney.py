@@ -40,9 +40,7 @@ class OutputBuffer:
         while end > 0 and chunk[end-1] == '\r':
             end = end - 1
 
-        chunk = chunk[bgn:end]
-        if chunk:
-            self.buffer.append(chunk)
+        self.buffer.append(chunk[bgn:end])
 
     def flush(self):
         if self.buffer:
