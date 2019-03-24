@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -e
+
+publish() {
+  dir=$(dirname "$1")
+  script=$(basename "$1")
+
+  pushd "${dir}" > /dev/null
+  echo "Running $(tput setaf 3)${script}$(tput sgr0) in $(tput setaf 2)$PWD$(tput sgr0)\n"
+  python3 "${script}"
+  echo
+  popd > /dev/null
+}
+
+root=$(dirname "$0")
+pushd "${root}/.." > /dev/null
+
+find . -type d -name '.generated*' -exec rm -rf {} +
+
+for snippets in $(find . -name '*.snippets.py'); do
+  publish "${snippets}"
+done
+
+publish "settings/settings.py"
+publish "disco/disco.py"
+
+popd > /dev/null
