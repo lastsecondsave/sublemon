@@ -115,7 +115,7 @@ def generate():
     with open(path, 'w') as json_file:
         json.dump(color_scheme, json_file, indent=2)
 
-    print('Generated {}'.format(path))
+    print('Generated', path)
 
 
 color_scheme = {
@@ -213,7 +213,7 @@ rec(META,
 rec(ITALIC,
     'meta.annotation')
 rec(BOLD,
-    'support.function -support.function.magic')
+    'support.function -support.function.magic -variable.annotation')
 rec(STRING,
     'string keyword.operator')
 rec(STRING + BOLD_ITALIC,

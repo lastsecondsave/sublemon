@@ -16,13 +16,14 @@
     "FADED_VIOLET": "#5E5E8E",
 
     "panel_blue": "#264F78",
+    "outer_dark": "#161E26",
 
     "qp_background": "#54545E",
     "qp_label": "#D2D2D2",
     "qp_path_label": "#838495",
     "qp_match": "#77ABFF",
 
-    "sidebar_label": "#838495"
+    "sidebar_label": "#838495",
   },
 
   "rules": [
@@ -30,7 +31,7 @@
     // Side Bar
     {
       "class": "sidebar_container",
-      "layer0.tint": [22, 30, 38],
+      "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 1.0,
       "content_margin": 0,
     },
@@ -235,7 +236,7 @@
     // Tabs
     {
       "class": "tabset_control",
-      "layer0.tint": [22, 30, 38],
+      "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 1.0,
       "content_margin": [-40, 0, -22, 0],
       "tab_height": 34,
@@ -468,7 +469,7 @@
     {
       "class": "quick_panel",
       "row_padding": [4, 2, 4, 2],
-      "layer0.tint": [22, 30, 38],
+      "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 0.7,
       "dark_content": true,
     },
@@ -536,28 +537,8 @@
     // Views
     {
       "class": "grid_layout_control",
-      "border_color": ["background", 255, 255, 255, 0.25],
+      "border_color": "var(outer_dark)",
       "border_size": 1
-    },
-    {
-      "class": "grid_layout_control",
-      "parents": [{"class": "edit_window", "attributes": ["file_light"]}],
-      "border_color": ["background", 0, 0, 0, 0.32],
-    },
-    {
-      "class": "grid_layout_control",
-      "parents": [{"class": "edit_window", "attributes": ["file_medium"]}],
-      "border_color": ["background", 0, 0, 0, 0.36],
-    },
-    {
-      "class": "grid_layout_control",
-      "parents": [{"class": "edit_window", "attributes": ["file_medium_dark"]}],
-      "border_color": ["background", 255, 255, 255, 0.32],
-    },
-    {
-      "class": "grid_layout_control",
-      "parents": [{"class": "edit_window", "attributes": ["file_dark"]}],
-      "border_color": ["background", 255, 255, 255, 0.28],
     },
     {
       "class": "minimap_control",
@@ -689,7 +670,7 @@
     // Dialogs
     {
       "class": "dialog",
-      "layer0.tint": [22, 30, 38],
+      "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 1.0
     },
     {
