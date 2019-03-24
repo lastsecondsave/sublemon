@@ -12,7 +12,7 @@ class PylintCommand(ChimneyCommand):
 
         options.shell_cmd = ' '.join(cmd)
         options.file_regex = r'(.+?):(\d+):(\d+): (.*)'
-        options.syntax = 'Packages/Sublemon/python_spec/pylint.sublime-syntax'
+        options.syntax = 'pylint'
 
     def get_listener(self):
         return PylintCommandListener()
