@@ -68,9 +68,17 @@ shutil.rmtree(TARGET_DIRECTORY, ignore_errors=True)
 os.mkdir(TARGET_DIRECTORY)
 
 
-settings("meta.context.sublime-syntax entity.name.key",
+settings("meta.context.sublime-syntax entity.name.tag",
     show_in_symbol_list=1,
     show_in_indexed_symbol_list=1
+)
+
+settings("meta.variables.sublime-syntax entity.name.tag",
+    show_in_symbol_list=1,
+    show_in_indexed_symbol_list=1,
+    symbol_transformation=[
+        '/.*/[var] $0/'
+    ]
 )
 
 settings("source.ini",
