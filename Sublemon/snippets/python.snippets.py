@@ -1,4 +1,4 @@
-from snippets import *
+from snippets_lib import *
 
 def blk(s): return s + ':\n\t$0'
 
