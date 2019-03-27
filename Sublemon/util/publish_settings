@@ -2,13 +2,18 @@
 
 set -e
 
+PYTHON_BINARY=python
+if which python3 > /dev/null; then
+    PYTHON_BINARY=python3
+fi
+
 publish() {
   dir=$(dirname "$1")
   script=$(basename "$1")
 
   pushd "${dir}" > /dev/null
-  echo "Running $(tput setaf 3)${script}$(tput sgr0) in $(tput setaf 2)$PWD$(tput sgr0)\n"
-  python3 "${script}"
+  echo -e "Running $(tput setaf 3)${script}$(tput sgr0) in $(tput setaf 2)$PWD$(tput sgr0)\n"
+  $PYTHON_BINARY "${script}"
   echo
   popd > /dev/null
 }
