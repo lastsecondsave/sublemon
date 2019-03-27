@@ -1,4 +1,4 @@
-from snippets import *
+from snippets_lib import *
 
 sh = Snippets('source.shell')
 

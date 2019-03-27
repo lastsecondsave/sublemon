@@ -1,4 +1,4 @@
-from snippets import *
+from snippets_lib import *
 
 xml = Snippets('text.xml')
 tag = xml.subscope('meta.tag')

@@ -1,4 +1,4 @@
-from snippets import *
+from snippets_lib import *
 
 regexp = Snippets('source.regexp')
 
