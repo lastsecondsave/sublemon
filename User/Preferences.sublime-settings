@@ -69,8 +69,6 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Objective-C",
-		"Rails",
 		"Vintage"
 	],
 	"indent_guide_options":
