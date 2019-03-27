@@ -560,4 +560,8 @@ rec(YELLOW,
     'entity.name.section')
 rec(FOREGROUND, 'string.unquoted')
 
+#### SUBLIME SYNTAX ####
+src('sublime-syntax')
+rec(VARIABLE_MARKER, 'punctuation.definition.variable')
+
 generate()

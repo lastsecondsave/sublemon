@@ -1,4 +1,7 @@
 {
+    "extensions":   [
+        "sublime-syntax"
+    ],
     "indent_guide_options": [
         "draw_normal"
     ],
