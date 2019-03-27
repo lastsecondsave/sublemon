@@ -127,7 +127,7 @@ color_scheme = {
         'caret': CLEAR_WHITE,
         'highlight': CLEAR_WHITE,
         'selection': DARK_BLUE,
-        'line_highlight': alpha(CRIMSON, 0.2),
+        'line_highlight': alpha(CRIMSON, 0.15),
         'find_highlight': YELLOW,
         'minimap_border': CLEAR_WHITE,
         'brackets_foreground': DARK_ORANGE,
@@ -245,6 +245,8 @@ rec(STORAGE,
     'support.constant.builtin')
 rec(OPERATOR,
     'storage.type.function.arrow')
+rec(KEYWORD,
+    'keyword.operator.js')
 rec(STRING,
     'meta.template.expression')
 rec(VARIABLE,
