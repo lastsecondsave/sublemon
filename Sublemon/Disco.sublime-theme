@@ -973,19 +973,19 @@
     // Labels
     {
       "class": "label_control",
-      "fg": "var(CLEAR_WHITE)",
+      "fg": "var(WHITE)",
       "font.size": 12
     },
     {
       "class": "title_label_control",
-      "fg": [255, 152, 0],
+      "fg": "var(WHITE)",
       "font.size": 24
     },
 
     // Tool tips
     {
       "class": "tool_tip_control",
-      "layer0.tint": "var(CLEAR_WHITE)",
+      "layer0.tint": [255, 255, 255],
       "layer0.opacity": 0.9,
       "content_margin": [8, 3, 8, 3]
     },
