@@ -187,7 +187,7 @@ def path_starts_with(path, prefix):
 class ToggleIndentGuidesCommand(TextCommand):
     def run(self, edit):
         guide_options = self.view.settings().get("indent_guide_options")
-        guide_options = [] if guide_options else ["draw_normal", "draw_active"]
+        guide_options = [] if guide_options else ["draw_normal"]
         self.view.settings().set("indent_guide_options", guide_options)
         show_setting_status('indent guides', guide_options)
 
