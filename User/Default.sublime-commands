@@ -5,6 +5,9 @@
   { "caption": "Indent Guides: Toggle", "command": "toggle_indent_guides" },
   { "caption": "Ligatures: Toggle", "command": "toggle_ligatures" },
 
+  { "caption": "Indentation: 2 Spaces", "command": "set_setting", "args":  {"setting": "tab_size", "value": 2} },
+  { "caption": "Indentation: 4 Spaces", "command": "set_setting", "args":  {"setting": "tab_size", "value": 4} },
+
   { "caption": "Git: Diff", "command": "git_diff" },
   { "caption": "Git: Log", "command": "git_log" },
   { "caption": "Git: Blame", "command": "git_blame "}
