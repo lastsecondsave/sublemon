@@ -51,7 +51,7 @@ ITALIC = Style(font_style='italic')
 BOLD = Style(font_style='bold')
 BOLD_ITALIC = Style(font_style='bold italic')
 
-FADED_HIGHLIGHT = Style(background=alpha(FADED_GRAY, 0.5))
+FADED_HIGHLIGHT = Style(background=alpha(FADED_GRAY, 0.4))
 INVALID_HIGHLIGHT = Style(background=alpha(CRIMSON, 0.5))
 
 KEYWORD = Style(PURPLE)
@@ -188,11 +188,16 @@ rec(INVALID,
 
 #### MARKUP ####
 
-rec(STRING, 'markup.raw')
-rec(BLUE, 'markup.heading')
-rec(YELLOW, 'markup.underline.link')
-rec(ITALIC, 'markup.italic -punctuation')
-rec(BOLD, 'markup.bold -punctuation')
+rec(STRING,
+    'markup.raw -markup.raw.code-fence -markup.raw.block')
+rec(BLUE,
+    'markup.heading')
+rec(ITALIC,
+    'markup.italic -punctuation',
+    'markup.underline.link',
+    'markup.quote')
+rec(BOLD,
+    'markup.bold -punctuation')
 
 #### INLINE DIFF ####
 
@@ -248,7 +253,8 @@ rec(OPERATOR,
 rec(KEYWORD,
     'keyword.operator.js')
 rec(STRING,
-    'meta.template.expression')
+    'meta.template.expression',
+    'string.regexp keyword.other.js')
 rec(VARIABLE,
     'support.type.object.dom')
 rec(PUNCTUATION,
@@ -486,37 +492,20 @@ rec(STRING,
 #### MARKDOWN ####
 
 txt('html.markdown')
-rec(PARAMETER,
-    'meta.link.inline.description',
-    'meta.link.reference.literal.description',
-    'meta.link.reference.description',
-    'meta.image.inline.description',
-    'meta.image.reference.description',
-    'constant.other.reference.link',
-    'entity.name.reference.link.markdown')
 rec(TAG,
     'meta.tag')
 rec(PUNCTUATION,
-    'meta.link.inline punctuation.definition.link',
-    'meta.link.reference punctuation.definition.link',
     'punctuation.definition.list_item',
-    'markup.list.numbered.bullet',
     'punctuation.definition.blockquote',
-    'punctuation.definition.constant',
-    'punctuation.definition.image',
-    'punctuation.separator',
-    'punctuation.definition.thematic-break')
-rec(STRING,
-    'punctuation.definition.string')
-rec(YELLOW,
-    'meta.link',
-    'meta.image',
-    'entity.other.attribute-name.class.html')
+    'punctuation.definition.link',
+    'markup.list.numbered.bullet')
+rec(VARIABLE,
+    'meta.link.inline.description')
 rec(FADED_GRAY,
     'punctuation.definition.bold',
-    'punctuation.definition.italic')
-rec(FOREGROUND,
-    'punctuation.separator.key-value.html')
+    'punctuation.definition.italic',
+    'punctuation.definition.raw.code-fence',
+    'meta.code-fence.definition constant.other.language-name')
 
 #### DIFF ####
 
@@ -563,6 +552,7 @@ rec(YELLOW,
 rec(FOREGROUND, 'string.unquoted')
 
 #### SUBLIME SYNTAX ####
+
 src('sublime-syntax')
 rec(VARIABLE_MARKER, 'punctuation.definition.variable')
 
