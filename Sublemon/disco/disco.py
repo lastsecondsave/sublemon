@@ -225,6 +225,8 @@ rec(STRING + BOLD_ITALIC,
     'string source.sql keyword')
 rec(STRING + ITALIC,
     'string source.sql storage')
+rec(PARAMETER + ITALIC,
+    'meta.function-call.arguments variable.parameter -meta.function.inline')
 
 #### REGEXP IN PYTHON ####
 
