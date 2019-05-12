@@ -1,5 +1,6 @@
 import os
 import re
+import tempfile
 
 import sublime
 from sublime import Region
@@ -7,7 +8,6 @@ from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
 
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 HOME_PATH = os.environ['USERPROFILE' if RUNNING_ON_WINDOWS else 'HOME']
-TMP_PATH = os.environ['TMP'] if RUNNING_ON_WINDOWS else '/tmp'
 
 
 class EscapeBackslashesCommand(TextCommand):
@@ -131,6 +131,9 @@ class ShowFilePathCommand(WindowCommand):
         prefix = None
         variables = self.window.extract_variables()
 
+        def path_starts_with(path, prefix):
+            return path.startswith(prefix + os.sep)
+
         if 'project' in variables:
             settings = self.window.project_data().get('settings', {})
             base_path = settings.get("project_root", variables["project_path"])
@@ -161,27 +164,31 @@ class OpenFilePathCommand(WindowCommand):
             if RUNNING_ON_WINDOWS:
                 path = path.replace('/', '\\')
 
-            if path_starts_with(path, '~'):
-                path = HOME_PATH + path[1:]
-            elif path_starts_with(path, '@'):
-                folder = self.window.extract_variables().get('folder')
-                if folder:
-                    path = folder + path[1:]
-                else:
-                    sublime.status_message('Not in project')
-                    return
-            elif path_starts_with(path, '#'):
-                tmp = os.path.join(TMP_PATH, 'sublemon')
-                os.makedirs(tmp, exist_ok=True)
-                path = tmp + path[1:]
+            parent = path[0] if len(path) > 1 and path[1] == os.sep else ''
 
-            self.window.open_file(path, sublime.ENCODED_POSITION)
+            if parent == '~':
+                parent = HOME_PATH
+            elif parent ==  '@':
+                parent = self.window.extract_variables().get('folder')
+            elif parent == '#':
+                parent = os.path.join(tempfile.gettempdir(), 'sublemon')
+
+            if parent:
+                path = parent + path[1:]
+
+            open_file = True
+
+            parent = os.path.dirname(path)
+            if (parent and not os.path.exists(parent)):
+                open_file = sublime.ok_cancel_dialog("Directory {0} does not exist".format(parent),
+                                                     "Create")
+                if open_file:
+                    os.makedirs(parent)
+
+            if open_file:
+                self.window.open_file(path, sublime.ENCODED_POSITION)
 
         self.window.show_input_panel("File Name:", '', on_done, None, None)
-
-
-def path_starts_with(path, prefix):
-    return path.startswith(prefix + os.sep)
 
 
 class ToggleIndentGuidesCommand(TextCommand):
