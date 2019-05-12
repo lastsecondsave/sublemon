@@ -34,7 +34,9 @@ class OutputBuffer:
             bgn = end + 1
             end = chunk.find('\n', bgn)
 
-        self.append(chunk, bgn, len(chunk))
+        end = len(chunk)
+        if bgn < end:
+            self.append(chunk, bgn, end)
 
     def append(self, chunk, bgn, end):
         while end > 0 and chunk[end-1] == '\r':
@@ -78,11 +80,9 @@ class OutputPanel:
         self.line_buffer_lock = Lock()
         self.line_buffer = deque()
 
-        self.scroll_to_end = True
+        self.lines_printed = 0
 
-    def reset(self,
-              syntax=None, scroll_to_end=True,
-              **settings):
+    def reset(self, syntax=None, **settings):
         view_settings = self.view.settings()
 
         view_settings.set('gutter', False)
@@ -96,9 +96,9 @@ class OutputPanel:
         if syntax:
             self.view.assign_syntax(syntax)
 
-        self.scroll_to_end = scroll_to_end
-
         self.window.create_output_panel('exec')
+
+        self.lines_printed = 0
 
     def append(self, line):
         with self.line_buffer_lock:
@@ -115,11 +115,13 @@ class OutputPanel:
             lines = copy.copy(self.line_buffer)
             self.line_buffer.clear()
 
-        self.view.run_command('append', {
-            'characters': '\n'.join(lines) + '\n',
-            'force': True,
-            'scroll_to_end': self.scroll_to_end
-        })
+        if self.lines_printed:
+            lines.appendleft('')
+
+        self.lines_printed += 1
+
+        characters = '\n'.join(lines)
+        self.view.run_command('append', {'characters': characters})
 
     def show(self):
         self.window.run_command('show_panel', {'panel': 'output.exec'})
@@ -191,7 +193,6 @@ class Executor:
 
         self.output_panel.reset(
             syntax=options.syntax,
-            scroll_to_end=options.scroll_to_end,
             result_base_dir=working_dir,
             result_file_regex=options.file_regex,
             result_line_regex=options.line_regex
