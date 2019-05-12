@@ -44,10 +44,10 @@ class GitLogCommandListener(ChimneyCommandListener):
         self.author_width = max(self.author_width, len(line_info['author']))
 
     def on_complete(self, ctx):
-        for line_info in self.line_infos:
-            line = ' '.join([line_info['commit'],
+        for line_info in reversed(self.line_infos):
+            line = ' '.join([line_info['date'],
                              line_info['author'].ljust(self.author_width),
-                             line_info['date'],
+                             line_info['commit'],
                              line_info['message']])
             ctx.print(line)
 
@@ -111,9 +111,9 @@ class GitBlameCommandListener(ChimneyCommandListener):
     def on_complete(self, ctx):
         for line_info in self.line_infos:
             if not line_info['not_committed']:
-                line = ' '.join([line_info['commit'],
+                line = ' '.join([line_info['date'],
                                  line_info['author'].ljust(self.author_width),
-                                 line_info['date']])
+                                 line_info['commit']])
             else:
                 line = ' ' * (len(line_info['commit']) + self.author_width + 12)
 

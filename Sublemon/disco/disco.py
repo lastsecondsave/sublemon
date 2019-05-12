@@ -540,8 +540,9 @@ rec(FOREGROUND,
     'entity.name')
 
 txt('git')
-rec(FADED_VIOLET, 'constant.date')
-rec(RAINBOW, 'constant.numeric.hash')
+rec(ITALIC,
+    'constant.date',
+    'constant.numeric.hash')
 
 #### INI ####
 
