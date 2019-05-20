@@ -1,6 +1,7 @@
 {
 	"auto_upgrade": true,
 	"bootstrapped": true,
+	"ignore_vcs_packages": true,
 	"in_process_packages":
 	[
 	],
@@ -9,12 +10,11 @@
 		"Alignment",
 		"ApplySyntax",
 		"Horizontal Scroll",
-		"IndentX",
 		"Kotlin",
 		"MoveTab",
 		"Package Control",
 		"PackageResourceViewer",
+		"Pretty JSON",
 		"ScopeHunter"
-	],
-	"ignore_vcs_packages": true
+	]
 }
