@@ -41,8 +41,12 @@
 
   { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
 
-  { "keys": ["alt+/"],      "command": "show_file_path" },
+  { "keys": ["ctrl+alt+b"], "command": "build" },
+
+  { "keys": ["alt+/"], "command": "show_file_path" },
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
+  { "keys": ["ctrl+shift+alt+p"], "command": "get_selection_scope" },
+  { "keys": ["ctrl+alt+a"], "command": "alignment" },
 
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 
@@ -77,26 +81,11 @@
   /** QUICK MENU **/
 
   { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
-  { "keys": ["alt+;"],   "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
-  { "keys": ["alt+f7"],  "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Build With: "} },
-
-  { "keys": ["ctrl+q"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
+  { "keys": ["ctrl+'"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
 
   /** PANELS **/
 
-  { "keys": ["ctrl+f"],       "command": "show_panel", "args": {"panel": "find", "reverse": false, "toggle": true} },
-  { "keys": ["ctrl+i"],       "command": "show_panel", "args": {"panel": "incremental_find", "reverse": false, "toggle": true} },
-  { "keys": ["ctrl+shift+i"], "command": "show_panel", "args": {"panel": "incremental_find", "reverse": true, "toggle": true} },
-  { "keys": ["ctrl+h"],       "command": "show_panel", "args": {"panel": "replace", "reverse": false, "toggle": true} },
-  { "keys": ["ctrl+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files", "toggle": true, "toggle": true} },
-
   { "keys": ["ctrl+o"], "command": "open_file_path" },
-  { "keys": ["ctrl+o"], "command": "hide_panel",
-    "context": [
-      { "key": "panel", "operand": "input" },
-      { "key": "panel_has_focus" }
-    ]
-  },
 
   { "keys": ["ctrl+b"], "command": "show_panel", "args": {"panel": "output.exec"} },
   { "keys": ["ctrl+b"], "command": "hide_panel",
@@ -105,14 +94,6 @@
       { "key": "panel_visible" }
     ]
   },
-
-  /** BUILD **/
-
-  { "keys": ["f7"],            "command": "build" },
-  { "keys": ["ctrl+alt+b"],    "command": "build" },
-  { "keys": ["ctrl+shift+f7"], "command": "build", "args": {"select": true} },
-
-  { "keys": ["ctrl+alt+f7"], "command": "exec", "args": {"kill": true} },
 
   /** XML **/
 
@@ -129,21 +110,11 @@
     ]
   },
 
-  { "keys": ["shift+alt+."], "command": "close_tag" },
-
   { "keys": ["shift+alt+,"], "command": "insert_snippet",
     "args": {"contents": "<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>"}
   },
 
-  /** PLUGINS **/
-
-  { "keys": ["alt+f6"],     "command": "toggle_selection_scope" },
-  { "keys": ["ctrl+alt+a"], "command": "alignment" },
-
   /** MACRO **/
-
-  { "keys": ["alt+."],        "command": "run_macro" },
-  { "keys": ["ctrl+shift+."], "command": "toggle_record_macro" },
 
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_indent.sublime-macro" },
