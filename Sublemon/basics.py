@@ -191,14 +191,6 @@ class OpenFilePathCommand(WindowCommand):
         self.window.show_input_panel("File Name:", '', on_done, None, None)
 
 
-class ToggleIndentGuidesCommand(TextCommand):
-    def run(self, edit):
-        guide_options = self.view.settings().get("indent_guide_options")
-        guide_options = [] if guide_options else ["draw_normal"]
-        self.view.settings().set("indent_guide_options", guide_options)
-        show_setting_status('indent guides', guide_options)
-
-
 class ToggleLigaturesCommand(TextCommand):
     def run(self, edit):
         font_options = self.view.settings().get("font_options")

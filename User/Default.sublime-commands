@@ -2,7 +2,7 @@
   { "caption": "Escape Backslashes", "command": "escape_backslashes" },
   { "caption": "Shrink Whitespace", "command": "shrink_whitespace" },
 
-  { "caption": "Indent Guides: Toggle", "command": "toggle_indent_guides" },
+  { "caption": "Draw Indent Guides: Toggle", "command": "toggle_setting_verbose", "args": {"setting": "draw_indent_guides"} },
   { "caption": "Indent to Bracket: Toggle", "command": "toggle_setting_verbose", "args":  {"setting": "indent_to_bracket"} },
   { "caption": "Ligatures: Toggle", "command": "toggle_ligatures" },
 
