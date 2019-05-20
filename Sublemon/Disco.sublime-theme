@@ -47,7 +47,7 @@
     {
       "class": "tree_row",
       "attributes": ["!hover"],
-      "layer0.tint": [84, 84, 94],
+      "layer0.tint": "var(FADED_GRAY)",
       "layer0.opacity": 0.0,
     },
     {
@@ -58,11 +58,11 @@
     {
       "class": "tree_row",
       "attributes": ["selected"],
-      "layer0.opacity": 0.5,
+      "layer0.opacity": 0.4
     },
     {
       "class": "sidebar_heading",
-      "fg": [190, 190, 190],
+      "fg": "var(WHITE)",
       "font.size": 12,
       "font.bold": true
     },
@@ -74,7 +74,7 @@
     {
       "class": "sidebar_label",
       "parents": [{"class": "tree_row", "attributes": ["selected"]}],
-      "fg": [230, 230, 230],
+      "fg": "var(WHITE)",
     },
     {
       "class": "sidebar_label",
@@ -85,7 +85,7 @@
     {
       "class": "sidebar_label",
       "parents": [{ "class": "tree_row", "attributes": ["expanded"] }],
-      "fg": [230, 230, 230],
+      "fg": "var(WHITE)",
     },
 
     // Open Files Icons
