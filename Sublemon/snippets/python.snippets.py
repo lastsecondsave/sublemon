@@ -16,6 +16,7 @@ py/'ss' - ('self.x - x', 'self.$1 - $1')
 py/'doc' - ('docstring', '"""\n\t$0\n"""')
 
 py/blk/'def' - ('function()', 'def ${1:run}($2)')
+py/spc/'lam' - ('lambda', 'lambda ${1:x}:')
 
 py/blk/'class' - 'class $1'
 py/blk/'init' - ('__init__()', 'def __init__(self$1)')
