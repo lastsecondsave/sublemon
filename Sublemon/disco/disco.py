@@ -1,14 +1,12 @@
-import os
 import json
+import os
 
 
 class Style:
-    def __init__(self, foreground=None, font_style=None, **settings):
+    def __init__(self, foreground=None, **settings):
         self.settings = settings
         if foreground:
             self.settings['foreground'] = foreground
-        if font_style:
-            self.settings['font_style'] = font_style
 
     def __add__(self, other):
         settings = self.settings.copy()
@@ -51,8 +49,6 @@ ITALIC = Style(font_style='italic')
 BOLD = Style(font_style='bold')
 BOLD_ITALIC = Style(font_style='bold italic')
 
-FADED_HIGHLIGHT = Style(background=alpha(FADED_GRAY, 0.4))
-INVALID_HIGHLIGHT = Style(background=alpha(CRIMSON, 0.5))
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
@@ -71,8 +67,8 @@ USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
 VARIABLE_MARKER = Style(DARK_ORANGE)
 
-RAINBOW = Style([GREEN, PINK])
-INVALID = CLEAR_WHITE + INVALID_HIGHLIGHT
+RAINBOW = Style([YELLOW, PINK])
+INVALID = Style(CLEAR_WHITE, background=CRIMSON)
 
 REGEXP_GROUP = Style(ORANGE)
 REGEXP_CHARACTER_CLASS = Style(PURPLE)
@@ -106,6 +102,7 @@ def rec(style, *scopes):
         color_scheme['rules'].append(dict(style.settings, scope=scope))
 
 
+
 def generate():
     global color_scheme
 
@@ -127,15 +124,15 @@ color_scheme = {
         'caret': CLEAR_WHITE,
         'highlight': CLEAR_WHITE,
         'selection': DARK_BLUE,
-        'line_highlight': alpha(CRIMSON, 0.15),
+        'line_highlight': alpha(FADED_GRAY, 0.3),
         'find_highlight': YELLOW,
         'minimap_border': CLEAR_WHITE,
         'brackets_foreground': DARK_ORANGE,
 
         'line_diff_width': '2',
-        'line_diff_added': alpha(FADED_GRAY, 0.5),
-        'line_diff_modified': alpha(FADED_VIOLET, 0.5),
-        'line_diff_deleted': alpha(FADED_VIOLET, 0.5)
+        'line_diff_added': FADED_GRAY,
+        'line_diff_modified': FADED_VIOLET,
+        'line_diff_deleted': FADED_VIOLET
     },
 
     'rules': []
@@ -157,6 +154,8 @@ rec(PRIMITIVE,
     'constant.character.escape')
 rec(STRING,
     'string')
+rec(FOREGROUND,
+    'string.unquoted')
 rec(STORAGE,
     'storage',
     'support.type',
@@ -185,6 +184,13 @@ rec(PUNCTUATION,
     'punctuation.separator.continuation -source.c++')
 rec(INVALID,
     'invalid')
+rec(TAG,
+    'entity.name.tag',
+    'punctuation.definition.tag')
+rec(TAG_ATTRIBUTE,
+    'entity.other.attribute-name')
+rec(VARIABLE_MARKER,
+    'punctuation.definition.variable')
 
 #### MARKUP ####
 
@@ -202,9 +208,9 @@ rec(BOLD,
 #### INLINE DIFF ####
 
 rec(BACKGROUND, 'diff.inserted')
-rec(FADED_HIGHLIGHT, 'diff.inserted.char')
-rec(GRAY + ITALIC + BACKGROUND, 'diff.deleted')
-rec(INVALID_HIGHLIGHT, 'diff.deleted.char')
+rec(Style(background=alpha(FADED_VIOLET, 0.7), foreground_adjust='l(+ 10%)'), 'diff.inserted.char')
+rec(GRAY + BACKGROUND, 'diff.deleted')
+rec(Style(WHITE, background=alpha(FADED_GRAY, 0.7)), 'diff.deleted.char')
 
 #### PYTHON ####
 
@@ -231,11 +237,9 @@ rec(PARAMETER + ITALIC,
 #### REGEXP IN PYTHON ####
 
 rec(REGEXP_GROUP,
-    'source.regexp punctuation.definition.group',
-    'source.regexp keyword.operator.or')
+    'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
-    'source.regexp constant.character.character-class',
-    'source.regexp constant.other.character-class.set')
+    'source.regexp & (constant.character.character-class | keyword.operator.or)')
 
 #### PYLINT ####
 
@@ -317,11 +321,8 @@ rec(PRIMITIVE,
 rec(CRIMSON,
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
-rec(FADED_VIOLET,
-    'text.html meta.tag entity.name',
-    'text.html constant.character.entity',
-    'constant.character.entity.named punctuation.terminator.entity',
-    'text.html meta.tag punctuation.definition.tag')
+rec(BACKGROUND + Style(foreground_adjust='s(25%)'),
+    'text.html & (meta.tag | constant.character.entity)')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
 rec(COMMENT + ITALIC,
@@ -334,11 +335,6 @@ rec(FOREGROUND,
 rec(ITALIC,
     'meta.annotation',
     'variable.parameter.javadoc')
-
-#### JAVA PROPERTIES ####
-
-src('java-props')
-rec(FOREGROUND, 'string.unquoted')
 
 #### JAVA LOG ####
 
@@ -361,21 +357,11 @@ rec(YELLOW, 'meta.message')
 #### C# ####
 
 src('cs')
-rec(KEYWORD,
-    'keyword.operator.new')
-rec(FADED_VIOLET,
-    'comment.block.documentation punctuation.definition.tag',
-    'comment.block.documentation entity.name.tag',
-    'comment.block.documentation entity.other',
-    'comment.block.documentation punctuation.separator')
-rec(FOREGROUND,
-    'comment.block.documentation string.quoted.double')
+rec(KEYWORD, 'keyword.operator.new')
 
 #### POWERSHELL ####
 
 src('powershell')
-rec(VARIABLE_MARKER,
-    'punctuation.definition.variable')
 rec(PUNCTUATION,
     'keyword.operator.other',
     'variable.other punctuation.section.braces',
@@ -385,21 +371,18 @@ rec(META,
     'support.function.attribute',
     'meta.attribute variable.parameter.attribute')
 rec(ITALIC,
-    'meta.attribute - punctuation.section.bracket',
+    'meta.attribute -punctuation.section.bracket',
     'keyword.operator.comparison',
     'keyword.operator.logical',
     'keyword.operator.unary')
 rec(VARIABLE,
     'variable storage.modifier.scope')
 rec(FOREGROUND,
-    'string.quoted.double interpolated.complex -string.quoted.single',
     'support.constant variable.other')
 
 #### SHELL ####
 
 src('shell')
-rec(VARIABLE_MARKER,
-    'punctuation.definition.variable')
 rec(PUNCTUATION,
     'meta.group.expansion punctuation.section',
     'keyword.operator.expansion',
@@ -408,8 +391,7 @@ rec(PUNCTUATION,
 rec(FOREGROUND,
     'keyword.control.case.item',
     'variable.language.tilde',
-    'variable.parameter.option',
-    'string.quoted.double meta.group.expansion.command -string.quoted.single')
+    'variable.parameter.option')
 
 #### C++ ####
 
@@ -448,8 +430,6 @@ src('css')
 rec(PRIMITIVE,
     'constant.numeric keyword.other',
     'constant.other.color')
-rec(TAG_ATTRIBUTE,
-    'entity.other.attribute-name')
 rec(FOREGROUND,
     'support.function')
 rec(CRIMSON,
@@ -460,14 +440,8 @@ rec(ITALIC,
 #### XML ####
 
 txt('xml')
-rec(TAG,
-    'meta.tag punctuation.definition.tag')
-rec(TAG_ATTRIBUTE,
-    'meta.tag entity.other.attribute-name')
 rec(PUNCTUATION,
     'string.unquoted.cdata punctuation')
-rec(FOREGROUND,
-    'string.unquoted.cdata')
 rec(VARIABLE,
     'meta.tag.sgml.doctype variable',
     'variable.other.substitution -comment')
@@ -484,18 +458,13 @@ rec(COMMENT,
 
 txt('html')
 rec(TAG,
-    'meta.tag punctuation.definition.tag',
     'meta.tag.sgml.doctype')
-rec(TAG_ATTRIBUTE,
-    'meta.tag entity.other.attribute-name')
 rec(STRING,
     'meta.attribute-with-value.style source.css')
 
 #### MARKDOWN ####
 
 txt('html.markdown')
-rec(TAG,
-    'meta.tag')
 rec(PUNCTUATION,
     'punctuation.definition.list_item',
     'punctuation.definition.blockquote',
@@ -529,7 +498,7 @@ rec(INDEXED,
     'variable.other.readwrite')
 
 txt('git.merge-conflict')
-rec(FADED_HIGHLIGHT,
+rec(Style(background=alpha(FADED_GRAY, 0.5)),
     'meta.branch',
     'meta.separator')
 rec(CLEAR_WHITE + BOLD,
@@ -552,11 +521,5 @@ src('ini')
 rec(YELLOW,
     'meta.section',
     'entity.name.section')
-rec(FOREGROUND, 'string.unquoted')
-
-#### SUBLIME SYNTAX ####
-
-src('sublime-syntax')
-rec(VARIABLE_MARKER, 'punctuation.definition.variable')
 
 generate()
