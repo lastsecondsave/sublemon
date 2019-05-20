@@ -38,12 +38,6 @@
 		"*.pyc",
 		"*.pdb",
 		"*.sublime-workspace",
-		"*.tar",
-		"*.tar.gz",
-		"*.tgz",
-		"*.war",
-		"*.xls",
-		"*.zip",
 		".DS_Store",
 		".project"
 	],
@@ -65,14 +59,12 @@
 		"directwrite"
 	],
 	"font_size": 10,
+	"git_diff_target": "head",
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		"Vintage"
-	],
-	"indent_guide_options":
-	[
 	],
 	"index_exclude_patterns":
 	[
@@ -111,6 +103,5 @@
 	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
-	"update_check": true,
 	"word_wrap": false
 }
