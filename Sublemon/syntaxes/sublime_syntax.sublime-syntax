@@ -2,7 +2,8 @@
 ---
 name: Sublime Syntax
 scope: source.sublime-syntax
-file_extensions: [sublime-syntax]
+file_extensions:
+  - sublime-syntax
 
 contexts:
   main:
@@ -88,7 +89,7 @@ contexts:
       set: scope:source.regexp
       with_prototype:
         - include: variables
-        - match: (?=\n|\s+#)
+        - match: (?=\n|\s+#|,\s*\w+:)
           pop: true
     - match: $
       pop: true
