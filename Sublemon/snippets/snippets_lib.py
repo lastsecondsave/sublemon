@@ -78,7 +78,7 @@ class Snippets(SnippetDefinition):
 def blk(s): return s + ' {\n\t$0\n}'
 def bls(s): return s + ' { $0 }'
 def scl(s): return s + ';'
-def spc(s): return s + ' '
+def spc(s): return s + ' $0'
 def slp(s): return s + '(${0:$SELECTION})'
 
 def ind(s):
