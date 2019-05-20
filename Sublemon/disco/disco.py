@@ -239,7 +239,7 @@ rec(PARAMETER + ITALIC,
 rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
-    'source.regexp & (constant.character.character-class | keyword.operator.or)')
+    'source.regexp & (constant.character.character-class | constant.other.character-class.set)')
 
 #### PYLINT ####
 
