@@ -71,6 +71,7 @@ java/blk/'enum' - 'enum ${1:$FILENAME}'
 java/blk/'ctor' - ('constructor {}', '$FILENAME($1)')
 java/blk/'ff' - ('method {}', '${1:void} ${2:run}($3)')
 java/blk/'main' - ('main {}', 'public static void main(String[] args)')
+java/blk/'tos' - ('toString {}', 'public String toString()')
 
 getter = r"""
 public ${1:String} ${1/boolean|(.*)/(?1:get:is)/}${2/./\u$0/}() {
