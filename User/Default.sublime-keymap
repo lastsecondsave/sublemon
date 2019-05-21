@@ -1,7 +1,6 @@
 [
   /** UNBOUND **/
 
-  { "keys": ["alt+shift+w"],  "command": "unbound" },
   { "keys": ["ctrl+="],       "command": "unbound" },
   { "keys": ["ctrl+-"],       "command": "unbound" },
   { "keys": ["ctrl+shift+-"], "command": "unbound" },
@@ -32,13 +31,8 @@
 
   { "keys": ["alt+n"], "command": "find_under" },
   { "keys": ["alt+p"], "command": "find_under_prev" },
-  { "keys": ["shift+alt+n"], "command": "find_under_prev" },
 
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
-  { "keys": ["ctrl+shift+s"], "command": "save_all" },
-  { "keys": ["ctrl+alt+s"],   "command": "prompt_save_as" },
-  { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
-
   { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
 
   { "keys": ["ctrl+alt+b"], "command": "build" },
@@ -47,6 +41,15 @@
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
   { "keys": ["ctrl+shift+alt+p"], "command": "get_selection_scope" },
   { "keys": ["ctrl+alt+a"], "command": "alignment" },
+
+  { "keys": ["shift+escape"], "command": "last_single_selection",
+    "context": [{"key": "num_selections", "operator": "not_equal", "operand": 1}]
+  },
+
+  { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
+
+  { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
+  { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
 
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 
@@ -61,17 +64,6 @@
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_setting_verbose", "args": {"setting": "draw_indent_guides"} },
   { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_ligatures" },
   { "keys": ["ctrl+k", "ctrl+'"], "command": "toggle_setting_verbose", "args": {"setting": "word_wrap"} },
-
-  { "keys": ["shift+escape"], "command": "last_single_selection",
-    "context": [
-      {"key": "num_selections", "operator": "not_equal", "operand": 1}
-    ]
-  },
-
-  { "keys": ["alt+backspace"], "command": "toggle_overwrite" },
-
-  { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
-  { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
 
   /** SEARCH WIDGET **/
 
@@ -103,14 +95,7 @@
     ]
   },
 
-  { "keys": ["shift+alt+a"], "command": "expand_selection", "args": {"to": "tag"} },
-  { "keys": ["shift+alt+a"], "command": "expand_selection", "args": {"to": "brackets"},
-    "context": [
-      { "key": "selector", "operator": "equal", "operand": "text.xml" }
-    ]
-  },
-
-  { "keys": ["shift+alt+,"], "command": "insert_snippet",
+  { "keys": ["shift+alt+w"], "command": "insert_snippet",
     "args": {"contents": "<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>"}
   },
 
@@ -144,9 +129,10 @@
   { "keys": ["enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Default/Add Line in Braces.sublime-macro"},
     "context": [
+      { "key": "setting.auto_indent", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-      { "key": "preceding_text", "operator": "regex_contains", "operand": "[{\\[]$", "match_all": true },
-      { "key": "following_text", "operator": "regex_contains", "operand": "^[}\\]]", "match_all": true }
+      { "key": "preceding_text", "operator": "regex_contains", "operand": "\\[$", "match_all": true },
+      { "key": "following_text", "operator": "regex_contains", "operand": "^\\]", "match_all": true }
     ]
   },
 

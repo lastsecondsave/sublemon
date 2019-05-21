@@ -1,4 +1,6 @@
 [
-  { "command": "insert_snippet", "args": {"contents": "\n${0:$SELECTION}\n"} },
-  { "command": "indent" }
+  { "command": "insert_snippet", "args": {"contents": "\n$SELECTION\n"} },
+  { "command": "move", "args": {"by": "lines", "forward": false} },
+  { "command": "move_to", "args": {"to": "hardeol", "extend": false} },
+  { "command": "reindent", "args": {"single_line": true} }
 ]
