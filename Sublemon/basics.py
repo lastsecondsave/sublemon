@@ -299,3 +299,10 @@ def split_markers(markers):
     b2 = i + 1 if i >= 0 else b1
 
     return {'left': markers[0:b1], 'right': markers[b2:]}
+
+
+class CloseWithoutSavingCommand(WindowCommand):
+    def run(self):
+        view = self.window.active_view()
+        view.set_scratch(True)
+        view.close()
