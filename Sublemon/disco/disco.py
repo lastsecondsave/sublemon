@@ -19,6 +19,14 @@ class Style:
         return Style(**settings)
 
 
+class Highlight(Style):
+    def __init__(self, background, background_alpha=0.5, foreground_adjust=None, **settings):
+        settings['background'] = alpha(background, background_alpha)
+        if foreground_adjust:
+            settings['foreground_adjust'] = foreground_adjust
+        super().__init__(**settings)
+
+
 def alpha(color, value):
     return 'color({} alpha({}))'.format(color, value)
 
@@ -67,7 +75,7 @@ USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
 VARIABLE_MARKER = Style(DARK_ORANGE)
 
-RAINBOW = Style([YELLOW, PINK])
+RAINBOW = Style([PINK, CRIMSON])
 INVALID = Style(CLEAR_WHITE, background=CRIMSON)
 
 REGEXP_GROUP = Style(ORANGE)
@@ -150,10 +158,9 @@ rec(PRIMITIVE,
     'constant.language',
     'storage.type.numeric',
     'punctuation.separator.decimal')
-rec(PRIMITIVE,
-    'constant.character.escape')
 rec(STRING,
-    'string')
+    'string',
+    'string.quoted')
 rec(FOREGROUND,
     'string.unquoted')
 rec(STORAGE,
@@ -169,7 +176,10 @@ rec(KEYWORD,
 rec(OPERATOR,
     'keyword.operator')
 rec(INDEXED,
-    'entity.name')
+    'entity.name.class',
+    'entity.name.function',
+    'entity.name.filename',
+    'entity.name.key')
 rec(FOREGROUND,
     'punctuation.separator',
     'punctuation.terminator',
@@ -179,9 +189,11 @@ rec(PARAMETER,
 rec(VARIABLE,
     'variable.language',
     'support.constant',
-    'support.variable')
+    'support.variable',
+    'variable.other.substitution')
 rec(PUNCTUATION,
-    'punctuation.separator.continuation -source.c++')
+    'punctuation.separator.continuation -source.c++',
+    'punctuation.definition.template-expression')
 rec(INVALID,
     'invalid')
 rec(TAG,
@@ -208,17 +220,15 @@ rec(BOLD,
 #### INLINE DIFF ####
 
 rec(BACKGROUND, 'diff.inserted')
-rec(Style(background=alpha(FADED_VIOLET, 0.7), foreground_adjust='l(+ 10%)'), 'diff.inserted.char')
+rec(Highlight(FADED_VIOLET, 0.6, 'l(+ 10%)'), 'diff.inserted.char')
 rec(GRAY + BACKGROUND, 'diff.deleted')
-rec(Style(WHITE, background=alpha(FADED_GRAY, 0.7)), 'diff.deleted.char')
+rec(WHITE + Highlight(FADED_GRAY, 0.6, 'l(+ 10%)'), 'diff.deleted.char')
 
 #### PYTHON ####
 
 src('python')
 rec(KEYWORD,
     'keyword.operator.logical')
-rec(INDEXED,
-    'entity.name.function.decorator')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
@@ -233,18 +243,10 @@ rec(STRING + ITALIC,
     'string source.sql storage')
 rec(PARAMETER + ITALIC,
     'meta.function-call.arguments variable.parameter -meta.function.inline')
-
-#### REGEXP IN PYTHON ####
-
 rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
     'source.regexp & (constant.character.character-class | constant.other.character-class.set)')
-
-#### PYLINT ####
-
-txt('log.pylint')
-rec(RAINBOW, 'constant.language.classifier')
 
 #### JAVASCRIPT ####
 
@@ -263,13 +265,8 @@ rec(STRING,
     'string.regexp keyword.other.js')
 rec(VARIABLE,
     'support.type.object.dom')
-rec(PUNCTUATION,
-    'punctuation.definition.template-expression')
 rec(FOREGROUND,
     'meta.binding.name variable.other.readwrite')
-
-#### REGEXP IN JAVASCRIPT ####
-
 rec(REGEXP_GROUP,
     'string.regexp punctuation.definition.group',
     'keyword.operator.or.regexp')
@@ -321,7 +318,7 @@ rec(PRIMITIVE,
 rec(CRIMSON,
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
-rec(BACKGROUND + Style(foreground_adjust='s(25%)'),
+rec(Highlight(BLUISH_BLACK, 1, 's(25%)'),
     'text.html & (meta.tag | constant.character.entity)')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
@@ -411,9 +408,6 @@ rec(PUNCTUATION,
     'entity.other.document',
     'keyword.control.flow.block-scalar',
     'storage.modifier.chomping-indicator')
-rec(VARIABLE,
-    'variable.other.substitution.sublime-syntax',
-    'punctuation.definition.alias')
 rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
@@ -430,8 +424,6 @@ src('css')
 rec(PRIMITIVE,
     'constant.numeric keyword.other',
     'constant.other.color')
-rec(FOREGROUND,
-    'support.function')
 rec(CRIMSON,
     'support.type.vendor-prefix')
 rec(ITALIC,
@@ -443,24 +435,17 @@ txt('xml')
 rec(PUNCTUATION,
     'string.unquoted.cdata punctuation')
 rec(VARIABLE,
-    'meta.tag.sgml.doctype variable',
-    'variable.other.substitution -comment')
+    'meta.tag.sgml.doctype variable')
 rec(ITALIC,
     'meta.tag.sgml -comment')
 rec(TAG + BOLD_ITALIC,
     'meta.tag.sgml.doctype keyword')
-rec(PUNCTUATION,
-    'meta.block.substitution punctuation -comment.block')
-rec(COMMENT,
-    'comment.block meta.block.substitution variable.other')
 
 #### HTML ####
 
 txt('html')
 rec(TAG,
     'meta.tag.sgml.doctype')
-rec(STRING,
-    'meta.attribute-with-value.style source.css')
 
 #### MARKDOWN ####
 
@@ -468,10 +453,8 @@ txt('html.markdown')
 rec(PUNCTUATION,
     'punctuation.definition.list_item',
     'punctuation.definition.blockquote',
-    'punctuation.definition.link',
+    'meta.link punctuation',
     'markup.list.numbered.bullet')
-rec(VARIABLE,
-    'meta.link.inline.description')
 rec(FADED_GRAY,
     'punctuation.definition.bold',
     'punctuation.definition.italic',
@@ -482,44 +465,34 @@ rec(FADED_GRAY,
 
 src('diff')
 rec(META + ITALIC, 'meta.diff.range')
-rec(CLEAR_WHITE + BOLD_ITALIC, 'entity.name.section')
+rec(BOLD_ITALIC, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
-rec(CRIMSON, 'markup.changed')
 
 #### GIT ####
 
+txt('git')
+rec(Style([PINK, PURPLE]) + ITALIC,
+    'constant.numeric.hash')
+
 txt('git.config')
-rec(YELLOW,
+rec(META,
     'meta.brackets',
     'entity.name.section')
 rec(INDEXED,
     'variable.other.readwrite')
 
 txt('git.merge-conflict')
-rec(Style(background=alpha(FADED_GRAY, 0.5)),
+rec(Highlight(FADED_GRAY, 0.5),
     'meta.branch',
     'meta.separator')
 rec(CLEAR_WHITE + BOLD,
     'variable.other.branch')
 
-txt('git.ignore')
-rec(PUNCTUATION,
-    'keyword.operator')
-rec(FOREGROUND,
-    'entity.name')
-
-txt('git')
-rec(ITALIC,
-    'constant.date',
-    'constant.numeric.hash')
-
 #### INI ####
 
 src('ini')
-rec(YELLOW,
-    'meta.section',
-    'entity.name.section')
+rec(META, 'meta.section')
 
 generate()
