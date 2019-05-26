@@ -180,7 +180,7 @@ class OpenFilePathCommand(WindowCommand):
 
             parent = os.path.dirname(path)
             if (parent and not os.path.exists(parent)):
-                open_file = sublime.ok_cancel_dialog("Directory {0} does not exist".format(parent),
+                open_file = sublime.ok_cancel_dialog("Directory doesn't exist: {0}".format(parent),
                                                      "Create")
                 if open_file:
                     os.makedirs(parent)
