@@ -117,7 +117,7 @@ class GitBlameCommandListener(ChimneyCommandListener):
             else:
                 line = ' ' * (len(line_info['commit']) + self.author_width + 12)
 
-            line += ' ' + line_info['line_number']
+            line += '   ' + line_info['line_number']
             if line_info['code']:
                 line += ' ' + line_info['code'][self.code_indent:]
 
