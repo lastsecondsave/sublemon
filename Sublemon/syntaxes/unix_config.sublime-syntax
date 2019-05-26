@@ -2,7 +2,7 @@
 ---
 name: Unix Config
 scope: source.unix
-first_line_match: '^#.+'
+first_line_match: '^#(?!!/).+'
 
 contexts:
   main:
