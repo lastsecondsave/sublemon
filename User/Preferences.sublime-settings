@@ -11,8 +11,7 @@
 		"*.gif",
 		"*.jpg",
 		"*.orig",
-		"*.png",
-		"*/node_modules/*"
+		"*.png"
 	],
 	"caret_extra_bottom": 0,
 	"caret_extra_top": 0,
@@ -51,6 +50,7 @@
 		".sublime",
 		".svn",
 		"__pycache__",
+		"node_modules",
 		"target"
 	],
 	"font_face": "PragmataPro Mono Liga",
