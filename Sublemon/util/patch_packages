@@ -11,59 +11,35 @@ if [[ ! -d $INSTALL_PATH ]]; then
   INSTALL_PATH="$(dirname $0)/../../../.."
 fi
 
-PACKAGES_DIRECTORY="$INSTALL_PATH/Packages"
-TEMP_DIRECTORY='/tmp/sublemon'
+TEMP_DIRECTORY='/tmp/sublemon-packages'
+rm -rf $TEMP_DIRECTORY && mkdir $TEMP_DIRECTORY
 
-pushd "$(dirname $0)/.."
-SUBLEMON_DIRECTORY=$PWD
-popd
+PACKAGES_DIRECTORY="${INSTALL_PATH}/Packages"
+PACKAGES_TO_PROCESS=(Java Groovy Python JavaScript ShellScript XML HTML)
 
-echo "Packages directory: $(tput setaf 2)$PACKAGES_DIRECTORY$(tput sgr0)"
-
-rm -rf $TEMP_DIRECTORY
-mkdir $TEMP_DIRECTORY
-
-cp $PACKAGES_DIRECTORY/*.sublime-package $TEMP_DIRECTORY
+for package in $PACKAGES_TO_PROCESS; do
+    cp "${PACKAGES_DIRECTORY}/${package}.sublime-package" $TEMP_DIRECTORY
+done
 
 pushd $TEMP_DIRECTORY
 
 for package in *.sublime-package; do
   dir="${package%%.sublime-package}"
 
-  if [[ $(unzip -l $package | grep '__patched__') ]]; then
-    echo "Skipping $(tput setaf 1)$dir$(tput sgr0).sublime-package"
-    continue
-  fi
-
-  echo "Processing $(tput setaf 3)$dir$(tput sgr0).sublime-package"
+  echo "Processing $(tput setaf 3)${dir}$(tput sgr0).sublime-package"
 
   unzip -q "$package" -d "$dir"
   rm "$package"
-
   pushd "$dir"
 
-  rm -rf 'Snippets'
   find . -name '*.sublime-snippet' -exec rm -f {} +
   find . -name '*.sublime-completions' -exec rm -f {} +
 
   case $dir in
-    'Java')
-      rm -f 'JavaC.sublime-build' \
-            'Ant.sublime-build'
-      ;;
-
-    'Default')
-      cp 'Default (OSX).sublime-keymap' 'Default (OSX).sublime-keymap.orig'
-      cp 'Default (Linux).sublime-keymap' 'Default (Linux).sublime-keymap.orig'
-
-      cp 'Default (Windows).sublime-keymap' 'Default (OSX).sublime-keymap'
-      cp 'Default (Windows).sublime-keymap' 'Default (Linux).sublime-keymap'
-      ;;
+    'Java') rm -f *.sublime-build;;
   esac
 
-  touch '__patched__'
-
-  zip -rq "../$package" *
+  zip -rq "../${package}" *
 
   popd
 done
