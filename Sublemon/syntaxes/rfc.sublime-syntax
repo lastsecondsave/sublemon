@@ -2,7 +2,9 @@
 ---
 name: RFC Specification
 scope: text.rfc
-file_extensions: [rfc.txt, rfc]
+file_extensions:
+  - rfc.txt
+  - rfc
 
 contexts:
   main:
@@ -12,4 +14,4 @@ contexts:
     scope: comment.rfc
   - match: '^.+?\s{5,}.*?$'
   - match: ^\w.*$
-    scope: entity.name.title.rfc
+    scope: markup.heading entity.name.title.rfc

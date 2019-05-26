@@ -2,7 +2,10 @@
 ---
 name: INI
 scope: source.ini
-file_extensions: [ini, inf, reg]
+file_extensions:
+  - ini
+  - inf
+  - reg
 first_line_match: '^\[[^\[]+\]$'
 
 contexts:
@@ -10,10 +13,12 @@ contexts:
   - match: ^\s*[;#].*$
     scope: comment.line.ini
 
-  - match: ^\s*\[(.*)\]
+  - match: ^\s*(\[)(.*)(\])
     scope: meta.section.ini
     captures:
-      1: entity.name.section.ini
+      1: punctuation.definition.section.begin.ini
+      2: entity.name.section.ini
+      3: punctuation.definition.section.end.ini
 
   - match: ^\s*(.*?)\s*(=)\s*
     captures:
