@@ -8,6 +8,6 @@ contexts:
   main:
   - match: ^(\d{4}-\d{2}-\d{2})\s+(.*?)\s+([0-9a-f]+)
     captures:
-      1: constant.date.git
-      2: entity.name.author.git
+      1: markup.italic constant.date.git
+      2: markup.heading entity.name.author.git
       3: constant.numeric.hash.git
