@@ -13,16 +13,23 @@ contexts:
         - match: '(?=^contexts:)'
           pop: true
         - include: injection-variables
+
     - match: (?=^contexts:)
       scope: meta.section.variables.sublime-syntax
       push: scope:source.yaml
       with_prototype:
         - include: injection-contexts
+
     - match: ''
-      embed: scope:source.yaml
-      escape: (?=^(?:contexts|variables):)
+      push: scope:source.yaml
+      with_prototype:
+        - match: (?=^(?:contexts|variables):)
+          pop: true
+        - include: injection-contexts
 
   injection-contexts:
+    - include: scope:source.yaml#comment
+
     - match: '(?=^  [\w-]+:(\s+#|\s*$))'
       embed: scope:source.yaml
       embed_scope: meta.context.sublime-syntax
@@ -35,6 +42,7 @@ contexts:
       push: regexp-value
 
   injection-variables:
+    - include: scope:source.yaml#comment
     - match: ^  (\w+)(:)
       captures:
         1: meta.variables.sublime-syntax string.unquoted.plain.out.yaml entity.name.tag.yaml
@@ -42,12 +50,12 @@ contexts:
       push: regexp-value
 
   regexp-value:
-    - match: \s+([>\|])(-?)\s*(#.*)?$
+    - match: \s+([>\|])(-?)\s*?(?:$|(?=\s#))
       captures:
         1: storage.modifier.chomping-indicator.yaml
         2: keyword.control.flow.block-scalar.literal.yaml
-        3: comment.line.number-sign.yaml
       set:
+        - include: scope:source.yaml#comment
         - match: ^(\s+)
           set:
             - meta_scope: source.regexp.embedded
@@ -98,5 +106,5 @@ contexts:
     - match: '({{)[A-Za-z0-9_]+(}})'
       scope: variable.other.substitution.sublime-syntax
       captures:
-        1: punctuation.definition.variable.begin.sublime-syntax
-        2: punctuation.definition.variable.end.sublime-syntax
+        1: punctuation.definition.template-expression.begin.sublime-syntax
+        2: punctuation.definition.template-expression.end.sublime-syntax
