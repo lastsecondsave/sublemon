@@ -7,13 +7,15 @@ py = Snippets('source.python')
 py/spc/'im' - 'import'
 py/spc/'fim' - 'from $1 import'
 py/spc/'ret' - 'return'
+py/spc/'yi' - 'yield'
 
 py/'stm' - '@staticmethod'
 
 py/'pl' - 'print(${0:$SELECTION})'
 
-py/'ss' - ('self.x - x', 'self.$1 - $1')
+py/'ss' - ('self.x = x', 'self.$1 = $1')
 py/'doc' - ('docstring', '"""\n\t$0\n"""')
+py/'isi' - ('isinstance()', 'isinstance(${1:$SELECTION}, ${2:str})')
 
 py/blk/'def' - ('function()', 'def ${1:run}($2)')
 py/spc/'lam' - ('lambda', 'lambda ${1:x}:')
