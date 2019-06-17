@@ -179,6 +179,7 @@ rec(INDEXED,
     'entity.name.class',
     'entity.name.function',
     'entity.name.filename',
+    'entity.name.namespace',
     'entity.name.key')
 rec(FOREGROUND,
     'punctuation.separator',
