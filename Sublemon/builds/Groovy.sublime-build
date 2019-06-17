@@ -1,0 +1,4 @@
+{
+  "selector": "source.groovy",
+  "shell_cmd": "groovy \"$file\""
+}
