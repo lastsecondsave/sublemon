@@ -29,6 +29,10 @@ py/blk/'else' - 'else'
 py/blk/'elif' - 'elif $1'
 py/blk/'while' - 'while $1'
 
+py/blk/'try' - 'try'
+py/blk/'except' - 'except ${1:Exception} as ${2:e}'
+py/blk/'finally' - 'finally'
+
 py/blk/'for' - ('for', 'for $1 in $2')
 py/blk/'fori' - (':range: for', 'for ${1:i} in range(${2:0}, ${3:imax})')
 
