@@ -1,31 +1,29 @@
 import re
 
-from Sublemon.chimney import ChimneyCommand, ChimneyCommandListener
+from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
+
+LINE_PATTERN = re.compile(r'(.+:\d+:)(\d+)(: .*)')
 
 
 class PylintCommand(ChimneyCommand):
-    def preprocess_options(self, options):
-        cmd = ['python', '-m', 'pylint', options.source_file]
+    def setup(self, ctx):
+        cmd = ['python', '-m', 'pylint', self.window.active_view().file_name()]
 
-        if options['disable']:
-            cmd.append('--disable=' + ','.join(options['disable']))
+        if ctx.opt('disable'):
+            cmd.append('--disable=' + ','.join(ctx.opt('disable')))
 
-        options.shell_cmd = ' '.join(cmd)
-        options.file_regex = r'(.+?):(\d+):(\d+): (.*)'
-        options.syntax = 'pylint'
-
-    def get_listener(self):
-        return PylintCommandListener()
+        ctx.set(cmd=cmd,
+                file_regex=r'(.+?):(\d+):(\d+): (.*)',
+                syntax='pylint',
+                listener=PylintBuildListener())
 
 
-class PylintCommandListener(ChimneyCommandListener):
-    LINE_PATTERN = re.compile(r'(.+:\d+:)(\d+)(: .*)')
-
+class PylintBuildListener(ChimneyBuildListener):
     def __init__(self):
         self.rank = None
 
     def on_output(self, line, ctx):
-        match = self.LINE_PATTERN.match(line)
+        match = LINE_PATTERN.match(line)
         if match:
             col = int(match.group(2)) + 1
             line = match.group(1) + str(col) + match.group(3)

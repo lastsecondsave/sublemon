@@ -1,27 +1,24 @@
 import re
 
-from Sublemon.chimney import ChimneyCommand, ChimneyCommandListener
+from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
 
 
 class GitDiffCommand(ChimneyCommand):
-    def preprocess_options(self, options):
-        options.shell_cmd = "git diff -- {}".format(options.source_file)
-        options.syntax = "Packages/Diff/Diff.tmLanguage"
+    def setup(self, ctx):
+        ctx.set(cmd='git diff -- "{}"'.format(self.window.active_view().file_name()),
+                syntax="Packages/Diff/Diff.tmLanguage")
 
 
 class GitLogCommand(ChimneyCommand):
-    def preprocess_options(self, options):
-        template = 'git log -200 --follow --no-merges --date=short --format="{}" -- {}'
+    def setup(self, ctx):
+        template = 'git log -200 --follow --no-merges --date=short --format="{}" -- "{}"'
 
-        options.shell_cmd = template.format("%h %ad %an → %s", options.source_file)
-        options.syntax = "git_log"
-        options.scroll_to_end = False
-
-    def get_listener(self):
-        return GitLogCommandListener()
+        ctx.set(cmd=template.format('%h %ad %an → %s', self.window.active_view().file_name()),
+                syntax="git_log",
+                listener=GitLogBuildListener())
 
 
-class GitLogCommandListener(ChimneyCommandListener):
+class GitLogBuildListener(ChimneyBuildListener):
     LINE_PATTERN = re.compile(r'([0-9a-z]+) (\d{4}-\d{2}-\d{2}) (.*) → (.*)')
 
     def __init__(self):
@@ -56,7 +53,7 @@ class GitLogCommandListener(ChimneyCommandListener):
 
 
 class GitBlameCommand(ChimneyCommand):
-    def preprocess_options(self, options):
+    def setup(self, ctx):
         cmd = "git blame --date=short"
         view = self.window.active_view()
         sel = view.sel()[0]
@@ -69,15 +66,12 @@ class GitBlameCommand(ChimneyCommand):
 
             cmd += ' -L "{},{}"'.format(from_line, to_line)
 
-        options.shell_cmd = cmd + " -- {}".format(options.source_file)
-        options.syntax = "git_blame"
-        options.scroll_to_end = False
-
-    def get_listener(self):
-        return GitBlameCommandListener()
+        ctx.set(cmd=cmd + ' -- "{}"'.format(view.file_name()),
+                syntax="git_blame",
+                listener=GitBlameBuildListener())
 
 
-class GitBlameCommandListener(ChimneyCommandListener):
+class GitBlameBuildListener(ChimneyBuildListener):
     LINE_PATTERN = re.compile(r'([0-9a-z]+) (.*?)\((.+?) (\d{4}-\d{2}-\d{2}) (\s*\d+)\) (.*)')
 
     def __init__(self):

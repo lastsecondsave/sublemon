@@ -2,28 +2,25 @@
   "selector": "source.maven",
   "keyfiles": ["pom.xml"],
   "target": "maven",
-  "mvn_cmd": "compile",
-  "mvn_global_opts": "--no-snapshot-updates",
+  "working_dir": "${folder:${file_path}}",
+  "cmd": "compile",
 
   "variants": [
-    { "name": "Version",
-      "mvn_cmd": "-version",
-    },
     { "name": "Clean → Compile",
-      "mvn_cmd": "clean compile"
+      "cmd": "clean compile"
     },
     { "name": "Compile → Exec",
-      "mvn_cmd": "compile exec:java"
+      "cmd": "compile exec:java"
     },
     { "name": "Exec",
-      "mvn_cmd": "exec:java",
+      "cmd": "exec:java",
       "no_info_messages": true
     },
     { "name": "Test",
-      "mvn_cmd": "test",
+      "cmd": "test",
     },
     { "name": "Clean → Test",
-      "mvn_cmd": "clean test",
+      "cmd": "clean test",
     }
   ]
 }

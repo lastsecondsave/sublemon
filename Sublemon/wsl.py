@@ -1,19 +1,19 @@
 import re
 import shlex
-import subprocess
 
-from Sublemon.chimney import ChimneyCommand, ChimneyCommandListener, ChimneyBuildError
+from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
 
 ESCAPE_CHARACTER = re.compile(r'\x1b.*?\[\d*m')
 SHEBANG = re.compile(r'\s*#!(.+)')
 
 
 class WslCommand(ChimneyCommand):
-    def preprocess_options(self, options):
+    def setup(self, ctx):
         view = self.window.active_view()
+
         filename = view.file_name()
         if not filename:
-            raise ChimneyBuildError("No file")
+            ctx.cancel_build("No file")
 
         cmd = ['wsl']
 
@@ -22,12 +22,11 @@ class WslCommand(ChimneyCommand):
             cmd.extend(shlex.split(match.group(1)))
 
         cmd.append("$(wslpath '{}')".format(filename))
-        options.cmd = cmd
 
-    def get_listener(self):
-        return WslCommandListener()
+        ctx.set(cmd=cmd,
+                listener=WslBuildListener())
 
 
-class WslCommandListener(ChimneyCommandListener):
+class WslBuildListener(ChimneyBuildListener):
     def on_output(self, line, ctx):
         ctx.print(ESCAPE_CHARACTER.sub('', line))
