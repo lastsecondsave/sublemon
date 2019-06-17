@@ -1,5 +1,4 @@
 {
   "selector": "source.python",
-  "shell_cmd": "python -m pycodestyle \"${file}\"",
-  "file_regex": "(.+?):(\\d+):(\\d+): (.*)"
+  "target": "pycodestyle"
 }
