@@ -2,17 +2,18 @@
 ---
 name: Pylint Output
 scope: text.log.pylint
+hidden: true
 
 contexts:
   main:
     - match: '^(.+?):(\d+):(\d+): (\w\d+): .*?(\(.+\))?$'
       captures:
-        1: entity.name.filename.pylint
-        2: constant.numeric.maven
-        3: constant.numeric.maven
-        4: comment.category.code.pylint
-        5: markup.italic comment.category.description.pylint
+        1: entity.name.filename
+        2: constant.numeric
+        3: constant.numeric
+        4: comment.category.code
+        5: markup.italic comment.category.description
     - match: '^\s+\^ (\(.+\))'
-      scope: comment.category.description.pylint
+      scope: comment.category.description
       captures:
         1: markup.italic
