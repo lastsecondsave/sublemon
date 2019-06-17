@@ -3,7 +3,7 @@ import re
 
 import sublime
 
-from Sublemon.chimney import ChimneyCommand, ChimneyCommandListener, RUNNING_ON_WINDOWS
+from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener, RUNNING_ON_WINDOWS
 
 DASHES_PATTERN = re.compile(r'\[INFO\] -{5,}.*')
 COMPILATION_FAILURE_PATTERN = re.compile(r'\[ERROR\] Failed to execute goal.*Compilation failure')
@@ -17,40 +17,25 @@ FILE_REGEX = r'^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
 
 
 class MavenCommand(ChimneyCommand):
-    def preprocess_options(self, options):
-        if not options.working_dir:
-            variables = self.window.extract_variables()
-            is_pom = variables.get('file_name', '') == 'pom.xml'
-            options.working_dir = variables['file_path' if is_pom else 'folder']
+    def setup(self, ctx):
+        cmd = ['mvn',
+               ctx.opt('cmd'),
+               '-B',
+               ctx.opt('mvn_opts')]
 
-        cmd = []
-
-        cmd.append('mvn -B')
-
-        if options['offline']:
+        if ctx.opt('offline'):
             cmd.append('-o')
 
-        if options['no_info_messages']:
-            cmd.append('-q')
-            cmd.append('-e')
+        if ctx.opt('no_info_messages'):
+            cmd += append(['-q', '-e'])
 
-        if options['mvn_global_opts']:
-            cmd.append(options['mvn_global_opts'])
-
-        if options['mvn_opts']:
-            cmd.append(options['mvn_opts'])
-
-        cmd.append(options['mvn_cmd'])
-
-        options.shell_cmd = ' '.join(cmd)
-        options.syntax = 'maven_build'
-        options.file_regex = FILE_REGEX
-
-    def get_listener(self):
-        return MavenCommandListener()
+        ctx.set(cmd=' '.join(filter(None, cmd)),
+                syntax='maven_build',
+                file_regex=FILE_REGEX,
+                listener=MavenBuildListener())
 
 
-class MavenCommandListener(ChimneyCommandListener):
+class MavenBuildListener(ChimneyBuildListener):
     def __init__(self):
         self.skip = False
         self.status = None

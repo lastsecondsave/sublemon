@@ -4,6 +4,7 @@ import signal
 import subprocess
 
 from collections import deque
+from itertools import chain
 from threading import Lock, Thread
 
 import sublime
@@ -14,6 +15,194 @@ RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 STARTUPINFO = subprocess.STARTUPINFO()
 if RUNNING_ON_WINDOWS:
     STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+
+RUNNING_BUILDS = {}
+
+class OutputPanel:
+    def __init__(self, window):
+        self.window = window
+        self.view = window.create_output_panel('exec')
+
+        self.line_buffer_lock = Lock()
+        self.line_buffer = deque()
+
+        self.lines_printed = 0
+
+    def reset(self, syntax, **settings):
+        view_settings = self.view.settings()
+
+        view_settings.set('gutter', False)
+        view_settings.set('scroll_past_end', False)
+        view_settings.set('word_wrap', True)
+        view_settings.set('draw_indent_guides', False)
+
+        for key, val in settings.items():
+            if val:
+                view_settings.set(key, val)
+
+        if syntax:
+            self.view.assign_syntax(syntax)
+
+        self.window.create_output_panel('exec')
+        self.lines_printed = 0
+
+    def append(self, line):
+        with self.line_buffer_lock:
+            invalidate = len(self.line_buffer) == 0
+            self.line_buffer.append(line)
+
+        if invalidate:
+            sublime.set_timeout(self.paint, 0)
+
+    def paint(self):
+        with self.line_buffer_lock:
+            if not self.line_buffer:
+                return
+            lines = copy.copy(self.line_buffer)
+            self.line_buffer.clear()
+
+        if self.lines_printed > 0:
+            lines.appendleft('')
+
+        self.lines_printed += len(lines)
+        self.view.run_command('append', {'characters': '\n'.join(lines)})
+
+    def show(self):
+        self.window.run_command('show_panel', {'panel': 'output.exec'})
+
+
+def format_command(command):
+    if isinstance(command, str):
+        return command
+
+    def chunks():
+        for c in command:
+            if "'" in c or ' ' in c:
+                yield '"' + c + '"'
+            else:
+                yield c
+
+    return ' '.join(chunks())
+
+
+class ChimneyBuildListener:
+    def on_startup(self, ctx):
+        ctx.window.status_message('Build started: ' + format_command(ctx.process.args))
+
+    def on_output(self, line, ctx):
+        ctx.print(line)
+
+    def on_error(self, line, ctx):
+        ctx.print(line)
+
+    def on_complete(self, ctx):
+        ctx.window.status_message('Build finished')
+
+
+class BuildError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+
+class BuildContext:
+    def __init__(self, options):
+        self.options = options
+        self.listener = ChimneyBuildListener()
+
+    def cancel_build(self, message=None):
+        raise BuildError(message)
+
+    def opt(self, name):
+        return self.options.get(name)
+
+    def set(self,
+            cmd=None,
+            working_dir=None,
+            syntax=None,
+            file_regex=None,
+            line_regex=None,
+            env=None,
+            listener=None):
+
+        self.listener = listener or self.listener
+
+        self.set_option('file_regex', file_regex, '')
+        self.set_option('line_regex', line_regex, '')
+        self.set_option('env', env)
+        self.set_option('working_dir', working_dir)
+
+        if syntax and not syntax.endswith(('.sublime-syntax', '.tmLanguage')):
+            syntax = 'Packages/Sublemon/syntaxes/{}.sublime-syntax'.format(syntax)
+        self.set_option('syntax', syntax, 'Packages/Text/Plain text.tmLanguage')
+
+        if isinstance(cmd, str):
+            self.set_option('shell_cmd', cmd)
+        elif isinstance(cmd, list):
+            self.set_option('cmd', cmd)
+
+    def set_option(self, option, value, default=None):
+        value = value or self.options.get(option, default)
+        if value != None:
+            self.options[option] = value
+
+
+def log(message, *params):
+    print(message.format(*params))
+
+
+class ChimneyCommand(WindowCommand):
+    def __init__(self, window):
+        super().__init__(window)
+        self.panel = OutputPanel(window)
+
+    def setup(self, ctx):
+        pass
+
+    def run(self, kill=False, **options):
+        build = RUNNING_BUILDS.get(self.window.id())
+
+        if build:
+            self.window.status_message('Cancelling build...')
+            build.cancelled = True
+            kill_process(build.process)
+
+        if kill:
+            return
+
+        ctx = BuildContext(options)
+
+        try:
+            self.setup(ctx)
+            if not 'cmd' in options and not 'shell_cmd' in options:
+                ctx.cancel_build('No command')
+
+        except BuildError as err:
+            self.window.status_message(': '.join(filter(None, ('Build error', err.message))))
+            return
+
+        self.panel.reset(
+            result_base_dir=self.change_working_dir(options.get('working_dir')),
+            result_file_regex=options.get('file_regex'),
+            result_line_regex=options.get('line_regex'),
+            syntax=options.get('syntax')
+        )
+
+        self.panel.show()
+
+        build = start_build(self.panel, options, ctx.listener)
+        RUNNING_BUILDS[self.window.id()] = build
+        log('→ [{}] {}', build.process.pid, format_command(build.process.args))
+
+    def change_working_dir(self, working_dir):
+        if not working_dir:
+            view = self.window.active_view()
+            if view and view.file_name():
+                working_dir = os.path.dirname(view.file_name())
+
+        if working_dir:
+            os.chdir(working_dir)
+
+        return working_dir
 
 
 class OutputBuffer:
@@ -72,269 +261,76 @@ class AsyncStreamConsumer(Thread):
             self.on_close()
 
 
-class OutputPanel:
-    def __init__(self, window):
-        self.window = window
-        self.view = window.create_output_panel('exec')
-
-        self.line_buffer_lock = Lock()
-        self.line_buffer = deque()
-
-        self.lines_printed = 0
-
-    def reset(self, syntax=None, **settings):
-        view_settings = self.view.settings()
-
-        view_settings.set('gutter', False)
-        view_settings.set('scroll_past_end', False)
-        view_settings.set('word_wrap', True)
-        view_settings.set('draw_indent_guides', False)
-
-        for key, val in settings.items():
-            if val:
-                view_settings.set(key, val)
-
-        if syntax:
-            self.view.assign_syntax(syntax)
-
-        self.window.create_output_panel('exec')
-
-        self.lines_printed = 0
-
-    def append(self, line):
-        with self.line_buffer_lock:
-            invalidate = len(self.line_buffer) == 0
-            self.line_buffer.append(line)
-
-        if invalidate:
-            sublime.set_timeout(self.paint, 0)
-
-    def paint(self):
-        with self.line_buffer_lock:
-            if not self.line_buffer:
-                return
-            lines = copy.copy(self.line_buffer)
-            self.line_buffer.clear()
-
-        if self.lines_printed:
-            lines.appendleft('')
-
-        self.lines_printed += 1
-
-        characters = '\n'.join(lines)
-        self.view.run_command('append', {'characters': characters})
-
-    def show(self):
-        self.window.run_command('show_panel', {'panel': 'output.exec'})
-
-
-class Options:
-    def __init__(self, options, window):
-        self.originals = options
-
-        self.kill = self.get('kill', False)
-        self.cmd = self.get('cmd')
-        self.shell_cmd = self.get('shell_cmd')
-        self.file_regex = self.get('file_regex', '')
-        self.line_regex = self.get('line_regex', '')
-        self.syntax = self.get('syntax', 'Packages/Text/Plain text.tmLanguage')
-        self.scroll_to_end = self.get('scroll_to_end', True)
-        self.working_dir = self.get('working_dir')
-        self.env = self.get("env")
-
-        self.source_file = '"{}"'.format(window.extract_variables().get('file'))
-
-    def get(self, arg, default=None):
-        return self.originals.get(arg, default)
-
-    def __getitem__(self, arg):
-        return self.get(arg)
-
-
-class ExecutorContext:
-    def __init__(self, executor, options, process, listener):
-        self.window = executor.window
-        self.executor = executor
-        self.options = options
+class RunningBuildContext:
+    def __init__(self, panel, process, listener):
+        self.panel = panel
         self.process = process
         self.listener = listener
-        self.completed = False
+
+        self.window = panel.window
+        self.cancelled = False
+
+        self.listener.on_startup(self)
 
     def print(self, line):
-        self.executor.output_panel.append(line)
+        self.panel.append(line)
 
     def complete(self):
-        self.window.status_message('Build finished')
-        self.listener.on_complete(self)
+        RUNNING_BUILDS.pop(self.window.id(), None)
 
-        self.process.poll()
-
-        if self.process.returncode:
-            _log('✗ [{}] {}', self.process.pid, self.process.returncode)
+        if self.cancelled:
+            self.window.status_message('Build cancelled')
+            self.print('\n💀 Terminated 💀')
+            log('✘ [{}]', self.process.pid)
         else:
-            _log('✓ [{}]', self.process.pid)
+            self.listener.on_complete(self)
+            log('✔ [{}]', self.process.pid)
 
-        self.completed = True
+
+def start_build(panel, options, listener):
+    process = start_process(options)
+    ctx = RunningBuildContext(panel, process, listener)
+
+    output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
+    error_buffer = OutputBuffer(lambda line: listener.on_error(line, ctx))
+
+    AsyncStreamConsumer(process.stdout, output_buffer,
+                        on_close=ctx.complete).start()
+    AsyncStreamConsumer(process.stderr, error_buffer).start()
+
+    return ctx
 
 
-class Executor:
-    def __init__(self, window):
-        self.window = window
-        self.output_panel = OutputPanel(window)
-        self.ctx = None
+def start_process(options):
+    process_params = dict(
+        startupinfo=STARTUPINFO,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        stdin=subprocess.DEVNULL)
 
-    def run(self, options, listener):
-        if self.ctx and not self.ctx.completed:
-            self.kill_process()
-
-        if options.kill:
-            return
-
-        working_dir = self.get_working_dir(options.working_dir)
-
-        self.output_panel.reset(
-            syntax=options.syntax,
-            result_base_dir=working_dir,
-            result_file_regex=options.file_regex,
-            result_line_regex=options.line_regex
-        )
-
-        process = self.start_process(options, working_dir)
-        self.ctx = ExecutorContext(self, options, process, listener)
-
-        listener.on_startup(self.ctx)
-
-        output_buffer = OutputBuffer(lambda line: listener.on_output(line, self.ctx))
-        error_buffer = OutputBuffer(lambda line: listener.on_error(line, self.ctx))
-
-        AsyncStreamConsumer(process.stdout, output_buffer,
-                            on_close=self.ctx.complete).start()
-        AsyncStreamConsumer(process.stderr, error_buffer).start()
-
-        self.output_panel.show()
-
-    def get_working_dir(self, working_dir):
-        if not working_dir:
-            view = self.window.active_view()
-            if view and view.file_name():
-                return os.path.dirname(view.file_name())
-
-        if not os.path.isabs(working_dir):
-            base_path = self.window.extract_variables().get('project_path')
-            working_dir = os.path.join(base_path, working_dir)
-
-        return working_dir
-
-    def start_process(self, options, working_dir):
-        process_params = dict(
-            startupinfo=STARTUPINFO,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            stdin=subprocess.DEVNULL)
-
-        if options.shell_cmd:
-            if RUNNING_ON_WINDOWS:
-                cmd = options.shell_cmd
-                process_params['shell'] = True
-            else:
-                cmd = [os.environ['SHELL'], '-c', options.shell_cmd]
-        else:
-            cmd = options.cmd
-
-        if options.env:
-            env = os.environ.copy()
-            env.update({k: os.path.expandvars(v) for k, v in options.env.items()})
-            process_params['env'] = env
-
-        os.chdir(working_dir)
-
-        process = subprocess.Popen(cmd, **process_params)
-
-        cmd = cmd if isinstance(cmd, str) else ' '.join(cmd)
-
-        _log('→ [{}] {}', process.pid, cmd)
-        self.window.status_message('Build started: {}'.format(cmd))
-
-        return process
-
-    def kill_process(self):
-        process = self.ctx.process
-
-        _log('Killing {}', process.pid)
-
+    if 'shell_cmd' in options:
+        cmd = options['shell_cmd']
         if RUNNING_ON_WINDOWS:
-            cmd = 'taskkill /T /F /PID {}'.format(process.pid)
-            subprocess.Popen(cmd, startupinfo=STARTUPINFO)
+            process_params['shell'] = True
         else:
-            os.killpg(process.pid, signal.SIGTERM)
-            process.terminate()
+            cmd = [os.environ['SHELL'], '-c', cmd]
+    else:
+        cmd = options['cmd']
+
+    if 'env' in options:
+        env = os.environ.copy()
+        env.update({k: os.path.expandvars(v) for k, v in options['env'].items()})
+        process_params['env'] = env
+
+    return subprocess.Popen(cmd, **process_params)
 
 
-class ChimneyCommandListener:
-    def on_startup(self, ctx):
-        pass
+def kill_process(process):
+    if RUNNING_ON_WINDOWS:
+        cmd = 'taskkill /T /F /PID {}'.format(process.pid)
+        subprocess.Popen(cmd, startupinfo=STARTUPINFO)
+    else:
+        os.killpg(process.pid, signal.SIGTERM)
+        process.terminate()
 
-    def on_output(self, line, ctx):
-        ctx.print(line)
-
-    def on_error(self, line, ctx):
-        ctx.print(line)
-
-    def on_complete(self, ctx):
-        pass
-
-
-class ChimneyBuildError(Exception):
-    def __init__(self, message=None):
-        super().__init__()
-        self.message = message
-
-
-class ChimneyCommand(WindowCommand):
-    def __init__(self, window):
-        super().__init__(window)
-        _get_executor(window)
-
-    def get_listener(self):
-        return ChimneyCommandListener()
-
-    def preprocess_options(self, options):
-        pass
-
-    def run(self, **kwargs):
-        if 'update_phantoms_only' in kwargs:
-            return
-
-        options = Options(kwargs, self.window)
-
-        try:
-            self.preprocess_options(options)
-        except ChimneyBuildError as err:
-            msg = list(filter(None, ['Build error', err.message]))
-            self.window.status_message(': '.join(msg))
-            return
-
-        if not options.cmd and not options.shell_cmd and not options.kill:
-            self.window.status_message('Build error: No command')
-            return
-
-        if '.sublime-syntax' not in options.syntax and '.tmLanguage' not in options.syntax:
-            options.syntax = 'Packages/Sublemon/syntaxes/' + options.syntax + '.sublime-syntax'
-
-        _get_executor(self.window).run(options, self.get_listener())
-
-
-_EXECUTORS = {}
-
-
-def _get_executor(window):
-    wid = window.id()
-    if wid not in _EXECUTORS:
-        _EXECUTORS[wid] = Executor(window)
-        _log('Created executor for window #{}', wid)
-
-    return _EXECUTORS[wid]
-
-
-def _log(message, *params):
-    print('Chimney:', message.format(*params))
+    process.wait()

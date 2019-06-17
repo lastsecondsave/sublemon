@@ -69,6 +69,7 @@
   { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
   { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
   { "keys": ["ctrl+shift+alt+p"], "command": "get_selection_scope" },
+  { "keys": ["ctrl+shift+alt+b"], "command": "cancel_build" },
 
 
   { "keys": ["ctrl+k", "ctrl+e"], "command": "select_with_custom_markers" },
