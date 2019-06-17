@@ -4,7 +4,6 @@ import signal
 import subprocess
 
 from collections import deque
-from itertools import chain
 from threading import Lock, Thread
 
 import sublime
@@ -17,6 +16,7 @@ if RUNNING_ON_WINDOWS:
     STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
 RUNNING_BUILDS = {}
+
 
 class OutputPanel:
     def __init__(self, window):
@@ -105,15 +105,20 @@ class BuildError(Exception):
 
 
 class BuildContext:
-    def __init__(self, options):
+    def __init__(self, options, window):
         self.options = options
+        self.window = window
         self.listener = ChimneyBuildListener()
 
-    def cancel_build(self, message=None):
+    @staticmethod
+    def cancel_build(message=None):
         raise BuildError(message)
 
     def opt(self, name):
-        return self.options.get(name)
+        return self.options.get(name, None)
+
+    def file_name(self):
+        return self.window.active_view().file_name()
 
     def set(self,
             cmd=None,
@@ -142,7 +147,7 @@ class BuildContext:
 
     def set_option(self, option, value, default=None):
         value = value or self.options.get(option, default)
-        if value != None:
+        if value is not None:
             self.options[option] = value
 
 
@@ -169,11 +174,11 @@ class ChimneyCommand(WindowCommand):
         if kill:
             return
 
-        ctx = BuildContext(options)
+        ctx = BuildContext(options, self.window)
 
         try:
             self.setup(ctx)
-            if not 'cmd' in options and not 'shell_cmd' in options:
+            if 'cmd' not in options and 'shell_cmd' not in options:
                 ctx.cancel_build('No command')
 
         except BuildError as err:
