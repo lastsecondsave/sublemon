@@ -5,7 +5,7 @@ from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
 
 class PylintCommand(ChimneyCommand):
     def setup(self, ctx):
-        cmd = ['python', '-m', 'pylint', ctx.file_name()]
+        cmd = ['python', '-m', 'pylint'] + (ctx.opt('cmd') or [ctx.file_name()])
 
         if ctx.opt('disable'):
             cmd.append('--disable=' + ','.join(ctx.opt('disable')))
