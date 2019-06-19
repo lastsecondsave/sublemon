@@ -413,7 +413,7 @@ rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
     'keyword.other.directive.yaml')
-rec(CRIMSON + ITALIC,
+rec(META + ITALIC,
     'variable.other.alias',
     'punctuation.definition.alias',
     'entity.name.other.anchor',
