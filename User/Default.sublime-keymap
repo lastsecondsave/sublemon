@@ -52,6 +52,7 @@
   { "keys": ["ctrl+alt+;"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"} },
 
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
+  { "keys": ["ctrl+alt+x"], "command": "selection_to_cursors" },
   { "keys": ["ctrl+alt+b"], "command": "build" },
   { "keys": ["ctrl+alt+,"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"}, },
   { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
