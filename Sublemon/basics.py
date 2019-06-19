@@ -4,7 +4,7 @@ import tempfile
 
 import sublime
 from sublime import Region
-from sublime_plugin import ApplicationCommand, TextCommand, WindowCommand
+from sublime_plugin import TextCommand, WindowCommand
 
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 HOME_PATH = os.environ['USERPROFILE' if RUNNING_ON_WINDOWS else 'HOME']
@@ -168,7 +168,7 @@ class OpenFilePathCommand(WindowCommand):
 
             if parent == '~':
                 parent = HOME_PATH
-            elif parent ==  '@':
+            elif parent == '@':
                 parent = self.window.extract_variables().get('folder')
             elif parent == '#':
                 parent = os.path.join(tempfile.gettempdir(), 'sublemon')
@@ -243,6 +243,18 @@ class StreamlineRegionsCommand(TextCommand):
             selection.subtract(r)
 
         selection.add_all(replacement)
+
+
+class SelectionToCursorsCommand(TextCommand):
+    def run(self, edit):
+        selection = self.view.sel()
+        for region in selection:
+            if region.empty():
+                continue
+
+            selection.subtract(region)
+            selection.add(Region(region.a, region.a))
+            selection.add(Region(region.b, region.b))
 
 
 class LastSingleSelectionCommand(TextCommand):
