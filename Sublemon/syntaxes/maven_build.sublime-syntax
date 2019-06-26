@@ -11,7 +11,7 @@ contexts:
     captures:
       1: meta.indicator.error.maven
       2: meta.indicator.warning.maven
-      3: entity.name.file.maven
+      3: entity.name.filename.maven
       4: constant.numeric.maven
       5: constant.numeric.maven
       6: string.maven
@@ -20,7 +20,7 @@ contexts:
   - match: '(\[WARNING\]) (.*\.java): (.*)'
     captures:
       1: meta.indicator.warning.maven
-      2: entity.name.file.maven
+      2: entity.name.filename.maven
       3: string.maven
 
   # Summary

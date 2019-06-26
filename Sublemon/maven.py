@@ -27,7 +27,7 @@ class MavenCommand(ChimneyCommand):
             cmd.append('-o')
 
         if ctx.opt('no_info_messages'):
-            cmd += append(['-q', '-e'])
+            cmd += ['-q', '-e']
 
         ctx.set(cmd=' '.join(filter(None, cmd)),
                 syntax='maven_build',
