@@ -4,6 +4,7 @@
   "target": "maven",
   "working_dir": "${folder:${file_path}}",
   "cmd": "compile",
+  "cancel": {"kill": true},
 
   "variants": [
     { "name": "Clean → Compile",
