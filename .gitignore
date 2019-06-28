@@ -12,5 +12,6 @@
 /User/*.crt
 
 !/Default
+!/Python
 
 .DS_Store
