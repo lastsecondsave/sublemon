@@ -493,6 +493,9 @@ rec(Highlight(FADED_GRAY, 0.5),
 rec(CLEAR_WHITE + BOLD,
     'variable.other.branch')
 
+txt('git.ignore')
+rec(KEYWORD, 'keyword.operator')
+
 #### INI ####
 
 src('ini')
