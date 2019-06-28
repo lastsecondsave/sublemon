@@ -29,6 +29,10 @@
 		{
 			"name": "default",
 			"path": "Default"
+		},
+		{
+			"name": "python",
+			"path": "Python"
 		}
 	]
 }
