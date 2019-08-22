@@ -5,7 +5,7 @@ import shutil
 
 import xml.etree.ElementTree as ET
 
-_CLEANUP = re.compile(r'(\$(\{[^\}]+?\}|\d)\s*)|[\t\n]|\s*:\n')
+CLEANUP = re.compile(r'(\$(\{[^\}]+?\}|\d)\s*)|[\t\n]|\s*:\n')
 
 
 def _generate_filename(content):
@@ -47,7 +47,7 @@ class SnippetWriter:
             snippet = mutate(snippet)
 
         if not description:
-            description = _CLEANUP.sub('', snippet).strip()
+            description = CLEANUP.sub('', snippet).strip()
 
         snippet = snippet.replace('$FILENAME', r'${TM_FILENAME/(.*?)(\..+)/$1/}')
 
@@ -55,7 +55,7 @@ class SnippetWriter:
 
 
 class SnippetDefinition:
-    def __init__(self, scope, mutators = ()):
+    def __init__(self, scope, mutators=()):
         self.scope = scope
         self.mutators = mutators
 
@@ -67,19 +67,18 @@ class SnippetDefinition:
 
 
 class Snippets(SnippetDefinition):
-    def __init__(self, scope, mutators = ()):
+    def __init__(self, scope, mutators=()):
         super().__init__(scope, mutators)
         _clean_target(scope)
 
     def subscope(self, scope):
         return Snippets(self.scope + ' ' + scope, self.mutators)
 
+# pylint: disable=multiple-statements
 
-def blk(s): return s + ' {\n\t$0\n}'
-def bls(s): return s + ' { $0 }'
-def scl(s): return s + ';'
-def spc(s): return s + ' $0'
-def slp(s): return s + '(${0:$SELECTION})'
-
-def ind(s):
-    return s.replace('|>', '\n\t').replace('||', '\n')
+def blk(text): return text + ' {\n\t$0\n}'
+def bls(text): return text + ' { $0 }'
+def scl(text): return text + ';'
+def spc(text): return text + ' $0'
+def slp(text): return text + '(${0:$SELECTION})'
+def ind(text): return text.replace('|>', '\n\t').replace('||', '\n')
