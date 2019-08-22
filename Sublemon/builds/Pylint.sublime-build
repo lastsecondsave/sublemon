@@ -3,6 +3,7 @@
   "target": "pylint",
   "disable": [
     "missing-docstring",
-    "too-few-public-methods"
+    "too-few-public-methods",
+    "no-else-return"
   ]
 }
