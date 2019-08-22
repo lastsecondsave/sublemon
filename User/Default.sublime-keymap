@@ -46,13 +46,15 @@
   },
 
   { "keys": ["ctrl+alt+w"], "command": "close_without_saving" },
+  { "keys": ["ctrl+alt+i"], "command": "reindent", "args": {"single_line": true} },
   { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
 
   { "keys": ["ctrl+alt+a"], "command": "alignment" },
+  { "keys": ["ctrl+alt+s"], "command": "selection_to_cursors" },
   { "keys": ["ctrl+alt+;"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"} },
 
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
-  { "keys": ["ctrl+alt+x"], "command": "selection_to_cursors" },
+  { "keys": ["ctrl+alt+x"], "command": "unbound" },
   { "keys": ["ctrl+alt+b"], "command": "build" },
   { "keys": ["ctrl+alt+,"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"}, },
   { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
@@ -75,7 +77,6 @@
 
   { "keys": ["ctrl+k", "ctrl+e"], "command": "select_with_custom_markers" },
   { "keys": ["ctrl+k", "ctrl+t"], "command": "title_case" },
-  { "keys": ["ctrl+k", "ctrl+i"], "command": "reindent", "args": {"single_line": false} },
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 
@@ -98,6 +99,7 @@
   { "keys": ["ctrl+="],       "command": "unbound" },
   { "keys": ["ctrl+-"],       "command": "unbound" },
   { "keys": ["ctrl+shift+-"], "command": "unbound" },
+  { "keys": ["ctrl+shift+="], "command": "unbound" },
 
   /** SMART KEYS **/
 
