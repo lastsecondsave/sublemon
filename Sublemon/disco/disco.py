@@ -73,7 +73,6 @@ TAG_ATTRIBUTE = Style(YELLOW)
 PARAMETER = Style(ORANGE)
 USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
-VARIABLE_MARKER = Style(DARK_ORANGE)
 
 RAINBOW = Style([PINK, CRIMSON])
 INVALID = Style(CLEAR_WHITE, background=CRIMSON)
@@ -202,7 +201,7 @@ rec(TAG,
     'punctuation.definition.tag')
 rec(TAG_ATTRIBUTE,
     'entity.other.attribute-name')
-rec(VARIABLE_MARKER,
+rec(PUNCTUATION,
     'punctuation.definition.variable')
 
 #### MARKUP ####
@@ -233,8 +232,7 @@ rec(KEYWORD,
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
-    'meta.annotation')
-rec(BOLD,
+    'meta.annotation',
     'support.function -support.function.magic -variable.annotation')
 rec(STRING,
     'string keyword.operator')
@@ -340,6 +338,12 @@ rec(ITALIC,
 
 txt('log.java')
 rec(CRIMSON, 'entity.name.exception')
+
+#### CLOJURE ####
+
+src('clojure')
+rec(TAG + ITALIC, 'constant.other.keyword')
+rec(PUNCTUATION, 'keyword.operator.macro')
 
 #### GROOVY ####
 
