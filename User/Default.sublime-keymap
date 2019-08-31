@@ -35,8 +35,6 @@
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
 
 
-  { "keys": ["ctrl+alt+left"], "command": "scroll_width", "args": {"amount": -20} },
-  { "keys": ["ctrl+alt+right"], "command": "scroll_width", "args": {"amount": 20} },
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_indent.sublime-macro" },
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
@@ -73,6 +71,8 @@
   { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
   { "keys": ["ctrl+shift+alt+p"], "command": "get_selection_scope" },
   { "keys": ["ctrl+shift+alt+b"], "command": "cancel_build" },
+  { "keys": ["ctrl+shift+alt+left"], "command": "scroll_width", "args": {"amount": -20} },
+  { "keys": ["ctrl+shift+alt+right"], "command": "scroll_width", "args": {"amount": 20} },
 
 
   { "keys": ["ctrl+k", "ctrl+e"], "command": "select_with_custom_markers" },
