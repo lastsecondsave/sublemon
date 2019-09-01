@@ -1,11 +1,24 @@
 import re
+import sublime
 
 from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
 
 
+def python_binary():
+    settings = sublime.load_settings("Preferences.sublime-settings")
+    return settings.get('python_binary', 'python')
+
+
+class PythonCommand(ChimneyCommand):
+    def setup(self, ctx):
+        ctx.set(cmd=' '.join((python_binary(), ctx.opt('shell_cmd'))),
+                file_regex='^[ ]*File "(...*?)", line ([0-9]*)',
+                env={"PYTHONIOENCODING": "utf-8"})
+
+
 class PylintCommand(ChimneyCommand):
     def setup(self, ctx):
-        cmd = ['python', '-m', 'pylint'] + (ctx.opt('cmd') or [ctx.file_name()])
+        cmd = [python_binary(), '-m', 'pylint'] + (ctx.opt('cmd') or [ctx.file_name()])
 
         if ctx.opt('disable'):
             cmd.append('--disable=' + ','.join(ctx.opt('disable')))
@@ -40,7 +53,7 @@ class PylintBuildListener(ChimneyBuildListener):
 
 class PycodestyleCommand(ChimneyCommand):
     def setup(self, ctx):
-        cmd = ['python',
+        cmd = [python_binary(),
                '-m', 'pycodestyle',
                ctx.file_name(),
                '--max-line-length=120']
