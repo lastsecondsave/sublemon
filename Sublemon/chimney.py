@@ -75,16 +75,13 @@ def format_command(command):
     if isinstance(command, str):
         return command
 
-    def chunks():
-        for c in command:
-            if "'" in c or ' ' in c:
-                yield '"' + c + '"'
-            else:
-                yield c
+    chunks = ('"' + c + '"' if ("'" in c) or (' ' in c) else c
+              for c in command)
 
-    return ' '.join(chunks())
+    return ' '.join(chunks)
 
 
+# pylint: disable=no-self-use
 class ChimneyBuildListener:
     def on_startup(self, ctx):
         ctx.window.status_message('Build started: ' + format_command(ctx.process.args))
@@ -101,6 +98,7 @@ class ChimneyBuildListener:
 
 class BuildError(Exception):
     def __init__(self, message):
+        super().__init__(self)
         self.message = message
 
 
@@ -120,6 +118,7 @@ class BuildContext:
     def file_name(self):
         return self.window.active_view().file_name()
 
+    # pylint: disable=too-many-arguments
     def set(self,
             cmd=None,
             working_dir=None,
@@ -335,7 +334,7 @@ def kill_process(process):
         cmd = 'taskkill /T /F /PID {}'.format(process.pid)
         subprocess.Popen(cmd, startupinfo=STARTUPINFO)
     else:
-        os.killpg(process.pid, signal.SIGTERM)
+        os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
         process.terminate()
 
     process.wait()
