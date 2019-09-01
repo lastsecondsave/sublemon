@@ -37,7 +37,7 @@ py/blk/'for' - ('for', 'for $1 in $2')
 py/blk/'fori' - (':range: for', 'for ${1:i} in range(${2:0}, ${3:imax})')
 
 py/'lc' - (':list: comprehension', '[$1 for $2 in $3]')
-py/'tc' - (':tuple: comprehension', '($1 for $2 in $3)')
+py/'gc' - (':gen: comprehension', '($1 for $2 in $3)')
 py/'dc' - (':dict: comprehension', '{$1: $2 for $3 in $4}')
 
 py/'pld' - '# pylint: disable=$1'
