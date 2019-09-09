@@ -11,7 +11,12 @@ def python_binary():
 
 class PythonCommand(ChimneyCommand):
     def setup(self, ctx):
-        ctx.set(cmd=' '.join((python_binary(), ctx.opt('shell_cmd'))),
+        if ctx.opt('shell_cmd'):
+            cmd = ' '.join((python_binary(), ctx.opt('shell_cmd')))
+        else:
+            cmd = [python_binary()] + ctx.opt('cmd')
+
+        ctx.set(cmd=cmd,
                 file_regex='^[ ]*File "(...*?)", line ([0-9]*)',
                 env={"PYTHONIOENCODING": "utf-8"})
 
