@@ -11,10 +11,6 @@ from sublime_plugin import WindowCommand
 
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
-STARTUPINFO = subprocess.STARTUPINFO()
-if RUNNING_ON_WINDOWS:
-    STARTUPINFO.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-
 RUNNING_BUILDS = {}
 
 
@@ -307,10 +303,14 @@ def start_build(panel, options, listener):
 
 def start_process(options):
     process_params = dict(
-        startupinfo=STARTUPINFO,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         stdin=subprocess.DEVNULL)
+
+    if RUNNING_ON_WINDOWS:
+        process_params['startupinfo'] = startupinfo()
+    else:
+        process_params['preexec_fn'] = os.setsid  # pylint: disable=no-member
 
     if 'shell_cmd' in options:
         cmd = options['shell_cmd']
@@ -332,9 +332,15 @@ def start_process(options):
 def kill_process(process):
     if RUNNING_ON_WINDOWS:
         cmd = 'taskkill /T /F /PID {}'.format(process.pid)
-        subprocess.Popen(cmd, startupinfo=STARTUPINFO)
+        subprocess.Popen(cmd, startupinfo=startupinfo())
     else:
         os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
         process.terminate()
 
     process.wait()
+
+
+def startupinfo():
+    sinfo = subprocess.STARTUPINFO()
+    sinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    return sinfo
