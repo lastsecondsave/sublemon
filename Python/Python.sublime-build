@@ -1,5 +1,6 @@
 {
   "selector": "source.python",
   "target": "python",
-  "shell_cmd": "-u \"$file\""
+  "shell_cmd": "-u \"$file\"",
+  "cancel": {"kill": true}
 }
