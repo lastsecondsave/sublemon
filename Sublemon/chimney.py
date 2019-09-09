@@ -163,8 +163,7 @@ class ChimneyCommand(WindowCommand):
 
         if build:
             self.window.status_message('Cancelling build...')
-            build.cancelled = True
-            kill_process(build.process)
+            build.cancel(kill)
 
         if kill:
             return
@@ -268,7 +267,7 @@ class RunningBuildContext:
         self.listener = listener
 
         self.window = panel.window
-        self.cancelled = False
+        self.finishing_state = 0
 
         self.listener.on_startup(self)
 
@@ -278,13 +277,18 @@ class RunningBuildContext:
     def complete(self):
         RUNNING_BUILDS.pop(self.window.id(), None)
 
-        if self.cancelled:
-            self.window.status_message('Build cancelled')
-            self.print('\n💀 Terminated 💀')
-            log('✘ [{}]', self.process.pid)
-        else:
+        if self.finishing_state == 0:
             self.listener.on_complete(self)
             log('✔ [{}]', self.process.pid)
+        else:
+            self.window.status_message('Build cancelled')
+            log('✘ [{}]', self.process.pid)
+            if self.finishing_state == 1:
+                self.print('\n[Process Terminated]')
+
+    def cancel(self, kill):
+        self.finishing_state = 1 if kill else 2
+        kill_process(self.process)
 
 
 def start_build(panel, options, listener):
