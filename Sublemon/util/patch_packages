@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 set -e
 
@@ -7,44 +7,44 @@ case $(uname -s) in
   'Linux')  INSTALL_PATH='/opt/sublime_text_3';;
 esac
 
-if [[ ! -d $INSTALL_PATH ]]; then
-  INSTALL_PATH="$(dirname $0)/../../../.."
+if [[ ! -d ${INSTALL_PATH} ]]; then
+  INSTALL_PATH=$(dirname "$0")/../../../..
 fi
 
 TEMP_DIRECTORY='/tmp/sublemon-packages'
-rm -rf $TEMP_DIRECTORY && mkdir $TEMP_DIRECTORY
+rm -rf "${TEMP_DIRECTORY}" && mkdir "${TEMP_DIRECTORY}"
 
 PACKAGES_DIRECTORY="${INSTALL_PATH}/Packages"
 PACKAGES_TO_PROCESS=(Java Groovy Python JavaScript ShellScript XML HTML)
 
-for package in $PACKAGES_TO_PROCESS; do
-    cp "${PACKAGES_DIRECTORY}/${package}.sublime-package" $TEMP_DIRECTORY
+for package in "${PACKAGES_TO_PROCESS[@]}"; do
+    cp "${PACKAGES_DIRECTORY}/${package}.sublime-package" "${TEMP_DIRECTORY}"
 done
 
-pushd $TEMP_DIRECTORY
+pushd "${TEMP_DIRECTORY}" > /dev/null
 
 for package in *.sublime-package; do
   dir="${package%%.sublime-package}"
 
   echo "Processing $(tput setaf 3)${dir}$(tput sgr0).sublime-package"
 
-  unzip -q "$package" -d "$dir"
-  rm "$package"
-  pushd "$dir"
+  unzip -q "${package}" -d "${dir}"
+  rm "${package}"
+  pushd "${dir}" > /dev/null
 
   find . -name '*.sublime-snippet' -exec rm -f {} +
   find . -name '*.sublime-completions' -exec rm -f {} +
 
-  case $dir in
-    'Java') rm -f *.sublime-build;;
+  case "${dir}" in
+    'Java') rm -f -- *.sublime-build;;
   esac
 
-  zip -rq "../${package}" *
+  zip -rq "../${package}" -- *
 
-  popd
+  popd > /dev/null
 done
 
-popd
+popd > /dev/null
 
-cp $TEMP_DIRECTORY/*.sublime-package $PACKAGES_DIRECTORY
-rm -rf $TEMP_DIRECTORY
+cp "${TEMP_DIRECTORY}"/*.sublime-package "$PACKAGES_DIRECTORY"
+rm -rf "${TEMP_DIRECTORY}"
