@@ -3,7 +3,7 @@
 set -e
 
 PYTHON_BINARY=python
-if which python3 2>&1 > /dev/null; then
+if command -v python3 > /dev/null 2>&1; then
     PYTHON_BINARY=python3
 fi
 
