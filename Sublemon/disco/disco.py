@@ -176,7 +176,7 @@ rec(OPERATOR,
     'keyword.operator')
 rec(INDEXED,
     'entity.name.class',
-    'entity.name.function',
+    'entity.name.function -meta.function-call',
     'entity.name.filename',
     'entity.name.namespace',
     'entity.name.key')
