@@ -11,8 +11,6 @@ from sublime_plugin import WindowCommand
 
 RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
 
-RUNNING_BUILDS = {}
-
 
 class OutputPanel:
     def __init__(self, window):
@@ -156,16 +154,15 @@ class ChimneyCommand(WindowCommand):
     def __init__(self, window):
         super().__init__(window)
         self.panel = OutputPanel(window)
+        self.build = None
 
     def setup(self, ctx):
         pass
 
     def run(self, kill=False, **options):
-        build = RUNNING_BUILDS.get(self.window.id())
-
-        if build:
+        if self.build:
             self.window.status_message('Cancelling build...')
-            build.cancel(kill)
+            self.build.cancel(kill)
 
         if kill:
             return
@@ -190,9 +187,8 @@ class ChimneyCommand(WindowCommand):
 
         self.panel.show()
 
-        build = start_build(self.panel, options, ctx.listener)
-        RUNNING_BUILDS[self.window.id()] = build
-        log('→ [{}] {}', build.process.pid, format_command(build.process.args))
+        self.build = start_build(self.panel, options, ctx.listener)
+        log('→ [{}] {}', self.build.process.pid, format_command(self.build.process.args))
 
     def change_working_dir(self, working_dir):
         if not working_dir:
@@ -267,9 +263,9 @@ class RunningBuildContext:
         self.panel = panel
         self.process = process
         self.listener = listener
-
         self.window = panel.window
-        self.finishing_state = 0
+
+        self.cancelled = None
 
         self.listener.on_startup(self)
 
@@ -277,20 +273,24 @@ class RunningBuildContext:
         self.panel.append(line)
 
     def complete(self):
-        RUNNING_BUILDS.pop(self.window.id(), None)
-
-        if self.finishing_state == 0:
+        if not self.cancelled:
             self.listener.on_complete(self)
+            self.panel.view.find_all_results()
             log('✔ [{}]', self.process.pid)
         else:
             self.window.status_message('Build cancelled')
             log('✘ [{}]', self.process.pid)
-            if self.finishing_state == 1:
-                self.print('\n[Process Terminated]')
+
+        if self.cancelled == 'kill':
+            self.print('\n[Process Terminated]')
 
     def cancel(self, kill):
-        self.finishing_state = 1 if kill else 2
+        self.cancelled = 'kill' if kill else 'restart'
         kill_process(self.process)
+
+    def __bool__(self):
+        '''True if process is active.'''
+        return self.process.poll() is None
 
 
 def start_build(panel, options, listener):
