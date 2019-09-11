@@ -1,7 +1,4 @@
-import os.path
 import re
-
-import sublime
 
 from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener, RUNNING_ON_WINDOWS
 
