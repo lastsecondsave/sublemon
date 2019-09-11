@@ -61,7 +61,9 @@ class OutputPanel:
             lines.appendleft('')
 
         self.lines_printed += len(lines)
-        self.view.run_command('append', {'characters': '\n'.join(lines)})
+        self.view.run_command(
+            'append',
+            {'characters': '\n'.join(lines), 'force': True, 'scroll_to_end': True})
 
     def show(self):
         self.window.run_command('show_panel', {'panel': 'output.exec'})
