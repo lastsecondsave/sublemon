@@ -40,4 +40,4 @@ py/'lc' - (':list: comprehension', '[$1 for $2 in $3]')
 py/'gc' - (':gen: comprehension', '($1 for $2 in $3)')
 py/'dc' - (':dict: comprehension', '{$1: $2 for $3 in $4}')
 
-py/'pld' - '# pylint: disable=$1'
+py/'pld' - '# pylint: disable='
