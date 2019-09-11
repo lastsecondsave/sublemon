@@ -1,3 +1,5 @@
+# pylint: disable=bad-whitespace,global-statement
+
 import json
 import os
 
@@ -81,48 +83,7 @@ REGEXP_GROUP = Style(ORANGE)
 REGEXP_CHARACTER_CLASS = Style(PURPLE)
 REGEXP_CONTROL = Style(PINK)
 
-
-def sec(scope=None):
-    global global_scope
-    global_scope = scope
-
-
-def src(lang):
-    sec('source.' + lang)
-
-
-def txt(lang):
-    sec('text.' + lang)
-
-
-def rec(style, *scopes):
-    global global_scope
-    global color_scheme
-
-    if not isinstance(style, Style):
-        style = Style(style)
-
-    for scope in scopes:
-        if global_scope:
-            scope = ' '.join([global_scope, scope])
-
-        color_scheme['rules'].append(dict(style.settings, scope=scope))
-
-
-
-def generate():
-    global color_scheme
-
-    path = os.path.join('..', 'Disco.sublime-color-scheme')
-    path = os.path.abspath(path)
-
-    with open(path, 'w') as json_file:
-        json.dump(color_scheme, json_file, indent=2)
-
-    print('Generated', path)
-
-
-color_scheme = {
+COLOR_SCHEME = {
     'name': 'Disco',
 
     'globals': {
@@ -145,7 +106,47 @@ color_scheme = {
     'rules': []
 }
 
-global_scope = None
+GLOBAL_SCOPE = None
+
+
+def sec(scope=None):
+    global GLOBAL_SCOPE
+    GLOBAL_SCOPE = scope
+
+
+def src(lang):
+    sec('source.' + lang)
+
+
+def txt(lang):
+    sec('text.' + lang)
+
+
+def rec(style, *scopes):
+    global GLOBAL_SCOPE
+    global COLOR_SCHEME
+
+    if not isinstance(style, Style):
+        style = Style(style)
+
+    for scope in scopes:
+        if GLOBAL_SCOPE:
+            scope = ' '.join([GLOBAL_SCOPE, scope])
+
+        COLOR_SCHEME['rules'].append(dict(style.settings, scope=scope))
+
+
+def generate():
+    global COLOR_SCHEME
+
+    path = os.path.join('..', 'Disco.sublime-color-scheme')
+    path = os.path.abspath(path)
+
+    with open(path, 'w') as json_file:
+        json.dump(COLOR_SCHEME, json_file, indent=2)
+
+    print('Generated', path)
+
 
 #### FOUNDATION ####
 
