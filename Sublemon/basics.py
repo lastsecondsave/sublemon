@@ -15,19 +15,19 @@ class EscapeBackslashesCommand(TextCommand):
         for region in self.view.sel():
             self.escape(edit, region.end())
 
-    def escape(self, edit, point):
-        def score(p):
-            return self.view.score_selector(p, 'string')
+    def points_to_string(self, point):
+        return self.view.score_selector(point, 'string')
 
-        if not score(point):
+    def escape(self, edit, point):
+        if not self.points_to_string(point):
             return
 
         (begin, end) = (point, point + 1)
 
-        while score(begin - 1):
+        while self.points_to_string(begin - 1):
             begin -= 1
 
-        while score(end):
+        while self.points_to_string(end):
             end += 1
 
         region = Region(begin, end)
@@ -104,15 +104,12 @@ class ShrinkWhitespaceCommand(TextCommand):
         return begin
 
     def shrink_spaces(self, edit, point):
-        def is_space(p):
-            return self.view.substr(p) == ' '
-
         begin = point
-        while is_space(begin - 1):
+        while self.view.substr(begin - 1) == ' ':
             begin -= 1
 
         end = point
-        while is_space(end):
+        while self.view.substr(end) == ' ':
             end += 1
 
         if end - begin < 2:
@@ -192,7 +189,7 @@ class OpenFilePathCommand(WindowCommand):
 
 
 class ToggleLigaturesCommand(TextCommand):
-    def run(self, edit):
+    def run(self, _edit):
         font_options = self.view.settings().get("font_options")
         enable = "no_calt" in font_options
         if enable:
@@ -204,7 +201,7 @@ class ToggleLigaturesCommand(TextCommand):
 
 
 class ToggleSettingVerboseCommand(TextCommand):
-    def run(self, edit, setting):
+    def run(self, _edit, setting):
         was_enabled = self.view.settings().get(setting)
         self.view.run_command('toggle_setting', dict(setting=setting))
         show_setting_status(setting, not was_enabled)
@@ -217,7 +214,7 @@ def show_setting_status(setting, active):
 
 
 class StreamlineRegionsCommand(TextCommand):
-    def run(self, edit):
+    def run(self, _edit):
         selection = self.view.sel()
         regions = [r for r in selection if not r.empty()]
 
@@ -226,8 +223,8 @@ class StreamlineRegionsCommand(TextCommand):
 
         left, right = 0, 0
 
-        for r in regions:
-            if r.a > r.b:
+        for region in regions:
+            if region.a > region.b:
                 left += 1
             else:
                 right += 1
@@ -239,14 +236,14 @@ class StreamlineRegionsCommand(TextCommand):
         else:
             replacement = [Region(r.end(), r.begin()) for r in regions]
 
-        for r in regions:
-            selection.subtract(r)
+        for region in regions:
+            selection.subtract(region)
 
         selection.add_all(replacement)
 
 
 class SelectionToCursorsCommand(TextCommand):
-    def run(self, edit):
+    def run(self, _edit):
         selection = self.view.sel()
         for region in selection:
             if region.empty():
@@ -258,7 +255,7 @@ class SelectionToCursorsCommand(TextCommand):
 
 
 class LastSingleSelectionCommand(TextCommand):
-    def run(self, edit):
+    def run(self, _edit):
         selection = self.view.sel()
         regions = [r for r in selection]
         for region in regions[:-1]:
@@ -266,7 +263,7 @@ class LastSingleSelectionCommand(TextCommand):
 
 
 class SelectWithMarkersCommand(TextCommand):
-    def run(self, edit, left, right):
+    def run(self, _edit, left, right):
         selection = self.view.sel()
         for region in selection:
             replacement = self.expand_region(region.end(), left, right)
@@ -307,10 +304,10 @@ class SelectWithCustomMarkersCommand(WindowCommand):
 def split_markers(markers):
     i = markers.find(' ')
 
-    b1 = i if i >= 0 else int(len(markers) / 2)
-    b2 = i + 1 if i >= 0 else b1
+    left_bound = i if i >= 0 else int(len(markers) / 2)
+    right_bound = i + 1 if i >= 0 else left_bound
 
-    return {'left': markers[0:b1], 'right': markers[b2:]}
+    return {'left': markers[:left_bound], 'right': markers[right_bound:]}
 
 
 class CloseWithoutSavingCommand(WindowCommand):
