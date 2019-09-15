@@ -9,7 +9,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
+from .utils import RUNNING_ON_WINDOWS
 
 
 class OutputPanel:
