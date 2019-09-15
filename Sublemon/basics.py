@@ -6,8 +6,7 @@ import sublime
 from sublime import Region
 from sublime_plugin import TextCommand, WindowCommand
 
-RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
-HOME_PATH = os.environ['USERPROFILE' if RUNNING_ON_WINDOWS else 'HOME']
+from .utils import RUNNING_ON_WINDOWS, HOME_PATH
 
 
 class EscapeBackslashesCommand(TextCommand):
