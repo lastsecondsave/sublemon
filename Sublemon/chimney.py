@@ -151,18 +151,24 @@ def log(message, *params):
 
 
 class ChimneyCommand(WindowCommand):
+    builds = {}
+    panels = {}
+
     def __init__(self, window):
         super().__init__(window)
-        self.panel = OutputPanel(window)
-        self.build = None
+
+        if not window.id() in self.panels:
+            self.panels[window.id()] = OutputPanel(window)
 
     def setup(self, ctx):
         pass
 
     def run(self, kill=False, **options):
-        if self.build:
+        wid = self.window.id()
+
+        if self.builds.get(wid, None):
             self.window.status_message('Cancelling build...')
-            self.build.cancel(kill)
+            self.builds[wid].cancel(kill)
 
         if kill:
             return
@@ -178,17 +184,21 @@ class ChimneyCommand(WindowCommand):
             self.window.status_message(': '.join(filter(None, ('Build error', err.message))))
             return
 
-        self.panel.reset(
+        panel = self.panels[wid]
+
+        panel.reset(
             result_base_dir=self.change_working_dir(options.get('working_dir')),
             result_file_regex=options.get('file_regex'),
             result_line_regex=options.get('line_regex'),
             syntax=options.get('syntax')
         )
 
-        self.panel.show()
+        panel.show()
 
-        self.build = start_build(self.panel, options, ctx.listener)
-        log('→ [{}] {}', self.build.process.pid, format_command(self.build.process.args))
+        build = start_build(panel, options, ctx.listener)
+        self.builds[wid] = build
+
+        log('→ [{}] {}', build.process.pid, format_command(build.process.args))
 
     def change_working_dir(self, working_dir):
         if not working_dir:
