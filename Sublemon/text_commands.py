@@ -214,3 +214,53 @@ class SelectWithMarkersCommand(TextCommand):
                 return None
 
         return Region(left+lmlen, right-rmlen)
+
+
+class IndentToBracesCommand(TextCommand):
+    def run(self, edit):
+        for region in self.view.sel():
+            self.indent_region(edit, region)
+
+    def indent_region(self, edit, region):
+        row, col = self.view.rowcol(region.begin())
+        if row == 0:
+            return
+
+        line = self.view.line(self.view.text_point(row-1, col))
+        if line.empty():
+            return
+
+        open_brace_position = self.find_open_brace_position(self.view.substr(line))
+        if open_brace_position < 0:
+            return
+
+        self.indent_lines(edit, region, ' ' * (open_brace_position+1))
+
+    def indent_lines(self, edit, region, indent):
+        for line in reversed(self.view.lines(region)):
+            if line.empty():
+                continue
+            replacement = indent + self.view.substr(line).lstrip()
+            self.view.replace(edit, line, replacement)
+
+    @staticmethod
+    def find_open_brace_position(text):
+        counters = {
+            ('[', ']'): 0,
+            ('{', '}'): 0,
+            ('(', ')'): 0
+        }
+
+        for i in reversed(range(len(text))):
+            for chars, counter in counters.items():
+                if text[i] == chars[0]:
+                    counter -= 1
+                elif text[i] == chars[1]:
+                    counter += 1
+
+                if counter == -1:
+                    return i
+
+                counters[chars] = counter
+
+        return -1
