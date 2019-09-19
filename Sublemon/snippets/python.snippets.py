@@ -34,7 +34,7 @@ py/blk/'except' - 'except ${1:Exception} as ${2:e}'
 py/blk/'finally' - 'finally'
 
 py/blk/'for' - ('for', 'for $1 in $2')
-py/blk/'fori' - (':range: for', 'for ${1:i} in range(${2:0}, ${3:imax})')
+py/blk/'fori' - (':range: for', 'for ${1:i} in range($2)')
 
 py/'lc' - (':list: comprehension', '[$1 for $2 in $3]')
 py/'gc' - (':gen: comprehension', '($1 for $2 in $3)')
