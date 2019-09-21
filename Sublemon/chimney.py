@@ -288,11 +288,13 @@ class RunningBuildContext:
             self.panel.view.find_all_results()
             log('✔ [{}]', self.process.pid)
         else:
-            self.window.status_message('Build cancelled')
             log('✘ [{}]', self.process.pid)
 
         if self.cancelled == 'kill':
+            self.window.status_message('Build cancelled')
             self.print('\n[Process Terminated]')
+
+        self.process = None
 
     def cancel(self, kill):
         self.cancelled = 'kill' if kill else 'restart'
@@ -300,7 +302,7 @@ class RunningBuildContext:
 
     def __bool__(self):
         '''True if process is active.'''
-        return self.process.poll() is None
+        return bool(self.process and not self.process.poll())
 
 
 def start_build(panel, options, listener):
