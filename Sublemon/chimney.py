@@ -150,25 +150,38 @@ def log(message, *params):
     print(message.format(*params))
 
 
-class ChimneyCommand(WindowCommand):
+class ChimneyBuildContainer():
     builds = {}
     panels = {}
 
-    def __init__(self, window):
-        super().__init__(window)
-
+    def panel(self, window):
         if not window.id() in self.panels:
             self.panels[window.id()] = OutputPanel(window)
 
+        return self.panels[window.id()]
+
+    def build(self, window):
+        return self.builds.get(window.id(), None)
+
+    def set_build(self, window, build):
+        self.builds[window.id()] = build
+
+
+class ChimneyCancelCommand(WindowCommand, ChimneyBuildContainer):
+    def run(self, **_options):
+        build = self.build(self.window)
+        if build:
+            build.cancel()
+
+
+class ChimneyCommand(WindowCommand, ChimneyBuildContainer):
     def setup(self, ctx):
         pass
 
     def run(self, kill=False, **options):
-        wid = self.window.id()
-
-        if self.builds.get(wid, None):
-            self.window.status_message('Cancelling build...')
-            self.builds[wid].cancel(kill)
+        build = self.build(self.window)
+        if build:
+            build.cancel()
 
         if kill:
             return
@@ -184,7 +197,7 @@ class ChimneyCommand(WindowCommand):
             self.window.status_message(': '.join(filter(None, ('Build error', err.message))))
             return
 
-        panel = self.panels[wid]
+        panel = self.panel(self.window)
 
         panel.reset(
             result_base_dir=self.change_working_dir(options.get('working_dir')),
@@ -196,7 +209,7 @@ class ChimneyCommand(WindowCommand):
         panel.show()
 
         build = start_build(panel, options, ctx.listener)
-        self.builds[wid] = build
+        self.set_build(self.window, build)
 
         log('→ [{}] {}', build.process.pid, format_command(build.process.args))
 
@@ -296,8 +309,9 @@ class RunningBuildContext:
 
         self.process = None
 
-    def cancel(self, kill):
+    def cancel(self, kill=True):
         self.cancelled = 'kill' if kill else 'restart'
+        self.window.status_message('Cancelling build...')
         kill_process(self.process)
 
     def __bool__(self):
