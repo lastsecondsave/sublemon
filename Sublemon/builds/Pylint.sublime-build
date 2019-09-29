@@ -1,6 +1,8 @@
 {
   "selector": "source.python",
   "target": "pylint",
+  "cancel": "chimney_cancel",
+  "cmd": ["$file"],
   "disable": [
     "missing-docstring",
     "too-few-public-methods",

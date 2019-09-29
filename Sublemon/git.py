@@ -5,16 +5,16 @@ from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
 
 class GitDiffCommand(ChimneyCommand):
     def setup(self, ctx):
-        ctx.set(cmd='git diff -- "{}"'.format(self.window.active_view().file_name()),
-                syntax="Packages/Diff/Diff.tmLanguage")
+        ctx.cmd.append('git', 'diff', ctx.file_name())
+        ctx.set(syntax="Packages/Diff/Diff.tmLanguage")
 
 
 class GitLogCommand(ChimneyCommand):
     def setup(self, ctx):
-        template = 'git log -200 --follow --no-merges --date=short --format="{}" -- "{}"'
-
-        ctx.set(cmd=template.format('%h %ad %an → %s', self.window.active_view().file_name()),
-                syntax="git_log",
+        ctx.cmd.append('git', 'log', '-200', '--follow', '--no-merges',
+                       '--date=short', '--format=%h %ad %an → %s',
+                       '--', ctx.file_name())
+        ctx.set(syntax="git_log",
                 listener=GitLogBuildListener())
 
 
@@ -54,7 +54,8 @@ class GitLogBuildListener(ChimneyBuildListener):
 
 class GitBlameCommand(ChimneyCommand):
     def setup(self, ctx):
-        cmd = "git blame --date=short"
+        ctx.cmd.append('git', 'blame', '--date=short')
+
         view = self.window.active_view()
         sel = view.sel()[0]
 
@@ -64,10 +65,10 @@ class GitBlameCommand(ChimneyCommand):
             if to_col > 0:
                 to_line += 1
 
-            cmd += ' -L "{},{}"'.format(from_line, to_line)
+            ctx.cmd.append('-L', '{},{}'.format(from_line, to_line))
 
-        ctx.set(cmd=cmd + ' -- "{}"'.format(view.file_name()),
-                syntax="git_blame",
+        ctx.cmd.append('--', ctx.file_name())
+        ctx.set(syntax="git_blame",
                 listener=GitBlameBuildListener())
 
 

@@ -16,19 +16,19 @@ FILE_REGEX = r'^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
 
 class MavenCommand(ChimneyCommand):
     def setup(self, ctx):
-        cmd = ['mvn',
-               ctx.opt('cmd'),
-               '-B',
-               ctx.opt('mvn_opts')]
+        ctx.cmd.appendleft('mvn.cmd' if RUNNING_ON_WINDOWS else 'mvn')
+        ctx.cmd.append('-B')
 
         if ctx.opt('offline'):
-            cmd.append('-o')
+            ctx.cmd.append('-o')
 
         if ctx.opt('no_info_messages'):
-            cmd += ['-q', '-e']
+            ctx.cmd.append('-q', '-e')
 
-        ctx.set(cmd=' '.join(filter(None, cmd)),
-                syntax='maven_build',
+        if ctx.opt('mvn_opts'):
+            ctx.cmd.append(*ctx.opt_list('mvn_opts'))
+
+        ctx.set(syntax='maven_build',
                 file_regex=FILE_REGEX,
                 listener=MavenBuildListener())
 
