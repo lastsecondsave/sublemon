@@ -81,4 +81,4 @@ def bls(text): return text + ' { $0 }'
 def scl(text): return text + ';'
 def spc(text): return text + ' $0'
 def slp(text): return text + '(${0:$SELECTION})'
-def ind(text): return text.replace('|>', '\n\t').replace('||', '\n')
+def ind(text): return text.replace('>=>', '\n\t').replace('==>', '\n')

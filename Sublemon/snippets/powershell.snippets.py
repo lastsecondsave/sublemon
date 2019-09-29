@@ -19,7 +19,7 @@ ps/blk/'fun' - ('function {}', 'function ${1:run}')
 
 ps/'pm' - ('Parameter', '[Parameter($1)]')
 
-ps/ind/'param' - ('param', 'param (|>$0||)')
+ps/ind/'param' - ('param', 'param (>=>$0==>)')
 
 ps/spc/'cd' - 'Set-Location'
 ps/spc/'cp' - 'Copy-Item'
