@@ -1,6 +1,6 @@
 {
   "selector": "source.python",
   "target": "python",
-  "shell_cmd": "-u \"$file\"",
+  "cmd": ["$file"],
   "cancel": "chimney_cancel"
 }

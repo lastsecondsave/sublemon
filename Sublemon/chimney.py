@@ -1,5 +1,6 @@
 import copy
 import os
+import shlex
 import signal
 import subprocess
 
@@ -67,20 +68,10 @@ class OutputPanel:
         self.window.run_command('show_panel', {'panel': 'output.exec'})
 
 
-def format_command(command):
-    if isinstance(command, str):
-        return command
-
-    chunks = ('"' + c + '"' if ("'" in c) or (' ' in c) else c
-              for c in command)
-
-    return ' '.join(chunks)
-
-
 # pylint: disable=no-self-use
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        ctx.window.status_message('Build started: ' + format_command(ctx.process.args))
+        ctx.window.status_message('Build started: ' + ' '.join(map(shlex.quote, ctx.process.args)))
 
     def on_output(self, line, ctx):
         ctx.print(line)
@@ -98,11 +89,36 @@ class BuildError(Exception):
         self.message = message
 
 
-class BuildContext:
+def split_command(cmd):
+    return shlex.split(cmd) if isinstance(cmd, str) else cmd
+
+
+class BuildCommand:
+    def __init__(self, options):
+        cmd = options.get('cmd', None) or options.get('shell_cmd', [])
+        self.cmd = deque(split_command(cmd))
+
+    def append(self, *chunks):
+        self.cmd.extend(chunks)
+
+    def appendleft(self, *chunks):
+        self.cmd.extendleft(reversed(chunks))
+
+    def __str__(self):
+        return ' '.join(map(shlex.quote, self.cmd))
+
+    def __bool__(self):
+        return bool(self.cmd)
+
+
+class BuildSetup:
     def __init__(self, options, window):
         self.options = options
         self.window = window
         self.listener = ChimneyBuildListener()
+
+        self.env = options.get('env', {})
+        self.cmd = BuildCommand(options)
 
     @staticmethod
     def cancel_build(message=None):
@@ -111,34 +127,29 @@ class BuildContext:
     def opt(self, name):
         return self.options.get(name, None)
 
+    def opt_list(self, name):
+        return split_command(self.opt(name))
+
     def file_name(self):
         return self.window.active_view().file_name()
 
     # pylint: disable=too-many-arguments
     def set(self,
-            cmd=None,
             working_dir=None,
             syntax=None,
             file_regex=None,
             line_regex=None,
-            env=None,
             listener=None):
 
         self.listener = listener or self.listener
 
         self.set_option('file_regex', file_regex, '')
         self.set_option('line_regex', line_regex, '')
-        self.set_option('env', env)
         self.set_option('working_dir', working_dir)
 
         if syntax and not syntax.endswith(('.sublime-syntax', '.tmLanguage')):
             syntax = 'Packages/Sublemon/syntaxes/{}.sublime-syntax'.format(syntax)
         self.set_option('syntax', syntax, 'Packages/Text/Plain text.tmLanguage')
-
-        if isinstance(cmd, str):
-            self.set_option('shell_cmd', cmd)
-        elif isinstance(cmd, list):
-            self.set_option('cmd', cmd)
 
     def set_option(self, option, value, default=None):
         value = value or self.options.get(option, default)
@@ -186,13 +197,13 @@ class ChimneyCommand(WindowCommand, ChimneyBuildContainer):
         if kill:
             return
 
-        ctx = BuildContext(options, self.window)
+        setup = BuildSetup(options, self.window)
 
         try:
-            self.setup(ctx)
-            if 'cmd' not in options and 'shell_cmd' not in options:
-                ctx.cancel_build('No command')
+            self.setup(setup)
 
+            if not setup.cmd:
+                setup.cancel_build('No command')
         except BuildError as err:
             self.window.status_message(': '.join(filter(None, ('Build error', err.message))))
             return
@@ -208,10 +219,10 @@ class ChimneyCommand(WindowCommand, ChimneyBuildContainer):
 
         panel.show()
 
-        build = start_build(panel, options, ctx.listener)
+        build = start_build(panel, setup.cmd.cmd, setup.env, setup.listener)
         self.set_build(self.window, build)
 
-        log('→ [{}] {}', build.process.pid, format_command(build.process.args))
+        log('→ [{}] {}', build.process.pid, setup.cmd)
 
     def change_working_dir(self, working_dir):
         if not working_dir:
@@ -319,8 +330,8 @@ class RunningBuildContext:
         return bool(self.process and not self.process.poll())
 
 
-def start_build(panel, options, listener):
-    process = start_process(options)
+def start_build(panel, cmd, env, listener):
+    process = start_process(cmd, env)
     ctx = RunningBuildContext(panel, process, listener)
 
     output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
@@ -333,32 +344,24 @@ def start_build(panel, options, listener):
     return ctx
 
 
-def start_process(options):
-    process_params = dict(
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        stdin=subprocess.DEVNULL)
+def start_process(cmd, env):
+    process_params = {
+        'stdout': subprocess.PIPE,
+        'stderr': subprocess.PIPE,
+        'stdin': subprocess.DEVNULL
+    }
 
     if RUNNING_ON_WINDOWS:
         process_params['startupinfo'] = startupinfo()
     else:
         process_params['preexec_fn'] = os.setsid  # pylint: disable=no-member
 
-    if 'shell_cmd' in options:
-        cmd = options['shell_cmd']
-        if RUNNING_ON_WINDOWS:
-            process_params['shell'] = True
-        else:
-            cmd = [os.environ['SHELL'], '-c', cmd]
-    else:
-        cmd = options['cmd']
+    if env:
+        process_params['env'] = os.environ.copy().update(
+            {k: os.path.expandvars(v) for k, v in env.items()})
 
-    if 'env' in options:
-        env = os.environ.copy()
-        env.update({k: os.path.expandvars(v) for k, v in options['env'].items()})
-        process_params['env'] = env
-
-    return subprocess.Popen(cmd, **process_params)
+    return subprocess.Popen(list(map(os.path.expandvars, cmd)),
+                            **process_params)
 
 
 def kill_process(process):
