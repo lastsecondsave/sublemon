@@ -6,14 +6,14 @@ hidden: true
 
 contexts:
   main:
-    - match: '^(.+?):(\d+):(\d+): (\w\d+): .*?(\(.+\))?$'
+    - match: '^(.+?):(\d+):(\d+): (\w\d+): .*?(\([\w-]+\))?$'
       captures:
         1: entity.name.filename
         2: constant.numeric
         3: constant.numeric
         4: comment.category.code
         5: markup.italic comment.category.description
-    - match: '^\s+\^ (\(.+\))'
+    - match: '^\s+\^ (\([\w-]+\))'
       scope: comment.category.description
       captures:
         1: markup.italic
