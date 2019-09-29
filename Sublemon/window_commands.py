@@ -4,7 +4,9 @@ import tempfile
 import sublime
 from sublime_plugin import WindowCommand
 
-from .utils import RUNNING_ON_WINDOWS, HOME_PATH
+from . import RUNNING_ON_WINDOWS
+
+HOME_PATH = os.path.expanduser('~')
 
 
 class ShowFilePathCommand(WindowCommand):
