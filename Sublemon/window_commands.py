@@ -44,49 +44,48 @@ class ShowFilePathCommand(WindowCommand):
 
 
 class OpenFilePathCommand(WindowCommand):
-    def run(self):
-        def on_done(path):
-            path = os.path.expandvars(path).strip()
+    def on_done(self, path):
+        path = os.path.expandvars(path).strip()
 
-            if RUNNING_ON_WINDOWS:
-                path = path.replace('/', '\\')
+        if RUNNING_ON_WINDOWS:
+            path = path.replace('/', '\\')
 
-            parent = path[0] if len(path) > 1 and path[1] == os.sep else ''
+        root = path[0] if len(path) > 1 and path[1] == os.sep else None
 
-            if parent == '~':
-                parent = HOME_PATH
-            elif parent == '@':
-                parent = self.window.extract_variables().get('folder')
-            elif parent == '#':
-                parent = os.path.join(tempfile.gettempdir(), 'sublemon')
+        if root == '~':
+            root = HOME_PATH
+        elif root == '@':
+            root = self.window.extract_variables().get('folder')
+        elif root == '#':
+            root = tempfile.gettempdir()
 
-            if parent:
-                path = parent + path[1:]
+        if root:
+            path = root + path[1:]
 
-            open_file = True
+        open_file = True
 
-            parent = os.path.dirname(path)
-            if (parent and not os.path.exists(parent)):
-                open_file = sublime.ok_cancel_dialog("Directory doesn't exist: {0}".format(parent),
-                                                     "Create")
-                if open_file:
-                    os.makedirs(parent)
-
+        parent = os.path.dirname(path)
+        if (parent and not os.path.exists(parent)):
+            open_file = sublime.ok_cancel_dialog("Directory doesn't exist: {}".format(parent),
+                                                 "Create")
             if open_file:
-                self.window.open_file(path, sublime.ENCODED_POSITION)
+                os.makedirs(parent)
 
-        self.window.show_input_panel("File Name:", '', on_done, None, None)
+        if open_file:
+            self.window.open_file(path, sublime.ENCODED_POSITION)
+
+    def run(self):
+        self.window.show_input_panel("File Name:", '', self.on_done, None, None)
 
 
 class SelectWithCustomMarkersCommand(WindowCommand):
     def run(self):
-        def on_done(markers):
-            if markers.strip():
-                self.window.active_view().run_command(
-                    'select_with_markers', self.split_markers(markers))
-
         self.window.show_input_panel(
-            'Selection markers:', '', on_done, None, None)
+            'Selection markers:', '', self.on_done, None, None)
+
+    def on_done(self, markers):
+        self.window.active_view().run_command(
+            'select_with_markers', self.split_markers(markers))
 
     @staticmethod
     def split_markers(markers):
