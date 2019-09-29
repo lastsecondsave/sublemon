@@ -10,7 +10,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from .utils import RUNNING_ON_WINDOWS
+from . import RUNNING_ON_WINDOWS
 
 
 class OutputPanel:
