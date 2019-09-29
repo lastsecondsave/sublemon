@@ -357,8 +357,9 @@ def start_process(cmd, env):
         process_params['preexec_fn'] = os.setsid  # pylint: disable=no-member
 
     if env:
-        process_params['env'] = os.environ.copy().update(
-            {k: os.path.expandvars(v) for k, v in env.items()})
+        os_env = os.environ.copy()
+        os_env.update({k: os.path.expandvars(v) for k, v in env.items()})
+        process_params['env'] = os_env
 
     return subprocess.Popen(list(map(os.path.expandvars, cmd)),
                             **process_params)
