@@ -428,6 +428,8 @@ rec(META,
 #### CSS ####
 
 src('css')
+rec(STRING,
+    'meta.selector string.unquoted')
 rec(PRIMITIVE,
     'constant.numeric keyword.other',
     'constant.other.color')
