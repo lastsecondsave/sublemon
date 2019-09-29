@@ -1,4 +1,4 @@
-# pylint: disable=bad-whitespace,global-statement
+# pylint: disable=bad-whitespace,global-statement,line-too-long
 
 import json
 import os
@@ -69,9 +69,10 @@ COMMENT = Style(GRAY)
 COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
-META = Style(YELLOW)
+META = Style(YELLOW) + ITALIC
 TAG = Style(BLUE)
 TAG_ATTRIBUTE = Style(YELLOW)
+SECTION = Style(YELLOW)
 PARAMETER = Style(ORANGE)
 USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
@@ -233,7 +234,6 @@ rec(KEYWORD,
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
-    'meta.annotation',
     'support.function -support.function.magic -variable.annotation')
 rec(STRING,
     'string keyword.operator')
@@ -244,7 +244,7 @@ rec(STRING + ITALIC,
 rec(PUNCTUATION,
     'meta.string.interpolated punctuation.section.interpolation')
 rec(PARAMETER + ITALIC,
-    'meta.function-call.arguments variable.parameter -meta.function.inline')
+    'variable.parameter & -meta.function.inline & (meta.annotation.arguments | meta.function-call.arguments)')
 rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
@@ -332,7 +332,6 @@ rec(FOREGROUND,
     'storage.modifier.array',
     'storage.type.function.anonymous')
 rec(ITALIC,
-    'meta.annotation',
     'variable.parameter.javadoc')
 
 #### JAVA LOG ####
@@ -373,10 +372,8 @@ rec(PUNCTUATION,
     'string.quoted.double punctuation.section.group -interpolated',
     'string.quoted.double punctuation.section.braces -interpolated')
 rec(META,
-    'support.function.attribute',
-    'meta.attribute variable.parameter.attribute')
+    'meta.attribute & (support.function | variable.parameter.attribute)')
 rec(ITALIC,
-    'meta.attribute -punctuation.section.bracket',
     'keyword.operator.comparison',
     'keyword.operator.logical',
     'keyword.operator.unary')
@@ -407,6 +404,8 @@ rec(META,
     'meta.preprocessor keyword')
 rec(KEYWORD,
     'keyword.operator.word')
+rec(INDEXED,
+    'entity.name.struct')
 
 #### YAML ####
 
@@ -420,7 +419,7 @@ rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
     'keyword.other.directive.yaml')
-rec(META + ITALIC,
+rec(META,
     'variable.other.alias',
     'punctuation.definition.alias',
     'entity.name.other.anchor',
@@ -472,7 +471,7 @@ rec(FADED_GRAY,
 #### DIFF ####
 
 src('diff')
-rec(META + ITALIC, 'meta.diff.range')
+rec(SECTION, 'meta.diff.range')
 rec(BOLD_ITALIC, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
@@ -485,7 +484,7 @@ rec(Style([PINK, PURPLE]) + ITALIC,
     'constant.numeric.hash')
 
 txt('git.config')
-rec(META,
+rec(SECTION,
     'meta.brackets',
     'entity.name.section')
 rec(INDEXED,
@@ -504,6 +503,6 @@ rec(KEYWORD, 'keyword.operator')
 #### INI ####
 
 src('ini')
-rec(META, 'meta.section')
+rec(SECTION, 'meta.section')
 
 generate()
