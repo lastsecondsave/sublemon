@@ -71,7 +71,7 @@ class OutputPanel:
 # pylint: disable=no-self-use
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        ctx.window.status_message('Build started: ' + ' '.join(map(shlex.quote, ctx.process.args)))
+        ctx.window.status_message('Build started')
 
     def on_output(self, line, ctx):
         ctx.print(line)

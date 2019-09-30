@@ -57,8 +57,8 @@
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
-		"Vintage",
-		".git"
+		".git",
+		"Vintage"
 	],
 	"index_exclude_patterns":
 	[
