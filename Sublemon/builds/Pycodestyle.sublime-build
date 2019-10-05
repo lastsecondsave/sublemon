@@ -1,6 +1,6 @@
 {
   "selector": "source.python",
   "target": "pycodestyle",
-  "cancel": "chimney_cancel",
-  "cmd": ["$file"]
+  "cmd": ["$file"],
+  "cancel": {"kill": true}
 }
