@@ -125,7 +125,7 @@ class BuildSetup:
         raise BuildError(message)
 
     def opt(self, name):
-        return self.options.get(name, None)
+        return self.options.get(name)
 
     def opt_list(self, name):
         return split_command(self.opt(name))
@@ -157,42 +157,29 @@ class BuildSetup:
             self.options[option] = value
 
 
-def log(message, *params):
-    print(message.format(*params))
-
-
-class ChimneyBuildContainer():
+class ChimneyCommand(WindowCommand):
     builds = {}
     panels = {}
 
-    def panel(self, window):
-        if not window.id() in self.panels:
-            self.panels[window.id()] = OutputPanel(window)
+    @property
+    def running_build(self):
+        return self.builds.get(self.window.id())
 
-        return self.panels[window.id()]
+    @running_build.setter
+    def running_build(self, value):
+        self.builds[self.window.id()] = value
 
-    def build(self, window):
-        return self.builds.get(window.id(), None)
+    @property
+    def panel(self):
+        key = self.window.id()
+        return self.panels.get(key) or self.panels.setdefault(key, OutputPanel(self.window))
 
-    def set_build(self, window, build):
-        self.builds[window.id()] = build
-
-
-class ChimneyCancelCommand(WindowCommand, ChimneyBuildContainer):
-    def run(self, **_options):
-        build = self.build(self.window)
-        if build:
-            build.cancel()
-
-
-class ChimneyCommand(WindowCommand, ChimneyBuildContainer):
     def setup(self, ctx):
         pass
 
     def run(self, kill=False, **options):
-        build = self.build(self.window)
-        if build:
-            build.cancel()
+        if self.running_build:
+            self.running_build.cancel()
 
         if kill:
             return
@@ -208,21 +195,18 @@ class ChimneyCommand(WindowCommand, ChimneyBuildContainer):
             self.window.status_message(': '.join(filter(None, ('Build error', err.message))))
             return
 
-        panel = self.panel(self.window)
-
-        panel.reset(
+        self.panel.reset(
             result_base_dir=self.change_working_dir(options.get('working_dir')),
             result_file_regex=options.get('file_regex'),
             result_line_regex=options.get('line_regex'),
             syntax=options.get('syntax')
         )
 
-        panel.show()
+        self.panel.show()
 
-        build = start_build(panel, setup.cmd.cmd, setup.env, setup.listener)
-        self.set_build(self.window, build)
+        self.running_build = start_build(self.panel, setup.cmd.cmd, setup.env, setup.listener)
 
-        log('→ [{}] {}', build.process.pid, setup.cmd)
+        print('→ [{}] {}'.format(self.running_build.process.pid, setup.cmd))
 
     def change_working_dir(self, working_dir):
         if not working_dir:
@@ -310,9 +294,9 @@ class RunningBuildContext:
         if not self.cancelled:
             self.listener.on_complete(self)
             self.panel.view.find_all_results()
-            log('✔ [{}]', self.process.pid)
-        else:
-            log('✘ [{}]', self.process.pid)
+
+        print('{} [{}]'.format('✘' if self.cancelled else '✔',
+                               self.process.pid))
 
         if self.cancelled == 'kill':
             self.window.status_message('Build cancelled')
@@ -361,7 +345,7 @@ def start_process(cmd, env):
         os_env.update({k: os.path.expandvars(v) for k, v in env.items()})
         process_params['env'] = os_env
 
-    return subprocess.Popen(list(map(os.path.expandvars, cmd)),
+    return subprocess.Popen(map(os.path.expandvars, cmd),
                             **process_params)
 
 
