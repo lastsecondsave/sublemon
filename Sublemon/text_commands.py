@@ -264,3 +264,14 @@ class IndentToBracesCommand(TextCommand):
                 counters[chars] = counter
 
         return -1
+
+
+class DualSideDeleteCommand(TextCommand):
+    def run(self, edit):
+        for region in self.view.sel():
+            self.view.replace(edit,
+                              Region(region.end(), region.end()+1),
+                              '')
+            self.view.replace(edit,
+                              Region(region.begin(), region.begin()-1),
+                              '')
