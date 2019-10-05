@@ -26,10 +26,6 @@
 
 
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
-  { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "brackets"} },
-  { "keys": ["ctrl+shift+a"], "command": "expand_selection", "args": {"to": "tag"},
-    "context": [{"key": "selector", "operator": "equal", "operand": "text.xml"}]
-  },
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
 
 
