@@ -95,7 +95,7 @@ def split_command(cmd):
 
 class BuildCommand:
     def __init__(self, options):
-        cmd = options.get('cmd', None) or options.get('shell_cmd', [])
+        cmd = options.get('cmd') or options.get('shell_cmd') or []
         self.cmd = deque(split_command(cmd))
 
     def append(self, *chunks):
@@ -162,17 +162,21 @@ class ChimneyCommand(WindowCommand):
     panels = {}
 
     @property
+    def wid(self):
+        return self.window.id()
+
+    @property
     def running_build(self):
-        return self.builds.get(self.window.id())
+        return self.builds.get(self.wid)
 
     @running_build.setter
     def running_build(self, value):
-        self.builds[self.window.id()] = value
+        self.builds[self.wid] = value
 
     @property
     def panel(self):
-        key = self.window.id()
-        return self.panels.get(key) or self.panels.setdefault(key, OutputPanel(self.window))
+        return self.panels.get(self.wid) or \
+            self.panels.setdefault(self.wid, OutputPanel(self.window))
 
     def setup(self, ctx):
         pass
@@ -218,6 +222,10 @@ class ChimneyCommand(WindowCommand):
             os.chdir(working_dir)
 
         return working_dir
+
+    def __del__(self):
+        self.builds.pop(self.wid, None)
+        self.panels.pop(self.wid, None)
 
 
 class OutputBuffer:
