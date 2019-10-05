@@ -10,37 +10,28 @@ HOME_PATH = os.path.expanduser('~')
 
 
 class ShowFilePathCommand(WindowCommand):
+    def is_enabled(self):
+        return bool(self.window.active_view().file_name())
+
     def run(self):
         file_path = self.window.active_view().file_name()
-        if not file_path:
-            return
-
-        prefix = None
         variables = self.window.extract_variables()
 
-        def path_starts_with(path, prefix):
-            return path.startswith(prefix + os.sep)
+        prefix = None
 
         if 'project' in variables:
-            settings = self.window.project_data().get('settings', {})
-            base_path = settings.get("project_root", variables["project_path"])
+            project_path = variables['project_path']
 
-            if path_starts_with(file_path, base_path):
-                file_path = file_path[len(base_path)+1:]
-                prefix = variables["project_base_name"]
+            if file_path.startswith(project_path + os.sep):
+                file_path = file_path[len(project_path):]
+                prefix = variables['project_base_name']
 
         if not prefix:
-            if path_starts_with(file_path, HOME_PATH):
-                file_path = file_path[len(HOME_PATH)+1:]
+            if file_path.startswith(HOME_PATH + os.sep):
+                file_path = file_path[len(HOME_PATH):]
                 prefix = "~"
-            elif RUNNING_ON_WINDOWS:
-                prefix = file_path[0:2].lower()
-                file_path = file_path[3:]
-            else:
-                prefix = "/"
-                file_path = file_path[1:]
 
-        sublime.status_message('{} / {}'.format(prefix, file_path.replace(os.sep, ' / ')))
+        sublime.status_message((prefix + file_path).replace(os.sep, ' / '))
 
 
 class OpenFilePathCommand(WindowCommand):
@@ -55,7 +46,7 @@ class OpenFilePathCommand(WindowCommand):
         if root == '~':
             root = HOME_PATH
         elif root == '@':
-            root = self.window.extract_variables().get('folder')
+            root = self.window.folders()[0]
         elif root == '#':
             root = tempfile.gettempdir()
 
@@ -65,7 +56,7 @@ class OpenFilePathCommand(WindowCommand):
         open_file = True
 
         parent = os.path.dirname(path)
-        if (parent and not os.path.exists(parent)):
+        if parent and not os.path.exists(parent):
             open_file = sublime.ok_cancel_dialog("Directory doesn't exist: {}".format(parent),
                                                  "Create")
             if open_file:
@@ -75,7 +66,7 @@ class OpenFilePathCommand(WindowCommand):
             self.window.open_file(path, sublime.ENCODED_POSITION)
 
     def run(self):
-        self.window.show_input_panel("File Name:", '', self.on_done, None, None)
+        self.window.show_input_panel("File Path:", '', self.on_done, None, None)
 
 
 class SelectWithCustomMarkersCommand(WindowCommand):
