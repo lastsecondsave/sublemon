@@ -34,7 +34,6 @@ def alpha(color, value):
 
 
 WHITE        = "#C4C4C4"
-CLEAR_WHITE  = "#FFFFFF"
 GRAY         = "#9090A0"
 PURPLE       = "#E572D2"
 PINK         = "#EF51AA"
@@ -45,9 +44,9 @@ ORANGE       = "#FFAD3A"
 DARK_ORANGE  = "#FF8147"
 CRIMSON      = "#E5476C"
 
+CLEAR_WHITE  = "#FFFFFF"
 BLUISH_BLACK = "#202830"
 DARK_BLUE    = "#384868"
-
 FADED_GRAY   = "#51515D"
 FADED_VIOLET = "#5E5E8E"
 
@@ -77,7 +76,6 @@ PARAMETER = Style(ORANGE)
 USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
 
-RAINBOW = Style([PINK, CRIMSON])
 INVALID = Style(CLEAR_WHITE, background=CRIMSON)
 
 REGEXP_GROUP = Style(ORANGE)
@@ -482,7 +480,7 @@ rec(CRIMSON, 'markup.deleted')
 #### GIT ####
 
 txt('git')
-rec(Style([PINK, PURPLE]) + ITALIC,
+rec(Style([PINK, FADED_VIOLET]) + ITALIC,
     'constant.numeric.hash')
 
 txt('git.config')
