@@ -69,14 +69,14 @@ class OpenFilePathCommand(WindowCommand):
         self.window.show_input_panel("File Path:", '', self.on_done, None, None)
 
 
-class SelectWithCustomMarkersCommand(WindowCommand):
+class SelectBetweenCustomMarkersCommand(WindowCommand):
     def run(self):
         self.window.show_input_panel(
             'Selection markers:', '', self.on_done, None, None)
 
     def on_done(self, markers):
-        self.window.active_view().run_command(
-            'select_with_markers', self.split_markers(markers))
+        self.window.active_view().run_command('select_between_markers',
+                                              {'markers': self.split_markers(markers)})
 
     @staticmethod
     def split_markers(markers):
@@ -85,7 +85,7 @@ class SelectWithCustomMarkersCommand(WindowCommand):
         left_bound = i if i >= 0 else int(len(markers) / 2)
         right_bound = i + 1 if i >= 0 else left_bound
 
-        return {'left': markers[:left_bound], 'right': markers[right_bound:]}
+        return (markers[:left_bound], markers[right_bound:])
 
 
 class CloseWithoutSavingCommand(WindowCommand):

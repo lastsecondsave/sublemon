@@ -3,7 +3,6 @@
   { "caption": "Shrink Whitespace", "command": "shrink_whitespace" },
 
   { "caption": "Draw Indent Guides: Toggle", "command": "toggle_setting_verbose", "args": {"setting": "draw_indent_guides"} },
-  { "caption": "Indent to Bracket: Toggle", "command": "toggle_setting_verbose", "args":  {"setting": "indent_to_bracket"} },
   { "caption": "Ligatures: Toggle", "command": "toggle_ligatures" },
 
   { "caption": "Indentation: 2 Spaces", "command": "set_setting", "args":  {"setting": "tab_size", "value": 2} },
