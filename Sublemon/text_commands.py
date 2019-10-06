@@ -1,9 +1,10 @@
 import json
+import html
 import re
 
 import sublime
 from sublime import Region
-from sublime_plugin import TextCommand
+from sublime_plugin import TextCommand, TextInputHandler
 
 
 class EscapeBackslashesCommand(TextCommand):
@@ -191,10 +192,14 @@ class LastSingleSelectionCommand(TextCommand):
 
 class SelectBetweenMarkersCommand(TextCommand):
     def run(self, _edit, markers):
+        if isinstance(markers, str):
+            markers = self.split_markers(markers)
+
         for region in self.view.sel():
-            replacement = self.expand_region(region, markers[0], markers[1])
-            if replacement:
-                self.view.sel().add(replacement)
+            self.expand_region(region, markers[0], markers[1])
+
+    def input(self, _args):
+        return SelectBetweenMarkersInputHandler()
 
     def expand_region(self, region, left_marker, right_marker):
         lmlen = len(left_marker)
@@ -203,13 +208,40 @@ class SelectBetweenMarkersCommand(TextCommand):
         while left_marker != self.view.substr(Region(left, left+lmlen)):
             left -= 1
             if left < 0:
-                return None
+                return
 
         right = self.view.find(right_marker, region.end(), sublime.LITERAL)
-        if not right:
+
+        if right:
+            self.view.sel().add(Region(left+lmlen, right.begin()))
+
+    @staticmethod
+    def split_markers(markers):
+        if markers == '  ':
+            return (' ', ' ')
+
+        i = markers.find(' ')
+
+        left_bound = i if i >= 0 else int(len(markers) / 2)
+        right_bound = i + 1 if i >= 0 else left_bound
+
+        return (markers[:left_bound], markers[right_bound:])
+
+
+class SelectBetweenMarkersInputHandler(TextInputHandler):
+    def name(self):
+        return 'markers'
+
+    def placeholder(self):
+        return 'Markers'
+
+    def preview(self, arg):
+        if not arg:
             return None
 
-        return Region(left+lmlen, right.begin())
+        markers = ('<i>{}</i>'.format(html.escape(x, quote=False) if x != ' ' else '_')
+                   for x in SelectBetweenMarkersCommand.split_markers(arg))
+        return sublime.Html(' ... '.join(markers))
 
 
 class IndentToBracesCommand(TextCommand):
