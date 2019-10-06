@@ -12,5 +12,6 @@
   { "caption": "Git: Log", "command": "git_log" },
   { "caption": "Git: Blame", "command": "git_blame "},
 
-  { "caption": "Reindent JSON", "command": "json_reindent" }
+  { "caption": "Reindent JSON", "command": "json_reindent" },
+  { "caption": "Select Between", "command": "select_between_markers" }
 ]
