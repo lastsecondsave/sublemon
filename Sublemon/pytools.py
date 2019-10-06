@@ -4,9 +4,14 @@ import sublime
 from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
 
 
-def setup_python_exec(ctx):
+def setup_python_exec(ctx, module=None):
+    module = ctx.opt('module') or module
+    if module:
+        ctx.cmd.appendleft('-m', module)
+
     settings = sublime.load_settings("Preferences.sublime-settings")
     ctx.cmd.appendleft(settings.get('python_binary', 'python'))
+
     ctx.env['PYTHONIOENCODING'] = 'utf-8'
     ctx.env['PYTHONUNBUFFERED'] = '1'
 
@@ -14,17 +19,14 @@ def setup_python_exec(ctx):
 class PythonCommand(ChimneyCommand):
     def setup(self, ctx):
         setup_python_exec(ctx)
-        ctx.set(file_regex='^[ ]*File "(...*?)", line ([0-9]*)')
 
 
 class PylintCommand(ChimneyCommand):
     def setup(self, ctx):
-        ctx.cmd.appendleft('-m', 'pylint')
-
         if ctx.opt('disable'):
             ctx.cmd.append('--disable=' + ','.join(ctx.opt('disable')))
 
-        setup_python_exec(ctx)
+        setup_python_exec(ctx, 'pylint')
         ctx.set(file_regex=r'(.+?):(\d+):(\d+): (.*)',
                 syntax='pylint',
                 listener=PylintBuildListener())
@@ -50,16 +52,3 @@ class PylintBuildListener(ChimneyBuildListener):
     def on_complete(self, ctx):
         if self.rank:
             ctx.window.status_message(self.rank)
-
-
-class PycodestyleCommand(ChimneyCommand):
-    def setup(self, ctx):
-        ctx.cmd.appendleft('-m', 'pycodestyle')
-        ctx.cmd.append('--max-line-length=120')
-
-        if ctx.opt('ignore'):
-            ctx.cmd.append('--ignore=' + ','.join(ctx.opt('ignore')))
-
-        setup_python_exec(ctx)
-        ctx.set(file_regex=r'(.+?):(\d+):(\d+): (.*)',
-                syntax='pycodestyle')
