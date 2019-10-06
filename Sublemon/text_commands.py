@@ -1,3 +1,4 @@
+import json
 import re
 
 import sublime
@@ -275,3 +276,24 @@ class DualSideDeleteCommand(TextCommand):
             self.view.replace(edit,
                               Region(region.begin(), region.begin()-1),
                               '')
+
+
+class JsonReindentCommand(TextCommand):
+    def is_enabled(self):
+        return all(not region.empty() for region in self.view.sel())
+
+    def run(self, edit):
+        tab_size = self.view.settings().get('tab_size')
+
+        for region in self.view.sel():
+            self.reindent(edit, region, tab_size)
+
+    def reindent(self, edit, region, tab_size):
+        try:
+            parsed = json.loads(self.view.substr(region))
+        except ValueError:
+            self.view.window().status_message('Not a valid JSON')
+            return
+
+        self.view.replace(edit, region,
+                          json.dumps(parsed, indent=tab_size))

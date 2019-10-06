@@ -11,5 +11,7 @@
 
   { "caption": "Git: Diff", "command": "git_diff" },
   { "caption": "Git: Log", "command": "git_log" },
-  { "caption": "Git: Blame", "command": "git_blame "}
+  { "caption": "Git: Blame", "command": "git_blame "},
+
+  { "caption": "Reindent JSON", "command": "json_reindent" }
 ]
