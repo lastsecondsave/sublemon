@@ -181,7 +181,7 @@ class ChimneyCommand(WindowCommand):
     def setup(self, ctx):
         pass
 
-    def run(self, kill=False, **options):
+    def run(self, kill=False, **options):  # pylint: disable=arguments-differ
         if self.running_build:
             self.running_build.cancel()
 
