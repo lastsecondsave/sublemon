@@ -189,32 +189,27 @@ class LastSingleSelectionCommand(TextCommand):
             selection.subtract(region)
 
 
-class SelectWithMarkersCommand(TextCommand):
-    def run(self, _edit, left, right):
-        selection = self.view.sel()
-        for region in selection:
-            replacement = self.expand_region(region.end(), left, right)
+class SelectBetweenMarkersCommand(TextCommand):
+    def run(self, _edit, markers):
+        for region in self.view.sel():
+            replacement = self.expand_region(region, markers[0], markers[1])
             if replacement:
-                selection.add(replacement)
+                self.view.sel().add(replacement)
 
-    def expand_region(self, point, left_marker, right_marker):
+    def expand_region(self, region, left_marker, right_marker):
         lmlen = len(left_marker)
-        left = point - lmlen
+        left = region.begin() - lmlen
 
         while left_marker != self.view.substr(Region(left, left+lmlen)):
             left -= 1
             if left < 0:
                 return None
 
-        rmlen = len(right_marker)
-        right = point + rmlen
+        right = self.view.find(right_marker, region.end(), sublime.LITERAL)
+        if not right:
+            return None
 
-        while right_marker != self.view.substr(Region(right-rmlen, right)):
-            right += 1
-            if right > self.view.size():
-                return None
-
-        return Region(left+lmlen, right-rmlen)
+        return Region(left+lmlen, right.begin())
 
 
 class IndentToBracesCommand(TextCommand):
