@@ -30,7 +30,7 @@ py/blk/'elif' - 'elif $1'
 py/blk/'while' - 'while $1'
 
 py/blk/'try' - 'try'
-py/blk/'except' - 'except ${1:Exception} as ${2:e}'
+py/blk/'except' - 'except ${1:Exception}'
 py/blk/'finally' - 'finally'
 
 py/blk/'for' - ('for', 'for $1 in $2')
