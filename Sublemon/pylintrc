@@ -1,3 +1,2 @@
-[TYPECHECK]
-
-ignored-modules=sublime,sublime_plugin
+[MASTER]
+init-hook='import sys; sys.path.append("../../..")'

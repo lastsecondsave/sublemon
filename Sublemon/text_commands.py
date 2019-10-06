@@ -117,7 +117,7 @@ class ShrinkWhitespaceCommand(TextCommand):
 
 
 class ToggleLigaturesCommand(TextCommand):
-    def run(self, _edit):
+    def run(self, edit):
         font_options = self.view.settings().get("font_options")
         enable = "no_calt" in font_options
         if enable:
@@ -129,7 +129,7 @@ class ToggleLigaturesCommand(TextCommand):
 
 
 class ToggleSettingVerboseCommand(TextCommand):
-    def run(self, _edit, setting):
+    def run(self, edit, setting):  # pylint: disable=arguments-differ
         was_enabled = self.view.settings().get(setting)
         self.view.run_command('toggle_setting', dict(setting=setting))
         show_setting_status(setting, not was_enabled)
@@ -142,7 +142,7 @@ def show_setting_status(setting, active):
 
 
 class StreamlineRegionsCommand(TextCommand):
-    def run(self, _edit):
+    def run(self, edit):
         selection = self.view.sel()
         regions = [r for r in selection if not r.empty()]
 
@@ -171,7 +171,7 @@ class StreamlineRegionsCommand(TextCommand):
 
 
 class SelectionToCursorsCommand(TextCommand):
-    def run(self, _edit):
+    def run(self, edit):
         selection = self.view.sel()
         for region in selection:
             if region.empty():
@@ -183,7 +183,7 @@ class SelectionToCursorsCommand(TextCommand):
 
 
 class LastSingleSelectionCommand(TextCommand):
-    def run(self, _edit):
+    def run(self, edit):
         selection = self.view.sel()
         regions = [r for r in selection]
         for region in regions[:-1]:
@@ -191,7 +191,7 @@ class LastSingleSelectionCommand(TextCommand):
 
 
 class SelectBetweenMarkersCommand(TextCommand):
-    def run(self, _edit, markers):
+    def run(self, edit, markers):  # pylint: disable=arguments-differ
         if isinstance(markers, str):
             markers = self.split_markers(markers)
 
