@@ -191,15 +191,21 @@ class LastSingleSelectionCommand(TextCommand):
 
 
 class SelectBetweenMarkersCommand(TextCommand):
-    def run(self, edit, markers):  # pylint: disable=arguments-differ
+    def run(self, edit, markers=None):  # pylint: disable=arguments-differ
+        if markers is None:
+            self.view.window().show_input_panel('Selection markers:', '',
+                                                self.on_done, None, None)
+            return
+
         if isinstance(markers, str):
             markers = self.split_markers(markers)
 
         for region in self.view.sel():
             self.expand_region(region, markers[0], markers[1])
 
-    def input(self, _args):
-        return SelectBetweenMarkersInputHandler()
+    def on_done(self, markers):
+        self.view.run_command('select_between_markers',
+                              {'markers': markers})
 
     def expand_region(self, region, left_marker, right_marker):
         lmlen = len(left_marker)
