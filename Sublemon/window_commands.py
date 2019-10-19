@@ -26,12 +26,12 @@ class ShowFilePathCommand(WindowCommand):
                 file_path = file_path[len(project_path):]
                 prefix = variables['project_base_name']
 
-        if not prefix:
-            if file_path.startswith(HOME_PATH + os.sep):
-                file_path = file_path[len(HOME_PATH):]
-                prefix = "~"
+        if not prefix and file_path.startswith(HOME_PATH + os.sep):
+            file_path = file_path[len(HOME_PATH):]
+            prefix = "~"
 
-        sublime.status_message((prefix + file_path).replace(os.sep, ' / '))
+        file_path = prefix + file_path if prefix else file_path
+        sublime.status_message(file_path.replace(os.sep, ' / '))
 
 
 class OpenFilePathCommand(WindowCommand):
