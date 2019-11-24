@@ -1,5 +1,6 @@
 {
 	"auto_complete_commit_on_tab": true,
+	"auto_complete_include_snippets": false,
 	"auto_match_enabled": true,
 	"binary_file_patterns":
 	[
@@ -53,12 +54,18 @@
 	"font_face": "PragmataPro Mono Liga",
 	"font_size": 10,
 	"git_diff_target": "head",
+	"hide_pointer_while_typing": false,
 	"highlight_line": true,
+	"highlight_line_number": false,
 	"highlight_modified_tabs": true,
 	"ignored_packages":
 	[
 		".git",
 		"Vintage"
+	],
+	"ignored_snippets":
+	[
+		"*"
 	],
 	"index_exclude_patterns":
 	[
