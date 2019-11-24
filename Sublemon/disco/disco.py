@@ -222,7 +222,7 @@ rec(BOLD,
 rec(BACKGROUND, 'diff.inserted')
 rec(Highlight(FADED_VIOLET, 0.6, 'l(+ 10%)'), 'diff.inserted.char')
 rec(GRAY + BACKGROUND, 'diff.deleted')
-rec(WHITE + Highlight(FADED_GRAY, 0.6, 'l(+ 10%)'), 'diff.deleted.char')
+rec(GRAY + Highlight(FADED_GRAY, 0.6, 'l(+ 10%)'), 'diff.deleted.char')
 
 #### PYTHON ####
 
@@ -498,7 +498,7 @@ rec(CLEAR_WHITE + BOLD,
     'variable.other.branch')
 
 txt('git.ignore')
-rec(KEYWORD, 'keyword.operator')
+rec(PUNCTUATION, 'keyword.operator')
 
 #### INI ####
 
