@@ -3,6 +3,7 @@
 !/Sublemon
 /Sublemon/*/.generated*
 /Sublemon/*/__pycache__
+/Sublemon/.mypy_cache
 /Sublemon/Disco.sublime-color-scheme
 
 !/User
