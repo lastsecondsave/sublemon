@@ -16,9 +16,10 @@
     "FADED_VIOLET": "#5E5E8E",
 
     "panel_blue": "#264F78",
+    "panel_gray": "#54545E",
     "outer_dark": "#161E26",
+    "outer_dark_hover": "#1C232B",
 
-    "qp_background": "#54545E",
     "qp_label": "#D2D2D2",
     "qp_path_label": "#838495",
     "qp_match": "#77ABFF",
@@ -47,17 +48,18 @@
     {
       "class": "tree_row",
       "attributes": ["!hover"],
-      "layer0.tint": "var(FADED_GRAY)",
-      "layer0.opacity": 0.0,
+      "layer0.tint": "var(outer_dark)",
+      "layer0.opacity": 1.0,
     },
     {
       "class": "tree_row",
       "attributes": ["selectable", "hover"],
-      "layer0.opacity": 0.1
+      "layer0.tint": "var(outer_dark_hover)"
     },
     {
       "class": "tree_row",
       "attributes": ["selected"],
+      "layer0.tint": "var(panel_gray)",
       "layer0.opacity": 0.4
     },
     {
@@ -462,7 +464,7 @@
     // Quick Panel
     {
       "class": "overlay_control",
-      "layer0.tint": "var(qp_background)",
+      "layer0.tint": "var(panel_gray)",
       "layer0.opacity": 0.8,
       "content_margin": 4
     },
@@ -475,7 +477,7 @@
     },
     {
       "class": "mini_quick_panel_row",
-      "layer0.tint": "var(qp_background)",
+      "layer0.tint": "var(panel_gray)",
       "layer0.opacity": 0.0
     },
     {
@@ -490,7 +492,7 @@
     },
     {
       "class": "quick_panel_row",
-      "layer0.tint": "var(qp_background)",
+      "layer0.tint": "var(panel_gray)",
       "layer0.opacity": 0.0
     },
     {
@@ -589,40 +591,44 @@
     },
     {
       "class": "popup_control",
-      "layer0.tint": [27, 27, 28],
-      "layer0.opacity": 1.0,
-      "content_margin": [2, 2]
+      "layer0.tint": "var(outer_dark)",
+      "layer0.opacity": 0.8,
+      "content_margin": 0
     },
     {
       "class": "auto_complete",
-      "row_padding": [1, 3, 1, 0],
-      "layer0.tint": [27, 27, 28],
-      "layer0.opacity": 1.0,
+      "row_padding": 0,
       "dark_content": true
     },
     {
-      "class": "scroll_bar_control",
-      "attributes": ["dark"],
-      "parents": [{"class": "popup_control auto_complete_popup"}],
-      "tint_modifier": [255, 255, 255, 0.06],
-    },
-    {
       "class": "table_row",
-      "layer0.tint": [27, 27, 28],
-      "layer0.opacity": 1.0,
-      "layer0.inner_margin": [1, 1]
+      "layer0.tint": "var(outer_dark)",
+      "layer0.opacity": 1.0
     },
     {
       "class": "table_row",
       "attributes": ["hover"],
-      "layer0.tint": [54, 54, 66],
-      "layer0.opacity": 0.3
+      "layer0.tint": "var(outer_dark_hover)"
     },
     {
       "class": "table_row",
       "attributes": ["hover", "selected"],
-      "layer0.tint": "var(panel_blue)",
-      "layer0.opacity": 1.0
+      "layer0.tint": "var(panel_blue)"
+    },
+    {
+      "class": "table_row",
+      "attributes": ["selected"],
+      "layer0.tint": "var(panel_blue)"
+    },
+    {
+      "class": "kind_container",
+      "content_margin": [5, 0],
+      "layer0.opacity": 0
+    },
+    {
+      "class": "kind_label",
+      "parents": [{"class": "kind_container kind_snippet"}],
+      "color": "var(GRAY)"
     },
     {
       "class": "auto_complete_label",
@@ -633,9 +639,11 @@
       "fg_blend": false
     },
     {
-      "class": "table_row",
-      "attributes": ["selected"],
-      "layer0.tint": "var(panel_blue)"
+      "class": "auto_complete_details",
+      "tint_index": 1,
+      "layer0.opacity": 0.5,
+      "layer0.tint": "var(panel_gray)",
+      "content_margin": [8, 5, 8, 5]
     },
 
     // Panels
@@ -1001,7 +1009,19 @@
       "class": "status_bar",
       "layer0.tint": "var(panel_blue)",
       "layer0.opacity": 1.0,
-      "content_margin": [1, 0, 0, 0]
+      "content_margin": [4, 0, 0, 0]
+    },
+    {
+      "class": "sidebar_button_control",
+      "layer0.texture": "Theme - Default/common/sidebar_button.png",
+      "layer0.opacity": { "target": 0.4, "speed": 4.0, "interpolation": "smoothstep" },
+      "layer0.tint": "#FFF",
+      "content_margin": [10, 11]
+    },
+    {
+      "class": "sidebar_button_control",
+      "attributes": ["hover"],
+      "layer0.opacity": { "target": 0.6, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "panel_button_control",
@@ -1016,7 +1036,7 @@
     },
     {
       "class": "status_container",
-      "content_margin": [0, 0],
+      "content_margin": [4, 0],
     },
     {
       "class": "status_button",
