@@ -1,2 +1,2 @@
 [MASTER]
-init-hook='import sys; sys.path.append("../../..")'
+init-hook='import sys; sys.path.append("../../.."); sys.path.append("../../../Lib/python38")'
