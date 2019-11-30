@@ -440,7 +440,8 @@ rec(ITALIC,
 
 txt('xml')
 rec(PUNCTUATION,
-    'string.unquoted.cdata punctuation')
+    'meta.tag.sgml.cdata punctuation.definition.tag',
+    'keyword.declaration.cdata')
 rec(VARIABLE,
     'meta.tag.sgml.doctype variable')
 rec(ITALIC,
