@@ -353,7 +353,14 @@ rec(YELLOW, 'meta.message')
 #### C# ####
 
 src('cs')
-rec(KEYWORD, 'keyword.operator.new')
+rec(KEYWORD,
+    'keyword.operator.new')
+rec(FADED_GRAY,
+    'comment.block.documentation & (entity.name.tag | entity.other.attribute-name | punctuation.definition.tag | punctuation.separator)')
+rec(FOREGROUND,
+    'comment.block.documentation string.quoted.double')
+rec(META,
+    'meta.preprocessor keyword')
 
 #### POWERSHELL ####
 
