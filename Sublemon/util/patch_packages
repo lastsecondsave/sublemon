@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
 case $(uname -s) in
   'Darwin') INSTALL_PATH='/Applications/Sublime Text.app/Contents/MacOS';;
@@ -11,17 +11,13 @@ if [[ ! -d ${INSTALL_PATH} ]]; then
   INSTALL_PATH=$(dirname "$0")/../../../..
 fi
 
+PACKAGES_DIRECTORY=$(cd "${INSTALL_PATH}" && pwd)/Packages
+
 TEMP_DIRECTORY='/tmp/sublemon-packages'
-rm -rf "${TEMP_DIRECTORY}" && mkdir "${TEMP_DIRECTORY}"
+rm -rf "$TEMP_DIRECTORY" && mkdir "$TEMP_DIRECTORY"
+pushd "$TEMP_DIRECTORY" > /dev/null
 
-PACKAGES_DIRECTORY="${INSTALL_PATH}/Packages"
-PACKAGES_TO_PROCESS=(Java Groovy Python JavaScript ShellScript XML HTML)
-
-for package in "${PACKAGES_TO_PROCESS[@]}"; do
-    cp "${PACKAGES_DIRECTORY}/${package}.sublime-package" "${TEMP_DIRECTORY}"
-done
-
-pushd "${TEMP_DIRECTORY}" > /dev/null
+cp "$PACKAGES_DIRECTORY"/*.sublime-package .
 
 for package in *.sublime-package; do
   dir="${package%%.sublime-package}"
@@ -44,7 +40,7 @@ for package in *.sublime-package; do
   popd > /dev/null
 done
 
+cp -- *.sublime-package "$PACKAGES_DIRECTORY"
 popd > /dev/null
 
-cp "${TEMP_DIRECTORY}"/*.sublime-package "$PACKAGES_DIRECTORY"
 rm -rf "${TEMP_DIRECTORY}"
