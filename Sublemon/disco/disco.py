@@ -158,10 +158,8 @@ rec(PRIMITIVE,
     'storage.type.numeric',
     'punctuation.separator.decimal')
 rec(STRING,
-    'string',
+    'string - string.unquoted',
     'string.quoted')
-rec(FOREGROUND,
-    'string.unquoted')
 rec(STORAGE,
     'storage',
     'support.type',
@@ -175,11 +173,7 @@ rec(KEYWORD,
 rec(OPERATOR,
     'keyword.operator')
 rec(INDEXED,
-    'entity.name.class',
-    'entity.name.function -meta.function-call',
-    'entity.name.filename',
-    'entity.name.namespace',
-    'entity.name.key')
+    'entity.name')
 rec(FOREGROUND,
     'punctuation.separator',
     'punctuation.terminator',
@@ -387,9 +381,13 @@ rec(PUNCTUATION,
     'meta.group.expansion punctuation.section',
     'keyword.operator.expansion',
     'keyword.operator.logical.pipe',
-    'keyword.operator.assignment.redirection')
+    'keyword.operator.assignment.redirection',
+    'keyword.operator.end-of-options')
+rec(KEYWORD,
+    'support.function.set')
 rec(FOREGROUND,
     'keyword.control.case.item',
+    'keyword.control.conditional.patterns.end',
     'variable.language.tilde',
     'variable.parameter.option')
 
