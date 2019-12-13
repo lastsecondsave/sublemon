@@ -63,10 +63,6 @@
 		".git",
 		"Vintage"
 	],
-	"ignored_snippets":
-	[
-		"*"
-	],
 	"index_exclude_patterns":
 	[
 		"*.css",
