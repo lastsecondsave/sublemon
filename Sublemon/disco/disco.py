@@ -158,7 +158,7 @@ rec(PRIMITIVE,
     'storage.type.numeric',
     'punctuation.separator.decimal')
 rec(STRING,
-    'string - string.unquoted',
+    'string -string.unquoted',
     'string.quoted')
 rec(STORAGE,
     'storage',
@@ -173,11 +173,7 @@ rec(KEYWORD,
 rec(OPERATOR,
     'keyword.operator')
 rec(INDEXED,
-    'entity.name')
-rec(FOREGROUND,
-    'punctuation.separator',
-    'punctuation.terminator',
-    'punctuation.accessor')
+    'entity.name -comment')
 rec(PARAMETER,
     'variable.parameter')
 rec(VARIABLE,
@@ -187,22 +183,21 @@ rec(VARIABLE,
     'variable.other.substitution')
 rec(PUNCTUATION,
     'punctuation.separator.continuation -source.c++',
-    'punctuation.definition.template-expression')
+    'punctuation.definition.template-expression',
+    'punctuation.definition.variable')
 rec(INVALID,
     'invalid')
 rec(TAG,
-    'entity.name.tag',
-    'punctuation.definition.tag')
+    'entity.name.tag -comment',
+    'punctuation.definition.tag -comment')
 rec(TAG_ATTRIBUTE,
-    'entity.other.attribute-name')
-rec(PUNCTUATION,
-    'punctuation.definition.variable')
+    'entity.other.attribute-name -comment')
 
 #### MARKUP ####
 
 rec(STRING,
-    'markup.raw -markup.raw.code-fence -markup.raw.block')
-rec(BLUE,
+    'markup.raw -markup.raw.code-fence -markup.raw.block -comment')
+rec(INDEXED,
     'markup.heading')
 rec(ITALIC,
     'markup.italic -punctuation',
@@ -214,7 +209,7 @@ rec(BOLD,
 #### INLINE DIFF ####
 
 rec(BACKGROUND, 'diff.inserted')
-rec(Highlight(FADED_VIOLET, 0.6, 'l(+ 10%)'), 'diff.inserted.char')
+rec(Highlight(WHITE, 0.4, 'l(+ 10%)'), 'diff.inserted.char')
 rec(GRAY + BACKGROUND, 'diff.deleted')
 rec(GRAY + Highlight(FADED_GRAY, 0.6, 'l(+ 10%)'), 'diff.deleted.char')
 
@@ -226,17 +221,16 @@ rec(KEYWORD,
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
-    'support.function -support.function.magic -variable.annotation')
+    'support.function -support.function.magic -variable.annotation',
+    'variable.parameter & -meta.function.inline & (meta.annotation.arguments | meta.function-call.arguments)')
 rec(STRING,
     'string keyword.operator')
-rec(STRING + BOLD_ITALIC,
-    'string source.sql keyword')
+rec(STRING + BOLD,
+    'string source.sql keyword.other')
 rec(STRING + ITALIC,
     'string source.sql storage')
 rec(PUNCTUATION,
     'meta.string.interpolated punctuation.section.interpolation')
-rec(PARAMETER + ITALIC,
-    'variable.parameter & -meta.function.inline & (meta.annotation.arguments | meta.function-call.arguments)')
 rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
@@ -296,8 +290,7 @@ rec(REGEXP_CONTROL,
 src('java')
 rec(META,
     'punctuation.definition.annotation',
-    'variable.annotation',
-    'meta.annotation variable.parameter')
+    'variable.annotation')
 rec(COMMENT_HIGHLIGHT,
     'comment.block.documentation keyword',
     'meta.block-tag variable.parameter')
@@ -316,15 +309,13 @@ rec(Highlight(BLUISH_BLACK, 1, 's(25%)'),
     'text.html & (meta.tag | constant.character.entity)')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
-rec(COMMENT + ITALIC,
-    'markup.underline.link')
-rec(COMMENT,
-    'markup.raw')
 rec(FOREGROUND,
     'storage.modifier.array',
-    'storage.type.function.anonymous')
+    'storage.type.function.anonymous',
+    'punctuation.accessor.dot')
 rec(ITALIC,
-    'variable.parameter.javadoc')
+    'variable.parameter.javadoc',
+    'meta.annotation.parameters variable.parameter')
 
 #### JAVA LOG ####
 
@@ -355,12 +346,16 @@ rec(YELLOW, 'meta.message')
 src('cs')
 rec(KEYWORD,
     'keyword.operator.new')
-rec(FADED_GRAY,
-    'comment.block.documentation & (entity.name.tag | entity.other.attribute-name | punctuation.definition.tag | punctuation.separator)')
-rec(FOREGROUND,
-    'comment.block.documentation string.quoted.double')
 rec(META,
     'meta.preprocessor keyword')
+rec(USER_CONSTANT,
+    'entity.name.constant',
+    'constant.other.flag')
+rec(FOREGROUND,
+    'storage.type.function')
+rec(FADED_VIOLET,
+    'comment.block.documentation & (entity | punctuation.definition.tag | punctuation.separator)',
+    'comment.block.documentation string.quoted.double')
 
 #### POWERSHELL ####
 
@@ -371,11 +366,12 @@ rec(PUNCTUATION,
     'string.quoted.double punctuation.section.group -interpolated',
     'string.quoted.double punctuation.section.braces -interpolated')
 rec(META,
-    'meta.attribute & (support.function | variable.parameter.attribute)')
+    'meta.attribute support.function')
 rec(ITALIC,
     'keyword.operator.comparison',
     'keyword.operator.logical',
-    'keyword.operator.unary')
+    'keyword.operator.unary',
+    'meta.attribute variable.parameter.attribute')
 rec(VARIABLE,
     'variable storage.modifier.scope')
 rec(FOREGROUND,
@@ -439,7 +435,9 @@ rec(PRIMITIVE,
 rec(CRIMSON,
     'support.type.vendor-prefix')
 rec(ITALIC,
-    'support.type.property-name')
+    'meta.property-name')
+rec(VARIABLE,
+    'entity.other.pseudo-class -punctuation')
 
 #### XML ####
 
@@ -505,6 +503,7 @@ rec(CLEAR_WHITE + BOLD,
 
 txt('git.ignore')
 rec(PUNCTUATION, 'keyword.operator')
+rec(FOREGROUND, 'entity.name.pattern')
 
 #### INI ####
 
