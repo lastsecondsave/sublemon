@@ -30,7 +30,7 @@ class Highlight(Style):
 
 
 def alpha(color, value):
-    return 'color({} alpha({}))'.format(color, value)
+    return f'color({color} alpha({value}))'
 
 
 WHITE        = "#C4C4C4"
@@ -51,7 +51,6 @@ FADED_GRAY   = "#51515D"
 FADED_VIOLET = "#5E5E8E"
 
 
-BACKGROUND = Style(background=BLUISH_BLACK)
 FOREGROUND = Style(WHITE)
 
 ITALIC = Style(font_style='italic')
@@ -68,7 +67,7 @@ COMMENT = Style(GRAY)
 COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
-META = Style(YELLOW)
+ANNOTATION = Style(YELLOW)
 TAG = Style(BLUE)
 TAG_ATTRIBUTE = Style(YELLOW)
 SECTION = Style(YELLOW)
@@ -193,6 +192,11 @@ rec(TAG,
 rec(TAG_ATTRIBUTE,
     'entity.other.attribute-name -comment')
 
+#### DOCUMENTATION ####
+
+rec(FADED_VIOLET,
+    'comment.block.documentation & (entity | punctuation -punctuation.definition.comment | string.quoted.double)')
+
 #### MARKUP ####
 
 rec(STRING,
@@ -208,17 +212,17 @@ rec(BOLD,
 
 #### INLINE DIFF ####
 
-rec(BACKGROUND, 'diff.inserted')
-rec(Highlight(WHITE, 0.4, 'l(+ 10%)'), 'diff.inserted.char')
-rec(GRAY + BACKGROUND, 'diff.deleted')
-rec(GRAY + Highlight(FADED_GRAY, 0.6, 'l(+ 10%)'), 'diff.deleted.char')
+rec(Highlight(GREEN, 0.1), 'diff.inserted')
+rec(Highlight(GREEN, 0.3, 'l(+ 10%)'), 'diff.inserted.char')
+rec(Highlight(CRIMSON, 0.2), 'diff.deleted')
+rec(Highlight(CRIMSON, 0.4, 'l(+ 10%)'), 'diff.deleted.char')
 
 #### PYTHON ####
 
 src('python')
 rec(KEYWORD,
     'keyword.operator.logical')
-rec(META,
+rec(ANNOTATION,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
     'support.function -support.function.magic -variable.annotation',
@@ -288,7 +292,7 @@ rec(REGEXP_CONTROL,
 #### JAVA ####
 
 src('java')
-rec(META,
+rec(ANNOTATION,
     'punctuation.definition.annotation',
     'variable.annotation')
 rec(COMMENT_HIGHLIGHT,
@@ -305,8 +309,6 @@ rec(PRIMITIVE,
 rec(CRIMSON,
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
-rec(Highlight(BLUISH_BLACK, 1, 's(25%)'),
-    'text.html & (meta.tag | constant.character.entity)')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
 rec(FOREGROUND,
@@ -331,7 +333,7 @@ rec(PUNCTUATION, 'keyword.operator.macro')
 #### GROOVY ####
 
 src('groovy')
-rec(META, 'storage.type.annotation')
+rec(ANNOTATION, 'storage.type.annotation')
 
 #### LOG ####
 
@@ -345,17 +347,20 @@ rec(YELLOW, 'meta.message')
 
 src('cs')
 rec(KEYWORD,
-    'keyword.operator.new')
-rec(META,
-    'meta.preprocessor keyword')
+    'keyword.operator.new | keyword.operator.reflection')
 rec(USER_CONSTANT,
     'entity.name.constant',
     'constant.other.flag')
 rec(FOREGROUND,
-    'storage.type.function')
-rec(FADED_VIOLET,
-    'comment.block.documentation & (entity | punctuation.definition.tag | punctuation.separator)',
-    'comment.block.documentation string.quoted.double')
+    'storage.type.function.lambda')
+rec(CRIMSON,
+    'storage.type.nullable')
+rec(PUNCTUATION,
+    'meta.string.interpolated punctuation.section.interpolation')
+rec(ANNOTATION,
+    'meta.annotation variable.annotation')
+rec(ITALIC,
+    'meta.annotation variable.parameter')
 
 #### POWERSHELL ####
 
@@ -365,7 +370,7 @@ rec(PUNCTUATION,
     'variable.other punctuation.section.braces',
     'string.quoted.double punctuation.section.group -interpolated',
     'string.quoted.double punctuation.section.braces -interpolated')
-rec(META,
+rec(ANNOTATION,
     'meta.attribute support.function')
 rec(ITALIC,
     'keyword.operator.comparison',
@@ -399,12 +404,8 @@ rec(FOREGROUND,
 src('c++')
 rec(USER_CONSTANT,
     'entity.name.constant.preprocessor')
-rec(META,
-    'meta.preprocessor keyword')
 rec(KEYWORD,
     'keyword.operator.word')
-rec(INDEXED,
-    'entity.name.struct')
 
 #### YAML ####
 
@@ -418,7 +419,7 @@ rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
     'keyword.other.directive.yaml')
-rec(META,
+rec(ANNOTATION,
     'variable.other.alias',
     'punctuation.definition.alias',
     'entity.name.other.anchor',
