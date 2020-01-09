@@ -1,5 +1,6 @@
-import json
 import html
+import json
+import os
 import re
 
 from collections import OrderedDict
@@ -332,3 +333,14 @@ class JsonReindentCommand(TextCommand):
 
         self.view.replace(edit, region,
                           json.dumps(parsed, indent=tab_size))
+
+
+class CopyFileDirectoryPathCommand(TextCommand):
+    def is_enabled(self):
+        return bool(self.view.file_name())
+
+    def run(self, edit):
+        dirname = os.path.dirname(self.view.file_name())
+        sublime.set_clipboard(dirname)
+
+        self.view.window().status_message('Copied file directory path')
