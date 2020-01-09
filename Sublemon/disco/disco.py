@@ -183,7 +183,8 @@ rec(VARIABLE,
 rec(PUNCTUATION,
     'punctuation.separator.continuation -source.c++',
     'punctuation.definition.template-expression',
-    'punctuation.definition.variable')
+    'punctuation.definition.variable',
+    'punctuation.section.interpolation')
 rec(INVALID,
     'invalid')
 rec(TAG,
@@ -233,8 +234,6 @@ rec(STRING + BOLD,
     'string source.sql keyword.other')
 rec(STRING + ITALIC,
     'string source.sql storage')
-rec(PUNCTUATION,
-    'meta.string.interpolated punctuation.section.interpolation')
 rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
@@ -244,7 +243,7 @@ rec(REGEXP_CHARACTER_CLASS,
 
 src('js')
 rec(TAG + ITALIC,
-    'meta.object-literal.key')
+    'meta.mapping.key')
 rec(STORAGE,
     'variable.type',
     'support.constant.builtin')
@@ -355,8 +354,6 @@ rec(FOREGROUND,
     'storage.type.function.lambda')
 rec(CRIMSON,
     'storage.type.nullable')
-rec(PUNCTUATION,
-    'meta.string.interpolated punctuation.section.interpolation')
 rec(ANNOTATION,
     'meta.annotation variable.annotation')
 rec(ITALIC,
