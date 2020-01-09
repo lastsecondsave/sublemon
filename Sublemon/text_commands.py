@@ -2,6 +2,8 @@ import json
 import html
 import re
 
+from collections import OrderedDict
+
 import sublime
 from sublime import Region
 from sublime_plugin import TextCommand, TextInputHandler
@@ -323,7 +325,7 @@ class JsonReindentCommand(TextCommand):
 
     def reindent(self, edit, region, tab_size):
         try:
-            parsed = json.loads(self.view.substr(region))
+            parsed = json.loads(self.view.substr(region), object_pairs_hook=OrderedDict)
         except ValueError:
             self.view.window().status_message('Not a valid JSON')
             return
