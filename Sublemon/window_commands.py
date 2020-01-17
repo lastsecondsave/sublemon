@@ -53,17 +53,17 @@ class OpenFilePathCommand(WindowCommand):
         if root:
             path = root + path[1:]
 
-        open_file = True
-
         parent = os.path.dirname(path)
-        if parent and not os.path.exists(parent):
-            open_file = sublime.ok_cancel_dialog("Directory doesn't exist: {}".format(parent),
-                                                 "Create")
-            if open_file:
+
+        if path.endswith('+'):
+            path = path[:-1]
+            if parent and not os.path.exists(parent):
                 os.makedirs(parent)
 
-        if open_file:
+        if os.path.exists(parent):
             self.window.open_file(path, sublime.ENCODED_POSITION)
+        else:
+            sublime.status_message("Directory " + parent + " doesn't exist")
 
     def run(self):
         self.window.show_input_panel("File Path:", '', self.on_done, None, None)
