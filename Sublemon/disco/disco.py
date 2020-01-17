@@ -506,6 +506,6 @@ rec(FOREGROUND, 'entity.name.pattern')
 #### INI ####
 
 src('ini')
-rec(SECTION, 'meta.section')
+rec(SECTION, 'entity.name.section | punctuation.definition.section')
 
 generate()
