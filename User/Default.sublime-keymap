@@ -83,6 +83,9 @@
   { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_setting_verbose", "args": {"setting": "draw_indent_guides"} },
   { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_ligatures" },
 
+
+  { "keys": ["ctrl+k", "ctrl+shift+c"], "command": "copy_file_directory_path" },
+
   /** SEARCH WIDGET **/
 
   { "keys": ["alt+s"], "command": "toggle_in_selection",  "context": [{"key": "setting.is_widget"}] },
