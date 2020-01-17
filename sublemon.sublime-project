@@ -1,49 +1,44 @@
 {
-	"folders":
-	[
-		{
-			"file_exclude_patterns":
-			[
-				"Disco.sublime-color-scheme"
-			],
-			"folder_exclude_patterns":
-			[
-				".generated*",
-				".mypy_cache"
-			],
-			"name": "sublemon",
-			"path": "Sublemon"
-		},
-		{
-			"file_exclude_patterns":
-			[
-				"Package Control.last-run",
-				"Package Control.cache",
-				"Package Control.*bundle",
-				"*.crt"
-			],
-			"folder_exclude_patterns":
-			[
-				"Package Control.cache"
-			],
-			"name": "user",
-			"path": "User"
-		},
-		{
-			"name": "default",
-			"path": "Default"
-		},
-		{
-			"name": "python",
-			"path": "Python"
-		}
-	],
+  "folders": [
+    {
+      "name": "sublemon",
+      "path": "Sublemon",
+      "file_exclude_patterns": [
+        "Disco.sublime-color-scheme"
+      ],
+      "folder_exclude_patterns": [
+        ".generated*",
+        ".mypy_cache"
+      ]
+    },
+    {
+      "name": "user",
+      "path": "User",
+      "file_exclude_patterns": [
+        "Package Control.last-run",
+        "Package Control.*bundle",
+        "*.crt"
+      ],
+      "folder_exclude_patterns": [
+        "Package Control.cache"
+      ]
+    },
+    {
+      "name": "default",
+      "path": "Default"
+    },
+    {
+      "name": "python",
+      "path": "Python"
+    }
+  ],
 
-	"build_systems": [
-		{
-			"name": "sublemon: pylint",
-			"target": "pylint",
-			"cmd": ["Sublemon"]
-		}
-	]
+  "build_systems": [
+    {
+      "name": "sublemon: pylint",
+      "target": "pylint",
+      "cmd": ["."],
+      "working_dir": "${project_path}/Sublemon"
+    }
+  ]
 }
