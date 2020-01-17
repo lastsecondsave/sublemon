@@ -37,5 +37,13 @@
 			"name": "python",
 			"path": "Python"
 		}
+	],
+
+	"build_systems": [
+		{
+			"name": "sublemon: pylint",
+			"target": "pylint",
+			"cmd": ["Sublemon"]
+		}
 	]
 }
