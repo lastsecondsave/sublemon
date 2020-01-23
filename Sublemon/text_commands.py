@@ -188,7 +188,7 @@ class SelectionToCursorsCommand(TextCommand):
 class LastSingleSelectionCommand(TextCommand):
     def run(self, edit):
         selection = self.view.sel()
-        for region in selection[:-1]:
+        for region in list(selection)[:-1]:
             selection.subtract(region)
 
 
