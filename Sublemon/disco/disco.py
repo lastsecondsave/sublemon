@@ -388,8 +388,8 @@ rec(PUNCTUATION,
     'keyword.operator.logical.pipe',
     'keyword.operator.assignment.redirection',
     'keyword.operator.end-of-options')
-rec(KEYWORD,
-    'support.function.set')
+rec(STORAGE,
+    'support.function.alias')
 rec(FOREGROUND,
     'keyword.control.case.item',
     'keyword.control.conditional.patterns.end',
