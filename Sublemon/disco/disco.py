@@ -422,6 +422,12 @@ rec(ANNOTATION,
     'entity.name.other.anchor',
     'punctuation.definition.anchor')
 
+#### TOML ####
+
+src('toml')
+rec(SECTION,
+    'entity.name.table | punctuation.definition.table')
+
 #### CSS ####
 
 src('css')
