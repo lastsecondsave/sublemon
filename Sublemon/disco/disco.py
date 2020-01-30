@@ -146,8 +146,6 @@ def generate():
     print('Generated', path)
 
 
-#### FOUNDATION ####
-
 rec(COMMENT,
     'comment')
 rec(PRIMITIVE,
@@ -193,12 +191,8 @@ rec(TAG,
 rec(TAG_ATTRIBUTE,
     'entity.other.attribute-name -comment')
 
-#### DOCUMENTATION ####
-
 rec(FADED_VIOLET,
     'comment.block.documentation & (entity | punctuation -punctuation.definition.comment | string.quoted.double)')
-
-#### MARKUP ####
 
 rec(STRING,
     'markup.raw -markup.raw.code-fence -markup.raw.block -comment')
@@ -211,14 +205,10 @@ rec(ITALIC,
 rec(BOLD,
     'markup.bold -punctuation')
 
-#### INLINE DIFF ####
-
 rec(Highlight(GREEN, 0.1), 'diff.inserted')
 rec(Highlight(GREEN, 0.3, 'l(+ 10%)'), 'diff.inserted.char')
 rec(Highlight(CRIMSON, 0.2), 'diff.deleted')
 rec(Highlight(CRIMSON, 0.4, 'l(+ 10%)'), 'diff.deleted.char')
-
-#### PYTHON ####
 
 src('python')
 rec(KEYWORD,
@@ -238,8 +228,6 @@ rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
     'source.regexp & (constant.character.character-class | constant.other.character-class.set)')
-
-#### JAVASCRIPT ####
 
 src('js')
 rec(TAG + ITALIC,
@@ -267,8 +255,6 @@ rec(REGEXP_CONTROL,
     'string.regexp && (keyword.control | keyword.operator)',
     'constant.other.character-class.set.regexp constant.other.character-class.escape')
 
-#### REGEXP ####
-
 src('regexp')
 rec(TAG,
     'meta.group keyword.other.named-capture-group punctuation.definition.capture-group-name')
@@ -287,8 +273,6 @@ rec(REGEXP_CONTROL,
     'keyword.control',
     'keyword.operator',
     'storage.modifier.mode')
-
-#### JAVA ####
 
 src('java')
 rec(ANNOTATION,
@@ -318,31 +302,21 @@ rec(ITALIC,
     'variable.parameter.javadoc',
     'meta.annotation.parameters variable.parameter')
 
-#### JAVA LOG ####
-
 txt('log.java')
 rec(CRIMSON, 'entity.name.exception')
-
-#### CLOJURE ####
 
 src('clojure')
 rec(TAG + ITALIC, 'constant.other.keyword')
 rec(PUNCTUATION, 'keyword.operator.macro')
 
-#### GROOVY ####
-
 src('groovy')
 rec(ANNOTATION, 'storage.type.annotation')
-
-#### LOG ####
 
 txt('log')
 rec(CRIMSON, 'meta.indicator.error')
 rec(ORANGE, 'meta.indicator.warning')
 rec(GREEN, 'meta.indicator.success')
 rec(YELLOW, 'meta.message')
-
-#### C# ####
 
 src('cs')
 rec(KEYWORD,
@@ -358,8 +332,6 @@ rec(ANNOTATION,
     'meta.annotation variable.annotation')
 rec(ITALIC,
     'meta.annotation variable.parameter')
-
-#### POWERSHELL ####
 
 src('powershell')
 rec(PUNCTUATION,
@@ -379,8 +351,6 @@ rec(VARIABLE,
 rec(FOREGROUND,
     'support.constant variable.other')
 
-#### SHELL ####
-
 src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion punctuation.section',
@@ -396,15 +366,11 @@ rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option')
 
-#### C++ ####
-
 src('c++')
 rec(USER_CONSTANT,
     'entity.name.constant.preprocessor')
 rec(KEYWORD,
     'keyword.operator.word')
-
-#### YAML ####
 
 src('yaml')
 rec(PUNCTUATION,
@@ -422,13 +388,9 @@ rec(ANNOTATION,
     'entity.name.other.anchor',
     'punctuation.definition.anchor')
 
-#### TOML ####
-
 src('toml')
 rec(SECTION,
     'entity.name.table | punctuation.definition.table')
-
-#### CSS ####
 
 src('css')
 rec(STRING,
@@ -443,8 +405,6 @@ rec(ITALIC,
 rec(VARIABLE,
     'entity.other.pseudo-class -punctuation')
 
-#### XML ####
-
 txt('xml')
 rec(PUNCTUATION,
     'meta.tag.sgml.cdata punctuation.definition.tag',
@@ -456,13 +416,9 @@ rec(ITALIC,
 rec(TAG + BOLD_ITALIC,
     'meta.tag.sgml.doctype keyword')
 
-#### HTML ####
-
 txt('html')
 rec(TAG,
     'meta.tag.sgml.doctype')
-
-#### MARKDOWN ####
 
 txt('html.markdown')
 rec(PUNCTUATION,
@@ -476,16 +432,12 @@ rec(FADED_GRAY,
     'punctuation.definition.raw.code-fence',
     'meta.code-fence.definition constant.other.language-name')
 
-#### DIFF ####
-
 src('diff')
 rec(SECTION, 'meta.diff.range')
 rec(BOLD_ITALIC, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
-
-#### GIT ####
 
 txt('git')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC,
@@ -508,8 +460,6 @@ rec(CLEAR_WHITE + BOLD,
 txt('git.ignore')
 rec(PUNCTUATION, 'keyword.operator')
 rec(FOREGROUND, 'entity.name.pattern')
-
-#### INI ####
 
 src('ini')
 rec(SECTION, 'entity.name.section | punctuation.definition.section')
