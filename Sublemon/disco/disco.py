@@ -153,7 +153,8 @@ rec(PRIMITIVE,
     'constant.character',
     'constant.language',
     'storage.type.numeric',
-    'punctuation.separator.decimal')
+    'punctuation.separator.decimal',
+    'string constant.other.placeholder')
 rec(STRING,
     'string -string.unquoted',
     'string.quoted')
