@@ -54,10 +54,12 @@ class OpenFilePathCommand(WindowCommand):
             path = root + path[1:]
 
         parent = os.path.dirname(path)
+        if not parent:
+            parent = '.'
 
         if path.endswith('+'):
             path = path[:-1]
-            if parent and not os.path.exists(parent):
+            if os.path.exists(parent):
                 os.makedirs(parent)
 
         if os.path.exists(parent):
