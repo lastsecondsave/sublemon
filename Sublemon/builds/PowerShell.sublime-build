@@ -1,17 +1,17 @@
 {
   "selector": "source.powershell",
   "file_regex": "At (.+\\.ps1):(\\d+) char:(\\d+)",
-  "cmd": ["pwsh", "-File", "$file"],
+  "cmd": ["pwsh", "-NoProfile", "-File", "$file"],
 
   "variants": [
-    { "name": "No Profile",
-      "cmd": ["pwsh", "-NoProfile", "-File", "$file"]
+    { "name": "With Profile",
+      "cmd": ["pwsh", "-File", "$file"]
     },
     { "name": "Legacy",
       "cmd": ["powershell", "-NoProfile", "-File", "$file"]
     },
-    { "name": "Legacy - No Profile",
-      "cmd": ["powershell", "-NoProfile", "-File", "$file"]
+    { "name": "Legacy - With Profile",
+      "cmd": ["powershell", "-File", "$file"]
     }
   ]
 }
