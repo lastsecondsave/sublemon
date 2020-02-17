@@ -192,48 +192,60 @@ class LastSingleSelectionCommand(TextCommand):
             selection.subtract(region)
 
 
-class SelectBetweenMarkersCommand(TextCommand):
-    def run(self, edit, markers=None):  # pylint: disable=arguments-differ
-        if markers is None:
-            self.view.window().show_input_panel('Selection markers:', '',
-                                                self.on_done, None, None)
-            return
+if (int(sublime.version()) > 4000):
+    class SelectBetweenMarkersCommand(TextCommand):
+        def run(self, edit, markers):  # pylint: disable=arguments-differ
+            for region in self.view.sel():
+                expand_region(self.view, region, *split_markers(markers))
 
-        if isinstance(markers, str):
-            markers = self.split_markers(markers)
+        def input(self, _args):
+            return SelectBetweenMarkersInputHandler()
 
-        for region in self.view.sel():
-            self.expand_region(region, markers[0], markers[1])
-
-    def on_done(self, markers):
-        self.view.run_command('select_between_markers',
-                              {'markers': markers})
-
-    def expand_region(self, region, left_marker, right_marker):
-        lmlen = len(left_marker)
-        left = region.begin() - lmlen
-
-        while left_marker != self.view.substr(Region(left, left+lmlen)):
-            left -= 1
-            if left < 0:
+else:
+    class SelectBetweenMarkersCommand(TextCommand):
+        def run(self, edit, markers=None):  # pylint: disable=arguments-differ
+            if markers is None:
+                self.view.window().show_input_panel('Selection markers:', '',
+                                                    self.on_done, None, None)
                 return
 
-        right = self.view.find(right_marker, region.end(), sublime.LITERAL)
+            for region in self.view.sel():
+                expand_region(self.view, region, markers[0], markers[1])
 
-        if right:
-            self.view.sel().add(Region(left+lmlen, right.begin()))
+        def on_done(self, markers):
+            self.view.run_command('select_between_markers',
+                                  {'markers': split_markers(markers)})
 
-    @staticmethod
-    def split_markers(markers):
-        if markers == '  ':
-            return (' ', ' ')
 
-        i = markers.find(' ')
+def expand_region(view, region, left_marker, right_marker):
+    lmlen = len(left_marker)
+    left = region.begin() - lmlen
 
-        left_bound = i if i >= 0 else int(len(markers) / 2)
-        right_bound = i + 1 if i >= 0 else left_bound
+    while left_marker != view.substr(Region(left, left+lmlen)):
+        left -= 1
+        if left < 0:
+            return
 
-        return (markers[:left_bound], markers[right_bound:])
+    if right_marker:
+        right = view.find(right_marker, region.end(), sublime.LITERAL)
+        right = right.begin() if right else None
+    else:
+        right = region.end()
+
+    if right:
+        view.sel().add(Region(left+lmlen, right))
+
+
+def split_markers(markers):
+    if markers == '  ':
+        return (' ', ' ')
+
+    i = markers.find(' ')
+
+    left_bound = i if i >= 0 else int(len(markers) / 2)
+    right_bound = i + 1 if i >= 0 else left_bound
+
+    return (markers[:left_bound], markers[right_bound:])
 
 
 class SelectBetweenMarkersInputHandler(TextInputHandler):
@@ -248,7 +260,7 @@ class SelectBetweenMarkersInputHandler(TextInputHandler):
             return None
 
         markers = ('<i>{}</i>'.format(html.escape(x, quote=False) if x != ' ' else '_')
-                   for x in SelectBetweenMarkersCommand.split_markers(arg))
+                   for x in split_markers(arg))
         return sublime.Html(' ... '.join(markers))
 
 
