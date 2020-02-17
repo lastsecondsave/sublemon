@@ -169,7 +169,8 @@ rec(KEYWORD,
     'keyword.operator.word',
     'storage.modifier')
 rec(OPERATOR,
-    'keyword.operator')
+    'keyword.operator -string',
+    'punctuation.separator')
 rec(INDEXED,
     'entity.name -comment')
 rec(PARAMETER,
@@ -217,10 +218,7 @@ rec(KEYWORD,
 rec(ANNOTATION,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
-    'support.function -support.function.magic -variable.annotation',
     'variable.parameter & -meta.function.inline & (meta.annotation.arguments | meta.function-call.arguments)')
-rec(STRING,
-    'string keyword.operator')
 rec(STRING + BOLD,
     'string source.sql keyword.other')
 rec(STRING + ITALIC,
@@ -393,6 +391,10 @@ src('toml')
 rec(SECTION,
     'entity.name.table | punctuation.definition.table')
 
+src('ini')
+rec(SECTION,
+    'entity.name.section | punctuation.definition.section')
+
 src('css')
 rec(STRING,
     'meta.selector string.unquoted')
@@ -461,8 +463,5 @@ rec(CLEAR_WHITE + BOLD,
 txt('git.ignore')
 rec(PUNCTUATION, 'keyword.operator')
 rec(FOREGROUND, 'entity.name.pattern')
-
-src('ini')
-rec(SECTION, 'entity.name.section | punctuation.definition.section')
 
 generate()
