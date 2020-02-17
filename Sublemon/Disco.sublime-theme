@@ -476,6 +476,16 @@
       "dark_content": true,
     },
     {
+      "class": "quick_panel",
+      "parents": [{"class": "overlay_control goto_symbol"}],
+      "row_padding": [0, 0, 0, 0],
+    },
+    {
+      "class": "quick_panel",
+      "parents": [{"class": "overlay_control goto_symbol_in_project"}],
+      "row_padding": [0, 0, 0, 0],
+    },
+    {
       "class": "mini_quick_panel_row",
       "layer0.tint": "var(panel_gray)",
       "layer0.opacity": 0.0
@@ -619,11 +629,6 @@
       "class": "table_row",
       "attributes": ["selected"],
       "layer0.tint": "var(panel_blue)"
-    },
-    {
-      "class": "kind_container",
-      "content_margin": [5, 0],
-      "layer0.opacity": 0
     },
     {
       "class": "kind_label",
