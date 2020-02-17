@@ -29,7 +29,7 @@ function Set-Association($Extension, $Class) {
     Set-ItemProperty "$SublimeNode\Capabilities\FileAssociations" -Name ".$Extension" -Value $Class; "Registered $Extension"
 }
 
-%{
+$(
     New-ClassDefinition 'SublimeTextFile' '%SystemRoot%\SysWow64\imageres.dll,-102'
     New-ClassDefinition 'SublimeTextItem' "$SublimeExe,0"
 
@@ -40,7 +40,7 @@ function Set-Association($Extension, $Class) {
     Set-ItemProperty "$SublimeNode\Capabilities" -Name ApplicationDescription -Value 'A sophisticated text editor for code, markup and prose'
 
     New-Item "$SublimeNode\Capabilities\FileAssociations"
-} | Out-Null
+) | Out-Null
 
 $SublimeItems = 'project', 'workspace'
 $SublimeFiles = @(
@@ -67,8 +67,8 @@ $TextFiles = @(
     'gitignore', 'gitattributes'
 )
 
-$TextFiles    | %{ Set-Association $_ 'SublimeTextFile' }
-$SublimeFiles | %{ Set-Association "sublime-$_" 'SublimeTextFile' }
-$SublimeItems | %{ Set-Association "sublime-$_" 'SublimeTextItem' }
+$TextFiles    | ForEach-Object { Set-Association $_ 'SublimeTextFile' }
+$SublimeFiles | ForEach-Object { Set-Association "sublime-$_" 'SublimeTextFile' }
+$SublimeItems | ForEach-Object { Set-Association "sublime-$_" 'SublimeTextItem' }
 
 Set-ItemProperty "$RootKey\Software\RegisteredApplications" -Name 'Sublime Text' -Value 'Software\SublimeText\Capabilities'
