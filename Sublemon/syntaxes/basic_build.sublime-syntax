@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+name: Basic Build
+scope: text.log.build
+hidden: true
+
+contexts:
+  main:
+    - match: '^(.+?):(\d+):(\d+): .*?(\(.+\))?$'
+      captures:
+        1: entity.name.filename
+        2: constant.numeric
+        3: constant.numeric
+        4: markup.italic comment.category.description
