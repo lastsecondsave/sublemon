@@ -5,8 +5,6 @@ import shutil
 
 import xml.etree.ElementTree as ET
 
-CLEANUP = re.compile(r'(\$(\{[^\}]+?\}|\d)\s*)|[\t\n]|\s*:\n')
-
 
 def _generate_filename(content):
     return hashlib.sha1(content.encode('ascii')).hexdigest() + ".sublime-snippet"
@@ -47,7 +45,7 @@ class SnippetWriter:
             snippet = mutate(snippet)
 
         if not description:
-            description = CLEANUP.sub('', snippet).strip()
+            description = re.search(r'^@?[-\w\s\.]+|.*', snippet).group().strip()
 
         snippet = snippet.replace('$FILENAME', r'${TM_FILENAME/(.*?)(\..+)/$1/}')
 
@@ -78,6 +76,7 @@ class Snippets(SnippetDefinition):
 
 def blk(text): return text + ' {\n\t$0\n}'
 def bls(text): return text + ' { $0 }'
+def blp(text): return text + ' (\n\t$0\n)'
 def scl(text): return text + ';'
 def spc(text): return text + ' $0'
 def slp(text): return text + '(${0:$SELECTION})'
