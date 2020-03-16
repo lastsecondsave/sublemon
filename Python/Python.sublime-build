@@ -2,6 +2,5 @@
   "selector": "source.python",
   "target": "python",
   "cmd": ["$file"],
-  "cancel": {"kill": true},
   "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)"
 }

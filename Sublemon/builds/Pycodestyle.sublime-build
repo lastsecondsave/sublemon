@@ -3,7 +3,6 @@
   "target": "python",
   "module": "pycodestyle",
   "cmd": ["$file", "--max-line-length=120"],
-  "cancel": {"kill": true},
   "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
   "syntax": "Packages/Sublemon/syntaxes/pycodestyle.sublime-syntax"
 }

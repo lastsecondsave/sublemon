@@ -68,7 +68,7 @@
   { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
   { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
   { "keys": ["ctrl+shift+alt+p"], "command": "get_selection_scope" },
-  { "keys": ["ctrl+shift+alt+b"], "command": "cancel_build" },
+  { "keys": ["ctrl+shift+alt+b"], "command": "chimney", "args": {"kill": true} },
   { "keys": ["ctrl+shift+alt+left"], "command": "scroll_width", "args": {"amount": -20} },
   { "keys": ["ctrl+shift+alt+right"], "command": "scroll_width", "args": {"amount": 20} },
 
