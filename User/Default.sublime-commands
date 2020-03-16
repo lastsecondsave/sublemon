@@ -8,6 +8,8 @@
   { "caption": "Indentation: 2 Spaces", "command": "set_setting", "args":  {"setting": "tab_size", "value": 2} },
   { "caption": "Indentation: 4 Spaces", "command": "set_setting", "args":  {"setting": "tab_size", "value": 4} },
 
+  { "caption": "Wrap Lines", "command": "wrap_lines_at_width" },
+
   { "caption": "Git: Diff", "command": "git_diff" },
   { "caption": "Git: Log", "command": "git_log" },
   { "caption": "Git: Blame", "command": "git_blame "},
