@@ -2,7 +2,6 @@
   "selector": "source.python",
   "target": "pylint",
   "cmd": ["$file"],
-  "cancel": {"kill": true},
   "disable": [
     "missing-docstring",
     "too-few-public-methods",

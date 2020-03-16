@@ -3,6 +3,5 @@
   "target": "python",
   "module": "mypy",
   "cmd": ["$file"],
-  "cancel": {"kill": true},
   "file_regex": "(.+?):(\\d+):(\\d+): (.*)"
 }
