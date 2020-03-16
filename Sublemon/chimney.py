@@ -89,15 +89,15 @@ class BuildError(Exception):
         self.message = message
 
 
-def split_command(cmd):
-    return shlex.split(cmd) if isinstance(cmd, str) else cmd
-
-
 class BuildCommand:
     def __init__(self, options):
-        cmd = options.get('cmd') or options.get('shell_cmd') or []
-        self.cmd = deque(split_command(cmd))
+        cmd = options.get('cmd') or shlex.split(options.get('shell_cmd', ''))
+        self.cmd = deque(cmd)
         self.shell = 'shell_cmd' in options or options.get('shell', False)
+
+    def reset(self, *chunks, shell=False):
+        self.cmd = deque(chunks)
+        self.shell = shell
 
     def append(self, *chunks):
         self.cmd.extend(chunks)
@@ -128,8 +128,11 @@ class BuildSetup:
     def opt(self, name):
         return self.options.get(name)
 
-    def opt_list(self, name):
-        return split_command(self.opt(name))
+    def opt_bool(self, name):
+        return self.options.get(name, False)
+
+    def opt_args(self, name):
+        return shlex.split(self.options.get(name, ''))
 
     def file_name(self):
         return self.window.active_view().file_name()
