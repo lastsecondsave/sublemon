@@ -13,7 +13,7 @@ py/'stm' - '@staticmethod'
 
 py/'pl' - 'print(${0:$SELECTION})'
 
-py/'ss' - ('self.x = x', 'self.$1 = $1')
+py/'self' - ('self.x = x', 'self.$1 = $1')
 py/'doc' - ('docstring', '"""\n\t$0\n"""')
 py/'isi' - 'isinstance(${1:$SELECTION}, ${2:str})'
 
