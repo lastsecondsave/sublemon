@@ -1,0 +1,5 @@
+{
+  "selector": "source.java",
+  "cmd": ["java", "$file"],
+  "file_regex": "(.+\\.java):(\\d+):() error: (.*)"
+}
