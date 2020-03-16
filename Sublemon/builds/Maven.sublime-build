@@ -3,24 +3,24 @@
   "keyfiles": ["pom.xml"],
   "target": "maven",
   "working_dir": "${folder:${file_path}}",
-  "cmd": "compile",
+  "mvn_cmd": "compile",
 
   "variants": [
     { "name": "Clean → Compile",
-      "cmd": "clean compile"
+      "mvn_cmd": "clean compile"
     },
     { "name": "Compile → Exec",
-      "cmd": "compile exec:java"
+      "mvn_cmd": "compile exec:java"
     },
     { "name": "Exec",
-      "cmd": "exec:java",
-      "no_info_messages": true
+      "mvn_cmd": "exec:java",
+      "quiet": true
     },
     { "name": "Test",
-      "cmd": "test",
+      "mvn_cmd": "test",
     },
     { "name": "Clean → Test",
-      "cmd": "clean test",
+      "mvn_cmd": "clean test",
     }
   ]
 }
