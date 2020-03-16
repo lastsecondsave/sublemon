@@ -13,6 +13,6 @@ ps/blk/'end' - 'end'
 
 ps/blp/'param' - 'param'
 
-ps/blk/'ff' - 'function ${1:run}'
+ps/blk/'fun' - 'function ${1:run}'
 
 ps/'pm' - ('Parameter', '[Parameter($1)]')

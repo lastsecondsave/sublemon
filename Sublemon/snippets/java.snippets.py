@@ -14,7 +14,7 @@ java/'ima' - ('import *', 'import $0.*;')
 
 java/'sf' - ('static final CONSTANT', 'static final ${1:String} ${2:CONSTANT} = ${3:null};')
 java/scl/'con' - 'continue'
-java/'tt' - ('this.x = x', 'this.$1 = $1;')
+java/'this' - ('this.x = x', 'this.$1 = $1;')
 
 java/spc/'ret' - 'return'
 java/scl/'rtt' - 'return this'
@@ -69,7 +69,7 @@ java/blk/'inter' - 'interface ${1:$FILENAME}'
 java/blk/'enum' - 'enum ${1:$FILENAME}'
 
 java/blk/'ctor' - ('constructor', '$FILENAME($1)')
-java/blk/'ff' - ('method', '${1:void} ${2:run}($3)')
+java/blk/'fun' - ('method', '${1:void} ${2:run}($3)')
 java/blk/'main' - ('main', 'public static void main(String[] args)')
 java/blk/'tos' - ('toString', 'public String toString()')
 
