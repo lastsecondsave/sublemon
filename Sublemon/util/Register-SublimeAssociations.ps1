@@ -52,7 +52,7 @@ $SublimeFiles = @(
 $TextFiles = @(
     'txt', 'log', 'conf', 'csv',
     'md', 'markdown',
-    'ini',
+    'ini', 'toml',
     'xml', 'xsd',
     'yaml', 'yml',
     'java', 'properties', 'groovy', 'clj', 'gradle', 'kt',
