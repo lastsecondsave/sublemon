@@ -2,7 +2,7 @@ import os
 import tempfile
 
 import sublime
-from sublime_plugin import WindowCommand
+from sublime_plugin import WindowCommand, TextInputHandler
 
 from . import RUNNING_ON_WINDOWS
 
@@ -77,3 +77,15 @@ class CloseWithoutSavingCommand(WindowCommand):
         view = self.window.active_view()
         view.set_scratch(True)
         view.close()
+
+
+class WrapLinesAtWidthCommand(WindowCommand):
+    def run(self, width):
+        self.window.run_command("wrap_lines", {"width": int(width)})
+
+    def input(self, _args):
+        class WidthInputHandler(TextInputHandler):
+            def placeholder(self):
+                return "Width"
+
+        return WidthInputHandler()
