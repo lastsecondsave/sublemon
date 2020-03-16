@@ -97,6 +97,7 @@ class BuildCommand:
     def __init__(self, options):
         cmd = options.get('cmd') or options.get('shell_cmd') or []
         self.cmd = deque(split_command(cmd))
+        self.shell = 'shell_cmd' in options or options.get('shell', False)
 
     def append(self, *chunks):
         self.cmd.extend(chunks)
@@ -208,7 +209,7 @@ class ChimneyCommand(WindowCommand):
 
         self.panel.show()
 
-        self.running_build = start_build(self.panel, setup.cmd.cmd, setup.env, setup.listener)
+        self.running_build = start_build(self.panel, setup.cmd, setup.env, setup.listener)
 
         print('→ [{}] {}'.format(self.running_build.process.pid, setup.cmd))
 
@@ -339,7 +340,8 @@ def start_process(cmd, env):
     process_params = {
         'stdout': subprocess.PIPE,
         'stderr': subprocess.PIPE,
-        'stdin': subprocess.DEVNULL
+        'stdin': subprocess.DEVNULL,
+        'shell': cmd.shell
     }
 
     if RUNNING_ON_WINDOWS:
@@ -352,7 +354,7 @@ def start_process(cmd, env):
         os_env.update({k: os.path.expandvars(v) for k, v in env.items()})
         process_params['env'] = os_env
 
-    return subprocess.Popen(map(os.path.expandvars, cmd),
+    return subprocess.Popen(map(os.path.expandvars, cmd.cmd),
                             **process_params)
 
 
