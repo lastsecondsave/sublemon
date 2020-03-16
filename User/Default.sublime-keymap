@@ -18,6 +18,7 @@
   { "keys": ["alt+backspace"], "command": "dual_side_delete" },
   { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
 
+  { "keys": ["alt+q"], "command": "expand_snippet" },
   { "keys": ["alt+p"], "command": "find_under_prev" },
   { "keys": ["alt+["], "command": "prev_view" },
   { "keys": ["alt+]"], "command": "next_view" },
