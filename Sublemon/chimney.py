@@ -291,7 +291,7 @@ class RunningBuildContext:
         self.listener = listener
         self.window = panel.window
 
-        self.cancelled = None
+        self.cancelled = False
 
         self.listener.on_startup(self)
 
@@ -300,20 +300,19 @@ class RunningBuildContext:
 
     def complete(self):
         if not self.cancelled:
-            self.listener.on_complete(self)
             self.panel.view.find_all_results()
+            self.listener.on_complete(self)
+        else:
+            self.window.status_message('Build cancelled')
+            self.print('\n[Process Terminated]')
 
         print('{} [{}]'.format('✘' if self.cancelled else '✔',
                                self.process.pid))
 
-        if self.cancelled == 'kill':
-            self.window.status_message('Build cancelled')
-            self.print('\n[Process Terminated]')
-
         self.process = None
 
-    def cancel(self, kill=True):
-        self.cancelled = 'kill' if kill else 'restart'
+    def cancel(self):
+        self.cancelled = True
         self.window.status_message('Cancelling build...')
         kill_process(self.process)
 
