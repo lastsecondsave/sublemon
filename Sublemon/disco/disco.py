@@ -371,6 +371,12 @@ rec(USER_CONSTANT,
 rec(KEYWORD,
     'keyword.operator.word')
 
+src('rust')
+rec(ANNOTATION,
+    'meta.annotation')
+rec(PUNCTUATION,
+    'storage.modifier.lifetime')
+
 src('yaml')
 rec(PUNCTUATION,
     'punctuation.definition.block.sequence.item',
