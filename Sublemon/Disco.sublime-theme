@@ -659,6 +659,23 @@
       "layer1.tint": "var(panel_gray)",
       "content_margin": [8, 5, 8, 5]
     },
+    {
+      "class": "kind_container",
+      "content_margin": [4, 0, 4, 0],
+      "layer0.tint": "var(--background)",
+      "layer0.opacity": 0
+    },
+    {
+      "class": "kind_container",
+      "parents": [{"class": "auto_complete"}],
+      "content_margin": [2, 0, 2, 0]
+    },
+    {
+      "class": "auto_complete_kind_name_label",
+      "font.size": "0.9rem",
+      "font.italic": true,
+      "border_color": "color(var(CLEAR_WHITE) a(0.2))"
+    },
 
     // Panels
     {
