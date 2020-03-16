@@ -32,7 +32,7 @@ for package in *.sublime-package; do
   find . -name '*.sublime-completions' -exec rm -f {} +
 
   case "${dir}" in
-    'Java') rm -f -- *.sublime-build;;
+    'Java'|'Python') rm -f -- *.sublime-build;;
   esac
 
   zip -rq "../${package}" -- *
