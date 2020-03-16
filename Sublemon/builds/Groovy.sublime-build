@@ -1,4 +1,6 @@
 {
   "selector": "source.groovy",
-  "shell_cmd": "groovy \"$file\""
+  "cmd": ["groovy", "$file"],
+  "shell": true,
+  "file_regex": "(.+\\.groovy): (\\d+):() (.*)"
 }
