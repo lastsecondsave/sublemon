@@ -357,8 +357,7 @@ def start_process(cmd, env):
         os_env.update({k: os.path.expandvars(v) for k, v in env.items()})
         process_params['env'] = os_env
 
-    return subprocess.Popen(map(os.path.expandvars, cmd.cmd),
-                            **process_params)
+    return subprocess.Popen(cmd.args, **process_params)
 
 
 def kill_process(process):
