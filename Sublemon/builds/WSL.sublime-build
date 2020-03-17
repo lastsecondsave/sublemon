@@ -1,4 +1,5 @@
 {
   "selector": "source.shell",
-  "target": "wsl"
+  "target": "wsl",
+  "cmd": ["$file"]
 }
