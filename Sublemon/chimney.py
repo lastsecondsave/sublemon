@@ -92,24 +92,24 @@ class BuildError(Exception):
 class BuildCommand:
     def __init__(self, options):
         cmd = options.get('cmd') or shlex.split(options.get('shell_cmd', ''))
-        self.cmd = deque(cmd)
+        self.args = deque(cmd)
         self.shell = 'shell_cmd' in options or options.get('shell', False)
 
     def reset(self, *chunks, shell=False):
-        self.cmd = deque(chunks)
+        self.args = deque(chunks)
         self.shell = shell
 
     def append(self, *chunks):
-        self.cmd.extend(chunks)
+        self.args.extend(chunks)
 
     def appendleft(self, *chunks):
-        self.cmd.extendleft(reversed(chunks))
+        self.args.extendleft(reversed(chunks))
 
     def __str__(self):
-        return ' '.join(map(shlex.quote, self.cmd))
+        return ' '.join(map(shlex.quote, self.args))
 
     def __bool__(self):
-        return bool(self.cmd)
+        return bool(self.args)
 
 
 class BuildSetup:
