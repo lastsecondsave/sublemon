@@ -28,6 +28,8 @@ for package in *.sublime-package; do
   rm "${package}"
   pushd "${dir}" > /dev/null
 
+  rm -rf 'Snippets'
+
   find . -name '*.sublime-snippet' -exec rm -f {} +
   find . -name '*.sublime-completions' -exec rm -f {} +
 
@@ -35,7 +37,7 @@ for package in *.sublime-package; do
     'Java'|'Python') rm -f -- *.sublime-build;;
   esac
 
-  zip -rq "../${package}" -- *
+  zip -rq0 "../${package}" -- *
 
   popd > /dev/null
 done
