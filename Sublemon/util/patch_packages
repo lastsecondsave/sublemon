@@ -37,7 +37,7 @@ for package in *.sublime-package; do
     'Java'|'Python') rm -f -- *.sublime-build;;
   esac
 
-  zip -rq0 "../${package}" -- *
+  zip -rq0 "../${package}" -- .
 
   popd > /dev/null
 done
