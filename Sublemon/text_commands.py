@@ -192,48 +192,31 @@ class LastSingleSelectionCommand(TextCommand):
             selection.subtract(region)
 
 
-if (int(sublime.version()) > 4000):
-    class SelectBetweenMarkersCommand(TextCommand):
-        def run(self, edit, markers):  # pylint: disable=arguments-differ
-            for region in self.view.sel():
-                expand_region(self.view, region, *split_markers(markers))
+class SelectBetweenMarkersCommand(TextCommand):
+    def run(self, edit, markers):  # pylint: disable=arguments-differ
+        for region in self.view.sel():
+            self.expand_region(region, *split_markers(markers))
 
-        def input(self, _args):
-            return SelectBetweenMarkersInputHandler()
+    def input(self, _args):
+        return SelectBetweenMarkersInputHandler()
 
-else:
-    class SelectBetweenMarkersCommand(TextCommand):
-        def run(self, edit, markers=None):  # pylint: disable=arguments-differ
-            if markers is None:
-                self.view.window().show_input_panel('Selection markers:', '',
-                                                    self.on_done, None, None)
+    def expand_region(self, region, left_marker, right_marker):
+        lmlen = len(left_marker)
+        left = region.begin() - lmlen
+
+        while left_marker != self.view.substr(Region(left, left+lmlen)):
+            left -= 1
+            if left < 0:
                 return
 
-            for region in self.view.sel():
-                expand_region(self.view, region, markers[0], markers[1])
+        if right_marker:
+            right = self.view.find(right_marker, region.end(), sublime.LITERAL)
+            right = right.begin() if right else None
+        else:
+            right = region.end()
 
-        def on_done(self, markers):
-            self.view.run_command('select_between_markers',
-                                  {'markers': split_markers(markers)})
-
-
-def expand_region(view, region, left_marker, right_marker):
-    lmlen = len(left_marker)
-    left = region.begin() - lmlen
-
-    while left_marker != view.substr(Region(left, left+lmlen)):
-        left -= 1
-        if left < 0:
-            return
-
-    if right_marker:
-        right = view.find(right_marker, region.end(), sublime.LITERAL)
-        right = right.begin() if right else None
-    else:
-        right = region.end()
-
-    if right:
-        view.sel().add(Region(left+lmlen, right))
+        if right:
+            self.view.sel().add(Region(left+lmlen, right))
 
 
 def split_markers(markers):
