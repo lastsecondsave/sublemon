@@ -288,8 +288,6 @@ rec(USER_CONSTANT,
 rec(STORAGE,
     'keyword.operator.wildcard',
     'keyword.other.package')
-rec(PRIMITIVE,
-    'string.quoted.single')
 rec(CRIMSON,
     'keyword.operator.wildcard.asterisk',
     'meta.class.body.anonymous.java punctuation.section.braces')
@@ -343,10 +341,7 @@ rec(PUNCTUATION,
 rec(ANNOTATION,
     'meta.attribute support.function')
 rec(ITALIC,
-    'keyword.operator.comparison',
-    'keyword.operator.logical',
-    'keyword.operator.unary',
-    'meta.attribute variable.parameter.attribute')
+    'keyword.operator.comparison | keyword.operator.logical | keyword.operator.unary')
 rec(VARIABLE,
     'variable storage.modifier.scope')
 rec(FOREGROUND,
@@ -375,7 +370,7 @@ rec(KEYWORD,
 
 src('rust')
 rec(ANNOTATION,
-    'meta.annotation')
+    'variable.annotation | punctuation.definition.annotation')
 rec(PUNCTUATION,
     'storage.modifier.lifetime')
 
