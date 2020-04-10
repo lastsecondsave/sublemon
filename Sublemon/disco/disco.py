@@ -129,6 +129,8 @@ def rec(style, *scopes):
 
     for scope in scopes:
         if GLOBAL_SCOPE:
+            if '|' in scope:
+                scope = "& ({})".format(scope)
             scope = ' '.join([GLOBAL_SCOPE, scope])
 
         COLOR_SCHEME['rules'].append(dict(style.settings, scope=scope))
