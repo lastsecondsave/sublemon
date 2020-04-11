@@ -33,30 +33,29 @@ def alpha(color, value):
     return f'color({color} alpha({value}))'
 
 
-WHITE        = "#C4C4C4"
-GRAY         = "#9090A0"
-PURPLE       = "#E572D2"
-PINK         = "#EF51AA"
-BLUE         = "#6699FF"
-GREEN        = "#C5CC4B"
-YELLOW       = "#EDC61A"
-ORANGE       = "#FFAD3A"
-DARK_ORANGE  = "#FF8147"
-CRIMSON      = "#E5476C"
+WHITE = "#C4C4C4"
+GRAY = "#9090A0"
+PURPLE = "#E572D2"
+PINK = "#EF51AA"
+BLUE = "#6699FF"
+GREEN = "#C5CC4B"
+YELLOW = "#EDC61A"
+ORANGE = "#FFAD3A"
+DARK_ORANGE = "#FF8147"
+CRIMSON = "#E5476C"
 
-CLEAR_WHITE  = "#FFFFFF"
-BLUISH_BLACK = "#202830"
-DARK_BLUE    = "#384868"
-FADED_GRAY   = "#51515D"
+CLEAR_WHITE = "#FFFFFF"
+FADED_GRAY = "#51515D"
 FADED_VIOLET = "#5E5E8E"
 
+BLUISH_BLACK = "#202830"
+DARK_BLUE = "#384868"
 
 FOREGROUND = Style(WHITE)
 
 ITALIC = Style(font_style='italic')
 BOLD = Style(font_style='bold')
 BOLD_ITALIC = Style(font_style='bold italic')
-
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
@@ -67,13 +66,12 @@ COMMENT = Style(GRAY)
 COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
-ANNOTATION = Style(YELLOW)
 TAG = Style(BLUE)
 TAG_ATTRIBUTE = Style(YELLOW)
-SECTION = Style(YELLOW)
 PARAMETER = Style(ORANGE)
-USER_CONSTANT = Style(CRIMSON)
 VARIABLE = Style(ORANGE)
+META = Style(YELLOW)
+SPECIAL = Style(CRIMSON)
 
 INVALID = Style(CLEAR_WHITE, background=CRIMSON)
 
@@ -217,7 +215,7 @@ rec(Highlight(CRIMSON, 0.4, 'l(+ 10%)'), 'diff.deleted.char')
 src('python')
 rec(KEYWORD,
     'keyword.operator.logical')
-rec(ANNOTATION,
+rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(ITALIC,
     'variable.parameter & -meta.function.inline & (meta.annotation.arguments | meta.function-call.arguments)')
@@ -276,21 +274,19 @@ rec(REGEXP_CONTROL,
     'storage.modifier.mode')
 
 src('java')
-rec(ANNOTATION,
+rec(META,
     'punctuation.definition.annotation',
     'variable.annotation')
 rec(COMMENT_HIGHLIGHT,
     'comment.block.documentation keyword',
     'meta.block-tag variable.parameter')
-rec(USER_CONSTANT,
+rec(SPECIAL,
     'entity.name.constant',
-    'constant.other')
+    'constant.other',
+    'meta.class.body.anonymous.java punctuation.section.braces')
 rec(STORAGE,
     'keyword.operator.wildcard',
     'keyword.other.package')
-rec(CRIMSON,
-    'keyword.operator.wildcard.asterisk',
-    'meta.class.body.anonymous.java punctuation.section.braces')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
 rec(FOREGROUND,
@@ -302,14 +298,14 @@ rec(ITALIC,
     'meta.annotation.parameters variable.parameter')
 
 txt('log.java')
-rec(CRIMSON, 'entity.name.exception')
+rec(SPECIAL, 'entity.name.exception')
 
 src('clojure')
 rec(TAG + ITALIC, 'constant.other.keyword')
 rec(PUNCTUATION, 'keyword.operator.macro')
 
 src('groovy')
-rec(ANNOTATION, 'storage.type.annotation')
+rec(META, 'storage.type.annotation')
 
 txt('log')
 rec(CRIMSON, 'meta.indicator.error')
@@ -320,14 +316,13 @@ rec(YELLOW, 'meta.message')
 src('cs')
 rec(KEYWORD,
     'keyword.operator.new | keyword.operator.reflection')
-rec(USER_CONSTANT,
+rec(SPECIAL,
     'entity.name.constant',
-    'constant.other.flag')
+    'constant.other.flag',
+    'storage.type.nullable')
 rec(FOREGROUND,
     'storage.type.function.lambda')
-rec(CRIMSON,
-    'storage.type.nullable')
-rec(ANNOTATION,
+rec(META,
     'meta.annotation variable.annotation')
 rec(ITALIC,
     'meta.annotation variable.parameter')
@@ -338,7 +333,7 @@ rec(PUNCTUATION,
     'variable.other punctuation.section.braces',
     'string.quoted.double punctuation.section.group -interpolated',
     'string.quoted.double punctuation.section.braces -interpolated')
-rec(ANNOTATION,
+rec(META,
     'meta.attribute support.function')
 rec(ITALIC,
     'keyword.operator.comparison | keyword.operator.logical | keyword.operator.unary')
@@ -363,13 +358,13 @@ rec(FOREGROUND,
     'variable.parameter.option')
 
 src('c++')
-rec(USER_CONSTANT,
+rec(SPECIAL,
     'entity.name.constant.preprocessor')
 rec(KEYWORD,
     'keyword.operator.word')
 
 src('rust')
-rec(ANNOTATION,
+rec(META,
     'variable.annotation | punctuation.definition.annotation')
 rec(PUNCTUATION,
     'storage.modifier.lifetime')
@@ -384,18 +379,18 @@ rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
     'keyword.other.directive.yaml')
-rec(ANNOTATION,
+rec(META,
     'variable.other.alias',
     'punctuation.definition.alias',
     'entity.name.other.anchor',
     'punctuation.definition.anchor')
 
 src('toml')
-rec(SECTION,
+rec(META,
     'entity.name.table | punctuation.definition.table')
 
 src('ini')
-rec(SECTION,
+rec(META,
     'entity.name.section | punctuation.definition.section')
 
 src('css')
@@ -404,7 +399,7 @@ rec(STRING,
 rec(PRIMITIVE,
     'constant.numeric keyword.other',
     'constant.other.color')
-rec(CRIMSON,
+rec(SPECIAL,
     'support.type.vendor-prefix')
 rec(ITALIC,
     'meta.property-name')
@@ -439,7 +434,7 @@ rec(FADED_GRAY,
     'meta.code-fence.definition constant.other.language-name')
 
 src('diff')
-rec(SECTION, 'meta.diff.range')
+rec(META, 'meta.diff.range')
 rec(BOLD_ITALIC, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
@@ -450,7 +445,7 @@ rec(Style([PINK, FADED_VIOLET]) + ITALIC,
     'constant.numeric.hash')
 
 txt('git.config')
-rec(SECTION,
+rec(META,
     'meta.brackets',
     'entity.name.section')
 rec(INDEXED,
