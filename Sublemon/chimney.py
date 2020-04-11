@@ -214,7 +214,7 @@ class ChimneyCommand(WindowCommand):
 
         self.running_build = start_build(self.panel, setup.cmd, setup.env, setup.listener)
 
-        print('→ [{}] {}'.format(self.running_build.process.pid, setup.cmd))
+        print('⌛ [{}] {}'.format(self.running_build.process.pid, setup.cmd))
 
     def change_working_dir(self, working_dir):
         if not working_dir:
