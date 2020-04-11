@@ -29,12 +29,19 @@ for package in *.sublime-package; do
   pushd "${dir}" > /dev/null
 
   rm -rf 'Snippets'
-
   find . -name '*.sublime-snippet' -exec rm -f {} +
-  find . -name '*.sublime-completions' -exec rm -f {} +
 
   case "${dir}" in
-    'Java'|'Python') rm -f -- *.sublime-build;;
+    'Java')
+      rm -f -- *.sublime-build
+      rm -f -- *.sublime-completions
+      ;;
+    'Python')
+      rm -f -- *.sublime-build
+      ;;
+    'Rust')
+      rm Default.sublime-keymap
+      ;;
   esac
 
   zip -rq0 "../${package}" -- .
