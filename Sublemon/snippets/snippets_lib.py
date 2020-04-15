@@ -9,9 +9,7 @@ import xml.etree.ElementTree as ET
 from contextlib import contextmanager
 from pathlib import Path
 
-
-def _generate_filename(content):
-    return hashlib.sha1(content.encode('ascii')).hexdigest() + ".sublime-snippet"
+GENERATED_DIR = Path(".generated")
 
 
 def _write_snippet(scope, tab_trigger, content, description):
@@ -23,17 +21,12 @@ def _write_snippet(scope, tab_trigger, content, description):
     ET.SubElement(root, 'scope').text = scope
     ET.SubElement(root, 'content').text = content
 
-    filename = _generate_filename(scope + content)
-    print("{}: {}".format(filename, description))
+    digest = hashlib.sha1(content.encode('ascii')).hexdigest()
+    path = GENERATED_DIR / scope / f"{digest}.sublime-snippet"
 
-    ET.ElementTree(root).write(os.path.join('.generated', scope, filename))
+    print(f"{path.name}: {description}")
 
-
-def _clean_target(scope):
-    target_dir = os.path.join('.generated', scope)
-    shutil.rmtree(target_dir, ignore_errors=True)
-    os.makedirs(target_dir)
-    return target_dir
+    ET.ElementTree(root).write(path)
 
 
 class SnippetWriter:
@@ -71,13 +64,25 @@ class SnippetDefinition:
 class Snippets(SnippetDefinition):
     def __init__(self, scope, mutators=()):
         super().__init__(scope, mutators)
-        _clean_target(scope)
+
+        self.target_dir = GENERATED_DIR / scope
+
+        shutil.rmtree(self.target_dir, ignore_errors=True)
+        os.makedirs(self.target_dir)
 
     def subscope(self, scope):
-        return Snippets(self.scope + ' ' + scope, self.mutators)
+        return Snippets(f"{self.scope} {scope}", self.mutators)
+
+    @contextmanager
+    def completions(self):
+        cmp = Completions(self.scope)
+        try:
+            yield cmp
+        finally:
+            cmp.write(self.target_dir)
+
 
 # pylint: disable=multiple-statements
-
 def blk(text): return text + ' {\n\t$0\n}'
 def bls(text): return text + ' { $0 }'
 def blp(text): return text + ' (\n\t$0\n)'
@@ -85,26 +90,20 @@ def scl(text): return text + ';'
 def spc(text): return text + ' $0'
 def slp(text): return text + '(${0:$SELECTION})'
 def ind(text): return text.replace('>=>', '\n\t').replace('==>', '\n')
+# pylint: enable=multiple-statements
 
 
 class Completions():
     def __init__(self, scope):
-        self.scope = scope
-        self.completions = []
+        self.content = dict(scope=scope, completions=[])
 
-    def write(self):
-        path = Path.cwd() / ".generated" / (self.scope + ".sublime-completions")
-
-        content = {
-            "scope": self.scope,
-            "completions": self.completions
-        }
+    def write(self, target_dir):
+        path = target_dir / "completions.sublime-completions"
 
         with path.open(mode='w') as json_file:
-            json.dump(content, json_file, indent=2)
+            json.dump(self.content, json_file, indent=2)
 
         print(path.name)
-
 
     def group(self, kind, *items):
         for item in items:
@@ -113,13 +112,4 @@ class Completions():
                 "content": item,
                 "kind": kind
             }
-            self.completions.append(completion)
-
-
-@contextmanager
-def completions(scope):
-    cmp = Completions(scope)
-    try:
-        yield cmp
-    finally:
-        cmp.write()
+            self.content["completions"].append(completion)
