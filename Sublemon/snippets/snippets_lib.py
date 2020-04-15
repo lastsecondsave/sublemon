@@ -1,9 +1,13 @@
 import hashlib
+import json
 import os
 import re
 import shutil
 
 import xml.etree.ElementTree as ET
+
+from contextlib import contextmanager
+from pathlib import Path
 
 
 def _generate_filename(content):
@@ -81,3 +85,41 @@ def scl(text): return text + ';'
 def spc(text): return text + ' $0'
 def slp(text): return text + '(${0:$SELECTION})'
 def ind(text): return text.replace('>=>', '\n\t').replace('==>', '\n')
+
+
+class Completions():
+    def __init__(self, scope):
+        self.scope = scope
+        self.completions = []
+
+    def write(self):
+        path = Path.cwd() / ".generated" / (self.scope + ".sublime-completions")
+
+        content = {
+            "scope": self.scope,
+            "completions": self.completions
+        }
+
+        with path.open(mode='w') as json_file:
+            json.dump(content, json_file, indent=2)
+
+        print(path.name)
+
+
+    def group(self, kind, *items):
+        for item in items:
+            completion = {
+                "trigger": item,
+                "content": item,
+                "kind": kind
+            }
+            self.completions.append(completion)
+
+
+@contextmanager
+def completions(scope):
+    cmp = Completions(scope)
+    try:
+        yield cmp
+    finally:
+        cmp.write()
