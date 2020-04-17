@@ -334,7 +334,7 @@ rec(PUNCTUATION,
     'string.quoted.double punctuation.section.group -interpolated',
     'string.quoted.double punctuation.section.braces -interpolated')
 rec(META,
-    'meta.attribute support.function')
+    'meta.attribute support.function.attribute')
 rec(ITALIC,
     'keyword.operator.comparison | keyword.operator.logical | keyword.operator.unary')
 rec(VARIABLE,
