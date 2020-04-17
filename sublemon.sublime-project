@@ -29,7 +29,10 @@
     },
     {
       "name": "python",
-      "path": "Python"
+      "path": "Python",
+      "file_include_patterns": [
+        "*.tmPreferences"
+      ]
     }
   ],
 

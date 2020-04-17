@@ -63,6 +63,16 @@
 		".git",
 		"Vintage"
 	],
+	"ignored_snippets": [
+		"Java/*",
+		"JavaScript/*",
+		"Python/*",
+		"Rails/*",
+		"Rust/*",
+		"ShellScript/*",
+		"Text/*",
+		"XML/*"
+	],
 	"index_exclude_patterns":
 	[
 		"*.css",
