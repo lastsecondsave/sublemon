@@ -11,7 +11,8 @@
 /User/*.crt
 
 !/Default
-!/Python
+
+!/Python/*.tmPreferences
 
 .DS_Store
 *.swp
