@@ -12,8 +12,6 @@
 
 !/Default
 
-!/Python/*.tmPreferences
-
 .DS_Store
 *.swp
 
