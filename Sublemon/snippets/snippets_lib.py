@@ -1,6 +1,5 @@
 import hashlib
 import json
-import os
 import re
 import shutil
 
@@ -68,7 +67,7 @@ class Snippets(SnippetDefinition):
         self.target_dir = GENERATED_DIR / scope
 
         shutil.rmtree(self.target_dir, ignore_errors=True)
-        os.makedirs(self.target_dir)
+        self.target_dir.mkdir(exist_ok=True, parents=True)
 
     def subscope(self, scope):
         return Snippets(f"{self.scope} {scope}", self.mutators)
