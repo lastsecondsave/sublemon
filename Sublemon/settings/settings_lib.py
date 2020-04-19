@@ -1,6 +1,7 @@
-import os
 import plistlib
 import re
+
+from pathlib import Path
 
 TO_UPPERCASE = re.compile(r'_[a-z]')
 
@@ -10,12 +11,13 @@ PIPE_SEPARATED = ['increaseIndentPattern',
                   'disableIndentNextLinePattern',
                   'unIndentedLinePattern']
 
+GENERATED_DIR = Path(".generated")
+
 
 def settings(scope, **custom_settings):
     sublime_settings = {}
 
-    comments = extract_comments(custom_settings)
-    if comments:
+    if comments := extract_comments(custom_settings):
         sublime_settings['shellVariables'] = comments
 
     for key, val in custom_settings.items():
@@ -28,14 +30,13 @@ def settings(scope, **custom_settings):
 
         sublime_settings[key] = val
 
-    filename = scope + '.tmPreferences'
-    os.makedirs('.generated', exist_ok=True)
-    path = os.path.join('.generated', filename)
+    GENERATED_DIR.mkdir(exist_ok=True)
+    path = GENERATED_DIR / f"{scope}.tmPreferences"
 
-    with open(path, 'wb') as pfile:
+    with path.open(mode="wb") as pfile:
         plistlib.dump({'scope': scope, 'settings': sublime_settings}, pfile)
 
-    print('Generated', filename)
+    print('Generated', path.name)
 
 
 def wrap(value):
@@ -47,7 +48,7 @@ def extract_comments(custom_settings):
     comment_index = 1
 
     def add_comment(variant, value):
-        name = 'TM_COMMENT_{}_{}'.format(variant, comment_index)
+        name = f'TM_COMMENT_{variant}_{comment_index}'
         shell_variables.append({'name': name, 'value': value})
 
     def add_start_comment(value):
@@ -60,8 +61,7 @@ def extract_comments(custom_settings):
         add_start_comment(line_comment)
         comment_index += 1
 
-    if 'block_comment' in custom_settings:
-        block_comment = custom_settings.pop('block_comment')
+    if block_comment := custom_settings.pop('block_comment', None):
         add_start_comment(block_comment[0])
         add_end_comment(block_comment[1])
 
