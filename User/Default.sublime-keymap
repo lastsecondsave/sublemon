@@ -1,6 +1,8 @@
 [
   /* CTRL */
 
+  { "keys": ["ctrl+-"], "command": "one_up", "args": {"negative": true} },
+  { "keys": ["ctrl+="], "command": "one_up" },
   { "keys": ["ctrl+o"], "command": "open_file_path" },
   { "keys": ["ctrl+'"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
   { "keys": ["ctrl+b"], "command": "show_panel", "args": {"panel": "output.exec"} },
@@ -100,8 +102,6 @@
 
   /* UNBOUND */
 
-  { "keys": ["ctrl+="],       "command": "unbound" },
-  { "keys": ["ctrl+-"],       "command": "unbound" },
   { "keys": ["ctrl+shift+-"], "command": "unbound" },
   { "keys": ["ctrl+shift+="], "command": "unbound" },
 
