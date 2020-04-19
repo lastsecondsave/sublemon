@@ -28,14 +28,21 @@ def mute(path):
         path.write_text(r'{"selector": "_"}')
     elif path.name.endswith("keymap"):
         path.write_text("[]")
+    elif path.name.endswith("tmPreferences"):
+        path.write_text('<plist><dict>'
+                        '<key>scope</key><string>_</string>'
+                        '<key>settings</key><dict/>'
+                        '</dict></plist>')
     else:
-        path.touch(exist_ok=True)
+        path.write_text("")
 
     print(f"Muted {path}")
 
 
 def mute_files():
     mute(PACKAGES / "Python" / "Python.sublime-build")
+    mute(PACKAGES / "Python" / "Miscellaneous.tmPreferences")
+    mute(PACKAGES / "Python" / "Symbol List.tmPreferences")
 
     mute(PACKAGES / "Rust" / "Default.sublime-keymap")
 

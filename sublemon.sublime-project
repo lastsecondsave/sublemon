@@ -26,13 +26,6 @@
     {
       "name": "default",
       "path": "Default"
-    },
-    {
-      "name": "python",
-      "path": "Python",
-      "file_include_patterns": [
-        "*.tmPreferences"
-      ]
     }
   ],
 
