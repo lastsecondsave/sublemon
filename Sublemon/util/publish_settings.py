@@ -24,11 +24,11 @@ def generate_files():
 def mute(path):
     path.parent.mkdir(exist_ok=True, parents=True)
 
-    if path.name.endswith("build"):
-        path.write_text(r'{"selector": "_"}')
-    elif path.name.endswith("keymap"):
+    if (ext := path.suffix) == ".sublime-build":
+        path.write_text('{"selector": "_"}')
+    elif ext == ".sublime-keymap":
         path.write_text("[]")
-    elif path.name.endswith("tmPreferences"):
+    elif ext == ".tmPreferences":
         path.write_text('<plist><dict>'
                         '<key>scope</key><string>_</string>'
                         '<key>settings</key><dict/>'
