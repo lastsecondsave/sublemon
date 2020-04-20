@@ -1,7 +1,7 @@
 # pylint: disable=bad-whitespace,global-statement,line-too-long
 
 import json
-import os
+from pathlib import Path
 
 
 class Style:
@@ -137,10 +137,9 @@ def rec(style, *scopes):
 def generate():
     global COLOR_SCHEME
 
-    path = os.path.join('..', 'Disco.sublime-color-scheme')
-    path = os.path.abspath(path)
+    path = Path(__file__).parent.parent / "Disco.sublime-color-scheme"
 
-    with open(path, 'w') as json_file:
+    with path.open(mode='w') as json_file:
         json.dump(COLOR_SCHEME, json_file, indent=2)
 
     print('Generated', path)
