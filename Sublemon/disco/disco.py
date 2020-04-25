@@ -363,9 +363,11 @@ rec(KEYWORD,
     'keyword.operator.word')
 
 src('rust')
+rec(STORAGE,
+    'meta.macro support.function -meta.block.macro-body')
 rec(META,
     'variable.annotation | punctuation.definition.annotation')
-rec(PUNCTUATION,
+rec(SPECIAL,
     'storage.modifier.lifetime')
 
 src('yaml')
