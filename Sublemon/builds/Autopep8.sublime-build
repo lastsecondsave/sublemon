@@ -2,5 +2,5 @@
   "selector": "source.python",
   "target": "python",
   "module": "autopep8",
-  "cmd": ["$file", "--in-place", "--max-line-length=120", "--verbose"]
+  "cmd": ["$file", "--in-place", "--max-line-length=120", "--verbose", "--aggressive"]
 }
