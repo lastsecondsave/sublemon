@@ -549,7 +549,7 @@
     {
       "class": "grid_layout_control",
       "border_color": "var(outer_dark)",
-      "border_size": 1
+      "border_size": 2
     },
     {
       "class": "minimap_control",
