@@ -1047,6 +1047,23 @@
       "parents": [{"class": "icon_button_control", "attributes": ["selected"]}],
       "layer0.opacity": 1.0,
     },
+    {
+      "class": "icon_use_gitignore",
+      "layer0.texture": "Theme - Default/common/icon_use_gitignore.png",
+      "layer0.tint": [255, 255, 255],
+      "layer0.opacity": { "target": 0.2, "speed": 5.0, "interpolation": "smoothstep" },
+      "content_margin": [14, 11]
+    },
+    {
+      "class": "icon_use_gitignore",
+      "attributes": ["hover", "!selected"],
+      "layer0.opacity": { "target": 0.4, "speed": 5.0, "interpolation": "smoothstep" },
+    },
+    {
+      "class": "icon_use_gitignore",
+      "parents": [{"class": "icon_button_control", "attributes": ["selected"]}],
+      "layer0.opacity": 1.0,
+    },
 
     // Labels
     {
