@@ -265,7 +265,6 @@
       "layer3.opacity": 0.2,
       "tint_index": 1,
       "tint_modifier": [0, 0, 0, 0.12],
-      // "accent_tint_index": 2,
       "content_margin": [26, 8, 22, 4],
       "hit_test_level": 0.3
     },
@@ -904,11 +903,6 @@
       "layer0.inner_margin": 2,
       "content_margin": [1, 3, 1, 3]
     },
-    // {
-    //     "class": "icon_button_control",
-    //     "attributes": ["selected"],
-    //     "layer0.opacity": 1.0
-    // },
     {
       "class": "icon_regex",
       "layer0.texture": "Theme - Default/common/dark/icon_regex.png",
