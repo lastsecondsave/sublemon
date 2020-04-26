@@ -42,14 +42,16 @@
 	"folder_exclude_patterns":
 	[
 		".git",
-		".gradle",
-		".idea",
-		".mvn",
-		".sublime",
 		".svn",
+		".gradle",
+		".mvn",
+		".idea",
 		"__pycache__",
+		".pytest_cache",
+		".mypy_cache",
+		"*.egg-info",
 		"node_modules",
-		"target"
+		"target",
 	],
 	"font_face": "PragmataPro Liga",
 	"font_size": 10,
