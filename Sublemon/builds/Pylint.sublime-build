@@ -1,10 +1,5 @@
 {
   "selector": "source.python",
   "target": "pylint",
-  "cmd": ["$file"],
-  "disable": [
-    "missing-docstring",
-    "too-few-public-methods",
-    "no-else-return"
-  ]
+  "cmd": ["$file"]
 }
