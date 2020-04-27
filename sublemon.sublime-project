@@ -7,8 +7,7 @@
         "Disco.sublime-color-scheme"
       ],
       "folder_exclude_patterns": [
-        ".generated*",
-        ".mypy_cache"
+        ".generated*"
       ]
     },
     {
