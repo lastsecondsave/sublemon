@@ -10,39 +10,50 @@ first_line_match: '^\[[^\[]+\]$'
 
 contexts:
   main:
-  - match: ^\s*[;#].*$
-    scope: comment.line.ini
+    - include: comments
 
-  - match: ^\s*(\[)(.*)(\])
-    scope: meta.section.ini
-    captures:
-      1: punctuation.definition.section.begin.ini
-      2: entity.name.section.ini
-      3: punctuation.definition.section.end.ini
+    - match: ^\s*(\[)(.*)(\])
+      scope: meta.section.ini
+      captures:
+        1: punctuation.definition.section.begin.ini
+        2: entity.name.section.ini
+        3: punctuation.definition.section.end.ini
 
-  - match: ^\s*(.*?)\s*(=)\s*
-    captures:
-      1: entity.name.key.ini
-      2: punctuation.separator.ini
-    push:
+    - match: ^\s*(.+?)\s*([=:])[ \t]*
+      captures:
+        1: entity.name.key.ini
+        2: punctuation.separator.ini
+      push: values
+
+  values:
     - match: '"'
       scope: punctuation.definition.string.begin.ini
       set:
-      - meta_scope: string.quoted.double.ini
-      - include: escapes
-      - match: '"'
-        scope: punctuation.definition.string.end.ini
-        pop: true
-      - match: \n
-        scope: invalid.illegal.ini
-        pop: true
-    - match: ''
-      set:
-      - meta_scope: string.unquoted.ini
-      - include: escapes
-      - match: \n
-        pop: true
+        - meta_scope: string.quoted.double.ini
+        - match: \\[\\;"trn]
+          scope: constant.character.escape.ini
+        - match: '"'
+          scope: punctuation.definition.string.end.ini
+          pop: true
+        - match: \n
+          scope: invalid.illegal.ini
+          pop: true
 
-  escapes:
-  - match: \\[\\;"trn]
-    scope: constant.character.escape.ini
+    - match: .*
+      scope: string.unquoted.ini
+      set: value_on_next_line
+
+    - match: \n
+      set: value_on_next_line
+
+  value_on_next_line:
+    - include: comments
+    - match: ^\s++(.+)
+      captures:
+        1: string.unquoted.ini
+    - match: (?=^)
+      pop: true
+
+  comments:
+    - match: ^\s*[;#].*$
+      scope: comment.line.ini
