@@ -1,5 +1,5 @@
 [MASTER]
-init-hook='import sys; sys.path.append("../../.."); sys.path.append("../../../Lib/python38")'
+init-hook='import sys; sys.path.append("../../../Lib/python38")'
 
 [MESSAGE CONTROL]
 disable=

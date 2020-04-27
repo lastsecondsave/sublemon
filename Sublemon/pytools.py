@@ -23,8 +23,11 @@ class PythonCommand(ChimneyCommand):
 
 class PylintCommand(ChimneyCommand):
     def setup(self, ctx):
-        if ctx.opt('disable'):
-            ctx.cmd.append('--disable=' + ','.join(ctx.opt('disable')))
+        if disable := ctx.opt("disable"):
+            ctx.cmd.append(f"--disable={','.join(disable)}")
+
+        if pylintrc := ctx.opt("pylintrc"):
+            ctx.cmd.append(f"--rcfile={pylintrc}")
 
         setup_python_exec(ctx, 'pylint')
         ctx.set(file_regex=r'(.+?):(\d+):(\d+): (.*)',
