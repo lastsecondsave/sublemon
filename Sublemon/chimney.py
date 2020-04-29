@@ -41,6 +41,8 @@ class OutputPanel:
         self.window.create_output_panel('exec')
         self.lines_printed = 0
 
+        self.window.run_command('show_panel', {'panel': 'output.exec'})
+
     def append(self, line):
         with self.line_buffer_lock:
             invalidate = len(self.line_buffer) == 0
@@ -64,9 +66,6 @@ class OutputPanel:
             'append',
             {'characters': '\n'.join(lines), 'force': True, 'scroll_to_end': True})
 
-    def show(self):
-        self.window.run_command('show_panel', {'panel': 'output.exec'})
-
 
 # pylint: disable=no-self-use
 class ChimneyBuildListener:
@@ -89,15 +88,13 @@ class BuildError(Exception):
         self.message = message
 
 
-class BuildCommand:
+class Cmd:
     def __init__(self, options):
-        cmd = options.get('cmd') or shlex.split(options.get('shell_cmd', ''))
+        cmd = options.get("shell_cmd") or options.get("cmd", [])
+        if isinstance(cmd, str):
+            cmd = shlex.split(cmd)
         self.args = deque(cmd)
         self.shell = 'shell_cmd' in options or options.get('shell', False)
-
-    def reset(self, *chunks, shell=False):
-        self.args = deque(chunks)
-        self.shell = shell
 
     def append(self, *chunks):
         self.args.extend(chunks)
@@ -112,53 +109,48 @@ class BuildCommand:
         return bool(self.args)
 
 
-class BuildSetup:
+class Build:
     def __init__(self, options, window):
         self.options = options
         self.window = window
-        self.listener = ChimneyBuildListener()
 
-        self.env = options.get('env', {})
-        self.cmd = BuildCommand(options)
+        self.listener = ChimneyBuildListener()
+        self.cmd = Cmd(options)
+
+        self.env = options.get("env", {})
+        self.file_regex = options.get("file_regex", "")
+        self.line_regex = options.get("line_regex", "")
+        self.working_dir = options.get("working_dir")
+
+        self._syntax = options.get("syntax",
+                                   "Packages/Text/Plain text.tmLanguage")
 
     @staticmethod
     def cancel_build(message=None):
         raise BuildError(message)
 
-    def opt(self, name):
-        return self.options.get(name)
+    def opt(self, key, default=None, expand=True):
+        value = self.options.get(key, default)
 
-    def opt_bool(self, name):
-        return self.options.get(name, False)
+        if expand:
+            value = sublime.expand_variables(value, self.window.extract_variables())
 
-    def opt_args(self, name):
-        return shlex.split(self.options.get(name, ''))
+        return value
 
-    def file_name(self):
+    @property
+    def syntax(self):
+        return self._syntax
+
+    @syntax.setter
+    def syntax(self, value):
+        if not value.endswith(('.sublime-syntax', '.tmLanguage')):
+            value = f"Packages/Sublemon/syntaxes/{value}.sublime-syntax"
+
+        self._syntax = value
+
+    @property
+    def active_file(self):
         return self.window.active_view().file_name()
-
-    # pylint: disable=too-many-arguments
-    def set(self,
-            working_dir=None,
-            syntax=None,
-            file_regex=None,
-            line_regex=None,
-            listener=None):
-
-        self.listener = listener or self.listener
-
-        self.set_option('file_regex', file_regex, '')
-        self.set_option('line_regex', line_regex, '')
-        self.set_option('working_dir', working_dir)
-
-        if syntax and not syntax.endswith(('.sublime-syntax', '.tmLanguage')):
-            syntax = 'Packages/Sublemon/syntaxes/{}.sublime-syntax'.format(syntax)
-        self.set_option('syntax', syntax, 'Packages/Text/Plain text.tmLanguage')
-
-    def set_option(self, option, value, default=None):
-        value = value or self.options.get(option, default)
-        if value is not None:
-            self.options[option] = value
 
 
 class ChimneyCommand(WindowCommand):
@@ -170,11 +162,11 @@ class ChimneyCommand(WindowCommand):
         return self.window.id()
 
     @property
-    def running_build(self):
+    def active_build(self):
         return self.builds.get(self.wid)
 
-    @running_build.setter
-    def running_build(self, value):
+    @active_build.setter
+    def active_build(self, value):
         self.builds[self.wid] = value
 
     @property
@@ -182,39 +174,38 @@ class ChimneyCommand(WindowCommand):
         return self.panels.get(self.wid) or \
             self.panels.setdefault(self.wid, OutputPanel(self.window))
 
-    def setup(self, ctx):
+    def setup(self, build):
         pass
 
     def run(self, kill=False, **options):  # pylint: disable=arguments-differ
-        if self.running_build:
-            self.running_build.cancel()
+        if self.active_build:
+            self.active_build.cancel()
 
         if kill:
             return
 
-        setup = BuildSetup(options, self.window)
+        build = Build(options, self.window)
 
         try:
-            self.setup(setup)
+            self.setup(build)
 
-            if not setup.cmd:
-                setup.cancel_build('No command')
+            if not build.cmd:
+                build.cancel_build('No command')
         except BuildError as err:
-            self.window.status_message(': '.join(filter(None, ('Build error', err.message))))
+            message = "Build error" + f": {err.message}" if err.message else ""
+            self.window.status_message(message)
             return
 
         self.panel.reset(
-            result_base_dir=self.change_working_dir(options.get('working_dir')),
-            result_file_regex=options.get('file_regex'),
-            result_line_regex=options.get('line_regex'),
-            syntax=options.get('syntax')
+            result_base_dir=self.change_working_dir(build.working_dir),
+            result_file_regex=build.file_regex,
+            result_line_regex=build.line_regex,
+            syntax=build.syntax
         )
 
-        self.panel.show()
+        self.active_build = start_build(build, self.panel)
 
-        self.running_build = start_build(self.panel, setup.cmd, setup.env, setup.listener)
-
-        print('⌛ [{}] {}'.format(self.running_build.process.pid, setup.cmd))
+        print('⌛ [{}] {}'.format(self.active_build.process.pid, build.cmd))
 
     def change_working_dir(self, working_dir):
         if not working_dir:
@@ -288,7 +279,7 @@ class AsyncStreamConsumer(Thread):
             self.on_close()
 
 
-class RunningBuildContext:
+class ActiveBuildContext:
     def __init__(self, panel, process, listener):
         self.panel = panel
         self.process = process
@@ -325,9 +316,10 @@ class RunningBuildContext:
         return bool(self.process and not self.process.poll())
 
 
-def start_build(panel, cmd, env, listener):
-    process = start_process(cmd, env)
-    ctx = RunningBuildContext(panel, process, listener)
+def start_build(build, panel):
+    listener = build.listener
+    process = start_process(build.cmd, build.env)
+    ctx = ActiveBuildContext(panel, process, listener)
 
     output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
     error_buffer = OutputBuffer(lambda line: listener.on_error(line, ctx))
