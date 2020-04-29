@@ -1,4 +1,5 @@
 import re
+import shlex
 
 from .chimney import ChimneyCommand, ChimneyBuildListener
 from . import RUNNING_ON_WINDOWS
@@ -15,21 +16,23 @@ FILE_REGEX = r'^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
 
 
 class MavenCommand(ChimneyCommand):
-    def setup(self, ctx):
-        ctx.cmd.reset('mvn', '-B', shell=True)
+    def setup(self, build):
+        if build.opt('offline'):
+            build.cmd.appendleft('-o')
 
-        if ctx.opt_bool('offline'):
-            ctx.cmd.append('-o')
+        if build.opt('quiet'):
+            build.cmd.appendleft('-q', '-e')
 
-        if ctx.opt_bool('quiet'):
-            ctx.cmd.append('-q', '-e')
+        build.cmd.appendleft("mvn", "-B")
 
-        ctx.cmd.append(*ctx.opt_args('mvn_opts'))
-        ctx.cmd.append(*ctx.opt_args('mvn_cmd'))
+        if opts := build.opt("mvn_opts"):
+            build.cmd.append(*shlex.split(opts))
 
-        ctx.set(syntax='maven_build',
-                file_regex=FILE_REGEX,
-                listener=MavenBuildListener())
+        build.cmd.shell = True
+
+        build.listener = MavenBuildListener()
+        build.syntax = "maven_build"
+        build.file_regex = FILE_REGEX
 
 
 class MavenBuildListener(ChimneyBuildListener):

@@ -1,21 +1,21 @@
 import re
 
-from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
+from .chimney import ChimneyCommand, ChimneyBuildListener
 
 
 class GitDiffCommand(ChimneyCommand):
-    def setup(self, ctx):
-        ctx.cmd.append('git', 'diff', ctx.file_name())
-        ctx.set(syntax="Packages/Diff/Diff.tmLanguage")
+    def setup(self, build):
+        build.cmd.append('git', 'diff', build.active_file)
+        build.syntax = "Packages/Diff/Diff.tmLanguage"
 
 
 class GitLogCommand(ChimneyCommand):
-    def setup(self, ctx):
-        ctx.cmd.append('git', 'log', '-200', '--follow', '--no-merges',
+    def setup(self, build):
+        build.cmd.append('git', 'log', '-200', '--follow', '--no-merges',
                        '--date=short', '--format=%h %ad %an → %s',
-                       '--', ctx.file_name())
-        ctx.set(syntax="git_log",
-                listener=GitLogBuildListener())
+                       '--', build.active_file)
+        build.listener = GitLogBuildListener()
+        build.syntax = "git_log"
 
 
 class GitLogBuildListener(ChimneyBuildListener):
@@ -53,8 +53,8 @@ class GitLogBuildListener(ChimneyBuildListener):
 
 
 class GitBlameCommand(ChimneyCommand):
-    def setup(self, ctx):
-        ctx.cmd.append('git', 'blame', '--date=short')
+    def setup(self, build):
+        build.cmd.append('git', 'blame', '--date=short')
 
         view = self.window.active_view()
         sel = view.sel()[0]
@@ -65,11 +65,11 @@ class GitBlameCommand(ChimneyCommand):
             if to_col > 0:
                 to_line += 1
 
-            ctx.cmd.append('-L', '{},{}'.format(from_line, to_line))
+            build.cmd.append('-L', '{},{}'.format(from_line, to_line))
 
-        ctx.cmd.append('--', ctx.file_name())
-        ctx.set(syntax="git_blame",
-                listener=GitBlameBuildListener())
+        build.cmd.append('--', build.active_file)
+        build.syntax = "git_blame"
+        build.listener = GitBlameBuildListener()
 
 
 class GitBlameBuildListener(ChimneyBuildListener):

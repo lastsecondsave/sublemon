@@ -1,38 +1,40 @@
 import re
-import sublime
 
-from Sublemon.chimney import ChimneyCommand, ChimneyBuildListener
+from . import project_pref, pref
+from .chimney import ChimneyCommand, ChimneyBuildListener
 
 
-def setup_python_exec(ctx, module=None):
-    module = ctx.opt('module') or module
-    if module:
-        ctx.cmd.appendleft('-m', module)
+def setup_python_exec(build, module=None):
+    if module := build.opt('module') or module:
+        build.cmd.appendleft('-m', module)
 
-    settings = sublime.load_settings("Preferences.sublime-settings")
-    ctx.cmd.appendleft(settings.get('python_binary', 'python'))
+    key = "python_binary"
+    binary = project_pref(build.window, key) or pref(key, "python")
 
-    ctx.env['PYTHONIOENCODING'] = 'utf-8'
-    ctx.env['PYTHONUNBUFFERED'] = '1'
+    build.cmd.appendleft(binary)
+
+    build.env['PYTHONIOENCODING'] = 'utf-8'
+    build.env['PYTHONUNBUFFERED'] = '1'
 
 
 class PythonCommand(ChimneyCommand):
-    def setup(self, ctx):
-        setup_python_exec(ctx)
+    def setup(self, build):
+        setup_python_exec(build)
 
 
 class PylintCommand(ChimneyCommand):
-    def setup(self, ctx):
-        if disable := ctx.opt("disable"):
-            ctx.cmd.append(f"--disable={','.join(disable)}")
+    def setup(self, build):
+        if disable := build.opt("disable"):
+            build.cmd.append(f"--disable={','.join(disable)}")
 
-        if pylintrc := ctx.opt("pylintrc"):
-            ctx.cmd.append(f"--rcfile={pylintrc}")
+        if pylintrc := build.opt("pylintrc") or project_pref(self.window, "pylintrc"):
+            build.cmd.append(f"--rcfile={pylintrc}")
 
-        setup_python_exec(ctx, 'pylint')
-        ctx.set(file_regex=r'(.+?):(\d+):(\d+): (.*)',
-                syntax='pylint',
-                listener=PylintBuildListener())
+        setup_python_exec(build, 'pylint')
+
+        build.file_regex = r'(.+?):(\d+):(\d+): (.*)'
+        build.syntax = "pylint"
+        build.listener = PylintBuildListener()
 
 
 class PylintBuildListener(ChimneyBuildListener):
