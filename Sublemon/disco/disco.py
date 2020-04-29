@@ -12,7 +12,13 @@ class Style:
 
     def __add__(self, other):
         settings = self.settings.copy()
-        settings.update(other.settings)
+
+        for key, val in other.settings.items():
+            if key == "font_style" and "font_style" in settings:
+                val += " " + settings["font_style"]
+
+            settings[key] = val
+
         return Style(**settings)
 
     def __radd__(self, other):
@@ -55,7 +61,7 @@ FOREGROUND = Style(WHITE)
 
 ITALIC = Style(font_style='italic')
 BOLD = Style(font_style='bold')
-BOLD_ITALIC = Style(font_style='bold italic')
+UNDERLINE = Style(font_style='underline')
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
@@ -415,7 +421,7 @@ rec(VARIABLE,
     'meta.tag.sgml.doctype variable')
 rec(ITALIC,
     'meta.tag.sgml -comment')
-rec(TAG + BOLD_ITALIC,
+rec(TAG + BOLD + ITALIC,
     'meta.tag.sgml.doctype keyword')
 
 txt('html')
@@ -436,7 +442,7 @@ rec(FADED_GRAY,
 
 src('diff')
 rec(META, 'meta.diff.range')
-rec(BOLD_ITALIC, 'entity.name.section')
+rec(FOREGROUND + UNDERLINE, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
