@@ -56,8 +56,7 @@ class SnippetDefinition:
     def __truediv__(self, other):
         if callable(other):
             return SnippetDefinition(self.scope, self.mutators + (other,))
-        else:
-            return SnippetWriter(self.scope, other, self.mutators)
+        return SnippetWriter(self.scope, other, self.mutators)
 
 
 class Snippets(SnippetDefinition):
