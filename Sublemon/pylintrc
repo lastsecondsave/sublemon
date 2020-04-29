@@ -4,4 +4,5 @@ init-hook='import sys; sys.path.append("../../../Lib/python38")'
 [MESSAGE CONTROL]
 disable=
     missing-docstring,
-    too-few-public-methods
+    too-few-public-methods,
+    too-many-instance-attributes
