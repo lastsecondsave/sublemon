@@ -310,12 +310,20 @@ class DualSideDeleteCommand(TextCommand):
 
 class JsonReindentCommand(TextCommand):
     def is_enabled(self):
+        json_file = self.view.scope_name(0).startswith("source.json")
+        return self.has_selected_text() or json_file
+
+    def has_selected_text(self):
         return all(not region.empty() for region in self.view.sel())
 
     def run(self, edit):
         tab_size = self.view.settings().get('tab_size')
 
-        for region in self.view.sel():
+        if self.has_selected_text():
+            for region in self.view.sel():
+                self.reindent(edit, region, tab_size)
+        else:
+            region = Region(0, self.view.size())
             self.reindent(edit, region, tab_size)
 
     def reindent(self, edit, region, tab_size):
