@@ -3,7 +3,6 @@ import os
 import shlex
 import signal
 import subprocess
-
 from collections import deque
 from threading import Lock, Thread
 

@@ -1,6 +1,5 @@
 import plistlib
 import re
-
 from pathlib import Path
 
 TO_UPPERCASE = re.compile(r'_[a-z]')
