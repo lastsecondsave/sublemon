@@ -1,6 +1,5 @@
 import subprocess
 import sys
-
 from pathlib import Path
 
 SUBLEMON = Path(__file__).parent.parent

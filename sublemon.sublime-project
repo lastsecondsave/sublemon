@@ -40,6 +40,16 @@
         "scripts/publish_settings.py",
       ],
       "working_dir": "${project_path}/Sublemon"
+    },
+    {
+      "name": "Sublemon - isort",
+      "target": "python",
+      "module": "isort",
+      "cmd": [
+        "--recursive",
+        "--skip-glob=*snippets.py",
+        "${project_path}/Sublemon"
+      ]
     }
   ],
 

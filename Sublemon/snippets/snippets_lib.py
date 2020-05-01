@@ -2,9 +2,7 @@ import hashlib
 import json
 import re
 import shutil
-
 import xml.etree.ElementTree as ET
-
 from contextlib import contextmanager
 from pathlib import Path
 

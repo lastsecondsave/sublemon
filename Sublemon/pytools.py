@@ -1,7 +1,7 @@
 import re
 
-from . import project_pref, pref
-from .chimney import ChimneyCommand, ChimneyBuildListener
+from . import pref, project_pref
+from .chimney import ChimneyBuildListener, ChimneyCommand
 
 
 def setup_python_exec(build, module=None):

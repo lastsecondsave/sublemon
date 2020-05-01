@@ -1,8 +1,8 @@
 import re
 import shlex
 
-from .chimney import ChimneyCommand, ChimneyBuildListener
 from . import RUNNING_ON_WINDOWS
+from .chimney import ChimneyBuildListener, ChimneyCommand
 
 DASHES_PATTERN = re.compile(r'\[INFO\] -{5,}.*')
 COMPILATION_FAILURE_PATTERN = re.compile(r'\[ERROR\] Failed to execute goal.*Compilation failure')

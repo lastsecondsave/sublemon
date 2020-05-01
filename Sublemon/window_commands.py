@@ -2,7 +2,7 @@ import os
 import tempfile
 
 import sublime
-from sublime_plugin import WindowCommand, TextInputHandler
+from sublime_plugin import TextInputHandler, WindowCommand
 
 from . import RUNNING_ON_WINDOWS
 

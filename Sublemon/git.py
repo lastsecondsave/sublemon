@@ -1,6 +1,6 @@
 import re
 
-from .chimney import ChimneyCommand, ChimneyBuildListener
+from .chimney import ChimneyBuildListener, ChimneyCommand
 
 
 class GitDiffCommand(ChimneyCommand):
