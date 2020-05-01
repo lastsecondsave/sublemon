@@ -300,12 +300,10 @@ class IndentToBracesCommand(TextCommand):
 class DualSideDeleteCommand(TextCommand):
     def run(self, edit):
         for region in self.view.sel():
-            self.view.replace(edit,
-                              Region(region.end(), region.end()+1),
-                              '')
-            self.view.replace(edit,
-                              Region(region.begin(), region.begin()-1),
-                              '')
+            self.view.erase(edit,
+                            Region(region.end(), region.end()+1))
+            self.view.erase(edit,
+                            Region(region.begin(), region.begin()-1))
 
 
 class JsonReindentCommand(TextCommand):
