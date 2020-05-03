@@ -176,7 +176,7 @@ class ChimneyCommand(WindowCommand):
     def setup(self, build):
         pass
 
-    def run(self, kill=False, **options):  # pylint: disable=arguments-differ
+    def run(self, kill=False, interactive=None, **options):  # pylint: disable=arguments-differ
         if self.active_build:
             self.active_build.cancel()
 
@@ -185,6 +185,24 @@ class ChimneyCommand(WindowCommand):
 
         build = Build(options, self.window)
 
+        if interactive:
+            self.window.show_input_panel(
+                f"$ {interactive}", "",
+                lambda cmd: self.run_build_custom_command(build, cmd),
+                None, None)
+        else:
+            self.run_build(build)
+
+    def run_build_custom_command(self, build, cmd):
+        variables = self.window.extract_variables()
+        cmd = (sublime.expand_variables(arg, variables) for arg in shlex.split(cmd))
+
+        build.cmd.append(*cmd)
+        build.cmd.shell = True
+
+        self.run_build(build)
+
+    def run_build(self, build):
         try:
             self.setup(build)
 
