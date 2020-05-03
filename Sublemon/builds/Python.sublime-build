@@ -2,5 +2,12 @@
   "selector": "source.python",
   "target": "python",
   "cmd": ["$file"],
-  "file_regex": "^\\s*File \"(.+)\", line (\\d*)"
+  "file_regex": "^\\s*File \"(.+)\", line (\\d*)",
+
+  "variants": [
+    {
+      "name": "Interactive",
+      "interactive": "python"
+    }
+  ]
 }
