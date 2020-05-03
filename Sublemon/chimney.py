@@ -121,6 +121,9 @@ class Build:
         self.line_regex = options.get("line_regex", "")
         self.working_dir = options.get("working_dir")
 
+        if not self.working_dir and self.active_file:
+            self.working_dir = os.path.dirname(self.active_file)
+
         self._syntax = options.get("syntax",
                                    "Packages/Text/Plain text.tmLanguage")
 
@@ -214,7 +217,7 @@ class ChimneyCommand(WindowCommand):
             return
 
         self.panel.reset(
-            result_base_dir=self.change_working_dir(build.working_dir),
+            result_base_dir=build.working_dir,
             result_file_regex=build.file_regex,
             result_line_regex=build.line_regex,
             syntax=build.syntax
@@ -223,17 +226,6 @@ class ChimneyCommand(WindowCommand):
         self.active_build = start_build(build, self.panel)
 
         print('⌛ [{}] {}'.format(self.active_build.process.pid, build.cmd))
-
-    def change_working_dir(self, working_dir):
-        if not working_dir:
-            view = self.window.active_view()
-            if view and view.file_name():
-                working_dir = os.path.dirname(view.file_name())
-
-        if working_dir:
-            os.chdir(working_dir)
-
-        return working_dir
 
     def __del__(self):
         self.builds.pop(self.wid, None)
@@ -335,6 +327,10 @@ class ActiveBuildContext:
 
 def start_build(build, panel):
     listener = build.listener
+
+    if build.working_dir:
+        os.chdir(build.working_dir)
+
     process = start_process(build.cmd, build.env)
     ctx = ActiveBuildContext(panel, process, listener)
 
