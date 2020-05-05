@@ -143,7 +143,7 @@ def rec(style, *scopes):
 def generate():
     global COLOR_SCHEME
 
-    path = Path(__file__).parent.parent / "Disco.sublime-color-scheme"
+    path = Path(__file__).resolve().parent.parent / "Disco.sublime-color-scheme"
 
     with path.open(mode='w') as json_file:
         json.dump(COLOR_SCHEME, json_file, indent=2)

@@ -2,7 +2,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-SUBLEMON = Path(__file__).parent.parent
+SUBLEMON = Path(__file__).resolve().parent.parent
 PACKAGES = SUBLEMON.parent
 
 
