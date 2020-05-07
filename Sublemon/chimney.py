@@ -128,7 +128,7 @@ class Build:
                                    "Packages/Text/Plain text.tmLanguage")
 
     @staticmethod
-    def cancel_build(message):
+    def cancel(message):
         raise BuildError(message)
 
     def opt(self, key, default=None, expand=True):
@@ -210,9 +210,9 @@ class ChimneyCommand(WindowCommand):
             self.setup(build)
 
             if not build.cmd:
-                build.cancel_build('No command')
+                build.cancel('No command')
         except BuildError as err:
-            self.window.status_message(f"Build error: {err.message}")
+            self.window.status_message(err.message)
             return
 
         self.panel.reset(
