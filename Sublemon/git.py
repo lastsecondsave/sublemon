@@ -5,12 +5,18 @@ from .chimney import ChimneyBuildListener, ChimneyCommand
 
 class GitDiffCommand(ChimneyCommand):
     def setup(self, build):
+        if not build.active_file:
+            build.cancel("No file")
+
         build.cmd.append('git', 'diff', build.active_file)
         build.syntax = "Packages/Diff/Diff.tmLanguage"
 
 
 class GitLogCommand(ChimneyCommand):
     def setup(self, build):
+        if not build.active_file:
+            build.cancel("No file")
+
         build.cmd.append('git', 'log', '-200', '--follow', '--no-merges',
                        '--date=short', '--format=%h %ad %an → %s',
                        '--', build.active_file)
@@ -54,6 +60,9 @@ class GitLogBuildListener(ChimneyBuildListener):
 
 class GitBlameCommand(ChimneyCommand):
     def setup(self, build):
+        if not build.active_file:
+            build.cancel("No file")
+
         build.cmd.append('git', 'blame', '--date=short')
 
         view = self.window.active_view()
