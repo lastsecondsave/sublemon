@@ -18,8 +18,8 @@ class GitLogCommand(ChimneyCommand):
             build.cancel("No file")
 
         build.cmd.append('git', 'log', '-200', '--follow', '--no-merges',
-                       '--date=short', '--format=%h %ad %an → %s',
-                       '--', build.active_file)
+                         '--date=short', '--format=%h %ad %an → %s',
+                         '--', build.active_file)
         build.listener = GitLogBuildListener()
         build.syntax = "git_log"
 

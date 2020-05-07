@@ -33,7 +33,7 @@
       "name": "Sublemon - Pylint",
       "target": "pylint",
       "cmd": [
-        ".",
+        "Sublemon",
         "snippets/snippets_lib.py",
         "settings/settings_lib.py",
         "disco/disco.py",

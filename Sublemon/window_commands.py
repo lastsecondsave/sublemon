@@ -39,7 +39,7 @@ class CloseWithoutSavingCommand(WindowCommand):
 
 
 class WrapLinesAtWidthCommand(WindowCommand):
-    def run(self, width):
+    def run(self, width):  # pylint: disable=arguments-differ
         self.window.run_command("wrap_lines", {"width": int(width)})
 
     def input(self, _args):

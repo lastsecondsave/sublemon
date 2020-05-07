@@ -117,8 +117,7 @@ def toggle_number(token, delta):
     if len(token) > 1 and token[0] == "0":
         if number == -1:
             return "9" * len(token)
-        else:
-            return str(number).zfill(len(token))
+        return str(number).zfill(len(token))
 
     return str(number)
 
