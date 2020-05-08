@@ -118,22 +118,26 @@ class ShrinkWhitespaceCommand(TextCommand):
         return begin + 1
 
 
-class ToggleLigaturesCommand(TextCommand):
-    def run(self, edit):
-        font_options = self.view.settings().get("font_options")
+class ToggleLigaturesCommand(WindowCommand):
+    def run(self):
+        settings = self.window.active_view().settings()
+        font_options = settings.get("font_options")
+
         enable = "no_calt" in font_options
         if enable:
             font_options.remove("no_calt")
         else:
             font_options.append("no_calt")
-        self.view.settings().set("font_options", font_options)
-        show_setting_status('ligatires', enable)
+
+        settings.set("font_options", font_options)
+        show_setting_status('ligatures', enable)
 
 
-class ToggleSettingVerboseCommand(TextCommand):
-    def run(self, edit, setting):  # pylint: disable=arguments-differ
-        was_enabled = self.view.settings().get(setting)
-        self.view.run_command('toggle_setting', dict(setting=setting))
+class ToggleSettingVerboseCommand(WindowCommand):
+    def run(self, setting):  # pylint: disable=arguments-differ
+        view = self.window.active_view()
+        was_enabled = view.settings().get(setting)
+        view.run_command("toggle_setting", {"setting": setting})
         show_setting_status(setting, not was_enabled)
 
 
@@ -334,15 +338,15 @@ class JsonReindentCommand(TextCommand):
                           json.dumps(parsed, indent=tab_size))
 
 
-class CopyFileDirectoryPathCommand(TextCommand):
+class CopyFileDirectoryPathCommand(WindowCommand):
     def is_enabled(self):
-        return bool(self.view.file_name())
+        return bool(self.window.active_view().file_name())
 
-    def run(self, edit):
-        dirname = os.path.dirname(self.view.file_name())
+    def run(self):
+        dirname = os.path.dirname(self.window.active_view().file_name())
         sublime.set_clipboard(dirname)
 
-        self.view.window().status_message('Copied file directory path')
+        self.window.status_message('Copied file directory path')
 
 
 class ShowFilePathCommand(WindowCommand):
