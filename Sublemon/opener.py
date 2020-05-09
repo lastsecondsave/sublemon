@@ -8,7 +8,6 @@ from sublime_plugin import WindowCommand
 
 class OpenFilePathCommand(WindowCommand):
     def run(self):
-        self.window.status_message("@ - project folder, # - temp")
         self.window.show_input_panel("File Path:", '', self.on_done, None, None)
 
     def on_done(self, path):
@@ -29,7 +28,7 @@ class OpenFilePathCommand(WindowCommand):
         else:
             sublime.status_message(f"Directory \"{path.parent}\" doesn't exist")
 
-    def expand(self, path: Path) -> Path:
+    def expand(self, path):
         parts = path.parts
 
         if len(parts) > 1 and (root := parts[0]) in "~@#":
@@ -45,7 +44,7 @@ class OpenFilePathCommand(WindowCommand):
         root = Path(self.window.active_view().file_name()).parent
         return Path(root, path)
 
-    def find_project_folder(self) -> str:
+    def find_project_folder(self):
         folders = self.window.folders()
 
         active_file = self.window.active_view().file_name()
@@ -54,12 +53,9 @@ class OpenFilePathCommand(WindowCommand):
 
         active_file = Path(active_file)
 
-        for folder in folders:
-            try:
-                active_file.relative_to(folder)
+        for folder in reorder(folders):
+            if folder in active_file.parents:
                 return folder
-            except ValueError:
-                pass
 
         return folders[0]
 
@@ -79,7 +75,7 @@ class ShowFilePathCommand(WindowCommand):
         sublime.status_message((' / ').join(path.parts))
 
     def split(self, path):
-        for folder in (Path(f) for f in self.window.folders()):
+        for folder in reorder(self.window.folders()):
             try:
                 return ("@" + folder.name, path.relative_to(folder))
             except ValueError:
@@ -89,3 +85,7 @@ class ShowFilePathCommand(WindowCommand):
             return ("~", path.relative_to(Path.home()))
         except ValueError:
             return (None, path)
+
+
+def reorder(folders):
+    return (Path(f) for f in sorted(folders, key=len, reverse=True))
