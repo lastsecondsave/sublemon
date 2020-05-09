@@ -6,7 +6,8 @@ from collections import OrderedDict
 
 import sublime
 from sublime import Region
-from sublime_plugin import TextCommand, TextInputHandler, WindowCommand
+from sublime_plugin import (EventListener, TextCommand, TextInputHandler,
+                            WindowCommand)
 
 
 class EscapeBackslashesCommand(TextCommand):
@@ -133,12 +134,13 @@ class ToggleLigaturesCommand(WindowCommand):
         show_setting_status('ligatures', enable)
 
 
-class ToggleSettingVerboseCommand(WindowCommand):
-    def run(self, setting):  # pylint: disable=arguments-differ
-        view = self.window.active_view()
-        was_enabled = view.settings().get(setting)
-        view.run_command("toggle_setting", {"setting": setting})
-        show_setting_status(setting, not was_enabled)
+class ToggleSettingListener(EventListener):
+    def on_post_text_command(self, view, command_name, args):
+        if command_name != "toggle_setting":
+            return
+
+        setting = args["setting"]
+        show_setting_status(setting, view.settings().get(setting))
 
 
 def show_setting_status(setting, active):
