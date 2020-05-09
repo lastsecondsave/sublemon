@@ -368,3 +368,10 @@ class WrapLinesAtWidthCommand(WindowCommand):
                 return "Width"
 
         return WidthInputHandler()
+
+
+class SaveAllEdited(WindowCommand):
+    def run(self):
+        for view in self.window.views():
+            if view.is_dirty() and view.file_name():
+                view.run_command("save")
