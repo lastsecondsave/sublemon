@@ -62,3 +62,30 @@ class OpenFilePathCommand(WindowCommand):
                 pass
 
         return folders[0]
+
+
+class ShowFilePathCommand(WindowCommand):
+    def is_enabled(self):
+        return bool(self.window.active_view().file_name())
+
+    def run(self):
+        path = Path(self.window.active_view().file_name())
+
+        (prefix, path) = self.split(path)
+
+        if prefix:
+            path = Path(prefix, path)
+
+        sublime.status_message((' / ').join(path.parts))
+
+    def split(self, path):
+        for folder in (Path(f) for f in self.window.folders()):
+            try:
+                return ("@" + folder.name, path.relative_to(folder))
+            except ValueError:
+                pass
+
+        try:
+            return ("~", path.relative_to(Path.home()))
+        except ValueError:
+            return (None, path)
