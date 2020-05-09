@@ -1,47 +1,46 @@
 import os
 import tempfile
+from pathlib import Path
 
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS
-
-HOME_PATH = os.path.expanduser('~')
-
 
 class OpenFilePathCommand(WindowCommand):
+    def run(self):
+        self.window.status_message("@ - project, # - temp")
+        self.window.show_input_panel("File Path:", '', self.on_done, None, None)
+
     def on_done(self, path):
         path = os.path.expandvars(path).strip()
+        if not path:
+            return
 
-        if RUNNING_ON_WINDOWS:
-            path = path.replace('/', '\\')
+        path = Path(path)
+        if not path.is_absolute():
+            path = self.expand(path)
 
-        root = path[0] if len(path) > 1 and path[1] == os.sep else None
+        if path.name.endswith("+"):
+            path = path.with_name(path.name[:-1])
+            path.parent.mkdir(exist_ok=True, parents=True)
 
-        if root == '~':
-            root = HOME_PATH
-        elif root == '@':
-            root = self.window.folders()[0]
-        elif root == '#':
-            root = tempfile.gettempdir()
-
-        if root:
-            path = root + path[1:]
-
-        parent = os.path.dirname(path) or '.'
-        parent_exists = os.path.exists(parent)
-
-        if path.endswith('+'):
-            path = path[:-1]
-            if not parent_exists:
-                os.makedirs(parent)
-                parent_exists = True
-
-        if parent_exists:
-            self.window.open_file(path, sublime.ENCODED_POSITION)
+        if path.parent.exists():
+            self.window.open_file(str(path), sublime.ENCODED_POSITION)
         else:
-            sublime.status_message("Directory " + parent + " doesn't exist")
+            sublime.status_message(f"Directory \"{path.parent}\" doesn't exist")
 
-    def run(self):
-        self.window.show_input_panel("File Path:", '', self.on_done, None, None)
-        self.window.status_message("@ - project, # - temp")
+    def expand(self, path: Path) -> Path:
+        parts = path.parts
+
+        if len(parts) > 1 and (root := parts[0]) in "~@#":
+            if root == '~':
+                root = Path.home()
+            elif root == '@':
+                root = self.window.folders()[0]
+            elif root == '#':
+                root = tempfile.gettempdir()
+
+            return Path(root, *parts[1:])
+
+        root = Path(self.window.active_view().file_name()).parent
+        return Path(root, path)
