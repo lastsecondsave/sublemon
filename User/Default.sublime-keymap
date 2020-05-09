@@ -62,6 +62,7 @@
   { "keys": ["shift+alt+w"], "command": "insert_snippet",
     "args": {"contents": "<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>"}
   },
+  { "keys": ["shift+alt+s"],  "command": "save_all_edited" },
   { "keys": ["shift+alt+z"],  "command": "reveal_in_side_bar" },
 
   /* CTRL + SHIFT + ALT */
