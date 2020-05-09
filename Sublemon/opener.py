@@ -8,7 +8,7 @@ from sublime_plugin import WindowCommand
 
 class OpenFilePathCommand(WindowCommand):
     def run(self):
-        self.window.status_message("@ - project, # - temp")
+        self.window.status_message("@ - project folder, # - temp")
         self.window.show_input_panel("File Path:", '', self.on_done, None, None)
 
     def on_done(self, path):
@@ -36,7 +36,7 @@ class OpenFilePathCommand(WindowCommand):
             if root == '~':
                 root = Path.home()
             elif root == '@':
-                root = self.window.folders()[0]
+                root = self.find_project_folder()
             elif root == '#':
                 root = tempfile.gettempdir()
 
@@ -44,3 +44,21 @@ class OpenFilePathCommand(WindowCommand):
 
         root = Path(self.window.active_view().file_name()).parent
         return Path(root, path)
+
+    def find_project_folder(self) -> str:
+        folders = self.window.folders()
+
+        active_file = self.window.active_view().file_name()
+        if not active_file:
+            return folders[0]
+
+        active_file = Path(active_file)
+
+        for folder in folders:
+            try:
+                active_file.relative_to(folder)
+                return folder
+            except ValueError:
+                pass
+
+        return folders[0]
