@@ -207,10 +207,11 @@ rec(INDEXED,
     'markup.heading')
 rec(ITALIC,
     'markup.italic -punctuation',
-    'markup.underline.link',
     'markup.quote')
 rec(BOLD,
     'markup.bold -punctuation')
+rec(UNDERLINE,
+    'markup.underline.link')
 
 rec(Highlight(GREEN, 0.1), 'diff.inserted')
 rec(Highlight(GREEN, 0.3, 'l(+ 10%)'), 'diff.inserted.char')
@@ -434,7 +435,7 @@ rec(PUNCTUATION,
     'punctuation.definition.blockquote',
     'meta.link punctuation',
     'markup.list.numbered.bullet')
-rec(FADED_GRAY,
+rec(GRAY,
     'punctuation.definition.bold',
     'punctuation.definition.italic',
     'punctuation.definition.raw.code-fence',
