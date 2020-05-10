@@ -10,6 +10,17 @@ from sublime_plugin import (EventListener, TextCommand, TextInputHandler,
                             WindowCommand)
 
 
+class CommandFineTuning(EventListener):
+    def on_post_text_command(self, view, command_name, args):
+        if command_name == "toggle_setting":
+            setting = args["setting"]
+            show_setting_status(setting, view.settings().get(setting))
+
+        elif command_name == "swap_with_mark":
+            location = view.sel()[0]
+            view.show(location)
+
+
 class EscapeBackslashesCommand(TextCommand):
     def run(self, edit):
         for region in self.view.sel():
@@ -132,15 +143,6 @@ class ToggleLigaturesCommand(WindowCommand):
 
         settings.set("font_options", font_options)
         show_setting_status('ligatures', enable)
-
-
-class ToggleSettingListener(EventListener):
-    def on_post_text_command(self, view, command_name, args):
-        if command_name != "toggle_setting":
-            return
-
-        setting = args["setting"]
-        show_setting_status(setting, view.settings().get(setting))
 
 
 def show_setting_status(setting, active):
