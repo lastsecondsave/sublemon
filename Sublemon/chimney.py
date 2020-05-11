@@ -189,14 +189,15 @@ class ChimneyCommand(WindowCommand):
         build = Build(options, self.window)
 
         if interactive:
+            prompt = "$ " + (interactive if isinstance(interactive, str) else "")
             self.window.show_input_panel(
-                f"$ {interactive}", "",
-                lambda cmd: self.run_build_custom_command(build, cmd),
+                prompt, "",
+                lambda cmd: self.run_build_interactive(build, cmd),
                 None, None)
         else:
             self.run_build(build)
 
-    def run_build_custom_command(self, build, cmd):
+    def run_build_interactive(self, build, cmd):
         variables = self.window.extract_variables()
         cmd = (sublime.expand_variables(arg, variables) for arg in shlex.split(cmd))
 
