@@ -313,12 +313,9 @@ class ActiveBuildContext:
 
 
 def start_build(build, window, panel):
+    process = start_process(build.cmd, build.env, build.working_dir)
     listener = build.listener
 
-    if build.working_dir:
-        os.chdir(build.working_dir)
-
-    process = start_process(build.cmd, build.env)
     ctx = ActiveBuildContext(window, panel, process, listener)
 
     output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
@@ -331,7 +328,7 @@ def start_build(build, window, panel):
     return ctx
 
 
-def start_process(cmd, env):
+def start_process(cmd, env, cwd):
     process_params = {
         'stdout': subprocess.PIPE,
         'stderr': subprocess.PIPE,
@@ -343,6 +340,9 @@ def start_process(cmd, env):
         process_params['startupinfo'] = startupinfo()
     else:
         process_params['preexec_fn'] = os.setsid  # pylint: disable=no-member
+
+    if cwd:
+        process_params['cwd'] = cwd
 
     if env:
         os_env = os.environ.copy()
