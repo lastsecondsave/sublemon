@@ -210,7 +210,7 @@ class ChimneyCommand(WindowCommand):
             syntax=build.syntax
         )
 
-        self.active_build = start_build(build, self.panel)
+        self.active_build = start_build(build, self.window, self.panel)
 
         print('⌛ [{}] {}'.format(self.active_build.process.pid, build.cmd))
 
@@ -276,11 +276,11 @@ class AsyncStreamConsumer(Thread):
 
 
 class ActiveBuildContext:
-    def __init__(self, panel, process, listener):
+    def __init__(self, window, panel, process, listener):
+        self.window = window
         self.panel = panel
         self.process = process
         self.listener = listener
-        self.window = panel.window
 
         self.cancelled = False
 
@@ -312,14 +312,14 @@ class ActiveBuildContext:
         return bool(self.process and not self.process.poll())
 
 
-def start_build(build, panel):
+def start_build(build, window, panel):
     listener = build.listener
 
     if build.working_dir:
         os.chdir(build.working_dir)
 
     process = start_process(build.cmd, build.env)
-    ctx = ActiveBuildContext(panel, process, listener)
+    ctx = ActiveBuildContext(window, panel, process, listener)
 
     output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
     error_buffer = OutputBuffer(lambda line: listener.on_error(line, ctx))
