@@ -377,3 +377,23 @@ class SaveAllEdited(WindowCommand):
         for view in self.window.views():
             if view.is_dirty() and view.file_name():
                 view.run_command("save")
+
+
+class MoveViewCommand(WindowCommand):
+    def run(self, forward=True):  # pylint: disable=arguments-differ
+        sheet = self.window.active_sheet()
+        group, index = self.window.get_sheet_index(sheet)
+
+        if forward:
+            index += 1
+            if index == len(self.window.sheets_in_group(group)):
+                group += 1
+                index = 0
+        else:
+            index -= 1
+            if index < 0:
+                group -= 1
+                index = len(self.window.sheets_in_group(group))
+
+        if 0 <= group < self.window.num_groups():
+            self.window.set_sheet_index(sheet, group, index)
