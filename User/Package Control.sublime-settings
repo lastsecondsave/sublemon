@@ -10,10 +10,9 @@
 		"Alignment",
 		"ApplySyntax",
 		"Horizontal Scroll",
-		"MoveTab",
 		"Package Control",
 		"PackageResourceViewer",
 		"ScopeHunter",
-		"TOML"
-	]
+		"TOML",
+	],
 }

@@ -32,11 +32,16 @@
 
   /* CTRL + SHIFT */
 
+  { "keys": ["ctrl+shift+pageup"], "command": "move_view", "args": {"forward": false} },
+  { "keys": ["ctrl+shift+pagedown"], "command": "move_view" },
+
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
   { "keys": ["ctrl+shift+c"], "command": "copy_path" },
 
   /* CTRL + ALT */
 
+  { "keys": ["ctrl+alt+pageup"], "command": "prev_view", "args": {"extend": true} },
+  { "keys": ["ctrl+alt+pagedown"], "command": "next_view", "args": {"extend": true} },
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
     "args": {"file": "Packages/Sublemon/macro/add_indent.sublime-macro" },
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
