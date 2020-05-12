@@ -1,10 +1,9 @@
-import copy
 import os
 import shlex
 import signal
 import subprocess
 from collections import deque
-from threading import Lock, Thread
+from threading import Thread
 
 import sublime
 from sublime_plugin import WindowCommand
@@ -13,60 +12,48 @@ from . import RUNNING_ON_WINDOWS
 
 
 class OutputPanel:
+    DEFAULTS = {
+        "gutter": False,
+        "scroll_past_end": False,
+        "word_wrap": True,
+        "draw_indent_guides": False
+    }
+
     def __init__(self, window):
         self.window = window
         self.view = window.create_output_panel('exec')
 
-        self.line_buffer_lock = Lock()
-        self.line_buffer = deque()
-
-        self.lines_printed = 0
+        self.empty = True
 
     def reset(self, syntax, **settings):
         view_settings = self.view.settings()
 
-        view_settings.set('gutter', False)
-        view_settings.set('scroll_past_end', False)
-        view_settings.set('word_wrap', True)
-        view_settings.set('draw_indent_guides', False)
-
-        for key, val in settings.items():
-            if val:
+        for key, val in {**self.DEFAULTS, **settings}.items():
+            if val is not None:
                 view_settings.set(key, val)
 
         if syntax:
             self.view.assign_syntax(syntax)
 
-        self.window.create_output_panel('exec')
-        self.lines_printed = 0
+        self.empty = True
 
+        self.window.create_output_panel('exec')
         self.window.run_command('show_panel', {'panel': 'output.exec'})
 
     def append(self, line):
-        with self.line_buffer_lock:
-            invalidate = len(self.line_buffer) == 0
-            self.line_buffer.append(line)
+        if not self.empty:
+            line = "\n" + line
 
-        if invalidate:
-            sublime.set_timeout(self.paint, 0)
+        self.empty = False
 
-    def paint(self):
-        with self.line_buffer_lock:
-            if not self.line_buffer:
-                return
-            lines = copy.copy(self.line_buffer)
-            self.line_buffer.clear()
-
-        if self.lines_printed > 0:
-            lines.appendleft('')
-
-        self.lines_printed += len(lines)
         self.view.run_command(
             'append',
-            {'characters': '\n'.join(lines), 'force': True, 'scroll_to_end': True})
+            {'characters': line, 'force': True, 'scroll_to_end': True})
+
+    def finalize(self):
+        self.view.find_all_results()
 
 
-# pylint: disable=no-self-use
 class ChimneyBuildListener:
     def on_startup(self, ctx):
         ctx.window.status_message('Build started')
@@ -304,7 +291,7 @@ class ActiveBuildContext:
 
     def complete(self):
         if not self.cancelled:
-            self.panel.view.find_all_results()
+            self.panel.finalize()
             self.listener.on_complete(self)
         else:
             self.window.status_message('Build cancelled')
