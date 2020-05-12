@@ -26,14 +26,11 @@ class OutputPanel:
         self.empty = True
 
     def reset(self, syntax, **settings):
-        view_settings = self.view.settings()
-
         for key, val in {**self.DEFAULTS, **settings}.items():
             if val is not None:
-                view_settings.set(key, val)
+                self.view.settings().set(key, val)
 
-        if syntax:
-            self.view.assign_syntax(syntax)
+        self.view.assign_syntax(syntax)
 
         self.empty = True
 
@@ -204,10 +201,10 @@ class ChimneyCommand(WindowCommand):
             return
 
         self.panel.reset(
+            syntax=build.syntax,
             result_base_dir=build.working_dir,
             result_file_regex=build.file_regex,
-            result_line_regex=build.line_regex,
-            syntax=build.syntax
+            result_line_regex=build.line_regex
         )
 
         self.active_build = start_build(build, self.window, self.panel)
