@@ -177,7 +177,7 @@ rec(OPERATOR,
     'keyword.operator -string',
     'punctuation.separator')
 rec(INDEXED,
-    'entity.name -comment')
+    'entity.name -comment -meta.function-call')
 rec(PARAMETER,
     'variable.parameter')
 rec(VARIABLE,
@@ -420,8 +420,6 @@ rec(PUNCTUATION,
     'keyword.declaration.cdata')
 rec(VARIABLE,
     'meta.tag.sgml.doctype variable')
-rec(ITALIC,
-    'meta.tag.sgml -comment')
 rec(TAG + BOLD + ITALIC,
     'meta.tag.sgml.doctype keyword')
 
