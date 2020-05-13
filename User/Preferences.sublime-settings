@@ -64,7 +64,7 @@
 	"ignored_packages":
 	[
 		".git",
-		"Vintage"
+		"Vintage",
 	],
 	"ignored_snippets": [
 		"Java/*",
