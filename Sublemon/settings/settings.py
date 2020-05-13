@@ -33,3 +33,6 @@ settings("source.python",
 settings("source.python entity.name.class, source.python entity.name.function",
          show_in_symbol_list=1,
          show_in_indexed_symbol_list=1)
+
+settings("text.xml",
+         block_comment=('<!--', '-->'))

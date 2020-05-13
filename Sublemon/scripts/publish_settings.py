@@ -49,6 +49,8 @@ def mute_files():
     mute(PACKAGES / "Java" / "JavaC.sublime-build")
     mute(PACKAGES / "Java" / "Java.sublime-completions")
 
+    mute(PACKAGES / "XML" / "Comments.tmPreferences")
+
 
 if __name__ == "__main__":
     generate_files()
