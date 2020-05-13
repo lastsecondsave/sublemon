@@ -18,7 +18,6 @@
   { "keys": ["alt+up"], "command": "swap_line_up" },
   { "keys": ["alt+down"], "command": "swap_line_down" },
   { "keys": ["alt+backspace"], "command": "dual_side_delete" },
-  { "keys": ["alt+f12"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
 
   { "keys": ["alt+q"], "command": "expand_snippet" },
   { "keys": ["alt+p"], "command": "find_under_prev" },
@@ -83,6 +82,7 @@
   /* L2 */
 
   { "keys": ["ctrl+k", "c"], "command": "copy_file_directory_path" },
+  { "keys": ["ctrl+k", "s"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
 
   /* L2: CTRL */
 
