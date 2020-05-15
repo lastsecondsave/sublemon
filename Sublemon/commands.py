@@ -183,10 +183,9 @@ class StreamlineRegionsCommand(TextCommand):
 class SelectionToCursorsCommand(TextCommand):
     def run(self, edit):
         selection = self.view.sel()
-        for region in selection:
-            if region.empty():
-                continue
+        regions = [r for r in selection if not r.empty()]
 
+        for region in regions:
             selection.subtract(region)
             selection.add(Region(region.a, region.a))
             selection.add(Region(region.b, region.b))
