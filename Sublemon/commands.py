@@ -6,8 +6,7 @@ from collections import OrderedDict
 
 import sublime
 from sublime import Region
-from sublime_plugin import (EventListener, TextCommand, TextInputHandler,
-                            WindowCommand)
+from sublime_plugin import EventListener, TextCommand, TextInputHandler, WindowCommand
 
 
 class CommandFineTuning(EventListener):
@@ -27,7 +26,7 @@ class EscapeBackslashesCommand(TextCommand):
             self.escape(edit, region.end())
 
     def points_to_string(self, point):
-        return self.view.score_selector(point, 'string')
+        return self.view.score_selector(point, "string")
 
     def escape(self, edit, point):
         if not self.points_to_string(point):
@@ -45,13 +44,13 @@ class EscapeBackslashesCommand(TextCommand):
         content = self.view.substr(region)
         initial_content_length = len(content)
 
-        content = content.replace('\\', '\\\\')
+        content = content.replace("\\", "\\\\")
         if len(content) > initial_content_length:
             self.view.replace(edit, region, content)
 
 
 class ShrinkWhitespaceCommand(TextCommand):
-    EMPTY_LINE_PATTERN = re.compile(r'\s*$')
+    EMPTY_LINE_PATTERN = re.compile(r"\s*$")
 
     def run(self, edit):
         selection = self.view.sel()
@@ -81,7 +80,7 @@ class ShrinkWhitespaceCommand(TextCommand):
         first_row, anchor = (row, None)
 
         while True:
-            prev_line = self.row_to_line(first_row-1)
+            prev_line = self.row_to_line(first_row - 1)
             if prev_line.begin() == anchor:
                 break
 
@@ -94,7 +93,7 @@ class ShrinkWhitespaceCommand(TextCommand):
         last_row, anchor = (row, None)
 
         while True:
-            next_line = self.row_to_line(last_row+1)
+            next_line = self.row_to_line(last_row + 1)
             if next_line.end() == anchor:
                 break
 
@@ -116,17 +115,17 @@ class ShrinkWhitespaceCommand(TextCommand):
 
     def shrink_spaces(self, edit, point):
         begin = point
-        while self.view.substr(begin - 1) == ' ':
+        while self.view.substr(begin - 1) == " ":
             begin -= 1
 
         end = point
-        while self.view.substr(end) == ' ':
+        while self.view.substr(end) == " ":
             end += 1
 
         if end - begin < 2:
             return point
 
-        self.view.replace(edit, Region(begin, end), ' ')
+        self.view.replace(edit, Region(begin, end), " ")
         return begin + 1
 
 
@@ -142,13 +141,13 @@ class ToggleLigaturesCommand(WindowCommand):
             font_options.append("no_calt")
 
         settings.set("font_options", font_options)
-        show_setting_status('ligatures', enable)
+        show_setting_status("ligatures", enable)
 
 
 def show_setting_status(setting, active):
-    status = 'ON' if active else 'OFF'
-    setting = setting.replace('_', ' ').title()
-    sublime.status_message('{}: {}'.format(setting, status))
+    status = "ON" if active else "OFF"
+    setting = setting.replace("_", " ").title()
+    sublime.status_message(f"{setting}: {status}")
 
 
 class StreamlineRegionsCommand(TextCommand):
@@ -210,7 +209,7 @@ class SelectBetweenMarkersCommand(TextCommand):
         lmlen = len(left_marker)
         left = region.begin() - lmlen
 
-        while left_marker != self.view.substr(Region(left, left+lmlen)):
+        while left_marker != self.view.substr(Region(left, left + lmlen)):
             left -= 1
             if left < 0:
                 return
@@ -222,14 +221,14 @@ class SelectBetweenMarkersCommand(TextCommand):
             right = region.end()
 
         if right:
-            self.view.sel().add(Region(left+lmlen, right))
+            self.view.sel().add(Region(left + lmlen, right))
 
 
 def split_markers(markers):
-    if markers == '  ':
-        return (' ', ' ')
+    if markers == "  ":
+        return (" ", " ")
 
-    i = markers.find(' ')
+    i = markers.find(" ")
 
     left_bound = i if i >= 0 else int(len(markers) / 2)
     right_bound = i + 1 if i >= 0 else left_bound
@@ -239,18 +238,20 @@ def split_markers(markers):
 
 class SelectBetweenMarkersInputHandler(TextInputHandler):
     def name(self):
-        return 'markers'
+        return "markers"
 
     def placeholder(self):
-        return 'Markers'
+        return "Markers"
 
     def preview(self, arg):
         if not arg:
             return None
 
-        markers = ('<i>{}</i>'.format(html.escape(x, quote=False) if x != ' ' else '_')
-                   for x in split_markers(arg))
-        return sublime.Html(' ... '.join(markers))
+        markers = (
+            "<i>{}</i>".format(html.escape(x, quote=False) if x != " " else "_")
+            for x in split_markers(arg)
+        )
+        return sublime.Html(" ... ".join(markers))
 
 
 class IndentToBracesCommand(TextCommand):
@@ -263,7 +264,7 @@ class IndentToBracesCommand(TextCommand):
         if row == 0:
             return
 
-        line = self.view.line(self.view.text_point(row-1, col))
+        line = self.view.line(self.view.text_point(row - 1, col))
         if line.empty():
             return
 
@@ -271,7 +272,7 @@ class IndentToBracesCommand(TextCommand):
         if open_brace_position < 0:
             return
 
-        self.indent_lines(edit, region, ' ' * (open_brace_position+1))
+        self.indent_lines(edit, region, " " * (open_brace_position + 1))
 
     def indent_lines(self, edit, region, indent):
         for line in reversed(self.view.lines(region)):
@@ -282,11 +283,7 @@ class IndentToBracesCommand(TextCommand):
 
     @staticmethod
     def find_open_brace_position(text):
-        counters = {
-            ('[', ']'): 0,
-            ('{', '}'): 0,
-            ('(', ')'): 0
-        }
+        counters = {("[", "]"): 0, ("{", "}"): 0, ("(", ")"): 0}
 
         for i in reversed(range(len(text))):
             for chars, counter in counters.items():
@@ -306,10 +303,8 @@ class IndentToBracesCommand(TextCommand):
 class DualSideDeleteCommand(TextCommand):
     def run(self, edit):
         for region in self.view.sel():
-            self.view.erase(edit,
-                            Region(region.end(), region.end()+1))
-            self.view.erase(edit,
-                            Region(region.begin(), region.begin()-1))
+            self.view.erase(edit, Region(region.end(), region.end() + 1))
+            self.view.erase(edit, Region(region.begin(), region.begin() - 1))
 
 
 class JsonReindentCommand(TextCommand):
@@ -321,8 +316,12 @@ class JsonReindentCommand(TextCommand):
         return all(not region.empty() for region in self.view.sel())
 
     def run(self, edit):
-        tab_size = self.view.settings().get('tab_size')
-        regions = self.view.sel() if self.has_selected_text() else (Region(0, self.view.size()),)
+        tab_size = self.view.settings().get("tab_size")
+        regions = (
+            self.view.sel()
+            if self.has_selected_text()
+            else (Region(0, self.view.size()),)
+        )
 
         for region in regions:
             self.reindent(edit, region, tab_size)
@@ -334,8 +333,7 @@ class JsonReindentCommand(TextCommand):
             self.view.window().status_message(f"Invalid json: {err}")
             return
 
-        self.view.replace(edit, region,
-                          json.dumps(parsed, indent=tab_size))
+        self.view.replace(edit, region, json.dumps(parsed, indent=tab_size))
 
 
 class CopyFileDirectoryPathCommand(WindowCommand):
@@ -346,7 +344,7 @@ class CopyFileDirectoryPathCommand(WindowCommand):
         dirname = os.path.dirname(self.window.active_view().file_name())
         sublime.set_clipboard(dirname)
 
-        self.window.status_message('Copied file directory path')
+        self.window.status_message("Copied file directory path")
 
 
 class CloseWithoutSavingCommand(WindowCommand):

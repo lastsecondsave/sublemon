@@ -5,16 +5,16 @@ from .chimney import ChimneyBuildListener, ChimneyCommand
 
 
 def setup_python_exec(build, module=None):
-    if module := build.opt('module') or module:
-        build.cmd.appendleft('-m', module)
+    if module := build.opt("module") or module:
+        build.cmd.appendleft("-m", module)
 
     key = "python_binary"
     binary = project_pref(build.window, key) or pref(key, "python")
 
     build.cmd.appendleft(binary)
 
-    build.env['PYTHONIOENCODING'] = 'utf-8'
-    build.env['PYTHONUNBUFFERED'] = '1'
+    build.env["PYTHONIOENCODING"] = "utf-8"
+    build.env["PYTHONUNBUFFERED"] = "1"
 
 
 class PythonCommand(ChimneyCommand):
@@ -30,15 +30,15 @@ class PylintCommand(ChimneyCommand):
         if pylintrc := build.opt("pylintrc") or project_pref(self.window, "pylintrc"):
             build.cmd.append(f"--rcfile={pylintrc}")
 
-        setup_python_exec(build, 'pylint')
+        setup_python_exec(build, "pylint")
 
-        build.file_regex = r'(.+?):(\d+):(\d+): (.*)'
+        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
         build.syntax = "pylint"
         build.listener = PylintBuildListener()
 
 
 class PylintBuildListener(ChimneyBuildListener):
-    LINE_PATTERN = re.compile(r'(.+:\d+:)(\d+)(: .*)')
+    LINE_PATTERN = re.compile(r"(.+:\d+:)(\d+)(: .*)")
 
     def __init__(self):
         self.rank = None
@@ -49,7 +49,7 @@ class PylintBuildListener(ChimneyBuildListener):
             col = int(match.group(2)) + 1
             line = match.group(1) + str(col) + match.group(3)
 
-        if line.startswith('Your code has been rated at'):
+        if line.startswith("Your code has been rated at"):
             self.rank = line
 
         ctx.print(line)

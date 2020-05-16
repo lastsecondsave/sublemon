@@ -31,7 +31,8 @@ class OneUpCommand(TextCommand):
             replacement = toggle(token, category, negative)
             self.view.replace(edit, region, replacement)
 
-            adjusted_regions.append(Region(region.begin(), region.begin() + len(replacement)))
+            begin = region.begin()
+            adjusted_regions.append(Region(begin, begin + len(replacement)))
 
         self.view.sel().add_all(adjusted_regions)
 
@@ -78,7 +79,7 @@ def classify(token):
     if not token:
         return None
 
-    if (token[0] == '-' and token[1:].isnumeric()) or token.isnumeric():
+    if (token[0] == "-" and token[1:].isnumeric()) or token.isnumeric():
         return Token.NUMBER
 
     if HEX_NUMBER_PATTERN.match(token):
@@ -130,7 +131,7 @@ def toggle_hex_number(token, delta):
     if number == -1:
         replacement = "f" * len(token)
     else:
-        template = '{{:0{}x}}'.format(len(token))
+        template = "{{:0{}x}}".format(len(token))
         replacement = template.format(number)
 
     if token.isupper():
