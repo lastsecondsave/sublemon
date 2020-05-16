@@ -330,8 +330,8 @@ class JsonReindentCommand(TextCommand):
     def reindent(self, edit, region, tab_size):
         try:
             parsed = json.loads(self.view.substr(region), object_pairs_hook=OrderedDict)
-        except ValueError:
-            self.view.window().status_message('Not a valid JSON')
+        except ValueError as err:
+            self.view.window().status_message(f"Invalid json: {err}")
             return
 
         self.view.replace(edit, region,
