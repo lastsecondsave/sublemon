@@ -16,12 +16,12 @@ class OutputPanel:
         "gutter": False,
         "scroll_past_end": False,
         "word_wrap": True,
-        "draw_indent_guides": False
+        "draw_indent_guides": False,
     }
 
     def __init__(self, window):
         self.window = window
-        self.view = window.create_output_panel('exec')
+        self.view = window.create_output_panel("exec")
 
         self.empty = True
 
@@ -34,8 +34,8 @@ class OutputPanel:
 
         self.empty = True
 
-        self.window.create_output_panel('exec')
-        self.window.run_command('show_panel', {'panel': 'output.exec'})
+        self.window.create_output_panel("exec")
+        self.window.run_command("show_panel", {"panel": "output.exec"})
 
     def append(self, line):
         if not self.empty:
@@ -44,8 +44,8 @@ class OutputPanel:
         self.empty = False
 
         self.view.run_command(
-            'append',
-            {'characters': line, 'force': True, 'scroll_to_end': True})
+            "append", {"characters": line, "force": True, "scroll_to_end": True}
+        )
 
     def finalize(self):
         self.view.find_all_results()
@@ -53,7 +53,7 @@ class OutputPanel:
 
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        ctx.window.status_message('Build started')
+        ctx.window.status_message("Build started")
 
     def on_output(self, line, ctx):
         ctx.print(line)
@@ -62,7 +62,7 @@ class ChimneyBuildListener:
         ctx.print(line)
 
     def on_complete(self, ctx):
-        ctx.window.status_message('Build finished')
+        ctx.window.status_message("Build finished")
 
 
 class BuildError(Exception):
@@ -77,7 +77,7 @@ class Cmd:
         if isinstance(cmd, str):
             cmd = shlex.split(cmd)
         self.args = deque(cmd)
-        self.shell = 'shell_cmd' in options or options.get('shell', False)
+        self.shell = "shell_cmd" in options or options.get("shell", False)
 
     def append(self, *chunks):
         self.args.extend(chunks)
@@ -86,7 +86,7 @@ class Cmd:
         self.args.extendleft(reversed(chunks))
 
     def __str__(self):
-        return ' '.join(map(shlex.quote, self.args))
+        return " ".join(map(shlex.quote, self.args))
 
     def __bool__(self):
         return bool(self.args)
@@ -108,8 +108,7 @@ class Build:
         if not self.working_dir and self.active_file:
             self.working_dir = os.path.dirname(self.active_file)
 
-        self._syntax = options.get("syntax",
-                                   "Packages/Text/Plain text.tmLanguage")
+        self._syntax = options.get("syntax", "Packages/Text/Plain text.tmLanguage")
 
     @staticmethod
     def cancel(message):
@@ -129,7 +128,7 @@ class Build:
 
     @syntax.setter
     def syntax(self, value):
-        if not value.endswith(('.sublime-syntax', '.tmLanguage')):
+        if not value.endswith((".sublime-syntax", ".tmLanguage")):
             value = f"Packages/Sublemon/syntaxes/{value}.sublime-syntax"
 
         self._syntax = value
@@ -157,13 +156,16 @@ class ChimneyCommand(WindowCommand):
 
     @property
     def panel(self):
-        return self.panels.get(self.wid) or \
-            self.panels.setdefault(self.wid, OutputPanel(self.window))
+        panel = self.panels.get(self.wid)
+        if not panel:
+            return self.panels.setdefault(self.wid, OutputPanel(self.window))
+        return panel
 
     def setup(self, build):
         pass
 
-    def run(self, kill=False, interactive=None, **options):  # pylint: disable=arguments-differ
+    # pylint: disable=arguments-differ
+    def run(self, kill=False, interactive=None, **options):
         if self.active_build:
             self.active_build.cancel()
 
@@ -174,10 +176,11 @@ class ChimneyCommand(WindowCommand):
 
         if interactive:
             prompt = "$ " + (interactive if isinstance(interactive, str) else "")
-            self.window.show_input_panel(
-                prompt, "",
-                lambda cmd: self.run_build_interactive(build, cmd),
-                None, None)
+
+            def on_done(cmd):
+                self.run_build_interactive(build, cmd)
+
+            self.window.show_input_panel(prompt, "", on_done, None, None)
         else:
             self.run_build(build)
 
@@ -195,7 +198,7 @@ class ChimneyCommand(WindowCommand):
             self.setup(build)
 
             if not build.cmd:
-                build.cancel('No command')
+                build.cancel("No command")
         except BuildError as err:
             self.window.status_message(err.message)
             return
@@ -204,12 +207,12 @@ class ChimneyCommand(WindowCommand):
             syntax=build.syntax,
             result_base_dir=build.working_dir,
             result_file_regex=build.file_regex,
-            result_line_regex=build.line_regex
+            result_line_regex=build.line_regex,
         )
 
         self.active_build = start_build(build, self.window, self.panel)
 
-        print('⌛ [{}] {}'.format(self.active_build.process.pid, build.cmd))
+        print("⌛ [{}] {}".format(self.active_build.process.pid, build.cmd))
 
     def __del__(self):
         self.builds.pop(self.wid, None)
@@ -222,31 +225,31 @@ class OutputBuffer:
         self.output = output
 
     def write(self, chunk):
-        chunk = chunk.decode('utf-8')
+        chunk = chunk.decode("utf-8")
 
         bgn = 0
-        end = chunk.find('\n')
+        end = chunk.find("\n")
 
         while end != -1:
             self.append(chunk, bgn, end)
             self.flush()
 
             bgn = end + 1
-            end = chunk.find('\n', bgn)
+            end = chunk.find("\n", bgn)
 
         end = len(chunk)
         if bgn < end:
             self.append(chunk, bgn, end)
 
     def append(self, chunk, bgn, end):
-        while end > 0 and chunk[end-1] == '\r':
+        while end > 0 and chunk[end - 1] == "\r":
             end = end - 1
 
         self.buffer.append(chunk[bgn:end])
 
     def flush(self):
         if self.buffer:
-            self.output(''.join(self.buffer))
+            self.output("".join(self.buffer))
             self.buffer.clear()
 
 
@@ -260,7 +263,7 @@ class AsyncStreamConsumer(Thread):
     def run(self):
         fileno = self.stream.fileno()
         while True:
-            chunk = os.read(fileno, 2**16)
+            chunk = os.read(fileno, 2 ** 16)
             if not chunk:
                 break
             self.output_buffer.write(chunk)
@@ -291,21 +294,20 @@ class ActiveBuildContext:
             self.panel.finalize()
             self.listener.on_complete(self)
         else:
-            self.window.status_message('Build cancelled')
-            self.print('\n[Process Terminated]')
+            self.window.status_message("Build cancelled")
+            self.print("\n[Process Terminated]")
 
-        print('{} [{}]'.format('✘' if self.cancelled else '✔',
-                               self.process.pid))
+        print("{} [{}]".format("✘" if self.cancelled else "✔", self.process.pid))
 
         self.process = None
 
     def cancel(self):
         self.cancelled = True
-        self.window.status_message('Cancelling build...')
+        self.window.status_message("Cancelling build...")
         kill_process(self.process)
 
     def __bool__(self):
-        '''True if process is active.'''
+        """True if process is active."""
         return bool(self.process and not self.process.poll())
 
 
@@ -318,8 +320,7 @@ def start_build(build, window, panel):
     output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
     error_buffer = OutputBuffer(lambda line: listener.on_error(line, ctx))
 
-    AsyncStreamConsumer(process.stdout, output_buffer,
-                        on_close=ctx.complete).start()
+    AsyncStreamConsumer(process.stdout, output_buffer, on_close=ctx.complete).start()
     AsyncStreamConsumer(process.stderr, error_buffer).start()
 
     return ctx
@@ -327,31 +328,31 @@ def start_build(build, window, panel):
 
 def start_process(cmd, env, cwd):
     process_params = {
-        'stdout': subprocess.PIPE,
-        'stderr': subprocess.PIPE,
-        'stdin': subprocess.DEVNULL,
-        'shell': cmd.shell
+        "stdout": subprocess.PIPE,
+        "stderr": subprocess.PIPE,
+        "stdin": subprocess.DEVNULL,
+        "shell": cmd.shell,
     }
 
     if RUNNING_ON_WINDOWS:
-        process_params['startupinfo'] = startupinfo()
+        process_params["startupinfo"] = startupinfo()
     else:
-        process_params['preexec_fn'] = os.setsid  # pylint: disable=no-member
+        process_params["preexec_fn"] = os.setsid  # pylint: disable=no-member
 
     if cwd:
-        process_params['cwd'] = cwd
+        process_params["cwd"] = cwd
 
     if env:
         os_env = os.environ.copy()
         os_env.update({k: os.path.expandvars(v) for k, v in env.items()})
-        process_params['env'] = os_env
+        process_params["env"] = os_env
 
     return subprocess.Popen(cmd.args, **process_params)
 
 
 def kill_process(process):
     if RUNNING_ON_WINDOWS:
-        cmd = 'taskkill /T /F /PID {}'.format(process.pid)
+        cmd = "taskkill /T /F /PID {}".format(process.pid)
         subprocess.Popen(cmd, startupinfo=startupinfo())
     else:
         os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member

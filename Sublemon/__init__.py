@@ -2,7 +2,7 @@
 
 import sublime
 
-RUNNING_ON_WINDOWS = sublime.platform() == 'windows'
+RUNNING_ON_WINDOWS = sublime.platform() == "windows"
 
 
 def pref(key, default=None):

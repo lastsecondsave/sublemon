@@ -8,7 +8,7 @@ from sublime_plugin import WindowCommand
 
 class OpenFilePathCommand(WindowCommand):
     def run(self):
-        self.window.show_input_panel("File Path:", '', self.on_done, None, None)
+        self.window.show_input_panel("File Path:", "", self.on_done, None, None)
 
     def on_done(self, path):
         path = os.path.expandvars(path).strip()
@@ -26,17 +26,17 @@ class OpenFilePathCommand(WindowCommand):
         if path.parent.exists():
             self.window.open_file(str(path), sublime.ENCODED_POSITION)
         else:
-            sublime.status_message(f"Directory \"{path.parent}\" doesn't exist")
+            sublime.status_message(f'Directory "{path.parent}" doesn\'t exist')
 
     def expand(self, path):
         parts = path.parts
 
         if len(parts) > 1 and (root := parts[0]) in "~@#":
-            if root == '~':
+            if root == "~":
                 root = Path.home()
-            elif root == '@':
+            elif root == "@":
                 root = self.find_project_folder()
-            elif root == '#':
+            elif root == "#":
                 root = tempfile.gettempdir()
 
             return Path(root, *parts[1:])
@@ -72,7 +72,7 @@ class ShowFilePathCommand(WindowCommand):
         if prefix:
             path = Path(prefix, path)
 
-        sublime.status_message((' / ').join(path.parts))
+        sublime.status_message((" / ").join(path.parts))
 
     def split(self, path):
         for folder in reorder(self.window.folders()):

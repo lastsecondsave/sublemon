@@ -10,15 +10,15 @@ GENERATED_DIR = Path(".generated")
 
 
 def _write_snippet(scope, tab_trigger, content, description):
-    content = content.replace('    ', '\t').strip()
+    content = content.replace("    ", "\t").strip()
 
-    root = ET.Element('snippet')
-    ET.SubElement(root, 'description').text = description
-    ET.SubElement(root, 'tabTrigger').text = tab_trigger
-    ET.SubElement(root, 'scope').text = scope
-    ET.SubElement(root, 'content').text = content
+    root = ET.Element("snippet")
+    ET.SubElement(root, "description").text = description
+    ET.SubElement(root, "tabTrigger").text = tab_trigger
+    ET.SubElement(root, "scope").text = scope
+    ET.SubElement(root, "content").text = content
 
-    digest = hashlib.sha1(content.encode('ascii')).hexdigest()
+    digest = hashlib.sha1(content.encode("ascii")).hexdigest()
     path = GENERATED_DIR / scope / f"{digest}.sublime-snippet"
 
     print(f"{path.name}: {description}")
@@ -33,15 +33,17 @@ class SnippetWriter:
         self.mutators = mutators
 
     def __sub__(self, content):
-        description, snippet = content if isinstance(content, tuple) else (None, content)
+        description, snippet = (
+            content if isinstance(content, tuple) else (None, content)
+        )
 
         for mutate in self.mutators:
             snippet = mutate(snippet)
 
         if not description:
-            description = re.search(r'^@?[-\w\s\.]+|.*', snippet).group().strip()
+            description = re.search(r"^@?[-\w\s\.]+|.*", snippet).group().strip()
 
-        snippet = snippet.replace('$FILENAME', r'${TM_FILENAME/(.*?)(\..+)/$1/}')
+        snippet = snippet.replace("$FILENAME", r"${TM_FILENAME/(.*?)(\..+)/$1/}")
 
         _write_snippet(self.scope, self.tab_trigger, snippet, description)
 
@@ -78,6 +80,7 @@ class Snippets(SnippetDefinition):
             cmp.write(self.target_dir)
 
 
+# fmt: off
 # pylint: disable=multiple-statements
 def blk(text): return text + ' {\n\t$0\n}'
 def bls(text): return text + ' { $0 }'
@@ -87,25 +90,22 @@ def spc(text): return text + ' $0'
 def slp(text): return text + '(${0:$SELECTION})'
 def ind(text): return text.replace('>=>', '\n\t').replace('==>', '\n')
 # pylint: enable=multiple-statements
+# fmt: on
 
 
-class Completions():
+class Completions:
     def __init__(self, scope):
         self.content = dict(scope=scope, completions=[])
 
     def write(self, target_dir):
         path = target_dir / "completions.sublime-completions"
 
-        with path.open(mode='w') as json_file:
+        with path.open(mode="w") as json_file:
             json.dump(self.content, json_file, indent=2)
 
         print(path.name)
 
     def group(self, kind, *items):
         for item in items:
-            completion = {
-                "trigger": item,
-                "content": item,
-                "kind": kind
-            }
+            completion = {"trigger": item, "content": item, "kind": kind}
             self.content["completions"].append(completion)

@@ -4,24 +4,26 @@ import shlex
 from . import RUNNING_ON_WINDOWS
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
-DASHES_PATTERN = re.compile(r'\[INFO\] -{5,}.*')
-COMPILATION_FAILURE_PATTERN = re.compile(r'\[ERROR\] Failed to execute goal.*Compilation failure')
-SKIPPED_LINES_PATTERN = re.compile(r'\[[EIW]\w+\].*')
-DRIVE_LETTER_PATTERN = re.compile(r'\[(?:ERROR|WARNING)\] /[A-Z]:')
+DASHES_PATTERN = re.compile(r"\[INFO\] -{5,}.*")
+COMPILATION_FAILURE_PATTERN = re.compile(
+    r"\[ERROR\] Failed to execute goal.*Compilation failure"
+)
+SKIPPED_LINES_PATTERN = re.compile(r"\[[EIW]\w+\].*")
+DRIVE_LETTER_PATTERN = re.compile(r"\[(?:ERROR|WARNING)\] /[A-Z]:")
 
-STATUS_PATTERN = re.compile(r'\[INFO\] BUILD (FAILURE|SUCCESS)$')
-TIME_PATTERN = re.compile(r'\[INFO\] Total time:')
+STATUS_PATTERN = re.compile(r"\[INFO\] BUILD (FAILURE|SUCCESS)$")
+TIME_PATTERN = re.compile(r"\[INFO\] Total time:")
 
-FILE_REGEX = r'^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)'
+FILE_REGEX = r"^\[ERROR\] (\S.*):\[(\d+),(\d+)\](?: error:)? (.*)"
 
 
 class MavenCommand(ChimneyCommand):
     def setup(self, build):
-        if build.opt('offline'):
-            build.cmd.appendleft('-o')
+        if build.opt("offline"):
+            build.cmd.appendleft("-o")
 
-        if build.opt('quiet'):
-            build.cmd.appendleft('-q', '-e')
+        if build.opt("quiet"):
+            build.cmd.appendleft("-q", "-e")
 
         build.cmd.appendleft("mvn", "-B")
 
@@ -60,11 +62,11 @@ class MavenBuildListener(ChimneyBuildListener):
         if RUNNING_ON_WINDOWS:
             match = DRIVE_LETTER_PATTERN.match(line)
             if match:
-                line = line[:match.end()-1] + line[match.end():]
+                line = line[: match.end() - 1] + line[match.end() :]
 
         ctx.print(line)
 
     def on_complete(self, ctx):
         if self.status:
             info = (self.status, self.time)
-            ctx.window.status_message(', '.join(info))
+            ctx.window.status_message(", ".join(info))
