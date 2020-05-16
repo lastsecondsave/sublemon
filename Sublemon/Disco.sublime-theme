@@ -25,6 +25,7 @@
     "qp_match": "#77ABFF",
 
     "sidebar_label": "#838495",
+    "popup_bg": "#2B333A"
   },
 
   "rules": [
@@ -648,7 +649,7 @@
     {
       "class": "auto_complete_detail_pane",
       "layer1.opacity": 1,
-      "layer1.tint": "var(outer_dark_hover)",
+      "layer1.tint": "var(popup_bg)",
       "content_margin": [8, 5, 8, 5]
     },
     {
