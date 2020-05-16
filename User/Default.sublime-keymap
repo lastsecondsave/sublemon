@@ -80,8 +80,8 @@
 
   /* L2 */
 
-  { "keys": ["ctrl+k", "c"], "command": "copy_file_directory_path" },
   { "keys": ["ctrl+k", "s"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
+  { "keys": ["ctrl+k", "c"], "command": "copy_file_directory_path" },
 
   /* L2: CTRL */
 
@@ -91,6 +91,7 @@
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 
   { "keys": ["ctrl+k", "ctrl+s"], "command": "shrink_whitespace" },
+  { "keys": ["ctrl+k", "ctrl+f"], "command": "fmt" },
   { "keys": ["ctrl+k", "ctrl+j"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete to BOL.sublime-macro"} },
   { "keys": ["ctrl+k", "ctrl+'"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
 
