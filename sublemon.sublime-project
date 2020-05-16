@@ -47,7 +47,18 @@
       "module": "isort",
       "cmd": [
         "--recursive",
+        "--line-width=88",
         "--skip-glob=*snippets.py",
+        "${project_path}/Sublemon"
+      ]
+    },
+    {
+      "name": "Sublemon - Black",
+      "target": "python",
+      "module": "black",
+      "cmd": [
+        "--exclude",
+        "(disco|settings|snippets)\\.py",
         "${project_path}/Sublemon"
       ]
     }
