@@ -1,6 +1,7 @@
 # pylint: disable=bad-whitespace,global-statement,line-too-long
 
 import json
+from itertools import chain
 from pathlib import Path
 
 
@@ -108,35 +109,33 @@ COLOR_SCHEME = {
     'rules': []
 }
 
-GLOBAL_SCOPE = None
+ROOT_SCOPES = None
 
 
-def sec(scope=None):
-    global GLOBAL_SCOPE
-    GLOBAL_SCOPE = scope
+def src(*scopes):
+    global ROOT_SCOPES
+    ROOT_SCOPES = list(f"source.{s}" for s in scopes)
 
 
-def src(lang):
-    sec('source.' + lang)
-
-
-def txt(lang):
-    sec('text.' + lang)
+def txt(*scopes):
+    global ROOT_SCOPES
+    ROOT_SCOPES = list(f"text.{s}" for s in scopes)
 
 
 def rec(style, *scopes):
-    global GLOBAL_SCOPE
-    global COLOR_SCHEME
-
     if not isinstance(style, Style):
         style = Style(style)
 
-    for scope in scopes:
-        if GLOBAL_SCOPE:
+    def expand(scope):
+        if ROOT_SCOPES:
             if '|' in scope:
                 scope = f"& ({scope})"
-            scope = ' '.join((GLOBAL_SCOPE, scope))
+            for root_scope in ROOT_SCOPES:
+                yield f"{root_scope} {scope}"
+        else:
+            yield scope
 
+    for scope in chain.from_iterable(expand(s) for s in scopes):
         COLOR_SCHEME['rules'].append({'scope': scope, **style.settings})
 
 
