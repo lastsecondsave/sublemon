@@ -3,6 +3,8 @@ import subprocess
 from sublime import Region
 from sublime_plugin import TextCommand
 
+from . import view_cwd
+
 
 class Formatter:
     def __init__(self, scope=None, cmdline=None):
@@ -12,6 +14,7 @@ class Formatter:
     def match(self, view):
         return view.match_selector(0, self.scope) > 0
 
+    # pylint: disable=unused-argument
     def cmd(self, view):
         return self.cmdline
 
@@ -71,6 +74,7 @@ class FmtCommand(TextCommand):
             encoding="utf-8",
             capture_output=True,
             shell=True,
+            cwd=view_cwd(self.view),
         )
 
         if process.returncode != 0:

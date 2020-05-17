@@ -1,5 +1,7 @@
 # pylint: disable=invalid-name
 
+from pathlib import Path
+
 import sublime
 
 RUNNING_ON_WINDOWS = sublime.platform() == "windows"
@@ -17,3 +19,9 @@ def project_pref(window, key, default=None):
 
     value = settings.get(key, default)
     return sublime.expand_variables(value, window.extract_variables())
+
+
+def view_cwd(view):
+    if active_file := view.file_name():
+        return Path(active_file).parent
+    return Path.home()
