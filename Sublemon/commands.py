@@ -8,6 +8,8 @@ import sublime
 from sublime import Region
 from sublime_plugin import EventListener, TextCommand, TextInputHandler, WindowCommand
 
+from . import indent_params
+
 
 class CommandFineTuning(EventListener):
     def on_post_text_command(self, view, command_name, args):
@@ -316,7 +318,6 @@ class JsonReindentCommand(TextCommand):
         return all(not region.empty() for region in self.view.sel())
 
     def run(self, edit):
-        tab_size = self.view.settings().get("tab_size")
         regions = (
             self.view.sel()
             if self.has_selected_text()
@@ -324,15 +325,16 @@ class JsonReindentCommand(TextCommand):
         )
 
         for region in regions:
-            self.reindent(edit, region, tab_size)
+            self.reindent(edit, region)
 
-    def reindent(self, edit, region, tab_size):
+    def reindent(self, edit, region):
         try:
             parsed = json.loads(self.view.substr(region), object_pairs_hook=OrderedDict)
         except ValueError as err:
             self.view.window().status_message(f"Invalid json: {err}")
             return
 
+        _, tab_size = indent_params(self.view)
         self.view.replace(edit, region, json.dumps(parsed, indent=tab_size))
 
 
