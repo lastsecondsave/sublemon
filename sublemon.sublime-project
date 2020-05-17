@@ -3,12 +3,8 @@
     {
       "name": "sublemon",
       "path": "Sublemon",
-      "file_exclude_patterns": [
-        "Disco.sublime-color-scheme"
-      ],
-      "folder_exclude_patterns": [
-        ".generated*"
-      ]
+      "file_exclude_patterns": ["Disco.sublime-color-scheme"],
+      "folder_exclude_patterns": [".generated*"]
     },
     {
       "name": "user",
@@ -18,9 +14,7 @@
         "Package Control.*bundle",
         "*.crt"
       ],
-      "folder_exclude_patterns": [
-        "Package Control.cache"
-      ]
+      "folder_exclude_patterns": ["Package Control.cache"]
     },
     {
       "name": "default",
@@ -37,7 +31,7 @@
         "snippets/snippets_lib.py",
         "settings/settings_lib.py",
         "disco/disco.py",
-        "scripts/publish_settings.py",
+        "scripts/publish_settings.py"
       ],
       "working_dir": "${project_path}/Sublemon"
     },
