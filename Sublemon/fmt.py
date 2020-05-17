@@ -3,7 +3,7 @@ import subprocess
 from sublime import Region
 from sublime_plugin import TextCommand
 
-from . import view_cwd
+from . import find_in_file_parents, indent_params, view_cwd
 
 
 class Formatter:
@@ -35,10 +35,16 @@ class Prettier(Formatter):
     def cmd(self, view):
         scope = matched_scope(view, self.PARSERS)
         parser = self.PARSERS[scope]
-        cmd = ["prettier", f"--parser={parser}", "--use-tabs=true"]
+        config = find_in_file_parents(view, ".prettierrc")
 
-        if parser == "markdown":
-            cmd += ["--prose-wrap=always", "--print-width=100"]
+        cmd = ["prettier", f"--parser={parser}"]
+
+        if not config:
+            use_tabs, tab_width = indent_params(view)
+            cmd += [f"--use-tabs={use_tabs}", f"--tab-width={tab_width}"]
+
+            if parser == "markdown":
+                cmd += ["--prose-wrap=always", "--print-width=100"]
 
         return cmd
 
