@@ -1,6 +1,4 @@
 {
-    "indent_guide_options": [
-        "draw_normal"
-    ],
-    "tab_size": 2
+  "tab_size": 2,
+  "extensions": [".prettierrc"]
 }
