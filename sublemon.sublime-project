@@ -42,6 +42,8 @@
       "cmd": [
         "--recursive",
         "--line-width=88",
+        "--multi-line=3",
+        "--trailing-comma",
         "--skip-glob=*snippets.py",
         "${project_path}/Sublemon"
       ]
