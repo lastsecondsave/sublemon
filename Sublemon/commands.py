@@ -1,14 +1,32 @@
 import html
+import imp
 import json
 import os
 import re
+import sys
 from collections import OrderedDict
 
 import sublime
 from sublime import Region
-from sublime_plugin import EventListener, TextCommand, TextInputHandler, WindowCommand
+from sublime_plugin import (
+    ApplicationCommand,
+    EventListener,
+    TextCommand,
+    TextInputHandler,
+    WindowCommand,
+)
 
 from . import indent_params
+
+
+class SublemonReloadCommand(ApplicationCommand):
+    def run(self):
+        modules = [v for k, v in sys.modules.items() if k.startswith("Sublemon")]
+        for module in modules:
+            print("reloading", module.__name__)
+            imp.reload(module)
+
+        sublime.active_window().status_message("Reloaded")
 
 
 class CommandFineTuning(EventListener):
