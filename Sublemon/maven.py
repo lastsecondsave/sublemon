@@ -48,10 +48,10 @@ class MavenBuildListener(ChimneyBuildListener):
             self.skip = True
 
         if self.skip and SKIPPED_LINES_PATTERN.match(line):
-            return
+            return None
 
         if DASHES_PATTERN.match(line):
-            return
+            return None
 
         if STATUS_PATTERN.match(line):
             self.status = line[7:]
@@ -64,7 +64,7 @@ class MavenBuildListener(ChimneyBuildListener):
             if match:
                 line = line[: match.end() - 1] + line[match.end() :]
 
-        ctx.print(line)
+        return line
 
     def on_complete(self, ctx):
         if self.status:

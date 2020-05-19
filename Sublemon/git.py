@@ -43,7 +43,7 @@ class GitLogBuildListener(ChimneyBuildListener):
     def on_output(self, line, ctx):
         match = self.LINE_PATTERN.match(line)
         if not match:
-            return
+            return None
 
         line_info = {
             "commit": match.group(1),
@@ -55,17 +55,20 @@ class GitLogBuildListener(ChimneyBuildListener):
         self.line_infos.append(line_info)
         self.author_width = max(self.author_width, len(line_info["author"]))
 
+        return None
+
     def on_complete(self, ctx):
-        for line_info in reversed(self.line_infos):
-            line = " ".join(
-                [
-                    line_info["date"],
-                    line_info["author"].ljust(self.author_width),
-                    line_info["commit"],
-                    line_info["message"],
-                ]
+        def combine(line_info):
+            pieces = (
+                line_info["date"],
+                line_info["author"].ljust(self.author_width),
+                line_info["commit"],
+                line_info["message"],
             )
-            ctx.print(line)
+            return " ".join(pieces)
+
+        lines = (combine(line_info) for line_info in reversed(self.line_infos))
+        ctx.print_lines(lines)
 
         if self.line_infos:
             ctx.window.status_message("Last edited at " + self.line_infos[0]["date"])
@@ -107,7 +110,7 @@ class GitBlameBuildListener(ChimneyBuildListener):
     def on_output(self, line, ctx):
         match = self.LINE_PATTERN.match(line)
         if not match:
-            return
+            return None
 
         line_info = {
             "commit": match.group(1),
@@ -127,16 +130,17 @@ class GitBlameBuildListener(ChimneyBuildListener):
         if not line_info["not_committed"]:
             self.author_width = max(self.author_width, len(line_info["author"]))
 
+        return None
+
     def on_complete(self, ctx):
-        for line_info in self.line_infos:
+        def combine(line_info):
             if not line_info["not_committed"]:
-                line = " ".join(
-                    [
-                        line_info["date"],
-                        line_info["author"].ljust(self.author_width),
-                        line_info["commit"],
-                    ]
-                )
+                pieces = [
+                    line_info["date"],
+                    line_info["author"].ljust(self.author_width),
+                    line_info["commit"],
+                ]
+                line = " ".join(pieces)
             else:
                 line = " " * (len(line_info["commit"]) + self.author_width + 12)
 
@@ -144,4 +148,6 @@ class GitBlameBuildListener(ChimneyBuildListener):
             if line_info["code"]:
                 line += " " + line_info["code"][self.code_indent :]
 
-            ctx.print(line)
+            return line
+
+        ctx.print_lines(combine(line_info) for line_info in self.line_infos)
