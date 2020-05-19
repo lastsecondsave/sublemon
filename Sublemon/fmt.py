@@ -2,7 +2,7 @@ import subprocess
 
 import sublime
 from sublime import Region
-from sublime_plugin import TextCommand
+from sublime_plugin import TextCommand, WindowCommand
 
 from . import find_in_file_parents, indent_params, view_cwd
 
@@ -55,34 +55,46 @@ def matched_scope(view, scopes):
     return next(matched, None)
 
 
-class FmtCommand(TextCommand):
+class FmtCommand(WindowCommand):
     FORMATTERS = (
         Prettier(),
         Formatter("source.rust", "rustfmt"),
         Formatter("source.python", "black -"),
     )
 
-    def run(self, edit):
+    def run(self):
+        view = self.window.active_view()
+
         for formatter in self.FORMATTERS:
-            if formatter.match(self.view):
-                self.run_formatter(edit, formatter.cmd(self.view))
+            if formatter.match(view):
+                self.reformat(formatter, view)
                 return
 
-        self.view.window().status_message("No supported formatter")
+        self.window.status_message("No supported formatter")
 
-    def run_formatter(self, edit, cmd):
+    def reformat(self, formatter, view):
+        text = view.substr(Region(0, view.size()))
+
+        def run_formatter():
+            process = subprocess.run(
+                formatter.cmd(view),
+                input=text,
+                encoding="utf-8",
+                capture_output=True,
+                shell=True,
+                cwd=view_cwd(view),
+            )
+
+            if process.returncode == 0:
+                view.run_command("replace_with_formatted", {"text": process.stdout})
+            else:
+                sublime.error_message(process.stderr.strip())
+
+        sublime.set_timeout_async(run_formatter, 0)
+
+
+class ReplaceWithFormattedCommand(TextCommand):
+    # pylint: disable=arguments-differ
+    def run(self, edit, text):
         region = Region(0, self.view.size())
-        process = subprocess.run(
-            cmd,
-            input=self.view.substr(region),
-            encoding="utf-8",
-            capture_output=True,
-            shell=True,
-            cwd=view_cwd(self.view),
-        )
-
-        if process.returncode != 0:
-            sublime.error_message(process.stderr.strip())
-            return
-
-        self.view.replace(edit, region, process.stdout)
+        self.view.replace(edit, region, text)
