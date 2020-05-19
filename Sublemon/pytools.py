@@ -52,7 +52,7 @@ class PylintBuildListener(ChimneyBuildListener):
         if line.startswith("Your code has been rated at"):
             self.rank = line
 
-        ctx.print(line)
+        return line
 
     def on_complete(self, ctx):
         if self.rank:

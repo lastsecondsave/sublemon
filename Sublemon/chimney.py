@@ -3,6 +3,7 @@ import shlex
 import signal
 import subprocess
 from collections import deque
+from itertools import chain, dropwhile
 from threading import Thread
 
 import sublime
@@ -23,8 +24,6 @@ class OutputPanel:
         self.window = window
         self.view = window.create_output_panel("exec")
 
-        self.empty = True
-
     def reset(self, syntax, **settings):
         for key, val in {**self.DEFAULTS, **settings}.items():
             if val is not None:
@@ -32,34 +31,35 @@ class OutputPanel:
 
         self.view.assign_syntax(syntax)
 
-        self.empty = True
-
         self.window.create_output_panel("exec")
         self.window.run_command("show_panel", {"panel": "output.exec"})
 
-    def append(self, line):
-        if not self.empty:
-            line = "\n" + line
+    def append(self, lines):
+        if self.view.size() > 0:
+            lines = chain(("",), lines)
+        else:
+            lines = dropwhile("".__eq__, lines)
 
-        self.empty = False
-
-        self.view.run_command(
-            "append", {"characters": line, "force": True, "scroll_to_end": True}
-        )
+        if characters := "\n".join(lines):
+            self.view.run_command(
+                "append",
+                {"characters": characters, "force": True, "scroll_to_end": True},
+            )
 
     def finalize(self):
         self.view.find_all_results()
 
 
+# pylint: disable=unused-argument
 class ChimneyBuildListener:
     def on_startup(self, ctx):
         ctx.window.status_message("Build started")
 
     def on_output(self, line, ctx):
-        ctx.print(line)
+        return line
 
     def on_error(self, line, ctx):
-        ctx.print(line)
+        return line
 
     def on_complete(self, ctx):
         ctx.window.status_message("Build finished")
@@ -219,63 +219,62 @@ class ChimneyCommand(WindowCommand):
         self.panels.pop(self.wid, None)
 
 
-class OutputBuffer:
-    def __init__(self, output):
-        self.buffer = deque()
-        self.output = output
+class BufferedPipe:
+    def __init__(self, process_line, ctx):
+        self.process_line = process_line
+        self.ctx = ctx
+
+        self.line_buffer = []
 
     def write(self, chunk):
-        chunk = chunk.decode("utf-8")
+        lines = []
+        begin = 0
 
-        bgn = 0
-        end = chunk.find("\n")
+        while (end := chunk.find("\n", begin)) != -1:
+            self.bufferize(chunk, begin, end)
+            lines.append(self.get_buffered_line())
 
-        while end != -1:
-            self.append(chunk, bgn, end)
-            self.flush()
+            begin = end + 1
 
-            bgn = end + 1
-            end = chunk.find("\n", bgn)
+        if begin < len(chunk):
+            self.bufferize(chunk, begin, len(chunk))
 
-        end = len(chunk)
-        if bgn < end:
-            self.append(chunk, bgn, end)
+        lines = (self.process_line(line, self.ctx) for line in lines)
 
-    def append(self, chunk, bgn, end):
+        self.ctx.print_lines(filter(None.__ne__, lines))
+
+    def bufferize(self, chunk, begin, end):
         while end > 0 and chunk[end - 1] == "\r":
-            end = end - 1
+            end -= 1
 
-        self.buffer.append(chunk[bgn:end])
+        self.line_buffer.append(chunk[begin:end])
+
+    def get_buffered_line(self):
+        content = "".join(self.line_buffer)
+        self.line_buffer.clear()
+        return content
 
     def flush(self):
-        if self.buffer:
-            self.output("".join(self.buffer))
-            self.buffer.clear()
+        if self.line_buffer:
+            line = self.process_line(self.get_buffered_line())
+            if line:
+                self.ctx.print_lines((line,))
 
 
-class AsyncStreamConsumer(Thread):
-    def __init__(self, stream, output_buffer, on_close=None):
-        super().__init__()
-        self.stream = stream
-        self.output_buffer = output_buffer
-        self.on_close = on_close
+def read_to_pipe(stream, pipe, on_close=None):
+    fileno = stream.fileno()
 
-    def run(self):
-        fileno = self.stream.fileno()
-        while True:
-            chunk = os.read(fileno, 2 ** 16)
-            if not chunk:
-                break
-            self.output_buffer.write(chunk)
+    while chunk := os.read(fileno, 2 ** 16):
+        pipe.write(chunk.decode("utf-8"))
 
-        self.output_buffer.flush()
-        self.stream.close()
+    pipe.flush()
+    stream.close()
 
-        if self.on_close:
-            self.on_close()
+    if on_close:
+        on_close()
 
 
-class ActiveBuildContext:
+class BuildContext:
     def __init__(self, window, panel, process, listener):
         self.window = window
         self.panel = panel
@@ -286,8 +285,8 @@ class ActiveBuildContext:
 
         self.listener.on_startup(self)
 
-    def print(self, line):
-        self.panel.append(line)
+    def print_lines(self, lines):
+        self.panel.append(lines)
 
     def complete(self):
         if not self.cancelled:
@@ -295,7 +294,7 @@ class ActiveBuildContext:
             self.listener.on_complete(self)
         else:
             self.window.status_message("Build cancelled")
-            self.print("\n[Process Terminated]")
+            self.print_lines(("", "[Process Terminated]"))
 
         print("{} [{}]".format("✘" if self.cancelled else "✔", self.process.pid))
 
@@ -315,13 +314,13 @@ def start_build(build, window, panel):
     process = start_process(build.cmd, build.env, build.working_dir)
     listener = build.listener
 
-    ctx = ActiveBuildContext(window, panel, process, listener)
+    ctx = BuildContext(window, panel, process, listener)
 
-    output_buffer = OutputBuffer(lambda line: listener.on_output(line, ctx))
-    error_buffer = OutputBuffer(lambda line: listener.on_error(line, ctx))
+    stdout_args = (process.stdout, BufferedPipe(listener.on_output, ctx), ctx.complete)
+    stderr_args = (process.stderr, BufferedPipe(listener.on_error, ctx))
 
-    AsyncStreamConsumer(process.stdout, output_buffer, on_close=ctx.complete).start()
-    AsyncStreamConsumer(process.stderr, error_buffer).start()
+    Thread(target=read_to_pipe, args=stdout_args).start()
+    Thread(target=read_to_pipe, args=stderr_args).start()
 
     return ctx
 

@@ -20,4 +20,4 @@ class WslCommand(ChimneyCommand):
 
 class WslBuildListener(ChimneyBuildListener):
     def on_output(self, line, ctx):
-        ctx.print(ESCAPE_CHARACTER.sub("", line))
+        return ESCAPE_CHARACTER.sub("", line)
