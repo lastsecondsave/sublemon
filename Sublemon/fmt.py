@@ -1,5 +1,6 @@
 import subprocess
 
+import sublime
 from sublime import Region
 from sublime_plugin import TextCommand
 
@@ -67,10 +68,7 @@ class FmtCommand(TextCommand):
                 self.run_formatter(edit, formatter.cmd(self.view))
                 return
 
-        self.status_message("No supported formatter")
-
-    def status_message(self, message):
-        self.view.window().status_message(message)
+        self.view.window().status_message("No supported formatter")
 
     def run_formatter(self, edit, cmd):
         region = Region(0, self.view.size())
@@ -84,15 +82,7 @@ class FmtCommand(TextCommand):
         )
 
         if process.returncode != 0:
-            self.log_error(cmd, process)
+            sublime.error_message(process.stderr.strip())
             return
 
         self.view.replace(edit, region, process.stdout)
-
-    def log_error(self, cmd, process):
-        self.status_message("Formatter exited with error")
-
-        print("Formatter:", cmd)
-        print(f"{'-'*12}stderr{'-'*12}")
-        print(process.stderr.strip())
-        print("-" * 30)
