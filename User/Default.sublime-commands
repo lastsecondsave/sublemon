@@ -1,4 +1,6 @@
 [
+  { "caption": "Sublemon: Reload", "command": "sublemon_reload" },
+
   { "caption": "Escape Backslashes", "command": "escape_backslashes" },
   { "caption": "Shrink Whitespace", "command": "shrink_whitespace" },
 
