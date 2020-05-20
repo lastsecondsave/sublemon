@@ -448,23 +448,9 @@ rec(CRIMSON, 'markup.deleted')
 txt('git')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC,
     'constant.numeric.hash')
-
-txt('git.config')
-rec(META,
-    'meta.brackets',
-    'entity.name.section')
-rec(INDEXED,
-    'variable.other.readwrite')
-
-txt('git.merge-conflict')
 rec(Highlight(FADED_GRAY, 0.5),
-    'meta.branch',
-    'meta.separator')
+    'meta.marker.git.merge-conflict')
 rec(CLEAR_WHITE + BOLD,
-    'variable.other.branch')
-
-txt('git.ignore')
-rec(PUNCTUATION, 'keyword.operator')
-rec(FOREGROUND, 'entity.name.pattern')
+    'variable.other.revision.git.merge-conflict')
 
 generate()
