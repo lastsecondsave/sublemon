@@ -173,12 +173,14 @@ rec(KEYWORD,
     'keyword.operator.word',
     'storage.modifier')
 rec(OPERATOR,
-    'keyword.operator -string',
+    'keyword.operator -string.quoted',
     'punctuation.separator')
 rec(INDEXED,
     'entity.name -comment -meta.function-call')
 rec(PARAMETER,
-    'variable.parameter')
+    'variable.parameter & (meta.function.parameters | meta.function.declaration)')
+rec(PARAMETER + ITALIC,
+    'variable.parameter & -meta.function.inline & -meta.function.declaration & (meta.annotation | meta.function-call)')
 rec(VARIABLE,
     'variable.language',
     'support.constant',
@@ -222,8 +224,6 @@ rec(KEYWORD,
     'keyword.operator.logical')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
-rec(ITALIC,
-    'variable.parameter & -meta.function.inline & (meta.annotation.arguments | meta.function-call.arguments)')
 rec(STRING + BOLD,
     'string source.sql keyword.other')
 rec(STRING + ITALIC,
@@ -235,7 +235,7 @@ rec(REGEXP_CHARACTER_CLASS,
 
 src('js')
 rec(TAG + ITALIC,
-    'meta.mapping.key')
+    'meta.mapping.key -variable')
 rec(STORAGE,
     'variable.type',
     'support.constant.builtin')
@@ -248,15 +248,13 @@ rec(STRING,
     'string.regexp keyword.other.js')
 rec(VARIABLE,
     'support.type.object.dom')
-rec(FOREGROUND,
-    'meta.binding.name variable.other.readwrite')
 rec(REGEXP_GROUP,
     'string.regexp punctuation.definition.group',
     'keyword.operator.or.regexp')
 rec(REGEXP_CHARACTER_CLASS,
     'string.regexp constant.other.character-class')
 rec(REGEXP_CONTROL,
-    'string.regexp && (keyword.control | keyword.operator)',
+    'string.regexp & (keyword.control | keyword.operator)',
     'constant.other.character-class.set.regexp constant.other.character-class.escape')
 
 src('regexp')
@@ -298,9 +296,6 @@ rec(FOREGROUND,
     'storage.modifier.array',
     'storage.type.function.anonymous',
     'punctuation.accessor.dot')
-rec(ITALIC,
-    'variable.parameter.javadoc',
-    'meta.annotation.parameters variable.parameter')
 
 txt('log.java')
 rec(SPECIAL, 'entity.name.exception')
@@ -329,8 +324,6 @@ rec(FOREGROUND,
     'storage.type.function.lambda')
 rec(META,
     'meta.annotation variable.annotation')
-rec(ITALIC,
-    'meta.annotation variable.parameter')
 
 src('powershell')
 rec(PUNCTUATION,
@@ -349,13 +342,17 @@ rec(FOREGROUND,
 
 src('shell')
 rec(PUNCTUATION,
-    'meta.group.expansion punctuation.section',
+    'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'keyword.operator.expansion',
     'keyword.operator.logical.pipe',
     'keyword.operator.assignment.redirection',
     'keyword.operator.end-of-options')
 rec(STORAGE,
     'support.function.alias')
+rec(VARIABLE,
+    'variable.other.readwrite.assignment')
+rec(KEYWORD,
+    'support.function.trap')
 rec(FOREGROUND,
     'keyword.control.case.item',
     'keyword.control.conditional.patterns.end',
