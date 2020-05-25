@@ -122,26 +122,42 @@ def txt(*scopes):
     ROOT_SCOPES = list(f"text.{s}" for s in scopes)
 
 
+def regroup(scopes):
+    if len(scopes) <= 1:
+        return scopes
+
+    simple_scopes = " | ".join(scope for scope in scopes if " " not in scope)
+    scopes = [scope for scope in scopes if " " in scope]
+
+    if simple_scopes:
+        scopes.append(simple_scopes)
+
+    return scopes
+
+
+def expand(scope):
+    if not ROOT_SCOPES:
+        yield scope
+        return
+
+    if "|" in scope and "&" not in scope:
+        scope = f"& ({scope})"
+    elif "&" in scope:
+        scope = f"& {scope}"
+
+    for root_scope in ROOT_SCOPES:
+        yield f"{root_scope} {scope}"
+
+
 def rec(style, *scopes):
     if not isinstance(style, Style):
         style = Style(style)
 
-    def expand(scope):
-        if ROOT_SCOPES:
-            if '|' in scope:
-                scope = f"& ({scope})"
-            for root_scope in ROOT_SCOPES:
-                yield f"{root_scope} {scope}"
-        else:
-            yield scope
-
-    for scope in chain.from_iterable(expand(s) for s in scopes):
+    for scope in chain.from_iterable(expand(s) for s in regroup(scopes)):
         COLOR_SCHEME['rules'].append({'scope': scope, **style.settings})
 
 
 def generate():
-    global COLOR_SCHEME
-
     path = Path(__file__).resolve().parent.parent / "Disco.sublime-color-scheme"
 
     with path.open(mode='w') as json_file:
