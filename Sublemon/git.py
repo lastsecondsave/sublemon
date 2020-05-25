@@ -1,6 +1,19 @@
 import re
+import subprocess
 
+from sublime_plugin import WindowCommand
+
+from . import find_in_file_parents
 from .chimney import ChimneyBuildListener, ChimneyCommand
+
+
+class GitGuiCommand(WindowCommand):
+    def run(self):
+        dotgit = find_in_file_parents(self.window.active_view(), ".git")
+        if dotgit:
+            subprocess.Popen("git gui", cwd=dotgit.parent, shell=True)
+        else:
+            self.window.status_message("No git repository")
 
 
 class GitDiffCommand(ChimneyCommand):
