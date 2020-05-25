@@ -24,6 +24,12 @@
 
   "build_systems": [
     {
+      "name": "Sublemon - Publish Settings",
+      "target": "python",
+      "cmd": ["scripts/publish_settings.py"],
+      "working_dir": "${project_path}/Sublemon"
+    },
+    {
       "name": "Sublemon - Pylint",
       "target": "pylint",
       "cmd": [
