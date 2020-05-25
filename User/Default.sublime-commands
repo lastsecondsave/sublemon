@@ -15,6 +15,7 @@
   { "caption": "Git: Diff", "command": "git_diff" },
   { "caption": "Git: Log", "command": "git_log" },
   { "caption": "Git: Blame", "command": "git_blame "},
+  { "caption": "Git: Gui", "command": "git_gui "},
 
   { "caption": "Reindent JSON", "command": "json_reindent" },
   { "caption": "Select Between", "command": "select_between_markers" }
