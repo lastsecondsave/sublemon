@@ -2,9 +2,11 @@
 ---
 name: Unix Config
 scope: source.unix
-first_line_match: '^#(?!!/).+'
+first_line_match: "^#(?!!/).+"
 
 contexts:
   main:
-  - match: ^\s*(#).*$
-    scope: comment.line.number-sign.git
+    - match: ^\s*(#).*$
+      scope: comment.line.number-sign.unix
+      captures:
+        1: punctuation.definition.comment.unix
