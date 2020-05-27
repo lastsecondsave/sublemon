@@ -58,6 +58,7 @@ $TextFiles = @(
     'java', 'properties', 'groovy', 'clj', 'gradle', 'kt',
     'js', 'json',
     'c', 'cpp', 'cu', 'h', 'hpp',
+    'rs',
     'go',
     'py',
     'ps1', 'psm1',
