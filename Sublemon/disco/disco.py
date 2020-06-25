@@ -173,8 +173,7 @@ rec(PRIMITIVE,
     'constant.character',
     'constant.language',
     'storage.type.numeric',
-    'punctuation.separator.decimal',
-    'string constant.other.placeholder')
+    'punctuation.separator.decimal')
 rec(STRING,
     'string -string.unquoted',
     'string.quoted')
@@ -240,10 +239,8 @@ rec(KEYWORD,
     'keyword.operator.logical')
 rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
-rec(STRING + BOLD,
-    'string source.sql keyword.other')
-rec(STRING + ITALIC,
-    'string source.sql storage')
+rec(STRING,
+    'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
 rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
