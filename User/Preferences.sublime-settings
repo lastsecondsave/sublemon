@@ -20,6 +20,7 @@
 	"copy_with_empty_selection": false,
 	"default_line_ending": "unix",
 	"drag_text": false,
+	"draw_shadows": false,
 	"enable_tab_scrolling": true,
 	"enable_telemetry": "disabled",
 	"ensure_newline_at_eof_on_save": true,
