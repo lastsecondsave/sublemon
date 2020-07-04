@@ -1,7 +1,11 @@
+import os
 import re
+from pathlib import Path
 
-from . import pref, project_pref
+from . import RUNNING_ON_WINDOWS, pref, project_pref
 from .chimney import ChimneyBuildListener, ChimneyCommand
+
+DEFAULT_BINARY = "python" if RUNNING_ON_WINDOWS else "python3"
 
 
 def setup_python_exec(build, module=None):
@@ -9,12 +13,26 @@ def setup_python_exec(build, module=None):
         build.cmd.appendleft("-m", module)
 
     key = "python_binary"
-    binary = project_pref(build.window, key) or pref(key, "python")
+    binary = project_pref(build.window, key) or pref(key, DEFAULT_BINARY)
 
     build.cmd.appendleft(binary)
 
     build.env["PYTHONIOENCODING"] = "utf-8"
     build.env["PYTHONUNBUFFERED"] = "1"
+
+    if venv := project_pref(build.window, "python_venv"):
+        setup_venv(build, venv)
+
+
+def setup_venv(build, venv):
+    build.env["VIRTUAL_ENV"] = venv
+    build.env["PYTHONPATH"] = None
+
+    scripts = Path(venv, "Scripts")
+    build.env["PATH"] = f'{scripts}{os.pathsep}{os.environ["PATH"]}'
+    build.cmd.shell = True
+
+    print(f" Using venv: {venv}")
 
 
 class PythonCommand(ChimneyCommand):
