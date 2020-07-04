@@ -12,16 +12,19 @@ def setup_python_exec(build, module=None):
     if module := build.opt("module") or module:
         build.cmd.appendleft("-m", module)
 
-    key = "python_binary"
-    binary = project_pref(build.window, key) or pref(key, DEFAULT_BINARY)
+    binary = DEFAULT_BINARY
+    venv = project_pref(build.window, "python_venv")
+
+    if venv:
+        setup_venv(build, venv)
+    else:
+        key = "python_binary"
+        binary = project_pref(build.window, key) or pref(key, DEFAULT_BINARY)
 
     build.cmd.appendleft(binary)
 
     build.env["PYTHONIOENCODING"] = "utf-8"
     build.env["PYTHONUNBUFFERED"] = "1"
-
-    if venv := project_pref(build.window, "python_venv"):
-        setup_venv(build, venv)
 
 
 def setup_venv(build, venv):
