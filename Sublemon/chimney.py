@@ -343,8 +343,13 @@ def start_process(cmd, env, cwd):
 
     if env:
         os_env = os.environ.copy()
-        os_env.update({k: os.path.expandvars(v) for k, v in env.items()})
         process_params["env"] = os_env
+
+        for key, val in env.items():
+            if val is None:
+                os_env.pop(key, None)
+            else:
+                os_env[key] = os.path.expandvars(val)
 
     return subprocess.Popen(cmd.args, **process_params)
 
