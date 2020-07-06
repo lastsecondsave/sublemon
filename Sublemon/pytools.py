@@ -6,6 +6,7 @@ from . import RUNNING_ON_WINDOWS, pref, project_pref
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 DEFAULT_BINARY = "python" if RUNNING_ON_WINDOWS else "python3"
+VENV_BIN = "Scripts" if RUNNING_ON_WINDOWS else "bin"
 
 
 def setup_python_exec(build, module=None):
@@ -31,8 +32,7 @@ def setup_venv(build, venv):
     build.env["VIRTUAL_ENV"] = venv
     build.env["PYTHONPATH"] = None
 
-    scripts = Path(venv, "Scripts")
-    build.env["PATH"] = f'{scripts}{os.pathsep}{os.environ["PATH"]}'
+    build.env["PATH"] = os.pathsep.join((Path(venv, VENV_BIN), os.environ["PATH"]))
     build.cmd.shell = True
 
     print(f" Using venv: {venv}")
