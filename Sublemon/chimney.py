@@ -351,7 +351,9 @@ def start_process(cmd, env, cwd):
             else:
                 os_env[key] = os.path.expandvars(val)
 
-    return subprocess.Popen(cmd.args, **process_params)
+    args = cmd.args if not cmd.shell else str(cmd)
+
+    return subprocess.Popen(args, **process_params)
 
 
 def kill_process(process):
