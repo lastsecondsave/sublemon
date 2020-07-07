@@ -12,12 +12,10 @@ def pref(key, default=None):
     return settings.get(key, default)
 
 
-def project_pref(window, key, default=None):
-    settings = window.project_data().get("settings")
-    if not settings:
-        return None
-
-    value = settings.get(key, default)
+def project_pref(window, key):
+    value = (window.project_data() or {}).get("settings", {}).get(key)
+    if not value:
+        return value
     return sublime.expand_variables(value, window.extract_variables())
 
 
