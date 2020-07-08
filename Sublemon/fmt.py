@@ -47,7 +47,7 @@ class Prettier(Formatter):
             if parser == "markdown":
                 cmd += ["--prose-wrap=always", "--print-width=100"]
 
-        return cmd
+        return " ".join(cmd)
 
 
 def matched_scope(view, scopes):
