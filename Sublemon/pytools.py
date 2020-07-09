@@ -32,7 +32,7 @@ def setup_venv(build, venv):
     build.env["VIRTUAL_ENV"] = venv
     build.env["PYTHONPATH"] = None
 
-    build.env["PATH"] = os.pathsep.join((Path(venv, VENV_BIN), os.environ["PATH"]))
+    build.env["PATH"] = f"{Path(venv, VENV_BIN)}{os.pathsep}$PATH"
     build.cmd.shell = True
 
     print(f" Using venv: {venv}")
