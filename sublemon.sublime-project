@@ -30,10 +30,18 @@
       "working_dir": "${project_path}/Sublemon"
     },
     {
-      "name": "Sublemon - Pylint",
+      "name": "Sublemon - Pylint - Plugins",
       "target": "pylint",
       "cmd": [
         "Sublemon",
+        "--init-hook=import sys; sys.path.append('../../Lib/python38')"
+      ],
+      "working_dir": "${project_path}"
+    },
+    {
+      "name": "Sublemon - Pylint - Scripts",
+      "target": "pylint",
+      "cmd": [
         "snippets/snippets_lib.py",
         "settings/settings_lib.py",
         "disco/disco.py",
