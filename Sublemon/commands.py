@@ -1,5 +1,5 @@
 import html
-import imp
+import importlib
 import json
 import os
 import re
@@ -24,7 +24,7 @@ class SublemonReloadCommand(ApplicationCommand):
         modules = [v for k, v in sys.modules.items() if k.startswith("Sublemon")]
         for module in modules:
             print("reloading", module.__name__)
-            imp.reload(module)
+            importlib.reload(module)
 
         sublime.active_window().status_message("Reloaded")
 
