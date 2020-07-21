@@ -195,7 +195,7 @@ rec(INDEXED,
 rec(PARAMETER,
     'variable.parameter & (meta.function.parameters | meta.function.declaration)')
 rec(PARAMETER + ITALIC,
-    'variable.parameter & -meta.function.inline & -meta.function.declaration & (meta.annotation | meta.function-call)')
+    'variable.parameter & -meta.function.inline & -meta.function.declaration & (meta.annotation | meta.function-call) & -source.shell')
 rec(VARIABLE,
     'variable.language',
     'support.constant',
@@ -358,6 +358,7 @@ rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'keyword.operator.expansion',
     'keyword.operator.logical.pipe',
+    'keyword.operator.logical.job',
     'keyword.operator.assignment.redirection',
     'keyword.operator.end-of-options')
 rec(STORAGE,
