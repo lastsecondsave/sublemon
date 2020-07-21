@@ -50,31 +50,20 @@
       "working_dir": "${project_path}/Sublemon"
     },
     {
-      "name": "Sublemon - isort",
+      "name": "Sublemon - Isort",
       "target": "python",
       "module": "isort",
-      "cmd": [
-        "--recursive",
-        "--line-width=88",
-        "--multi-line=3",
-        "--trailing-comma",
-        "--skip-glob=*snippets.py",
-        "${project_path}/Sublemon"
-      ]
+      "cmd": ["--recursive", "${project_path}/Sublemon"]
     },
     {
       "name": "Sublemon - Black",
       "target": "python",
       "module": "black",
-      "cmd": [
-        "--exclude",
-        "(disco|settings|snippets)\\.py",
-        "${project_path}/Sublemon"
-      ]
+      "cmd": ["${project_path}/Sublemon"]
     }
   ],
 
   "settings": {
-    "pylintrc": "${project_path}/Sublemon/pylintrc"
+    "pylintrc": "${project_path}/Sublemon/pyproject.toml"
   }
 }
