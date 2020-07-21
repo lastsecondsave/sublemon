@@ -1,7 +1,0 @@
-[MESSAGE CONTROL]
-disable=
-    missing-docstring,
-    no-self-use,
-    subprocess-run-check,
-    too-few-public-methods,
-    too-many-instance-attributes
