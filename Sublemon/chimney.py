@@ -73,23 +73,33 @@ class BuildError(Exception):
 
 class Cmd:
     def __init__(self, options):
-        cmd = options.get("shell_cmd") or options.get("cmd", [])
-        if isinstance(cmd, str):
-            cmd = shlex.split(cmd)
-        self.args = deque(cmd)
-        self.shell = "shell_cmd" in options or options.get("shell", False)
+        self.args = deque()
+        self.cmdline = None
+
+        if shell_cmd := options.get("shell_cmd"):
+            self.shell = True
+            self.cmdline = shell_cmd
+        elif cmd := options.get("cmd"):
+            self.shell = options.get("shell", False)
+            self.args.extend(cmd)
+
+    def split_args(self):
+        if not self.args and self.cmdline:
+            self.args = deque(shlex.split(self.cmdline))
 
     def append(self, *chunks):
+        self.split_args()
         self.args.extend(chunks)
 
     def appendleft(self, *chunks):
+        self.split_args()
         self.args.extendleft(reversed(chunks))
 
     def __str__(self):
-        return " ".join(map(shlex.quote, self.args))
+        return shlex.join(self.args) if self.args else self.cmdline
 
     def __bool__(self):
-        return bool(self.args)
+        return bool(self.args or self.cmdline)
 
 
 class Build:
