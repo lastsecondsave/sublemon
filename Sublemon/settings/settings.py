@@ -26,6 +26,5 @@ settings("source.powershell",
          block_comment=('<#', '#>'))
 
 settings("source.python",
-         line_comment='#',
          increase_indent_pattern=r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
          decrease_indent_pattern=r"^\s*((elif|else|except|finally)\b.*:|[\}\]])")
