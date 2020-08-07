@@ -24,9 +24,9 @@
 
   "build_systems": [
     {
-      "name": "Sublemon - Publish Settings",
+      "name": "Sublemon - Publish",
       "target": "python",
-      "cmd": ["scripts/publish_settings.py"],
+      "cmd": ["scripts/publish.py"],
       "working_dir": "${project_path}/Sublemon"
     },
     {
