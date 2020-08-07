@@ -28,10 +28,12 @@ def mute(path):
     elif ext == ".sublime-keymap":
         path.write_text("[]")
     elif ext == ".tmPreferences":
-        path.write_text('<plist><dict>'
-                        '<key>scope</key><string>_</string>'
-                        '<key>settings</key><dict/>'
-                        '</dict></plist>')
+        path.write_text(
+            "<plist><dict>"
+            "<key>scope</key><string>_</string>"
+            "<key>settings</key><dict/>"
+            "</dict></plist>"
+        )
     else:
         path.write_text("")
 
