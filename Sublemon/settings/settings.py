@@ -29,10 +29,3 @@ settings("source.python",
          line_comment='#',
          increase_indent_pattern=r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
          decrease_indent_pattern=r"^\s*((elif|else|except|finally)\b.*:|[\}\]])")
-
-settings("source.python entity.name.class, source.python entity.name.function",
-         show_in_symbol_list=1,
-         show_in_indexed_symbol_list=1)
-
-settings("text.xml",
-         block_comment=('<!--', '-->'))
