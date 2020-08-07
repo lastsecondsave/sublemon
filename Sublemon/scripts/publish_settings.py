@@ -41,15 +41,12 @@ def mute(path):
 def mute_files():
     mute(PACKAGES / "Python" / "Python.sublime-build")
     mute(PACKAGES / "Python" / "Miscellaneous.tmPreferences")
-    mute(PACKAGES / "Python" / "Symbol List.tmPreferences")
 
     mute(PACKAGES / "Rust" / "Default.sublime-keymap")
 
     mute(PACKAGES / "Java" / "Ant.sublime-build")
     mute(PACKAGES / "Java" / "JavaC.sublime-build")
     mute(PACKAGES / "Java" / "Java.sublime-completions")
-
-    mute(PACKAGES / "XML" / "Comments.tmPreferences")
 
 
 if __name__ == "__main__":
