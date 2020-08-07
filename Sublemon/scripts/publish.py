@@ -42,7 +42,7 @@ def mute(path):
 
 def mute_files():
     mute(PACKAGES / "Python" / "Python.sublime-build")
-    mute(PACKAGES / "Python" / "Miscellaneous.tmPreferences")
+    mute(PACKAGES / "Python" / "Indentation Rules.tmPreferences")
 
     mute(PACKAGES / "Rust" / "Default.sublime-keymap")
 
