@@ -5,13 +5,13 @@
 	"auto_match_enabled": true,
 	"binary_file_patterns":
 	[
-		"*.bak",
 		"*.bmp",
-		"*.ico",
 		"*.gif",
+		"*.ico",
 		"*.jpg",
+		"*.png",
+		"*.bak",
 		"*.orig",
-		"*.png"
 	],
 	"caret_extra_bottom": 0,
 	"caret_extra_top": 0,
@@ -27,18 +27,16 @@
 	"fallback_encoding": "cyrillic (windows 1251)",
 	"file_exclude_patterns":
 	[
-		"*.class",
-		"*.dll",
-		"*.exe",
-		"*.iml",
-		"*.ipr",
-		"*.iws",
-		"*.jar",
-		"*.pyc",
-		"*.pdb",
 		"*.sublime-workspace",
+		".project",
 		".DS_Store",
-		".project"
+		"*.class",
+		"*.jar",
+		"*.exe",
+		"*.a",
+		"*.so",
+		"*.dll",
+		"*.pyc",
 	],
 	"find_selected_text": false,
 	"folder_exclude_patterns":
