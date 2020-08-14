@@ -75,12 +75,12 @@ class Cmd:
     def __init__(self, options):
         self.args = deque()
         self.cmdline = None
+        self.shell = options.get("shell", False)
 
         if shell_cmd := options.get("shell_cmd"):
             self.shell = True
             self.cmdline = shell_cmd
         elif cmd := options.get("cmd"):
-            self.shell = options.get("shell", False)
             self.args.extend(cmd)
 
     def split_args(self):
