@@ -191,11 +191,10 @@ rec(OPERATOR,
     'keyword.operator -string.quoted',
     'punctuation.separator')
 rec(INDEXED,
-    'entity.name -comment -meta.function-call')
+    'entity.name -comment -meta.function-call',
+    'markup.heading')
 rec(PARAMETER,
-    'variable.parameter & (meta.function.parameters | meta.function.declaration)')
-rec(PARAMETER + ITALIC,
-    'variable.parameter & -meta.function.inline & -meta.function.declaration & (meta.annotation | meta.function-call) & -source.shell')
+    'variable.parameter')
 rec(VARIABLE,
     'variable.language',
     'support.constant',
@@ -214,21 +213,6 @@ rec(TAG,
 rec(TAG_ATTRIBUTE,
     'entity.other.attribute-name -comment')
 
-rec(FADED_VIOLET,
-    'comment.block.documentation & (entity | punctuation -punctuation.definition.comment | string.quoted.double)')
-
-rec(STRING,
-    'markup.raw -markup.raw.code-fence -markup.raw.block -comment')
-rec(INDEXED,
-    'markup.heading')
-rec(ITALIC,
-    'markup.italic -punctuation',
-    'markup.quote')
-rec(BOLD,
-    'markup.bold -punctuation')
-rec(UNDERLINE,
-    'markup.underline.link')
-
 rec(Highlight(GREEN, 0.1), 'diff.inserted')
 rec(Highlight(GREEN, 0.3, 'l(+ 10%)'), 'diff.inserted.char')
 rec(Highlight(CRIMSON, 0.2), 'diff.deleted')
@@ -245,6 +229,8 @@ rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
     'source.regexp & (constant.character.character-class | constant.other.character-class.set)')
+rec(ITALIC,
+    '(meta.function-call.arguments variable.parameter) & -meta.function.inline')
 
 src('js')
 rec(TAG + ITALIC,
@@ -294,7 +280,8 @@ rec(META,
     'punctuation.definition.annotation',
     'variable.annotation')
 rec(COMMENT_HIGHLIGHT,
-    'comment.block.documentation keyword',
+    'meta.block-tag keyword')
+rec(COMMENT_HIGHLIGHT + ITALIC,
     'meta.block-tag variable.parameter')
 rec(SPECIAL,
     'entity.name.constant',
@@ -375,9 +362,11 @@ rec(FOREGROUND,
 
 src('c++')
 rec(SPECIAL,
-    'entity.name.constant.preprocessor')
+    'meta.preprocessor keyword.control.import')
 rec(KEYWORD,
     'keyword.operator.word')
+rec(VARIABLE,
+    'entity.name.constant.preprocessor')
 
 src('rust')
 rec(STORAGE,
@@ -448,6 +437,14 @@ rec(GRAY,
     'punctuation.definition.italic',
     'punctuation.definition.raw.code-fence',
     'meta.code-fence.definition constant.other.language-name')
+rec(STRING,
+    'markup.raw.inline')
+rec(ITALIC,
+    'markup.italic -punctuation')
+rec(BOLD,
+    'markup.bold -punctuation')
+rec(UNDERLINE,
+    'markup.underline.link')
 
 src('diff')
 rec(META, 'meta.diff.range')
