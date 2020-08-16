@@ -4,7 +4,7 @@ import sublime
 from sublime import Region
 from sublime_plugin import TextCommand, WindowCommand
 
-from . import find_in_file_parents, indent_params, view_cwd
+from . import RUNNING_ON_WINDOWS, find_in_file_parents, indent_params, view_cwd
 
 
 class Formatter:
@@ -50,6 +50,26 @@ class Prettier(Formatter):
         return " ".join(cmd)
 
 
+class ClangFormat(Formatter):
+    SCOPES = ("source.c++", "source.c", "source.java")
+    BINARY = "clang-format-11"
+
+    def match(self, view):
+        return bool(matched_scope(view, self.SCOPES))
+
+    def cmd(self, view):
+        scope = matched_scope(view, self.SCOPES)
+        binary = f"wsl {self.BINARY}" if RUNNING_ON_WINDOWS else self.BINARY
+        config = find_in_file_parents(view, ".clang-format")
+
+        cmd = [binary, f"--assume-filename={scope}"]
+
+        if not config:
+            cmd.append('-style="{IndentWidth: 4, ColumnLimit: 88}"')
+
+        return " ".join(cmd)
+
+
 def matched_scope(view, scopes):
     matched = (scope for scope in scopes if view.match_selector(0, scope))
     return next(matched, None)
@@ -58,6 +78,7 @@ def matched_scope(view, scopes):
 class FmtCommand(WindowCommand):
     FORMATTERS = (
         Prettier(),
+        ClangFormat(),
         Formatter("source.rust", "rustfmt"),
         Formatter("source.python", "black -"),
     )
