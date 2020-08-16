@@ -9,6 +9,7 @@
 	[
 		"Alignment",
 		"ApplySyntax",
+		"CMake",
 		"Horizontal Scroll",
 		"Package Control",
 		"TOML",
