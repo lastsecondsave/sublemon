@@ -65,7 +65,8 @@ class ClangFormat(Formatter):
         cmd = [binary, f"--assume-filename={scope}"]
 
         if not config:
-            cmd.append('-style="{IndentWidth: 4, ColumnLimit: 88}"')
+            _, tab_width = indent_params(view)
+            cmd.append(f'-style="{{IndentWidth: {tab_width}, ColumnLimit: 88}}"')
 
         return " ".join(cmd)
 
