@@ -66,7 +66,7 @@ class ClangFormat(Formatter):
 
         if not config:
             _, tab_width = indent_params(view)
-            cmd.append(f'-style="{{IndentWidth: {tab_width}, ColumnLimit: 88}}"')
+            cmd.append(f'-style="{{BasedOnStyle: Google, IndentWidth: {tab_width}}}"')
 
         return " ".join(cmd)
 
