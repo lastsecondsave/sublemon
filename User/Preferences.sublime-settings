@@ -68,6 +68,7 @@
 		"Vintage",
 	],
 	"ignored_snippets": [
+		"C++/*",
 		"Java/*",
 		"JavaScript/*",
 		"Python/*",
