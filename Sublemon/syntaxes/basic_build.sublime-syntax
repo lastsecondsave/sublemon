@@ -11,4 +11,4 @@ contexts:
         1: entity.name.filename
         2: constant.numeric
         3: constant.numeric
-        4: markup.italic comment.category.description
+        4: style.italic comment.category.description
