@@ -213,6 +213,10 @@ rec(TAG,
 rec(TAG_ATTRIBUTE,
     'entity.other.attribute-name -comment')
 
+rec(ITALIC, 'style.italic')
+rec(BOLD, 'style.bold')
+rec(UNDERLINE, 'style.underline')
+
 rec(Highlight(GREEN, 0.1), 'diff.inserted')
 rec(Highlight(GREEN, 0.3, 'l(+ 10%)'), 'diff.inserted.char')
 rec(Highlight(CRIMSON, 0.2), 'diff.deleted')
