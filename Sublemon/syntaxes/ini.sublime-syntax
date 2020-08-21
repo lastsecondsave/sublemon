@@ -6,7 +6,6 @@ file_extensions:
   - ini
   - inf
   - reg
-first_line_match: '^\[[^\[]+\]$'
 
 contexts:
   main:
