@@ -201,7 +201,7 @@ rec(VARIABLE,
     'support.variable',
     'variable.other.substitution')
 rec(PUNCTUATION,
-    'punctuation.separator.continuation -source.c++',
+    'punctuation.separator.continuation',
     'punctuation.definition.template-expression',
     'punctuation.definition.variable',
     'punctuation.section.interpolation')
@@ -355,14 +355,39 @@ rec(PUNCTUATION,
 rec(STORAGE,
     'support.function.alias')
 rec(VARIABLE,
-    'variable.other.readwrite.assignment')
+    'meta.variable variable.other.readwrite')
 rec(KEYWORD,
     'support.function.trap')
+rec(COMMENT,
+    'constant.language.shebang')
 rec(FOREGROUND,
     'keyword.control.case.item',
     'keyword.control.conditional.patterns.end',
     'variable.language.tilde',
     'variable.parameter.option')
+
+src('makefile')
+rec(PUNCTUATION,
+    'keyword.other.single-character-variable',
+    'variable.parameter keyword.other.block')
+rec(VARIABLE,
+    'variable.other')
+rec(FOREGROUND,
+    'variable.parameter')
+
+src('cmake')
+rec(VARIABLE,
+    'variable.other.readwrite.assignment')
+rec(PUNCTUATION,
+    'meta.text-substitution punctuation.section.braces')
+rec(KEYWORD,
+    'keyword.operator.logical',
+    'support.function.function',
+    'support.function.endfunction',
+    'support.function.macro',
+    'support.function.endmacro')
+rec(INDEXED,
+    'entity.name.function')
 
 src('c++')
 rec(SPECIAL,
