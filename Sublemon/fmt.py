@@ -82,6 +82,7 @@ class FmtCommand(WindowCommand):
         ClangFormat(),
         Formatter("source.rust", "rustfmt"),
         Formatter("source.python", "black -"),
+        Formatter("source.cmake", "cmake-format -"),
     )
 
     def run(self):
