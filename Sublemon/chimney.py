@@ -148,27 +148,28 @@ class Build:
         return self.window.active_view().file_name()
 
 
-class ChimneyCommand(WindowCommand):
-    builds = {}
-    panels = {}
+BUILDS = {}
+PANELS = {}
 
+
+class ChimneyCommand(WindowCommand):
     @property
     def wid(self):
         return self.window.id()
 
     @property
     def active_build(self):
-        return self.builds.get(self.wid)
+        return BUILDS.get(self.wid)
 
     @active_build.setter
     def active_build(self, value):
-        self.builds[self.wid] = value
+        BUILDS[self.wid] = value
 
     @property
     def panel(self):
-        panel = self.panels.get(self.wid)
+        panel = PANELS.get(self.wid)
         if not panel:
-            return self.panels.setdefault(self.wid, OutputPanel(self.window))
+            return PANELS.setdefault(self.wid, OutputPanel(self.window))
         return panel
 
     def setup(self, build):
@@ -225,8 +226,8 @@ class ChimneyCommand(WindowCommand):
         print("⌛ [{}] {}".format(self.active_build.process.pid, build.cmd))
 
     def __del__(self):
-        self.builds.pop(self.wid, None)
-        self.panels.pop(self.wid, None)
+        BUILDS.pop(self.wid, None)
+        PANELS.pop(self.wid, None)
 
 
 class BufferedPipe:
