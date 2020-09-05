@@ -22,6 +22,8 @@ from . import indent_params
 class SublemonReloadCommand(ApplicationCommand):
     def run(self):
         modules = [v for k, v in sys.modules.items() if k.startswith("Sublemon")]
+        modules.append(sys.modules["Default.exec"])
+
         for module in modules:
             print("reloading", module.__name__)
             importlib.reload(module)
