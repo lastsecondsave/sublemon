@@ -223,7 +223,7 @@ class ChimneyCommand(WindowCommand):
 
         self.active_build = start_build(build, self.window, self.panel)
 
-        print("⌛ [{}] {}".format(self.active_build.process.pid, build.cmd))
+        print("⭍ [{}] {}".format(self.active_build.process.pid, build.cmd))
 
     def __del__(self):
         BUILDS.pop(self.wid, None)
