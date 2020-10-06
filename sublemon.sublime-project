@@ -53,7 +53,7 @@
       "name": "Sublemon - Isort",
       "target": "python",
       "module": "isort",
-      "cmd": ["--recursive", "${project_path}/Sublemon"]
+      "cmd": ["${project_path}/Sublemon"]
     },
     {
       "name": "Sublemon - Black",
