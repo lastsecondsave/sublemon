@@ -40,6 +40,8 @@
 
   /* CTRL + ALT */
 
+  { "keys": ["ctrl+alt+up"], "command": "select_lines", "args": {"forward": false} },
+  { "keys": ["ctrl+alt+down"], "command": "select_lines", "args": {"forward": true} },
   { "keys": ["ctrl+alt+pageup"], "command": "prev_view", "args": {"extend": true} },
   { "keys": ["ctrl+alt+pagedown"], "command": "next_view", "args": {"extend": true} },
   { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
