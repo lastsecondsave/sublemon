@@ -34,7 +34,7 @@
       "target": "pylint",
       "cmd": [
         "Sublemon",
-        "--init-hook=import sys; sys.path.append('../../Lib/python38')"
+        "--init-hook=import sys; sys.path.extend(['/opt/sublime_text/Lib/python38', '../../Lib/python38'])"
       ],
       "working_dir": "${project_path}"
     },
