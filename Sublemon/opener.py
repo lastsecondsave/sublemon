@@ -35,7 +35,7 @@ class OpenFilePathCommand(WindowCommand):
             if root == "~":
                 root = Path.home()
             elif root == "@":
-                root = self.find_project_folder()
+                root = self.find_parent_folder()
             elif root == "#":
                 root = tempfile.gettempdir()
 
@@ -44,7 +44,7 @@ class OpenFilePathCommand(WindowCommand):
         root = Path(self.window.active_view().file_name()).parent
         return Path(root, path)
 
-    def find_project_folder(self):
+    def find_parent_folder(self):
         folders = self.window.folders()
 
         active_file = self.window.active_view().file_name()
