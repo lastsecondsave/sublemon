@@ -25,7 +25,12 @@
     "qp_match": "#77ABFF",
 
     "sidebar_label": "#838495",
-    "popup_bg": "#2B333A"
+    "popup_bg": "#2B333A",
+
+    "font": "system",
+    "font_size": 12,
+    "font_size_statusbar": 11,
+    "font_size_quickpanel": 13
   },
 
   "rules": [
@@ -66,13 +71,15 @@
     {
       "class": "sidebar_heading",
       "fg": "var(WHITE)",
-      "font.size": 12,
+      "font.face": "var(font)",
+      "font.size": "var(font_size)",
       "font.bold": true
     },
     {
       "class": "sidebar_label",
       "fg": "var(sidebar_label)",
-      "font.size": 12
+      "font.face": "var(font)",
+      "font.size": "var(font_size)"
     },
     {
       "class": "sidebar_label",
@@ -339,7 +346,9 @@
       "class": "tab_label",
       "fg": [152, 152, 152],
       "shadow_color": [0, 0, 0, 0.25],
-      "shadow_offset": [0, -1]
+      "shadow_offset": [0, -1],
+      "font.face": "var(font)",
+      "font.size": "var(font_size)"
     },
     {
       "class": "tab_label",
@@ -520,19 +529,23 @@
       "fg": "var(qp_label)",
       "match_fg": "var(qp_match)",
       "selected_fg": "var(CLEAR_WHITE)",
-      "selected_match_fg": "var(qp_match)"
+      "selected_match_fg": "var(qp_match)",
+      "font.face": "var(font)",
+      "font.size": "var(font_size_quickpanel)"
     },
     {
       "class": "quick_panel_label",
       "parents": [{"class": "mini_quick_panel_row"}],
-      "font.size": 13
+      "font.size": "var(font_size_quickpanel)"
     },
     {
       "class": "quick_panel_path_label",
       "fg": "var(qp_path_label)",
       "match_fg": "var(qp_label)",
       "selected_fg": "var(qp_path_label)",
-      "selected_match_fg": "var(qp_label)"
+      "selected_match_fg": "var(qp_label)",
+      "font.face": "var(font)",
+      "font.size": "var(font_size)"
     },
     {
       "class": "quick_panel",
@@ -1070,7 +1083,8 @@
     {
       "class": "label_control",
       "fg": "var(WHITE)",
-      "font.size": 12
+      "font.face": "var(font)",
+      "font.size": "var(font_size)"
     },
     {
       "class": "title_label_control",
@@ -1087,7 +1101,8 @@
     },
     {
       "class": "tool_tip_label_control",
-      "font.size": 11,
+      "font.face": "var(font)",
+      "font.size": "var(font_size)",
       "fg": [64, 64, 64]
     },
 
@@ -1133,7 +1148,8 @@
     {
       "class": "label_control",
       "parents": [{"class": "status_bar"}],
-      "font.size": 11,
+      "font.face": "var(font)",
+      "font.size": "var(font_size_statusbar)",
       "color": "var(CLEAR_WHITE)"
     },
     {
