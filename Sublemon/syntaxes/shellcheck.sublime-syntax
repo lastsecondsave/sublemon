@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: ShellCheck Build Output
+scope: text.log.shellcheck
+hidden: true
+
+contexts:
+  main:
+    - match: '^In (.+?) line (\d+):$'
+      captures:
+        1: entity.name.filename
+        2: constant.numeric
+    - match: '^\s*(\^-*\^?) (\w+): (.*)'
+      captures:
+        1: punctuation.definition.variable
+        2: storage
+        3: string
+
