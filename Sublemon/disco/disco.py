@@ -353,7 +353,7 @@ rec(PUNCTUATION,
     'keyword.operator.assignment.redirection',
     'keyword.operator.end-of-options')
 rec(STORAGE,
-    'support.function.alias')
+    'support.function.alias | support.function.export')
 rec(VARIABLE,
     'meta.variable variable.other.readwrite')
 rec(KEYWORD,
