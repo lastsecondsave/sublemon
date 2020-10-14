@@ -29,6 +29,7 @@
 
     "font": "system",
     "font_size": 12,
+    "font_size_tabs": 11,
     "font_size_statusbar": 11,
     "font_size_quickpanel": 13
   },
@@ -348,7 +349,7 @@
       "shadow_color": [0, 0, 0, 0.25],
       "shadow_offset": [0, -1],
       "font.face": "var(font)",
-      "font.size": "var(font_size)"
+      "font.size": "var(font_size_tabs)"
     },
     {
       "class": "tab_label",
