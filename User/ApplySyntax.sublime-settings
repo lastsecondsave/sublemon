@@ -2,26 +2,17 @@
   "default_syntaxes": [],
 
   "syntaxes": [
-    { "syntax": "Python/Python",
-      "rules": [
-          { "interpreter": "python" },
-          { "interpreter": "pypy" }
-      ]
+    {
+      "syntax": "Python/Python",
+      "rules": [{ "interpreter": "python" }, { "interpreter": "pypy" }]
     },
-    { "syntax": "Sublemon/syntaxes/maven_pom",
-      "rules": [
-          { "file_path": ".*(\\\\|\/)pom\\.xml$" }
-      ]
+    {
+      "syntax": "Sublemon/syntaxes/maven_pom",
+      "rules": [{ "file_path": ".*/(build|pom).xml" }]
     },
-    { "syntax": "Sublemon/syntaxes/unix_config",
-      "rules": [
-          { "file_path": ".*(\\\\|\/)Dockerfile" }
-      ]
-    },
-    { "syntax": "Sublemon/syntaxes/html_template",
-      "rules": [
-          { "first_line": "<template name=.*" }
-      ]
+    {
+      "syntax": "Sublemon/syntaxes/html_template",
+      "rules": [{ "first_line": "<template name=.*" }]
     }
   ]
 }
