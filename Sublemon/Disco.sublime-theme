@@ -1128,12 +1128,6 @@
     },
     {
       "class": "panel_button_control",
-      "layer0.texture": "Theme - Default/common/dark/panels_button.png",
-      "layer0.opacity": { "target": 0.7, "speed": 4.0, "interpolation": "smoothstep" },
-      "content_margin": [12, 11]
-    },
-    {
-      "class": "panel_button_control",
       "attributes": ["hover"],
       "layer0.opacity": { "target": 1.0, "speed": 4.0, "interpolation": "smoothstep" },
     },
