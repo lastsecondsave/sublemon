@@ -66,6 +66,10 @@
 
   /* SHIFT + ALT */
 
+  { "keys": ["shift+alt+f9"], "command": "toggle_ligatures" },
+  { "keys": ["shift+alt+f11"], "command": "toggle_setting", "args": {"setting": "draw_indent_guides"} },
+  { "keys": ["shift+alt+f12"], "command": "toggle_minimap" },
+
   { "keys": ["shift+alt+w"], "command": "insert_snippet",
     "args": {"contents": "<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>"}
   },
@@ -87,7 +91,6 @@
 
   /* L2: CTRL */
 
-  { "keys": ["ctrl+k", "ctrl+e"], "command": "select_between_markers" },
   { "keys": ["ctrl+k", "ctrl+t"], "command": "title_case" },
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
@@ -98,9 +101,7 @@
   { "keys": ["ctrl+k", "ctrl+'"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
 
   { "keys": ["ctrl+k", "ctrl+n"], "command": "clone_file" },
-  { "keys": ["ctrl+k", "ctrl+m"], "command": "toggle_minimap" },
-  { "keys": ["ctrl+k", "ctrl+,"], "command": "toggle_setting", "args": {"setting": "draw_indent_guides"} },
-  { "keys": ["ctrl+k", "ctrl+."], "command": "toggle_ligatures" },
+  { "keys": ["ctrl+k", "ctrl+m"], "command": "select_between_markers" },
 
   /* SEARCH WIDGET */
 
@@ -126,7 +127,6 @@
 
   { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"},
     "context": [
-      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "[A-Z]\\w+(<.*>)?$", "match_all": true }
@@ -135,7 +135,6 @@
 
   { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<$0>"},
     "context": [
-      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "([A-Z]\\w+|::)$", "match_all": true }
@@ -144,7 +143,6 @@
 
   { "keys": [">"], "command": "move", "args": {"by": "characters", "forward": true},
     "context": [
-      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
       { "key": "following_text", "operator": "regex_contains", "operand": "^>", "match_all": true }
@@ -154,7 +152,6 @@
   { "keys": ["backspace"], "command": "run_macro_file",
     "args": {"file": "res://Packages/Default/Delete Left Right.sublime-macro"},
     "context": [
-      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "<$", "match_all": true },
@@ -171,9 +168,15 @@
 
   { "keys": ["'"], "command": "insert_snippet", "args": {"contents": "'$0"},
     "context": [
-      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
       { "key": "selector", "operator": "equal", "operand": "source.rust" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "[&<]$", "match_all": true }
+    ]
+  },
+
+  { "keys": ["$"], "command": "insert_snippet", "args": {"contents": "\\$\\{${0:$SELECTION}\\}"},
+    "context": [
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+      { "key": "selector", "operator": "equal", "operand": "source.shell | source.makefile" },
     ]
   },
 ]
