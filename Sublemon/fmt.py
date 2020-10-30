@@ -81,7 +81,7 @@ class FmtCommand(WindowCommand):
         Prettier(),
         ClangFormat(),
         Formatter("source.rust", "rustfmt"),
-        Formatter("source.python", "black -"),
+        Formatter("source.python", "isort - | black -"),
         Formatter("source.cmake", "cmake-format -"),
     )
 
