@@ -99,6 +99,7 @@ COLOR_SCHEME = {
         'find_highlight': YELLOW,
         'minimap_border': CLEAR_WHITE,
         'brackets_foreground': DARK_ORANGE,
+        'selection_corner_radius': '2',
 
         'line_diff_width': '2',
         'line_diff_added': FADED_GRAY,
