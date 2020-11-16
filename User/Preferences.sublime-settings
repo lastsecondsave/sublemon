@@ -62,6 +62,7 @@
 	"font_face": "PragmataPro Liga",
 	"font_size": 10,
 	"git_diff_target": "head",
+	"hardware_acceleration": "none",
 	"hide_pointer_while_typing": false,
 	"highlight_line": true,
 	"highlight_line_number": false,
