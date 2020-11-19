@@ -122,6 +122,7 @@
 	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_automatic_white_space": false,
+	"trim_only_modified_white_space": false,
 	"trim_trailing_white_space_on_save": "all",
 	"word_wrap": false,
 }
