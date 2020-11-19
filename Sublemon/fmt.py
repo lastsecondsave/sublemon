@@ -41,11 +41,11 @@ class Prettier(Formatter):
         cmd = ["prettier", f"--parser={parser}"]
 
         if not config:
-            use_tabs, tab_width = indent_params(view)
-            cmd += [f"--use-tabs={use_tabs}", f"--tab-width={tab_width}"]
-
             if parser == "markdown":
                 cmd += ["--prose-wrap=always", "--print-width=100"]
+            else:
+                use_tabs, tab_width = indent_params(view)
+                cmd += [f"--use-tabs={use_tabs}", f"--tab-width={tab_width}"]
 
         return " ".join(cmd)
 
