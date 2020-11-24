@@ -134,13 +134,13 @@ class Build:
 
     @property
     def syntax(self):
+        if not self._syntax.endswith((".sublime-syntax", ".tmLanguage")):
+            return f"Packages/Sublemon/syntaxes/{self._syntax}.sublime-syntax"
+
         return self._syntax
 
     @syntax.setter
     def syntax(self, value):
-        if not value.endswith((".sublime-syntax", ".tmLanguage")):
-            value = f"Packages/Sublemon/syntaxes/{value}.sublime-syntax"
-
         self._syntax = value
 
     @property
