@@ -17,3 +17,7 @@ contexts:
       scope: comment.category.description
       captures:
         1: style.italic
+    - match: (\*{1,}) Module (.+)
+      captures:
+        1: comment
+        2: meta.title

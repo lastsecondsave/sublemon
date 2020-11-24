@@ -316,7 +316,7 @@ txt('log')
 rec(CRIMSON, 'meta.indicator.error')
 rec(ORANGE, 'meta.indicator.warning')
 rec(GREEN, 'meta.indicator.success')
-rec(YELLOW, 'meta.message')
+rec(YELLOW, 'meta.message', 'meta.title')
 
 src('cs')
 rec(KEYWORD,
