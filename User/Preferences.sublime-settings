@@ -55,7 +55,6 @@
 		".pytest_cache",
 		".svn",
 		"__pycache__",
-		"build",
 		"node_modules",
 		"target",
 	],
