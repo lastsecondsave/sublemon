@@ -18,6 +18,4 @@
   { "button": "scroll_up",   "modifiers": ["ctrl"], "command": "null" },
   { "button": "scroll_down", "modifiers": ["alt"], "command": "next_view" },
   { "button": "scroll_up",   "modifiers": ["alt"], "command": "prev_view" },
-  { "button": "scroll_down", "modifiers": ["button2"], "command": "scroll_width", "args": {"amount": 20} },
-  { "button": "scroll_up",   "modifiers": ["button2"], "command": "scroll_width", "args": {"amount": -20} }
 ]

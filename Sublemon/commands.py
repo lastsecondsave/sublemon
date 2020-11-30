@@ -413,3 +413,10 @@ class MoveViewCommand(WindowCommand):
 
         if 0 <= group < self.window.num_groups():
             self.window.set_sheet_index(sheet, group, index)
+
+
+class MoveViewportHorizontallyCommand(TextCommand):
+    def run(self, _edit, forward=True):  # pylint: disable=arguments-differ
+        current = self.view.viewport_position()
+        xpos = self.view.viewport_extent()[0] if forward else 0
+        self.view.set_viewport_position((xpos, current[1]), False)
