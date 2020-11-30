@@ -1,3 +1,12 @@
 {
-  "extensions": ["desktop", "inf", "ini", "reg", ".env", ".pylintrc"]
+  "extensions": [
+    ".env",
+    ".gitmodules",
+    ".pylintrc",
+    "desktop",
+    "inf",
+    "ini",
+    "reg",
+    ".gitconfig",
+  ],
 }
