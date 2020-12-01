@@ -418,5 +418,12 @@ class MoveViewCommand(WindowCommand):
 class MoveViewportHorizontallyCommand(TextCommand):
     def run(self, _edit, forward=True):  # pylint: disable=arguments-differ
         current = self.view.viewport_position()
-        xpos = self.view.viewport_extent()[0] if forward else 0
+        if forward:
+            cursor = self.view.sel()[0]
+            line = self.view.line(cursor)
+            line_width = self.view.text_to_layout(line.end())[0]
+            xpos = line_width - self.view.viewport_extent()[0]
+        else:
+            xpos = 0
+
         self.view.set_viewport_position((xpos, current[1]), False)
