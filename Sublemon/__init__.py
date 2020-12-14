@@ -46,3 +46,7 @@ def find_in_file_parents(view, file_name):
             return None
 
     return None
+
+
+def active_view_contains_file(window):
+    return bool(window.active_view() and window.active_view().file_name())

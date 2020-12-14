@@ -3,7 +3,7 @@ import subprocess
 
 from sublime_plugin import WindowCommand
 
-from . import find_in_file_parents
+from . import active_view_contains_file, find_in_file_parents, view_cwd
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 NOT_A_GIT_REPOSITORY = "Not a git repository"
@@ -34,18 +34,15 @@ class GitEditExcludeCommand(WindowCommand):
 
 class GitDiffCommand(ChimneyCommand):
     def setup(self, build):
-        if not build.active_file:
-            build.cancel("No file")
-
         build.cmd.append("git", "diff", build.active_file)
         build.syntax = "Packages/Diff/Diff.tmLanguage"
+
+    def is_enabled(self):
+        return active_view_contains_file(self.window)
 
 
 class GitLogCommand(ChimneyCommand):
     def setup(self, build):
-        if not build.active_file:
-            build.cancel("No file")
-
         build.cmd.append(
             "git",
             "log",
@@ -60,6 +57,9 @@ class GitLogCommand(ChimneyCommand):
 
         build.listener = GitLogBuildListener()
         build.syntax = "git_log"
+
+    def is_enabled(self):
+        return active_view_contains_file(self.window)
 
 
 class GitLogBuildListener(ChimneyBuildListener):
@@ -105,9 +105,6 @@ class GitLogBuildListener(ChimneyBuildListener):
 
 class GitBlameCommand(ChimneyCommand):
     def setup(self, build):
-        if not build.active_file:
-            build.cancel("No file")
-
         build.cmd.append("git", "blame", "--date=short")
 
         view = self.window.active_view()
@@ -124,6 +121,9 @@ class GitBlameCommand(ChimneyCommand):
         build.cmd.append("--", build.active_file)
         build.syntax = "git_blame"
         build.listener = GitBlameBuildListener()
+
+    def is_enabled(self):
+        return active_view_contains_file(self.window)
 
 
 class GitBlameBuildListener(ChimneyBuildListener):
