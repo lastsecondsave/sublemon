@@ -1,10 +1,9 @@
 import re
 import subprocess
-from pathlib import Path
 
 from sublime_plugin import WindowCommand
 
-from . import find_in_file_parents, view_cwd
+from . import find_in_file_parents
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 NOT_A_GIT_REPOSITORY = "Not a git repository"
@@ -21,20 +20,13 @@ class GitGuiCommand(WindowCommand):
 
 class GitEditExcludeCommand(WindowCommand):
     def run(self):
-        process = subprocess.run(
-            "git rev-parse --show-toplevel",
-            encoding="utf-8",
-            capture_output=True,
-            shell=True,
-            cwd=view_cwd(self.window.active_view()),
-        )
+        dotgit = find_in_file_parents(self.window.active_view(), ".git")
 
-        if process.returncode != 0:
+        if not dotgit:
             self.window.status_message(NOT_A_GIT_REPOSITORY)
             return
 
-        path = Path(process.stdout.strip(), ".git", "info", "exclude")
-        exclude_view = self.window.open_file(str(path))
+        exclude_view = self.window.open_file(str(dotgit / "info" / "exclude"))
         exclude_view.set_syntax_file(
             "Packages/Sublemon/syntaxes/unix_config.sublime-syntax"
         )
