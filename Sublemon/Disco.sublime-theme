@@ -549,6 +549,10 @@
       "font.size": "var(font_size)"
     },
     {
+      "class": "quick_panel_detail_label",
+      "link_color": "hsl(210, 45%, 40%)"
+    },
+    {
       "class": "quick_panel",
       "parents": [{"class": "switch_project_window"}],
       "layer0.opacity": 1.0
@@ -731,7 +735,8 @@
     {
       "class": "auto_complete_kind_name_label",
       "font.size": "0.9rem",
-      "font.italic": true,
+      "font.face": "var(font)",
+      "font.italic": false,
       "border_color": "color(var(CLEAR_WHITE) a(0.2))"
     },
 
