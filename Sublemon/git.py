@@ -32,6 +32,15 @@ class GitEditExcludeCommand(WindowCommand):
         )
 
 
+class GitRevertFileCommand(WindowCommand):
+    def run(self):
+        view = self.window.active_view()
+        subprocess.call(["git", "checkout", view.file_name()], cwd=view_cwd(view))
+
+    def is_enabled(self):
+        return active_view_contains_file(self.window)
+
+
 class GitDiffCommand(ChimneyCommand):
     def setup(self, build):
         build.cmd.append("git", "diff", build.active_file)
