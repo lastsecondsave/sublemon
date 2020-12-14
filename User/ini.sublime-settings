@@ -1,12 +1,13 @@
 {
   "extensions": [
+    ".clang-format",
     ".env",
+    ".gitconfig",
     ".gitmodules",
     ".pylintrc",
     "desktop",
     "inf",
     "ini",
-    "reg",
-    ".gitconfig",
-  ],
+    "reg"
+  ]
 }

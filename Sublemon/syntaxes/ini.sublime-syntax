@@ -43,7 +43,7 @@ contexts:
 
   value_on_next_line:
     - include: comments
-    - match: (?=^\s+\S+\s*=)
+    - match: (?=^\s+\S+\s*[=:])
       pop: true
     - match: ^\s++(.+)
       captures:
