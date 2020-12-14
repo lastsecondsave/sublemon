@@ -10,7 +10,7 @@ settings("meta.variables.sublime-syntax entity.name.tag",
          symbol_transformation='/.*/[var] $0/')
 
 settings("source.ini",
-         line_comment=(';', '#'))
+         line_comment=('#', ';'))
 
 settings("source.ini entity.name.section",
          show_in_symbol_list=1)
