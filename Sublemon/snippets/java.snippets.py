@@ -92,7 +92,7 @@ java/'set' - ('setter', setter)
 
 java/'gs' - ('getter + setter', getter + setter)
 
-java/ind/'jd' - ('javadoc', r'/**||${SELECTION/^\s*/ * /mg}$0|| */')
+java/ind/'jd' - ('javadoc', r'/**==>${SELECTION/^\s*/ * /mg}$0==> */')
 
 javadoc = java.subscope('comment.block.documentation.javadoc')
 
