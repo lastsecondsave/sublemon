@@ -478,7 +478,7 @@ rec(UNDERLINE,
 
 src('diff')
 rec(META, 'meta.diff.range')
-rec(FOREGROUND + UNDERLINE, 'entity.name.section')
+rec(META + UNDERLINE, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
