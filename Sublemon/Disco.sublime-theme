@@ -26,6 +26,7 @@
 
     "panel_blue": "#264F78",
     "panel_gray": "#54545E",
+    "label_grey": "#838495",
     "outer_dark": "#161E26",
     "outer_dark_hover": "#1C232B",
 
@@ -33,7 +34,6 @@
     "qp_path_label": "#838495",
     "qp_match": "#77ABFF",
 
-    "sidebar_label": "#838495",
     "popup_bg": "#2B333A",
 
     "font": "system",
@@ -87,7 +87,7 @@
     },
     {
       "class": "sidebar_label",
-      "fg": "var(sidebar_label)",
+      "fg": "var(label_grey)",
       "font.face": "var(font)",
       "font.size": "var(font_size)"
     },
@@ -251,7 +251,7 @@
     {
       "class": "sidebar_label",
       "parents": [{"class": "file_system_entry", "attributes": ["ignored"]}],
-      "color": "color(var(sidebar_label) alpha(0.6))"
+      "color": "color(var(label_grey) alpha(0.6))"
     },
 
     // Tabs
@@ -262,7 +262,7 @@
       "content_margin": [-42, 0, 0, 0],
       "tab_overlap": 10,
       "tab_height": 32,
-      "connector_height": 2,
+      "connector_height": 0,
     },
     {
       "class": "tab_connector",
@@ -327,11 +327,6 @@
       "class": "tab_control",
       "attributes": ["!selected"],
       "layer1.opacity": { "target": 0.0, "speed": 5.0, "interpolation": "smoothstep" },
-    },
-    {
-      "class": "tab_control",
-      "attributes": ["!selected", "hover"],
-      "layer1.opacity": { "target": 0.8, "speed": 5.0, "interpolation": "smoothstep" },
     },
     {
       "class": "tab_control",
@@ -404,14 +399,13 @@
     // Tabs - label
     {
       "class": "tab_label",
-      "fg": [152, 152, 152],
+      "fg": "var(label_grey)",
       "font.face": "var(font)",
       "font.size": "var(font_size_tabs)"
     },
     {
       "class": "tab_label",
       "parents": [{"class": "tab_control", "attributes": ["selected"]}],
-      "opacity": { "target": 1.0, "speed": 5.0, "interpolation": "smoothstep" },
       "fg": "var(CLEAR_WHITE)"
     },
     {
@@ -422,12 +416,11 @@
     {
       "class": "tab_label",
       "parents": [{"class": "tab_control", "attributes": ["!selected"]}],
-      "opacity": { "target": 0.7, "speed": 5.0, "interpolation": "smoothstep" }
     },
     {
       "class": "tab_label",
       "parents": [{"class": "tab_control", "attributes": ["!selected", "hover"]}],
-      "opacity": { "target": 1.0, "speed": 5.0, "interpolation": "smoothstep" }
+      "fg": "var(WHITE)"
     },
 
     // Tabs - close button
