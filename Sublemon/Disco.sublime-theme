@@ -4,10 +4,6 @@
     "icon_tint": "var(base_tint)",
     "shape_tint": "var(base_tint)",
 
-    "tabset_button_opacity": { "target": 0.6, "speed": 4.0, "interpolation": "smoothstep" },
-    "tabset_new_tab_button_opacity": { "target": 0.3, "speed": 4.0, "interpolation": "smoothstep" },
-    "tabset_button_hover_opacity": { "target": 0.8, "speed": 4.0, "interpolation": "smoothstep" },
-
     // Disco
     "WHITE": "#C4C4C4",
     "CLEAR_WHITE": "#FFFFFF",
@@ -259,7 +255,7 @@
       "class": "tabset_control",
       "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 1.0,
-      "content_margin": [-42, 0, 0, 0],
+      "content_margin": [-5, 0, -5, 0],
       "tab_overlap": 10,
       "tab_height": 32,
       "connector_height": 0,
@@ -457,67 +453,30 @@
     {
       "class": "scroll_tabs_left_button",
       "layer0.texture": "Theme - Default/common/tab_scroll_left.png",
-      "layer0.opacity": "var(tabset_button_opacity)",
+      "layer0.opacity": 1,
       "layer0.inner_margin": [1, 0, 13, 0],
-      "content_margin": [11, 12, 10, 12]
-    },
-    {
-      "class": "scroll_tabs_left_button",
-      "attributes": ["hover"],
-      "layer0.opacity": "var(tabset_button_hover_opacity)",
+      "content_margin": 0
     },
     {
       "class": "scroll_tabs_right_button",
       "layer0.texture": "Theme - Default/common/tab_scroll_right.png",
-      "layer0.opacity": "var(tabset_button_opacity)",
+      "layer0.opacity": 1,
       "layer0.inner_margin": [13, 0, 1, 0],
-      // Reduces the right padding on the button due to accomodate for
-      // tab overlap
-      "content_margin": [11, 12, 5, 12],
-    },
-    {
-      "class": "scroll_tabs_right_button",
-      "attributes": ["hover"],
-      "layer0.opacity": "var(tabset_button_hover_opacity)",
+      "content_margin": 0,
     },
     {
       "class": "new_tab_button",
       "layer0.texture": "Theme - Default/common/new_tab.png",
-      "layer0.opacity": "var(tabset_new_tab_button_opacity)",
+      "layer0.opacity": 1,
       "layer0.inner_margin": [21, 0, 1, 0],
-      "content_margin": [12, 12]
-    },
-    {
-      "class": "new_tab_button",
-      "settings": ["!enable_tab_scrolling"],
-      "content_margin": [15, 12]
-    },
-    {
-      "class": "new_tab_button",
-      "settings": ["hide_new_tab_button"],
       "content_margin": 0
-    },
-    {
-      "class": "new_tab_button",
-      "attributes": ["hover"],
-      "layer0.opacity": "var(tabset_button_hover_opacity)",
     },
     {
       "class": "show_tabs_dropdown_button",
       "layer0.texture": "Theme - Default/common/tab_dropdown.png",
-      "layer0.opacity": "var(tabset_button_opacity)",
+      "layer0.opacity": 1,
       "layer0.inner_margin": [1, 0, 21, 0],
-      "content_margin": [11, 12]
-    },
-    {
-      "class": "show_tabs_dropdown_button",
-      "settings": ["hide_new_tab_button"],
-      "content_margin": [13, 12]
-    },
-    {
-      "class": "show_tabs_dropdown_button",
-      "attributes": ["hover"],
-      "layer0.opacity": "var(tabset_button_hover_opacity)",
+      "content_margin": 0
     },
 
     // Quick Panel
