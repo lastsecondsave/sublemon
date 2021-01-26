@@ -296,7 +296,7 @@
       "layer2.tint": "var(WHITE)",
       "layer3.texture": "Theme - Default/common/tab_rounded_divider.png",
       "layer3.inner_margin": [7, 0, 7, 0],
-      "layer3.opacity": { "target": 0.0, "speed": 5.0, "interpolation": "smoothstep" },
+      "layer3.opacity": 0.0,
       "tint_index": 1,
       "tint_modifier": "transparent",
       "accent_tint_index": 2,
@@ -358,42 +358,32 @@
     // Tabs - dividers
     {
       "class": "tab_control",
-      "attributes": ["right", "!left"],
+      "attributes": ["!right", "!left", "!right_of_selected", "!left_of_selected", "!selected"],
+      "layer3.opacity": 0.3
+    },
+    {
+      "class": "tab_control",
+      "attributes": ["right", "!left", "!selected", "!right_of_selected"],
       "layer3.texture": "Theme - Default/common/tab_rounded_divider_right.png",
+      "layer3.opacity": 0.3
     },
     {
       "class": "tab_control",
-      "attributes": ["left_of_selected", "!left", "!right_of_selected", "!right_of_hover", "!selected", "!hover"],
+      "attributes": ["left_of_selected", "!left"],
       "layer3.texture": "Theme - Default/common/tab_rounded_divider_right.png",
-      "layer3.opacity": { "target": 0.3, "speed": 5.0, "interpolation": "smoothstep" },
+      "layer3.opacity": 0.3
     },
     {
       "class": "tab_control",
-      "attributes": ["left_of_hover", "!left", "!right_of_selected", "!right_of_hover", "!selected", "!hover"],
-      "layer3.texture": "Theme - Default/common/tab_rounded_divider_right.png",
-      "layer3.opacity": { "target": 0.3, "speed": 5.0, "interpolation": "smoothstep" },
-    },
-    {
-      "class": "tab_control",
-      "attributes": ["left", "!right"],
+      "attributes": ["left", "!right", "!selected", "!left_of_selected"],
       "layer3.texture": "Theme - Default/common/tab_rounded_divider_left.png",
+      "layer3.opacity": 0.3
     },
     {
       "class": "tab_control",
-      "attributes": ["right_of_selected", "!right", "!left_of_selected", "!left_of_hover", "!selected", "!hover"],
+      "attributes": ["right_of_selected", "!right"],
       "layer3.texture": "Theme - Default/common/tab_rounded_divider_left.png",
-      "layer3.opacity": { "target": 0.3, "speed": 5.0, "interpolation": "smoothstep" },
-    },
-    {
-      "class": "tab_control",
-      "attributes": ["right_of_hover", "!right", "!left_of_selected", "!left_of_hover", "!selected", "!hover"],
-      "layer3.texture": "Theme - Default/common/tab_rounded_divider_left.png",
-      "layer3.opacity": { "target": 0.3, "speed": 5.0, "interpolation": "smoothstep" },
-    },
-    {
-      "class": "tab_control",
-      "attributes": ["!highlighted", "!selected", "!hover", "!left_of_selected", "!right_of_selected", "!left_of_hover", "!right_of_hover"],
-      "layer3.opacity": { "target": 0.3, "speed": 5.0, "interpolation": "smoothstep" },
+      "layer3.opacity": 0.3
     },
 
     // Tabs - label
