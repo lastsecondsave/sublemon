@@ -2,7 +2,7 @@ from snippets_lib import *
 
 cpp = Snippets('source.c++')
 
-cpp/'pl' - ('std::cout', r"std::cout << ${0:$SELECTION} << '\n';")
+cpp/'pl' - ('std::cout', r"std::cout << ${0:$SELECTION} << std::endl;")
 
 cpp/ind/'dc' - ('doc comment', r'/**==>${SELECTION/^\s*/ * /mg}$0==> */')
 
