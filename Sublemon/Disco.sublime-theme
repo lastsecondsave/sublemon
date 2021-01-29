@@ -342,7 +342,7 @@
       "class": "tab_control",
       "attributes": ["dirty"],
       "settings": ["highlight_modified_tabs"],
-      "layer2.opacity": 0.6
+      "layer2.opacity": 0.3
     },
     {
       "class": "tab_control",
