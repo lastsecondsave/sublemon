@@ -365,7 +365,7 @@
     },
     {
       "class": "tab_control",
-      "attributes": ["left_of_selected", "!left"],
+      "attributes": ["left_of_selected", "!left", "!right_of_selected", "!selected"],
       "layer3.texture": "Theme - Default/common/tab_rounded_divider_right.png",
       "layer3.opacity": 0.3
     },
@@ -377,7 +377,7 @@
     },
     {
       "class": "tab_control",
-      "attributes": ["right_of_selected", "!right"],
+      "attributes": ["right_of_selected", "!right", "!left_of_selected", "!selected"],
       "layer3.texture": "Theme - Default/common/tab_rounded_divider_left.png",
       "layer3.opacity": 0.3
     },
