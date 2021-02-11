@@ -380,7 +380,8 @@ src('cmake')
 rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
-    'meta.text-substitution punctuation.section.braces')
+    'meta.text-substitution punctuation.section.braces',
+    'string punctuation.section.block')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.function',
@@ -390,7 +391,7 @@ rec(KEYWORD,
 rec(INDEXED,
     'entity.name.function')
 
-src('c++')
+src('c++', 'c')
 rec(SPECIAL,
     'meta.preprocessor keyword.control.import')
 rec(KEYWORD,
