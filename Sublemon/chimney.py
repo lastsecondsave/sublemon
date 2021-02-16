@@ -4,7 +4,7 @@ import signal
 import subprocess
 from collections import deque
 from itertools import chain, dropwhile
-from threading import Thread
+from threading import Lock, Thread
 
 import sublime
 from sublime_plugin import WindowCommand
@@ -23,6 +23,8 @@ class OutputPanel:
     def __init__(self, window):
         self.window = window
         self.view = window.create_output_panel("exec")
+        self.lock = Lock()
+        self.empty = True
 
     def reset(self, syntax, **settings):
         for key, val in {**self.DEFAULTS, **settings}.items():
@@ -31,11 +33,17 @@ class OutputPanel:
 
         self.view.assign_syntax(syntax)
 
+        self.empty = True
+
         self.window.create_output_panel("exec")
         self.window.run_command("show_panel", {"panel": "output.exec"})
 
     def append(self, lines):
-        if self.view.size() > 0:
+        with self.lock:
+            empty = self.empty
+            self.empty = False
+
+        if not empty:
             lines = chain(("",), lines)
         else:
             lines = dropwhile("".__eq__, lines)
