@@ -77,4 +77,4 @@ class PylintBuildListener(ChimneyBuildListener):
 
     def on_complete(self, ctx):
         if self.rank:
-            ctx.window.status_message(self.rank)
+            ctx.on_complete_message = self.rank

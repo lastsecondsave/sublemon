@@ -118,7 +118,7 @@ class GitLogBuildListener(ChimneyBuildListener):
         ctx.print_lines(lines)
 
         if self.line_infos:
-            ctx.window.status_message("Last edited at " + self.line_infos[0]["date"])
+            ctx.on_complete_message = "Last edited at " + self.line_infos[0]["date"]
 
 
 class GitBlameCommand(ChimneyCommand):

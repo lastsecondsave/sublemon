@@ -70,7 +70,7 @@ class ChimneyBuildListener:
         return line
 
     def on_complete(self, ctx):
-        ctx.window.status_message("Build finished")
+        pass
 
 
 class BuildError(Exception):
@@ -296,23 +296,26 @@ def read_to_pipe(stream, pipe, on_close=None):
 
 
 class BuildContext:
-    def __init__(self, window, panel, process, listener):
+    def __init__(self, window, panel, process, build):
         self.window = window
         self.panel = panel
         self.process = process
-        self.listener = listener
-
         self.cancelled = False
 
-        self.listener.on_startup(self)
+        self.working_dir = build.working_dir
+        self.on_complete = build.listener.on_complete
+        self.on_complete_message = "Build finished"
+
+        build.listener.on_startup(self)
 
     def print_lines(self, lines):
         self.panel.append(lines)
 
     def complete(self):
         if not self.cancelled:
+            self.on_complete(self)
             self.panel.finalize()
-            self.listener.on_complete(self)
+            self.window.status_message(self.on_complete_message)
         else:
             self.window.status_message("Build cancelled")
             self.print_lines(("", "[Process Terminated]"))
@@ -335,7 +338,7 @@ def start_build(build, window, panel):
     process = start_process(build.cmd, build.env, build.working_dir)
     listener = build.listener
 
-    ctx = BuildContext(window, panel, process, listener)
+    ctx = BuildContext(window, panel, process, build)
 
     stdout_args = (process.stdout, BufferedPipe(listener.on_output, ctx), ctx.complete)
     stderr_args = (process.stderr, BufferedPipe(listener.on_error, ctx))
