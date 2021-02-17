@@ -69,4 +69,4 @@ class MavenBuildListener(ChimneyBuildListener):
     def on_complete(self, ctx):
         if self.status:
             info = (self.status, self.time)
-            ctx.window.status_message(", ".join(info))
+            ctx.on_complete_message = ", ".join(info)
