@@ -354,11 +354,15 @@ rec(PUNCTUATION,
     'keyword.operator.assignment.redirection',
     'keyword.operator.end-of-options')
 rec(STORAGE,
-    'support.function.alias | support.function.export | support.function.source')
+    'keyword.declaration.alias | keyword.declaration.variable | support.function.export')
 rec(VARIABLE,
     'meta.variable variable.other.readwrite')
 rec(KEYWORD,
-    'support.function.trap')
+    'support.function.eval',
+    'support.function.exec',
+    'support.function.source',
+    'support.function.trap',
+    'support.function.unset')
 rec(COMMENT,
     'constant.language.shebang')
 rec(FOREGROUND,
@@ -476,6 +480,8 @@ rec(BOLD,
     'markup.bold -punctuation')
 rec(UNDERLINE,
     'markup.underline.link')
+rec(FOREGROUND,
+    'entity.name.reference.link')
 
 src('diff')
 rec(META, 'meta.diff.range')
