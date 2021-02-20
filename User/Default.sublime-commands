@@ -3,6 +3,7 @@
 
   { "caption": "Escape Backslashes", "command": "escape_backslashes" },
   { "caption": "Shrink Whitespace", "command": "shrink_whitespace" },
+  { "caption": "Sort Tokens", "command": "sort_tokens" },
 
   { "caption": "Draw Indent Guides: Toggle", "command": "toggle_setting", "args": {"setting": "draw_indent_guides"} },
   { "caption": "Ligatures: Toggle", "command": "toggle_ligatures" },
