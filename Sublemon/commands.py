@@ -71,6 +71,23 @@ class EscapeBackslashesCommand(TextCommand):
             self.view.replace(edit, region, content)
 
 
+class SortTokensCommand(TextCommand):
+    SEPARATORS = {", ": re.compile(r",\s*"), " ": re.compile(r"\s+")}
+
+    def run(self, edit):
+        for region in self.view.sel():
+            content = self.view.substr(region)
+            self.view.replace(edit, region, self.sort_tokens(content))
+
+    def sort_tokens(self, content):
+        for sep, pattern in self.SEPARATORS.items():
+            tokens = pattern.split(content)
+            if len(tokens) > 1:
+                return sep.join(sorted(tokens))
+
+        return content
+
+
 class ShrinkWhitespaceCommand(TextCommand):
     EMPTY_LINE_PATTERN = re.compile(r"\s*$")
 
