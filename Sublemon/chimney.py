@@ -382,11 +382,14 @@ def start_process(cmd, env, cwd):
 
 def kill_process(process):
     if RUNNING_ON_WINDOWS:
-        cmd = "taskkill /T /F /PID {}".format(process.pid)
+        cmd = f"taskkill /T /F /PID {process.pid}"
         subprocess.Popen(cmd, startupinfo=startupinfo())
     else:
-        os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
-        process.terminate()
+        try:
+            os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
+            process.terminate()
+        except ProcessLookupError:
+            print(f"[WARN] Process {process.pid} doesn't exist")
 
     process.wait()
 
