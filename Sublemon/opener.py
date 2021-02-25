@@ -31,15 +31,16 @@ class OpenFilePathCommand(WindowCommand):
     def expand(self, path):
         parts = path.parts
 
-        if len(parts) > 1 and (root := parts[0]) in "~@#":
-            if root == "~":
-                root = Path.home()
-            elif root == "@":
-                root = self.find_parent_folder()
-            elif root == "#":
-                root = tempfile.gettempdir()
+        if len(parts) > 1 and parts[0] == "~":
+            return Path(Path.home(), *parts[1:])
 
-            return Path(root, *parts[1:])
+        joined = str(path)
+
+        if joined.startswith("!"):
+            return Path(tempfile.gettempdir(), joined[1:])
+
+        if joined.startswith("@"):
+            return Path(self.find_parent_folder(), joined[1:])
 
         root = Path(self.window.active_view().file_name()).parent
         return Path(root, path)
