@@ -204,13 +204,13 @@ class ChimneyCommand(WindowCommand):
             self.run_build(build)
 
     def run_build_interactive(self, build, cmd):
+        cmd = cmd.replace("$$", f'"{build.active_file}"')
+        cmd = cmd.replace("@@", f'"{build.working_dir}"')
+
         if not build.cmd:
             build.cmd = Cmd({"shell_cmd": cmd})
-            build.env["file"] = build.active_file
         else:
-            variables = self.window.extract_variables()
-            cmd = (arg for arg in shlex.split(sublime.expand_variables(cmd, variables)))
-            build.cmd.append(*cmd)
+            build.cmd.append(*(shlex.split(cmd)))
 
         self.run_build(build)
 
