@@ -207,7 +207,7 @@ rec(PUNCTUATION,
     'punctuation.definition.variable',
     'punctuation.section.interpolation')
 rec(INVALID,
-    'invalid')
+    'invalid -text.html.markdown')
 rec(TAG,
     'entity.name.tag -comment',
     'punctuation.definition.tag -comment')
@@ -465,15 +465,19 @@ txt('html.markdown')
 rec(PUNCTUATION,
     'punctuation.definition.list_item',
     'punctuation.definition.blockquote',
-    'meta.link punctuation',
+    'punctuation.definition.image',
+    'punctuation.definition.link',
     'markup.list.numbered.bullet')
 rec(GRAY,
     'punctuation.definition.bold',
     'punctuation.definition.italic',
     'punctuation.definition.raw.code-fence',
-    'meta.code-fence.definition constant.other.language-name')
+    'meta.code-fence.definition constant.other.language-name',
+    'meta.link.inet punctuation.definition.link')
 rec(STRING,
     'markup.raw.inline')
+rec(VARIABLE,
+    '(meta.image.inline.description | meta.link.inline.description) -markup.underline -punctuation')
 rec(ITALIC,
     'markup.italic -punctuation')
 rec(BOLD,
