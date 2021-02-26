@@ -5,6 +5,7 @@ def blk(s): return s + ':\n\t$0'
 py = Snippets('source.python')
 
 py/'pl' - 'print(${0:$SELECTION})'
+py/'isi' - 'isinstance($1, ${2:str})'
 
 py/'self' - ('self.x = x', 'self.$1 = $1')
 
