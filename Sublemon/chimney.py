@@ -135,7 +135,7 @@ class Build:
     def opt(self, key, default=None, expand=True):
         value = self.options.get(key, default)
 
-        if expand:
+        if expand and isinstance(value, str):
             value = sublime.expand_variables(value, self.window.extract_variables())
 
         return value
