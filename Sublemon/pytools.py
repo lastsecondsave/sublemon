@@ -9,14 +9,13 @@ DEFAULT_BINARY = "python" if RUNNING_ON_WINDOWS else "python3"
 VENV_BIN = "Scripts" if RUNNING_ON_WINDOWS else "bin"
 
 
-def setup_python_exec(build, module=None):
+def setup_python_exec(build, module=None, allow_venv=True):
     if module := build.opt("module") or module:
         build.cmd.appendleft("-m", module)
 
     binary = DEFAULT_BINARY
-    venv = project_pref(build.window, "python_venv")
 
-    if venv:
+    if allow_venv and (venv := find_venv(build.window)):
         setup_venv(build, venv)
     else:
         key = "python_binary"
@@ -28,6 +27,18 @@ def setup_python_exec(build, module=None):
     build.env["PYTHONUNBUFFERED"] = "1"
 
 
+def find_venv(window):
+    if venv := project_pref(window, "python_venv"):
+        return venv
+
+    for folder in window.folders():
+        venv = Path(folder, ".venv")
+        if venv.is_dir():
+            return str(venv)
+
+    return None
+
+
 def setup_venv(build, venv):
     build.env["VIRTUAL_ENV"] = venv
     build.env["PYTHONPATH"] = None
@@ -35,7 +46,7 @@ def setup_venv(build, venv):
     build.env["PATH"] = f"{Path(venv, VENV_BIN)}{os.pathsep}$PATH"
     build.cmd.shell = True
 
-    print(f" Using venv: {venv}")
+    print(f"‼ Using venv: {venv}")
 
 
 class PythonCommand(ChimneyCommand):

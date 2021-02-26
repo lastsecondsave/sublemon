@@ -4,7 +4,7 @@ from .pytools import setup_python_exec
 
 class CpplintCommand(ChimneyCommand):
     def setup(self, build):
-        setup_python_exec(build, "cpplint")
+        setup_python_exec(build, "cpplint", allow_venv=False)
 
         build.file_regex = r"(.+?):(\d+)(): (.*)"
         build.syntax = "cpplint"
