@@ -1,5 +1,6 @@
 {
   "selector": "source.python",
   "target": "pylint",
-  "cmd": ["$file"]
+  "cmd": ["$file"],
+  "allow_venv": false
 }
