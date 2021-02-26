@@ -15,7 +15,7 @@ def setup_python_exec(build, module=None, allow_venv=True):
 
     binary = DEFAULT_BINARY
 
-    if allow_venv and (venv := find_venv(build.window)):
+    if allow_venv and (venv := find_venv(build)):
         setup_venv(build, venv)
     else:
         key = "python_binary"
@@ -27,11 +27,14 @@ def setup_python_exec(build, module=None, allow_venv=True):
     build.env["PYTHONUNBUFFERED"] = "1"
 
 
-def find_venv(window):
-    if venv := project_pref(window, "python_venv"):
+def find_venv(build):
+    if build.opt("allow_venv") is False:
+        return None
+
+    if venv := project_pref(build.window, "python_venv"):
         return venv
 
-    for folder in window.folders():
+    for folder in build.window.folders():
         venv = Path(folder, ".venv")
         if venv.is_dir():
             return str(venv)
