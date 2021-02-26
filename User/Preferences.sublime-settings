@@ -54,6 +54,7 @@
 		".mypy_cache",
 		".pytest_cache",
 		".svn",
+		".venv",
 		"__pycache__",
 		"node_modules",
 		"target",
