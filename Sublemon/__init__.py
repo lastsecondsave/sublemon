@@ -14,9 +14,10 @@ def pref(key, default=None):
 
 def project_pref(window, key):
     value = (window.project_data() or {}).get("settings", {}).get(key)
-    if not value:
-        return value
-    return sublime.expand_variables(value, window.extract_variables())
+    if isinstance(value, str):
+        return sublime.expand_variables(value, window.extract_variables())
+
+    return value
 
 
 def indent_params(view):
