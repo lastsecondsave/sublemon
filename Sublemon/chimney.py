@@ -40,19 +40,18 @@ class OutputPanel:
 
     def append(self, lines):
         with self.lock:
-            empty = self.empty
-            self.empty = False
+            if not self.empty:
+                lines = chain(("",), lines)
+            else:
+                lines = dropwhile("".__eq__, lines)
 
-        if not empty:
-            lines = chain(("",), lines)
-        else:
-            lines = dropwhile("".__eq__, lines)
+            text = "\n".join(lines)
 
-        if characters := "\n".join(lines):
-            self.view.run_command(
-                "append",
-                {"characters": characters, "force": True, "scroll_to_end": True},
-            )
+            if self.empty and text:
+                self.empty = False
+
+        if text:
+            self.view.run_command("append", {"characters": text})
 
     def finalize(self):
         self.view.find_all_results()
