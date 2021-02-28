@@ -260,6 +260,8 @@ rec(REGEXP_CHARACTER_CLASS,
 rec(REGEXP_CONTROL,
     'string.regexp & (keyword.control | keyword.operator)',
     'constant.other.character-class.set.regexp constant.other.character-class.escape')
+rec(FOREGROUND,
+    'keyword.declaration.function.arrow')
 
 src('regexp')
 rec(TAG,
