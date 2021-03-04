@@ -2,10 +2,9 @@
   "selector": "source.powershell",
   "file_regex": "^(.+?):(\\d+):(\\d+): (.*)",
   "syntax": "Packages/Sublemon/syntaxes/basic_build.sublime-syntax",
-  "cmd": [
-    "pwsh",
-    "-NoProfile",
-    "-Command",
-    "Invoke-ScriptAnalyzer -Path '$file' | %{ '{0}:{1}:{2}: {3} ({4})' -f \\$_.ScriptName, \\$_.Line, \\$_.Column, \\$_.Message, \\$_.RuleName }"
+  "target": "pwsh",
+  "shell_cmd": [
+    "Invoke-ScriptAnalyzer -Path '$file' |",
+    "%{ '{0}:{1}:{2}: {3} ({4})' -f \\$_.ScriptName, \\$_.Line, \\$_.Column, \\$_.Message, \\$_.RuleName }"
   ]
 }
