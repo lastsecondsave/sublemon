@@ -81,12 +81,14 @@ class BuildError(Exception):
 class Cmd:
     def __init__(self, options):
         self.args = deque()
-        self.cmdline = None
+        self.cmdline = ""
         self.shell = options.get("shell", False)
 
         if shell_cmd := options.get("shell_cmd"):
             self.shell = True
-            self.cmdline = shell_cmd
+            self.cmdline = (
+                shell_cmd if isinstance(shell_cmd, str) else " ".join(shell_cmd)
+            )
         elif cmd := options.get("cmd"):
             self.args.extend(cmd)
 
