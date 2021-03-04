@@ -12,6 +12,7 @@ class Token(Enum):
     BOOLEAN = 1
     NUMBER = 2
     HEX_NUMBER = 3
+    ON_OFF = 4
 
 
 class OneUpCommand(TextCommand):
@@ -88,6 +89,9 @@ def classify(token):
     if token.lower() in ("true", "false"):
         return Token.BOOLEAN
 
+    if token.lower() in ("on", "off"):
+        return Token.ON_OFF
+
     return None
 
 
@@ -101,15 +105,22 @@ def toggle(token, category, negative):
         return toggle_hex_number(token, delta)
 
     if category is Token.BOOLEAN:
-        replacement = "false" if token.lower() == "true" else "true"
-        if token.isupper():
-            replacement = replacement.upper()
-        elif token[0].isupper():
-            replacement = replacement.title()
+        return toggle_pair(token, "true", "false")
 
-        return replacement
+    if category is Token.ON_OFF:
+        return toggle_pair(token, "on", "off")
 
     return token
+
+
+def toggle_pair(token, first, second):
+    replacement = first if token.lower() == second else second
+    if token.isupper():
+        replacement = replacement.upper()
+    elif token[0].isupper():
+        replacement = replacement.title()
+
+    return replacement
 
 
 def toggle_number(token, delta):
