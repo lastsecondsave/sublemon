@@ -97,7 +97,7 @@ COLOR_SCHEME = {
         'selection': DARK_BLUE,
         'line_highlight': alpha(FADED_GRAY, 0.3),
         'find_highlight': YELLOW,
-        'minimap_border': CLEAR_WHITE,
+        'minimap_border': alpha(CLEAR_WHITE, 0.7),
         'brackets_foreground': DARK_ORANGE,
         'selection_corner_radius': '2',
 
