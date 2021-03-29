@@ -575,7 +575,7 @@
     },
     {
       "class": "minimap_control",
-      "viewport_color": "color(var(FADED_GRAY) a(0.3))",
+      "viewport_color": "color(var(CLEAR_WHITE) a(0.1))",
     },
     {
       "class": "minimap_control",
