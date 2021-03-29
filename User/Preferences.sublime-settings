@@ -120,6 +120,7 @@
 	"show_rel_path": true,
 	"show_line_endings": true,
 	"theme": "Disco.sublime-theme",
+	"tab_completion": false,
 	"translate_tabs_to_spaces": true,
 	"trim_automatic_white_space": false,
 	"trim_only_modified_white_space": false,
