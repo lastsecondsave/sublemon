@@ -100,6 +100,7 @@ COLOR_SCHEME = {
         'minimap_border': alpha(CLEAR_WHITE, 0.7),
         'brackets_foreground': DARK_ORANGE,
         'selection_corner_radius': '2',
+        'scroll_selected_highlight': YELLOW,
 
         'line_diff_width': '2',
         'line_diff_added': FADED_GRAY,
