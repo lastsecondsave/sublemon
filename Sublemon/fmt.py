@@ -51,7 +51,7 @@ class Prettier(Formatter):
 
 
 class ClangFormat(Formatter):
-    SCOPES = ("source.c++", "source.c", "source.java")
+    SCOPES = ("source.c++", "source.c", "source.java", "source.objc++")
     BINARY = "clang-format-11"
 
     def match(self, view):
