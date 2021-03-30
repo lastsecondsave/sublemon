@@ -406,6 +406,10 @@ rec(KEYWORD,
 rec(VARIABLE,
     'entity.name.constant.preprocessor')
 
+src('objc++')
+rec(PARAMETER,
+    'meta.function-call support.function.any-method')
+
 src('rust')
 rec(STORAGE,
     'meta.macro support.function -meta.block.macro-body')
@@ -451,18 +455,14 @@ rec(ITALIC,
 rec(VARIABLE,
     'entity.other.pseudo-class -punctuation')
 
-txt('xml')
+txt('xml', 'html')
 rec(PUNCTUATION,
     'meta.tag.sgml.cdata punctuation.definition.tag',
     'keyword.declaration.cdata')
 rec(VARIABLE,
     'meta.tag.sgml.doctype variable')
-rec(TAG + BOLD + ITALIC,
-    'meta.tag.sgml.doctype keyword')
-
-txt('html')
 rec(TAG,
-    'meta.tag.sgml.doctype')
+    'meta.tag.sgml.doctype keyword')
 
 txt('html.markdown')
 rec(PUNCTUATION,

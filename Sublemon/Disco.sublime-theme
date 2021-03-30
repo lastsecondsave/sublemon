@@ -11,15 +11,21 @@
     "ORANGE": "#FFAD3A",
     "DARK_ORANGE": "#FF8147",
     "CRIMSON": "#E5476C",
+    "BLUISH_BLACK": "#202830",
 
     "FADED_GRAY": "#51515D",
     "FADED_VIOLET": "#5E5E8E",
 
     "panel_blue": "#264F78",
     "panel_gray": "#54545E",
-    "label_grey": "#838495",
+    "panel_gray_zero": "#1C232B",
+    "panel_gray_dark": "#2E333C",
+    "label_gray": "#838495",
+
     "outer_dark": "#161E26",
-    "outer_dark_hover": "#1C232B",
+    "outer_gray": "color(var(panel_gray_dark) s(+ 5%) l(+ 2%))",
+
+    "tabset_bg": "var(outer_gray)",
 
     "qp_label": "#D2D2D2",
     "qp_path_label": "#838495",
@@ -62,13 +68,12 @@
     {
       "class": "tree_row",
       "attributes": ["selectable", "hover"],
-      "layer0.tint": "var(outer_dark_hover)"
+      "layer0.tint": "var(panel_gray_zero)"
     },
     {
       "class": "tree_row",
       "attributes": ["selected"],
-      "layer0.tint": "var(panel_gray)",
-      "layer0.opacity": 0.4
+      "layer0.tint": "var(panel_gray_dark)",
     },
     {
       "class": "sidebar_heading",
@@ -79,7 +84,7 @@
     },
     {
       "class": "sidebar_label",
-      "fg": "var(label_grey)",
+      "fg": "var(label_gray)",
       "font.face": "var(font)",
       "font.size": "var(font_size)"
     },
@@ -241,18 +246,18 @@
     {
       "class": "sidebar_label",
       "parents": [{"class": "file_system_entry", "attributes": ["ignored"]}],
-      "color": "color(var(label_grey) alpha(0.6))"
+      "color": "color(var(label_gray) alpha(0.6))"
     },
 
     // Tabs
     {
       "class": "tabset_control",
-      "layer0.tint": "var(outer_dark)",
+      "layer0.tint": "var(tabset_bg)",
       "layer0.opacity": 1.0,
-      "content_margin": [-5, 0, -5, 0],
+      "content_margin": [0, 0, 0, 0],
       "tab_overlap": 10,
       "tab_height": 32,
-      "connector_height": 0,
+      "connector_height": 1,
     },
     {
       "class": "tab_connector",
@@ -297,7 +302,7 @@
     {
       "class": "tab_control",
       "parents": [{"class": "edit_window"}],
-      "layer0.tint": "var(outer_dark)",
+      "layer0.tint": "var(tabset_bg)",
     },
     {
       "class": "tab_control",
@@ -318,7 +323,7 @@
       "class": "tab_control",
       "attributes": ["!selected", "hover"],
       "layer0.texture": "Theme - Default/common/tab_rounded.png",
-      "layer0.tint": "var(outer_dark_hover)"
+      "layer0.tint": "color(var(panel_gray_dark) s(+ 2%) l(+ 5%))"
     },
     {
       "class": "tab_control",
@@ -334,18 +339,18 @@
     },
 
     // Tabs - modified highlight
-    {
-      "class": "tab_control",
-      "attributes": ["dirty"],
-      "settings": ["highlight_modified_tabs"],
-      "layer2.opacity": 1.0 ,
-    },
-    {
-      "class": "tab_control",
-      "attributes": ["dirty", "selected"],
-      "settings": ["highlight_modified_tabs"],
-      "layer2.opacity": 1.0
-    },
+    // {
+    //   "class": "tab_control",
+    //   "attributes": ["dirty"],
+    //   "settings": ["highlight_modified_tabs"],
+    //   "layer2.opacity": 1.0 ,
+    // },
+    // {
+    //   "class": "tab_control",
+    //   "attributes": ["dirty", "selected"],
+    //   "settings": ["highlight_modified_tabs"],
+    //   "layer2.opacity": 1.0
+    // },
 
     // Tabs - dividers
     {
@@ -381,7 +386,7 @@
     // Tabs - label
     {
       "class": "tab_label",
-      "fg": "var(label_grey)",
+      "fg": "var(label_gray)",
       "font.face": "var(font)",
       "font.size": "var(font_size_tabs)"
     },
@@ -426,6 +431,8 @@
       "class": "tab_close_button",
       "parents": [{"class": "tab_control", "attributes": ["dirty"]}],
       "layer0.texture": "Theme - Default/common/tab_dirty.png",
+      "layer0.tint": "var(CLEAR_WHITE)",
+      "layer0.opacity": { "target": 1.0, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "tab_close_button",
@@ -473,6 +480,16 @@
       "layer0.opacity": 1,
       "layer0.inner_margin": [1, 0, 21, 0],
       "content_margin": 0
+    },
+
+    {
+      "class": "sheet_contents",
+      "background_modifier": ""
+    },
+    {
+      "class": "sheet_contents",
+      "attributes": ["!highlighted"],
+      "background_modifier": "blend(var(panel_gray_zero) 50%)"
     },
 
     // Quick Panel
@@ -559,6 +576,7 @@
     {
       "class": "quick_panel",
       "parents": [{"class": "switch_project_window"}],
+      "layer0.tint": "color(var(outer_dark) blenda(var(panel_gray) 70%))",
       "layer0.opacity": 1.0
     },
     {
@@ -571,11 +589,12 @@
     // Views
     {
       "class": "grid_layout_control",
-      "border_size": 0
+      "border_size": 1,
+      "border_color": "color(var(BLUISH_BLACK) blend(var(panel_gray_zero) 50%))"
     },
     {
       "class": "minimap_control",
-      "viewport_color": "color(var(CLEAR_WHITE) a(0.1))",
+      "viewport_color": "color(var(WHITE) alpha(0.15))",
     },
     {
       "class": "minimap_control",
@@ -639,7 +658,7 @@
     {
       "class": "table_row",
       "attributes": ["hover"],
-      "layer0.tint": "var(outer_dark_hover)"
+      "layer0.tint": "var(panel_gray_zero)"
     },
     {
       "class": "table_row",
@@ -753,7 +772,8 @@
     {
       "class": "panel_control",
       "parents": [{"class": "switch_project_window"}],
-      "layer0.tint": "var(outer_dark)"
+      "layer0.tint": "color(var(panel_gray) blenda(var(BLUISH_BLACK) 80%))",
+
     },
     {
       "class": "panel_grid_control",
