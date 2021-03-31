@@ -91,7 +91,7 @@
 
   /* L2: CTRL */
 
-  { "keys": ["ctrl+k", "ctrl+t"], "command": "title_case" },
+  { "keys": ["ctrl+k", "ctrl+t"], "command": "convert_case" },
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 

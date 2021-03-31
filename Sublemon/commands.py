@@ -11,6 +11,7 @@ from sublime import Region
 from sublime_plugin import (
     ApplicationCommand,
     EventListener,
+    ListInputHandler,
     TextCommand,
     TextInputHandler,
     WindowCommand,
@@ -465,3 +466,34 @@ class DeleteRulersCommand(WindowCommand):
     def run(self):
         settings = self.window.active_view().settings()
         settings.set("rulers", [])
+
+
+class ConvertCaseCommand(TextCommand):
+    SEPARATORS = re.compile(r"[_\.\-]+")
+    UPPER_CASE = re.compile(r"(?=[A-Z])")
+
+    def run(self, edit, case):  # pylint: disable=arguments-differ
+        selection = self.view.sel()
+        for region in reversed(selection):
+            self.convert(edit, region, case)
+
+    def convert(self, edit, region, case):
+        if region.empty():
+            region = self.view.word(region)
+
+        token = self.view.substr(region)
+        tokens = self.SEPARATORS.split(token)
+
+        if len(tokens) == 1 and not token.isupper():
+            tokens = self.UPPER_CASE.split(token)
+
+    def input(self, _args):
+        return ConvertCaseInputHandler()
+
+
+class ConvertCaseInputHandler(ListInputHandler):
+    def name(self):
+        return "case"
+
+    def list_items(self):
+        return ["camelCase", "PascalCase", "snake_case", "SCREAM_CASE", "kebab-case"]
