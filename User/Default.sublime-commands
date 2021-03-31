@@ -16,6 +16,8 @@
   { "caption": "Add Ruler", "command": "add_ruler" },
   { "caption": "Delete Rulers", "command": "delete_rulers" },
 
+  { "caption": "Convert Case", "command": "convert_case" },
+
   { "caption": "Git: Diff", "command": "git_diff" },
   { "caption": "Git: Log", "command": "git_log" },
   { "caption": "Git: Blame", "command": "git_blame "},
