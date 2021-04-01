@@ -470,30 +470,73 @@ class DeleteRulersCommand(WindowCommand):
 
 class ConvertCaseCommand(TextCommand):
     SEPARATORS = re.compile(r"[_\.\-]+")
-    UPPER_CASE = re.compile(r"(?=[A-Z])")
+    CASE_CHANGE = re.compile(r"(?=[A-Z0-9])")
+
+    CONVERTORS = {
+        "camelCase": lambda ts: ts[0] + "".join(x.capitalize() for x in ts[1:]),
+        "PascalCase": lambda ts: "".join(x.capitalize() for x in ts),
+        "snake_case": "_".join,
+        "SCREAM_CASE": lambda ts: "_".join(ts).upper(),
+        "kebab-case": "-".join,
+        "dot.case": ".".join,
+    }
 
     def run(self, edit, case):  # pylint: disable=arguments-differ
-        selection = self.view.sel()
-        for region in reversed(selection):
-            self.convert(edit, region, case)
+        adjusted_regions = []
 
-    def convert(self, edit, region, case):
-        if region.empty():
-            region = self.view.word(region)
+        for region in self.view.sel():
+            if region.empty():
+                region = self.view.word(region)
+                if region.empty():
+                    continue
 
-        token = self.view.substr(region)
+            token = self.view.substr(region)
+            replacement = self.convert(token, case)
+            self.view.replace(edit, region, replacement)
+
+            begin = region.begin()
+            adjusted_regions.append(Region(begin, begin + len(replacement)))
+
+        self.view.sel().add_all(adjusted_regions)
+
+    def convert(self, token, case):
+        tokens = (x.lower() for x in self.tokenize(token))
+        return self.CONVERTORS[case](tokens)
+
+    def tokenize(self, token):
         tokens = self.SEPARATORS.split(token)
 
-        if len(tokens) == 1 and not token.isupper():
-            tokens = self.UPPER_CASE.split(token)
+        if len(tokens) > 1 or token.isupper():
+            return tokens
+
+        splits = self.CASE_CHANGE.split(token)
+        tokens = []
+        buffer = ""
+
+        for split in splits:
+            if not split:
+                continue
+
+            if len(split) == 1:
+                buffer += split
+                continue
+
+            if buffer:
+                tokens.append(buffer)
+                buffer = ""
+
+            tokens.append(split)
+
+        if buffer:
+            tokens.append(buffer)
+
+        return tokens
 
     def input(self, _args):
-        return ConvertCaseInputHandler()
+        items = self.CONVERTORS.keys()
 
+        class CaseInputHandler(ListInputHandler):
+            def list_items(self):
+                return items
 
-class ConvertCaseInputHandler(ListInputHandler):
-    def name(self):
-        return "case"
-
-    def list_items(self):
-        return ["camelCase", "PascalCase", "snake_case", "SCREAM_CASE", "kebab-case"]
+        return CaseInputHandler()
