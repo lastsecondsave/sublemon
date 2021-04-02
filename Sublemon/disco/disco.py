@@ -93,13 +93,16 @@ COLOR_SCHEME = {
         'background': BLUISH_BLACK,
         'foreground': WHITE,
         'caret': CLEAR_WHITE,
-        'highlight': CLEAR_WHITE,
-        'selection': DARK_BLUE,
         'line_highlight': alpha(FADED_GRAY, 0.3),
-        'find_highlight': YELLOW,
         'minimap_border': alpha(CLEAR_WHITE, 0.7),
         'brackets_foreground': DARK_ORANGE,
+
+        'selection': DARK_BLUE,
         'selection_corner_radius': '2',
+        'selection_border_width': '0',
+
+        'highlight': CLEAR_WHITE,
+        'find_highlight': YELLOW,
         'scroll_selected_highlight': YELLOW,
 
         'line_diff_width': '2',
