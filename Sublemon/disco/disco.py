@@ -406,9 +406,11 @@ rec(KEYWORD,
 rec(VARIABLE,
     'entity.name.constant.preprocessor')
 
-src('objc++')
+src('objc++', 'objc')
 rec(PARAMETER,
     'meta.function-call support.function.any-method')
+rec(SPECIAL,
+    'keyword.control.import')
 
 src('rust')
 rec(STORAGE,
