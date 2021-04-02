@@ -500,7 +500,7 @@ class ConvertCaseCommand(TextCommand):
         self.view.sel().add_all(adjusted_regions)
 
     def convert(self, token, case):
-        tokens = (x.lower() for x in self.tokenize(token))
+        tokens = [x.lower() for x in self.tokenize(token)]
         return self.CONVERTORS[case](tokens)
 
     def tokenize(self, token):
