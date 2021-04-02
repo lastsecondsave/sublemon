@@ -22,17 +22,20 @@
     "panel_gray_dark": "#2E333C",
 
     "label_gray": "#838495",
+    "label_white": "#D2D2D2",
+    "label_blue": "#77ABFF",
 
     "outer_dark": "#161E26",
     "outer_gray": "color(var(panel_gray_dark) s(+ 5%) l(+ 2%))",
 
     "tabset_bg": "var(outer_gray)",
+    "bottom_bg": "var(outer_gray)",
+    "sidebar_bg": "var(outer_dark)",
 
-    "qp_label": "#D2D2D2",
-    "qp_path_label": "var(label_gray)",
-    "qp_match": "#77ABFF",
-
+    "scrollbar_tint": "color(var(CLEAR_WHITE) alpha(60%))",
     "sidebar_icon_tint": "var(CLEAR_WHITE)",
+
+    "form_label": "var(label_white)",
 
     "font": "system",
     "font_size": 12,
@@ -43,10 +46,17 @@
 
   "rules": [
 
+    {
+      "class": "title_bar",
+      "fg": "var(form_label)",
+      "bg": "var(outer_gray)",
+      "style": "dark"
+    },
+
     // Side Bar
     {
       "class": "sidebar_container",
-      "layer0.tint": "var(outer_dark)",
+      "layer0.tint": "var(sidebar_bg)",
       "layer0.opacity": 1.0,
       "content_margin": 0,
     },
@@ -62,7 +72,7 @@
     {
       "class": "tree_row",
       "attributes": ["!hover"],
-      "layer0.tint": "var(outer_dark)",
+      "layer0.tint": "var(sidebar_bg)",
       "layer0.opacity": 1.0,
     },
     {
@@ -534,10 +544,10 @@
     },
     {
       "class": "quick_panel_label",
-      "fg": "var(qp_label)",
-      "match_fg": "var(qp_match)",
+      "fg": "var(label_white)",
+      "match_fg": "var(label_blue)",
       "selected_fg": "var(CLEAR_WHITE)",
-      "selected_match_fg": "var(qp_match)",
+      "selected_match_fg": "var(label_blue)",
       "font.face": "var(font)",
       "font.size": "var(font_size_quickpanel)"
     },
@@ -548,10 +558,10 @@
     },
     {
       "class": "quick_panel_path_label",
-      "fg": "var(qp_path_label)",
-      "match_fg": "var(qp_label)",
-      "selected_fg": "var(qp_path_label)",
-      "selected_match_fg": "var(qp_label)",
+      "fg": "var(label_gray)",
+      "match_fg": "var(label_white)",
+      "selected_fg": "var(label_gray)",
+      "selected_match_fg": "var(label_white)",
       "font.face": "var(font)",
       "font.size": "var(font_size)"
     },
@@ -652,10 +662,10 @@
     },
     {
       "class": "auto_complete_label",
-      "fg": "var(qp_label)",
-      "match_fg": "var(qp_match)",
+      "fg": "var(label_white)",
+      "match_fg": "var(label_blue)",
       "selected_fg": "var(CLEAR_WHITE)",
-      "selected_match_fg": "var(qp_match)",
+      "selected_match_fg": "var(label_blue)",
       "fg_blend": false
     },
     {
@@ -745,7 +755,7 @@
     // Panels
     {
       "class": "panel_control",
-      "layer0.tint": "var(panel_blue)",
+      "layer0.tint": "var(bottom_bg)",
       "layer0.opacity": 1.0,
       "content_margin": 0
     },
@@ -776,7 +786,7 @@
     // Dialogs
     {
       "class": "dialog",
-      "layer0.tint": "var(outer_dark)",
+      "layer0.tint": "var(outer_gray)",
       "layer0.opacity": 1.0
     },
     {
@@ -837,7 +847,7 @@
     {
       "class": "puck_control",
       "attributes": ["dark"],
-      "layer0.tint": [205, 205, 205]
+      "layer0.tint": "var(scrollbar_tint)"
     },
     {
       "class": "scroll_corner_control",
@@ -861,7 +871,7 @@
     {
       "class": "puck_control",
       "attributes": ["horizontal", "dark"],
-      "layer0.tint": [205, 205, 205]
+      "layer0.tint": "var(scrollbar_tint)"
     },
 
     // Inputs
@@ -871,7 +881,7 @@
       "layer0.inner_margin": 4,
       "layer0.opacity": 1.0,
       "layer0.tint": [32, 40, 48],
-      "color_scheme_tint": [32, 40, 48],
+      "color_scheme_tint": "var(BLUISH_BLACK)",
       "content_margin": [4, 3, 4, 4]
     },
     {
@@ -1073,7 +1083,7 @@
     {
       "class": "icon_use_gitignore",
       "layer0.texture": "Theme - Default/common/icon_use_gitignore.png",
-      "layer0.tint": [255, 255, 255],
+      "layer0.tint": "var(CLEAR_WHITE)",
       "layer0.opacity": { "target": 0.2, "speed": 5.0, "interpolation": "smoothstep" },
       "content_margin": [14, 11]
     },
@@ -1104,21 +1114,21 @@
     // Tool tips
     {
       "class": "tool_tip_control",
-      "layer0.tint": [255, 255, 255],
-      "layer0.opacity": 0.9,
+      "layer0.tint": "var(panel_gray)",
+      "layer0.opacity": 0.8,
       "content_margin": [8, 3, 8, 3]
     },
     {
       "class": "tool_tip_label_control",
       "font.face": "var(font)",
       "font.size": "var(font_size)",
-      "fg": [64, 64, 64]
+      "fg": "var(label_white)"
     },
 
     // Status Bar
     {
       "class": "status_bar",
-      "layer0.tint": "var(panel_blue)",
+      "layer0.tint": "var(bottom_bg)",
       "layer0.opacity": 1.0,
       "content_margin": [4, 0, 0, 0]
     },
@@ -1153,7 +1163,7 @@
       "parents": [{"class": "status_bar"}],
       "font.face": "var(font)",
       "font.size": "var(font_size_statusbar)",
-      "color": "var(CLEAR_WHITE)"
+      "color": "var(form_label)"
     },
     {
       "class": "vcs_status",
