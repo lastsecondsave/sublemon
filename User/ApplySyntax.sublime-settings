@@ -13,6 +13,10 @@
     {
       "syntax": "Sublemon/syntaxes/html_template",
       "rules": [{ "first_line": "<template name=.*" }]
+    },
+    {
+      "syntax": "Objective-C/Objective-C++",
+      "rules": [{ "first_line": "#import <Foundation/.+>" }]
     }
   ]
 }

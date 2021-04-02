@@ -51,7 +51,7 @@ class Prettier(Formatter):
 
 
 class ClangFormat(Formatter):
-    SCOPES = ("source.c++", "source.c", "source.java", "source.objc++")
+    SCOPES = ("source.c++", "source.c", "source.java", "source.objc", "source.objc++")
     BINARY = "clang-format-11"
 
     def match(self, view):
@@ -62,7 +62,8 @@ class ClangFormat(Formatter):
         binary = f"wsl {self.BINARY}" if RUNNING_ON_WINDOWS else self.BINARY
         config = find_in_file_parents(view, ".clang-format")
 
-        cmd = [binary, f"--assume-filename={scope}"]
+        filename = scope if not "objc" in scope else "source.mm"
+        cmd = [binary, f"--assume-filename={filename}"]
 
         if not config:
             _, tab_width = indent_params(view)
