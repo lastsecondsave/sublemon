@@ -84,6 +84,7 @@ class FmtCommand(WindowCommand):
         Formatter("source.rust", "rustfmt"),
         Formatter("source.python", "isort - | black -"),
         Formatter("source.cmake", "cmake-format -"),
+        Formatter("text.xml", "xmlstarlet fo -"),
     )
 
     def run(self):
