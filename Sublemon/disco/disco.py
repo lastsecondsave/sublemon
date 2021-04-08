@@ -303,6 +303,8 @@ rec(STORAGE,
     'keyword.other.package')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
+rec(FADED_VIOLET,
+    'meta.tag')
 rec(FOREGROUND,
     'storage.modifier.array',
     'storage.type.function.anonymous',
