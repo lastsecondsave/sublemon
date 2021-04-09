@@ -4,7 +4,7 @@ import sublime
 from sublime import Region
 from sublime_plugin import TextCommand, WindowCommand
 
-from . import RUNNING_ON_WINDOWS, find_in_file_parents, indent_params, view_cwd
+from . import find_in_file_parents, indent_params, view_cwd
 
 
 class Formatter:
@@ -13,10 +13,16 @@ class Formatter:
         self.cmdline = cmdline
 
     def match(self, view):
-        return view.match_selector(0, self.scope) > 0
+        for scope in self.supported_scopes():
+            if view.match_selector(0, scope):
+                return scope
 
-    # pylint: disable=unused-argument
-    def cmd(self, view):
+        return None
+
+    def supported_scopes(self):
+        return (self.scope,)
+
+    def cmd(self, _view, _scope):
         return self.cmdline
 
 
@@ -30,11 +36,10 @@ class Prettier(Formatter):
         "text.html": "html",
     }
 
-    def match(self, view):
-        return bool(matched_scope(view, self.PARSERS))
+    def supported_scopes(self):
+        return self.PARSERS
 
-    def cmd(self, view):
-        scope = matched_scope(view, self.PARSERS)
+    def cmd(self, view, scope):
         parser = self.PARSERS[scope]
         config = find_in_file_parents(view, ".prettierrc")
 
@@ -51,28 +56,27 @@ class Prettier(Formatter):
 
 
 class ClangFormat(Formatter):
-    SCOPES = ("source.c++", "source.c", "source.java", "source.objc", "source.objc++")
+    FILES = {
+        "source.c": "file.c",
+        "source.c++": "file.cpp",
+        "source.java": "file.java",
+        "source.objc": "file.m",
+        "source.objc++": "file.mm",
+    }
 
-    def match(self, view):
-        return bool(matched_scope(view, self.SCOPES))
+    def supported_scopes(self):
+        return self.FILES
 
-    def cmd(self, view):
-        scope = matched_scope(view, self.SCOPES)
+    def cmd(self, view, scope):
         config = find_in_file_parents(view, ".clang-format")
 
-        filename = scope if not "objc" in scope else "source.mm"
-        cmd = ["clang-format", f"--assume-filename={filename}"]
+        cmd = ["clang-format", f"--assume-filename={self.FILES[scope]}"]
 
         if not config:
             _, tab_width = indent_params(view)
             cmd.append(f'-style="{{BasedOnStyle: Google, IndentWidth: {tab_width}}}"')
 
         return " ".join(cmd)
-
-
-def matched_scope(view, scopes):
-    matched = (scope for scope in scopes if view.match_selector(0, scope))
-    return next(matched, None)
 
 
 class FmtCommand(WindowCommand):
@@ -89,18 +93,18 @@ class FmtCommand(WindowCommand):
         view = self.window.active_view()
 
         for formatter in self.FORMATTERS:
-            if formatter.match(view):
-                self.reformat(formatter, view)
+            if scope := formatter.match(view):
+                self.reformat(formatter, view, scope)
                 return
 
         self.window.status_message("No supported formatter")
 
-    def reformat(self, formatter, view):
+    def reformat(self, formatter, view, scope):
         text = view.substr(Region(0, view.size()))
 
         def run_formatter():
             process = subprocess.run(
-                formatter.cmd(view),
+                formatter.cmd(view, scope),
                 input=text,
                 encoding="utf-8",
                 capture_output=True,
