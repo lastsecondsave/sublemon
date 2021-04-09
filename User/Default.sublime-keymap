@@ -25,6 +25,11 @@
   { "keys": ["alt+]"], "command": "next_view" },
 
   { "keys": ["alt+d"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/select_subword.sublime-macro"} },
+  { "keys": ["alt+d"], "command": "move", "args": {"by": "subword_ends", "extend": true, "forward": true},
+    "context": [
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
+    ]
+  },
 
   { "keys": ["alt+z"], "command": "last_single_selection",
     "context": [{"key": "num_selections", "operator": "not_equal", "operand": 1}]
