@@ -59,6 +59,8 @@ class PythonCommand(ChimneyCommand):
 
 class PylintCommand(ChimneyCommand):
     def setup(self, build):
+        build.cmd.append("--jobs=0")
+
         if disable := build.opt("disable"):
             build.cmd.append(f"--disable={','.join(disable)}")
 
