@@ -95,7 +95,6 @@
   /* L2 */
 
   { "keys": ["ctrl+k", "s"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Set Syntax: "} },
-  { "keys": ["ctrl+k", "c"], "command": "copy_file_directory_path" },
 
   /* L2: CTRL */
 
@@ -114,6 +113,7 @@
   /* L3: CTRL */
 
   { "keys": ["ctrl+j", "ctrl+i"], "command": "expand_selection", "args": {"to": "indentation" } },
+  { "keys": ["ctrl+j", "ctrl+c"], "command": "copy_file_path" },
 
   /* SEARCH WIDGET */
 
