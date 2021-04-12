@@ -3,7 +3,7 @@ import tempfile
 from pathlib import Path
 
 import sublime
-from sublime_plugin import WindowCommand
+from sublime_plugin import ListInputHandler, WindowCommand
 
 
 class OpenFilePathCommand(WindowCommand):
@@ -90,3 +90,43 @@ class ShowFilePathCommand(WindowCommand):
 
 def reorder(folders):
     return (Path(f) for f in sorted(folders, key=len, reverse=True))
+
+
+class CopyFilePathCommand(WindowCommand):
+    def is_enabled(self):
+        return bool(self.window.active_view().file_name())
+
+    def run(self, mode):  # pylint: disable=arguments-differ
+        path = Path(self.window.active_view().file_name())
+
+        if mode == "name":
+            path = path.name
+        elif mode == "parent":
+            path = path.parent
+        elif mode == "project":
+            path = self.project_path(path)
+
+        if path:
+            sublime.set_clipboard(str(path))
+
+    def project_path(self, path):
+        if project_file := self.window.project_file_name():
+            try:
+                return path.relative_to(Path(project_file).parent)
+            except ValueError:
+                pass
+
+        sublime.status_message("Not in a project")
+        return None
+
+    def input(self, _args):
+        class ModeInputHandler(ListInputHandler):
+            def list_items(self):
+                return [
+                    ("File Name", "name"),
+                    ("Parent Path", "parent"),
+                    ("Project Path", "project"),
+                    ("Absolute Path", "absolute"),
+                ]
+
+        return ModeInputHandler()

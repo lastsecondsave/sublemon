@@ -17,6 +17,7 @@
   { "caption": "Delete Rulers", "command": "delete_rulers" },
 
   { "caption": "Convert Case", "command": "convert_case" },
+  { "caption": "Copy Path", "command": "copy_file_path" },
 
   { "caption": "Git: Diff", "command": "git_diff" },
   { "caption": "Git: Log", "command": "git_log" },
