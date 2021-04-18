@@ -17,6 +17,7 @@
     "FADED_VIOLET": "#5E5E8E",
 
     "panel_blue": "#264F78",
+    "panel_black": "#161E26",
     "panel_gray": "#54545E",
     "panel_gray_dark": "#2E333C",
 
@@ -24,13 +25,13 @@
     "label_white": "#D2D2D2",
     "label_blue": "#77ABFF",
 
-    "outer_dark": "#161E26",
     "outer_gray": "color(var(panel_gray_dark) s(+ 5%) l(+ 2%))",
+    "outer_dark": "color(var(panel_black) blend(var(outer_gray) 80%))",
 
     "tabset_bg": "var(outer_gray)",
     "bottom_bg": "var(outer_gray)",
-    "sidebar_bg": "color(var(outer_dark) blend(var(outer_gray) 80%))",
-    "popup_bg": "var(outer_dark)",
+    "sidebar_bg": "var(outer_dark)",
+    "popup_bg": "var(panel_black)",
 
     "scrollbar_tint": "color(var(CLEAR_WHITE) alpha(60%))",
     "sidebar_icon_tint": "color(var(label_gray) l(- 15%))",
@@ -293,7 +294,7 @@
       "layer3.texture": "Theme - Default/common/tab_rounded_divider.png",
       "layer3.inner_margin": [7, 0, 7, 0],
       "layer3.opacity": 0.0,
-      "layer3.tint": "var(outer_dark)",
+      "layer3.tint": "var(panel_black)",
       "tint_index": 1,
       "tint_modifier": "transparent",
       "accent_tint_index": 2,
@@ -467,7 +468,7 @@
     {
       "class": "sheet_contents",
       "attributes": ["!highlighted"],
-      "background_modifier": "blend(var(sidebar_bg) 0%)"
+      "background_modifier": "blend(var(outer_dark) 0%)"
     },
 
     // Quick Panel
@@ -480,7 +481,7 @@
     {
       "class": "quick_panel",
       "row_padding": [4, 2, 4, 2],
-      "layer0.tint": "var(outer_dark)",
+      "layer0.tint": "var(panel_black)",
       "layer0.opacity": 0.7,
       "dark_content": true,
     },
@@ -554,7 +555,7 @@
     {
       "class": "quick_panel",
       "parents": [{"class": "switch_project_window"}],
-      "layer0.tint": "color(var(outer_dark) blenda(var(panel_gray) 70%))",
+      "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 1.0
     },
 
@@ -562,7 +563,7 @@
     {
       "class": "grid_layout_control",
       "border_size": 0,
-      "border_color": "var(sidebar_bg)"
+      "border_color": "var(outer_dark)"
     },
     {
       "class": "minimap_control",
@@ -740,7 +741,6 @@
       "class": "panel_control",
       "parents": [{"class": "switch_project_window"}],
       "layer0.tint": "var(outer_gray)",
-
     },
     {
       "class": "panel_grid_control",
@@ -768,12 +768,12 @@
     },
     {
       "class": "progress_bar_control",
-      "layer0.tint": [0, 0, 0, 0.06],
+      "layer0.tint": "var(panel_black)",
       "layer0.opacity": 1.0
     },
     {
       "class": "progress_gauge_control",
-      "layer0.tint": [171, 177, 186],
+      "layer0.tint": "var(label_white)",
       "layer0.opacity": 1.0,
       "content_margin": [0, 6]
     },
