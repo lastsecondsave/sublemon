@@ -105,6 +105,10 @@ COLOR_SCHEME = {
         'find_highlight': YELLOW,
         'scroll_selected_highlight': YELLOW,
 
+        'guide': alpha(FADED_GRAY, 0.2),
+        'active_guide': alpha(FADED_GRAY, 0.4),
+        'stack_guide': alpha(FADED_GRAY, 0.2),
+
         'line_diff_width': '2',
         'line_diff_added': FADED_GRAY,
         'line_diff_modified': FADED_VIOLET,
