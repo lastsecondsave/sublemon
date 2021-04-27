@@ -1,4 +1,5 @@
 import os
+import re
 import shlex
 import signal
 import subprocess
@@ -242,6 +243,8 @@ class ChimneyCommand(WindowCommand):
 
 
 class BufferedPipe:
+    ESCAPE_CHARACTER = re.compile(r"\x1b.*?\[\d*m")
+
     def __init__(self, process_line, ctx):
         self.process_line = process_line
         self.ctx = ctx
@@ -269,7 +272,8 @@ class BufferedPipe:
         while end > 0 and chunk[end - 1] == "\r":
             end -= 1
 
-        self.line_buffer.append(chunk[begin:end])
+        line = self.ESCAPE_CHARACTER.sub("", chunk[begin:end])
+        self.line_buffer.append(line)
 
     def get_buffered_line(self):
         content = "".join(self.line_buffer)
