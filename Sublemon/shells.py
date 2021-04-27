@@ -1,29 +1,19 @@
 import re
 
-from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
-
-ESCAPE_CHARACTER = re.compile(r"\x1b.*?\[\d*m")
-WIN_PATH = re.compile(r"([A-Za-z]):\\(.*)")
-
-
-class TrimEscapeSequencesListener(ChimneyBuildListener):
-    def on_output(self, line, ctx):
-        return ESCAPE_CHARACTER.sub("", line)
-
-    def on_error(self, line, ctx):
-        return ESCAPE_CHARACTER.sub("", line)
+from .chimney import ChimneyCommand, Cmd
 
 
 class WslCommand(ChimneyCommand):
+    WIN_PATH = re.compile(r"([A-Za-z]):\\(.*)")
+
     def setup(self, build):
         for i, val in enumerate(build.cmd.args):
-            if match := WIN_PATH.match(val):
+            if match := self.WIN_PATH.match(val):
                 drive = match.group(1).lower()
                 path = match.group(2).replace("\\", "/")
                 build.cmd.args[i] = f"/{drive}/{path}"
 
         build.cmd.appendleft("wsl")
-        build.listener = TrimEscapeSequencesListener()
 
 
 class PwshCommand(ChimneyCommand):
@@ -34,4 +24,3 @@ class PwshCommand(ChimneyCommand):
             build.cmd = Cmd({"cmd": ("-Command", cmdline)})
 
         build.cmd.appendleft("pwsh", "-NoProfile")
-        build.listener = TrimEscapeSequencesListener()
