@@ -206,6 +206,11 @@ class ChimneyCommand(WindowCommand):
             self.run_build(build)
 
     def run_build_interactive(self, build, cmd):
+        if cmd.startswith("@"):
+            cmd = cmd[1:]
+            if project_file := self.window.project_file_name():
+                build.working_dir = os.path.dirname(project_file)
+
         cmd = cmd.replace("$$", f'"{build.active_file}"')
         cmd = cmd.replace("@@", f'"{build.working_dir}"')
 
