@@ -209,10 +209,12 @@ class ChimneyCommand(WindowCommand):
         cmd = cmd.replace("$$", f'"{build.active_file}"')
         cmd = cmd.replace("@@", f'"{build.working_dir}"')
 
-        if not build.cmd:
-            build.cmd = Cmd({"shell_cmd": cmd})
-        else:
+        if build.cmd:
             build.cmd.append(*(shlex.split(cmd)))
+        elif RUNNING_ON_WINDOWS:
+            build.cmd = Cmd({"cmd": ("pwsh", "-NoProfile", "-Command", cmd)})
+        else:
+            build.cmd = Cmd({"shell_cmd": cmd})
 
         self.run_build(build)
 
