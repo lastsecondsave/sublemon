@@ -4,6 +4,7 @@ import json
 import re
 import sys
 from collections import OrderedDict
+from itertools import chain
 
 import sublime
 from sublime import Region
@@ -457,7 +458,7 @@ class DeleteRulersCommand(WindowCommand):
 
 
 class ConvertCaseCommand(TextCommand):
-    SEPARATORS = re.compile(r"[_\.\-]+")
+    SEPARATORS = re.compile(r"[_\.\- ]+")
     CASE_CHANGE = re.compile(r"(?=[A-Z0-9])")
 
     CONVERTORS = {
@@ -467,6 +468,9 @@ class ConvertCaseCommand(TextCommand):
         "SCREAM_CASE": lambda ts: "_".join(ts).upper(),
         "kebab-case": "-".join,
         "dot.case": ".".join,
+        "Sentence case": lambda ts: (
+            " ".join(chain((ts[0].capitalize(),), (x.lower() for x in ts[1:])))
+        ),
     }
 
     def run(self, edit, case):  # pylint: disable=arguments-differ
