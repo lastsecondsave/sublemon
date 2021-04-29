@@ -101,7 +101,7 @@ class CopyFilePathCommand(WindowCommand):
 
         if mode == "name":
             path = path.name
-        elif mode == "parent":
+        elif mode == "directory":
             path = path.parent
         elif mode == "project":
             path = self.project_path(path)
@@ -124,7 +124,7 @@ class CopyFilePathCommand(WindowCommand):
             def list_items(self):
                 return [
                     ("File Name", "name"),
-                    ("Parent Path", "parent"),
+                    ("Directory Path", "directory"),
                     ("Project Path", "project"),
                     ("Absolute Path", "absolute"),
                 ]
