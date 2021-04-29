@@ -298,6 +298,8 @@ rec(COMMENT_HIGHLIGHT,
     'meta.block-tag keyword')
 rec(COMMENT_HIGHLIGHT + ITALIC,
     'meta.block-tag variable.parameter')
+rec(ITALIC,
+    'text.html.javadoc markup.underline.link')
 rec(SPECIAL,
     'entity.name.constant',
     'constant.other',
@@ -491,7 +493,9 @@ rec(GRAY,
 rec(STRING,
     'markup.raw.inline')
 rec(VARIABLE,
-    '(meta.image.inline.description | meta.link.inline.description) -markup.underline -punctuation')
+    '(meta.image.inline.description | meta.link.inline.description | meta.link.reference.description) -markup.underline -punctuation',
+    'meta.link.reference.def entity.name.reference.link',
+    'meta.link.reference constant.other.reference.link')
 rec(ITALIC,
     'markup.italic -punctuation')
 rec(BOLD,
