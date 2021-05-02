@@ -242,6 +242,8 @@ rec(REGEXP_GROUP,
     'source.regexp & (punctuation.definition.group | keyword.operator.or)')
 rec(REGEXP_CHARACTER_CLASS,
     'source.regexp & (constant.character.character-class | constant.other.character-class.set)')
+rec(REGEXP_CONTROL,
+    'source.regexp punctuation.definition.character-class')
 rec(ITALIC,
     '(meta.function-call.arguments variable.parameter) & -meta.function.inline')
 
@@ -264,10 +266,11 @@ rec(REGEXP_GROUP,
     'string.regexp punctuation.definition.group',
     'keyword.operator.or.regexp')
 rec(REGEXP_CHARACTER_CLASS,
-    'string.regexp constant.other.character-class')
+    'string.regexp constant.other.character-class',
+    'string.regexp & (punctuation.definition.unicode-property | support.constant.unicode-property)')
 rec(REGEXP_CONTROL,
     'string.regexp & (keyword.control | keyword.operator)',
-    'constant.other.character-class.set.regexp constant.other.character-class.escape')
+    'string.regexp punctuation.definition.character-class')
 rec(FOREGROUND,
     'keyword.declaration.function.arrow')
 
@@ -282,10 +285,8 @@ rec(REGEXP_GROUP,
     'keyword.other.named-capture-group')
 rec(REGEXP_CHARACTER_CLASS,
     'meta.set',
-    'keyword.control.set',
     'keyword.control.character-class')
 rec(REGEXP_CONTROL,
-    'meta.set keyword.control.character-class',
     'keyword.control',
     'keyword.operator',
     'storage.modifier.mode')
