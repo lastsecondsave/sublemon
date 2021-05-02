@@ -710,7 +710,7 @@
     {
       "class": "kind_label",
       "parents": [{"class": "kind_container kind_variable"}],
-      "color": "var(DARK_ORANGE)"
+      "color": "var(ORANGE)"
     },
     {
       "class": "kind_label",
