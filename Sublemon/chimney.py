@@ -370,9 +370,9 @@ def start_process(cmd, env, cwd):
     }
 
     if RUNNING_ON_WINDOWS:
-        process_params["startupinfo"] = startupinfo()
+        process_params["creationflags"] = subprocess.CREATE_NO_WINDOW
     else:
-        process_params["preexec_fn"] = os.setsid  # pylint: disable=no-member
+        process_params["start_new_session"] = True
 
     if cwd:
         process_params["cwd"] = cwd
@@ -395,7 +395,7 @@ def start_process(cmd, env, cwd):
 def kill_process(process):
     if RUNNING_ON_WINDOWS:
         cmd = f"taskkill /T /F /PID {process.pid}"
-        subprocess.Popen(cmd, startupinfo=startupinfo())
+        subprocess.Popen(cmd, creationflags=subprocess.CREATE_NO_WINDOW)
     else:
         try:
             os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
@@ -404,9 +404,3 @@ def kill_process(process):
             print(f"[WARN] Process {process.pid} doesn't exist")
 
     process.wait()
-
-
-def startupinfo():
-    sinfo = subprocess.STARTUPINFO()
-    sinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    return sinfo
