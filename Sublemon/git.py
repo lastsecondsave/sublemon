@@ -44,7 +44,9 @@ class GitEditExcludeCommand(WindowCommand):
 class GitRevertFileCommand(WindowCommand):
     def run(self):
         view = self.window.active_view()
-        subprocess.call(["git", "checkout", view.file_name()], cwd=view_cwd(view))
+        subprocess.call(
+            ["git", "checkout", view.file_name()], cwd=view_cwd(view), shell=True
+        )
 
     def is_enabled(self):
         return active_view_contains_file(self.window)
