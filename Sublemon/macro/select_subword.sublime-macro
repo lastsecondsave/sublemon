@@ -1,4 +1,0 @@
-[
-  { "command": "move", "args": {"by": "subwords", "forward": false} },
-  { "command": "move", "args": {"by": "subword_ends", "extend": true, "forward": true} }
-]

@@ -24,7 +24,12 @@
   { "keys": ["alt+["], "command": "prev_view" },
   { "keys": ["alt+]"], "command": "next_view" },
 
-  { "keys": ["alt+d"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/select_subword.sublime-macro"} },
+  { "keys": ["alt+d"], "command": "chain", "args": {
+    "commands": [
+      { "command": "move", "args": {"by": "subwords", "forward": false} },
+      { "command": "move", "args": {"by": "subword_ends", "extend": true, "forward": true} }
+    ]
+  }},
   { "keys": ["alt+d"], "command": "move", "args": {"by": "subword_ends", "extend": true, "forward": true},
     "context": [
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
