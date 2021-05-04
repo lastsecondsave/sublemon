@@ -768,12 +768,12 @@
     },
     {
       "class": "progress_bar_control",
-      "layer0.tint": "var(panel_black)",
+      "layer0.tint": "color(var(outer_gray) l(+ 3%))",
       "layer0.opacity": 1.0
     },
     {
       "class": "progress_gauge_control",
-      "layer0.tint": "var(label_white)",
+      "layer0.tint": "var(label_gray)",
       "layer0.opacity": 1.0,
       "content_margin": [0, 6]
     },
