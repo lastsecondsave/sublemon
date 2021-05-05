@@ -1,11 +1,32 @@
-from snippets_lib import *
+from snippets import *
 
-cpp = Snippets('source.c++')
+snippets = {
+    "pl": "std::cout << $SEL0 << std::endl;",
+    "dc": ("doc comment", r"/**>>=${SELECTION/^\s*/ * /mg}$0>>= */"),
+}
 
-cpp/'pl' - ('std::cout', r"std::cout << ${0:$SELECTION} << std::endl;")
+completions = {
+    kind(ICON_KEYWORD, "Keyword"): [
+        "break",
+        "continue",
+        "return",
+    ],
+    kind(ICON_CONVERT, "Cast"): [
+        "const_cast<$1>",
+        "reinterpret_cast<$1>",
+        "static_cast<$1>",
+    ],
+    kind(ICON_BLOCK, "Block"): [
+        "else ($1) {}",
+        "for ($1) {}",
+        "if ($1) {}",
+        "while ($1) {}",
+    ],
+    kind(ICON_MACROS, "Macros"): [
+        "#include",
+        "#ifdef",
+        "#endif",
+    ],
+}
 
-cpp/ind/'dc' - ('doc comment', r'/**==>${SELECTION/^\s*/ * /mg}$0==> */')
-
-cpp/'inc' - ('#include', '#include $0')
-cpp/'#in' - ('#include', '#include $0')
-cpp/'ifdef' - ('#ifdef', '#ifdef $1\n${0:$SELECTION}\n#endif')
+generate("source.c++", snippets, completions)
