@@ -1,4 +1,4 @@
-# pylint: disable=bad-whitespace,global-statement,line-too-long
+# pylint: disable=global-statement,line-too-long
 
 import json
 from itertools import chain
@@ -121,14 +121,17 @@ COLOR_SCHEME = {
 ROOT_SCOPES = None
 
 
-def src(*scopes):
+def sec(*scopes):
     global ROOT_SCOPES
-    ROOT_SCOPES = list(f"source.{s}" for s in scopes)
+    ROOT_SCOPES = scopes
+
+
+def src(*scopes):
+    sec(*(f"source.{s}" for s in scopes))
 
 
 def txt(*scopes):
-    global ROOT_SCOPES
-    ROOT_SCOPES = list(f"text.{s}" for s in scopes)
+    sec(*(f"text.{s}" for s in scopes))
 
 
 def regroup(scopes):
