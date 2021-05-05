@@ -768,7 +768,7 @@
     },
     {
       "class": "progress_bar_control",
-      "layer0.tint": "color(var(outer_gray) l(+ 3%))",
+      "layer0.tint": "color(var(outer_gray) l(+ 4%))",
       "layer0.opacity": 1.0
     },
     {
@@ -882,7 +882,7 @@
     {
       "class": "text_output_control",
       "parents": [{"class": "window"}],
-      // "color_scheme_tint": "var(outer_dark)"
+      "color_scheme_tint": "color(var(outer_gray) l(- 5%))"
     },
     {
       "class": "dropdown_button_control",
