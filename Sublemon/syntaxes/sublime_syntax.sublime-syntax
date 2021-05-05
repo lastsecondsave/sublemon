@@ -30,10 +30,10 @@ contexts:
   injection-contexts:
     - include: scope:source.yaml#comment
 
-    - match: '(?=^  [\w-]+:(\s+#|\s*$))'
-      embed: scope:source.yaml
-      embed_scope: meta.context.sublime-syntax
-      escape: (?=\s+#)|$
+    - match: ^  (\w+)(:)
+      captures:
+        1: meta.context.sublime-syntax string.unquoted.plain.out.yaml entity.name.section.yaml
+        2: punctuation.separator.key-value.mapping.yaml
 
     - match: (match|escape|first_line_match)(:)
       captures:
@@ -45,7 +45,7 @@ contexts:
     - include: scope:source.yaml#comment
     - match: ^  (\w+)(:)
       captures:
-        1: meta.variables.sublime-syntax string.unquoted.plain.out.yaml entity.name.tag.yaml
+        1: meta.variables.sublime-syntax string.unquoted.plain.out.yaml variable.other.yaml entity.name.variable.yaml
         2: punctuation.separator.key-value.mapping.yaml
       push: regexp-value
 

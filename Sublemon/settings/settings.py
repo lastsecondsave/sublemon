@@ -1,13 +1,12 @@
 from settings_lib import settings
 
-settings("meta.context.sublime-syntax entity.name.tag",
+settings("meta.context.sublime-syntax entity.name.section",
          show_in_symbol_list=1,
          show_in_indexed_symbol_list=1)
 
-settings("meta.variables.sublime-syntax entity.name.tag",
+settings("meta.variables.sublime-syntax variable.other",
          show_in_symbol_list=1,
-         show_in_indexed_symbol_list=1,
-         symbol_transformation='/.*/[var] $0/')
+         show_in_indexed_symbol_list=1)
 
 settings("source.ini",
          line_comment=('#', ';'))
