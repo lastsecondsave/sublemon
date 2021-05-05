@@ -668,7 +668,7 @@
     {
       "class": "kind_container",
       "parents": [{"class": "auto_complete"}],
-      "content_margin": [7, 0, 4, 0]
+      "content_margin": [6, 0, 5, 0],
     },
     {
       "class": "kind_label",
@@ -685,7 +685,7 @@
     {
       "class": "kind_label",
       "parents": [{"class": "kind_container kind_snippet"}],
-      "color": "var(GRAY)"
+      "color": "var(label_white)"
     },
     {
       "class": "kind_label",
