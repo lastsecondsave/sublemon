@@ -6,27 +6,33 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 GENERATED_DIR = Path(".generated")
-FIRST_WORD_PATTERN = re.compile(r"^[#@]?([\w\-:\.]+)")
+FIRST_WORD_PATTERN = re.compile(r"^[#@]?([\w\-:\.]+\w)")
 
 
-ICON_KEYWORD = ""
-ICON_BLOCK = ""
-ICON_CONVERT = ""
-ICON_MACROS = ""
-
-
-def kind(icon, description):
-    return f"snippet {icon} {description}"
+class Icon:
+    KEYWORD = ""
+    MODIFIER = ""
+    BLOCK = ""
+    CONVERT = ""
+    META = ""
+    NAMESPACE = ""
+    FUNCTION = ""
+    STORAGE = ""
+    ENTITY = ""
 
 
 def expand_custom_variables(content):
     content = content.replace("$FILENAME", r"${TM_FILENAME/(.*?)(\..+)/$1/}")
-    content = content.replace("$SEL0", "${0:$SELECTION}")
-    return content
+    return content.replace("$SEL0", "${0:$SELECTION}")
+
+
+def intent_with_tabs(content):
+    return content.replace("    ", "\t")
 
 
 def make_multiline(content):
-    return content.replace("==>", "\n\t").replace(">>=", "\n")
+    content = content.replace("==>", "\n\t").replace(">>=", "\n")
+    return content.replace("<=>", "\n\t$0\n")
 
 
 def expand_braces(content):
@@ -34,7 +40,7 @@ def expand_braces(content):
 
 
 DEFAULT_MUTATORS = (make_multiline, expand_braces)
-MANDATORY_MUTATORS = (expand_custom_variables,)
+MANDATORY_MUTATORS = (expand_custom_variables, intent_with_tabs)
 
 
 def generate(scope, snippets=None, completions=None, mutators=DEFAULT_MUTATORS):
@@ -53,20 +59,11 @@ def generate(scope, snippets=None, completions=None, mutators=DEFAULT_MUTATORS):
         prepared_completions = []
 
         for kind, values in completions.items():
-            kind = kind.split()
+            kind = prepare_kind(kind)
             for value in values:
                 prepared_completions.append(prepare_completion(kind, value, mutators))
 
-        path = target_dir / "completions.sublime-completions"
-
-        with path.open(mode="w") as json_file:
-            json.dump(
-                {"scope": scope, "completions": prepared_completions},
-                json_file,
-                indent=2,
-            )
-
-        print(path.name)
+        write_completions(scope, prepared_completions, target_dir)
 
 
 def is_collection(item):
@@ -80,11 +77,11 @@ def get_first_word(string):
 def prepare_snippet(scope, trigger, snippet, mutators):
     description, content = snippet if is_collection(snippet) else (None, snippet)
 
-    for mutate in mutators:
-        content = mutate(content)
-
     if not description:
         description = get_first_word(content)
+
+    for mutate in mutators:
+        content = mutate(content)
 
     return {
         "scope": scope,
@@ -107,17 +104,37 @@ def write_snippet(snippet, target_dir):
     ET.ElementTree(root).write(path)
 
 
+def prepare_kind(kind):
+    if isinstance(kind, str):
+        return kind.split(maxsplit=2) if " " in kind else kind
+
+    return ("snippet", kind[1], kind[0])
+
+
 def prepare_completion(kind, completion, mutators):
     trigger, content = completion if is_collection(completion) else (None, completion)
 
-    for mutate in mutators:
-        content = mutate(content)
-
     if not trigger:
         trigger = get_first_word(content)
+
+    for mutate in mutators:
+        content = mutate(content)
 
     return {
         "kind": kind,
         "trigger": trigger,
         "contents": content,
     }
+
+
+def write_completions(scope, completions, target_dir):
+    path = target_dir / "completions.sublime-completions"
+
+    with path.open(mode="w") as json_file:
+        json.dump(
+            {"scope": scope, "completions": completions},
+            json_file,
+            indent=2,
+        )
+
+    print(path.name)
