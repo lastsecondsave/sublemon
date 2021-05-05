@@ -249,6 +249,8 @@ rec(REGEXP_CONTROL,
     'source.regexp punctuation.definition.character-class')
 rec(ITALIC,
     '(meta.function-call.arguments variable.parameter) & -meta.function.inline')
+rec(FOREGROUND,
+    'keyword.other.print')
 
 src('js')
 rec(TAG + ITALIC,
@@ -367,14 +369,16 @@ src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'keyword.operator.expansion',
-    'keyword.operator.logical.pipe',
-    'keyword.operator.logical.job',
+    'keyword.operator.assignment.pipe',
     'keyword.operator.assignment.redirection',
-    'keyword.operator.end-of-options')
+    'keyword.operator.end-of-options',
+    'keyword.control.conditional.patterns.end')
 rec(STORAGE,
     'keyword.declaration.alias | keyword.declaration.variable | support.function.export')
 rec(VARIABLE,
-    'meta.variable variable.other.readwrite')
+    'meta.variable variable.other.readwrite -meta.conditional.shell',
+    'meta.declaration.variable variable.other.readwrite -meta.interpolation',
+    'variable.language punctuation.definition.variable')
 rec(KEYWORD,
     'support.function.eval',
     'support.function.exec',
@@ -384,10 +388,10 @@ rec(KEYWORD,
 rec(COMMENT,
     'constant.language.shebang')
 rec(FOREGROUND,
-    'keyword.control.case.item',
-    'keyword.control.conditional.patterns.end',
     'variable.language.tilde',
     'variable.parameter.option')
+rec(ITALIC,
+    'meta.conditional.case.clause.patterns meta.pattern.regexp -keyword.operator.logical -keyword.control')
 
 src('makefile')
 rec(PUNCTUATION,
@@ -396,14 +400,15 @@ rec(PUNCTUATION,
 rec(VARIABLE,
     'variable.other')
 rec(FOREGROUND,
-    'variable.parameter')
+    'variable.parameter',
+    'meta.function-call constant.language')
 
 src('cmake')
 rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
-    'string punctuation.section.block')
+    'punctuation.section.block.begin | punctuation.section.block.end')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.function',
