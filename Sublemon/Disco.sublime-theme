@@ -715,7 +715,7 @@
     {
       "class": "kind_label",
       "parents": [{"class": "kind_container kind_markup"}],
-      "color": "var(GREEN)"
+      "color": "var(DARK_ORANGE)"
     },
     {
       "class": "kind_label",
@@ -857,14 +857,32 @@
       "layer0.texture": "Theme - Default/common/input.png",
       "layer0.inner_margin": 4,
       "layer0.opacity": 1.0,
-      "layer0.tint": [32, 40, 48],
-      "color_scheme_tint": "var(BLUISH_BLACK)",
-      "content_margin": [4, 3, 4, 4]
+      "layer0.tint": "var(BLUISH_BLACK)",
+      "content_margin": [4, 4, 4, 3]
     },
     {
       "class": "text_line_control",
       "parents": [{"class": "panel_control"}],
       "content_margin": [4, 6, 4, 4]
+    },
+    {
+      "class": "text_line_control",
+      "parents": [{"class": "overlay_control"}],
+      "font.face": "var(font)",
+      "font.size": "var(font_size_quickpanel)",
+    },
+    {
+      "class": "text_line_control",
+      "parents": [{"class": "switch_project_window"}],
+      "font.face": "var(font)",
+      "font.size": "var(font_size_quickpanel)",
+      "layer0.tint": "var(outer_dark)",
+      "color_scheme_tint": "var(outer_dark)",
+    },
+    {
+      "class": "text_output_control",
+      "parents": [{"class": "window"}],
+      // "color_scheme_tint": "var(outer_dark)"
     },
     {
       "class": "dropdown_button_control",
@@ -1160,7 +1178,7 @@
     {
       "class": "vcs_changes_annotation",
       "font.size": 9,
-      "color": "var(CLEAR_WHITE)",
+      "color": "var(form_label)",
       "border_color": "color(var(CLEAR_WHITE) a(60%))",
       "content_margin": [3, 1, 3, 0]
     }
