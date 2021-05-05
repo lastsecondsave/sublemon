@@ -1,10 +1,12 @@
 # pylint: disable=invalid-name
 
+import subprocess
 from pathlib import Path
 
 import sublime
 
 RUNNING_ON_WINDOWS = sublime.platform() == "windows"
+CREATION_FLAGS = subprocess.CREATE_NO_WINDOW if RUNNING_ON_WINDOWS else 0
 
 
 def pref(key, default=None):

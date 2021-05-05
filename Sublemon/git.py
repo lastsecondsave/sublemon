@@ -2,9 +2,10 @@ import re
 import subprocess
 from pathlib import Path
 
+import sublime
 from sublime_plugin import WindowCommand
 
-from . import active_view_contains_file, find_in_file_parents, view_cwd
+from . import CREATION_FLAGS, active_view_contains_file, find_in_file_parents, view_cwd
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 NOT_A_GIT_REPOSITORY = "Not a git repository"
@@ -22,7 +23,9 @@ class GitGuiCommand(WindowCommand):
             dotgit = find_in_file_parents(self.window.active_view(), ".git")
 
         if dotgit:
-            subprocess.Popen("git gui", cwd=dotgit.parent, shell=True)
+            subprocess.Popen(
+                ["git", "gui"], cwd=dotgit.parent, creationflags=CREATION_FLAGS
+            )
         else:
             self.window.status_message(NOT_A_GIT_REPOSITORY)
 
@@ -44,8 +47,14 @@ class GitEditExcludeCommand(WindowCommand):
 class GitRevertFileCommand(WindowCommand):
     def run(self):
         view = self.window.active_view()
-        subprocess.call(
-            ["git", "checkout", view.file_name()], cwd=view_cwd(view), shell=True
+        if view.is_dirty():
+            sublime.error_message("You need to save the file first!")
+            return
+
+        subprocess.Popen(
+            ["git", "checkout", view.file_name()],
+            cwd=view_cwd(view),
+            creationflags=CREATION_FLAGS,
         )
 
     def is_enabled(self):
