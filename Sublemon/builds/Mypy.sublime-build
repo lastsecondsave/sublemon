@@ -1,7 +1,0 @@
-{
-  "selector": "source.python",
-  "target": "python",
-  "module": "mypy",
-  "cmd": ["$file"],
-  "file_regex": "(.+?):(\\d+):(\\d+): (.*)"
-}
