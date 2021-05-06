@@ -37,11 +37,23 @@ completions = {
         "begin {}",
         "else {}",
         "end {}",
-        "function ${1:run} {}",
+        "for ($1) {}",
         "if ($1) {}",
         "process {}",
+        "switch ($1) {}",
+    ],
+    ("Storage", Icon.STORAGE): [
+        "function ${1:run} {}",
+        "param (<=>)",
+    ],
+    ("Attribute", Icon.META): [
+        ("Parameter", "[Parameter($0)]"),
+    ],
+    ("Constant", Icon.CONSTANT): [
+        ("False", "\\$False"),
+        ("Null", "\\$Null"),
+        ("True", "\\$True"),
     ],
 }
 
 generate("source.powershell", snippets, completions)
-

@@ -77,7 +77,7 @@ completions = {
         "nullptr",
         "true",
     ],
-    ("Constant", Icon.VARIABLE): [
+    ("Variable", Icon.VARIABLE): [
         "this",
     ],
 }
