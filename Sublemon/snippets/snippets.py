@@ -53,6 +53,8 @@ def generate(scope, snippets=None, completions=None, mutators=DEFAULT_MUTATORS):
     shutil.rmtree(target_dir, ignore_errors=True)
     target_dir.mkdir(exist_ok=True, parents=True)
 
+    print("Scope:", scope)
+
     if snippets:
         for trigger, snippet in snippets.items():
             snippet = prepare_snippet(scope, trigger, snippet, mutators)
@@ -140,4 +142,4 @@ def write_completions(scope, completions, target_dir):
             indent=2,
         )
 
-    print(path.name)
+    print(len(completions), "completions")
