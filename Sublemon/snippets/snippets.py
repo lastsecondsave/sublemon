@@ -5,20 +5,23 @@ import shutil
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-GENERATED_DIR = Path(".generated")
 FIRST_WORD_PATTERN = re.compile(r"^[#@]?([\w\-:\.]+\w)")
 
 
 class Icon:
     KEYWORD = ""
-    MODIFIER = ""
+    MODIFIER = ""
+    ACCESS_MODIFIER = ""
     BLOCK = ""
     CONVERT = ""
-    META = ""
+    META = ""
     NAMESPACE = ""
     FUNCTION = ""
     STORAGE = ""
     ENTITY = ""
+    PRIMITIVE = ""
+    CONSTANT = ""
+    VARIABLE = ""
 
 
 def expand_custom_variables(content):
@@ -46,7 +49,7 @@ MANDATORY_MUTATORS = (expand_custom_variables, intent_with_tabs)
 def generate(scope, snippets=None, completions=None, mutators=DEFAULT_MUTATORS):
     mutators = [*mutators, *MANDATORY_MUTATORS]
 
-    target_dir = GENERATED_DIR / scope
+    target_dir = Path(".generated") / scope
     shutil.rmtree(target_dir, ignore_errors=True)
     target_dir.mkdir(exist_ok=True, parents=True)
 
