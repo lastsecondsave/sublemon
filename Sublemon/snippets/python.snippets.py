@@ -1,4 +1,4 @@
-from snippets import DEFAULT_MUTATORS, Icon, generate
+from snippets import Icon, generate
 
 snippets = {
     "pl": "print($SEL0)",
@@ -54,6 +54,4 @@ def expand_colon(content):
     return content + "\n\t${0:pass}" if content.endswith(":") else content
 
 
-generate(
-    "source.python", snippets, completions, mutators=(*DEFAULT_MUTATORS, expand_colon)
-)
+generate("source.python", snippets, completions, mutators=[expand_colon])

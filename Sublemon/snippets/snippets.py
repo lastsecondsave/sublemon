@@ -42,12 +42,16 @@ def expand_braces(content):
     return content[:-2] + "{\n\t$0\n}" if content.endswith(" {}") else content
 
 
-DEFAULT_MUTATORS = (make_multiline, expand_braces)
-MANDATORY_MUTATORS = (expand_custom_variables, intent_with_tabs)
+DEFAULT_MUTATORS = (
+    make_multiline,
+    expand_braces,
+    expand_custom_variables,
+    intent_with_tabs,
+)
 
 
-def generate(scope, snippets=None, completions=None, mutators=DEFAULT_MUTATORS):
-    mutators = [*mutators, *MANDATORY_MUTATORS]
+def generate(scope, snippets=(), completions=(), mutators=()):
+    mutators = (*mutators, *DEFAULT_MUTATORS)
 
     target_dir = Path(".generated") / scope
     shutil.rmtree(target_dir, ignore_errors=True)
@@ -55,20 +59,20 @@ def generate(scope, snippets=None, completions=None, mutators=DEFAULT_MUTATORS):
 
     print("Scope:", scope)
 
-    if snippets:
-        for trigger, snippet in snippets.items():
-            snippet = prepare_snippet(scope, trigger, snippet, mutators)
-            write_snippet(snippet, target_dir)
+    for trigger, snippet in snippets.items():
+        snippet = prepare_snippet(scope, trigger, snippet, mutators)
+        write_snippet(snippet, target_dir)
 
-    if completions:
-        prepared_completions = []
+    prepared_completions = []
 
-        for kind, values in completions.items():
-            kind = prepare_kind(kind)
-            for value in values:
-                prepared_completions.append(prepare_completion(kind, value, mutators))
+    for kind, values in completions.items():
+        kind = prepare_kind(kind)
+        for value in values:
+            prepared_completions.append(prepare_completion(kind, value, mutators))
 
-        write_completions(scope, prepared_completions, target_dir)
+    write_completions(scope, prepared_completions, target_dir)
+
+    print(len(prepared_completions), "completions")
 
 
 def is_collection(item):
@@ -136,10 +140,4 @@ def write_completions(scope, completions, target_dir):
     path = target_dir / "completions.sublime-completions"
 
     with path.open(mode="w") as json_file:
-        json.dump(
-            {"scope": scope, "completions": completions},
-            json_file,
-            indent=2,
-        )
-
-    print(len(completions), "completions")
+        json.dump({"scope": scope, "completions": completions}, json_file)
