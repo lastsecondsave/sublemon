@@ -19,6 +19,8 @@
   { "keys": ["alt+down"], "command": "swap_line_down" },
   { "keys": ["alt+backspace"], "command": "dual_side_delete" },
 
+  { "keys": ["alt+0"], "command": "unselect_others" },
+
   { "keys": ["alt+q"], "command": "expand_snippet" },
   { "keys": ["alt+p"], "command": "find_under_prev" },
   { "keys": ["alt+["], "command": "prev_view" },
