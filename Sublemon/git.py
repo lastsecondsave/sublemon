@@ -2,7 +2,6 @@ import re
 import subprocess
 from pathlib import Path
 
-import sublime
 from sublime_plugin import WindowCommand
 
 from . import CREATION_FLAGS, active_view_contains_file, find_in_file_parents, view_cwd
@@ -45,10 +44,12 @@ class GitEditExcludeCommand(WindowCommand):
 
 
 class GitRevertFileCommand(WindowCommand):
-    def run(self):
+    def run(self, save=True):  # pylint: disable=arguments-differ
         view = self.window.active_view()
-        if view.is_dirty():
-            sublime.error_message("You need to save the file first!")
+
+        if view.is_dirty() and save:
+            self.window.run_command("save")
+            self.window.run_command("git_revert_file", args={"save": False})
             return
 
         subprocess.Popen(
