@@ -1,10 +1,38 @@
-from snippets_lib import *
+from snippets import Icon, generate
 
-sh = Snippets('source.shell')
+snippets = {
+    "sb": ("shebang", "#!/usr/bin/env ${0:bash}"),
+    "fn": ("function", "${1:run}() {}"),
+    "pl": "echo $SEL0",
+}
 
-sh/'#!' - '#!/usr/bin/env bash'
-sh/'awk' - "awk '{$0}'"
+completions = {
+    ("Support", Icon.FUNCTION): [
+        "echo",
+        "exec",
+        "exit",
+        "printf",
+        "source",
+        "trap",
+    ],
+    ("Modifier", Icon.ACCESS_MODIFIER): [
+        "export",
+        "local",
+        "readonly",
+    ],
+    ("Block", Icon.BLOCK): [
+        "case $1 in<=>esac",
+        "elif [[ $1 ]]; then==>",
+        "else==>",
+        "if [[ $1 ]]; then<=>fi",
+        "while $1; do<=>done",
+    ],
+    ("Program", Icon.EXTERNAL): [
+        "basename",
+        "dirname",
+        "xargs",
+    ],
+}
 
-sh/ind/'case' - 'case $1 in>=>$0==>esac'
-sh/ind/'if' - 'if [[ $1 ]]; then>=>$0==>fi'
-sh/ind/'while' - 'while $1; do>=>$0==>done'
+
+generate("source.shell.bash", snippets, completions)
