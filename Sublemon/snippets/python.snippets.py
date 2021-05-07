@@ -7,6 +7,7 @@ snippets = {
     "main": ('if __name__ == "__main__"', 'if __name__ == "__main__":==>${0:main()}'),
     "fi": ("from import", "from $1 import $0"),
     "init": ("__init__", "def __init__(self$1):"),
+    "ie": ("if x else y", "if $1 else $0"),
 }
 
 completions = {
@@ -29,7 +30,7 @@ completions = {
     ],
     ("Storage", Icon.STORAGE): [
         "def ${1:run}($2):",
-        "class ${1:Item}($2):",
+        "class $1:",
     ],
     ("Support", Icon.FUNCTION): [
         "isinstance($1, ${2:str})",
