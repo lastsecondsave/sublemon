@@ -2,7 +2,7 @@ from snippets import Icon, generate
 
 snippets = {
     "pl": "std::cout << $SEL0 << std::endl;",
-    "dc": ("doc comment", r"/**>>=${SELECTION/^\s*/ * /mg}$0>>= */"),
+    "dc": ("doc comment", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
     "main": ("main", "int main(${1:int argc, char *argv[]}) {}"),
     "fun": ("function", "${1:void} ${2:run}($3) {}"),
 }
@@ -32,6 +32,7 @@ completions = {
     ("Block", Icon.BLOCK): [
         "catch (${1:const std::exception& e}) {}",
         "else {}",
+        ("elif", "else if ($1) {}"),
         "for ($1) {}",
         "if ($1) {}",
         "try {}",

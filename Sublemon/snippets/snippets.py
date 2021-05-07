@@ -22,6 +22,7 @@ class Icon:
     PRIMITIVE = ""
     CONSTANT = ""
     VARIABLE = ""
+    EXTERNAL = ""
 
 
 def expand_custom_variables(content):
@@ -34,8 +35,8 @@ def intent_with_tabs(content):
 
 
 def make_multiline(content):
-    content = content.replace("==>", "\n\t").replace(">>=", "\n")
-    return content.replace("<=>", "\n\t$0\n")
+    content = content.replace("==>", "\n\t").replace("-->", "\n")
+    return content.replace("<=>", "\n\t$0\n").replace("<->", "\n$0\n")
 
 
 def expand_braces(content):

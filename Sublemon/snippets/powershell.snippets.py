@@ -32,7 +32,7 @@ def pwsh_cmdlets():
 snippets = {"pl": "Write-Output $SEL0"}
 
 completions = {
-    ("Cmdlet", ""): pwsh_cmdlets(),
+    ("Cmdlet", Icon.EXTERNAL): pwsh_cmdlets(),
     ("Block", Icon.BLOCK): [
         "begin {}",
         "else {}",
