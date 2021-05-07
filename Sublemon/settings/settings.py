@@ -13,18 +13,8 @@ def generate(all_settings):
 
 
 def write_settings(scope, settings, target_dir):
-    sublime_settings = {}
-
-    if comments := extract_comments(settings):
-        sublime_settings["shellVariables"] = comments
-
-    for key, val in settings.items():
-        if key == "symbolTransformation":
-            val = ";".join(wrap(val)) + ";"
-        elif isinstance(val, bool):
-            val = int(val)
-
-        sublime_settings[key] = val
+    sublime_settings = settings.copy()
+    repack_comments(sublime_settings)
 
     path = target_dir / f"{scope}.tmPreferences"
 
@@ -34,11 +24,7 @@ def write_settings(scope, settings, target_dir):
     print("Generated", path.name)
 
 
-def wrap(value):
-    return value if isinstance(value, (list, tuple)) else (value,)
-
-
-def extract_comments(settings):
+def repack_comments(settings):
     shell_variables = []
     comment_index = 1
 
@@ -46,33 +32,33 @@ def extract_comments(settings):
         name = f"TM_COMMENT_{variant}_{comment_index}"
         shell_variables.append({"name": name, "value": value})
 
+    def wrap(value):
+        return [value] if isinstance(value, str) else value
+
     for line_comment in wrap(settings.pop("lineComment", [])):
         add_comment("START", line_comment + " ")
         comment_index += 1
 
     if block_comment := settings.pop("blockComment", None):
-        add_comment("START", block_comment[0] + " ")
-        add_comment("END", " " + block_comment[1])
+        add_comment("START", block_comment[0])
+        add_comment("END", block_comment[1])
 
-    return shell_variables
+    if shell_variables:
+        settings["shellVariables"] = shell_variables
 
 
-SETTINGS = {
-    "meta.context.sublime-syntax entity.name.section": {
-        "showInSymbolList": True,
-    },
-    "meta.variables.sublime-syntax variable.other": {
-        "showInSymbolList": True,
-    },
-    "text.rfc entity.name.title": {"showInSymbolList": True},
-    "source.ini": {"lineComment": ("#", ";")},
-    "source.ini entity.name.section": {"showInSymbolList": True},
-    "source.unix": {"lineComment": "#"},
-    "source.powershell": {"lineComment": "#", "blockComment": ("<#", "#>")},
-    "source.python": {
-        "increaseIndentPattern": r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
-        "decreaseIndentPattern": r"^\s*((elif|else|except|finally)\b.*:|[\}\]])",
-    },
-}
-
-generate(SETTINGS)
+generate(
+    {
+        "meta.context.sublime-syntax entity.name.section": {"showInSymbolList": 1},
+        "meta.variables.sublime-syntax variable.other": {"showInSymbolList": 1},
+        "text.rfc entity.name.title": {"showInSymbolList": 1},
+        "source.ini": {"lineComment": ("#", ";")},
+        "source.ini entity.name.section": {"showInSymbolList": 1},
+        "source.unix": {"lineComment": "#"},
+        "source.powershell": {"lineComment": "#", "blockComment": ("<#", "#>")},
+        "source.python": {
+            "increaseIndentPattern": r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
+            "decreaseIndentPattern": r"^\s*((elif|else|except|finally)\b.*:|[\}\]])",
+        },
+    }
+)
