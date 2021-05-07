@@ -50,7 +50,7 @@ DEFAULT_MUTATORS = (
 )
 
 
-def generate(scope, snippets=(), completions=(), mutators=()):
+def generate(scope, snippets=None, completions=None, mutators=()):
     mutators = (*mutators, *DEFAULT_MUTATORS)
 
     target_dir = Path(".generated") / scope
@@ -59,20 +59,22 @@ def generate(scope, snippets=(), completions=(), mutators=()):
 
     print("Scope:", scope)
 
-    for trigger, snippet in snippets.items():
-        snippet = prepare_snippet(scope, trigger, snippet, mutators)
-        write_snippet(snippet, target_dir)
+    if snippets:
+        for trigger, snippet in snippets.items():
+            snippet = prepare_snippet(scope, trigger, snippet, mutators)
+            write_snippet(snippet, target_dir)
 
-    prepared_completions = []
+    if completions:
+        prepared_completions = []
 
-    for kind, values in completions.items():
-        kind = prepare_kind(kind)
-        for value in values:
-            prepared_completions.append(prepare_completion(kind, value, mutators))
+        for kind, values in completions.items():
+            kind = prepare_kind(kind)
+            for value in values:
+                prepared_completions.append(prepare_completion(kind, value, mutators))
 
-    write_completions(scope, prepared_completions, target_dir)
+        write_completions(scope, prepared_completions, target_dir)
 
-    print(len(prepared_completions), "completions")
+        print(len(prepared_completions), "completions")
 
 
 def is_collection(item):
