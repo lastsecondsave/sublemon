@@ -1,6 +1,7 @@
 [tool.pylint."MESSAGE CONTROL"]
 disable = [
     "missing-docstring",
+    "line-too-long",
     "no-self-use",
     "subprocess-run-check",
     "too-few-public-methods",
@@ -8,8 +9,7 @@ disable = [
 ]
 
 [tool.isort]
-profile= "black"
-skip_glob = "*snippets.py"
+profile = "black"
 
 [tool.black]
-exclude = '(disco|settings|snippets)\.py'
+exclude = '(disco|snippets)\.py'
