@@ -1,11 +1,18 @@
-from snippets_lib import *
+from snippets import generate
 
-regexp = Snippets('source.regexp')
+generate(
+    "source.regexp",
+    snippets={
+        "?>": ("atomic group", "(?>$SEL0)"),
+        "?=": ("lookahead", "(?=$SEL0)"),
+        "?:": ("non-capturing group", "(?:$SEL0)"),
+    },
+)
 
-regexp/'>' - ('atomic group', '(?>${0:$SELECTION})')
-regexp/'=' - ('lookahead', '(?=${0:$SELECTION})')
-regexp/':' - ('non-capturing group', '(?:${0:$SELECTION})')
-
-clj = Snippets('source.clojure')
-
-clj/'pl' - ('println', '(println $0)')
+generate(
+    "text.xml",
+    snippets={
+        "cdata": ("CDATA", "<![CDATA[$SEL0]]>"),
+        "xml": ("xml declaration", '<?xml version="1.0" encoding="UTF-8"?>'),
+    },
+)
