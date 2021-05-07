@@ -28,8 +28,8 @@
 
   { "keys": ["alt+d"], "command": "chain", "args": {
     "commands": [
-      { "command": "move", "args": {"by": "subwords", "forward": false} },
-      { "command": "move", "args": {"by": "subword_ends", "extend": true, "forward": true} }
+      ["move", {"by": "subwords", "forward": false}],
+      ["move", {"by": "subword_ends", "extend": true, "forward": true}]
     ]
   }},
   { "keys": ["alt+d"], "command": "move", "args": {"by": "subword_ends", "extend": true, "forward": true},
@@ -59,8 +59,7 @@
   { "keys": ["ctrl+alt+down"], "command": "select_lines", "args": {"forward": true} },
   { "keys": ["ctrl+alt+pageup"], "command": "select_to_left" },
   { "keys": ["ctrl+alt+pagedown"], "command": "select_to_right" },
-  { "keys": ["ctrl+alt+enter"], "command": "run_macro_file",
-    "args": {"file": "Packages/Sublemon/macro/add_indent.sublime-macro" },
+  { "keys": ["ctrl+alt+enter"], "command": "insert_snippet", "args": {"contents": "\n\t${0:$SELECTION}\n"},
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
   },
   { "keys": ["ctrl+alt+space"], "command": "insert_snippet", "args": {"contents": " ${0:$SELECTION} "} },
@@ -71,12 +70,22 @@
 
   { "keys": ["ctrl+alt+a"], "command": "alignment" },
   { "keys": ["ctrl+alt+s"], "command": "selection_to_cursors" },
-  { "keys": ["ctrl+alt+;"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/add_semicolon.sublime-macro"} },
+  { "keys": ["ctrl+alt+;"], "command": "chain", "args": {
+    "commands": [
+      ["move_to", {"extend": false, "to": "eol"}],
+      ["insert", {"characters": ";\n"}]
+    ]
+  }},
 
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
   { "keys": ["ctrl+alt+x"], "command": "indent_to_braces" },
   { "keys": ["ctrl+alt+b"], "command": "build" },
-  { "keys": ["ctrl+alt+,"], "command": "run_macro_file", "args": {"file": "Packages/Sublemon/macro/add_comma.sublime-macro"}, },
+  { "keys": ["ctrl+alt+,"], "command": "chain", "args": {
+    "commands": [
+      ["move_to", {"extend": false, "to": "eol"}],
+      ["insert", {"characters": ",\n"}]
+    ]
+  }},
   { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
 
   /* SHIFT + ALT */
