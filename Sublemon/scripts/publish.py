@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -16,6 +17,7 @@ def generate_files():
     execute(SUBLEMON / "disco" / "disco.py")
     execute(SUBLEMON / "settings" / "settings.py")
 
+    shutil.rmtree(SUBLEMON / "snippets" / ".generated", ignore_errors=True)
     for snippet in (SUBLEMON / "snippets").glob("*.snippets.py"):
         execute(snippet)
 
