@@ -40,3 +40,17 @@ generate(
         ]
     },
 )
+
+generate(
+    "source.rust",
+    snippets={
+        "pl": 'println!("{}", $SEL0);',
+    },
+)
+
+generate(
+    "source.js",
+    snippets={
+        "pl": "console.log($SEL0);",
+    },
+)
