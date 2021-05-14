@@ -155,25 +155,8 @@
 
   { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<${0:$SELECTION}>"},
     "context": [
-      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
-      { "key": "preceding_text", "operator": "regex_contains", "operand": "[A-Z]\\w+(<.*>)?$", "match_all": true }
-    ]
-  },
-
-  { "keys": ["<"], "command": "insert_snippet", "args": {"contents": "<$0>"},
-    "context": [
-      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
-      { "key": "preceding_text", "operator": "regex_contains", "operand": "([A-Z]\\w+|::)$", "match_all": true }
-    ]
-  },
-
-  { "keys": [">"], "command": "move", "args": {"by": "characters", "forward": true},
-    "context": [
-      { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
-      { "key": "following_text", "operator": "regex_contains", "operand": "^>", "match_all": true }
+      { "key": "setting.auto_match_enabled", "operator": "equal", "operand": true },
+      { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }
     ]
   },
 
@@ -181,7 +164,6 @@
     "args": {"file": "res://Packages/Default/Delete Left Right.sublime-macro"},
     "context": [
       { "key": "selection_empty", "operator": "equal", "operand": true, "match_all": true },
-      { "key": "selector", "operator": "equal", "operand": "source.java | source.rust" },
       { "key": "preceding_text", "operator": "regex_contains", "operand": "<$", "match_all": true },
       { "key": "following_text", "operator": "regex_contains", "operand": "^>", "match_all": true }
     ]
