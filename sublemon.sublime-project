@@ -50,16 +50,9 @@
       "working_dir": "${project_path}/Sublemon"
     },
     {
-      "name": "Sublemon - Isort",
-      "target": "python",
-      "module": "isort",
-      "cmd": ["${project_path}/Sublemon"]
-    },
-    {
-      "name": "Sublemon - Black",
-      "target": "python",
-      "module": "black",
-      "cmd": ["${project_path}/Sublemon"]
+      "name": "Sublemon - Fmt",
+      "shell_cmd": "black . && isort .",
+      "working_dir": "${project_path}/Sublemon"
     }
   ],
 
