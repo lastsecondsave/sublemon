@@ -52,6 +52,8 @@ def mute_files():
     mute(PACKAGES / "Java" / "JavaC.sublime-build")
     mute(PACKAGES / "Java" / "Java.sublime-completions")
 
+    mute(PACKAGES / "CMake" / "CMake.sublime-completions")
+
 
 if __name__ == "__main__":
     generate_files()

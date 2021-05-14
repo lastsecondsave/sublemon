@@ -23,7 +23,9 @@ generate(
         ("Block", Icon.BLOCK): [
             "define $1<->endef",
             "ifdef $1<->endif",
+            "ifndef $1<->endif",
             'ifeq "$1" "$2"<->endif',
+            'ifneq "$1" "$2"<->endif',
         ]
     },
 )
@@ -35,8 +37,43 @@ generate(
             "addprefix",
             "addsuffix",
             "call",
+            "error",
+            "info",
             "patsubst",
             "subst",
+            "warning",
+        ]
+    },
+)
+
+generate(
+    "source.cmake",
+    completions={
+        ("Function", Icon.FUNCTION): [
+            "add_library()",
+            "target_include_directories()",
+            "target_link_libraries()",
+            "target_sources()",
+        ],
+        ("Block", Icon.BLOCK): [
+            "if($1)<=>endif()",
+        ],
+        ("Variable", Icon.VARIABLE): [
+            "CMAKE_BINARY_DIR",
+            "CMAKE_CURRENT_BINARY_DIR",
+            "CMAKE_CURRENT_SOURCE_DIR",
+            "CMAKE_SOURCE_DIR",
+        ],
+    },
+)
+
+generate(
+    "source.cmake meta.function-call",
+    completions={
+        ("Function", Icon.ACCESS_MODIFIER): [
+            "PUBLIC",
+            "PRIVATE",
+            "INTERFACE",
         ]
     },
 )
