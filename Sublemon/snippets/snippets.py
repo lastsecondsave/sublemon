@@ -43,9 +43,18 @@ def expand_braces(content):
     return content[:-2] + "{\n\t$0\n}" if content.endswith(" {}") else content
 
 
+def expand_parentheses(content):
+    return (
+        content[:-2] + "($1)"
+        if content.endswith("()") and not "\n" in content
+        else content
+    )
+
+
 DEFAULT_MUTATORS = (
     make_multiline,
     expand_braces,
+    expand_parentheses,
     expand_custom_variables,
     intent_with_tabs,
 )
@@ -75,7 +84,7 @@ def generate(scope, snippets=None, completions=None, mutators=()):
 
         write_completions(scope, prepared_completions, target_dir)
 
-        print(len(prepared_completions), "completions")
+        print(" ", len(prepared_completions), "completions")
 
 
 def is_collection(item):
@@ -111,7 +120,7 @@ def write_snippet(snippet, target_dir):
     digest = hashlib.sha1(str(snippet).encode("ascii")).hexdigest()
     path = target_dir / f"{digest}.sublime-snippet"
 
-    print(f"{path.name}: {snippet['description']}")
+    print(f"  {path.name}: {snippet['description']}")
 
     ET.ElementTree(root).write(path)
 
