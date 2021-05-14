@@ -368,15 +368,15 @@ rec(FOREGROUND,
 src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
+    'meta.interpolation.parameter keyword.operator',
     'keyword.operator.expansion',
     'keyword.operator.assignment.pipe',
     'keyword.operator.assignment.redirection',
-    'keyword.operator.end-of-options',
-    'keyword.control.conditional.patterns.end')
+    'keyword.operator.end-of-options')
 rec(STORAGE,
     'keyword.declaration.alias | keyword.declaration.variable | support.function.export')
 rec(VARIABLE,
-    'meta.variable variable.other.readwrite -meta.conditional.shell',
+    'meta.variable variable.other.readwrite -meta.conditional -meta.interpolation',
     'meta.declaration.variable variable.other.readwrite -meta.interpolation',
     'variable.language punctuation.definition.variable')
 rec(KEYWORD,
@@ -389,7 +389,8 @@ rec(COMMENT,
     'constant.language.shebang')
 rec(FOREGROUND,
     'variable.language.tilde',
-    'variable.parameter.option')
+    'variable.parameter.option',
+    'keyword.control.conditional.patterns')
 rec(ITALIC,
     'meta.conditional.case.clause.patterns meta.pattern.regexp -keyword.operator.logical -keyword.control')
 
@@ -408,7 +409,8 @@ rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
-    'punctuation.section.block.begin | punctuation.section.block.end')
+    'punctuation.section.block.begin | punctuation.section.block.end',
+    'punctuation.separator.generator-expression')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.function',
@@ -427,10 +429,12 @@ rec(VARIABLE,
     'entity.name.constant.preprocessor')
 
 src('objc++', 'objc')
-rec(PARAMETER,
+rec(PARAMETER + ITALIC,
     'meta.function-call support.function.any-method')
 rec(SPECIAL,
     'keyword.control.import')
+rec(FOREGROUND,
+    'support.constant.cocoa')
 
 src('rust')
 rec(STORAGE,
