@@ -15,7 +15,6 @@ contexts:
         - include: injection-variables
 
     - match: (?=^contexts:)
-      scope: meta.section.variables.sublime-syntax
       push: scope:source.yaml
       with_prototype:
         - include: injection-contexts
@@ -32,7 +31,7 @@ contexts:
 
     - match: ^  (\w+)(:)
       captures:
-        1: meta.context.sublime-syntax string.unquoted.plain.out.yaml entity.name.section.yaml
+        1: meta.symbol.sublime-syntax string.unquoted.plain.out.yaml entity.name.class.yaml
         2: punctuation.separator.key-value.mapping.yaml
 
     - match: (match|escape|first_line_match)(:)
@@ -45,7 +44,7 @@ contexts:
     - include: scope:source.yaml#comment
     - match: ^  (\w+)(:)
       captures:
-        1: meta.variables.sublime-syntax string.unquoted.plain.out.yaml variable.other.yaml entity.name.variable.yaml
+        1: meta.symbol.sublime-syntax string.unquoted.plain.out.yaml variable.other.yaml entity.name.variable.yaml
         2: punctuation.separator.key-value.mapping.yaml
       push: regexp-value
 

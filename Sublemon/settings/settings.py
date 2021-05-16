@@ -49,8 +49,7 @@ def repack_comments(settings):
 
 generate(
     {
-        "meta.context.sublime-syntax entity.name.section": {"showInSymbolList": 1},
-        "meta.variables.sublime-syntax variable.other": {"showInSymbolList": 1},
+        "meta.symbol.sublime-syntax entity.name": {"showInSymbolList": 1},
         "text.rfc entity.name.title": {"showInSymbolList": 1},
         "source.ini": {"lineComment": ("#", ";")},
         "source.ini entity.name.section": {"showInSymbolList": 1},
