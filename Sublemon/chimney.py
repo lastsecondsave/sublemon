@@ -242,7 +242,8 @@ class ChimneyCommand(WindowCommand):
 
         self.active_build = start_build(build, self.window, self.panel)
 
-        print("⭍ [{}] {}".format(self.active_build.process.pid, build.cmd))
+        marker = "⭭" if build.cmd.shell else "⭍"
+        print(f"{marker} [{self.active_build.process.pid}] {build.cmd}")
 
     def __del__(self):
         BUILDS.pop(self.wid, None)
@@ -316,7 +317,7 @@ class BuildContext:
 
         self.working_dir = build.working_dir
         self.on_complete = build.listener.on_complete
-        self.on_complete_message = "Build finished"
+        self.on_complete_message = "Build complete"
 
         build.listener.on_startup(self)
 
