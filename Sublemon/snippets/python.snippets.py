@@ -27,6 +27,7 @@ completions = {
         "for $1 in $2:",
         "if $1:",
         "while $1:",
+        "with $1 as $2:",
     ],
     ("Storage", Icon.STORAGE): [
         "def ${1:run}($2):",
@@ -37,7 +38,9 @@ completions = {
     ],
     ("Decorator", Icon.META): [
         "@classmethod",
+        "@contextmanager",
         "@dataclass",
+        "@property",
         "@staticmethod",
     ],
     ("Constant", Icon.CONSTANT): [
