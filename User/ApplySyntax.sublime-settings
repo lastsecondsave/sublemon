@@ -3,20 +3,20 @@
 
   "syntaxes": [
     {
-      "syntax": "Python/Python",
-      "rules": [{ "interpreter": "python" }, { "interpreter": "pypy" }]
-    },
-    {
       "syntax": "Sublemon/syntaxes/maven_pom",
       "rules": [{ "file_path": ".*/(build|pom).xml" }]
     },
     {
-      "syntax": "Sublemon/syntaxes/html_template",
-      "rules": [{ "first_line": "<template name=.*" }]
+      "syntax": "Python/Python",
+      "rules": [{ "interpreter": "python" }, { "interpreter": "pypy" }]
     },
     {
       "syntax": "Objective-C/Objective-C++",
-      "rules": [{ "first_line": "#import <Foundation/.+>" }]
+      "match": "all",
+      "rules": [
+        { "globmatch": "**/*.h" },
+        { "contains": "#import <Foundation/|@interface" }
+      ]
     }
   ]
 }
