@@ -27,8 +27,8 @@ class Style:
 
 
 class Highlight(Style):
-    def __init__(self, background, background_alpha=0.5, foreground_adjust=None):
-        settings = {"background": alpha(background, background_alpha)}
+    def __init__(self, background, foreground_adjust=None):
+        settings = {"background": background}
         if foreground_adjust:
             settings["foreground_adjust"] = foreground_adjust
         super().__init__(**settings)
@@ -78,7 +78,7 @@ VARIABLE = Style(ORANGE)
 META = Style(YELLOW)
 SPECIAL = Style(CRIMSON)
 
-INVALID = Style(CLEAR_WHITE, background=CRIMSON)
+INVALID = CLEAR_WHITE + Highlight("#E62020", "l(- 5%)")
 
 REGEXP_GROUP = Style(ORANGE)
 REGEXP_CHARACTER_CLASS = Style(PURPLE)
@@ -227,10 +227,10 @@ rec(ITALIC, 'style.italic')
 rec(BOLD, 'style.bold')
 rec(UNDERLINE, 'style.underline')
 
-rec(Highlight(GREEN, 0.1), 'diff.inserted')
-rec(Highlight(GREEN, 0.3, 'l(+ 10%)'), 'diff.inserted.char')
-rec(Highlight(CRIMSON, 0.2), 'diff.deleted')
-rec(Highlight(CRIMSON, 0.4, 'l(+ 10%)'), 'diff.deleted.char')
+rec(Highlight("#18453B", 'l(+ 10%)'), 'diff.inserted')
+rec(Highlight("#4F7942", 'l(+ 10%)'), 'diff.inserted.char')
+rec(Highlight("#733635", 'l(+ 10%)'), 'diff.deleted')
+rec(Highlight("#BF4F51", 'l(+ 10%)'), 'diff.deleted.char')
 
 src('python')
 rec(KEYWORD,
