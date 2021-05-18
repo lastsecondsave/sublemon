@@ -9,7 +9,7 @@ class Style:
     def __init__(self, foreground=None, **settings):
         self.settings = settings
         if foreground:
-            self.settings['foreground'] = foreground
+            self.settings["foreground"] = foreground
 
     def __add__(self, other):
         settings = self.settings.copy()
@@ -22,22 +22,20 @@ class Style:
 
         return Style(**settings)
 
-    def __radd__(self, other):
-        settings = self.settings.copy()
-        settings['foreground'] = other
-        return Style(**settings)
+    def __radd__(self, foreground):
+        return Style(foreground, **self.settings)
 
 
 class Highlight(Style):
-    def __init__(self, background, background_alpha=0.5, foreground_adjust=None, **settings):
-        settings['background'] = alpha(background, background_alpha)
+    def __init__(self, background, background_alpha=0.5, foreground_adjust=None):
+        settings = {"background": alpha(background, background_alpha)}
         if foreground_adjust:
-            settings['foreground_adjust'] = foreground_adjust
+            settings["foreground_adjust"] = foreground_adjust
         super().__init__(**settings)
 
 
 def alpha(color, value):
-    return f'color({color} alpha({value}))'
+    return f"color({color} alpha({value}))"
 
 
 WHITE = "#C4C4C4"
@@ -166,16 +164,16 @@ def rec(style, *scopes):
         style = Style(style)
 
     for scope in chain.from_iterable(expand(s) for s in regroup(scopes)):
-        COLOR_SCHEME['rules'].append({'scope': scope, **style.settings})
+        COLOR_SCHEME["rules"].append({"scope": scope, **style.settings})
 
 
 def generate():
     path = Path(__file__).resolve().parent.parent / "Disco.sublime-color-scheme"
 
-    with path.open(mode='w') as json_file:
+    with path.open(mode="w") as json_file:
         json.dump(COLOR_SCHEME, json_file, indent=2)
 
-    print('Generated', path)
+    print("Generated", path)
 
 
 rec(COMMENT,
