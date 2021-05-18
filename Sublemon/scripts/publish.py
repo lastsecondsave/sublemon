@@ -53,6 +53,7 @@ def mute_files():
     mute(PACKAGES / "Java" / "Java.sublime-completions")
 
     mute(PACKAGES / "CMake" / "CMake.sublime-completions")
+    mute(PACKAGES / "CMake" / "CMakeVariables.sublime-completions")
 
 
 if __name__ == "__main__":
