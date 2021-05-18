@@ -526,9 +526,9 @@ rec(CRIMSON, 'markup.deleted')
 txt('git')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC,
     'constant.numeric.hash')
-rec(Highlight(FADED_GRAY, 0.5),
+rec(INVALID,
     'meta.marker.git.merge-conflict')
-rec(CLEAR_WHITE + BOLD,
+rec(ITALIC,
     'variable.other.revision.git.merge-conflict')
 
 generate()

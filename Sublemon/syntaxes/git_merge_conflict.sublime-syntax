@@ -5,7 +5,7 @@ scope: text.git.merge-conflict
 
 contexts:
   main:
-    - match: '^(<{7}|>{7}|\|{7}|={7})(?:\s+(.*))?\n'
+    - match: '^(<{7}|>{7}|\|{7}|={7})(?:\s+(.+))?'
       scope: meta.marker.git.merge-conflict
       captures:
         1: punctuation.definition.marker.git.merge-conflict
