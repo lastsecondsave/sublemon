@@ -5,6 +5,7 @@
     ".gitconfig",
     ".gitmodules",
     ".pylintrc",
+    "CPPLINT.cfg",
     "desktop",
     "inf",
     "ini",
