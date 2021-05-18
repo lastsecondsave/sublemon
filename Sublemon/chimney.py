@@ -10,6 +10,8 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
+from .opener import find_project_folder
+
 from . import RUNNING_ON_WINDOWS
 
 
@@ -208,8 +210,8 @@ class ChimneyCommand(WindowCommand):
     def run_build_interactive(self, build, cmd):
         if cmd.startswith("@"):
             cmd = cmd[1:]
-            if project_file := self.window.project_file_name():
-                build.working_dir = os.path.dirname(project_file)
+            if project_folder := find_project_folder(self.window):
+                build.working_dir = str(project_folder)
 
         cmd = cmd.replace("$$", f'"{build.active_file}"')
         cmd = cmd.replace("@@", f'"{build.working_dir}"')
