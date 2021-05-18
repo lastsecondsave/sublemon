@@ -40,25 +40,30 @@ class OpenFilePathCommand(WindowCommand):
             return Path(tempfile.gettempdir(), joined[1:])
 
         if joined.startswith("@"):
-            return Path(self.find_parent_folder(), joined[1:])
+            return Path(find_project_folder(self.window), joined[1:])
 
         root = Path(self.window.active_view().file_name()).parent
         return Path(root, path)
 
-    def find_parent_folder(self):
-        folders = self.window.folders()
 
-        active_file = self.window.active_view().file_name()
-        if not active_file:
-            return folders[0]
+def find_project_folder(window):
+    folders = window.folders()
 
-        active_file = Path(active_file)
-
-        for folder in reorder(folders):
-            if folder in active_file.parents:
-                return folder
-
+    active_file = window.active_view().file_name()
+    if not active_file:
         return folders[0]
+
+    parents = Path(active_file).parents
+
+    for folder in reorder(folders):
+        if folder in parents:
+            return folder
+
+    return folders[0]
+
+
+def reorder(folders):
+    return (Path(f) for f in sorted(folders, key=len, reverse=True))
 
 
 class ShowFilePathCommand(WindowCommand):
@@ -86,10 +91,6 @@ class ShowFilePathCommand(WindowCommand):
             return ("~", path.relative_to(Path.home()))
         except ValueError:
             return (None, path)
-
-
-def reorder(folders):
-    return (Path(f) for f in sorted(folders, key=len, reverse=True))
 
 
 class CopyFilePathCommand(WindowCommand):
