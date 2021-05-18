@@ -45,7 +45,7 @@ def expand_braces(content):
 
 def expand_parentheses(content):
     return (
-        content[:-2] + "($1)"
+        content[:-2] + "($9)"
         if content.endswith("()") and not "\n" in content
         else content
     )
