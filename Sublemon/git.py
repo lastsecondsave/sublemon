@@ -2,45 +2,44 @@ import re
 import subprocess
 from pathlib import Path
 
+import sublime
 from sublime_plugin import WindowCommand
 
 from . import CREATION_FLAGS, active_view_contains_file, find_in_file_parents, view_cwd
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
-NOT_A_GIT_REPOSITORY = "Not a git repository"
+
+def find_dotgit(window, error_when_not_found=True):
+    dotgit = None
+
+    if project_file := window.project_file_name():
+        path = Path(project_file).with_name(".git")
+        if path.exists():
+            dotgit = path
+    else:
+        dotgit = find_in_file_parents(window.active_view(), ".git")
+
+    if not dotgit and error_when_not_found:
+        sublime.error_message("Not a git repository.")
+
+    return dotgit
 
 
 class GitGuiCommand(WindowCommand):
     def run(self):
-        dotgit = None
-
-        if project_file := self.window.project_file_name():
-            path = Path(project_file).with_name(".git")
-            if path.exists():
-                dotgit = path
-        else:
-            dotgit = find_in_file_parents(self.window.active_view(), ".git")
-
-        if dotgit:
+        if dotgit := find_dotgit(self.window):
             subprocess.Popen(
                 ["git", "gui"], cwd=dotgit.parent, creationflags=CREATION_FLAGS
             )
-        else:
-            self.window.status_message(NOT_A_GIT_REPOSITORY)
 
 
 class GitEditExcludeCommand(WindowCommand):
     def run(self):
-        dotgit = find_in_file_parents(self.window.active_view(), ".git")
-
-        if not dotgit:
-            self.window.status_message(NOT_A_GIT_REPOSITORY)
-            return
-
-        exclude_view = self.window.open_file(str(dotgit / "info" / "exclude"))
-        exclude_view.set_syntax_file(
-            "Packages/Sublemon/syntaxes/unix_config.sublime-syntax"
-        )
+        if dotgit := find_dotgit(self.window):
+            exclude_view = self.window.open_file(str(dotgit / "info" / "exclude"))
+            exclude_view.assign_syntax(
+                "Packages/Sublemon/syntaxes/unix_config.sublime-syntax"
+            )
 
 
 class GitRevertFileCommand(WindowCommand):
@@ -86,7 +85,7 @@ class GitLogCommand(ChimneyCommand):
         )
 
         build.listener = GitLogBuildListener()
-        build.syntax = "git_log"
+        build.syntax = "Git Log Output"
 
     def is_enabled(self):
         return active_view_contains_file(self.window)
@@ -149,7 +148,7 @@ class GitBlameCommand(ChimneyCommand):
             build.cmd.append("-L", "{},{}".format(from_line, to_line))
 
         build.cmd.append("--", build.active_file)
-        build.syntax = "git_blame"
+        build.syntax = "Git Blame Output"
         build.listener = GitBlameBuildListener()
 
     def is_enabled(self):
