@@ -524,12 +524,12 @@ rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
-txt('git')
+txt('output.git')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC,
     'constant.numeric.hash')
-rec(INVALID,
-    'meta.marker.git.merge-conflict')
-rec(ITALIC,
-    'variable.other.revision.git.merge-conflict')
+
+txt('git.merge-conflict')
+rec(INVALID, 'meta.marker')
+rec(ITALIC, 'variable.other.revision')
 
 generate()
