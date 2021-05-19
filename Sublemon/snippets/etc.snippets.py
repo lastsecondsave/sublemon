@@ -48,6 +48,9 @@ generate(
 
 generate(
     "source.cmake",
+    snippets={
+        "pl": "message($SEL0)",
+    },
     completions={
         ("Function", Icon.FUNCTION): [
             "add_library()",

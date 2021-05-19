@@ -25,9 +25,12 @@ completions = {
         "unsigned",
     ],
     ("Cast", Icon.CONVERT): [
-        "const_cast<$1>",
-        "reinterpret_cast<$1>",
-        "static_cast<$1>",
+        "const_cast<$1>()",
+        "reinterpret_cast<$1>()",
+        "static_cast<$1>()",
+    ],
+    ("Function", Icon.FUNCTION): [
+        "sizeof()",
     ],
     ("Block", Icon.BLOCK): [
         "catch (${1:const std::exception& e}) {}",
