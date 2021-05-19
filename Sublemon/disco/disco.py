@@ -58,9 +58,9 @@ DARK_BLUE = "#384868"
 
 FOREGROUND = Style(WHITE)
 
-ITALIC = Style(font_style='italic')
-BOLD = Style(font_style='bold')
-UNDERLINE = Style(font_style='underline')
+ITALIC = Style(font_style="italic")
+BOLD = Style(font_style="bold")
+UNDERLINE = Style(font_style="underline")
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
@@ -85,36 +85,36 @@ REGEXP_CHARACTER_CLASS = Style(PURPLE)
 REGEXP_CONTROL = Style(PINK)
 
 COLOR_SCHEME = {
-    'name': 'Disco',
+    "name": "Disco",
 
-    'globals': {
-        'background': BLUISH_BLACK,
-        'foreground': WHITE,
-        'caret': CLEAR_WHITE,
-        'line_highlight': alpha(FADED_GRAY, 0.3),
-        'minimap_border': alpha(CLEAR_WHITE, 0.7),
-        'brackets_foreground': DARK_ORANGE,
+    "globals": {
+        "background": BLUISH_BLACK,
+        "foreground": WHITE,
+        "caret": CLEAR_WHITE,
+        "line_highlight": alpha(FADED_GRAY, 0.3),
+        "minimap_border": alpha(CLEAR_WHITE, 0.7),
+        "brackets_foreground": DARK_ORANGE,
 
-        'selection': DARK_BLUE,
-        'selection_corner_radius': '2',
-        'selection_border_width': '0',
-        'invisibles': f'color({DARK_BLUE} l(+ 10%))',
+        "selection": DARK_BLUE,
+        "selection_corner_radius": "2",
+        "selection_border_width": "0",
+        "invisibles": f"color({DARK_BLUE} l(+ 10%))",
 
-        'highlight': CLEAR_WHITE,
-        'find_highlight': YELLOW,
-        'scroll_selected_highlight': YELLOW,
+        "highlight": CLEAR_WHITE,
+        "find_highlight": YELLOW,
+        "scroll_selected_highlight": YELLOW,
 
-        'guide': alpha(FADED_GRAY, 0.2),
-        'active_guide': alpha(FADED_GRAY, 0.4),
-        'stack_guide': alpha(FADED_GRAY, 0.2),
+        "guide": alpha(FADED_GRAY, 0.2),
+        "active_guide": alpha(FADED_GRAY, 0.4),
+        "stack_guide": alpha(FADED_GRAY, 0.2),
 
-        'line_diff_width': '2',
-        'line_diff_added': FADED_GRAY,
-        'line_diff_modified': FADED_VIOLET,
-        'line_diff_deleted': FADED_VIOLET
+        "line_diff_width": "2",
+        "line_diff_added": FADED_GRAY,
+        "line_diff_modified": FADED_VIOLET,
+        "line_diff_deleted": FADED_VIOLET
     },
 
-    'rules': []
+    "rules": []
 }
 
 ROOT_SCOPES = None
