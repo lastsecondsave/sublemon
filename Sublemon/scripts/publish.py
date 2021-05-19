@@ -55,6 +55,8 @@ def mute_files():
     mute(PACKAGES / "CMake" / "CMake.sublime-completions")
     mute(PACKAGES / "CMake" / "CMakeVariables.sublime-completions")
 
+    mute(PACKAGES / "C++" / "C++ Single File.sublime-build")
+
 
 if __name__ == "__main__":
     generate_files()

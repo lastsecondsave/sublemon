@@ -192,7 +192,7 @@ rec(STORAGE,
     'storage',
     'support.type',
     'support.class',
-    'entity.other.inherited-class')
+    'entity.other.inherited-class -punctuation.accessor')
 rec(KEYWORD,
     'keyword',
     'keyword.operator.alphanumeric',
@@ -409,7 +409,7 @@ rec(VARIABLE,
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
     'punctuation.section.block.begin | punctuation.section.block.end',
-    'punctuation.separator.generator-expression')
+    'string.quoted.double punctuation.separator')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.function',
