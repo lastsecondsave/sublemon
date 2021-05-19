@@ -98,6 +98,7 @@ COLOR_SCHEME = {
         'selection': DARK_BLUE,
         'selection_corner_radius': '2',
         'selection_border_width': '0',
+        'invisibles': f'color({DARK_BLUE} l(+ 10%))',
 
         'highlight': CLEAR_WHITE,
         'find_highlight': YELLOW,
