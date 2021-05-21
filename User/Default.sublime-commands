@@ -27,5 +27,7 @@
   { "caption": "Git: Revert File", "command": "git_revert_file"},
 
   { "caption": "Reindent JSON", "command": "json_reindent" },
-  { "caption": "Select Between", "command": "select_between_markers" }
+  { "caption": "Select Between", "command": "select_between_markers" },
+
+  { "caption": "Highlight: Add", "command": "highlight_add" },
 ]
