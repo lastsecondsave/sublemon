@@ -3,8 +3,12 @@
     {
       "name": "sublemon",
       "path": "Sublemon",
-      "file_exclude_patterns": ["Disco.sublime-color-scheme"],
       "folder_exclude_patterns": [".generated*"]
+    },
+    {
+      "name": "disco",
+      "path": "Disco",
+      "file_exclude_patterns": ["Disco.sublime-color-scheme"]
     },
     {
       "name": "user",
@@ -30,24 +34,13 @@
       "working_dir": "${project_path}/Sublemon"
     },
     {
-      "name": "Sublemon - Pylint - Plugins",
+      "name": "Sublemon - Lint Plugins",
       "target": "pylint",
       "cmd": [
         "Sublemon",
         "--init-hook=import sys; sys.path.extend(['/opt/sublime_text/Lib/python38', '../../Lib/python38'])"
       ],
       "working_dir": "${project_path}"
-    },
-    {
-      "name": "Sublemon - Pylint - Scripts",
-      "target": "pylint",
-      "cmd": [
-        "snippets/snippets.py",
-        "settings/settings.py",
-        "disco/disco.py",
-        "scripts/publish.py"
-      ],
-      "working_dir": "${project_path}/Sublemon"
     },
     {
       "name": "Sublemon - Fmt",
