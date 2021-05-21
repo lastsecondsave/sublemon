@@ -2,7 +2,9 @@
 
 !/Sublemon
 /Sublemon/*/.generated*
-/Sublemon/Disco.sublime-color-scheme
+
+!/Disco
+/Disco/Disco.sublime-color-scheme
 
 !/User
 /User/Disco.sublime-theme

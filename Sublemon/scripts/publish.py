@@ -14,7 +14,7 @@ def execute(script):
 
 
 def generate_files():
-    execute(SUBLEMON / "disco" / "disco.py")
+    execute(PACKAGES / "Disco" / "src" / "disco.py")
     execute(SUBLEMON / "settings" / "settings.py")
 
     shutil.rmtree(SUBLEMON / "snippets" / ".generated", ignore_errors=True)
