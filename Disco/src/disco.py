@@ -528,8 +528,4 @@ txt('output.git')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC,
     'constant.numeric.hash')
 
-txt('git.merge-conflict')
-rec(INVALID, 'meta.marker')
-rec(ITALIC, 'variable.other.revision')
-
 generate()
