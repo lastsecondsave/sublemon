@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Pylint Output
-scope: text.log.pylint
+scope: text.output.pylint
 hidden: true
 
 contexts:
@@ -9,15 +9,17 @@ contexts:
     - match: '^(.+?):(\d+):(\d+): (\w\d+): .*?(\([\w-]+\))?$'
       captures:
         1: entity.name.filename
-        2: constant.numeric
-        3: constant.numeric
-        4: comment.category.code
-        5: style.italic comment.category.description
+        2: constant.numeric.line
+        3: constant.numeric.column
+        4: storage.category.hash
+        5: comment.category.description
+
     - match: '^\s+\^ (\([\w-]+\))'
       scope: comment.category.description
       captures:
         1: style.italic
+
     - match: (\*{1,}) Module (.+)
       captures:
-        1: comment
-        2: meta.title
+        1: punctuation.formatting
+        2: entity.name.section

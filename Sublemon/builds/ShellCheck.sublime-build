@@ -2,5 +2,5 @@
   "selector": "source.shell",
   "cmd": ["shellcheck", "$file"],
   "file_regex": "^In (.+?) line (\\d+):",
-  "syntax": "Packages/Sublemon/syntaxes/shellcheck.sublime-syntax"
+  "syntax": "Packages/Sublemon/syntaxes/ShellCheck Output.sublime-syntax"
 }

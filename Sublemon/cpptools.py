@@ -7,7 +7,7 @@ class CpplintCommand(ChimneyCommand):
         setup_python_exec(build, "cpplint", allow_venv=False)
 
         build.file_regex = r"(.+?):(\d+)(): (.*)"
-        build.syntax = "cpplint"
+        build.syntax = "Cpplint Output"
         build.listener = CpplintBuildListener()
 
 

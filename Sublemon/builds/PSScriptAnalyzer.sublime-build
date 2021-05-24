@@ -1,7 +1,7 @@
 {
   "selector": "source.powershell",
   "file_regex": "^(.+?):(\\d+):(\\d+): (.*)",
-  "syntax": "Packages/Sublemon/syntaxes/basic_build.sublime-syntax",
+  "syntax": "Packages/Sublemon/syntaxes/Generic Build Output.sublime-syntax",
   "target": "pwsh",
   "shell_cmd": [
     "Invoke-ScriptAnalyzer -Path '$file' |",
