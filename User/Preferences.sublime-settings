@@ -31,7 +31,6 @@
 	"drag_text": false,
 	"draw_shadows": false,
 	"enable_tab_scrolling": true,
-	"enable_telemetry": "disabled",
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
@@ -109,12 +108,9 @@
 		".git*",
 		"Makefile",
 	],
-	"line_padding_bottom": 0,
-	"line_padding_top": 0,
 	"margin": 0,
 	"match_brackets_content": false,
 	"mini_diff": "auto",
-	"minimap_scroll_to_clicked_text": true,
 	"open_files_in_new_window": false,
 	"overlay_scroll_bars": "enabled",
 	"scroll_past_end": true,
@@ -128,7 +124,6 @@
 	"tab_completion": false,
 	"translate_tabs_to_spaces": true,
 	"trim_automatic_white_space": false,
-	"trim_only_modified_white_space": false,
 	"trim_trailing_white_space_on_save": "all",
 	"word_wrap": false,
 }
