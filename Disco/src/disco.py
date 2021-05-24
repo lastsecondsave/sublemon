@@ -331,12 +331,6 @@ rec(PUNCTUATION, 'keyword.operator.macro')
 src('groovy')
 rec(META, 'storage.type.annotation')
 
-txt('log')
-rec(CRIMSON, 'meta.indicator.error')
-rec(ORANGE, 'meta.indicator.warning')
-rec(GREEN, 'meta.indicator.success')
-rec(YELLOW, 'meta.message', 'meta.title')
-
 src('cs')
 rec(KEYWORD,
     'keyword.operator.new | keyword.operator.reflection')
@@ -524,8 +518,14 @@ rec(BLUE, 'meta.diff.header')
 rec(GREEN, 'markup.inserted')
 rec(CRIMSON, 'markup.deleted')
 
-txt('output.git')
-rec(Style([PINK, FADED_VIOLET]) + ITALIC,
-    'constant.numeric.hash')
+txt('output')
+rec(Style([PINK, FADED_VIOLET]) + ITALIC, 'storage.category.hash')
+rec(COMMENT, 'punctuation.formatting')
+rec(COMMENT + ITALIC, 'comment.category')
+rec(META, 'entity.name.section')
+rec(CRIMSON, 'constant.other.indicator.error')
+rec(ORANGE, 'constant.other.indicator.warning')
+rec(GREEN, 'constant.other.indicator.success')
+rec(FOREGROUND + ITALIC, 'constant.numeric.date')
 
 generate()

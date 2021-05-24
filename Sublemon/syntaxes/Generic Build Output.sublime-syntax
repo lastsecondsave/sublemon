@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+name: Generic Build Output
+scope: text.output
+hidden: true
+
+contexts:
+  main:
+    - match: '^(.+?):(\d+):(\d+): .*?(\([^\(]+\))?$'
+      captures:
+        1: entity.name.filename
+        2: constant.numeric.line
+        3: constant.numeric.column
+        4: comment.category.description

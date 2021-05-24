@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
-name: ShellCheck Build Output
-scope: text.log.shellcheck
+name: ShellCheck Output
+scope: text.output.shellcheck
 hidden: true
 
 contexts:
@@ -9,10 +9,11 @@ contexts:
     - match: '^In (.+?) line (\d+):$'
       captures:
         1: entity.name.filename
-        2: constant.numeric
+        2: constant.numeric.line
+
     - match: '^\s*(\^-*\^?) (\w+): (.*)'
       captures:
         1: punctuation.definition.variable
-        2: storage
-        3: string
+        2: storage.category
+        3: string.description
 

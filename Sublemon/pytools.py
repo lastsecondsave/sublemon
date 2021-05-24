@@ -70,7 +70,7 @@ class PylintCommand(ChimneyCommand):
         setup_python_exec(build, "pylint")
 
         build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
-        build.syntax = "pylint"
+        build.syntax = "Pylint Output"
         build.listener = PylintBuildListener()
 
 

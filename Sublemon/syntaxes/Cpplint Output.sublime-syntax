@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Cpplint Output
-scope: text.log.cpplint
+scope: text.output.cpplint
 hidden: true
 
 contexts:
@@ -9,6 +9,6 @@ contexts:
     - match: '^(.+?):(\d+): .+? (\[[^\]]+\]) (\[[^\]]+\])$'
       captures:
         1: entity.name.filename
-        2: constant.numeric
-        3: style.italic comment.category
-        4: style.italic comment.confidense
+        2: constant.numeric.line
+        3: comment.category.description
+        4: comment.category.confidense

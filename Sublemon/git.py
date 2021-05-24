@@ -38,7 +38,7 @@ class GitEditExcludeCommand(WindowCommand):
         if dotgit := find_dotgit(self.window):
             exclude_view = self.window.open_file(str(dotgit / "info" / "exclude"))
             exclude_view.assign_syntax(
-                "Packages/Sublemon/syntaxes/unix_config.sublime-syntax"
+                "Packages/Sublemon/syntaxes/Unix Config.sublime-syntax"
             )
 
 
