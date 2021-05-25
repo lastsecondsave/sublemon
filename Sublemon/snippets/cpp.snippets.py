@@ -30,6 +30,7 @@ completions = {
         "static_cast<$1>()",
     ],
     ("Function", Icon.FUNCTION): [
+        "defined()",
         "sizeof()",
     ],
     ("Block", Icon.BLOCK): [
@@ -42,6 +43,7 @@ completions = {
         "while ($1) {}",
     ],
     ("Macros", Icon.META): [
+        "#define",
         "#endif",
         "#ifdef",
         "#include",

@@ -53,8 +53,11 @@ generate(
     },
     completions={
         ("Function", Icon.FUNCTION): [
+            "add_executable()",
             "add_library()",
+            "add_subdirectory()",
             "target_include_directories()",
+            "target_link_directories()",
             "target_link_libraries()",
             "target_sources()",
         ],
@@ -66,14 +69,14 @@ generate(
             "CMAKE_CURRENT_BINARY_DIR",
             "CMAKE_CURRENT_SOURCE_DIR",
             "CMAKE_SOURCE_DIR",
-        ],
+        ]
     },
 )
 
 generate(
     "source.cmake meta.function-call",
     completions={
-        ("Function", Icon.ACCESS_MODIFIER): [
+        ("Constant", Icon.ACCESS_MODIFIER): [
             "PUBLIC",
             "PRIVATE",
             "INTERFACE",
