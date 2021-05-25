@@ -532,3 +532,22 @@ class ConvertCaseCommand(TextCommand):
                 return items
 
         return CaseInputHandler()
+
+
+class CopyAsOneLineCommand(TextCommand):
+    EOL_PATTERN = re.compile(r"(\s*\\?\n\s*)+")
+
+    def run(self, edit):
+        chunks = []
+
+        for region in self.view.sel():
+            if region.empty():
+                continue
+
+            text = self.view.substr(region)
+            if text := self.EOL_PATTERN.sub(" ", text).strip():
+                chunks.append(text)
+
+        text = " ".join(chunks)
+        sublime.set_clipboard(text)
+        sublime.status_message(f"Copied {len(text)} characters")
