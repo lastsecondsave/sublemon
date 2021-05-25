@@ -39,7 +39,7 @@
 
     "form_label": "var(label_white)",
 
-    "font": "system",
+    "font_face": "system",
     "font_size": 12,
     "font_size_tabs": 11,
     "font_size_statusbar": 11,
@@ -90,14 +90,14 @@
     {
       "class": "sidebar_heading",
       "fg": "var(label_white)",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size)",
       "font.bold": true
     },
     {
       "class": "sidebar_label",
       "fg": "var(label_gray)",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size)"
     },
     {
@@ -375,7 +375,7 @@
     {
       "class": "tab_label",
       "fg": "var(label_gray)",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size_tabs)"
     },
     {
@@ -531,7 +531,7 @@
       "match_fg": "var(label_blue)",
       "selected_fg": "var(CLEAR_WHITE)",
       "selected_match_fg": "var(label_blue)",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size_quickpanel)"
     },
     {
@@ -545,7 +545,7 @@
       "match_fg": "var(label_white)",
       "selected_fg": "var(label_gray)",
       "selected_match_fg": "var(label_white)",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size)"
     },
     {
@@ -725,7 +725,7 @@
     {
       "class": "auto_complete_kind_name_label",
       "font.size": "0.9rem",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.italic": false,
       "border_color": "color(var(CLEAR_WHITE) a(0.2))"
     },
@@ -868,13 +868,13 @@
     {
       "class": "text_line_control",
       "parents": [{"class": "overlay_control"}],
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size_quickpanel)",
     },
     {
       "class": "text_line_control",
       "parents": [{"class": "switch_project_window"}],
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size_quickpanel)",
       "layer0.tint": "var(outer_dark)",
       "color_scheme_tint": "var(outer_dark)",
@@ -1106,7 +1106,7 @@
     {
       "class": "label_control",
       "fg": "var(WHITE)",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size)"
     },
     {
@@ -1124,7 +1124,7 @@
     },
     {
       "class": "tool_tip_label_control",
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size)",
       "fg": "var(label_white)"
     },
@@ -1160,7 +1160,7 @@
     {
       "class": "label_control",
       "parents": [{"class": "status_bar"}],
-      "font.face": "var(font)",
+      "font.face": "var(font_face)",
       "font.size": "var(font_size_statusbar)",
       "color": "var(form_label)"
     },
