@@ -67,6 +67,7 @@ STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
 OPERATOR = Style(WHITE)
 PUNCTUATION = Style(DARK_ORANGE)
+ACCESSOR = Style(color(FADED_VIOLET, "l(+ 25%)"))
 COMMENT = Style(GRAY)
 COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
@@ -192,15 +193,14 @@ rec(STORAGE,
     'storage',
     'support.type',
     'support.class',
-    'entity.other.inherited-class -punctuation.accessor')
+    'entity.other.inherited-class')
 rec(KEYWORD,
     'keyword',
     'keyword.operator.alphanumeric',
     'keyword.operator.word',
     'storage.modifier')
 rec(OPERATOR,
-    'keyword.operator -string.quoted',
-    'punctuation.separator')
+    'keyword.operator -string.quoted')
 rec(INDEXED,
     'entity.name -comment -meta.function-call',
     'markup.heading')
@@ -216,6 +216,8 @@ rec(PUNCTUATION,
     'punctuation.definition.template-expression',
     'punctuation.definition.variable',
     'punctuation.section.interpolation')
+rec(ACCESSOR,
+    'punctuation.accessor')
 rec(INVALID,
     'invalid -text.html.markdown')
 rec(TAG,
@@ -318,8 +320,7 @@ rec(FADED_VIOLET,
     'meta.tag')
 rec(FOREGROUND,
     'storage.modifier.array',
-    'storage.type.function.anonymous',
-    'punctuation.accessor.dot')
+    'storage.type.function.anonymous')
 
 txt('log.java')
 rec(SPECIAL, 'entity.name.exception')
@@ -403,7 +404,7 @@ rec(VARIABLE,
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
     'punctuation.section.block.begin | punctuation.section.block.end',
-    'string.quoted.double punctuation.separator')
+    'punctuation.separator.generator-expression')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.function',
