@@ -13,7 +13,7 @@ contexts:
 
     - match: '^\s*(\^-*\^?) (\w+): (.*)'
       captures:
-        1: punctuation.definition.variable
+        1: punctuation.definition.marker
         2: storage.category
         3: string.description
 
