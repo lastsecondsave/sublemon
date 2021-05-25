@@ -34,8 +34,8 @@ class Highlight(Style):
         super().__init__(**settings)
 
 
-def alpha(color, value):
-    return f"color({color} alpha({value}))"
+def color(value, mod):
+    return f"color({value} {mod})"
 
 
 WHITE = "#C4C4C4"
@@ -91,22 +91,22 @@ COLOR_SCHEME = {
         "background": BLUISH_BLACK,
         "foreground": WHITE,
         "caret": CLEAR_WHITE,
-        "line_highlight": alpha(FADED_GRAY, 0.3),
-        "minimap_border": alpha(CLEAR_WHITE, 0.7),
+        "line_highlight": color(FADED_GRAY, "a(0.3)"),
+        "minimap_border": color(CLEAR_WHITE, "a(0.7)"),
         "brackets_foreground": DARK_ORANGE,
 
         "selection": DARK_BLUE,
         "selection_corner_radius": "2",
         "selection_border_width": "0",
-        "invisibles": f"color({DARK_BLUE} l(+ 10%))",
+        "invisibles": color(DARK_BLUE, "l(+ 10%)"),
 
         "highlight": CLEAR_WHITE,
         "find_highlight": YELLOW,
         "scroll_selected_highlight": YELLOW,
 
-        "guide": alpha(FADED_GRAY, 0.2),
-        "active_guide": alpha(FADED_GRAY, 0.4),
-        "stack_guide": alpha(FADED_GRAY, 0.2),
+        "guide": color(FADED_GRAY, "a(0.2)"),
+        "active_guide": color(FADED_GRAY, "a(0.4)"),
+        "stack_guide": color(FADED_GRAY, "a(0.2)"),
 
         "line_diff_width": "2",
         "line_diff_added": FADED_GRAY,
