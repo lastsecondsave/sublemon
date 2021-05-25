@@ -104,8 +104,12 @@ class CopyFilePathCommand(WindowCommand):
             path = path.name
         elif mode == "directory":
             path = path.parent
+        elif mode == "directory_name":
+            path = path.parent.name
         elif mode == "project":
             path = self.project_path(path)
+        elif mode == "directory_project":
+            path = self.project_path(path.parent)
 
         if path:
             sublime.set_clipboard(str(path))
@@ -125,9 +129,11 @@ class CopyFilePathCommand(WindowCommand):
             def list_items(self):
                 return [
                     ("File Name", "name"),
-                    ("Directory Path", "directory"),
                     ("Project Path", "project"),
                     ("Absolute Path", "absolute"),
+                    ("Directory Path", "directory"),
+                    ("Directory Name", "directory_name"),
+                    ("Directory Project Path", "directory_project"),
                 ]
 
         return ModeInputHandler()
