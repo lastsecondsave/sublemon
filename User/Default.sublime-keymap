@@ -129,7 +129,7 @@
   /* L3: CTRL */
 
   { "keys": ["ctrl+j", "ctrl+i"], "command": "expand_selection", "args": {"to": "indentation" } },
-  { "keys": ["ctrl+j", "ctrl+c"], "command": "copy_file_path" },
+  { "keys": ["ctrl+j", "ctrl+f"], "command": "copy_file_path" },
 
   /* SEARCH WIDGET */
 
