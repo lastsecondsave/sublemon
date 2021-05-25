@@ -11,15 +11,19 @@ contexts:
         1: entity.name.filename
         2: constant.numeric.line
         3: constant.numeric.column
-        4: storage.category.hash
+        4: storage.category
         5: comment.category.description
 
-    - match: '^\s+\^ (\([\w-]+\))'
-      scope: comment.category.description
+    - match: '^\s+(\^) (\([\w-]+\))'
       captures:
-        1: style.italic
+        1: punctuation.formatting
+        2: comment.category.description
 
-    - match: (\*{1,}) Module (.+)
+    - match: (\*{1,}) (.+)
       captures:
         1: punctuation.formatting
         2: entity.name.section
+
+    - match: ^(-+)$
+      captures:
+        1: punctuation.formatting
