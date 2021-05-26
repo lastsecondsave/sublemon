@@ -1,6 +1,7 @@
 # pylint: disable=global-statement,line-too-long
 
 import json
+import re
 from itertools import chain
 from pathlib import Path
 
@@ -147,7 +148,24 @@ def regroup(scopes):
     return scopes
 
 
+def expand_glob(match):
+    scope = match.group(0)
+
+    begin = scope.find("{")
+    end = scope.find("}", begin + 1)
+
+    prefix = scope[:begin]
+    suffix = scope[end + 1 :]
+    chunks = scope[begin + 1 : end].split("|")
+
+    scopes = [f"{prefix}{chunk}{suffix}" for chunk in chunks]
+
+    return " | ".join(scopes)
+
+
 def expand(scope):
+    scope = re.sub(r"[\w.-]*\{[\w.|-]+\}[\w.-]*", expand_glob, scope)
+
     if not ROOT_SCOPES:
         yield scope
         return
@@ -181,9 +199,7 @@ def generate():
 rec(COMMENT,
     'comment')
 rec(PRIMITIVE,
-    'constant.numeric',
-    'constant.character',
-    'constant.language',
+    'constant.{character|language|numeric}',
     'storage.type.numeric',
     'punctuation.separator.decimal')
 rec(STRING,
@@ -191,30 +207,25 @@ rec(STRING,
     'string.quoted')
 rec(STORAGE,
     'storage',
-    'support.type',
-    'support.class',
+    'support.{class|type}',
     'entity.other.inherited-class')
 rec(KEYWORD,
     'keyword',
-    'keyword.operator.alphanumeric',
-    'keyword.operator.word',
+    'keyword.operator.{alphanumeric|word}',
     'storage.modifier')
 rec(OPERATOR,
-    'keyword.operator -string.quoted')
+    'keyword.operator')
 rec(INDEXED,
     'entity.name -comment -meta.function-call',
     'markup.heading')
 rec(PARAMETER,
     'variable.parameter')
 rec(VARIABLE,
-    'variable.language',
-    'support.constant',
-    'support.variable',
-    'variable.other.substitution')
+    'variable.{language|other.substitution}',
+    'support.{constant|variable}')
 rec(PUNCTUATION,
     'punctuation.separator.continuation',
-    'punctuation.definition.template-expression',
-    'punctuation.definition.variable',
+    'punctuation.definition.{template-expression|variable}',
     'punctuation.section.interpolation')
 rec(ACCESSOR,
     'punctuation.accessor')
@@ -274,9 +285,9 @@ rec(REGEXP_GROUP,
     'keyword.operator.or.regexp')
 rec(REGEXP_CHARACTER_CLASS,
     'string.regexp constant.other.character-class',
-    'string.regexp & (punctuation.definition.unicode-property | support.constant.unicode-property)')
+    'string.regexp & ({punctuation.definition|support.constant}.unicode-property)')
 rec(REGEXP_CONTROL,
-    'string.regexp & (keyword.control | keyword.operator)',
+    'string.regexp & (keyword.{control|operator}',
     'string.regexp punctuation.definition.character-class')
 rec(FOREGROUND,
     'keyword.declaration.function.arrow')
@@ -285,17 +296,15 @@ src('regexp')
 rec(TAG,
     'meta.group keyword.other.named-capture-group punctuation.definition.capture-group-name')
 rec(REGEXP_GROUP,
-    'keyword.control.group',
-    'keyword.other.conditional',
     'constant.other.assertion',
+    'keyword.control.group',
     'keyword.operator.alternation',
-    'keyword.other.named-capture-group')
+    'keyword.other.{conditional|named-capture-group}')
 rec(REGEXP_CHARACTER_CLASS,
     'meta.set',
     'keyword.control.character-class')
 rec(REGEXP_CONTROL,
-    'keyword.control',
-    'keyword.operator',
+    'keyword.{control|operator}',
     'storage.modifier.mode')
 
 src('java')
@@ -331,7 +340,7 @@ rec(META, 'storage.type.annotation')
 
 src('cs')
 rec(KEYWORD,
-    'keyword.operator.new | keyword.operator.reflection')
+    'keyword.operator.{new|reflection}')
 rec(SPECIAL,
     'entity.name.constant',
     'constant.other.flag',
@@ -345,12 +354,11 @@ src('powershell')
 rec(PUNCTUATION,
     'keyword.operator.other',
     'variable.other punctuation.section.braces',
-    'string.quoted.double punctuation.section.group -interpolated',
-    'string.quoted.double punctuation.section.braces -interpolated')
+    'string.quoted.double & (punctuation.section.{braces|group}) -interpolated')
 rec(META,
     'meta.attribute support.function.attribute')
 rec(ITALIC,
-    'keyword.operator.comparison | keyword.operator.logical | keyword.operator.unary')
+    'keyword.operator.{comparison|logical|unary}')
 rec(VARIABLE,
     'variable storage.modifier.scope')
 rec(FOREGROUND,
@@ -360,22 +368,16 @@ src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'meta.interpolation.parameter keyword.operator',
-    'keyword.operator.expansion',
-    'keyword.operator.assignment.pipe',
-    'keyword.operator.assignment.redirection',
-    'keyword.operator.end-of-options')
+    'keyword.operator.{end-of-options|expansion}',
+    'keyword.operator.assignment.{pipe|redirection}')
 rec(STORAGE,
-    'keyword.declaration.alias | keyword.declaration.variable | support.function.export')
+    'keyword.declaration.{alias|variable} | support.function.export')
 rec(VARIABLE,
     'meta.variable variable.other.readwrite -meta.conditional -meta.interpolation',
     'meta.declaration.variable variable.other.readwrite -meta.interpolation',
     'variable.language punctuation.definition.variable')
 rec(KEYWORD,
-    'support.function.eval',
-    'support.function.exec',
-    'support.function.source',
-    'support.function.trap',
-    'support.function.unset')
+    'support.function.{eval|exec|source|trap|unset}')
 rec(COMMENT,
     'constant.language.shebang')
 rec(FOREGROUND,
@@ -400,14 +402,11 @@ rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
-    'punctuation.section.block.begin | punctuation.section.block.end',
+    'punctuation.section.block.{begin|end}',
     'punctuation.separator.generator-expression')
 rec(KEYWORD,
     'keyword.operator.logical',
-    'support.function.function',
-    'support.function.endfunction',
-    'support.function.macro',
-    'support.function.endmacro')
+    'support.function.{endfunction|endmacro|function|macro}')
 rec(INDEXED,
     'entity.name.function')
 
@@ -431,7 +430,7 @@ src('rust')
 rec(STORAGE,
     'meta.macro support.function -meta.block.macro-body')
 rec(META,
-    'variable.annotation | punctuation.definition.annotation')
+    '{variable|punctuation.definition}.annotation')
 rec(SPECIAL,
     'storage.modifier.lifetime')
 
@@ -447,17 +446,16 @@ rec(TAG,
     'keyword.other.directive.yaml')
 rec(META,
     'variable.other.alias',
-    'punctuation.definition.alias',
     'entity.name.other.anchor',
-    'punctuation.definition.anchor')
+    'punctuation.definition.{alias|anchor}')
 
 src('toml')
 rec(META,
-    'entity.name.table | punctuation.definition.table')
+    '{entity.name|punctuation.definition}.table')
 
 src('ini')
 rec(META,
-    'entity.name.section | punctuation.definition.section')
+    '{entity.name|punctuation.definition}.section')
 
 src('css')
 rec(STRING,
@@ -483,21 +481,16 @@ rec(TAG,
 
 txt('html.markdown')
 rec(PUNCTUATION,
-    'punctuation.definition.list_item',
-    'punctuation.definition.blockquote',
-    'punctuation.definition.image',
-    'punctuation.definition.link',
+    'punctuation.definition.{blockquote|image|link|list_item}',
     'markup.list.numbered.bullet')
 rec(GRAY,
-    'punctuation.definition.bold',
-    'punctuation.definition.italic',
-    'punctuation.definition.raw.code-fence',
+    'punctuation.definition.{bold|italic|raw.code-fence}',
     'meta.code-fence.definition constant.other.language-name',
     'meta.link.inet punctuation.definition.link')
 rec(STRING,
     'markup.raw.inline')
 rec(VARIABLE,
-    '(meta.image.inline.description | meta.link.inline.description | meta.link.reference.description) -markup.underline -punctuation',
+    '({meta.image.inline|meta.link.inline|meta.link.reference}.description) -markup.underline -punctuation',
     'meta.link.reference.def entity.name.reference.link',
     'meta.link.reference constant.other.reference.link')
 rec(ITALIC,
