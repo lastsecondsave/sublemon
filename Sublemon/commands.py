@@ -73,7 +73,8 @@ class EscapeBackslashesCommand(TextCommand):
 
 
 class SortTokensCommand(TextCommand):
-    SEPARATORS = {", ": re.compile(r",\s*"), " ": re.compile(r"\s+")}
+    SEP_PATTERNS = {", ": re.compile(r",\s*"), " ": re.compile(r"\s+")}
+    SEP_CHARACTERS = "|"
 
     def run(self, edit):
         for region in self.view.sel():
@@ -81,8 +82,13 @@ class SortTokensCommand(TextCommand):
             self.view.replace(edit, region, self.sort_tokens(content))
 
     def sort_tokens(self, content):
-        for sep, pattern in self.SEPARATORS.items():
+        for sep, pattern in self.SEP_PATTERNS.items():
             tokens = pattern.split(content)
+            if len(tokens) > 1:
+                return sep.join(sorted(tokens))
+
+        for sep in self.SEP_CHARACTERS:
+            tokens = content.split(sep)
             if len(tokens) > 1:
                 return sep.join(sorted(tokens))
 
