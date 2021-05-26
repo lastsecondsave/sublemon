@@ -6,21 +6,10 @@
   "cmd": "compile",
 
   "variants": [
-    { "name": "Clean → Compile",
-      "cmd": "clean compile"
-    },
-    { "name": "Compile → Exec",
-      "cmd": "compile exec:java"
-    },
-    { "name": "Exec",
-      "cmd": "exec:java",
-      "quiet": true
-    },
-    { "name": "Test",
-      "cmd": "test",
-    },
-    { "name": "Clean → Test",
-      "cmd": "clean test",
-    }
+    { "name": "Clean → Compile", "cmd": ["clean", "compile"] },
+    { "name": "Compile → Exec", "cmd": ["compile", "exec:java"] },
+    { "name": "Exec", "cmd": "exec:java", "quiet": true },
+    { "name": "Test", "cmd": "test" },
+    { "name": "Clean → Test", "cmd": ["clean", "test"] }
   ]
 }
