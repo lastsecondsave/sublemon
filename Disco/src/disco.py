@@ -149,22 +149,15 @@ def regroup(scopes):
 
 
 def expand_glob(match):
-    scope = match.group(0)
+    prefix = match.group(1)
+    chunks = match.group(2).split("|")
+    suffix = match.group(3)
 
-    begin = scope.find("{")
-    end = scope.find("}", begin + 1)
-
-    prefix = scope[:begin]
-    suffix = scope[end + 1 :]
-    chunks = scope[begin + 1 : end].split("|")
-
-    scopes = [f"{prefix}{chunk}{suffix}" for chunk in chunks]
-
-    return " | ".join(scopes)
+    return " | ".join(f"{prefix}{chunk}{suffix}" for chunk in chunks)
 
 
 def expand(scope):
-    scope = re.sub(r"[\w.-]*\{[\w.|-]+\}[\w.-]*", expand_glob, scope)
+    scope = re.sub(r"([\w.-]*)\{([\w.|-]+)\}([\w.-]*)", expand_glob, scope)
 
     if not ROOT_SCOPES:
         yield scope
