@@ -229,6 +229,7 @@ rec(TAG_ATTRIBUTE,
 rec(ITALIC, 'style.italic')
 rec(BOLD, 'style.bold')
 rec(UNDERLINE, 'style.underline')
+rec(CRIMSON, 'style.crimson')
 
 rec(Highlight("#18453B", 'l(+ 10%)'), 'diff.inserted')
 rec(Highlight("#4F7942", 'l(+ 10%)'), 'diff.inserted.char')

@@ -103,7 +103,6 @@ contexts:
 
   variables:
     - match: '({{)[A-Za-z0-9_]+(}})'
-      scope: variable.other.substitution.sublime-syntax
       captures:
-        1: punctuation.definition.template-expression.begin.sublime-syntax
-        2: punctuation.definition.template-expression.end.sublime-syntax
+        1: style.crimson
+        2: style.crimson
