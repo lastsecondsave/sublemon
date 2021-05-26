@@ -10,9 +10,8 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from .opener import find_project_folder
-
 from . import RUNNING_ON_WINDOWS
+from .opener import find_project_folder
 
 
 class OutputPanel:
@@ -93,7 +92,7 @@ class Cmd:
                 shell_cmd if isinstance(shell_cmd, str) else " ".join(shell_cmd)
             )
         elif cmd := options.get("cmd"):
-            self.args.extend(cmd)
+            self.args.extend(cmd if isinstance(cmd, list) else [cmd])
 
     def split_args(self):
         if not self.args and self.cmdline:
