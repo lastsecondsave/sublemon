@@ -10,6 +10,3 @@ disable = [
 
 [tool.isort]
 profile = "black"
-
-[tool.black]
-exclude = '(disco|snippets)\.py'
