@@ -19,6 +19,9 @@ completions = {
         "private",
         "protected",
         "public",
+        "static",
+        "thread_local",
+        "volatile",
     ],
     ("Modifier", Icon.MODIFIER): [
         "typename",
@@ -39,6 +42,7 @@ completions = {
         ("elif", "else if ($1) {}"),
         "for ($1) {}",
         "if ($1) {}",
+        "switch ($1) {}",
         "try {}",
         "while ($1) {}",
     ],
@@ -54,15 +58,16 @@ completions = {
     ],
     ("Storage", Icon.STORAGE): [
         "auto",
-        "class ${1:Class} {}",
-        "namespace ${1:ns} {}",
-        "struct ${1:Struct} {}",
+        "class $1 {}",
+        "namespace $1 {}",
+        "struct $1 {}",
     ],
-    ("Class", Icon.ENTITY): [
+    ("Class", Icon.TYPE): [
         ("string", "std::string"),
-        ("vector", "std::vector<$1>"),
+        ("vector", "std::vector<>"),
     ],
-    ("Type", Icon.PRIMITIVE): [
+    ("Type", Icon.PRIMITIVE_TYPE): [
+        "bool",
         "char",
         "double",
         "float",
@@ -72,6 +77,7 @@ completions = {
         "int64_t",
         "int8_t",
         "long",
+        "size_t",
         "uint16_t",
         "uint32_t",
         "uint64_t",
