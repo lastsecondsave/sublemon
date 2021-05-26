@@ -247,16 +247,18 @@ rec(META,
     'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
 rec(STRING,
     'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
-rec(REGEXP_GROUP,
-    'source.regexp & (punctuation.definition.group | keyword.operator.or)')
-rec(REGEXP_CHARACTER_CLASS,
-    'source.regexp & (constant.character.character-class | constant.other.character-class.set)')
-rec(REGEXP_CONTROL,
-    'source.regexp punctuation.definition.character-class')
 rec(ITALIC,
     '(meta.function-call.arguments variable.parameter) & -meta.function.inline')
 rec(FOREGROUND,
     'keyword.other.print')
+
+src('regexp.python')
+rec(REGEXP_GROUP,
+    'punctuation.definition.group | keyword.operator.or')
+rec(REGEXP_CHARACTER_CLASS,
+    'constant.character.character-class | constant.other.character-class.set')
+rec(REGEXP_CONTROL,
+    'punctuation.definition.character-class')
 
 src('js')
 rec(TAG + ITALIC,
@@ -273,17 +275,19 @@ rec(STRING,
     'string.regexp keyword.other.js')
 rec(VARIABLE,
     'support.type.object.dom')
-rec(REGEXP_GROUP,
-    'string.regexp punctuation.definition.group',
-    'keyword.operator.or.regexp')
-rec(REGEXP_CHARACTER_CLASS,
-    'string.regexp constant.other.character-class',
-    'string.regexp & ({punctuation.definition|support.constant}.unicode-property)')
-rec(REGEXP_CONTROL,
-    'string.regexp & (keyword.{control|operator}',
-    'string.regexp punctuation.definition.character-class')
 rec(FOREGROUND,
     'keyword.declaration.function.arrow')
+
+sec('string.regexp.js')
+rec(REGEXP_GROUP,
+    'punctuation.definition.group',
+    'keyword.operator.or')
+rec(REGEXP_CHARACTER_CLASS,
+    'constant.other.character-class',
+    '{punctuation.definition|support.constant}.unicode-property')
+rec(REGEXP_CONTROL,
+    'keyword.{control|operator}',
+    'punctuation.definition.character-class')
 
 src('regexp')
 rec(TAG,
