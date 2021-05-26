@@ -9,7 +9,7 @@ COMPILATION_FAILURE_PATTERN = re.compile(
     r"\[ERROR\] Failed to execute goal.*Compilation failure"
 )
 SKIPPED_LINES_PATTERN = re.compile(r"\[[EIW]\w+\].*")
-DRIVE_LETTER_PATTERN = re.compile(r"\[(?:ERROR|WARNING)\] /[A-Z]:")
+DRIVE_LETTER_PATTERN = re.compile(r"(\[(?:ERROR|WARNING)\] )/([A-Za-z]:.*)$")
 
 STATUS_PATTERN = re.compile(r"\[INFO\] BUILD (FAILURE|SUCCESS)$")
 TIME_PATTERN = re.compile(r"\[INFO\] Total time:")
@@ -33,7 +33,7 @@ class MavenCommand(ChimneyCommand):
         build.cmd.shell = True
 
         build.listener = MavenBuildListener()
-        build.syntax = "maven_build"
+        build.syntax = "Maven Output"
         build.file_regex = FILE_REGEX
 
 
@@ -59,10 +59,8 @@ class MavenBuildListener(ChimneyBuildListener):
         if TIME_PATTERN.match(line):
             self.time = line[7:]
 
-        if RUNNING_ON_WINDOWS:
-            match = DRIVE_LETTER_PATTERN.match(line)
-            if match:
-                line = line[: match.end() - 1] + line[match.end() :]
+        if RUNNING_ON_WINDOWS and (match := DRIVE_LETTER_PATTERN.match(line)):
+            line = match.group(1) + match.group(2)
 
         return line
 

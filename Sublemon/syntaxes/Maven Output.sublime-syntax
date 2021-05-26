@@ -1,0 +1,88 @@
+%YAML 1.2
+---
+name: Maven Output
+scope: text.output.maven
+hidden: true
+
+variables:
+  lowercase_id: (?:[_$]*\p{Ll}[\p{Ll}\p{N}_$]*)
+  classcase_id: (?:\p{Lu}[\p{L}\p{N}_$]*)
+
+contexts:
+  main:
+    # Compilation's error and warning
+    - match: '^(?:(\[ERROR\])|(\[WARNING\])) (.+):\[(\d+),(\d+)\] (.*)'
+      captures:
+        1: constant.other.indicator.error
+        2: constant.other.indicator.warning
+        3: entity.name.filename
+        4: constant.numeric.line
+        5: constant.numeric.column
+        6: string.description
+
+    # Compiler lints
+    - match: '(\[WARNING\]) (.*\.java): (.*)'
+      captures:
+        1: constant.other.indicator.warning
+        2: entity.name.filename
+        3: string.description
+
+    - match: ^\[ERROR\] Failed to execute goal
+      set:
+        - meta_scope: comment.failure
+
+    - match: (\[ERROR\]) (COMPILATION ERROR)
+      captures:
+        1: constant.other.indicator.error
+        2: style.italic constant.other.indicator.error
+
+    - match: (\[INFO\]) (?:(--- .+ ---)|(BUILD FAILURE)|(BUILD SUCCESS))
+      captures:
+        1: punctuation.formatting
+        2: entity.name.section
+        3: style.italic constant.other.indicator.error
+        4: style.italic constant.other.indicator.success
+
+    - match: (\[INFO\])\s+(T E S T S)
+      captures:
+        1: punctuation.formatting
+        2: style.italic entity.name.section
+      push: junit5-tests
+
+    - include: indicators
+
+  indicators:
+    - match: '^\[(?:ERROR|FATAL)\]'
+      scope: constant.other.indicator.error
+    - match: '^\[WARNING\]'
+      scope: constant.other.indicator.warning
+    - match: '^\[INFO\]'
+      scope: punctuation.formatting
+
+  junit5-tests:
+    - meta_scope: meta.tests
+    - include: junit5-tests-running
+    - match: "Results:"
+      set:
+        - meta_scope: meta.tests.results
+        - include: junit5-tests-results
+        - match: "Tests run: .+"
+          pop: true
+
+  junit5-tests-running:
+    - include: indicators
+
+    - match: '((?:{{lowercase_id}}\.)+{{classcase_id}}(?:Exception|Error|Failure)):?\s+(.*)'
+      captures:
+        1: support.type.exception
+        2: string.description
+
+    - match: \bat .*?({{classcase_id}}).+\((?:(.*):(.*)|.*)\)(.*)
+      captures:
+        1: support.class
+        2: entity.name.filename
+        3: constant.numeric.line
+        4: comment
+
+  junit5-tests-results:
+    - include: indicators

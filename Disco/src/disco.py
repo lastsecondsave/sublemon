@@ -309,8 +309,6 @@ rec(COMMENT_HIGHLIGHT + ITALIC,
 rec(ITALIC,
     'text.html.javadoc markup.underline.link')
 rec(SPECIAL,
-    'entity.name.constant',
-    'constant.other',
     'meta.class.body.anonymous.java punctuation.section.braces')
 rec(STORAGE,
     'keyword.operator.wildcard',
@@ -320,11 +318,9 @@ rec(FADED_GRAY,
 rec(FADED_VIOLET,
     'meta.tag')
 rec(FOREGROUND,
+    'entity.name.constant',
     'storage.modifier.array',
     'storage.type.function.anonymous')
-
-txt('log.java')
-rec(SPECIAL, 'entity.name.exception')
 
 src('clojure')
 rec(TAG + ITALIC, 'constant.other.keyword')
@@ -471,7 +467,7 @@ rec(PRIMITIVE,
     'constant.other.color')
 rec(SPECIAL,
     'support.type.vendor-prefix')
-rec(ITALIC,
+rec(STORAGE + ITALIC,
     'meta.property-name')
 rec(VARIABLE,
     'entity.other.pseudo-class -punctuation')
@@ -526,6 +522,7 @@ rec(COMMENT, 'punctuation.formatting')
 rec(PUNCTUATION, 'punctuation.definition.marker')
 rec(COMMENT + ITALIC, 'comment.category')
 rec(META, 'entity.name.section')
+rec(SPECIAL, 'support.type.exception')
 rec(CRIMSON, 'constant.other.indicator.error')
 rec(ORANGE, 'constant.other.indicator.warning')
 rec(GREEN, 'constant.other.indicator.success')
