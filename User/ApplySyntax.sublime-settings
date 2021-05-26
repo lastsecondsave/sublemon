@@ -3,8 +3,8 @@
 
   "syntaxes": [
     {
-      "syntax": "Sublemon/syntaxes/maven_pom",
-      "rules": [{ "file_path": ".*/(build|pom).xml" }]
+      "syntax": "Sublemon/syntaxes/Maven Pom",
+      "rules": [{ "globmatch": "**/{build,pom}.xml" }]
     },
     {
       "syntax": "Python/Python",
