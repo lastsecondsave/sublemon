@@ -248,7 +248,7 @@ rec(META,
 rec(STRING,
     'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
 rec(ITALIC,
-    '(meta.function-call.arguments variable.parameter) & -meta.function.inline')
+    'meta.function-call.arguments variable.parameter -meta.function.inline')
 rec(FOREGROUND,
     'keyword.other.print')
 
@@ -370,9 +370,8 @@ rec(PUNCTUATION,
 rec(STORAGE,
     'keyword.declaration.{alias|variable} | support.function.export')
 rec(VARIABLE,
-    'meta.variable variable.other.readwrite -meta.conditional -meta.interpolation',
-    'meta.declaration.variable variable.other.readwrite -meta.interpolation',
-    'variable.language punctuation.definition.variable')
+    'meta.variable variable.other.readwrite - (meta.{arithmetic|conditional|interpolation})',
+    'meta.declaration.variable variable.other.readwrite -meta.interpolation')
 rec(KEYWORD,
     'support.function.{eval|exec|source|trap|unset}')
 rec(COMMENT,
