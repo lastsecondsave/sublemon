@@ -48,6 +48,8 @@ def mute_files():
 
     mute(PACKAGES / "Rust" / "Default.sublime-keymap")
 
+    mute(PACKAGES / "Markdown" / "Default.sublime-keymap")
+
     mute(PACKAGES / "Java" / "Ant.sublime-build")
     mute(PACKAGES / "Java" / "JavaC.sublime-build")
     mute(PACKAGES / "Java" / "Java.sublime-completions")
