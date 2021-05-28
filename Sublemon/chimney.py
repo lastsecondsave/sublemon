@@ -159,28 +159,29 @@ class Build:
         return self.window.active_view().file_name()
 
 
-BUILDS = {}
-PANELS = {}
-
-
 class ChimneyCommand(WindowCommand):
+    BUILDS = {}
+    PANELS = {}
+
+    last_command = ""
+
     @property
     def wid(self):
         return self.window.id()
 
     @property
     def active_build(self):
-        return BUILDS.get(self.wid)
+        return ChimneyCommand.BUILDS.get(self.wid)
 
     @active_build.setter
     def active_build(self, value):
-        BUILDS[self.wid] = value
+        ChimneyCommand.BUILDS[self.wid] = value
 
     @property
     def panel(self):
-        panel = PANELS.get(self.wid)
+        panel = ChimneyCommand.PANELS.get(self.wid)
         if not panel:
-            return PANELS.setdefault(self.wid, OutputPanel(self.window))
+            return ChimneyCommand.PANELS.setdefault(self.wid, OutputPanel(self.window))
         return panel
 
     def setup(self, build):
@@ -202,11 +203,17 @@ class ChimneyCommand(WindowCommand):
             def on_done(cmd):
                 self.run_build_interactive(build, cmd)
 
-            self.window.show_input_panel(prompt, "", on_done, None, None)
+            input_view = self.window.show_input_panel(
+                prompt, self.last_command, on_done, None, None
+            )
+
+            input_view.sel().add(sublime.Region(0, len(self.last_command)))
         else:
             self.run_build(build)
 
     def run_build_interactive(self, build, cmd):
+        self.last_command = cmd
+
         if cmd.startswith("@"):
             cmd = cmd[1:]
             if project_folder := find_project_folder(self.window):
@@ -247,8 +254,8 @@ class ChimneyCommand(WindowCommand):
         print(f"{marker} [{self.active_build.process.pid}] {build.cmd}")
 
     def __del__(self):
-        BUILDS.pop(self.wid, None)
-        PANELS.pop(self.wid, None)
+        ChimneyCommand.BUILDS.pop(self.wid, None)
+        ChimneyCommand.PANELS.pop(self.wid, None)
 
 
 class BufferedPipe:
