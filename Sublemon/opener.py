@@ -74,11 +74,14 @@ class ShowFilePathCommand(WindowCommand):
         path = Path(self.window.active_view().file_name())
 
         (prefix, path) = self.split(path)
+        parts = path.parts
 
         if prefix:
-            path = Path(prefix, path)
+            parts = (prefix,) + parts
+        elif parts[0] == "/":
+            parts = ("",) + parts[1:]
 
-        sublime.status_message((" / ").join(path.parts))
+        sublime.status_message(" / ".join(parts).strip())
 
     def split(self, path):
         for folder in reorder(self.window.folders()):
@@ -94,25 +97,35 @@ class ShowFilePathCommand(WindowCommand):
 
 
 class CopyFilePathCommand(WindowCommand):
+    MODES = {
+        "file_name": "File Name",
+        "file_path": "File Path",
+        "file_project_path": "File Project Path",
+        "dir_name": "Directory Name",
+        "dir_path": "Directory Path",
+        "dir_project_path": "Directory Project Path",
+    }
+
     def is_enabled(self):
         return bool(self.window.active_view().file_name())
 
     def run(self, mode):  # pylint: disable=arguments-differ
         path = Path(self.window.active_view().file_name())
 
-        if mode == "name":
+        if mode == "file_name":
             path = path.name
-        elif mode == "directory":
-            path = path.parent
-        elif mode == "directory_name":
-            path = path.parent.name
-        elif mode == "project":
+        elif mode == "file_project_path":
             path = self.project_path(path)
-        elif mode == "directory_project":
+        elif mode == "dir_name":
+            path = path.parent.name
+        elif mode == "dir_path":
+            path = path.parent
+        elif mode == "dir_project_path":
             path = self.project_path(path.parent)
 
         if path:
             sublime.set_clipboard(str(path))
+            sublime.status_message(f"Copied {self.MODES[mode].lower()}")
 
     def project_path(self, path):
         if project_file := self.window.project_file_name():
@@ -125,15 +138,10 @@ class CopyFilePathCommand(WindowCommand):
         return None
 
     def input(self, _args):
+        items = [(val, key) for key, val in self.MODES.items()]
+
         class ModeInputHandler(ListInputHandler):
             def list_items(self):
-                return [
-                    ("File Name", "name"),
-                    ("Project Path", "project"),
-                    ("Absolute Path", "absolute"),
-                    ("Directory Path", "directory"),
-                    ("Directory Name", "directory_name"),
-                    ("Directory Project Path", "directory_project"),
-                ]
+                return items
 
         return ModeInputHandler()
