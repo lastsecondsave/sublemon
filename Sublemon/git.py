@@ -16,7 +16,13 @@ def find_dotgit(window, error_when_not_found=True):
         path = Path(project_file).with_name(".git")
         if path.exists():
             dotgit = path
-    else:
+
+    if not dotgit and (folders := window.folders()):
+        path = Path(folders[0]) / ".git"
+        if path.exists():
+            dotgit = path
+
+    if not dotgit:
         dotgit = find_in_file_parents(window.active_view(), ".git")
 
     if not dotgit and error_when_not_found:
