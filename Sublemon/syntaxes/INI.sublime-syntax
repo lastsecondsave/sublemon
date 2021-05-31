@@ -2,6 +2,7 @@
 ---
 name: INI
 scope: source.ini
+version: 2
 
 contexts:
   main:
@@ -34,23 +35,28 @@ contexts:
           scope: invalid.illegal.ini
           pop: true
 
-    - match: .*
+    - match: ".*?(?= #)|.*"
       scope: string.unquoted.ini
-      set: value_on_next_line
+      set: unquoted-value
 
     - match: \n
-      set: value_on_next_line
+      set: unquoted-value
 
-  value_on_next_line:
+  unquoted-value:
     - include: comments
     - match: (?=^\s+\S+\s*[=:])
       pop: true
-    - match: ^\s++(.+)
+    - match: '^\s+(.+)(?= #)'
+      captures:
+        1: string.unquoted.ini
+    - match: ^\s+(.+)
       captures:
         1: string.unquoted.ini
     - match: (?=^)
       pop: true
 
   comments:
-    - match: ^\s*[;#].*$
+    - match: (?:^\s*|\s+)([;#]).*
       scope: comment.line.ini
+      captures:
+        1: punctuation.definition.comment.ini
