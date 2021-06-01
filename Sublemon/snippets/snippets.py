@@ -23,6 +23,7 @@ class Icon:
     CONSTANT = ""
     VARIABLE = ""
     EXTERNAL = ""
+    PROPERTY = ""
 
 
 def expand_custom_variables(content):
