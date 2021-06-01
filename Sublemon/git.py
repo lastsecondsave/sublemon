@@ -1,3 +1,4 @@
+import datetime
 import re
 import subprocess
 from pathlib import Path
@@ -111,7 +112,7 @@ class GitLogBuildListener(ChimneyBuildListener):
 
         line_info = {
             "commit": match.group(1),
-            "date": match.group(2),
+            "date": reformat_date(match.group(2)),
             "author": match.group(3).strip(),
             "message": match.group(4),
         }
@@ -123,19 +124,21 @@ class GitLogBuildListener(ChimneyBuildListener):
 
     def on_complete(self, ctx):
         def combine(line_info):
-            pieces = (
-                line_info["date"],
-                line_info["author"].ljust(self.author_width),
-                line_info["commit"],
-                line_info["message"],
-            )
-            return " ".join(pieces)
+            date = line_info["date"]
+            author = line_info["author"].ljust(self.author_width)
+            commit = line_info["commit"]
+            message = line_info["message"]
+            return f"{date}  {author} {commit}  {message}"
 
         lines = (combine(line_info) for line_info in reversed(self.line_infos))
         ctx.print_lines(lines)
 
         if self.line_infos:
             ctx.on_complete_message = "Last edited at " + self.line_infos[0]["date"]
+
+
+def reformat_date(date_string):
+    return datetime.date.fromisoformat(date_string).strftime("%a, %d %b %Y")
 
 
 class GitBlameCommand(ChimneyCommand):
@@ -179,7 +182,7 @@ class GitBlameBuildListener(ChimneyBuildListener):
         line_info = {
             "commit": match.group(1),
             "author": match.group(3).strip(),
-            "date": match.group(4),
+            "date": reformat_date(match.group(4)),
             "line_number": match.group(5),
             "code": match.group(6),
             "not_committed": match.group(3) == "Not Committed Yet",
@@ -199,14 +202,12 @@ class GitBlameBuildListener(ChimneyBuildListener):
     def on_complete(self, ctx):
         def combine(line_info):
             if not line_info["not_committed"]:
-                pieces = [
-                    line_info["date"],
-                    line_info["author"].ljust(self.author_width),
-                    line_info["commit"],
-                ]
-                line = " ".join(pieces)
+                date = line_info["date"]
+                author = line_info["author"].ljust(self.author_width)
+                commit = line_info["commit"]
+                line = f"{date}  {author} {commit}"
             else:
-                line = " " * (len(line_info["commit"]) + self.author_width + 12)
+                line = " " * (len(line_info["commit"]) + self.author_width + 19)
 
             line += "   " + line_info["line_number"]
             if line_info["code"]:
