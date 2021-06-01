@@ -1,6 +1,6 @@
 $RootKey = 'hkcu:'
 
-$SublimeExe = '"' + $env:USERPROFILE + '\Software\sublime-text\sublime_text.exe"'
+$SublimeExe = '"' + $env:ProgramFiles + '\Sublime Text\sublime_text.exe"'
 $SublimeNode = "$RootKey\Software\SublimeText"
 
 $Default = '(Default)'
@@ -31,7 +31,7 @@ function Set-Association($Extension, $Class) {
 
 $(
     New-ClassDefinition 'SublimeTextFile' '%SystemRoot%\SysWow64\imageres.dll,-102'
-    New-ClassDefinition 'SublimeTextItem' "$SublimeExe,0"
+    New-ClassDefinition 'SublimeTextItem' "$SublimeExe,1"
 
     New-RootItem $SublimeNode
 
