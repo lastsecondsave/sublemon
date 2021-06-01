@@ -25,6 +25,7 @@
 	"caret_extra_bottom": 1,
 	"caret_extra_top": 1,
 	"color_scheme": "Packages/Disco/Disco.sublime-color-scheme",
+	"control_character_style": "names",
 	"copy_with_empty_selection": false,
 	"default_line_ending": "unix",
 	"drag_text": false,
@@ -113,7 +114,7 @@
 	"mini_diff": "auto",
 	"open_files_in_new_window": false,
 	"overlay_scroll_bars": "enabled",
-	"scroll_past_end": true,
+	"scroll_past_end": 0.25,
 	"shift_tab_unindent": true,
 	"show_definitions": false,
 	"show_encoding": true,
@@ -126,4 +127,6 @@
 	"trim_automatic_white_space": false,
 	"trim_trailing_white_space_on_save": "all",
 	"word_wrap": false,
+	"wrap_width": 100,
+	"wrap_width_style": "min",
 }
