@@ -127,6 +127,4 @@
 	"trim_automatic_white_space": false,
 	"trim_trailing_white_space_on_save": "all",
 	"word_wrap": false,
-	"wrap_width": 100,
-	"wrap_width_style": "min",
 }
