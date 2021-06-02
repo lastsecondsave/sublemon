@@ -398,7 +398,6 @@ def start_process(cmd, env, cwd):
 
     args = cmd.args if not cmd.shell else str(cmd)
 
-    # pylint: disable=consider-using-with
     return subprocess.Popen(args, **process_params)
 
 
