@@ -16,6 +16,9 @@ class HighlightAddCommand(TextCommand):
         scope = f"style.{color.lower().replace(' ', '')}"
         name = f"{color} {style}"
 
+        if existing_regions := self.view.get_regions(name):
+            regions += existing_regions
+
         self.view.add_regions(name, regions, flags=flags, scope=scope)
 
 
