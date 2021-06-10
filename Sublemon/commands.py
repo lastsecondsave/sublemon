@@ -442,12 +442,12 @@ class MoveViewportHorizontallyCommand(TextCommand):
         self.view.set_viewport_position((xpos, current[1]), False)
 
 
-class AddRulerCommand(WindowCommand):
-    def run(self, position):  # pylint: disable=arguments-differ
-        settings = self.window.active_view().settings()
-        rulers = settings.get("rulers")
+class AddRulerCommand(TextCommand):
+    def run(self, _edit, position):  # pylint: disable=arguments-differ
+        settings = self.view.settings()
+        rulers = settings.get("rulers", [])
         rulers.append(int(position))
-        rulers = settings.set("rulers", rulers)
+        settings.set("rulers", rulers)
 
     def input(self, _args):
         class PositionInputHandler(TextInputHandler):
@@ -457,10 +457,9 @@ class AddRulerCommand(WindowCommand):
         return PositionInputHandler()
 
 
-class DeleteRulersCommand(WindowCommand):
-    def run(self):
-        settings = self.window.active_view().settings()
-        settings.set("rulers", [])
+class DeleteRulersCommand(TextCommand):
+    def run(self, _edit):
+        self.view.settings().set("rulers", [])
 
 
 class ConvertCaseCommand(TextCommand):

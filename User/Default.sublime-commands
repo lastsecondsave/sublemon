@@ -13,8 +13,8 @@
 
   { "caption": "Wrap Lines", "command": "wrap_lines_at_width" },
 
-  { "caption": "Add Ruler", "command": "add_ruler" },
-  { "caption": "Delete Rulers", "command": "delete_rulers" },
+  { "caption": "Rulers: Add", "command": "add_ruler" },
+  { "caption": "Rulers: Delete All", "command": "delete_rulers" },
 
   { "caption": "Convert Case", "command": "convert_case" },
   { "caption": "Copy Path", "command": "copy_file_path" },
