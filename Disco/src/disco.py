@@ -98,6 +98,7 @@ COLOR_SCHEME = {
         "brackets_foreground": DARK_ORANGE,
 
         "selection": DARK_BLUE,
+        "inactive_selection": color(DARK_BLUE, "a(0.8)"),
         "selection_corner_radius": "2",
         "selection_border_width": "0",
         "invisibles": color(DARK_BLUE, "l(+ 10%)"),
@@ -109,6 +110,7 @@ COLOR_SCHEME = {
         "guide": color(FADED_GRAY, "a(0.2)"),
         "active_guide": color(FADED_GRAY, "a(0.4)"),
         "stack_guide": color(FADED_GRAY, "a(0.2)"),
+        "rulers": FADED_GRAY,
 
         "line_diff_width": "2",
         "line_diff_added": FADED_GRAY,
