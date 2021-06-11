@@ -30,4 +30,6 @@
   { "caption": "Select Between", "command": "select_between_markers" },
 
   { "caption": "Highlight: Add", "command": "highlight_add" },
+  { "caption": "Highlight: Delete", "command": "highlight_delete" },
+  { "caption": "Highlight: Delete All", "command": "highlight_delete_all" },
 ]
