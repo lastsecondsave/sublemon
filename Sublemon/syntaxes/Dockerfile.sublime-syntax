@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+name: Dockerfile
+scope: source.dockerfile
+version: 2
+file_extensions:
+  - Dockerfile
+  - .dockerfile
+
+contexts:
+  main:
+  - match: ^(#).*
+    scope: comment.line.dockerfile
+    captures:
+      1: punctuation.definition.comment.dockerfile
+
+  - match: ^(RUN)\s+
+    captures:
+      1: keyword.control.run.dockerfile
+    push: shell
+
+  shell:
+    - match: \n
+      pop: true
+    - match: ^\s*(#).*\n$
+      scope: comment.line.dockerfile
+      captures:
+        1: punctuation.definition.comment.dockerfile
+    - match: (?=\S)
+      embed: scope:source.shell.bash
+      escape: (?<!\\)(?=\n)|^(?=\s*#)

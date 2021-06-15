@@ -59,5 +59,6 @@ generate(
             "increaseIndentPattern": r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
             "decreaseIndentPattern": r"^\s*((elif|else|except|finally)\b.*:|[\}\]])",
         },
+        "source.dockerfile": {"lineComment": "#"},
     }
 )
