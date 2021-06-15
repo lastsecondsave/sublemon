@@ -415,7 +415,8 @@ rec(INDEXED,
 
 src('c++', 'c')
 rec(SPECIAL,
-    'meta.preprocessor keyword.control')
+    'meta.preprocessor keyword.control.import',
+    'meta.preprocessor keyword.control -meta.preprocessor.macro')
 rec(KEYWORD,
     'keyword.operator.word')
 rec(VARIABLE,
