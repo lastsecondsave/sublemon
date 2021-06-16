@@ -413,6 +413,10 @@ rec(KEYWORD,
 rec(INDEXED,
     'entity.name.function')
 
+src('dockerfile')
+rec(VARIABLE,
+    'meta.declaration.variable variable.other.readwrite -meta.interpolation')
+
 src('c++', 'c')
 rec(SPECIAL,
     'meta.preprocessor keyword.control.import',
