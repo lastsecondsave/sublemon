@@ -9,23 +9,89 @@ file_extensions:
 
 contexts:
   main:
-  - match: ^(#).*
-    scope: comment.line.dockerfile
-    captures:
-      1: punctuation.definition.comment.dockerfile
+    - include: comments
 
-  - match: ^(RUN)\s+
-    captures:
-      1: keyword.control.run.dockerfile
-    push: shell
+    - match: ^(RUN)\s+
+      captures:
+        1: keyword.control.RUN.dockerfile
+      push: shell-command
 
-  shell:
+    - match: ^(ENV)\s+
+      captures:
+        1: keyword.control.ENV.dockerfile
+      push: key-value
+
+    - match: ^(ARG)\s+
+      captures:
+        1: keyword.control.ARG.dockerfile
+      push: key-value
+
+    - match: ^(LABEL)\s+
+      captures:
+        1: keyword.control.LABEL.dockerfile
+      push: key-value
+
+  shell-command:
+    - meta_content_scope: meta.shell-command.dockerfile
     - match: \n
-      pop: true
+      pop: 1
+    - include: greedy-comments
+    - match: (?=\S)
+      embed: scope:source.shell.bash
+      escape: (?<!\\)(?=\n)|^(?=\s*#)
+
+  key-value:
+    - meta_content_scope: meta.key-value.dockerfile
+    - match: \n
+      pop: 1
+
+    - include: greedy-comments
+    - include: comments
+    - include: escapes
+    - include: expansions
+
+    - match: (\w+)(=)
+      captures:
+        1: variable.other.readwrite.dockerfile
+        2: keyword.operator.assignment.dockerfile
+      push:
+        - meta_scope: meta.declaration.variable.dockerfile
+        - match: (?=\s|$)
+          pop: 1
+        - include: greedy-comments
+        - include: comments
+        - include: escapes
+        - include: expansions
+
+  comments:
+    - match: (?:^|\s)((#).*)
+      captures:
+        1: comment.line.dockerfile
+        2: punctuation.definition.comment.dockerfile
+
+  greedy-comments:
     - match: ^\s*(#).*\n$
       scope: comment.line.dockerfile
       captures:
         1: punctuation.definition.comment.dockerfile
-    - match: (?=\S)
-      embed: scope:source.shell.bash
-      escape: (?<!\\)(?=\n)|^(?=\s*#)
+
+  escapes:
+    - match: (\\)\n
+      captures:
+        1: punctuation.separator.continuation.line.dockerfile
+    - match: \\.
+      scope: constant.character.escape.dockerfile
+
+  expansions:
+    - match: (\$)(\{)(\w*)(\})
+      scope: meta.interpolation.parameter.dockerfile
+      captures:
+        1: punctuation.definition.variable.dockerfile
+        2: punctuation.section.interpolation.begin.dockerfile
+        3: variable.other.readwrite.dockerfile
+        4: punctuation.section.interpolation.end.dockerfile
+    - match: (\$)(\w+)
+      scope: meta.interpolation.parameter.dockerfile
+      captures:
+        1: punctuation.definition.variable.dockerfile
+        2: variable.other.readwrite.dockerfile
