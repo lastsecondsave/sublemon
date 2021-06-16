@@ -29,7 +29,7 @@ contexts:
   injection-contexts:
     - include: scope:source.yaml#comment
 
-    - match: ^  (\w+)(:)
+    - match: ^  ([\w-]+)(:)
       captures:
         1: meta.symbol.sublime-syntax string.unquoted.plain.out.yaml entity.name.class.yaml
         2: punctuation.separator.key-value.mapping.yaml
