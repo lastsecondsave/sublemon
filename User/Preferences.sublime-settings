@@ -42,6 +42,7 @@
 		"*.pyc",
 		"*.sublime-workspace",
 		".DS_Store",
+		".git",
 		".project",
 	],
 	"find_selected_text": false,
