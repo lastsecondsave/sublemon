@@ -11,22 +11,22 @@ contexts:
   main:
     - include: comments
 
-    - match: ^(RUN)\s+
+    - match: ^(?i)(RUN)\s+
       captures:
         1: keyword.control.RUN.dockerfile
       push: shell-command
 
-    - match: ^(ENV)\s+
+    - match: ^(?i)(ENV)\s+
       captures:
         1: keyword.control.ENV.dockerfile
       push: key-value
 
-    - match: ^(ARG)\s+
+    - match: ^(?i)(ARG)\s+
       captures:
         1: keyword.control.ARG.dockerfile
       push: key-value
 
-    - match: ^(LABEL)\s+
+    - match: ^(?i)(LABEL)\s+
       captures:
         1: keyword.control.LABEL.dockerfile
       push: key-value
@@ -35,7 +35,9 @@ contexts:
     - meta_content_scope: meta.shell-command.dockerfile
     - match: \n
       pop: 1
+
     - include: greedy-comments
+
     - match: (?=\S)
       embed: scope:source.shell.bash
       escape: (?<!\\)(?=\n)|^(?=\s*#)
@@ -62,6 +64,22 @@ contexts:
         - include: comments
         - include: escapes
         - include: expansions
+        - match: \"
+          scope: punctuation.definition.string.begin.dockerfile
+          push:
+            - meta_scope: string.quoted.double.dockerfile
+            - match: \"
+              scope: punctuation.definition.string.end.dockerfile
+              pop: 1
+            - include: escapes
+            - include: expansions
+        - match: \'
+          scope: punctuation.definition.string.begin.dockerfile
+          push:
+            - meta_scope: string.quoted.single.dockerfile
+            - match: \'
+              scope: punctuation.definition.string.end.dockerfile
+              pop: 1
 
   comments:
     - match: (?:^|\s)((#).*)
