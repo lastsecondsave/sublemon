@@ -14,7 +14,6 @@ RUN apt update \
  && apt install sudo
 #^^^^^^^^^^^^^^^^^^^ meta.shell-command.dockerfile source.shell.bash
 
-
 RUN apt update
 #   ^^^^^^^^^^ meta.shell-command.dockerfile source.shell.bash
  && apt install sudo
@@ -22,4 +21,24 @@ RUN apt update
 
 ENV ver=10.01
 #^^ keyword.control.ENV.dockerfile
-#   ^^^ meta.declaration.variable.dockerfile variable.other.readwrite.dockerfile
+#   ^^^^^^^^^ meta.declaration.variable.dockerfile
+#   ^^^ variable.other.readwrite.dockerfile
+
+ENV one=001 two=002
+#      ^^^^^ -variable.other.readwrite.dockerfile
+#           ^^^ variable.other.readwrite.dockerfile
+
+ENV one=001 \
+#           ^ punctuation.separator.continuation.line.dockerfile
+    two=002
+#   ^^^ variable.other.readwrite.dockerfile
+
+ARG one="xxx $y $zz ${zzz}"
+#^^ keyword.control.ARG.dockerfile
+#       ^^^^^^^^^^^^^^^^^^^ string.quoted.double.dockerfile
+#            ^ punctuation.definition.variable.dockerfile
+#             ^ variable.other.readwrite.dockerfile
+#               ^ punctuation.definition.variable.dockerfile
+#                ^^ variable.other.readwrite.dockerfile
+#                   ^ punctuation.definition.variable.dockerfile
+#                     ^^^ variable.other.readwrite.dockerfile
