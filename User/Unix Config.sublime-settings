@@ -1,3 +1,3 @@
 {
-  "extensions": ["conf", "ovpn", ".gitignore", ".dockerignore"]
+  "extensions": [".bazelrc", ".dockerignore", ".gitignore", "conf", "ovpn"]
 }
