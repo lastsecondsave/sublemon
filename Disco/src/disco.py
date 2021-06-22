@@ -308,7 +308,8 @@ rec(REGEXP_CHARACTER_CLASS,
     'meta.set',
     'keyword.control.character-class')
 rec(REGEXP_CONTROL,
-    'keyword.{control|operator}',
+    'keyword.{control|operator}')
+rec(SPECIAL,
     'storage.modifier.mode')
 
 src('java')
