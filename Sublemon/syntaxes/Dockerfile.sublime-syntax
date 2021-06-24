@@ -11,25 +11,89 @@ contexts:
   main:
     - include: comments
 
-    - match: ^(?i)(RUN)\s+
+    - match: ^(?i)(ONBUILD)\s+(?=[a-z])
       captures:
-        1: keyword.control.RUN.dockerfile
-      push: shell-command
+        1: storage.type.onbuild.dockerfile
+      push: instructions
 
-    - match: ^(?i)(ENV)\s+
+    - match: ^(?i)(ONBUILD)(?=\s|$)
       captures:
-        1: keyword.control.ENV.dockerfile
-      push: key-value
+        1: storage.type.onbuild.dockerfile
 
-    - match: ^(?i)(ARG)\s+
-      captures:
-        1: keyword.control.ARG.dockerfile
-      push: key-value
+    - match: ^(?=[a-zA-Z])
+      push: instructions
 
-    - match: ^(?i)(LABEL)\s+
+  instructions:
+    - match: (?i)(RUN)(?=\s|$)
       captures:
-        1: keyword.control.LABEL.dockerfile
-      push: key-value
+        1: keyword.control.dockerfile
+      set: shell-command
+
+    - match: (?i)(ENV|ARG)\s+((\w+)\s.*)
+      captures:
+        1: keyword.control.dockerfile
+        2: meta.declaration.variable.dockerfile
+        3: variable.other.readwrite.dockerfile
+      pop: 1
+
+    - match: (?i)(ENV|ARG|LABEL)(?=\s|$)
+      captures:
+        1: keyword.control.dockerfile
+      set: key-value
+
+    - match: (?i)(CMD|ENTRYPOINT)(?=\s|$)
+      captures:
+        1: keyword.control.dockerfile
+      set: json-or-shell-command
+
+    - match: (?i)(HEALTHCHECK)\s+(NONE)
+      captures:
+        1: keyword.control.dockerfile
+        2: constant.language.dockerfile
+      pop: 1
+
+    - match: (?i)(HEALTHCHECK)(?=\s|$)
+      scope: keyword.control.dockerfile
+      set:
+        - match: \n
+          pop: 1
+
+        - include: escapes
+        - include: greedy-comments
+        - include: comments
+
+        - match: (?i)CMD(?=\s|$)
+          scope: keyword.control.dockerfile
+          set: json-or-shell-command
+
+    - match: (?i)(SHELL)(?=\s|$)
+      captures:
+        1: keyword.control.dockerfile
+      set: json
+
+    - match: (?i)(FROM|ADD|COPY|WORKDIR|USER|EXPOSE|VOLUME|STOPSIGNAL)(?=\s|$)
+      captures:
+        1: keyword.control.dockerfile
+      pop: 1
+
+  json-or-shell-command:
+    - match: (?=\[)
+      set: json
+    - match: (?=\S)
+      set: shell-command
+    - match: \n
+      pop: 1
+
+  json:
+    - meta_content_scope: meta.json.dockerfile
+    - match: \n
+      pop: 1
+
+    - include: greedy-comments
+
+    - match: (?=\[)
+      embed: scope:source.json
+      escape: (?<=])
 
   shell-command:
     - meta_content_scope: meta.shell-command.dockerfile
@@ -52,7 +116,7 @@ contexts:
     - include: escapes
     - include: expansions
 
-    - match: (\w+)(=)
+    - match: ([\w\.]+)(=)
       captures:
         1: variable.other.readwrite.dockerfile
         2: keyword.operator.assignment.dockerfile
@@ -64,22 +128,25 @@ contexts:
         - include: comments
         - include: escapes
         - include: expansions
+        - include: quoted-string
+
+  quoted-string:
+    - match: \"
+      scope: punctuation.definition.string.begin.dockerfile
+      push:
+        - meta_scope: string.quoted.double.dockerfile
         - match: \"
-          scope: punctuation.definition.string.begin.dockerfile
-          push:
-            - meta_scope: string.quoted.double.dockerfile
-            - match: \"
-              scope: punctuation.definition.string.end.dockerfile
-              pop: 1
-            - include: escapes
-            - include: expansions
+          scope: punctuation.definition.string.end.dockerfile
+          pop: 1
+        - include: escapes
+        - include: expansions
+    - match: \'
+      scope: punctuation.definition.string.begin.dockerfile
+      push:
+        - meta_scope: string.quoted.single.dockerfile
         - match: \'
-          scope: punctuation.definition.string.begin.dockerfile
-          push:
-            - meta_scope: string.quoted.single.dockerfile
-            - match: \'
-              scope: punctuation.definition.string.end.dockerfile
-              pop: 1
+          scope: punctuation.definition.string.end.dockerfile
+          pop: 1
 
   comments:
     - match: (?:^|\s)((#).*)
