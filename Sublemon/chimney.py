@@ -225,7 +225,7 @@ class ChimneyCommand(WindowCommand):
         if build.cmd:
             build.cmd.append(*(shlex.split(cmd)))
         elif RUNNING_ON_WINDOWS:
-            build.cmd = Cmd({"cmd": ("pwsh", "-NoProfile", "-Command", cmd)})
+            build.cmd = Cmd({"cmd": ["pwsh", "-NoProfile", "-Command", cmd]})
         else:
             build.cmd = Cmd({"shell_cmd": cmd})
 
