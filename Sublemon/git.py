@@ -124,11 +124,13 @@ class GitLogBuildListener(ChimneyBuildListener):
 
     def on_complete(self, ctx):
         def combine(line_info):
-            date = line_info["date"]
-            author = line_info["author"].ljust(self.author_width)
-            commit = line_info["commit"]
-            message = line_info["message"]
-            return f"{date}  {author} {commit}  {message}"
+            chunks = [
+                line_info["date"],
+                line_info["author"].ljust(self.author_width),
+                line_info["commit"],
+                line_info["message"],
+            ]
+            return "  ".join(chunks)
 
         lines = (combine(line_info) for line_info in reversed(self.line_infos))
         ctx.print_lines(lines)
@@ -138,7 +140,7 @@ class GitLogBuildListener(ChimneyBuildListener):
 
 
 def reformat_date(date_string):
-    return datetime.date.fromisoformat(date_string).strftime("%a, %d %b %Y")
+    return datetime.date.fromisoformat(date_string).strftime("%d %b %Y")
 
 
 class GitBlameCommand(ChimneyCommand):
@@ -205,13 +207,13 @@ class GitBlameBuildListener(ChimneyBuildListener):
                 date = line_info["date"]
                 author = line_info["author"].ljust(self.author_width)
                 commit = line_info["commit"]
-                line = f"{date}  {author} {commit}"
+                line = f"{date}  {author}  {commit}"
             else:
-                line = " " * (len(line_info["commit"]) + self.author_width + 19)
+                line = " " * (len(line_info["commit"]) + self.author_width + 15)
 
-            line += "   " + line_info["line_number"]
+            line += "  " + line_info["line_number"]
             if line_info["code"]:
-                line += " " + line_info["code"][self.code_indent :]
+                line += "  " + line_info["code"][self.code_indent :]
 
             return line
 

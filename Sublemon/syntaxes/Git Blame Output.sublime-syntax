@@ -6,7 +6,7 @@ hidden: true
 
 contexts:
   main:
-    - match: ^(.+?)  (.+?) ([0-9a-f]+)\s+(\d+)
+    - match: ^(.+?)  (.+?)\s+([0-9a-f]+)\s+(\d+)
       captures:
         1: constant.numeric.date.git
         2: entity.name.author.git
