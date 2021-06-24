@@ -59,6 +59,8 @@ def mute_files():
 
     mute(PACKAGES / "C++" / "C++ Single File.sublime-build")
 
+    mute(PACKAGES / "Go" / "Go.sublime-completions")
+
 
 if __name__ == "__main__":
     generate_files()

@@ -79,6 +79,7 @@
 	"ignored_snippets": [
 		"C++/*",
 		"CMake/*",
+		"Go/*",
 		"HTML/*",
 		"Java/*",
 		"JavaScript/*",
