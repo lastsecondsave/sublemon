@@ -384,6 +384,8 @@ rec(KEYWORD,
     'support.function.{eval|exec|source|trap|unset}')
 rec(COMMENT,
     'constant.language.shebang')
+rec(STRING,
+    'punctuation.definition.string')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
