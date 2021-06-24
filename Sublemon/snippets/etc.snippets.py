@@ -97,3 +97,10 @@ generate(
         "pl": "console.log($SEL0);",
     },
 )
+
+generate(
+    "source.go",
+    snippets={
+        "pl": "fmt.Println($SEL0)",
+    },
+)
