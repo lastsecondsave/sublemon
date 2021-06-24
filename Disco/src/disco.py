@@ -256,6 +256,8 @@ rec(STRING,
     'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
 rec(ITALIC,
     'meta.function-call.arguments variable.parameter -meta.function.inline')
+rec(PARAMETER,
+    'constant.other.format-spec')
 rec(FOREGROUND,
     'keyword.other.print')
 
