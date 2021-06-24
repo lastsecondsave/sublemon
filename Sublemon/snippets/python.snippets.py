@@ -23,6 +23,8 @@ completions = {
         "yeild",
     ],
     ("Block", Icon.BLOCK): [
+        "class $1:",
+        "def ${1:run}($2):",
         "elif $1:",
         "else:",
         "for $1 in $2:",
@@ -30,19 +32,17 @@ completions = {
         "while $1:",
         "with $1 as $2:",
     ],
-    ("Storage", Icon.STORAGE): [
-        "def ${1:run}($2):",
-        "class $1:",
-    ],
     ("Support", Icon.FUNCTION): [
-        "isinstance($1, ${2:str})",
+        "__init__",
+        "isinstance",
+        "super",
     ],
     ("Decorator", Icon.META): [
-        "@classmethod",
-        "@contextmanager",
-        "@dataclass",
-        "@property",
-        "@staticmethod",
+        "classmethod",
+        "contextmanager",
+        "dataclass",
+        "property",
+        "staticmethod",
     ],
     ("Constant", Icon.CONSTANT): [
         "False",
