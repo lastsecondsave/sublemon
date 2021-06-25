@@ -8,18 +8,18 @@ from . import find_in_file_parents, indent_params, view_cwd
 
 
 class Formatter:
-    def __init__(self, scope=None, cmdline=None):
-        self.scope = scope
+    def __init__(self, scope, cmdline):
+        self.scopes = (scope,)
         self.cmdline = cmdline
 
     def supported_scopes(self):
-        return (self.scope,)
+        return self.scopes
 
     def cmd(self, _view, _scope):
         return self.cmdline
 
 
-class Prettier(Formatter):
+class Prettier:
     PARSERS = {
         "source.json": "json",
         "source.js": "babel",
@@ -48,7 +48,7 @@ class Prettier(Formatter):
         return " ".join(cmd)
 
 
-class ClangFormat(Formatter):
+class ClangFormat:
     FILES = {
         "source.c": "file.c",
         "source.c++": "file.cpp",
@@ -96,12 +96,14 @@ class FmtCommand(WindowCommand):
 
     def run(self):
         view = self.window.active_view()
-        scope = view.scope_name(0).split()[0]
+        scopes = view.scope_name(0).split()
 
-        if formatter := self.FORMATTERS.get(scope):
-            self.reformat(formatter, view, scope)
-        else:
-            self.window.status_message("No supported formatter")
+        for scope in scopes:
+            if formatter := self.FORMATTERS.get(scope):
+                self.reformat(formatter, view, scope)
+                return
+
+        self.window.status_message("No supported formatter")
 
     def reformat(self, formatter, view, scope):
         text = view.substr(Region(0, view.size()))
