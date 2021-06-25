@@ -2,11 +2,13 @@ import plistlib
 import shutil
 from pathlib import Path
 
+SUBLEMON = Path(__file__).resolve().parent.parent
+
 
 def generate(all_settings):
-    target_dir = Path(".generated")
+    target_dir = SUBLEMON / ".generated" / "settings"
     shutil.rmtree(target_dir, ignore_errors=True)
-    target_dir.mkdir(exist_ok=True)
+    target_dir.mkdir(exist_ok=True, parents=True)
 
     for scope, settings in all_settings.items():
         write_settings(scope, settings, target_dir)
