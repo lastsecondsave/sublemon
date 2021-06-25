@@ -14,10 +14,11 @@ def execute(script):
 
 
 def generate_files():
-    execute(PACKAGES / "Disco" / "src" / "disco.py")
-    execute(SUBLEMON / "settings" / "settings.py")
+    shutil.rmtree(SUBLEMON / ".generated", ignore_errors=True)
 
-    shutil.rmtree(SUBLEMON / "snippets" / ".generated", ignore_errors=True)
+    execute(PACKAGES / "Disco" / "src" / "disco.py")
+    execute(SUBLEMON / "scripts" / "settings.py")
+
     for snippet in (SUBLEMON / "snippets").glob("*.snippets.py"):
         execute(snippet)
 

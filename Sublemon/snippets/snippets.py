@@ -5,6 +5,7 @@ import shutil
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+SUBLEMON = Path(__file__).resolve().parent.parent
 FIRST_WORD_PATTERN = re.compile(r"^[#@]?([\w\-:\.]+\w)")
 
 
@@ -73,7 +74,7 @@ DEFAULT_MUTATORS = (
 def generate(scope, snippets=None, completions=None, mutators=()):
     mutators = (*mutators, *DEFAULT_MUTATORS)
 
-    target_dir = Path(".generated") / scope
+    target_dir = SUBLEMON / ".generated" / "snippets" / scope
     shutil.rmtree(target_dir, ignore_errors=True)
     target_dir.mkdir(exist_ok=True, parents=True)
 
