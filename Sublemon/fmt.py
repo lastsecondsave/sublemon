@@ -90,6 +90,7 @@ class FmtCommand(WindowCommand):
         Formatter("source.python", "isort - | black -"),
         Formatter("source.cmake", "cmake-format -"),
         Formatter("source.go", "gofmt"),
+        Formatter("source.shell.bash", "shfmt -ci -"),
         Formatter("text.xml", "xmlstarlet fo -"),
     )
 
