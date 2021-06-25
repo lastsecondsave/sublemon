@@ -2,7 +2,7 @@ from snippets import Icon, generate
 
 snippets = {
     "sb": ("shebang", "#!/usr/bin/env ${0:bash}"),
-    "fn": ("function", "${1:run}() {}"),
+    "fun": ("function", "${1:run}() {}"),
     "pl": "echo $SEL0",
 }
 
@@ -33,6 +33,5 @@ completions = {
         "xargs",
     ],
 }
-
 
 generate("source.shell.bash", snippets, completions)

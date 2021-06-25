@@ -64,24 +64,22 @@ completions = {
     ],
     ("Block", Icon.BLOCK): [
         "catch (${1:Exception} e) {}",
+        "class ${1:$FILENAME} {}",
         "else {}",
+        "enum ${1:$FILENAME} {}",
         "finally {}",
         "for ($1) {}",
         "if ($1) {}",
+        "interface ${1:$FILENAME} {}",
         "switch ($1) {}",
         "synchronized (${1:this}) {}",
         "try {}",
         "while ($1) {}",
         ("elif", "else if ($1) {}"),
     ],
-    ("Storage", Icon.STORAGE): [
-        "class ${1:$FILENAME} {}",
-        "enum ${1:$FILENAME} {}",
-        "interface ${1:$FILENAME} {}",
-    ],
     ("Annotation", Icon.META): [
-        "@Override",
-        "@SuppressWarnings()",
+        "Override",
+        "SuppressWarnings",
     ],
     ("Type", Icon.PRIMITIVE_TYPE): [
         "boolean",
@@ -110,7 +108,6 @@ completions = {
 }
 
 generate("source.java", snippets, completions)
-
 
 generate(
     "source.java comment.block.documentation.javadoc",

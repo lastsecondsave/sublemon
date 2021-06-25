@@ -53,13 +53,13 @@ generate(
     },
     completions={
         ("Function", Icon.FUNCTION): [
-            "add_executable()",
-            "add_library()",
-            "add_subdirectory()",
-            "target_include_directories()",
-            "target_link_directories()",
-            "target_link_libraries()",
-            "target_sources()",
+            "add_executable",
+            "add_library",
+            "add_subdirectory",
+            "target_include_directories",
+            "target_link_directories",
+            "target_link_libraries",
+            "target_sources",
         ],
         ("Block", Icon.BLOCK): [
             "if($1)<=>endif()",
