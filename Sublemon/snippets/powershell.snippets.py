@@ -38,21 +38,19 @@ completions = {
         "else {}",
         "end {}",
         "for ($1) {}",
+        "function ${1:run} {}",
         "if ($1) {}",
+        "param (<=>)",
         "process {}",
         "switch ($1) {}",
     ],
-    ("Storage", Icon.STORAGE): [
-        "function ${1:run} {}",
-        "param (<=>)",
-    ],
     ("Attribute", Icon.META): [
-        ("Parameter", "[Parameter($0)]"),
+        ("Parameter", "Parameter"),
     ],
     ("Constant", Icon.CONSTANT): [
-        ("False", "\\$False"),
-        ("Null", "\\$Null"),
-        ("True", "\\$True"),
+        "False",
+        "Null",
+        "True",
     ],
 }
 
