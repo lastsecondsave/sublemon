@@ -1,6 +1,7 @@
 {
   "extensions": [
     ".clang-format",
+    ".editorconfig",
     ".env",
     ".gitconfig",
     ".gitmodules",
