@@ -12,13 +12,6 @@ class Formatter:
         self.scope = scope
         self.cmdline = cmdline
 
-    def match(self, view):
-        for scope in self.supported_scopes():
-            if view.match_selector(0, scope):
-                return scope
-
-        return None
-
     def supported_scopes(self):
         return (self.scope,)
 
@@ -79,8 +72,18 @@ class ClangFormat(Formatter):
         return " ".join(cmd)
 
 
+def prepare_formatters(*formatters):
+    mapping = {}
+
+    for formatter in formatters:
+        for scope in formatter.supported_scopes():
+            mapping[scope] = formatter
+
+    return mapping
+
+
 class FmtCommand(WindowCommand):
-    FORMATTERS = (
+    FORMATTERS = prepare_formatters(
         Prettier(),
         ClangFormat(),
         Formatter("source.rust", "rustfmt"),
@@ -92,13 +95,12 @@ class FmtCommand(WindowCommand):
 
     def run(self):
         view = self.window.active_view()
+        scope = view.scope_name(0).split()[0]
 
-        for formatter in self.FORMATTERS:
-            if scope := formatter.match(view):
-                self.reformat(formatter, view, scope)
-                return
-
-        self.window.status_message("No supported formatter")
+        if formatter := self.FORMATTERS.get(scope):
+            self.reformat(formatter, view, scope)
+        else:
+            self.window.status_message("No supported formatter")
 
     def reformat(self, formatter, view, scope):
         text = view.substr(Region(0, view.size()))
