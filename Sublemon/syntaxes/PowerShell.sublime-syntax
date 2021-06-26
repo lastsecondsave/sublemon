@@ -118,8 +118,10 @@ contexts:
       scope: keyword.operator.bitwise.powershell
     - match: '(?<!\w)-(?i:f)(?!\p{L})'
       scope: keyword.operator.string-format.powershell
-    - match: "[+%*/-]?=|[+/*%-]"
+    - match: "[+%*/-]?="
       scope: keyword.operator.assignment.powershell
+    - match: '[+/*%-](?!\w)'
+      scope: keyword.operator.arithmetic.powershell
     - match: '\|{2}|&{2}|;'
       scope: punctuation.terminator.statement.powershell
     - match: ","
