@@ -365,7 +365,7 @@ rec(PUNCTUATION,
     'string.quoted.double & (punctuation.section.{braces|group}) -interpolated')
 rec(META,
     'meta.attribute support.function.attribute')
-rec(ITALIC,
+rec(KEYWORD,
     'keyword.operator.{comparison|logical|unary}')
 rec(VARIABLE,
     'variable storage.modifier.scope')
