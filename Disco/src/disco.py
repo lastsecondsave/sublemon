@@ -277,16 +277,12 @@ rec(STORAGE,
     'variable.type',
     'support.constant.builtin')
 rec(OPERATOR,
-    'storage.type.function.arrow')
-rec(KEYWORD,
-    'keyword.operator.js')
+    'keyword.declaration.function.arrow')
 rec(STRING,
     'meta.template.expression',
     'string.regexp keyword.other.js')
 rec(VARIABLE,
     'support.type.object.dom')
-rec(FOREGROUND,
-    'keyword.declaration.function.arrow')
 
 sec('string.regexp.js')
 rec(REGEXP_GROUP,
