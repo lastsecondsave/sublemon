@@ -59,7 +59,7 @@ $TextFiles = @(
     'js', 'json',
     'c', 'cpp', 'cu', 'h', 'hpp',
     'rs',
-    'go',
+    'go', 'mod',
     'py',
     'ps1', 'psm1',
     'sh', 'zsh',
