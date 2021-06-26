@@ -49,18 +49,32 @@ def repack_comments(settings):
         settings["shellVariables"] = shell_variables
 
 
-generate(
-    {
-        "meta.symbol.sublime-syntax entity.name": {"showInSymbolList": 1},
-        "text.rfc entity.name.title": {"showInSymbolList": 1},
-        "source.ini": {"lineComment": ("#", ";")},
-        "source.ini entity.name.section": {"showInSymbolList": 1},
-        "source.unix": {"lineComment": "#"},
-        "source.powershell": {"lineComment": "#", "blockComment": ("<#", "#>")},
-        "source.python": {
-            "increaseIndentPattern": r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
-            "decreaseIndentPattern": r"^\s*((elif|else|except|finally)\b.*:|[\}\]])",
-        },
-        "source.dockerfile": {"lineComment": "#"},
-    }
-)
+# fmt: off
+generate({
+    "meta.symbol.sublime-syntax entity.name": {
+        "showInSymbolList": 1
+    },
+    "text.rfc entity.name.title": {
+        "showInSymbolList": 1
+    },
+    "source.ini": {
+        "lineComment": ("#", ";")
+    },
+    "source.ini entity.name.section": {
+        "showInSymbolList": 1
+    },
+    "source.unix": {
+        "lineComment": "#"
+    },
+    "source.powershell": {
+        "lineComment": "#",
+        "blockComment": ("<#", "#>")
+    },
+    "source.python": {
+        "increaseIndentPattern": r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
+        "decreaseIndentPattern": r"^\s*((elif|else|except|finally)\b.*:|[\}\]])",
+    },
+    "source.dockerfile": {
+        "lineComment": "#"
+    },
+})
