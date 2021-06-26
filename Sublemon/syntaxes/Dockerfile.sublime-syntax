@@ -92,7 +92,8 @@ contexts:
     - include: greedy-comments
 
     - match: (?=\[)
-      embed: scope:source.json
+      embed: scope:source.json#array
+      embed_scope: source.json
       escape: (?<=])
 
   shell-command:
