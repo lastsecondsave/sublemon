@@ -104,3 +104,12 @@ generate(
         "pl": "fmt.Println($SEL0)",
     },
 )
+
+
+generate(
+    "text.html.markdown",
+    snippets={
+        "cf": ("code fence", "```$1-->$SEL0-->```"),
+        "ln": ("link", "[$SEL1]($2)"),
+    },
+)
