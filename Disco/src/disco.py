@@ -430,11 +430,12 @@ rec(VARIABLE,
 
 src('objc++', 'objc')
 rec(PARAMETER + ITALIC,
-    'meta.function-call support.function.any-method')
+    'meta.function-call support.function.any-method -punctuation')
 rec(SPECIAL,
     'keyword.control.import')
 rec(FOREGROUND,
-    'support.constant.cocoa')
+    'support.constant.cocoa',
+    'punctuation.separator.arguments')
 
 src('rust')
 rec(STORAGE,
