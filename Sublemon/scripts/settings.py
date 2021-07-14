@@ -51,6 +51,9 @@ def repack_comments(settings):
 
 # fmt: off
 generate({
+    "source.sublime-syntax": {
+        "lineComment": "#"
+    },
     "meta.symbol.sublime-syntax entity.name": {
         "showInSymbolList": 1
     },
