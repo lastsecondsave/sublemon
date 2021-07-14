@@ -114,7 +114,6 @@
 
   /* L2: CTRL */
 
-  { "keys": ["ctrl+k", "ctrl+t"], "command": "convert_case" },
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+k", "ctrl+p"], "command": "open_file" , "args": {"file": "${project}"} },
 
@@ -131,6 +130,7 @@
   { "keys": ["ctrl+j", "ctrl+i"], "command": "expand_selection", "args": {"to": "indentation" } },
   { "keys": ["ctrl+j", "ctrl+f"], "command": "copy_file_path" },
   { "keys": ["ctrl+j", "ctrl+c"], "command": "copy_as_one_line" },
+  { "keys": ["ctrl+j", "ctrl+n"], "command": "convert_case" },
 
   /* SEARCH WIDGET */
 
