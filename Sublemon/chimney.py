@@ -74,7 +74,7 @@ class ChimneyBuildListener:
         pass
 
 
-class BuildError(Exception):
+class BuildSetupError(Exception):
     def __init__(self, message):
         super().__init__(self)
         self.message = message
@@ -113,7 +113,7 @@ class Cmd:
         return bool(self.args or self.cmdline)
 
 
-class Build:
+class BuildSetup:
     def __init__(self, options, window):
         self.options = options
         self.window = window
@@ -131,9 +131,8 @@ class Build:
 
         self._syntax = options.get("syntax", "Packages/Text/Plain text.tmLanguage")
 
-    @staticmethod
-    def cancel(message):
-        raise BuildError(message)
+    def cancel(self, message):
+        raise BuildSetupError(message)
 
     def opt(self, key, default=None, expand=True):
         value = self.options.get(key, default)
@@ -195,7 +194,7 @@ class ChimneyCommand(WindowCommand):
         if kill:
             return
 
-        build = Build(options, self.window)
+        build = BuildSetup(options, self.window)
 
         if interactive:
             prompt = "$ " + (interactive if isinstance(interactive, str) else "")
@@ -212,8 +211,13 @@ class ChimneyCommand(WindowCommand):
             self.run_build(build)
 
     def run_build_interactive(self, build, cmd):
-        self.last_command = cmd
+        if cmd:
+            self.last_command = cmd
+            self.set_cmd(build, cmd)
 
+        self.run_build(build)
+
+    def set_cmd(self, build, cmd):
         if cmd.startswith("@"):
             cmd = cmd[1:]
             if project_folder := find_project_folder(self.window):
@@ -229,15 +233,13 @@ class ChimneyCommand(WindowCommand):
         else:
             build.cmd = Cmd({"shell_cmd": cmd})
 
-        self.run_build(build)
-
     def run_build(self, build):
         try:
             self.setup(build)
 
             if not build.cmd:
                 build.cancel("No command")
-        except BuildError as err:
+        except BuildSetupError as err:
             self.window.status_message(err.message)
             return
 
