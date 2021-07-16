@@ -2,21 +2,35 @@ import subprocess
 
 import sublime
 from sublime import Region
-from sublime_plugin import TextCommand, WindowCommand
+from sublime_plugin import TextCommand
 
-from . import find_in_file_parents, indent_params, view_cwd
+from . import (
+    POPEN_CREATION_FLAGS,
+    RUNNING_ON_LINUX,
+    RUNNING_ON_WINDOWS,
+    find_in_file_parents,
+    indent_params,
+    view_cwd,
+)
 
 
 class Formatter:
-    def __init__(self, scope, cmdline):
+    def __init__(self, scope, command, shell=False, windows=None, linux=None):
         self.scopes = (scope,)
-        self.cmdline = cmdline
+        self.shell = shell
+
+        if RUNNING_ON_WINDOWS and windows:
+            self.command = windows
+        elif RUNNING_ON_LINUX and linux:
+            self.command = linux
+        else:
+            self.command = command
 
     def supported_scopes(self):
         return self.scopes
 
     def cmd(self, _view, _scope):
-        return self.cmdline
+        return (self.command, self.shell)
 
 
 class Prettier:
@@ -40,12 +54,12 @@ class Prettier:
 
         if not config:
             if parser == "markdown":
-                cmd += ["--prose-wrap=always", "--print-width=100"]
+                cmd += ["--prose-wrap=always", "--print-width=88"]
             else:
                 use_tabs, tab_width = indent_params(view)
                 cmd += [f"--use-tabs={use_tabs}", f"--tab-width={tab_width}"]
 
-        return " ".join(cmd)
+        return (cmd, False)
 
 
 class ClangFormat:
@@ -56,6 +70,8 @@ class ClangFormat:
         "source.objc": "file.m",
         "source.objc++": "file.mm",
     }
+
+    shell = False
 
     def supported_scopes(self):
         return self.FILES
@@ -69,7 +85,7 @@ class ClangFormat:
             _, tab_width = indent_params(view)
             cmd.append(f'-style="{{BasedOnStyle: Google, IndentWidth: {tab_width}}}"')
 
-        return " ".join(cmd)
+        return (cmd, False)
 
 
 def prepare_formatters(*formatters):
@@ -82,44 +98,47 @@ def prepare_formatters(*formatters):
     return mapping
 
 
-class FmtCommand(WindowCommand):
+class FmtCommand(TextCommand):
     FORMATTERS = prepare_formatters(
         Prettier(),
         ClangFormat(),
         Formatter("source.rust", "rustfmt"),
-        Formatter("source.python", "isort - | black -"),
-        Formatter("source.cmake", "cmake-format -"),
+        Formatter("source.python", "isort - | black -", shell=True),
+        Formatter("source.cmake", ["cmake-format", "-"]),
         Formatter("source.go", "gofmt"),
-        Formatter("source.shell.bash", "shfmt -ci -"),
-        Formatter("text.xml", "xmlstarlet fo -"),
+        Formatter("source.shell.bash", ["shfmt", "-ci", "-"]),
+        Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
     )
 
-    def run(self):
-        view = self.window.active_view()
-        scopes = view.scope_name(0).split()
+    def run(self, edit):
+        scopes = self.view.scope_name(0).split()
 
         for scope in scopes:
             if formatter := self.FORMATTERS.get(scope):
-                self.reformat(formatter, view, scope)
+                self.reformat(formatter, scope)
                 return
 
-        self.window.status_message("No supported formatter")
+        self.view.window().status_message("No supported formatter")
 
-    def reformat(self, formatter, view, scope):
-        text = view.substr(Region(0, view.size()))
+    def reformat(self, formatter, scope):
+        original_text = self.view.substr(Region(0, self.view.size()))
 
         def run_formatter():
+            cmd, shell = formatter.cmd(self.view, scope)
+
             process = subprocess.run(
-                formatter.cmd(view, scope),
-                input=text,
+                cmd,
+                input=original_text,
                 encoding="utf-8",
                 capture_output=True,
-                shell=True,
-                cwd=view_cwd(view),
+                shell=shell,
+                cwd=view_cwd(self.view),
+                creationflags=POPEN_CREATION_FLAGS,
             )
 
             if process.returncode == 0:
-                view.run_command("replace_with_formatted", {"text": process.stdout})
+                replacement = process.stdout
+                self.view.run_command("replace_with_formatted", {"text": replacement})
             else:
                 sublime.error_message(process.stderr.strip())
 
