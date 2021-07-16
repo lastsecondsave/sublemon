@@ -5,6 +5,7 @@ disable = [
     "no-self-use",
     "subprocess-run-check",
     "too-few-public-methods",
+    "too-many-arguments",
     "too-many-instance-attributes"
 ]
 
