@@ -6,7 +6,12 @@ from pathlib import Path
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import CREATION_FLAGS, active_view_contains_file, find_in_file_parents, view_cwd
+from . import (
+    POPEN_CREATION_FLAGS,
+    active_view_contains_file,
+    find_in_file_parents,
+    view_cwd,
+)
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 
@@ -36,7 +41,7 @@ class GitGuiCommand(WindowCommand):
     def run(self):
         if dotgit := find_dotgit(self.window):
             subprocess.Popen(
-                ["git", "gui"], cwd=dotgit.parent, creationflags=CREATION_FLAGS
+                ["git", "gui"], cwd=dotgit.parent, creationflags=POPEN_CREATION_FLAGS
             )
 
 
@@ -61,7 +66,7 @@ class GitRevertFileCommand(WindowCommand):
         subprocess.Popen(
             ["git", "checkout", view.file_name()],
             cwd=view_cwd(view),
-            creationflags=CREATION_FLAGS,
+            creationflags=POPEN_CREATION_FLAGS,
         )
 
     def is_enabled(self):

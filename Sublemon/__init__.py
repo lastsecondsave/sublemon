@@ -6,7 +6,9 @@ from pathlib import Path
 import sublime
 
 RUNNING_ON_WINDOWS = sublime.platform() == "windows"
-CREATION_FLAGS = subprocess.CREATE_NO_WINDOW if RUNNING_ON_WINDOWS else 0
+RUNNING_ON_LINUX = sublime.platform() == "linux"
+
+POPEN_CREATION_FLAGS = subprocess.CREATE_NO_WINDOW if RUNNING_ON_WINDOWS else 0
 
 
 def pref(key, default=None):
