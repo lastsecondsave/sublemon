@@ -50,7 +50,8 @@ class Prettier:
         parser = self.PARSERS[scope]
         config = find_in_file_parents(view, ".prettierrc")
 
-        cmd = ["prettier", f"--parser={parser}"]
+        binary = "prettier.cmd" if RUNNING_ON_WINDOWS else "prettier"
+        cmd = [binary, f"--parser={parser}"]
 
         if not config:
             if parser == "markdown":
@@ -83,7 +84,7 @@ class ClangFormat:
 
         if not config:
             _, tab_width = indent_params(view)
-            cmd.append(f'-style="{{BasedOnStyle: Google, IndentWidth: {tab_width}}}"')
+            cmd.append(f"-style={{BasedOnStyle: Google, IndentWidth: {tab_width}}}")
 
         return (cmd, False)
 
