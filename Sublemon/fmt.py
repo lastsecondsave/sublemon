@@ -104,7 +104,7 @@ class FmtCommand(TextCommand):
         Prettier(),
         ClangFormat(),
         Formatter("source.rust", "rustfmt"),
-        Formatter("source.python", "isort - | black -", shell=True),
+        Formatter("source.python", ["black", "-"]),
         Formatter("source.cmake", ["cmake-format", "-"]),
         Formatter("source.go", "gofmt"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-"]),
