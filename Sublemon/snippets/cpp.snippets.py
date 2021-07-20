@@ -11,6 +11,8 @@ completions = {
     ("Keyword", Icon.KEYWORD): [
         "break",
         "continue",
+        "delete",
+        "new",
         "return",
         "throw",
     ],
@@ -62,6 +64,7 @@ completions = {
     ("Class", Icon.TYPE): [
         "auto",
         "string",
+        "typedef",
         "vector",
     ],
     ("Type", Icon.PRIMITIVE_TYPE): [
