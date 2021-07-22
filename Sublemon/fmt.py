@@ -34,31 +34,32 @@ class Formatter:
 
 
 class Prettier:
-    PARSERS = {
-        "source.json": "json",
-        "source.js": "babel",
-        "source.css": "css",
-        "source.yaml": "yaml",
-        "text.html.markdown": "markdown",
-        "text.html": "html",
+    FILES = {
+        "source.json": "file.json",
+        "source.js": "file.js",
+        "source.css": "file.css",
+        "source.yaml": "file.yaml",
+        "text.html.markdown": "file.md",
+        "text.html": "file.html",
     }
 
     def supported_scopes(self):
-        return self.PARSERS
+        return self.FILES
 
     def cmd(self, view, scope):
-        parser = self.PARSERS[scope]
         config = find_in_file_parents(view, ".prettierrc")
 
         binary = "prettier.cmd" if RUNNING_ON_WINDOWS else "prettier"
-        cmd = [binary, f"--parser={parser}"]
+        cmd = [binary, f"--stdin-filepath={self.FILES[scope]}"]
 
         if not config:
-            if parser == "markdown":
+            if scope == "text.html.markdown":
                 cmd += ["--prose-wrap=always", "--print-width=88"]
             else:
                 use_tabs, tab_width = indent_params(view)
                 cmd += [f"--use-tabs={use_tabs}", f"--tab-width={tab_width}"]
+        else:
+            cmd.append(f"--config={config}")
 
         return (cmd, False)
 
