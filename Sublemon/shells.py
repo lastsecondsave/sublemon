@@ -21,6 +21,6 @@ class PwshCommand(ChimneyCommand):
         if file := build.opt("file"):
             build.cmd.appendleft("-File", file)
         elif cmdline := build.cmd.cmdline:
-            build.cmd = Cmd({"cmd": ("-Command", cmdline)})
+            build.cmd = Cmd({"cmd": ["-Command", cmdline]})
 
         build.cmd.appendleft("pwsh", "-NoProfile")
