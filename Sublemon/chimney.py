@@ -82,7 +82,7 @@ class BuildSetupError(Exception):
 
 class Cmd:
     def __init__(self, options):
-        self.args = deque()
+        self.params = deque()
         self.cmdline = ""
         self.shell = options.get("shell", False)
 
@@ -92,25 +92,25 @@ class Cmd:
                 shell_cmd if isinstance(shell_cmd, str) else " ".join(shell_cmd)
             )
         elif cmd := options.get("cmd"):
-            self.args.extend(cmd if isinstance(cmd, list) else [cmd])
+            self.params.extend(cmd if isinstance(cmd, list) else [cmd])
 
-    def split_args(self):
-        if not self.args and self.cmdline:
-            self.args = deque(shlex.split(self.cmdline))
+    def split_cmdline(self):
+        if not self.params and self.cmdline:
+            self.params = deque(shlex.split(self.cmdline))
 
     def append(self, *chunks):
-        self.split_args()
-        self.args.extend(chunks)
+        self.split_cmdline()
+        self.params.extend(chunks)
 
     def appendleft(self, *chunks):
-        self.split_args()
-        self.args.extendleft(reversed(chunks))
+        self.split_cmdline()
+        self.params.extendleft(reversed(chunks))
 
     def __str__(self):
-        return shlex.join(self.args) if self.args else self.cmdline
+        return shlex.join(self.params) if self.params else self.cmdline
 
     def __bool__(self):
-        return bool(self.args or self.cmdline)
+        return bool(self.params or self.cmdline)
 
 
 class BuildSetup:
@@ -398,10 +398,14 @@ def start_process(cmd, env, cwd):
             else:
                 os_env[key] = os.path.expandvars(val)
 
-    args = cmd.args if not cmd.shell else str(cmd)
+    params = cmd.params if not cmd.shell else str(cmd)
 
-    # pylint: disable=consider-using-with
-    return subprocess.Popen(args, **process_params)
+    try:
+        # pylint: disable=consider-using-with
+        return subprocess.Popen(params, **process_params)
+    except:
+        print(f"⚑ Failed to run program: {cmd}")
+        raise
 
 
 def kill_process(process):
@@ -413,6 +417,6 @@ def kill_process(process):
             os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
             process.terminate()
         except ProcessLookupError:
-            print(f"[WARN] Process {process.pid} doesn't exist")
+            print(f"⚑ Process {process.pid} doesn't exist")
 
     process.wait()
