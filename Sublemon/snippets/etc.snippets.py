@@ -62,7 +62,9 @@ generate(
             "target_sources",
         ],
         ("Block", Icon.BLOCK): [
+            "function($1)<=>endfunction()",
             "if($1)<=>endif()",
+            "macro($1)<=>endmacro()",
         ],
         ("Variable", Icon.VARIABLE): [
             "CMAKE_BINARY_DIR",
