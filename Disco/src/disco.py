@@ -68,6 +68,7 @@ KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
 OPERATOR = Style(LIGHT_VIOLET)
+DULL_PUNCTUATION = Style(LIGHT_VIOLET)
 PUNCTUATION = Style(DARK_ORANGE)
 ACCESSOR = Style(LIGHT_VIOLET)
 COMMENT = Style(GRAY)
@@ -193,14 +194,16 @@ def generate():
 
 
 rec(COMMENT,
-    'comment')
+    'comment',
+    'punctuation.definition.comment')
 rec(PRIMITIVE,
     'constant.{character|language|numeric}',
     'storage.type.numeric',
     'punctuation.separator.decimal')
 rec(STRING,
     'string -string.unquoted',
-    'string.quoted')
+    'string.quoted',
+    'punctuation.definition.string')
 rec(STORAGE,
     'storage',
     'support.{class|type}',
@@ -219,6 +222,8 @@ rec(PARAMETER,
 rec(VARIABLE,
     'variable.{language|other.substitution}',
     'support.{constant|variable}')
+rec(DULL_PUNCTUATION,
+    '(punctuation.{section|separator|terminator}) -source.json')
 rec(PUNCTUATION,
     'punctuation.separator.continuation',
     'punctuation.definition.{template-expression|variable}',
@@ -372,7 +377,7 @@ src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'meta.interpolation.parameter keyword.operator',
-    'keyword.operator.{end-of-options|expansion}',
+    'keyword.operator.{end-of-options|expansion|herestring}',
     'keyword.operator.assignment.{pipe|redirection}')
 rec(STORAGE,
     'keyword.declaration.{alias|variable} | support.function.export')
@@ -383,8 +388,6 @@ rec(KEYWORD,
     'support.function.{eval|exec|source|trap|unset}')
 rec(COMMENT,
     'constant.language.shebang')
-rec(STRING,
-    'punctuation.definition.string')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
@@ -462,7 +465,7 @@ rec(META,
 
 src('toml')
 rec(META,
-    '{entity.name|punctuation.definition}.table')
+    '{entity.name|punctuation.definition|punctuation.separator}.table')
 
 src('ini')
 rec(META,
