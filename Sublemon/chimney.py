@@ -10,7 +10,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS
+from . import RUNNING_ON_WINDOWS, sad_message
 from .opener import find_project_folder
 
 
@@ -404,7 +404,7 @@ def start_process(cmd, env, cwd):
         # pylint: disable=consider-using-with
         return subprocess.Popen(params, **process_params)
     except:
-        print(f"⚑ Failed to run program: {cmd}")
+        sad_message(f"Failed to run program: {cmd}")
         raise
 
 
@@ -417,6 +417,6 @@ def kill_process(process):
             os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
             process.terminate()
         except ProcessLookupError:
-            print(f"⚑ Process {process.pid} doesn't exist")
+            sad_message(f"Process {process.pid} doesn't exist")
 
     process.wait()
