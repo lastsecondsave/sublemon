@@ -1,0 +1,13 @@
+{
+  "selector": "source.go",
+  "cmd": ["go", "run", "$file"],
+  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
+  "syntax": "Generic Build Output",
+
+  "variants": [
+    {
+      "name": "Interactive",
+      "interactive": "go"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "keyfiles": ["go.mod"],
+  "working_dir": "$folder",
+  "cmd": ["go", "build", "$folder"],
+
+  "variants": [
+    {
+      "name": "Run",
+      "cmd": ["go", "run", "$folder"]
+    },
+    {
+      "name": "Run Interactive",
+      "cmd": ["go", "run", "$folder"],
+      "interactive": "go"
+    }
+  ]
+}
