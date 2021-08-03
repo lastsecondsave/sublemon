@@ -2,6 +2,8 @@
   "keyfiles": ["go.mod"],
   "working_dir": "$folder",
   "cmd": ["go", "build", "$folder"],
+  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
+  "syntax": "Generic Build Output",
 
   "variants": [
     {
