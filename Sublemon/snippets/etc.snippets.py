@@ -101,14 +101,6 @@ generate(
 )
 
 generate(
-    "source.go",
-    snippets={
-        "pl": "fmt.Println($SEL0)",
-    },
-)
-
-
-generate(
     "text.html.markdown",
     snippets={
         "cf": ("code fence", "```$1-->$SEL0-->```"),
