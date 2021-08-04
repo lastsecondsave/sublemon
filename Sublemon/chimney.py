@@ -337,13 +337,22 @@ class BuildContext:
     def complete(self):
         if not self.cancelled:
             self.on_complete(self)
-            self.panel.finalize()
+
+            returncode = self.process.wait()
+
+            if not self.panel.empty:
+                self.panel.finalize()
+            elif returncode:
+                self.print_lines((f"Exited with {returncode}",))
+            else:
+                self.print_lines(("OK",))
+
             self.window.status_message(self.on_complete_message)
+            print(f"✔ [{self.process.pid}] {returncode}")
         else:
             self.window.status_message("Build cancelled")
-            self.print_lines(("", "[Process Terminated]"))
-
-        print("{} [{}]".format("✘" if self.cancelled else "✔", self.process.pid))
+            self.print_lines(("", "*** Terminated ***"))
+            print(f"✘ [{self.process.pid}]")
 
         self.process = None
 
