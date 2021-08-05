@@ -7,16 +7,21 @@ snippets = {
 
 completions = {
     ("Keyword", Icon.KEYWORD): [
+        "const",
         "defer",
         "import",
+        "new",
         "package",
+        "range",
         "return",
         "type",
         "var",
     ],
     ("Block", Icon.BLOCK): [
+        "for $1 {}",
         "func ${1:run}($2)$3 {}",
         "if $1 {}",
+        "interface {}",
         "struct {}",
     ],
     ("Constant", Icon.CONSTANT): [
@@ -24,7 +29,7 @@ completions = {
         "nil",
         "true",
     ],
-    ("Primitive", Icon.PRIMITIVE_TYPE): [
+    ("Type", Icon.PRIMITIVE_TYPE): [
         "bool",
         "byte",
         "complex128",
@@ -44,7 +49,7 @@ completions = {
         "uint8",
         "uintptr",
     ],
-    ("Primitive", Icon.TYPE): [
+    ("Type", Icon.TYPE): [
         "string",
         "map",
     ],
