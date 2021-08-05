@@ -6,9 +6,14 @@ hidden: true
 
 contexts:
   main:
-    - match: '^(.+?):(\d+):(\d+): .*?(\([^\(]+\))?$'
+    - match: '^(.+?):(\d+):(\d+): .*?(\([\w-]+\))?$'
       captures:
         1: entity.name.filename
         2: constant.numeric.line
         3: constant.numeric.column
         4: comment.category.description
+
+    - match: ^\s*(#).*$
+      scope: comment.line
+      captures:
+        1: punctuation.definition.comment

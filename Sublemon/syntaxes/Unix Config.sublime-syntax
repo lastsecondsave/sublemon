@@ -6,6 +6,6 @@ scope: source.unix
 contexts:
   main:
     - match: ^\s*([#;]).*$
-      scope: comment.line.number-sign.unix
+      scope: comment.line.unix
       captures:
         1: punctuation.definition.comment.unix
