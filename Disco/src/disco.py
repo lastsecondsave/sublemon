@@ -497,10 +497,11 @@ txt('html.markdown')
 rec(PUNCTUATION,
     'punctuation.definition.{blockquote|image|link|list_item}',
     'markup.list.numbered.bullet')
-rec(GRAY,
-    'punctuation.definition.{bold|italic|raw.code-fence}',
-    'meta.code-fence.definition constant.other.language-name',
+rec(DULL_PUNCTUATION,
+    'punctuation.definition.{bold|italic}',
     'meta.link.inet punctuation.definition.link')
+rec(COMMENT,
+    'meta.code-fence.definition')
 rec(STRING,
     'markup.raw.inline')
 rec(VARIABLE,
