@@ -121,33 +121,33 @@ class ShrinkWhitespaceCommand(TextCommand):
         return self.view.line(self.view.text_point(row, 0))
 
     def shrink_lines(self, edit, line):
-        row = self.view.rowcol(line.begin())[0]
+        row, _ = self.view.rowcol(line.begin())
 
-        first_row, anchor = (row, None)
+        first_row, boundary = (row, None)
 
         while True:
             prev_line = self.row_to_line(first_row - 1)
-            if prev_line.begin() == anchor:
+            if prev_line.begin() == boundary:
                 break
 
             if not self.is_empty_line(prev_line):
                 break
 
             first_row -= 1
-            anchor = prev_line.begin()
+            boundary = prev_line.begin()
 
-        last_row, anchor = (row, None)
+        last_row, boundary = (row, None)
 
         while True:
             next_line = self.row_to_line(last_row + 1)
-            if next_line.end() == anchor:
+            if next_line.end() == boundary:
                 break
 
             if not self.is_empty_line(next_line):
                 break
 
             last_row += 1
-            anchor = next_line.end()
+            boundary = next_line.end()
 
         if first_row == last_row:
             self.view.erase(edit, line)
