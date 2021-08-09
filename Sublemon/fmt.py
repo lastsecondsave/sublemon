@@ -107,7 +107,7 @@ class FmtCommand(TextCommand):
         Formatter("source.rust", "rustfmt"),
         Formatter("source.python", ["black", "-"]),
         Formatter("source.cmake", ["cmake-format", "-"]),
-        Formatter("source.go", "gofmt"),
+        Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-"]),
         Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
     )
