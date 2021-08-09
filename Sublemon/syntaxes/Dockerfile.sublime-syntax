@@ -125,29 +125,46 @@ contexts:
         - meta_scope: meta.declaration.variable.dockerfile
         - match: (?=\s|$)
           pop: 1
-        - include: greedy-comments
-        - include: comments
-        - include: escapes
-        - include: expansions
-        - include: quoted-string
+
+        - match: (?="|')
+          set: quoted-string
+        - match: -?\d+(\.\d+)?(?=\s|$)
+          scope: constant.numeric.dockerfile
+          pop: 1
+
+        - match: ""
+          set:
+            - match: (?=\s|$)
+              pop: 1
+            - include: greedy-comments
+            - include: comments
+            - include: escapes
+            - include: expansions
 
   quoted-string:
     - match: \"
       scope: punctuation.definition.string.begin.dockerfile
-      push:
+      set:
         - meta_scope: string.quoted.double.dockerfile
         - match: \"
           scope: punctuation.definition.string.end.dockerfile
           pop: 1
         - include: escapes
         - include: expansions
+        - include: illegal-newline
     - match: \'
       scope: punctuation.definition.string.begin.dockerfile
-      push:
+      set:
         - meta_scope: string.quoted.single.dockerfile
         - match: \'
           scope: punctuation.definition.string.end.dockerfile
           pop: 1
+        - include: illegal-newline
+
+  illegal-newline:
+    - match: \n
+      scope: invalid.illegal.newline.dockerfile
+      pop: 1
 
   comments:
     - match: (?:^|\s)((#).*)

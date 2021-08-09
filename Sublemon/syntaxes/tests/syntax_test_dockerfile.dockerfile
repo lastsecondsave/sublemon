@@ -27,11 +27,16 @@ ENV ver=10.01
 ENV one=001 two=002
 #      ^^^^^ -variable.other.readwrite.dockerfile
 #           ^^^ variable.other.readwrite.dockerfile
+#       ^^^ constant.numeric.dockerfile
+#               ^^^ constant.numeric.dockerfile
 
 ENV one=001 \
 #           ^ punctuation.separator.continuation.line.dockerfile
-    two=002
+    two=002 \
 #   ^^^ variable.other.readwrite.dockerfile
+#       ^^^ constant.numeric.dockerfile
+    three="001 002"
+#          ^^^^^^^ string.quoted.double.dockerfile
 
 ARG one="xxx $y $zz ${zzz}"
 #^^ keyword.control.dockerfile
@@ -42,6 +47,18 @@ ARG one="xxx $y $zz ${zzz}"
 #                ^^ variable.other.readwrite.dockerfile
 #                   ^ punctuation.definition.variable.dockerfile
 #                     ^^^ variable.other.readwrite.dockerfile
+
+ENV ver='xxx'
+#       ^^^^^ string.quoted.single.dockerfile
+
+ENV ver=yyy'xxx
+#       ^^^^^^^ -string.quoted.single.dockerfile
+
+ENV ver=yyy.10
+#           ^^ -constant.numeric.dockerfile
+
+ENV ver=10.yyy
+#       ^^ -constant.numeric.dockerfile
 
 ARG version 1.2.1
 #   ^^^^^^^ variable.other.readwrite.dockerfile
