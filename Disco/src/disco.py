@@ -213,7 +213,7 @@ rec(KEYWORD,
     'keyword.operator.{alphanumeric|word}',
     'storage.modifier')
 rec(OPERATOR,
-    'keyword.operator')
+    'keyword.operator -string')
 rec(INDEXED,
     'entity.name -comment -meta.function-call',
     'markup.heading')
@@ -223,7 +223,7 @@ rec(VARIABLE,
     'variable.{language|other.substitution}',
     'support.{constant|variable}')
 rec(DULL_PUNCTUATION,
-    '(punctuation.{section|separator|terminator}) -source.json')
+    '(punctuation.{section|separator|terminator}) -source.json -string')
 rec(PUNCTUATION,
     'punctuation.separator.continuation',
     'punctuation.definition.{template-expression|variable}',
@@ -263,7 +263,7 @@ rec(STRING,
 rec(ITALIC,
     'meta.function-call.arguments variable.parameter -meta.function.inline')
 rec(PARAMETER,
-    'constant.other.format-spec')
+    'meta.interpolation constant.other.format-spec')
 rec(FOREGROUND,
     'keyword.other.print')
 
