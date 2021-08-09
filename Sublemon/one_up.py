@@ -1,5 +1,5 @@
 import re
-from enum import Enum, unique
+from enum import Enum, auto, unique
 
 from sublime import Region
 from sublime_plugin import TextCommand
@@ -9,10 +9,18 @@ HEX_NUMBER_PATTERN = re.compile(r"0[xX][0-9A-Fa-f]+")
 
 @unique
 class Token(Enum):
-    BOOLEAN = 1
-    NUMBER = 2
-    HEX_NUMBER = 3
-    ON_OFF = 4
+    NUMBER = auto()
+    HEX_NUMBER = auto()
+    BOOLEAN = auto()
+    ON_OFF = auto()
+    YES_NO = auto()
+
+
+PAIRS = {
+    Token.BOOLEAN: ("true", "false"),
+    Token.ON_OFF: ("on", "off"),
+    Token.YES_NO: ("yes", "no"),
+}
 
 
 class OneUpCommand(TextCommand):
@@ -86,11 +94,9 @@ def classify(token):
     if HEX_NUMBER_PATTERN.match(token):
         return Token.HEX_NUMBER
 
-    if token.lower() in ("true", "false"):
-        return Token.BOOLEAN
-
-    if token.lower() in ("on", "off"):
-        return Token.ON_OFF
+    for category in (Token.BOOLEAN, Token.ON_OFF, Token.YES_NO):
+        if token.lower() in PAIRS[category]:
+            return category
 
     return None
 
@@ -104,13 +110,7 @@ def toggle(token, category, negative):
     if category is Token.HEX_NUMBER:
         return toggle_hex_number(token, delta)
 
-    if category is Token.BOOLEAN:
-        return toggle_pair(token, "true", "false")
-
-    if category is Token.ON_OFF:
-        return toggle_pair(token, "on", "off")
-
-    return token
+    return toggle_pair(token, *PAIRS[category])
 
 
 def toggle_pair(token, first, second):
