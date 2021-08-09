@@ -271,15 +271,25 @@ class SelectBetweenMarkersCommand(TextCommand):
 
 
 def split_markers(markers):
+    left, right = find_markers(markers)
+    return (markers[:left], markers[right:])
+
+
+def find_markers(markers):
+    if markers == " ":
+        return (0, 0)
+
     if markers == "  ":
-        return (" ", " ")
+        return (1, 1)
 
-    i = markers.find(" ")
+    if sep := markers.find("  ") > -1:
+        return (sep, sep + 2)
 
-    left_bound = i if i >= 0 else int(len(markers) / 2)
-    right_bound = i + 1 if i >= 0 else left_bound
+    if sep := markers.find(" ") > -1:
+        return (sep, sep + 1)
 
-    return (markers[:left_bound], markers[right_bound:])
+    sep = int(len(markers) / 2)
+    return (sep, sep)
 
 
 class SelectBetweenMarkersInputHandler(TextInputHandler):
@@ -294,7 +304,7 @@ class SelectBetweenMarkersInputHandler(TextInputHandler):
             return None
 
         markers = (
-            "<i>{}</i>".format(html.escape(x, quote=False) if x != " " else "_")
+            "<i>{}</i>".format(html.escape(x.replace(" ", "_"), quote=False))
             for x in split_markers(arg)
         )
         return sublime.Html(" ... ".join(markers))
