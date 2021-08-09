@@ -279,13 +279,13 @@ def find_markers(markers):
     if markers == " ":
         return (0, 0)
 
-    if markers == "  ":
+    if markers == "  " or markers == "><":
         return (1, 1)
 
-    if sep := markers.find("  ") > -1:
+    if (sep := markers.find("><")) > -1:
         return (sep, sep + 2)
 
-    if sep := markers.find(" ") > -1:
+    if (sep := markers.find(" ")) > -1:
         return (sep, sep + 1)
 
     sep = int(len(markers) / 2)
