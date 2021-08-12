@@ -300,7 +300,7 @@ class BufferedPipe:
 
     def flush(self):
         if self.line_buffer:
-            line = self.process_line(self.get_buffered_line())
+            line = self.process_line(self.get_buffered_line(), self.ctx)
             if line:
                 self.ctx.print_lines((line,))
 
