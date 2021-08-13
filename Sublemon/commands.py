@@ -279,7 +279,7 @@ def find_markers(markers):
     if markers == " ":
         return (0, 0)
 
-    if markers == "  " or markers == "><":
+    if markers in ("  ", "><"):
         return (1, 1)
 
     if (sep := markers.find("><")) > -1:
