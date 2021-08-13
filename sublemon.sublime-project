@@ -46,6 +46,7 @@
     {
       "name": "Sublemon - Fmt",
       "shell_cmd": "black . && isort .",
+      "preview": true,
       "working_dir": "${project_path}/Sublemon"
     }
   ],

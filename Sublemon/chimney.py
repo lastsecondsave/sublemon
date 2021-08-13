@@ -62,7 +62,9 @@ class OutputPanel:
 # pylint: disable=unused-argument
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        ctx.window.status_message("Build started")
+        preview = ctx.cmd.preview
+        message = f"Running {preview} …" if preview else "Build started"
+        ctx.window.status_message(message)
 
     def on_output(self, line, ctx):
         return line
@@ -81,6 +83,8 @@ class BuildSetupError(Exception):
 
 
 class Cmd:
+    PREVIEW = re.compile(r"\S+( [^-][\w-]+)?(?=\s|$)")
+
     def __init__(self, options):
         self.params = deque()
         self.cmdline = ""
@@ -94,6 +98,10 @@ class Cmd:
         elif cmd := options.get("cmd"):
             self.params.extend(cmd if isinstance(cmd, list) else [cmd])
 
+        self._preview = options.get("preview")
+        if self._preview is True:
+            self._preview = str(self)
+
     def split_cmdline(self):
         if not self.params and self.cmdline:
             self.params = deque(shlex.split(self.cmdline))
@@ -105,6 +113,20 @@ class Cmd:
     def appendleft(self, *chunks):
         self.split_cmdline()
         self.params.extendleft(reversed(chunks))
+
+    @property
+    def preview(self):
+        if self._preview:
+            return self._preview
+
+        if match := Cmd.PREVIEW.match(str(self)):
+            return match.group(0)
+
+        return ""
+
+    @preview.setter
+    def preview(self, value):
+        self._preview = value
 
     def __str__(self):
         return shlex.join(self.params) if self.params else self.cmdline
@@ -326,8 +348,12 @@ class BuildContext:
         self.cancelled = False
 
         self.working_dir = build.working_dir
+        self.cmd = build.cmd
         self.on_complete = build.listener.on_complete
-        self.on_complete_message = "Build complete"
+
+        self.on_complete_message = (
+            f"Complete: {build.cmd.preview}" if build.cmd.preview else "Build complete"
+        )
 
         build.listener.on_startup(self)
 

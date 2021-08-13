@@ -10,8 +10,12 @@ VENV_BIN = "Scripts" if RUNNING_ON_WINDOWS else "bin"
 
 
 def setup_python_exec(build, module=None, allow_venv=True):
-    if module := build.opt("module") or module:
+    module = module or build.opt("module")
+    build.cmd.preview = "python"
+
+    if module:
         build.cmd.appendleft("-m", module)
+        build.cmd.preview = module
 
     binary = DEFAULT_BINARY
 
@@ -93,4 +97,4 @@ class PylintBuildListener(ChimneyBuildListener):
 
     def on_complete(self, ctx):
         if self.rank:
-            ctx.on_complete_message = self.rank
+            ctx.on_complete_message = "pylint: " + self.rank
