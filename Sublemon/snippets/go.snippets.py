@@ -7,7 +7,10 @@ snippets = {
 
 completions = {
     ("Keyword", Icon.KEYWORD): [
+        "case",
         "const",
+        "continue",
+        "default",
         "defer",
         "import",
         "new",
@@ -23,6 +26,7 @@ completions = {
         "if $1 {}",
         "interface {}",
         "struct {}",
+        "switch $1 {}",
     ],
     ("Constant", Icon.CONSTANT): [
         "false",
@@ -50,11 +54,15 @@ completions = {
         "uintptr",
     ],
     ("Type", Icon.TYPE): [
-        "string",
+        "error",
         "map",
+        "string",
     ],
     ("Support", Icon.FUNCTION): [
         "make",
+        "new",
+        "panic",
+        "recover",
     ],
 }
 
