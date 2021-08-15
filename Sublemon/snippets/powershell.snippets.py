@@ -13,12 +13,12 @@ def pwsh_cmdlets():
 
     pipeline = [
         "Get-Command",
-        f"where Source -IN {','.join(sources)}",
-        "select Name, Source",
+        f"Where-Object Source -in {','.join(sources)}",
+        "Select-Object Name",
         "ConvertTo-Json",
     ]
 
-    cmd = ["pwsh", "-NoLogo", "-Command", " | ".join(pipeline)]
+    cmd = ["pwsh", "-NoProfile", "-NoLogo", "-Command", " | ".join(pipeline)]
 
     process = subprocess.run(cmd, encoding="utf-8", capture_output=True)
 
@@ -38,6 +38,7 @@ completions = {
         "else {}",
         "end {}",
         "for ($1) {}",
+        "foreach ($1) {}",
         "function ${1:run} {}",
         "if ($1) {}",
         "param (<=>)",
@@ -45,12 +46,12 @@ completions = {
         "switch ($1) {}",
     ],
     ("Attribute", Icon.META): [
-        ("Parameter", "Parameter"),
+        "Parameter",
     ],
     ("Constant", Icon.CONSTANT): [
-        "False",
-        "Null",
-        "True",
+        "false",
+        "null",
+        "true",
     ],
 }
 
