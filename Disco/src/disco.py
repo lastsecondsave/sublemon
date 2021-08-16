@@ -107,6 +107,8 @@ COLOR_SCHEME = {
 
         "highlight": CLEAR_WHITE,
         "find_highlight": YELLOW,
+        "find_highlight_foreground": BLUISH_BLACK,
+        "scroll_highlight": CLEAR_WHITE,
         "scroll_selected_highlight": YELLOW,
 
         "guide": color(FADED_GRAY, "a(0.2)"),
