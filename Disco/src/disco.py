@@ -379,7 +379,6 @@ src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'meta.interpolation.parameter keyword.operator',
-    'punctuation.section.compound'
     'keyword.operator.{end-of-options|expansion|herestring}',
     'keyword.operator.assignment.{pipe|redirection}')
 rec(STORAGE,
