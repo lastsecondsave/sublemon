@@ -21,10 +21,12 @@ completions = {
         "var",
     ],
     ("Block", Icon.BLOCK): [
+        "else {}",
         "for $1 {}",
         "func ${1:run}($2)$3 {}",
         "if $1 {}",
         "interface {}",
+        "select {}",
         "struct {}",
         "switch $1 {}",
     ],
@@ -54,6 +56,7 @@ completions = {
         "uintptr",
     ],
     ("Type", Icon.TYPE): [
+        "chan",
         "error",
         "map",
         "string",
