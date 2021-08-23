@@ -105,10 +105,10 @@ COLOR_SCHEME = {
         "selection_border_width": "0",
         "invisibles": color(DARK_BLUE, "l(+ 10%)"),
 
-        "highlight": CLEAR_WHITE,
+        "highlight": LIGHT_VIOLET,
         "find_highlight": YELLOW,
         "find_highlight_foreground": BLUISH_BLACK,
-        "scroll_highlight": CLEAR_WHITE,
+        "scroll_highlight": WHITE,
         "scroll_selected_highlight": YELLOW,
 
         "guide": color(FADED_GRAY, "a(0.2)"),
