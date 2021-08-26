@@ -55,6 +55,7 @@
 		".idea",
 		".mvn",
 		".svn",
+		".vagrant",
 		".venv",
 		"__pycache__",
 		"bazel-*",
