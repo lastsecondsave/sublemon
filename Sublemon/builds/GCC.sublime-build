@@ -1,0 +1,9 @@
+{
+  "selector": "source.c++",
+  "shell_cmd": [
+    "g++ -std=c++17 \"$file\" -o \"$file_path/$file_base_name\"",
+    "&& \"$file_path/$file_base_name\""
+  ],
+  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
+  "syntax": "Generic Build Output"
+}
