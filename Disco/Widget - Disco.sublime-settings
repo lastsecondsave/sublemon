@@ -1,4 +1,5 @@
 {
   "color_scheme": "Packages/Disco/Disco.sublime-color-scheme",
-  "font_options": ["no_calt"]
+  "font_options": ["no_calt"],
+  "highlight_line": false
 }
