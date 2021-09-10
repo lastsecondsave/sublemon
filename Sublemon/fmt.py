@@ -40,7 +40,7 @@ class Prettier:
         "source.css": "file.css",
         "source.yaml": "file.yaml",
         "text.html.markdown": "file.md",
-        "text.html": "file.html",
+        "text.html.basic": "file.html",
     }
 
     def supported_scopes(self):
@@ -113,7 +113,7 @@ class FmtCommand(TextCommand):
     )
 
     def run(self, edit):
-        scopes = self.view.scope_name(0).split()
+        scopes = self.view.scope_name(0).split()[:3]
 
         for scope in scopes:
             if formatter := self.FORMATTERS.get(scope):
