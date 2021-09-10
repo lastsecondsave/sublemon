@@ -486,6 +486,7 @@ class ConvertCaseCommand(TextCommand):
         "Sentence case": lambda ts: (
             " ".join(chain((ts[0].capitalize(),), (x.lower() for x in ts[1:])))
         ),
+        "Title Case": lambda ts: " ".join(x.capitalize() for x in ts),
     }
 
     def run(self, edit, case):  # pylint: disable=arguments-differ
