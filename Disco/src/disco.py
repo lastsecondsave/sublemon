@@ -68,7 +68,7 @@ KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
 OPERATOR = Style(LIGHT_VIOLET)
-DULL_PUNCTUATION = Style(LIGHT_VIOLET)
+BG_PUNCTUATION = Style(LIGHT_VIOLET)
 PUNCTUATION = Style(DARK_ORANGE)
 ACCESSOR = Style(LIGHT_VIOLET)
 COMMENT = Style(GRAY)
@@ -208,7 +208,6 @@ rec(STRING,
     'punctuation.definition.string')
 rec(STORAGE,
     'storage',
-    'support.{class|type}',
     'entity.other.inherited-class')
 rec(KEYWORD,
     'keyword',
@@ -224,8 +223,8 @@ rec(PARAMETER,
 rec(VARIABLE,
     'variable.{language|other.substitution}',
     'support.{constant|variable}')
-rec(DULL_PUNCTUATION,
-    '(punctuation.{section|separator|terminator}) -source.json -string')
+rec(BG_PUNCTUATION,
+    '(punctuation.{section|separator|terminator|definition.generic}) -source.json -string')
 rec(PUNCTUATION,
     'punctuation.separator.continuation',
     'punctuation.definition.{template-expression|variable}',
@@ -266,6 +265,8 @@ rec(ITALIC,
     'meta.function-call.arguments variable.parameter -meta.function.inline')
 rec(PARAMETER,
     'meta.interpolation constant.other.format-spec')
+rec(STORAGE,
+    'support.type')
 rec(FOREGROUND,
     'keyword.other.print')
 
@@ -277,14 +278,16 @@ rec(REGEXP_CHARACTER_CLASS,
 rec(REGEXP_CONTROL,
     'punctuation.definition.character-class')
 
-src('js')
+src('js', 'ts', 'tsx')
 rec(TAG + ITALIC,
-    'meta.mapping.key -variable')
+    'meta.mapping.key -variable -support')
 rec(STORAGE,
     'variable.type',
-    'support.constant.builtin')
+    'support.{constant|class}.builtin')
 rec(OPERATOR,
-    'keyword.declaration.function.arrow')
+    'keyword.declaration.function.arrow',
+    'meta.type keyword.declaration.function',
+    'storage.modifier.array')
 rec(STRING,
     'meta.template.expression',
     'string.regexp keyword.other.js')
@@ -331,16 +334,18 @@ rec(ITALIC,
 rec(SPECIAL,
     'meta.class.body.anonymous.java punctuation.section.braces')
 rec(STORAGE,
-    'keyword.operator.wildcard',
-    'keyword.other.package')
+    'support.class',
+    'keyword.operator.wildcard')
+rec(OPERATOR,
+    'storage.type.function.anonymous')
+rec(BG_PUNCTUATION,
+    'storage.modifier.array')
 rec(FADED_GRAY,
     'meta.inline-tag & (keyword.other | punctuation.section)')
 rec(FADED_VIOLET,
     'meta.tag')
 rec(FOREGROUND,
-    'entity.name.constant',
-    'storage.modifier.array',
-    'storage.type.function.anonymous')
+    'entity.name.constant')
 
 src('clojure')
 rec(TAG + ITALIC, 'constant.other.keyword')
@@ -446,9 +451,11 @@ src('rust')
 rec(STORAGE,
     'meta.macro support.function -meta.block.macro-body')
 rec(META,
-    '{variable|punctuation.definition}.annotation')
+    'variable.annotation')
 rec(SPECIAL,
     'storage.modifier.lifetime')
+rec(BG_PUNCTUATION,
+    'punctuation.definition.annotation')
 
 src('yaml')
 rec(PUNCTUATION,
@@ -499,7 +506,7 @@ txt('html.markdown')
 rec(PUNCTUATION,
     'punctuation.definition.{blockquote|image|link|list_item}',
     'markup.list.numbered.bullet')
-rec(DULL_PUNCTUATION,
+rec(BG_PUNCTUATION,
     'punctuation.definition.{bold|italic}',
     'meta.link.inet punctuation.definition.link')
 rec(COMMENT,
