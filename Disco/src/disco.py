@@ -433,6 +433,8 @@ src('c++', 'c')
 rec(SPECIAL,
     'meta.preprocessor keyword.control.import',
     'meta.preprocessor keyword.control -meta.preprocessor.macro')
+rec(STORAGE,
+    'support.type.{sys-types|stdint}')
 rec(KEYWORD,
     'keyword.operator.word')
 rec(VARIABLE,
