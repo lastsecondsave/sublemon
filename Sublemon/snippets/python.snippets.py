@@ -20,7 +20,7 @@ completions = {
         "pass",
         "raise",
         "return",
-        "yeild",
+        "yield",
     ],
     ("Block", Icon.BLOCK): [
         "class $1:",
