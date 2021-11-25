@@ -389,10 +389,12 @@ rec(PUNCTUATION,
 rec(STORAGE,
     'keyword.declaration.{alias|variable} | support.function.export')
 rec(VARIABLE,
+    'meta.conditional.case.clause.commands meta.variable variable.other.readwrite',
     'meta.variable variable.other.readwrite - (meta.{arithmetic|conditional|interpolation})',
     'meta.declaration.variable variable.other.readwrite -meta.interpolation')
 rec(KEYWORD,
-    'support.function.{eval|exec|source|trap|unset}')
+    'support.function.{eval|exec|source|trap|unset}',
+    'entity.name.tag.heredoc')
 rec(COMMENT,
     'constant.language.shebang')
 rec(FOREGROUND,
