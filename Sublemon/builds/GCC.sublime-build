@@ -1,9 +1,24 @@
 {
   "selector": "source.c++",
   "shell_cmd": [
-    "g++ -std=c++17 \"$file\" -o \"$file_path/$file_base_name\"",
+    "g++ -std=c++17 -Wall \"$file\" -o \"$file_path/$file_base_name\"",
     "&& \"$file_path/$file_base_name\""
   ],
   "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
-  "syntax": "Generic Build Output"
+  "syntax": "Generic Build Output",
+
+  "variants": [
+    {
+      "name": "Release Build",
+      "shell_cmd": [
+        "g++ -std=c++17 -Wall -O2 \"$file\" -o \"$file_path/$file_base_name\""
+      ]
+    },
+    {
+      "name": "Debug Build",
+      "shell_cmd": [
+        "g++ -std=c++17 -Wall -Og -g \"$file\" -o \"$file_path/$file_base_name\""
+      ]
+    }
+  ]
 }
