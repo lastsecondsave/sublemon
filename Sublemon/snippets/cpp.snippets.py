@@ -5,6 +5,7 @@ snippets = {
     "dc": ("doc comment", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
     "main": ("main", "int main(${1:int argc, char *argv[]}) {}"),
     "fun": ("function", "${1:void} ${2:run}($3) {}"),
+    ";;": ("i = 0; i < imax; i++", "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:$2++}"),
 }
 
 completions = {
@@ -18,11 +19,14 @@ completions = {
     ],
     ("Modifier", Icon.ACCESS_MODIFIER): [
         "const",
+        "constexpr",
+        "override",
         "private",
         "protected",
         "public",
         "static",
         "thread_local",
+        "virtual",
         "volatile",
     ],
     ("Modifier", Icon.MODIFIER): [
@@ -63,8 +67,12 @@ completions = {
     ],
     ("Class", Icon.TYPE): [
         "auto",
+        "shared_ptr",
         "string",
         "typedef",
+        "unique_ptr",
+        "unordered_map",
+        "unordered_set",
         "vector",
     ],
     ("Type", Icon.PRIMITIVE_TYPE): [
