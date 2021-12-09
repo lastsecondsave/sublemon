@@ -6,6 +6,7 @@ snippets = {
     "main": ("main", "int main(${1:int argc, char *argv[]}) {}"),
     "fun": ("function", "${1:void} ${2:run}($3) {}"),
     ";;": ("i = 0; i < imax; i++", "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:$2++}"),
+    "in": "#include <$SEL0>",
 }
 
 completions = {
@@ -18,20 +19,21 @@ completions = {
         "throw",
     ],
     ("Modifier", Icon.ACCESS_MODIFIER): [
-        "const",
-        "constexpr",
-        "override",
         "private",
         "protected",
         "public",
-        "static",
-        "thread_local",
-        "virtual",
-        "volatile",
     ],
     ("Modifier", Icon.MODIFIER): [
+        "const",
+        "constexpr",
+        "explicit",
+        "override",
+        "static",
+        "thread_local",
         "typename",
         "unsigned",
+        "virtual",
+        "volatile",
     ],
     ("Cast", Icon.CONVERT): [
         "const_cast",
