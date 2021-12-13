@@ -309,6 +309,7 @@ src('regexp')
 rec(TAG,
     'meta.group keyword.other.named-capture-group punctuation.definition.capture-group-name')
 rec(REGEXP_GROUP,
+    'punctuation.section.group',
     'constant.other.assertion',
     'keyword.control.group',
     'keyword.operator.alternation',
@@ -467,6 +468,8 @@ rec(PUNCTUATION,
     'entity.other.document',
     'keyword.control.flow.block-scalar',
     'storage.modifier.chomping-indicator')
+rec(BG_PUNCTUATION,
+    'punctuation.definition.sequence')
 rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
