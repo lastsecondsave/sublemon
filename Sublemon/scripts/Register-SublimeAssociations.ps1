@@ -1,9 +1,5 @@
-$RootKey = 'hkcu:'
-
-$SublimeExe = '"' + $env:ProgramFiles + '\Sublime Text\sublime_text.exe"'
-$SublimeNode = "$RootKey\Software\SublimeText"
-
-$Default = '(Default)'
+$SublimeExe = "${env:ProgramFiles}\Sublime Text\sublime_text.exe"
+$SublimeNode = "HKCU:\Software\SublimeText"
 
 function New-RootItem($Path) {
     if (Test-Path $Path) { Remove-Item -Recurse $Path }
@@ -11,22 +7,24 @@ function New-RootItem($Path) {
 }
 
 function New-ClassDefinition($Name, $Icon) {
-    New-RootItem "$RootKey\Software\Classes\$Name"
+    $Class = "HKCU:\Software\Classes\$Name"
+    $Default = '(Default)'
 
-    New-Item "$RootKey\Software\Classes\$Name\DefaultIcon"
-    Set-ItemProperty "$RootKey\Software\Classes\$Name\DefaultIcon" -Name $Default -Value $Icon
+    New-RootItem $Class
 
-    New-Item "$RootKey\Software\Classes\$Name\shell"
-    Set-ItemProperty "$RootKey\Software\Classes\$Name\shell" -Name $Default -Value 'open'
+    New-Item "$Class\DefaultIcon"
+    Set-ItemProperty "$Class\DefaultIcon" -Name $Default -Value $Icon
 
-    New-Item "$RootKey\Software\Classes\$Name\shell\open"
-    New-Item "$RootKey\Software\Classes\$Name\shell\open\command"
+    New-Item "$Class\shell"
+    Set-ItemProperty "$Class\shell" -Name $Default -Value 'open'
 
-    Set-ItemProperty "$RootKey\Software\Classes\$Name\shell\open\command" -Name $Default -Value "$SublimeExe `"%1`""
+    New-Item "$Class\shell\open", "$Class\shell\open\command"
+    Set-ItemProperty "$Class\shell\open\command" -Name $Default -Value "`"$SublimeExe`" `"%1`""
 }
 
 function Set-Association($Extension, $Class) {
-    Set-ItemProperty "$SublimeNode\Capabilities\FileAssociations" -Name ".$Extension" -Value $Class; "Registered $Extension"
+    Set-ItemProperty "$SublimeNode\Capabilities\FileAssociations" -Name ".$Extension" -Value $Class
+    Write-Output "Registered .$Extension"
 }
 
 $(
@@ -36,19 +34,23 @@ $(
     New-RootItem $SublimeNode
 
     New-Item "$SublimeNode\Capabilities"
-    Set-ItemProperty "$SublimeNode\Capabilities" -Name ApplicationName -Value 'Sublime Text'
-    Set-ItemProperty "$SublimeNode\Capabilities" -Name ApplicationDescription -Value 'A sophisticated text editor for code, markup and prose'
+    Set-ItemProperty "$SublimeNode\Capabilities" -Name 'ApplicationName' -Value 'Sublime Text'
+    Set-ItemProperty "$SublimeNode\Capabilities" -Name 'ApplicationDescription' -Value 'A sophisticated text editor for code, markup and prose'
 
     New-Item "$SublimeNode\Capabilities\FileAssociations"
+
+    Set-ItemProperty "HKCU:\Software\RegisteredApplications" -Name 'Sublime Text' -Value 'Software\SublimeText\Capabilities'
 ) | Out-Null
 
 $SublimeItems = 'project', 'workspace'
+
 $SublimeFiles = @(
     'settings', 'keymap', 'mousemap',
     'menu', 'commands',
     'theme', 'color-scheme',
     'syntax', 'completions', 'snippet', 'build'
 )
+
 $TextFiles = @(
     'txt', 'log', 'conf', 'csv',
     'md', 'markdown',
@@ -65,11 +67,9 @@ $TextFiles = @(
     'sh', 'zsh',
     'sql',
     'css',
-    'gitignore', 'gitattributes'
+    'gitignore', 'gitattributes', 'gitmodules'
 )
 
 $TextFiles    | ForEach-Object { Set-Association $_ 'SublimeTextFile' }
 $SublimeFiles | ForEach-Object { Set-Association "sublime-$_" 'SublimeTextFile' }
 $SublimeItems | ForEach-Object { Set-Association "sublime-$_" 'SublimeTextItem' }
-
-Set-ItemProperty "$RootKey\Software\RegisteredApplications" -Name 'Sublime Text' -Value 'Software\SublimeText\Capabilities'
