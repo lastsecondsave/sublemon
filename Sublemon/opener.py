@@ -5,6 +5,7 @@ from pathlib import Path
 
 import sublime
 from sublime_plugin import ListInputHandler, TextCommand, WindowCommand
+from . import project_pref
 
 
 class OpenFilePathCommand(WindowCommand):
@@ -68,19 +69,47 @@ def reorder(folders):
 
 
 class OpenFileUnderCursorCommand(TextCommand):
-    PATH_PATTERN_STR = r"([^\s:]+)(?::\d+){0,2}"
-    PATH_PATTERN = re.compile(PATH_PATTERN_STR)
+    POSITION_PATTERN = re.compile(r"(?::\d+){1,2}$")
+
+    roots = None
+
+    def init(self):
+        self.roots = []
+        window = self.view.window()
+
+        project_file_name = window.project_file_name()
+        if not project_file_name:
+            return
+
+        roots = project_pref(window, "opener_roots")
+        if not roots:
+            return
+
+        project_dir = Path(project_file_name).parent
+
+        for root in roots:
+            root = Path(root)
+            if not root.is_absolute():
+                root = project_dir / root
+
+            if root.is_dir():
+                self.roots.append(root)
 
     def run(self, edit):
+        if self.roots is None:
+            self.init()
+
         paths = []
-        root = None
+        roots = []
 
         if file_name := self.view.file_name():
-            root = Path(file_name).parent
+            roots.append(Path(file_name).parent)
+
+        roots.extend(self.roots)
 
         for region in self.view.sel():
             if path := self.find_path(region):
-                if path := self.process_path(path, root):
+                if path := self.process_path(path, roots):
                     paths.append(path)
 
         for path in paths:
@@ -94,22 +123,31 @@ class OpenFileUnderCursorCommand(TextCommand):
             region.begin(),
             forward=False,
             classes=sublime.CLASS_WORD_START | sublime.CLASS_LINE_START,
-            separators=" ",
+            separators='"< ',
         )
 
-        match = self.view.find(self.PATH_PATTERN_STR, point)
-        return self.view.substr(match)
+        match = self.view.find(r"(\S+\w)((?::\d+){0,2})", point)
+        return self.view.substr(match) if match.begin() != -1 else None
 
-    def process_path(self, path, root):
-        if not Path(path).is_absolute():
-            if not root:
-                return None
+    def process_path(self, path, roots):
+        match = self.POSITION_PATTERN.search(path)
+        position = path[match.start() :]
+        path = Path(path[: match.start()])
 
-            path = str(root / path)
+        print(path, position)
 
-        match = self.PATH_PATTERN.match(path)
-        if match and Path(match.group(1)).is_file():
-            return path
+        if path.is_absolute():
+            if path.is_file():
+                return str(path) + position
+
+            return None
+
+        for root in roots:
+            abs_path = root / path
+            print(abs_path)
+
+            if abs_path.is_file():
+                return str(abs_path) + position
 
         return None
 
