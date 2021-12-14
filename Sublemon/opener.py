@@ -1,10 +1,12 @@
 import os
 import re
 import tempfile
+from collections import deque
 from pathlib import Path
 
 import sublime
 from sublime_plugin import ListInputHandler, TextCommand, WindowCommand
+
 from . import project_pref
 
 
@@ -69,7 +71,7 @@ def reorder(folders):
 
 
 class OpenFileUnderCursorCommand(TextCommand):
-    POSITION_PATTERN = re.compile(r"(?::\d+){1,2}$")
+    POSITION_PATTERN = re.compile(r"(?::\d+){0,2}$")
 
     roots = None
 
@@ -99,57 +101,65 @@ class OpenFileUnderCursorCommand(TextCommand):
         if self.roots is None:
             self.init()
 
-        paths = []
-        roots = []
+        roots = deque(self.roots)
 
         if file_name := self.view.file_name():
-            roots.append(Path(file_name).parent)
+            roots.appendleft(Path(file_name).parent)
 
-        roots.extend(self.roots)
+        files = []
+        directories = []
 
         for region in self.view.sel():
-            if path := self.find_path(region):
-                if path := self.process_path(path, roots):
-                    paths.append(path)
+            path = self.find_path(region) if region.empty() else self.crop_path(region)
+            path, is_file = self.process_path(path, roots)
 
-        for path in paths:
+            if path:
+                (files if is_file else directories).append(path)
+
+        for path in files:
             self.view.window().open_file(path, sublime.ENCODED_POSITION)
 
-    def find_path(self, region):
-        if not region.empty():
-            return self.view.substr(region)
+        for path in directories:
+            self.view.window().run_command("open_dir", {"dir": path})
 
+        if not files and not directories:
+            sublime.status_message("No paths found")
+
+    def crop_path(self, region):
+        path = self.view.substr(region)
+        if path.startswith(" ") or "\n" in path:
+            return None
+
+        return path
+
+    def find_path(self, region):
         point = self.view.find_by_class(
             region.begin(),
             forward=False,
             classes=sublime.CLASS_WORD_START | sublime.CLASS_LINE_START,
-            separators='"< ',
+            separators="\"'<[( ",
         )
 
         match = self.view.find(r"(\S+\w)((?::\d+){0,2})", point)
-        return self.view.substr(match) if match.begin() != -1 else None
+        if match.empty():
+            return None
+
+        return self.view.substr(match)
 
     def process_path(self, path, roots):
         match = self.POSITION_PATTERN.search(path)
         position = path[match.start() :]
         path = Path(path[: match.start()])
 
-        print(path, position)
+        paths = [path] if path.is_absolute() else [root / path for root in roots]
 
-        if path.is_absolute():
-            if path.is_file():
-                return str(path) + position
-
-            return None
-
-        for root in roots:
-            abs_path = root / path
-            print(abs_path)
-
+        for abs_path in paths:
             if abs_path.is_file():
-                return str(abs_path) + position
+                return str(abs_path) + position, True
+            if abs_path.is_dir():
+                return str(abs_path), False
 
-        return None
+        return None, False
 
 
 class ShowFilePathCommand(WindowCommand):
