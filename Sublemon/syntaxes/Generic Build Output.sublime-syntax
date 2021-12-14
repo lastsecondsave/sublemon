@@ -2,7 +2,6 @@
 ---
 name: Generic Build Output
 scope: text.output
-hidden: true
 
 contexts:
   main:
