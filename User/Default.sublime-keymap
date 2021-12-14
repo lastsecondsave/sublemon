@@ -121,8 +121,11 @@
   /* L3: CTRL */
 
   { "keys": ["ctrl+j", "ctrl+i"], "command": "expand_selection", "args": {"to": "indentation" } },
+  { "keys": ["ctrl+j", "ctrl+o"], "command": "open_file_under_cursor"},
+
   { "keys": ["ctrl+j", "ctrl+d"], "command": "convert_case" },
   { "keys": ["ctrl+j", "ctrl+f"], "command": "copy_file_path" },
+
   { "keys": ["ctrl+j", "ctrl+c"], "command": "copy_as_one_line" },
 
   /* SEARCH WIDGET */

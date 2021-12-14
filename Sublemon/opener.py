@@ -1,9 +1,10 @@
 import os
+import re
 import tempfile
 from pathlib import Path
 
 import sublime
-from sublime_plugin import ListInputHandler, WindowCommand
+from sublime_plugin import ListInputHandler, TextCommand, WindowCommand
 
 
 class OpenFilePathCommand(WindowCommand):
@@ -64,6 +65,53 @@ def find_project_folder(window):
 
 def reorder(folders):
     return (Path(f) for f in sorted(folders, key=len, reverse=True))
+
+
+class OpenFileUnderCursorCommand(TextCommand):
+    PATH_PATTERN_STR = r"([^\s:]+)(?::\d+){0,2}"
+    PATH_PATTERN = re.compile(PATH_PATTERN_STR)
+
+    def run(self, edit):
+        paths = []
+        root = None
+
+        if file_name := self.view.file_name():
+            root = Path(file_name).parent
+
+        for region in self.view.sel():
+            if path := self.find_path(region):
+                if path := self.process_path(path, root):
+                    paths.append(path)
+
+        for path in paths:
+            self.view.window().open_file(path, sublime.ENCODED_POSITION)
+
+    def find_path(self, region):
+        if not region.empty():
+            return self.view.substr(region)
+
+        point = self.view.find_by_class(
+            region.begin(),
+            forward=False,
+            classes=sublime.CLASS_WORD_START | sublime.CLASS_LINE_START,
+            separators=" ",
+        )
+
+        match = self.view.find(self.PATH_PATTERN_STR, point)
+        return self.view.substr(match)
+
+    def process_path(self, path, root):
+        if not Path(path).is_absolute():
+            if not root:
+                return None
+
+            path = str(root / path)
+
+        match = self.PATH_PATTERN.match(path)
+        if match and Path(match.group(1)).is_file():
+            return path
+
+        return None
 
 
 class ShowFilePathCommand(WindowCommand):
