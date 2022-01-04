@@ -175,7 +175,9 @@ class ShowFilePathCommand(WindowCommand):
         if prefix:
             parts = (prefix,) + parts
         elif parts[0] == "/":
-            parts = ("",) + parts[1:]
+            parts = parts[1:]
+        elif parts[0].endswith(":\\"):
+            parts = (parts[0][:-2],) + parts[1:]
 
         sublime.status_message(" / ".join(parts).strip())
 
