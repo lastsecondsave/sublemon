@@ -303,10 +303,10 @@ class SelectBetweenMarkersInputHandler(TextInputHandler):
         if not arg:
             return None
 
-        markers = (
-            "<i>{}</i>".format(html.escape(x.replace(" ", "_"), quote=False))
-            for x in split_markers(arg)
-        )
+        def escape(value):
+            return html.escape(value.replace(" ", "_"), quote=False)
+
+        markers = (f"<i>{escape(x)}</i>" for x in split_markers(arg))
         return sublime.Html(" ... ".join(markers))
 
 

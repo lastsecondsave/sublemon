@@ -161,7 +161,7 @@ class GitBlameCommand(ChimneyCommand):
             if to_col > 0:
                 to_line += 1
 
-            build.cmd.append("-L", "{},{}".format(from_line, to_line))
+            build.cmd.append("-L", f"{from_line},{to_line}")
 
         build.cmd.append("--", build.active_file)
         build.syntax = "Git Blame Output"

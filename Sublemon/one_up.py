@@ -142,7 +142,7 @@ def toggle_hex_number(token, delta):
     if number == -1:
         replacement = "f" * len(token)
     else:
-        template = "{{:0{}x}}".format(len(token))
+        template = f"{{:0{len(token)}x}}"
         replacement = template.format(number)
 
     if token.isupper():
