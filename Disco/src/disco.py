@@ -316,11 +316,13 @@ rec(REGEXP_GROUP,
     'keyword.other.{conditional|named-capture-group}')
 rec(REGEXP_CHARACTER_CLASS,
     'meta.set',
+    'meta.set punctuation.separator.sequence',
     'keyword.control.character-class')
 rec(REGEXP_CONTROL,
     'keyword.{control|operator}')
 rec(SPECIAL,
-    'storage.modifier.mode')
+    'storage.modifier.mode',
+    'punctuation.definition.modifier')
 
 src('java')
 rec(META,
