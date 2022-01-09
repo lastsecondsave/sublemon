@@ -23,6 +23,7 @@ ENV ver=10.01
 #^^ keyword.control.dockerfile
 #   ^^^^^^^^^ meta.declaration.variable.dockerfile
 #   ^^^ variable.other.readwrite.dockerfile
+#      ^ -variable.other.readwrite.dockerfile
 
 ENV one=001 two=002
 #      ^^^^^ -variable.other.readwrite.dockerfile
@@ -40,7 +41,9 @@ ENV one=001 \
 
 ARG one="xxx $y $zz ${zzz}"
 #^^ keyword.control.dockerfile
-#       ^^^^^^^^^^^^^^^^^^^ string.quoted.double.dockerfile
+#       ^^^^^^^^^^^^^^^^^^^ meta.string.dockerfile
+#       ^^^^ string.quoted.double.dockerfile
+#                         ^ string.quoted.double.dockerfile
 #            ^ punctuation.definition.variable.dockerfile
 #             ^ variable.other.readwrite.dockerfile
 #               ^ punctuation.definition.variable.dockerfile
@@ -51,17 +54,40 @@ ARG one="xxx $y $zz ${zzz}"
 ENV ver='xxx'
 #       ^^^^^ string.quoted.single.dockerfile
 
-ENV ver=yyy'xxx
-#       ^^^^^^^ -string.quoted.single.dockerfile
-
 ENV ver=yyy.10
 #           ^^ -constant.numeric.dockerfile
 
-ENV ver=10.yyy
+ENV ver=10.y'yy'
 #       ^^ -constant.numeric.dockerfile
+#           ^^^^ string.quoted.single.dockerfile
 
-ARG version 1.2.1
+ARG version
 #   ^^^^^^^ variable.other.readwrite.dockerfile
+
+ARG version 1.2.1 ext
+#   ^^^^^^^ variable.other.readwrite.dockerfile
+#           ^^^^^^^^^ -variable.other.readwrite.dockerfile
+
+ENV ver= ${VERSION}=x
+#        ^^^^^^^^^^ variable.other.readwrite.dockerfile meta.interpolation.parameter.dockerfile
+#                   ^ meta.value.dockerfile
+
+ENV ver'si'o"n"=${VERSION}
+#   ^^^^^^^^^^^ variable.other.readwrite.dockerfile
+#      ^^^^ string.quoted.single.dockerfile
+#           ^^^ string.quoted.double.dockerfile
+
+ARG message="\
+     hello\n\
+#         ^^ string.quoted.double.dockerfile constant.character.escape.dockerfile
+     world"
+#    ^^^^^^ string.quoted.double.dockerfile
+
+ENV message='\n\n\n\
+#           ^^^^^^^ string.quoted.single.dockerfile -constant.character.escape.dockerfile
+    xxx\
+'
+#<- string.quoted.single.dockerfile
 
 LABEL com.example.vendor="ACME Incorporated"
 #     ^^^^^^^^^^^^^^^^^^ variable.other.readwrite.dockerfile
@@ -91,3 +117,18 @@ HEALTHCHECK --interval=5m --timeout=3s \
 HEALTHCHECK --interval=5m --timeout=3s CMD ["check"]
 #                                      ^^^ keyword.control.dockerfile
 #                                          ^^^^^^^^^ meta.json.dockerfile source.json
+
+FROM image:42
+#^^ keyword.control.dockerfile
+#         ^ punctuation.separator.dockerfile
+
+FROM image:42 AS name
+#^^ keyword.control.dockerfile
+#             ^^ keyword.control.dockerfile
+#                ^^^^ entity.name.stage.dockerfile
+
+FROM image:42 \
+#             ^ punctuation.separator.continuation.line.dockerfile
+     AS name
+#    ^^ keyword.control.dockerfile
+#       ^^^^ entity.name.stage.dockerfile
