@@ -129,6 +129,7 @@ FROM image:42 AS name
 
 FROM image:42 \
 #             ^ punctuation.separator.continuation.line.dockerfile
+
      AS name
 #    ^^ keyword.control.dockerfile
 #       ^^^^ entity.name.stage.dockerfile
