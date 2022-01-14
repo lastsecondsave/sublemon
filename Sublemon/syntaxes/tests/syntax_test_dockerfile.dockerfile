@@ -77,11 +77,16 @@ ENV ver'si'o"n"=${VERSION}
 #      ^^^^ string.quoted.single.dockerfile
 #           ^^^ string.quoted.double.dockerfile
 
+ARG HOME=${xxx:+'yyy zz yyy'}
+#             ^^ keyword.operator.assignment.dockerfile
+#               ^^^^^^^^^^^^ string.quoted.single.dockerfile
+
 ARG message="\
      hello\n\
 #         ^^ string.quoted.double.dockerfile constant.character.escape.dockerfile
-     world"
-#    ^^^^^^ string.quoted.double.dockerfile
+     ${world}"
+#    ^^^^^^^^ -string.quoted.double.dockerfile meta.interpolation.parameter.dockerfile
+#            ^ string.quoted.double.dockerfile
 
 ENV message='\n\n\n\
 #           ^^^^^^^ string.quoted.single.dockerfile -constant.character.escape.dockerfile
@@ -93,10 +98,21 @@ LABEL com.example.vendor="ACME Incorporated"
 #     ^^^^^^^^^^^^^^^^^^ variable.other.readwrite.dockerfile
 
 CMD ["sudo", "apt", "update"]
-#   ^^^^^^^^^^^^^^^^^^^^^^^^^ meta.json.dockerfile source.json
+#   ^ punctuation.section.json-sequence.begin.dockerfile
+#                           ^ punctuation.section.json-sequence.end.dockerfile
+#          ^ punctuation.separator.json-sequence.dockerfile
+#    ^^^^^^ string.quoted.double.dockerfile
+#            ^^^^^ string.quoted.double.dockerfile
+
+SHELL ["powershell", \
+       "-command"]
+#      ^^^^^^^^^^^ meta.json-sequence.dockerfile
 
 CMD sudo apt update
 #   ^^^^^^^^^^^^^^^ meta.shell-command.dockerfile source.shell.bash
+
+CMD \[ -n $HOME ] && echo 1
+#   ^^^^^^^^^^^^^^^^^^^^^^^ meta.shell-command.dockerfile
 
 ONBUILD CMD apt update
 #^^^^^^ storage.type.onbuild.dockerfile
@@ -116,7 +132,7 @@ HEALTHCHECK --interval=5m --timeout=3s \
 
 HEALTHCHECK --interval=5m --timeout=3s CMD ["check"]
 #                                      ^^^ keyword.control.dockerfile
-#                                          ^^^^^^^^^ meta.json.dockerfile source.json
+#                                          ^^^^^^^^^ meta.json-sequence.dockerfile
 
 FROM image:42
 #^^ keyword.control.dockerfile
@@ -127,9 +143,23 @@ FROM image:42 AS name
 #             ^^ keyword.control.dockerfile
 #                ^^^^ entity.name.stage.dockerfile
 
-FROM image:42 \
-#             ^ punctuation.separator.continuation.line.dockerfile
+FROM ${FROM}:42 \
+#               ^ punctuation.separator.continuation.line.dockerfile
+#           ^ punctuation.separator.dockerfile
+#    ^^^^^^^ meta.interpolation.parameter.dockerfile
 
      AS name
 #    ^^ keyword.control.dockerfile
 #       ^^^^ entity.name.stage.dockerfile
+
+COPY file.txt ${OTHER} dir/${BUILD}/file.txt
+#^^^ keyword.control.dockerfile
+#             ^^^^^^^^ meta.interpolation.parameter.dockerfile
+#                          ^^^^^^^^ meta.interpolation.parameter.dockerfile
+
+COPY ["file with space.txt", "dir/file.txt"]
+#    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.json-sequence.dockerfile
+#^^^ keyword.control.dockerfile
+
+WORKDIR ${HOME}/app
+#       ^^^^^^^ meta.interpolation.parameter.dockerfile

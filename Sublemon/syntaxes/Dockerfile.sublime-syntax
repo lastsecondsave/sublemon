@@ -12,7 +12,7 @@ contexts:
     - match: (\\)\n
       captures:
         1: punctuation.separator.continuation.line.dockerfile
-    - match: ^\s*(#).*\n
+    - match: ^\s*(#).*(?:\n|$)
       scope: comment.line.dockerfile
       captures:
         1: punctuation.definition.comment.dockerfile
@@ -73,32 +73,44 @@ contexts:
     - match: (?i)(SHELL)(?=\s|$)
       captures:
         1: keyword.control.dockerfile
-      set: json-command
+      set: json-sequence
 
     - match: (?i)(FROM)(?=\s|$)
       captures:
         1: keyword.control.dockerfile
       set: from-instruction
 
-    - match: (?i)(ADD|COPY|WORKDIR|USER|EXPOSE|VOLUME|STOPSIGNAL)(?=\s|$)
+    - match: (?i)(ADD|COPY)(?=\s|$)
       captures:
         1: keyword.control.dockerfile
-      pop: 1
+      set: copy-instruction
+
+    - match: (?i)(EXPOSE|STOPSIGNAL|USER|VOLUME|WORKDIR)(?=\s|$)
+      captures:
+        1: keyword.control.dockerfile
+      set:
+        - include: escapes
+        - include: variables
+        - include: pop-on-eol
 
   from-instruction:
-    - match: ([^\s:@]+)(?:([:@])(\S+))?
-      captures:
-        2: punctuation.separator.dockerfile
+    - include: pop-on-eol
+    - match: (?=\S)
       set:
-        - match: (?i)AS(?=\s|$)
-          scope: keyword.control.dockerfile
+        - match: "[:@]"
+          scope: punctuation.separator.dockerfile
+        - include: escapes
+        - include: variables
+        - match: (?=\s)
           set:
-            - match: \w+
-              scope: entity.name.stage.dockerfile
-              pop: 1
-            - include: instruction-end
-        - include: instruction-end
-    - include: instruction-end
+            - match: (?i)AS(?=\s|$)
+              scope: keyword.control.dockerfile
+              set:
+                - match: \w+
+                  scope: entity.name.stage.dockerfile
+                  pop: 1
+                - include: pop-otherwise
+            - include: pop-otherwise
 
   heathcheck-instruction:
     - match: (?i)NONE(?=\s|$)
@@ -109,9 +121,15 @@ contexts:
       set: json-or-shell-command
     - include: pop-on-eol
 
-  instruction-end:
+  copy-instruction:
+    - match: (?=\[)
+      set: json-sequence
+    - match: (?=\S)
+      set:
+        - include: variables
+        - include: escapes
+        - include: pop-on-eol
     - include: pop-on-eol
-    - include: pop-anyway
 
   pop-on-eol:
     - match: (?=\n)
@@ -129,7 +147,8 @@ contexts:
     - match: (?=\s)
       pop: 2
 
-  pop-anyway:
+  pop-otherwise:
+    - include: pop-on-eol
     - match: (?=\S)
       pop: 1
 
@@ -139,19 +158,23 @@ contexts:
 
   json-or-shell-command:
     - match: (?=\[)
-      set: json-command
+      set: json-sequence
     - match: (?=\S)
       set: shell-command
-    - include: instruction-end
-
-  json-command:
-    - meta_content_scope: meta.json.dockerfile
     - include: pop-on-eol
 
-    - match: (?=\[)
-      embed: scope:source.json#array
-      embed_scope: source.json
-      escape: (?<=])
+  json-sequence:
+    - match: \[
+      scope: punctuation.section.json-sequence.begin.dockerfile
+      push:
+        - meta_scope: meta.json-sequence.dockerfile
+        - match: \]
+          scope: punctuation.section.json-sequence.end.dockerfile
+          pop: 2
+        - include: pop-2-on-eol
+        - include: double-quoted-string
+        - match: ","
+          scope: punctuation.separator.json-sequence.dockerfile
 
   shell-command:
     - meta_content_scope: meta.shell-command.dockerfile
@@ -174,12 +197,12 @@ contexts:
           - match: ""
             set:
               - meta_content_scope: meta.value.dockerfile
-              - include: quoted-string
+              - include: quoted-strings
               - include: escapes
               - include: variables
               - include: pop-2-on-space
         - - meta_content_scope: variable.other.readwrite.dockerfile
-          - include: quoted-string
+          - include: quoted-strings
           - include: escapes
           - include: variables
           - match: (?=\s)
@@ -204,7 +227,7 @@ contexts:
             - include: variables
             - include: pop-immediately
 
-  quoted-string:
+  quoted-strings:
     - include: double-quoted-string
     - match: \'
       scope: punctuation.definition.string.begin.dockerfile
@@ -232,6 +255,14 @@ contexts:
         - include: pop-on-eol
         - match: \w+
           scope: variable.other.readwrite.dockerfile
+        - match: ":[+-]"
+          scope: keyword.operator.assignment.dockerfile
+          push:
+            - include: escapes
+            - include: quoted-strings
+            - include: pop-2-on-space
+            - match: (?=\})
+              pop: 1
     - match: (\$)(\w+)
       scope: meta.interpolation.parameter.dockerfile
       captures:
