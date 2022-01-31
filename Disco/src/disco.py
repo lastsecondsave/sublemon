@@ -73,6 +73,7 @@ PUNCTUATION = Style(DARK_ORANGE)
 ACCESSOR = Style(LIGHT_VIOLET)
 COMMENT = Style(GRAY)
 COMMENT_HIGHLIGHT = Style(WHITE)
+COMMENT_DIM = Style(FADED_VIOLET)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
 TAG = Style(BLUE)
@@ -329,26 +330,24 @@ rec(META,
     'punctuation.definition.annotation',
     'variable.annotation')
 rec(COMMENT_HIGHLIGHT,
-    'meta.block-tag keyword')
+    'meta.tag.block entity.name.tag.documentation')
 rec(COMMENT_HIGHLIGHT + ITALIC,
-    'meta.block-tag variable.parameter')
+    'comment.block.documentation variable.parameter')
+rec(COMMENT_DIM,
+    'meta.tag.inline & (entity.name | punctuation.definition)')
 rec(ITALIC,
-    'text.html.javadoc markup.underline.link')
-rec(SPECIAL,
-    'meta.class.body.anonymous.java punctuation.section.braces')
+    'text.html.javadoc markup.underline.link',
+    'meta.annotation.parameters variable.parameter')
 rec(STORAGE,
+    'meta.import entity.name.class',
     'support.class',
-    'keyword.operator.wildcard')
+    'variable.language.wildcard.asterisk')
 rec(OPERATOR,
-    'storage.type.function.anonymous')
-rec(BG_PUNCTUATION,
+    'keyword.declaration.function.arrow',
     'storage.modifier.array')
-rec(FADED_GRAY,
-    'meta.inline-tag & (keyword.other | punctuation.section)')
-rec(FADED_VIOLET,
-    'meta.tag')
 rec(FOREGROUND,
-    'entity.name.constant')
+    'entity.name.{constant|namespace}',
+    'meta.import entity.name.function')
 
 src('clojure')
 rec(TAG + ITALIC, 'constant.other.keyword')
@@ -386,7 +385,6 @@ rec(FOREGROUND,
 src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
-    'meta.interpolation.parameter keyword.operator',
     'keyword.operator.{end-of-options|expansion|herestring}',
     'keyword.operator.assignment.{pipe|redirection}')
 rec(STORAGE,
