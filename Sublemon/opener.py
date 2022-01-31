@@ -83,11 +83,12 @@ class OpenFileUnderCursorCommand(TextCommand):
         if not project_file_name:
             return
 
+        project_dir = Path(project_file_name).parent
+        self.roots.append(project_dir)
+
         roots = project_pref(window, "opener_roots")
         if not roots:
             return
-
-        project_dir = Path(project_file_name).parent
 
         for root in roots:
             root = Path(root)
