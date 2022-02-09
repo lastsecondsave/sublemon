@@ -8,7 +8,7 @@ from . import (
     POPEN_CREATION_FLAGS,
     RUNNING_ON_LINUX,
     RUNNING_ON_WINDOWS,
-    find_in_file_parents,
+    find_in_parent_directories,
     indent_params,
     view_cwd,
 )
@@ -47,7 +47,7 @@ class Prettier:
         return self.FILES
 
     def cmd(self, view, scope):
-        config = find_in_file_parents(view, ".prettierrc")
+        config = find_in_parent_directories(view, ".prettierrc")
 
         binary = "prettier.cmd" if RUNNING_ON_WINDOWS else "prettier"
         cmd = [binary, f"--stdin-filepath={self.FILES[scope]}"]
@@ -79,7 +79,7 @@ class ClangFormat:
         return self.FILES
 
     def cmd(self, view, scope):
-        config = find_in_file_parents(view, ".clang-format")
+        config = find_in_parent_directories(view, ".clang-format")
 
         cmd = ["clang-format", f"--assume-filename={self.FILES[scope]}"]
 
