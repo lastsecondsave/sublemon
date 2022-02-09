@@ -38,6 +38,9 @@ class CommandFineTuning(EventListener):
             setting = args["setting"]
             show_setting_status(setting, view.settings().get(setting))
 
+        elif command_name == "set_setting":
+            show_setting_status(args["setting"], args["value"])
+
         elif command_name == "swap_with_mark":
             location = view.sel()[0]
             view.show(location)
@@ -190,10 +193,11 @@ class ToggleLigaturesCommand(WindowCommand):
         show_setting_status("ligatures", enable)
 
 
-def show_setting_status(setting, active):
-    status = "ON" if active else "OFF"
+def show_setting_status(setting, value):
+    if isinstance(value, bool):
+        value = "ON" if value else "OFF"
     setting = setting.replace("_", " ").title()
-    sublime.status_message(f"{setting}: {status}")
+    sublime.status_message(f"{setting}: {value}")
 
 
 class StreamlineRegionsCommand(TextCommand):
