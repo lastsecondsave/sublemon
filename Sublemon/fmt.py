@@ -85,7 +85,17 @@ class ClangFormat:
 
         if not config:
             _, tab_width = indent_params(view)
-            cmd.append(f"-style={{BasedOnStyle: Google, IndentWidth: {tab_width}}}")
+            style = ", ".join(
+                [
+                    "BasedOnStyle: Google",
+                    "ColumnLimit: 88",
+                    f"IndentWidth: {tab_width}",
+                    f"ContinuationIndentWidth: {tab_width * 2}",
+                    f"AccessModifierOffset: {int(tab_width / 2) * -1}",
+                    "IncludeBlocks: Preserve",
+                ]
+            )
+            cmd.append(f"--style={{{style}}}")
 
         return (cmd, False)
 
