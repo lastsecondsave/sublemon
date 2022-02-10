@@ -60,6 +60,8 @@ def mute_files():
     mute(PACKAGES / "CMake" / "CMake.sublime-completions")
     mute(PACKAGES / "CMake" / "CMakeVariables.sublime-completions")
 
+    mute(PACKAGES / "Makefile" / "Make.sublime-build")
+
     mute(PACKAGES / "C++" / "C++ Single File.sublime-build")
 
     mute(PACKAGES / "Go" / "Go.sublime-completions")

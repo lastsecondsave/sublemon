@@ -1,0 +1,53 @@
+%YAML 1.2
+---
+name: GCC Output
+scope: text.output.make.gcc
+
+contexts:
+  main:
+    - include: cmake
+
+    - match: '^(.+?):(\d+):(\d+):'
+      captures:
+        1: entity.name.filename
+        2: constant.numeric.line
+        3: constant.numeric.column
+      push: [listing, message]
+
+  message:
+    - match: $
+      pop: 1
+    - match: "(?:((?:fatal )?error)|(warning)|(note)):"
+      captures:
+        1: constant.other.indicator.error
+        2: constant.other.indicator.warning
+        3: constant.other.indicator.note
+    - match: ‘.+?’
+      scope: string.quoted
+
+  listing:
+    - match: '^\s+([+]{3}) (\|)(.*)$'
+      captures:
+        1: string
+        2: punctuation.formatting
+        3: string
+    - match: '^\s+(\|)\s+(~*)(\^)(~*)$'
+      captures:
+        1: punctuation.formatting
+        2: punctuation.formatting
+        3: punctuation.definition.marker
+        4: punctuation.formatting
+    - match: '^\s+(\d+)? (\|).*$'
+      captures:
+        1: constant.numeric.line-number
+        2: punctuation.formatting
+    - match: "^"
+      pop: 1
+
+  cmake:
+    - match: '\[[\d ]{3}%\] .*'
+      scope: comment.log
+    - match: 'make(?:\[\d+\])?: .*'
+      scope: comment.log
+    - match: 'Scanning dependencies of target .*'
+      scope: comment.log

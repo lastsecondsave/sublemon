@@ -550,6 +550,7 @@ rec(SPECIAL, 'support.type.exception')
 rec(CRIMSON, 'constant.other.indicator.error')
 rec(ORANGE, 'constant.other.indicator.warning')
 rec(GREEN, 'constant.other.indicator.success')
+rec(PURPLE, 'constant.other.indicator.note')
 rec(FOREGROUND, 'constant.numeric.date')
 
 generate()

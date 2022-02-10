@@ -5,7 +5,7 @@
     "&& \"$file_path/$file_base_name\""
   ],
   "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
-  "syntax": "Generic Build Output",
+  "syntax": "GCC Output",
 
   "variants": [
     {

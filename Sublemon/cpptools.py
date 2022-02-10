@@ -1,4 +1,4 @@
-from .chimney import ChimneyBuildListener, ChimneyCommand
+from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
 from .pytools import setup_python_exec
 
 
@@ -29,3 +29,11 @@ class CpplintBuildListener(ChimneyBuildListener):
 
     def on_complete(self, ctx):
         ctx.print_lines(self.output_lines)
+
+
+class MakeCommand(ChimneyCommand):
+    def setup(self, build):
+        build.cmd.appendleft("make", "-j")
+
+        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+        build.syntax = "GCC Output"
