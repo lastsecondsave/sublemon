@@ -10,6 +10,7 @@ from . import (
     RUNNING_ON_WINDOWS,
     find_in_parent_directories,
     indent_params,
+    sad_message,
     view_cwd,
 )
 
@@ -100,6 +101,27 @@ class ClangFormat:
         return (cmd, False)
 
 
+class CMakeFormat:
+    def supported_scopes(self):
+        return ("source.cmake",)
+
+    def cmd(self, view, scope):
+        config = find_in_parent_directories(view, ".cmake-format")
+
+        cmd = ["cmake-format", "-"]
+
+        if not config:
+            _, tab_width = indent_params(view)
+            cmd += [
+                "--line-width=88",
+                f"--tab-size={tab_width}",
+                "--enable-markup=false",
+                "--max-subgroups-hwrap=3",
+            ]
+
+        return (cmd, False)
+
+
 def prepare_formatters(*formatters):
     mapping = {}
 
@@ -114,9 +136,9 @@ class FmtCommand(TextCommand):
     FORMATTERS = prepare_formatters(
         Prettier(),
         ClangFormat(),
+        CMakeFormat(),
         Formatter("source.rust", "rustfmt"),
         Formatter("source.python", ["black", "-"]),
-        Formatter("source.cmake", ["cmake-format", "-"]),
         Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-sr", "-"]),
         Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
@@ -152,6 +174,7 @@ class FmtCommand(TextCommand):
                 replacement = process.stdout
                 self.view.run_command("replace_with_formatted", {"text": replacement})
             else:
+                sad_message(f"Failed to run program: {cmd}")
                 sublime.error_message(process.stderr.strip())
 
         sublime.set_timeout_async(run_formatter, 0)
