@@ -92,7 +92,7 @@ class ClangFormat:
                     "ColumnLimit: 88",
                     f"IndentWidth: {tab_width}",
                     f"ContinuationIndentWidth: {tab_width * 2}",
-                    f"AccessModifierOffset: {int(tab_width / 2) * -1}",
+                    f"AccessModifierOffset: {-tab_width}",
                     "IncludeBlocks: Preserve",
                 ]
             )
