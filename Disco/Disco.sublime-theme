@@ -248,7 +248,7 @@
     {
       "class": "sidebar_label",
       "parents": [{"class": "file_system_entry", "attributes": ["ignored"]}],
-      "color": "color(var(label_gray) alpha(0.6))"
+      "color": "color(var(label_gray) a(60%))"
     },
 
     // Tabs
@@ -727,7 +727,7 @@
       "font.size": "0.9rem",
       "font.face": "var(font_face)",
       "font.italic": false,
-      "border_color": "color(var(CLEAR_WHITE) a(0.2))"
+      "border_color": "color(var(CLEAR_WHITE) a(20%))"
     },
 
     // Panels
