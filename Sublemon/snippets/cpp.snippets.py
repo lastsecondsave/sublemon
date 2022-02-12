@@ -2,21 +2,28 @@ from snippets import Icon, generate
 
 snippets = {
     "pl": "std::cout << $SEL0 << std::endl;",
-    "dc": ("doc comment", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
+    "dc": ("doc comment", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
     "main": ("main", "int main(${1:int argc, char *argv[]}) {}"),
-    "fun": ("function", "${1:void} ${2:run}($3) {}"),
+    "fn": ("function", "${1:void} ${2:run}($3) {}"),
     ";;": ("i = 0; i < imax; i++", "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:$2++}"),
-    "in": "#include <$SEL0>",
+    "inc": ("#include <header>", "#include <$SEL0>"),
+    "inq": ('#include "header"', '#include "$SEL0"'),
+    "ifd": ("#ifdef X ... #endif", "#ifdef $1<->#endif"),
 }
 
 completions = {
     ("Keyword", Icon.KEYWORD): [
         "break",
         "continue",
+        "default",
         "delete",
+        "namespace",
         "new",
         "return",
+        "template",
         "throw",
+        "typedef",
+        "using",
     ],
     ("Modifier", Icon.ACCESS_MODIFIER): [
         "private",
@@ -42,6 +49,7 @@ completions = {
     ],
     ("Function", Icon.FUNCTION): [
         "defined",
+        "make_shared",
         "sizeof",
     ],
     ("Block", Icon.BLOCK): [
@@ -71,7 +79,6 @@ completions = {
         "auto",
         "shared_ptr",
         "string",
-        "typedef",
         "unique_ptr",
         "unordered_map",
         "unordered_set",
