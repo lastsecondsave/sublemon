@@ -94,6 +94,7 @@ class ClangFormat:
                     f"ContinuationIndentWidth: {tab_width * 2}",
                     f"AccessModifierOffset: {-tab_width}",
                     "IncludeBlocks: Preserve",
+                    "KeepEmptyLinesAtTheStartOfBlocks: true",
                 ]
             )
             cmd.append(f"--style={{{style}}}")
