@@ -473,7 +473,8 @@ rec(BG_PUNCTUATION,
 rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
-    'keyword.other.directive.yaml')
+    'keyword.other.directive.yaml',
+    'meta.mapping.key meta.string string')
 rec(META,
     'variable.other.alias',
     'entity.name.other.anchor',
