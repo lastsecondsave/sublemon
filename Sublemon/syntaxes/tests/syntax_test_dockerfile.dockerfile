@@ -19,6 +19,15 @@ RUN apt update
  && apt install sudo
 #^^^^^^^^^^^^^^^^^^^ -meta.shell-command.dockerfile -source.shell.bash
 
+RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret
+#   ^^^^^^^ variable.parameter.flag.dockerfile
+#           ^^^^ constant.language.flag.attribute-name.dockerfile
+#               ^ keyword.operator.assignment.flag.dockerfile
+#                      ^ punctuation.separator.arguments.dockerfile
+#                       ^^ constant.language.flag.attribute-name.dockerfile
+#                         ^ keyword.operator.assignment.flag.dockerfile
+#                                    shell.bash
+
 ENV ver=10.01
 #^^ keyword.control.dockerfile
 #   ^^^^^^^^^ meta.declaration.variable.dockerfile
@@ -125,6 +134,11 @@ HEALTHCHECK NONE
 
 HEALTHCHECK --interval=5m --timeout=3s \
 #^^^^^^^^^^ keyword.control.dockerfile
+#           ^^^^^^^^^^ variable.parameter.flag.dockerfile
+#                     ^ keyword.operator.assignment.flag.dockerfile
+#                          ^^^^^^^^ variable.parameter.flag.dockerfile
+#                                  ^ keyword.operator.assignment.flag.dockerfile
+
   CMD curl -f http://localhost/ || exit 1
 # ^^^ keyword.control.dockerfile
 #     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.shell-command.dockerfile source.shell.bash
@@ -137,6 +151,12 @@ HEALTHCHECK --interval=5m --timeout=3s CMD ["check"]
 FROM image:42
 #^^ keyword.control.dockerfile
 #         ^ punctuation.separator.dockerfile
+
+FROM --platform=amd64 image:42
+#^^ keyword.control.dockerfile
+#    ^^^^^^^^^^ variable.parameter.flag.dockerfile
+#              ^ keyword.operator.assignment.flag.dockerfile
+#                          ^ punctuation.separator.dockerfile
 
 FROM image:42 AS name
 #^^ keyword.control.dockerfile
@@ -160,6 +180,13 @@ COPY file.txt ${OTHER} dir/${BUILD}/file.txt
 COPY ["file with space.txt", "dir/file.txt"]
 #    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.json-sequence.dockerfile
 #^^^ keyword.control.dockerfile
+
+COPY --chown=user:group file.txt dir/file.txt
+#    ^^^^^^^ variable.parameter.flag.dockerfile
+
+COPY --chown=user:group ["file.txt", "dir/file.txt"]
+#    ^^^^^^^ variable.parameter.flag.dockerfile
+#                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.json-sequence.dockerfile
 
 WORKDIR ${HOME}/app
 #       ^^^^^^^ meta.interpolation.parameter.dockerfile

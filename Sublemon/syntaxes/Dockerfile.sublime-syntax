@@ -41,7 +41,7 @@ contexts:
     - match: (?i)(RUN)(?=\s|$)
       captures:
         1: keyword.control.dockerfile
-      set: shell-command
+      set: run-instruction
 
     - match: (?i)(ENV|ARG)\s+((\w+)\s.*)
       captures:
@@ -59,12 +59,6 @@ contexts:
       captures:
         1: keyword.control.dockerfile
       set: json-or-shell-command
-
-    - match: (?i)(HEALTHCHECK)\s+(NONE)
-      captures:
-        1: keyword.control.dockerfile
-        2: constant.language.dockerfile
-      pop: 1
 
     - match: (?i)(HEALTHCHECK)(?=\s|$)
       scope: keyword.control.dockerfile
@@ -95,6 +89,7 @@ contexts:
 
   from-instruction:
     - include: pop-on-eol
+    - include: flags
     - match: (?=\S)
       set:
         - match: "[:@]"
@@ -112,6 +107,12 @@ contexts:
                 - include: pop-otherwise
             - include: pop-otherwise
 
+  run-instruction:
+    - include: pop-on-eol
+    - include: flags
+    - match: (?=\S)
+      set: shell-command
+
   heathcheck-instruction:
     - match: (?i)NONE(?=\s|$)
       scope: constant.language.dockerfile
@@ -119,9 +120,11 @@ contexts:
     - match: (?i)CMD(?=\s|$)
       scope: keyword.control.dockerfile
       set: json-or-shell-command
+    - include: flags
     - include: pop-on-eol
 
   copy-instruction:
+    - include: flags
     - match: (?=\[)
       set: json-sequence
     - match: (?=\S)
@@ -268,3 +271,19 @@ contexts:
       captures:
         1: punctuation.definition.variable.dockerfile
         2: variable.other.readwrite.dockerfile
+
+  flags:
+    - match: --\w+
+      scope: variable.parameter.flag.dockerfile
+      push:
+        - meta_scope: meta.flag.dockerfile
+        - match: =
+          scope: keyword.operator.assignment.flag.dockerfile
+        - match: (\w+)(=)
+          captures:
+            1: constant.language.flag.attribute-name.dockerfile
+            2: keyword.operator.assignment.flag.dockerfile
+        - match: ','
+          scope: punctuation.separator.arguments.dockerfile
+        - include: pop-on-space
+
