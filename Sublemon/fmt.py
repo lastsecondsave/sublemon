@@ -48,7 +48,7 @@ class Prettier:
         return self.FILES
 
     def cmd(self, view, scope):
-        config = find_in_parent_directories(view, ".prettierrc")
+        config = find_in_parent_directories(view, ".prettierrc", ".prettierrc.json")
 
         binary = "prettier.cmd" if RUNNING_ON_WINDOWS else "prettier"
         cmd = [binary, f"--stdin-filepath={self.FILES[scope]}"]
