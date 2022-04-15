@@ -11,6 +11,7 @@ generate(
             "add_library",
             "add_subdirectory",
             "target_compile_options",
+            "target_compile_definitions",
             "target_include_directories",
             "target_link_directories",
             "target_link_libraries",

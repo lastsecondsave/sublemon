@@ -3,7 +3,7 @@ from snippets import Icon, generate
 snippets = {
     "pl": "std::cout << $SEL0 << std::endl;",
     "dc": ("doc comment", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
-    "main": ("main", "int main(${1:int argc, char *argv[]}) {}"),
+    "main": ("main", "int main(${1:int argc, char* argv[]}) {}"),
     "fn": ("function", "${1:void} ${2:run}($3) {}"),
     ";;": ("i = 0; i < imax; i++", "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:$2++}"),
     "inc": ("#include <header>", "#include <$SEL0>"),
