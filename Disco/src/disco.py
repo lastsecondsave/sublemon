@@ -515,7 +515,7 @@ rec(PUNCTUATION,
     'punctuation.definition.{blockquote|image|link|list_item}',
     'markup.list.numbered.bullet')
 rec(BG_PUNCTUATION,
-    'punctuation.definition.{bold|italic}',
+    'punctuation.definition.{attributes|bold|constant|italic|metadata}',
     'meta.link.inet punctuation.definition.link')
 rec(COMMENT,
     'meta.code-fence.definition')
