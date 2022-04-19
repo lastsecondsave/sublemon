@@ -54,12 +54,12 @@ completions = {
     ],
     ("Block", Icon.BLOCK): [
         "catch (${1:const std::exception& e}) {}",
-        "class $1 {}",
+        "class $1 {};",
         "else {}",
         "for ($1) {}",
         "if ($1) {}",
         "namespace $1 {}",
-        "struct $1 {}",
+        "struct $1 {};",
         "switch ($1) {}",
         "try {}",
         "while ($1) {}",
@@ -112,4 +112,9 @@ completions = {
     ],
 }
 
-generate("source.c++", snippets, completions)
+
+def expand_braces_with_semicolon(content):
+    return content[:-3] + "{\n\t$0\n};" if content.endswith(" {};") else content
+
+
+generate("source.c++", snippets, completions, mutators=(expand_braces_with_semicolon,))
