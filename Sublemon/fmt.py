@@ -74,32 +74,47 @@ class ClangFormat:
         "source.objc++": "file.mm",
     }
 
-    shell = False
-
     def supported_scopes(self):
         return self.FILES
 
     def cmd(self, view, scope):
-        config = find_in_parent_directories(view, ".clang-format")
-
         cmd = ["clang-format", f"--assume-filename={self.FILES[scope]}"]
+        config = None
+
+        if scope != "source.java":
+            config = find_in_parent_directories(view, ".clang-format")
 
         if not config:
-            _, tab_width = indent_params(view)
-            style = ", ".join(
-                [
-                    "BasedOnStyle: Google",
-                    "ColumnLimit: 88",
-                    f"IndentWidth: {tab_width}",
-                    f"ContinuationIndentWidth: {tab_width * 2}",
-                    f"AccessModifierOffset: {-tab_width}",
-                    "IncludeBlocks: Preserve",
-                    "KeepEmptyLinesAtTheStartOfBlocks: true",
-                ]
-            )
+            style = ", ".join(self.generate_style(view, scope))
             cmd.append(f"--style={{{style}}}")
 
         return (cmd, False)
+
+    def generate_style(self, view, scope):
+        _, tab_width = indent_params(view)
+
+        common = [
+            "ColumnLimit: 88",
+            f"IndentWidth: {tab_width}",
+            f"ContinuationIndentWidth: {tab_width * 2}",
+        ]
+
+        if scope == "source.java":
+            return common + [
+                "BreakAfterJavaFieldAnnotations: true",
+                "AllowShortFunctionsOnASingleLine: Empty",
+                "AllowShortIfStatementsOnASingleLine: Never",
+                "AllowShortLoopsOnASingleLine: false",
+                "AlignAfterOpenBracket: false",
+                "AlignOperands: DontAlign",
+                "AllowAllArgumentsOnNextLine: true",
+            ]
+
+        return common + [
+            "BasedOnStyle: Google",
+            "IncludeBlocks: Preserve",
+            "KeepEmptyLinesAtTheStartOfBlocks: true",
+        ]
 
 
 class CMakeFormat:
