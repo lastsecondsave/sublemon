@@ -1,12 +1,12 @@
 from snippets import Icon, generate
 
-getter = r"""
+getter = R"""
 public ${1:String} ${1/boolean|(.*)/(?1:get:is)/}${2/./\u$0/}() {
     return ${2:property};
 }
 """
 
-setter = r"""
+setter = R"""
 public void set${2/./\u$0/}(${1:String} ${2/.*/$0/}) {
     this.${2:property} = ${2/.*/$0/};
 }
@@ -19,7 +19,7 @@ snippets = {
         "static final ${1:String} ${2:CONSTANT} = ${3:null};",
     ),
     "ima": ("import *", "import $0.*;"),
-    "fun": ("function", "${1:void} ${2:run}($3) {}"),
+    "fn": ("method", "${1:void} ${2:run}($3) {}"),
     "main": ("main", "public static void main(String[] args) {}"),
     "tt": ("this.x = x", "this.$1 = $1;"),
     "te": ("throw Exception", "throw new ${1:RuntimeException}($2);"),
@@ -32,8 +32,8 @@ snippets = {
         "for iterator",
         "for (Iterator<$1> ${2:itr} = ${3:list}.iterator(); $2.hasNext(); ) {}",
     ),
-    "jd": ("javadoc", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
-    "td": ("TODO", "// TODO: "),
+    "trr": ("try with resources", "try ($1) {}"),
+    "jd": ("javadoc", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
     "get": ("getter", getter),
     "geto": (
         "getter with optional",

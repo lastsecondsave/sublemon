@@ -65,5 +65,9 @@ generate(
     snippets={
         "cf": ("code fence", "```$1-->$SEL0-->```"),
         "ln": ("link", "[$SEL1]($2)"),
+        "bd": ("bold", "**$SEL1**"),
+        "it": ("italic", "_$SEL1_"),
     },
 )
+
+generate("source.makefile", snippets={"ph": ".PHONY: "})
