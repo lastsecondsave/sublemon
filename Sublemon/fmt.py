@@ -154,7 +154,7 @@ class FmtCommand(TextCommand):
         ClangFormat(),
         CMakeFormat(),
         Formatter("source.rust", "rustfmt"),
-        Formatter("source.python", ["black", "-"]),
+        Formatter("source.python", "isort --profile black - | black -", shell=True),
         Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-sr", "-"]),
         Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
