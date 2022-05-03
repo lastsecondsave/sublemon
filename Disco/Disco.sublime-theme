@@ -50,8 +50,8 @@
 
     {
       "class": "title_bar",
-      "fg": "var(form_label)",
-      "bg": "var(outer_gray)",
+      "fg": "color(var(form_label) l(- 10%))",
+      "bg": "color(var(outer_dark) blend(var(outer_gray) 60%))",
       "style": "dark"
     },
 
