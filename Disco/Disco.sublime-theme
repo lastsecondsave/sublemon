@@ -32,6 +32,7 @@
     "bottom_bg": "var(outer_gray)",
     "sidebar_bg": "var(outer_dark)",
     "popup_bg": "var(panel_black)",
+    "titlebar_bg": "color(var(outer_dark) blend(var(outer_gray) 40%))",
 
     "scrollbar_tint": "color(var(CLEAR_WHITE) alpha(60%))",
     "sidebar_icon_tint": "color(var(label_gray) l(- 15%))",
@@ -51,7 +52,7 @@
     {
       "class": "title_bar",
       "fg": "color(var(form_label) l(- 10%))",
-      "bg": "color(var(outer_dark) blend(var(outer_gray) 60%))",
+      "bg": "var(titlebar_bg)",
       "style": "dark"
     },
 
@@ -73,19 +74,18 @@
     },
     {
       "class": "tree_row",
-      "attributes": ["!hover"],
-      "layer0.tint": "var(sidebar_bg)",
-      "layer0.opacity": 1.0,
+      "layer0.tint": "var(panel_gray_dark)",
+      "layer0.opacity": 0.0,
     },
     {
       "class": "tree_row",
       "attributes": ["selectable", "hover", "!selected"],
-      "layer0.tint": "color(var(panel_gray) blenda(var(sidebar_bg) 10%))",
+      "layer0.opacity": 0.3,
     },
     {
       "class": "tree_row",
       "attributes": ["selected"],
-      "layer0.tint": "var(panel_gray_dark)",
+      "layer0.opacity": 1.0,
     },
     {
       "class": "sidebar_heading",
@@ -497,33 +497,33 @@
     },
     {
       "class": "mini_quick_panel_row",
-      "layer0.tint": "var(panel_gray)",
+      "layer0.tint": "var(panel_gray_dark)",
       "layer0.opacity": 0.0
     },
     {
       "class": "mini_quick_panel_row",
       "attributes": ["selected"],
-      "layer0.opacity": 0.3
+      "layer0.opacity": 1.0
     },
     {
       "class": "mini_quick_panel_row",
       "attributes": ["hover", "!selected"],
-      "layer0.opacity": 0.1
+      "layer0.opacity": 0.4
     },
     {
       "class": "quick_panel_row",
-      "layer0.tint": "var(panel_gray)",
+      "layer0.tint": "var(panel_gray_dark)",
       "layer0.opacity": 0.0
     },
     {
       "class": "quick_panel_row",
       "attributes": ["selected"],
-      "layer0.opacity": 0.3
+      "layer0.opacity": 1.0
     },
     {
       "class": "quick_panel_row",
       "attributes": ["hover", "!selected"],
-      "layer0.opacity": 0.1
+      "layer0.opacity": 0.4
     },
     {
       "class": "quick_panel_label",
@@ -555,7 +555,6 @@
     {
       "class": "quick_panel",
       "parents": [{"class": "switch_project_window"}],
-      "layer0.tint": "var(outer_dark)",
       "layer0.opacity": 1.0
     },
 
@@ -740,7 +739,7 @@
     {
       "class": "panel_control",
       "parents": [{"class": "switch_project_window"}],
-      "layer0.tint": "var(outer_gray)",
+      "layer0.tint": "var(titlebar_bg)",
     },
     {
       "class": "panel_grid_control",
