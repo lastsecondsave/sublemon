@@ -629,11 +629,6 @@
     },
     {
       "class": "table_row",
-      "attributes": ["hover", "!selected"],
-      "layer0.tint": "color(var(popup_bg) l(+ 2%))"
-    },
-    {
-      "class": "table_row",
       "attributes": ["selected"],
       "layer0.tint": "var(panel_blue)"
     },
