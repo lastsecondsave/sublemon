@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Maven Pom
-scope: text.xml source.maven.pom
+scope: source.maven.pom text.xml
 version: 2
 extends: Packages/XML/XML.sublime-syntax
 
