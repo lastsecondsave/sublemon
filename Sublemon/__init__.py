@@ -16,7 +16,13 @@ def pref(key, default=None):
     return settings.get(key, default)
 
 
-def project_pref(window, key):
+def project_pref(view_or_window, key):
+    window = (
+        view_or_window
+        if isinstance(view_or_window, sublime.Window)
+        else view_or_window.window()
+    )
+
     value = (window.project_data() or {}).get("settings", {}).get(key)
     if isinstance(value, str):
         return sublime.expand_variables(value, window.extract_variables())

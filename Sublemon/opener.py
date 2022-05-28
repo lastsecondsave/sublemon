@@ -1,7 +1,6 @@
 import os
 import re
 import tempfile
-from collections import deque
 from pathlib import Path
 
 import sublime
@@ -73,39 +72,27 @@ def reorder(folders):
 class OpenFileUnderCursorCommand(TextCommand):
     POSITION_PATTERN = re.compile(r"(?::\d+){0,2}$")
 
-    roots = None
-
-    def init(self):
-        self.roots = []
-        window = self.view.window()
-
-        project_file_name = window.project_file_name()
+    def project_roots(self):
+        project_file_name = self.view.window().project_file_name()
         if not project_file_name:
-            return
+            return []
 
         project_dir = Path(project_file_name).parent
-        self.roots.append(project_dir)
+        roots = [project_dir]
 
-        roots = project_pref(window, "opener_roots")
-        if not roots:
-            return
-
-        for root in roots:
+        for root in project_pref(self.view, "opener_roots") or []:
             root = Path(root)
-            if not root.is_absolute():
-                root = project_dir / root
+            roots.append(root if root.is_absolute() else project_dir / root)
 
-            if root.is_dir():
-                self.roots.append(root)
+        return roots
 
     def run(self, edit):
-        if self.roots is None:
-            self.init()
-
-        roots = deque(self.roots)
+        roots = []
 
         if file_name := self.view.file_name():
-            roots.appendleft(Path(file_name).parent)
+            roots.append(Path(file_name).parent)
+
+        roots += self.project_roots()
 
         files = []
         directories = []
