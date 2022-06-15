@@ -49,10 +49,13 @@ completions = {
         "break",
         "case",
         "continue",
-        "return",
-        "throw",
+        "extends",
+        "implements",
         "import",
         "package",
+        "return",
+        "throw",
+        "throws",
     ],
     ("Modifier", Icon.ACCESS_MODIFIER): [
         "final",
@@ -93,7 +96,10 @@ completions = {
         "void",
     ],
     ("Class", Icon.TYPE): [
+        "Exception",
         "Optional",
+        "HashMap",
+        "RuntimeException",
         "String",
     ],
     ("Constant", Icon.CONSTANT): [
