@@ -58,6 +58,16 @@ generate(
     snippets={
         "pl": "console.log($SEL0);",
     },
+    completions={
+        ("Block", Icon.BLOCK): [
+            "else {}",
+            "for ($1) {}",
+            "if ($1) {}",
+            "switch ($1) {}",
+            "while ($1) {}",
+            ("elif", "else if ($1) {}"),
+        ],
+    },
 )
 
 generate(
