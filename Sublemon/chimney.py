@@ -330,7 +330,7 @@ class BufferedPipe:
 def read_to_pipe(stream, pipe, on_close=None):
     fileno = stream.fileno()
 
-    while chunk := os.read(fileno, 2 ** 16):
+    while chunk := os.read(fileno, 2**16):
         pipe.write(chunk.decode("utf-8"))
 
     pipe.flush()
@@ -446,6 +446,7 @@ def start_process(cmd, env, cwd):
 def kill_process(process):
     if RUNNING_ON_WINDOWS:
         cmd = f"taskkill /T /F /PID {process.pid}"
+        # pylint: disable=consider-using-with
         subprocess.Popen(cmd, creationflags=subprocess.CREATE_NO_WINDOW)
     else:
         try:

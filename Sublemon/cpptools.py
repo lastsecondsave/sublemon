@@ -1,4 +1,4 @@
-from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
+from .chimney import ChimneyBuildListener, ChimneyCommand
 from .pytools import setup_python_exec
 
 

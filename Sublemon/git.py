@@ -1,15 +1,14 @@
 import datetime
 import re
-import subprocess
 from pathlib import Path
 
 import sublime
 from sublime_plugin import WindowCommand
 
 from . import (
-    POPEN_CREATION_FLAGS,
     active_view_contains_file,
     find_in_parent_directories,
+    start_process,
     view_cwd,
 )
 from .chimney import ChimneyBuildListener, ChimneyCommand
@@ -40,9 +39,7 @@ def find_dotgit(window, error_when_not_found=True):
 class GitGuiCommand(WindowCommand):
     def run(self):
         if dotgit := find_dotgit(self.window):
-            subprocess.Popen(
-                ["git", "gui"], cwd=dotgit.parent, creationflags=POPEN_CREATION_FLAGS
-            )
+            start_process(["git", "gui"], dotgit.parent)
 
 
 class GitEditExcludeCommand(WindowCommand):
@@ -63,11 +60,7 @@ class GitRevertFileCommand(WindowCommand):
             self.window.run_command("git_revert_file", args={"save": False})
             return
 
-        subprocess.Popen(
-            ["git", "checkout", view.file_name()],
-            cwd=view_cwd(view),
-            creationflags=POPEN_CREATION_FLAGS,
-        )
+        start_process(["git", "checkout", view.file_name()], view_cwd(view))
 
     def is_enabled(self):
         return active_view_contains_file(self.window)

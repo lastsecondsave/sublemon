@@ -122,7 +122,7 @@ class CMakeFormat:
     def supported_scopes(self):
         return ("source.cmake",)
 
-    def cmd(self, view, scope):
+    def cmd(self, view, _scope):
         config = find_in_parent_directories(view, ".cmake-format")
 
         cmd = ["cmake-format", "-"]
@@ -143,13 +143,13 @@ class PythonFormat:
     def supported_scopes(self):
         return ("source.python",)
 
-    def cmd(self, view, scope):
+    def cmd(self, view, _scope):
         use_isort = pref("fmt_isort", True, view=view)
 
         if use_isort:
             return ("isort --profile black - | black -", True)
-        else:
-            return (["black", "-"], False)
+
+        return (["black", "-"], False)
 
 
 def prepare_formatters(*formatters):
