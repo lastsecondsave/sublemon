@@ -10,6 +10,7 @@ from . import (
     RUNNING_ON_WINDOWS,
     find_in_parent_directories,
     indent_params,
+    pref,
     sad_message,
     view_cwd,
 )
@@ -138,6 +139,19 @@ class CMakeFormat:
         return (cmd, False)
 
 
+class PythonFormat:
+    def supported_scopes(self):
+        return ("source.python",)
+
+    def cmd(self, view, scope):
+        use_isort = pref("fmt_isort", True, view=view)
+
+        if use_isort:
+            return ("isort --profile black - | black -", True)
+        else:
+            return (["black", "-"], False)
+
+
 def prepare_formatters(*formatters):
     mapping = {}
 
@@ -153,8 +167,8 @@ class FmtCommand(TextCommand):
         Prettier(),
         ClangFormat(),
         CMakeFormat(),
+        PythonFormat(),
         Formatter("source.rust", "rustfmt"),
-        Formatter("source.python", ["black", "-"]),
         Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-sr", "-"]),
         Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
