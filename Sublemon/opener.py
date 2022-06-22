@@ -6,7 +6,7 @@ from pathlib import Path
 import sublime
 from sublime_plugin import ListInputHandler, TextCommand, WindowCommand
 
-from . import project_pref
+from . import pref
 
 
 class OpenFilePathCommand(WindowCommand):
@@ -80,7 +80,7 @@ class OpenFileUnderCursorCommand(TextCommand):
         project_dir = Path(project_file_name).parent
         roots = [project_dir]
 
-        for root in project_pref(self.view, "opener_roots") or []:
+        for root in pref("opener_roots", [], view=self.view):
             root = Path(root)
             roots.append(root if root.is_absolute() else project_dir / root)
 

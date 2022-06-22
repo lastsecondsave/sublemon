@@ -2,7 +2,7 @@ import os
 import re
 from pathlib import Path
 
-from . import RUNNING_ON_WINDOWS, pref, project_pref
+from . import RUNNING_ON_WINDOWS, pref
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 DEFAULT_BINARY = "python" if RUNNING_ON_WINDOWS else "python3"
@@ -22,8 +22,7 @@ def setup_python_exec(build, module=None, allow_venv=True):
     if allow_venv and (venv := find_venv(build)):
         setup_venv(build, venv)
     else:
-        key = "python_binary"
-        binary = project_pref(build.window, key) or pref(key, DEFAULT_BINARY)
+        binary = pref("python_binary", DEFAULT_BINARY, window=build.window)
 
     build.cmd.appendleft(binary)
 
@@ -35,7 +34,7 @@ def find_venv(build):
     if build.opt("allow_venv") is False:
         return None
 
-    if venv := project_pref(build.window, "python_venv"):
+    if venv := pref("python_venv", window=build.window):
         return venv
 
     for folder in build.window.folders():
@@ -68,7 +67,11 @@ class PylintCommand(ChimneyCommand):
         if disable := build.opt("disable"):
             build.cmd.append(f"--disable={','.join(disable)}")
 
-        if pylintrc := build.opt("pylintrc") or project_pref(self.window, "pylintrc"):
+        pylintrc = build.opt("pylintrc")
+        if not pylintrc:
+            pylintrc = pref("pylintrc", window=self.window, expand=True)
+
+        if pylintrc:
             build.cmd.append(f"--rcfile={pylintrc}")
 
         setup_python_exec(build, "pylint")
