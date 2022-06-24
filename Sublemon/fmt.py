@@ -115,6 +115,7 @@ class ClangFormat:
             "BasedOnStyle: Google",
             "IncludeBlocks: Preserve",
             "KeepEmptyLinesAtTheStartOfBlocks: true",
+            f"AccessModifierOffset: -{int(tab_width/2)}",
         ]
 
 
