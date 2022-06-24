@@ -21,7 +21,7 @@ def pref(key, default=None, view=None, window=None, expand=False):
         value = (window.project_data() or {}).get("settings", {}).get(key)
 
     if value is None:
-        settings = sublime.load_settings("Preferences.sublime-settings")
+        settings = sublime.load_settings("Sublemon.sublime-settings")
         value = settings.get(key)
 
     if value is None:
