@@ -1,3 +1,7 @@
+import subprocess
+from pathlib import Path
+
+from . import sad_message
 from .chimney import ChimneyBuildListener, ChimneyCommand
 from .pytools import setup_python_exec
 
@@ -37,3 +41,40 @@ class MakeCommand(ChimneyCommand):
 
         build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
         build.syntax = "GCC Output"
+
+
+class VcvarsCommand(ChimneyCommand):
+    env = None
+
+    def capture_env(self, build):
+        vs_path = Path("C:/Program Files/Microsoft Visual Studio/2022/Community")
+        vcvars_path = vs_path / "VC/Auxiliary/Build/vcvarsall.bat"
+
+        variables = ["LIB", "INCLUDE", "PATH"]
+        echo_cmd = " ".join(f'"""!{var} $env:{var}"""' for var in variables)
+        pwsh_cmd = f"pwsh -NoProfile -NoLogo -Command Write-Output {echo_cmd}"
+
+        cmd = f'"{vcvars_path}" x64 && {pwsh_cmd}'
+        process = subprocess.run(cmd, shell=True, capture_output=True)
+
+        if process.returncode != 0:
+            sad_message(f"Failed to run program: {cmd}")
+            build.cancel("Failed to capture variables from vcvars")
+
+        captures = {}
+
+        for line in process.stdout.decode("utf-8").splitlines():
+            if not line.startswith("!"):
+                continue
+
+            key, value = line.strip("! ").split(maxsplit=1)
+            captures[key] = value
+
+        return captures
+
+    def setup(self, build):
+        if not self.env:
+            print("Capturing variables from vcvars")
+            self.env = self.capture_env(build)
+
+        build.env = self.env

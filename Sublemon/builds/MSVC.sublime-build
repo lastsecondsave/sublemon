@@ -1,0 +1,6 @@
+{
+  "selector": "source.c++",
+  "target": "vcvars",
+  "shell_cmd": "cl /EHsc /diagnostics:caret /nologo \"$file\" && \"$file_path/$file_base_name\"",
+  "file_regex": "(.+?)\\((\\d+),?(\\d+)\\): (.*)"
+}

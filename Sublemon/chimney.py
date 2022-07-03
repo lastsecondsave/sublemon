@@ -83,7 +83,7 @@ class BuildSetupError(Exception):
 
 
 class Cmd:
-    PREVIEW = re.compile(r"\S+( [^-][\w-]+)?(?=\s|$)")
+    PREVIEW = re.compile(r"\S+( [^-/][\w-]+)?(?=\s|$)")
 
     def __init__(self, options):
         self.params = deque()
