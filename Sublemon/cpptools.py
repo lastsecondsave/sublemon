@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from . import sad_message
+from . import sad_message, RUNNING_ON_WINDOWS
 from .chimney import ChimneyBuildListener, ChimneyCommand
 from .pytools import setup_python_exec
 
@@ -73,6 +73,9 @@ class VcvarsCommand(ChimneyCommand):
         return captures
 
     def setup(self, build):
+        if not RUNNING_ON_WINDOWS:
+            build.cancel("MSVC only works on Windows")
+
         if not self.env:
             print("Capturing variables from vcvars")
             self.env = self.capture_env(build)
