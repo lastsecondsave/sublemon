@@ -214,10 +214,5 @@ class FmtCommand(TextCommand):
 class ReplaceWithFormattedCommand(TextCommand):
     # pylint: disable=arguments-differ
     def run(self, edit, text):
-        viewport = self.view.viewport_position()
-
         region = Region(0, self.view.size())
         self.view.replace(edit, region, text)
-
-        self.view.set_viewport_position((0, 0), False)
-        self.view.set_viewport_position((0, viewport[1]), False)
