@@ -50,6 +50,7 @@ completions = {
     ("Function", Icon.FUNCTION): [
         "defined",
         "make_shared",
+        "move",
         "sizeof",
     ],
     ("Block", Icon.BLOCK): [

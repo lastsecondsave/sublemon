@@ -36,6 +36,8 @@ completions = {
     ],
     ("Support", Icon.FUNCTION): [
         "__init__",
+        "__repl__",
+        "__str__",
         "isinstance",
         "super",
     ],
