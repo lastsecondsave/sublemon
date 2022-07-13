@@ -115,6 +115,8 @@ class ClangFormat:
             "BasedOnStyle: Google",
             "IncludeBlocks: Preserve",
             "KeepEmptyLinesAtTheStartOfBlocks: true",
+            "PointerAlignment: Left",
+            "DerivePointerAlignment: false",
             f"AccessModifierOffset: -{1 if tab_width == 2 else tab_width}",
         ]
 
