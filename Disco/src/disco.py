@@ -250,10 +250,10 @@ rec(BLUE, 'style.blue')
 rec(GREEN, 'style.green')
 rec(GRAY, 'style.gray')
 
-rec(Highlight("#18453B", 'l(+ 10%)'), 'diff.inserted')
-rec(Highlight("#4F7942", 'l(+ 10%)'), 'diff.inserted.char')
-rec(Highlight("#733635", 'l(+ 10%)'), 'diff.deleted')
-rec(Highlight("#BF4F51", 'l(+ 10%)'), 'diff.deleted.char')
+rec(Highlight("hsla(170, 45%, 40%, 0.15)", 'l(+ 10%)'), 'diff.inserted')
+rec(Highlight("hsla(170, 65%, 40%, 0.30)", 'l(+ 10%)'), 'diff.inserted.char')
+rec(Highlight("hsla(357, 45%, 60%, 0.15)", 'l(+ 10%)'), 'diff.deleted')
+rec(Highlight("hsla(357, 65%, 60%, 0.30)", 'l(+ 10%)'), 'diff.deleted.char')
 
 src('python')
 rec(KEYWORD,
