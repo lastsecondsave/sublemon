@@ -24,6 +24,9 @@
   { "keys": ["alt+q"], "command": "expand_snippet" },
   { "keys": ["alt+p"], "command": "find_under_prev" },
 
+  { "keys": ["alt+a"], "command": "single_selection",
+    "context": [{"key": "num_selections", "operator": "not_equal", "operand": 1}]
+  },
   { "keys": ["alt+d"], "command": "chain", "args": {
     "commands": [
       ["move", {"by": "subwords", "forward": false}],
@@ -57,8 +60,8 @@
 
   { "keys": ["ctrl+alt+up"], "command": "select_lines", "args": {"forward": false} },
   { "keys": ["ctrl+alt+down"], "command": "select_lines", "args": {"forward": true} },
-  { "keys": ["ctrl+alt+pageup"], "command": "select_to_left" },
-  { "keys": ["ctrl+alt+pagedown"], "command": "select_to_right" },
+  { "keys": ["ctrl+alt+pageup"], "command": "focus_neighboring_group", "args": {"forward": false} },
+  { "keys": ["ctrl+alt+pagedown"], "command": "focus_neighboring_group", "args": {"forward": true} },
   { "keys": ["ctrl+alt+enter"], "command": "insert_snippet", "args": {"contents": "\n\t${0:$SELECTION}\n"},
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
   },
@@ -68,6 +71,8 @@
   { "keys": ["ctrl+alt+i"], "command": "reindent", "args": {"single_line": true} },
   { "keys": ["ctrl+alt+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
+  { "keys": ["ctrl+alt+["], "command": "select_to_left" },
+  { "keys": ["ctrl+alt+]"], "command": "select_to_right" },
 
   { "keys": ["ctrl+alt+a"], "command": "alignment" },
   { "keys": ["ctrl+alt+s"], "command": "selection_to_cursors" },
