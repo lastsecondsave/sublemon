@@ -1,3 +1,4 @@
+import configparser
 import datetime
 import re
 from pathlib import Path
@@ -216,3 +217,42 @@ class GitBlameBuildListener(ChimneyBuildListener):
             return line
 
         ctx.print_lines(combine(line_info) for line_info in self.line_infos)
+
+
+class GitLineLinkCommand(WindowCommand):
+    GIT_URL_PATTERN = re.compile(r"git@(.+):(.+)\.git")
+
+    def run(self):
+        dotgit = find_dotgit(self.window)
+        if not dotgit:
+            return
+
+        config = configparser.ConfigParser()
+        config.read(dotgit / "config")
+
+        origin_url = config['remote "origin"']["url"]
+        if match := self.GIT_URL_PATTERN.match(origin_url):
+            origin_url = f"https://{match.group(1)}/{match.group(2)}"
+
+        view = self.window.active_view()
+        file_path = "/".join(Path(view.file_name()).relative_to(dotgit.parent).parts)
+
+        lines, lines_desc = self.lines_string()
+
+        sublime.set_clipboard(f"{origin_url}/blob/master/{file_path}#{lines}")
+        sublime.status_message(f"Copied URL to {lines_desc}")
+
+    def lines_string(self):
+        view = self.window.active_view()
+        region = view.sel()[0]
+
+        begin = view.rowcol(region.begin())[0] + 1
+        end = view.rowcol(region.end())[0] + 1
+
+        if begin == end:
+            return f"L{begin}", f"line {begin}"
+
+        return f"L{begin}:L{end}", f"lines {begin}-{end}"
+
+    def is_enabled(self):
+        return active_view_contains_file(self.window)

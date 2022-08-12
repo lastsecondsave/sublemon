@@ -25,6 +25,7 @@
   { "caption": "Git: Gui", "command": "git_gui "},
   { "caption": "Git: Edit Exclude", "command": "git_edit_exclude"},
   { "caption": "Git: Revert File", "command": "git_revert_file"},
+  { "caption": "Git: Copy URL to Line", "command": "git_line_link"},
 
   { "caption": "Reindent JSON", "command": "json_reindent" },
   { "caption": "Select Between", "command": "select_between_markers" },
