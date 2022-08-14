@@ -5,10 +5,16 @@ snippets = {
     "dc": ("doc comment", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
     "main": ("main", "int main(${1:int argc, char* argv[]}) {}"),
     "fn": ("function", "${1:void} ${2:run}($3) {}"),
-    ";;": ("i = 0; i < imax; i++", "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:$2++}"),
+    ";;": ("i = 0; i < imax; i++", "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:++$2}"),
     "inc": ("#include <header>", "#include <$SEL0>"),
     "inq": ('#include "header"', '#include "$SEL0"'),
     "ifd": ("#ifdef X ... #endif", "#ifdef $1<->#endif"),
+    "mi": ("member init", "$1_(${2:$1})"),
+    "cpcon": ("copy constructor", "${1:Class}(const ${1:Class}& ${2:other})"),
+    "mvcon": ("move constructor", "${1:Class}(${1:Class}&& ${2:other})"),
+    "cpass": ("copy assignment", "${1:Class}& operator=(const ${1:Class}& ${2:other})"),
+    "mvass": ("move assignment", "${1:Class}& operator=(${1:Class}&& ${2:other})"),
+    "mv": "std::move($SEL0)",
 }
 
 completions = {
@@ -17,6 +23,7 @@ completions = {
         "continue",
         "default",
         "delete",
+        "friend",
         "namespace",
         "new",
         "return",
@@ -34,6 +41,8 @@ completions = {
         "const",
         "constexpr",
         "explicit",
+        "mutable",
+        "noexcept",
         "override",
         "static",
         "thread_local",
@@ -78,6 +87,7 @@ completions = {
     ],
     ("Class", Icon.TYPE): [
         "auto",
+        "runtime_error",
         "shared_ptr",
         "string",
         "unique_ptr",
