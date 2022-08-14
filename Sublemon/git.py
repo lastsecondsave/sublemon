@@ -249,10 +249,13 @@ class GitLineLinkCommand(WindowCommand):
         begin = view.rowcol(region.begin())[0] + 1
         end = view.rowcol(region.end())[0] + 1
 
+        if begin != end and view.rowcol(region.end())[1] == 0:
+            end -= 1
+
         if begin == end:
             return f"L{begin}", f"line {begin}"
 
-        return f"L{begin}:L{end}", f"lines {begin}-{end}"
+        return f"L{begin}-L{end}", f"lines {begin}-{end}"
 
     def is_enabled(self):
         return active_view_contains_file(self.window)
