@@ -248,7 +248,7 @@
     {
       "class": "sidebar_label",
       "parents": [{"class": "file_system_entry", "attributes": ["ignored"]}],
-      "color": "color(var(label_gray) a(60%))"
+      "color": "color(var(label_gray) a(64%))"
     },
 
     // Tabs
