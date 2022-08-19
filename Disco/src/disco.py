@@ -198,7 +198,8 @@ def generate():
 
 rec(COMMENT,
     'comment',
-    'punctuation.definition.comment')
+    'punctuation.definition.comment',
+    'comment.line.shebang constant.language.shebang')
 rec(PRIMITIVE,
     'constant.{character|language|numeric}',
     'storage.type.numeric',
@@ -396,8 +397,6 @@ rec(VARIABLE,
 rec(KEYWORD,
     'support.function.{eval|exec|source|trap|unset}',
     'entity.name.tag.heredoc')
-rec(COMMENT,
-    'constant.language.shebang')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
