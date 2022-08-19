@@ -126,7 +126,7 @@ class CMakeFormat:
         return ("source.cmake",)
 
     def cmd(self, view, _scope):
-        config = find_in_parent_directories(view, ".cmake-format")
+        config = find_in_parent_directories(view, ".cmake-format", ".cmake-format.json")
 
         cmd = ["cmake-format", "-"]
 

@@ -54,7 +54,6 @@ def find_in_parent_directories(view, *file_names):
     for parent in Path(active_file).parents:
         for file_name in file_names:
             if (path := parent.joinpath(file_name)).exists():
-                print(path)
                 return path
 
         if parent.joinpath(".git").exists():
