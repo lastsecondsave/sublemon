@@ -1,5 +1,14 @@
 from snippets import Icon, generate
 
+rule_of_five = """
+${1:Class}() = default;
+virtual ~${1:Class}() = default;
+${1:Class}(const ${1:Class}&) = delete;
+${1:Class}& operator=(const ${1:Class}&) = delete;
+${1:Class}(${1:Class}&&) = delete;
+${1:Class}& operator=(${1:Class}&&) = delete;
+"""
+
 snippets = {
     "pl": "std::cout << $SEL0 << std::endl;",
     "dc": ("doc comment", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
@@ -10,11 +19,12 @@ snippets = {
     "inq": ('#include "header"', '#include "$SEL0"'),
     "ifd": ("#ifdef X ... #endif", "#ifdef $1<->#endif"),
     "mi": ("member init", "$1_(${2:$1})"),
+    "mv": "std::move($SEL0)",
     "cpcon": ("copy constructor", "${1:Class}(const ${1:Class}& ${2:other})"),
     "mvcon": ("move constructor", "${1:Class}(${1:Class}&& ${2:other})"),
     "cpass": ("copy assignment", "${1:Class}& operator=(const ${1:Class}& ${2:other})"),
     "mvass": ("move assignment", "${1:Class}& operator=(${1:Class}&& ${2:other})"),
-    "mv": "std::move($SEL0)",
+    "rof": ("rule of five", rule_of_five),
 }
 
 completions = {
