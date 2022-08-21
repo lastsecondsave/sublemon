@@ -20,10 +20,10 @@ snippets = {
     "ifd": ("#ifdef X ... #endif", "#ifdef $1<->#endif"),
     "mi": ("member init", "$1_(${2:$1})"),
     "mv": "std::move($SEL0)",
-    "cpcon": ("copy constructor", "${1:Class}(const ${1:Class}& ${2:other})"),
-    "mvcon": ("move constructor", "${1:Class}(${1:Class}&& ${2:other})"),
-    "cpass": ("copy assignment", "${1:Class}& operator=(const ${1:Class}& ${2:other})"),
-    "mvass": ("move assignment", "${1:Class}& operator=(${1:Class}&& ${2:other})"),
+    "cpc": ("copy constructor", "${1:Class}(const ${1:Class}& ${2:other})"),
+    "mvc": ("move constructor", "${1:Class}(${1:Class}&& ${2:other})"),
+    "cpa": ("copy assignment", "${1:Class}& operator=(const ${1:Class}& ${2:other})"),
+    "mva": ("move assignment", "${1:Class}& operator=(${1:Class}&& ${2:other})"),
     "rof": ("rule of five", rule_of_five),
 }
 
