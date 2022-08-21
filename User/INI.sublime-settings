@@ -5,6 +5,7 @@
     ".env",
     ".gitconfig",
     ".gitmodules",
+    ".prettierrc",
     ".pylintrc",
     "CPPLINT.cfg",
     "desktop",
