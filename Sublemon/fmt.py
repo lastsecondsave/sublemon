@@ -103,7 +103,6 @@ class ClangFormat:
         if scope == "source.java":
             return common + [
                 "BreakAfterJavaFieldAnnotations: true",
-                "AllowShortFunctionsOnASingleLine: Empty",
                 "AllowShortIfStatementsOnASingleLine: Never",
                 "AllowShortLoopsOnASingleLine: false",
                 "AlignAfterOpenBracket: false",
@@ -115,6 +114,7 @@ class ClangFormat:
             "BasedOnStyle: Google",
             "IncludeBlocks: Preserve",
             "KeepEmptyLinesAtTheStartOfBlocks: true",
+            "AllowShortFunctionsOnASingleLine: Empty",
             "PointerAlignment: Left",
             "DerivePointerAlignment: false",
             f"AccessModifierOffset: -{1 if tab_width == 2 else tab_width}",
