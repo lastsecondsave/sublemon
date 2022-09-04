@@ -1,6 +1,15 @@
 {
   "selector": "source.c++",
   "target": "vcvars",
-  "shell_cmd": "cl /EHsc /diagnostics:caret /nologo \"$file\" && \"$file_path/$file_base_name\"",
-  "file_regex": "(.+?)\\((\\d+),?(\\d+)\\): (.*)"
+  "shell_cmd_base": "cl /EHsc /diagnostics:caret /nologo",
+  "shell_cmd": "\"$file\" && \"$file_path/$file_base_name\"",
+  "preview": "cl $file_name",
+  "file_regex": "(.+?)\\((\\d+),?(\\d+)\\): (.*)",
+
+  "variants": [
+    {
+      "name": "Release Build",
+      "shell_cmd": "/O2 \"$file\""
+    }
+  ]
 }

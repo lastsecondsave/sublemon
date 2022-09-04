@@ -62,9 +62,7 @@ class OutputPanel:
 # pylint: disable=unused-argument
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        preview = ctx.cmd.preview
-        message = f"Running {preview} …" if preview else "Build started"
-        ctx.window.status_message(message)
+        ctx.window.status_message(f"Running {ctx.cmd.preview} …")
 
     def on_output(self, line, ctx):
         return line
@@ -85,22 +83,29 @@ class BuildSetupError(Exception):
 class Cmd:
     PREVIEW = re.compile(r"\S+( [^-/][\w-]+)?(?=\s|$)")
 
-    def __init__(self, **options):
+    def __init__(self, variables=None, **options):
         self.args = deque()
         self.cmdline = ""
         self.shell = options.get("shell", False)
 
         if shell_cmd := options.get("shell_cmd"):
             self.shell = True
-            self.cmdline = (
+
+            if base := options.get("shell_cmd_base"):
+                base = sublime.expand_variables(base, variables or {})
+                self.cmdline = base + " "
+
+            self.cmdline += (
                 shell_cmd if isinstance(shell_cmd, str) else " ".join(shell_cmd)
             )
+
         elif cmd := options.get("cmd"):
             self.args.extend(cmd if isinstance(cmd, list) else [cmd])
 
-        self._preview = options.get("preview")
-        if self._preview is True:
-            self._preview = str(self)
+        self._preview = ""
+
+        if preview := options.get("preview"):
+            self._preview = sublime.expand_variables(preview, variables)
 
     def verify_editable(self):
         if self.cmdline:
@@ -119,10 +124,7 @@ class Cmd:
         if self._preview:
             return self._preview
 
-        if match := Cmd.PREVIEW.match(str(self)):
-            return match.group(0)
-
-        return ""
+        return Cmd.PREVIEW.match(str(self)).group(0)
 
     @preview.setter
     def preview(self, value):
@@ -146,7 +148,7 @@ class BuildSetup:
 
         self.listener = ChimneyBuildListener()
         self.initializer = None
-        self.cmd = Cmd(**options)
+        self.cmd = Cmd(variables=window.extract_variables(), **options)
 
         self.env = options.get("env", {})
         self.file_regex = options.get("file_regex", "")
@@ -365,11 +367,9 @@ class BuildContext:
 
         self.working_dir = build.working_dir
         self.cmd = build.cmd
-        self.on_complete = build.listener.on_complete
 
-        self.on_complete_message = (
-            f"Complete: {build.cmd.preview}" if build.cmd.preview else "Build complete"
-        )
+        self.on_complete = build.listener.on_complete
+        self.on_complete_message = f"Complete: {build.cmd.preview}"
 
         build.listener.on_startup(self)
 

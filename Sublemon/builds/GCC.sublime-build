@@ -1,24 +1,19 @@
 {
   "selector": "source.c++",
-  "shell_cmd": [
-    "g++ -std=c++17 -Wall \"$file\" -o \"$file_path/$file_base_name\"",
-    "&& \"$file_path/$file_base_name\""
-  ],
+  "shell_cmd_base": "g++ -std=c++17 -Wall -o \"$file_path/$file_base_name\"",
+  "shell_cmd": "\"$file\" && \"$file_path/$file_base_name\"",
+  "preview": "g++ $file_name",
   "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
   "syntax": "GCC Output",
 
   "variants": [
     {
       "name": "Release Build",
-      "shell_cmd": [
-        "g++ -std=c++17 -Wall -O2 \"$file\" -o \"$file_path/$file_base_name\""
-      ]
+      "shell_cmd": "-O2 \"$file\""
     },
     {
       "name": "Debug Build",
-      "shell_cmd": [
-        "g++ -std=c++17 -Wall -Og -g \"$file\" -o \"$file_path/$file_base_name\""
-      ]
+      "shell_cmd": "-Og -g \"$file\""
     }
   ]
 }
