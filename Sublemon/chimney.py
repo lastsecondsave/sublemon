@@ -145,6 +145,7 @@ class BuildSetup:
         self.window = window
 
         self.listener = ChimneyBuildListener()
+        self.initializer = None
         self.cmd = Cmd(**options)
 
         self.env = options.get("env", {})
@@ -229,20 +230,17 @@ class ChimneyCommand(WindowCommand):
         prompt = "$ " + (interactive if isinstance(interactive, str) else "")
 
         def on_done(cmd):
-            self.run_build_interactive(build, cmd)
+            if cmd:
+                self.last_command = cmd
+                self.set_cmd(build, cmd)
+
+            self.run_build(build)
 
         input_view = self.window.show_input_panel(
             prompt, self.last_command, on_done, None, None
         )
 
         input_view.sel().add(sublime.Region(0, len(self.last_command)))
-
-    def run_build_interactive(self, build, cmd):
-        if cmd:
-            self.last_command = cmd
-            self.set_cmd(build, cmd)
-
-        self.run_build(build)
 
     def set_cmd(self, build, cmd):
         if cmd.startswith("@"):
@@ -271,6 +269,17 @@ class ChimneyCommand(WindowCommand):
             self.window.status_message("No command")
             return
 
+        if not build.initializer:
+            self.start_build(build)
+            return
+
+        def init_and_start():
+            build.initializer(build)
+            self.start_build(build)
+
+        sublime.set_timeout_async(init_and_start, 0)
+
+    def start_build(self, build):
         self.panel.reset(
             syntax=build.syntax,
             result_base_dir=build.working_dir,
@@ -310,7 +319,9 @@ class BufferedPipe:
         if begin < len(chunk):
             self.bufferize(chunk, begin, len(chunk))
 
-        lines = (self.process_line(line, self.ctx) for line in lines)
+        lines = filter(
+            None.__ne__, (self.process_line(line, self.ctx) for line in lines)
+        )
 
         self.ctx.print_lines(*lines)
 
@@ -363,7 +374,7 @@ class BuildContext:
         build.listener.on_startup(self)
 
     def print_lines(self, *lines):
-        self.panel.append(filter(None.__ne__, lines))
+        self.panel.append(lines)
 
     def complete(self):
         if not self.cancelled:

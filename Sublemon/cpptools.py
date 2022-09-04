@@ -47,6 +47,8 @@ class VcvarsCommand(ChimneyCommand):
     env = None
 
     def capture_env(self, build):
+        self.window.status_message("Capturing variables from vcvars")
+
         vs_path = Path("C:/Program Files/Microsoft Visual Studio/2022/Community")
         vcvars_path = vs_path / "VC/Auxiliary/Build/vcvarsall.bat"
 
@@ -70,14 +72,14 @@ class VcvarsCommand(ChimneyCommand):
             key, value = line.strip("! ").split(maxsplit=1)
             captures[key] = value
 
-        return captures
+        self.env = captures
+        build.env = captures
 
     def setup(self, build):
         if not RUNNING_ON_WINDOWS:
             build.cancel("MSVC only works on Windows")
 
         if not self.env:
-            print("Capturing variables from vcvars")
-            self.env = self.capture_env(build)
+            build.initializer = self.capture_env
 
         build.env = self.env
