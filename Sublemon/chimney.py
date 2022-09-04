@@ -85,8 +85,8 @@ class BuildSetupError(Exception):
 class Cmd:
     PREVIEW = re.compile(r"\S+( [^-/][\w-]+)?(?=\s|$)")
 
-    def __init__(self, options):
-        self.params = deque()
+    def __init__(self, **options):
+        self.args = deque()
         self.cmdline = ""
         self.shell = options.get("shell", False)
 
@@ -96,23 +96,23 @@ class Cmd:
                 shell_cmd if isinstance(shell_cmd, str) else " ".join(shell_cmd)
             )
         elif cmd := options.get("cmd"):
-            self.params.extend(cmd if isinstance(cmd, list) else [cmd])
+            self.args.extend(cmd if isinstance(cmd, list) else [cmd])
 
         self._preview = options.get("preview")
         if self._preview is True:
             self._preview = str(self)
 
-    def split_cmdline(self):
-        if not self.params and self.cmdline:
-            self.params = deque(shlex.split(self.cmdline))
+    def verify_editable(self):
+        if self.cmdline:
+            raise ValueError("Cmd with cmdline is not editable")
 
     def append(self, *chunks):
-        self.split_cmdline()
-        self.params.extend(chunks)
+        self.verify_editable()
+        self.args.extend(chunks)
 
     def appendleft(self, *chunks):
-        self.split_cmdline()
-        self.params.extendleft(reversed(chunks))
+        self.verify_editable()
+        self.args.extendleft(reversed(chunks))
 
     @property
     def preview(self):
@@ -129,10 +129,14 @@ class Cmd:
         self._preview = value
 
     def __str__(self):
-        return shlex.join(self.params) if self.params else self.cmdline
+        if self.cmdline:
+            return self.cmdline
+        if RUNNING_ON_WINDOWS:
+            return subprocess.list2cmdline(self.args)
+        return shlex.join(self.args)
 
     def __bool__(self):
-        return bool(self.params or self.cmdline)
+        return bool(self.args or self.cmdline)
 
 
 class BuildSetup:
@@ -141,7 +145,7 @@ class BuildSetup:
         self.window = window
 
         self.listener = ChimneyBuildListener()
-        self.cmd = Cmd(options)
+        self.cmd = Cmd(**options)
 
         self.env = options.get("env", {})
         self.file_regex = options.get("file_regex", "")
@@ -218,19 +222,20 @@ class ChimneyCommand(WindowCommand):
 
         build = BuildSetup(options, self.window)
 
-        if interactive:
-            prompt = "$ " + (interactive if isinstance(interactive, str) else "")
-
-            def on_done(cmd):
-                self.run_build_interactive(build, cmd)
-
-            input_view = self.window.show_input_panel(
-                prompt, self.last_command, on_done, None, None
-            )
-
-            input_view.sel().add(sublime.Region(0, len(self.last_command)))
-        else:
+        if not interactive:
             self.run_build(build)
+            return
+
+        prompt = "$ " + (interactive if isinstance(interactive, str) else "")
+
+        def on_done(cmd):
+            self.run_build_interactive(build, cmd)
+
+        input_view = self.window.show_input_panel(
+            prompt, self.last_command, on_done, None, None
+        )
+
+        input_view.sel().add(sublime.Region(0, len(self.last_command)))
 
     def run_build_interactive(self, build, cmd):
         if cmd:
@@ -251,18 +256,19 @@ class ChimneyCommand(WindowCommand):
         if build.cmd:
             build.cmd.append(*(shlex.split(cmd)))
         elif RUNNING_ON_WINDOWS:
-            build.cmd = Cmd({"cmd": ["pwsh", "-NoProfile", "-Command", cmd]})
+            build.cmd = Cmd(cmd=["pwsh", "-NoProfile", "-Command", cmd])
         else:
-            build.cmd = Cmd({"shell_cmd": cmd})
+            build.cmd = Cmd(shell_cmd=cmd)
 
     def run_build(self, build):
         try:
             self.setup(build)
-
-            if not build.cmd:
-                build.cancel("No command")
         except BuildSetupError as err:
             self.window.status_message(err.message)
+            return
+
+        if not build.cmd:
+            self.window.status_message("No command")
             return
 
         self.panel.reset(
@@ -306,7 +312,7 @@ class BufferedPipe:
 
         lines = (self.process_line(line, self.ctx) for line in lines)
 
-        self.ctx.print_lines(filter(None.__ne__, lines))
+        self.ctx.print_lines(*lines)
 
     def bufferize(self, chunk, begin, end):
         while end > 0 and chunk[end - 1] == "\r":
@@ -322,9 +328,8 @@ class BufferedPipe:
 
     def flush(self):
         if self.line_buffer:
-            line = self.process_line(self.get_buffered_line(), self.ctx)
-            if line:
-                self.ctx.print_lines((line,))
+            if line := self.process_line(self.get_buffered_line(), self.ctx):
+                self.ctx.print_lines(line)
 
 
 def read_to_pipe(stream, pipe, on_close=None):
@@ -357,8 +362,8 @@ class BuildContext:
 
         build.listener.on_startup(self)
 
-    def print_lines(self, lines):
-        self.panel.append(lines)
+    def print_lines(self, *lines):
+        self.panel.append(filter(None.__ne__, lines))
 
     def complete(self):
         if not self.cancelled:
@@ -369,15 +374,15 @@ class BuildContext:
             if not self.panel.empty:
                 self.panel.finalize()
             elif returncode:
-                self.print_lines((f"Exited with {returncode}",))
+                self.print_lines(f"Exited with {returncode}")
             else:
-                self.print_lines(("OK",))
+                self.print_lines("OK")
 
             self.window.status_message(self.on_complete_message)
             print(f"✔ [{self.process.pid}] {returncode}")
         else:
             self.window.status_message("Build cancelled")
-            self.print_lines(("", "*** Terminated ***"))
+            self.print_lines("", "*** Terminated ***")
             print(f"✘ [{self.process.pid}]")
 
         self.process = None
@@ -388,21 +393,29 @@ class BuildContext:
         kill_process(self.process)
 
     def __bool__(self):
-        """True if process is active."""
         return bool(self.process and not self.process.poll())
 
 
 def start_build(build, window, panel):
     process = start_process(build.cmd, build.env, build.working_dir)
-    listener = build.listener
-
     ctx = BuildContext(window, panel, process, build)
 
-    stdout_args = (process.stdout, BufferedPipe(listener.on_output, ctx), ctx.complete)
-    stderr_args = (process.stderr, BufferedPipe(listener.on_error, ctx))
+    Thread(
+        target=read_to_pipe,
+        args=(
+            process.stdout,
+            BufferedPipe(build.listener.on_output, ctx),
+            ctx.complete,
+        ),
+    ).start()
 
-    Thread(target=read_to_pipe, args=stdout_args).start()
-    Thread(target=read_to_pipe, args=stderr_args).start()
+    Thread(
+        target=read_to_pipe,
+        args=(
+            process.stderr,
+            BufferedPipe(build.listener.on_error, ctx),
+        ),
+    ).start()
 
     return ctx
 
@@ -433,11 +446,11 @@ def start_process(cmd, env, cwd):
             else:
                 os_env[key] = os.path.expandvars(val)
 
-    params = cmd.params if not cmd.shell else str(cmd)
+    args = cmd.args or cmd.cmdline
 
     try:
         # pylint: disable=consider-using-with
-        return subprocess.Popen(params, **process_params)
+        return subprocess.Popen(args, **process_params)
     except:
         sad_message(f"Failed to run program: {cmd}")
         raise

@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from . import sad_message, RUNNING_ON_WINDOWS
+from . import RUNNING_ON_WINDOWS, sad_message
 from .chimney import ChimneyBuildListener, ChimneyCommand
 from .pytools import setup_python_exec
 
