@@ -314,18 +314,15 @@ class BufferedPipe:
 
         while (end := chunk.find("\n", begin)) != -1:
             self.bufferize(chunk, begin, end)
-            lines.append(self.get_buffered_line())
+            if line := self.process_line(self.get_buffered_line(), self.ctx):
+                lines.append(line)
 
             begin = end + 1
 
         if begin < len(chunk):
             self.bufferize(chunk, begin, len(chunk))
 
-        lines = filter(
-            None.__ne__, (self.process_line(line, self.ctx) for line in lines)
-        )
-
-        self.ctx.print_lines(*lines)
+        self.ctx.print_lines(lines)
 
     def bufferize(self, chunk, begin, end):
         while end > 0 and chunk[end - 1] == "\r":
@@ -373,8 +370,11 @@ class BuildContext:
 
         build.listener.on_startup(self)
 
-    def print_lines(self, *lines):
+    def print_lines(self, lines):
         self.panel.append(lines)
+
+    def print_line(self, line):
+        self.panel.append((line,))
 
     def complete(self):
         if not self.cancelled:
@@ -385,15 +385,15 @@ class BuildContext:
             if not self.panel.empty:
                 self.panel.finalize()
             elif returncode:
-                self.print_lines(f"Exited with {returncode}")
+                self.print_line(f"Exited with {returncode}")
             else:
-                self.print_lines("OK")
+                self.print_line("OK")
 
             self.window.status_message(self.on_complete_message)
             print(f"✔ [{self.process.pid}] {returncode}")
         else:
             self.window.status_message("Build cancelled")
-            self.print_lines("", "*** Terminated ***")
+            self.print_lines(("", "*** Terminated ***"))
             print(f"✘ [{self.process.pid}]")
 
         self.process = None
