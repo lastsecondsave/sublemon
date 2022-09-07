@@ -7,7 +7,7 @@ contexts:
   main:
     - include: cmake
 
-    - match: '^(.+?):(\d+):(\d+):'
+    - match: '^(.+?):(\d+):((\d+):)?'
       captures:
         1: entity.name.filename
         2: constant.numeric.line
@@ -18,6 +18,7 @@ contexts:
       captures:
         1: constant.other.indicator.warning
         2: entity.name.filename
+      push: message
 
   message:
     - match: $
@@ -28,6 +29,8 @@ contexts:
         2: constant.other.indicator.warning
         3: constant.other.indicator.note
     - match: ‘.+?’
+      scope: string.quoted
+    - match: "`.+?'"
       scope: string.quoted
     - match: '\[-W[\w-]+]'
       scope: comment.category
