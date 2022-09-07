@@ -111,13 +111,13 @@ class Cmd:
         if self.cmdline:
             raise ValueError("Cmd with cmdline is not editable")
 
-    def append(self, *chunks):
+    def append(self, *args):
         self.verify_editable()
-        self.args.extend(chunks)
+        self.args.extend(args)
 
-    def appendleft(self, *chunks):
+    def appendleft(self, *args):
         self.verify_editable()
-        self.args.extendleft(reversed(chunks))
+        self.args.extendleft(reversed(args))
 
     @property
     def preview(self):

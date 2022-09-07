@@ -1,0 +1,17 @@
+{
+  "keyfiles": ["CMakeLists.txt"],
+  "working_dir": "$folder",
+  "target": "cmake",
+
+  "variants": [
+    {
+      "name": "Generate",
+      "mode": "generate"
+    },
+    {
+      "name": "Interactive",
+      "interactive": "cmake --target",
+      "cmd": "--target"
+    }
+  ]
+}

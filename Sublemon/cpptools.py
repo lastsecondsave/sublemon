@@ -1,8 +1,8 @@
 import subprocess
 from pathlib import Path
 
-from . import RUNNING_ON_WINDOWS, sad_message
-from .chimney import ChimneyBuildListener, ChimneyCommand
+from . import RUNNING_ON_WINDOWS, pref, sad_message
+from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
 from .pytools import setup_python_exec
 
 
@@ -83,3 +83,46 @@ class VcvarsCommand(ChimneyCommand):
             build.initializer = self.capture_env
 
         build.env = self.env
+
+
+class CmakeCommand(ChimneyCommand):
+    def setup(self, build):
+        mode = build.opt("mode", "build")
+
+        build_dir = build.opt("build_dir") or pref(
+            "cmake_build_dir", "build", window=self.window
+        )
+
+        build_type = build.opt("build_type") or pref(
+            "cmake_build_type", "Release", window=self.window
+        )
+
+        if mode == "generate":
+            build.cmd.appendleft(
+                "cmake", ".", "-B", build_dir, f"-DCMAKE_BUILD_TYPE={build_type}"
+            )
+            return
+
+        if mode != "build":
+            build.cancel(f"Invalid mode: {mode}")
+
+        cmd = ["cmake", "--build", build_dir, "--parallel"]
+
+        if build.cmd.args:
+            build.cmd.appendleft(*cmd)
+        else:
+            build_targets = build.opt("build_target") or pref(
+                "cmake_default_target", "all", window=self.window
+            )
+
+            if not isinstance(build_targets, list):
+                build_targets = [build_targets]
+
+            build.cmd = Cmd(cmd=cmd)
+            build.cmd.append("--target", *build_targets)
+
+        if RUNNING_ON_WINDOWS:
+            build.file_regex = r"(.+?)\((\d+),?(\d+)\): (.*)"
+        else:
+            build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+            build.syntax = "GCC Output"
