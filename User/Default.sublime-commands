@@ -29,6 +29,7 @@
 
   { "caption": "Reindent JSON", "command": "json_reindent" },
   { "caption": "Select Between", "command": "select_between_markers" },
+  { "caption": "Select With", "command": "select_with_markers" },
 
   { "caption": "Highlight: Add", "command": "highlight_add" },
   { "caption": "Highlight: Delete", "command": "highlight_delete" },
