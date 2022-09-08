@@ -3,7 +3,7 @@
   "shell_cmd_base": "g++ -std=c++17 -Wall -o \"$file_path/$file_base_name\"",
   "shell_cmd": "\"$file\" && \"$file_path/$file_base_name\"",
   "preview": "g++ $file_name",
-  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
+  "file_regex": "(.+?):(\\d+):(?:(\\d+):)? (.*)",
   "syntax": "GCC Output",
 
   "variants": [

@@ -39,7 +39,7 @@ class MakeCommand(ChimneyCommand):
     def setup(self, build):
         build.cmd.appendleft("make", "-j")
 
-        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+        build.file_regex = r"(.+?):(\d+):(?:(\d+):)? (.*)"
         build.syntax = "GCC Output"
 
 
@@ -93,14 +93,20 @@ class CmakeCommand(ChimneyCommand):
             "cmake_build_dir", "build", window=self.window
         )
 
-        build_type = build.opt("build_type") or pref(
-            "cmake_build_type", "Release", window=self.window
-        )
-
         if mode == "generate":
+            build_type = build.opt("build_type") or pref(
+                "cmake_build_type", "Release", window=self.window
+            )
+
             build.cmd.appendleft(
                 "cmake", ".", "-B", build_dir, f"-DCMAKE_BUILD_TYPE={build_type}"
             )
+
+            if params := pref("cmake_parameters", window=self.window):
+                build.cmd.append(*params)
+
+            build.file_regex = r"CMake Error at (.+?):(\d+) (.*):"
+
             return
 
         if mode != "build":
@@ -124,5 +130,5 @@ class CmakeCommand(ChimneyCommand):
         if RUNNING_ON_WINDOWS:
             build.file_regex = r"(.+?)\((\d+),?(\d+)\): (.*)"
         else:
-            build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+            build.file_regex = r"(.+?):(\d+):(?:(\d+):)? (.*)"
             build.syntax = "GCC Output"

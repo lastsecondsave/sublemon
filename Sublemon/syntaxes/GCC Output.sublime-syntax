@@ -7,18 +7,18 @@ contexts:
   main:
     - include: cmake
 
-    - match: '^(.+?):(\d+):((\d+):)?'
+    - match: '/usr/bin/ld: (.+?):(\d+)'
+      captures:
+        1: entity.name.filename
+        2: constant.numeric.line
+      push: message
+
+    - match: '^(.+?):(\d+):(?:(\d+):)?(?=\s+\S)'
       captures:
         1: entity.name.filename
         2: constant.numeric.line
         3: constant.numeric.column
       push: [listing, message]
-
-    - match: '(/usr/bin/ld): (.+?):'
-      captures:
-        1: constant.other.indicator.warning
-        2: entity.name.filename
-      push: message
 
   message:
     - match: $
@@ -28,9 +28,7 @@ contexts:
         1: constant.other.indicator.error
         2: constant.other.indicator.warning
         3: constant.other.indicator.note
-    - match: ‘.+?’
-      scope: string.quoted
-    - match: "`.+?'"
+    - match: ‘.+?’|`.+?'
       scope: string.quoted
     - match: '\[-W[\w-]+]'
       scope: comment.category
@@ -57,9 +55,9 @@ contexts:
       pop: 1
 
   cmake:
-    - match: '\[[\d ]{3}%\] .*'
+    - match: '(?:\[[\d ]{3}%\]|gmake(?:\[\d+\])?:) .*'
       scope: comment.log
     - match: 'make(?:\[\d+\])?: .*'
       scope: comment.log
-    - match: '(--|Scanning dependencies of target|collect2:) .*'
+    - match: '(?:--|Scanning dependencies of target|collect2:) .*'
       scope: comment.log
