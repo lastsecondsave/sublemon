@@ -10,7 +10,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS, sad_message
+from . import RUNNING_ON_WINDOWS, listify, sad_message
 from .opener import find_project_folder
 
 
@@ -100,12 +100,12 @@ class Cmd:
             )
 
         elif cmd := options.get("cmd"):
-            self.args.extend(cmd if isinstance(cmd, list) else [cmd])
+            self.args.extend(listify(cmd))
 
         self._preview = ""
 
         if preview := options.get("preview"):
-            self._preview = sublime.expand_variables(preview, variables)
+            self._preview = sublime.expand_variables(preview, variables or {})
 
     def verify_editable(self):
         if self.cmdline:

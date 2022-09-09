@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from . import RUNNING_ON_WINDOWS, pref, sad_message
+from . import RUNNING_ON_WINDOWS, listify, pref, sad_message
 from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
 from .pytools import setup_python_exec
 
@@ -115,16 +115,18 @@ class CmakeCommand(ChimneyCommand):
         cmd = ["cmake", "--build", build_dir, "--parallel"]
 
         if build.cmd.args:
+            build.cmd.preview = f"cmake {' '.join(build.cmd.args)}"
             build.cmd.appendleft(*cmd)
         else:
-            build_targets = build.opt("build_target") or pref(
-                "cmake_default_target", "all", window=self.window
+            build_targets = listify(
+                build.opt("build_target")
+                or pref("cmake_default_target", "all", window=self.window)
             )
 
-            if not isinstance(build_targets, list):
-                build_targets = [build_targets]
+            build.cmd = Cmd(
+                cmd=cmd, preview=f"cmake --target {' '.join(build_targets)}"
+            )
 
-            build.cmd = Cmd(cmd=cmd)
             build.cmd.append("--target", *build_targets)
 
         if RUNNING_ON_WINDOWS:

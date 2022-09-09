@@ -33,6 +33,13 @@ def pref(key, default=None, view=None, window=None, expand=False):
     return value
 
 
+def listify(value):
+    if isinstance(value, list):
+        return value
+
+    return [value]
+
+
 def indent_params(view):
     tab_size = view.settings().get("tab_size")
     use_tabs = not view.settings().get("translate_tabs_to_spaces")
