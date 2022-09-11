@@ -254,7 +254,7 @@ class ChimneyCommand(WindowCommand):
         cmd = cmd.replace("@@", f'"{build.working_dir}"')
 
         if build.cmd:
-            build.cmd.append(*(shlex.split(cmd)))
+            build.cmd.append(*(shlex.split(cmd, posix=(not RUNNING_ON_WINDOWS))))
         elif RUNNING_ON_WINDOWS:
             build.cmd = Cmd(cmd=["pwsh", "-NoProfile", "-Command", cmd])
         else:
