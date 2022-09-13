@@ -4,7 +4,12 @@ import tempfile
 from pathlib import Path
 
 import sublime
-from sublime_plugin import ListInputHandler, TextCommand, WindowCommand
+from sublime_plugin import (
+    ApplicationCommand,
+    ListInputHandler,
+    TextCommand,
+    WindowCommand,
+)
 
 from . import pref
 
@@ -231,3 +236,9 @@ class CopyFilePathCommand(WindowCommand):
                 return items
 
         return ModeInputHandler()
+
+
+class CopyPathsCommand(ApplicationCommand):
+    def run(self, paths):  # pylint: disable=arguments-differ
+        sublime.set_clipboard("\n".join(paths))
+        sublime.status_message(f"Copied file path")
