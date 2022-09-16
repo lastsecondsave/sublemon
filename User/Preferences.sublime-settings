@@ -25,7 +25,7 @@
 	],
 	"caret_extra_bottom": 1,
 	"caret_extra_top": 1,
-	"color_scheme": "Packages/Disco/Disco.sublime-color-scheme",
+	"color_scheme": "Disco.sublime-color-scheme",
 	"control_character_style": "names",
 	"copy_with_empty_selection": false,
 	"default_line_ending": "unix",
