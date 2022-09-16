@@ -47,7 +47,7 @@ class StyleInputHandler(ListInputHandler):
 
 class ColorInputHandler(ListInputHandler):
     def list_items(self):
-        return ["Orange", "Dark Orange", "Crimson", "Blue", "Green", "Gray"]
+        return ["Orange", "Blue", "Green", "Crimson", "Gray"]
 
 
 class HighlightDeleteAllCommand(TextCommand):
