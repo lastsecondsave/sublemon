@@ -453,8 +453,10 @@ rec(FOREGROUND,
 
 src('rust')
 rec(STORAGE,
-    'meta.macro support.function -meta.block.macro-body')
-rec(META,
+    'meta.macro support.function -meta.block.macro-body',
+    'meta.annotation meta.group',
+    'support.type')
+rec(KEYWORD,
     'variable.annotation')
 rec(SPECIAL,
     'storage.modifier.lifetime')
