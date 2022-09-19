@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+name: MSVC Output
+scope: text.output.msvc
+
+contexts:
+  main:
+    - match: '^(.+?)\((\d+),(\d+)\):'
+      captures:
+        1: entity.name.filename
+        2: constant.numeric.line
+        3: constant.numeric.column
+      push: [message]
+
+    - match: ^\s*(\^)\s*$
+      captures:
+        1: punctuation.definition.marker
+
+
+  message:
+    - match: $
+      pop: 1
+    - match: '(?:(error)|(warning)) (?:\w\d+):'
+      captures:
+        1: constant.other.indicator.error
+        2: constant.other.indicator.warning
+    - match: "('.+'):"
+      captures:
+        1: string.quoted
+    - match: '\[.+\]$'
+      scope: comment.category

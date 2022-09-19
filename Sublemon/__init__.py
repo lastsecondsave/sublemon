@@ -37,7 +37,7 @@ def listify(value):
     if isinstance(value, list):
         return value
 
-    return [value]
+    return [value] if value is not None else []
 
 
 def indent_params(view):

@@ -93,11 +93,11 @@ class CmakeCommand(ChimneyCommand):
             "cmake_build_dir", "build", window=self.window
         )
 
-        if mode == "generate":
-            build_type = build.opt("build_type") or pref(
-                "cmake_build_type", "Release", window=self.window
-            )
+        build_type = build.opt("build_type") or pref(
+            "cmake_build_type", "Release", window=self.window
+        )
 
+        if mode == "generate":
             build.cmd.appendleft(
                 "cmake", ".", "-B", build_dir, f"-DCMAKE_BUILD_TYPE={build_type}"
             )
@@ -106,7 +106,6 @@ class CmakeCommand(ChimneyCommand):
                 build.cmd.append(*params)
 
             build.file_regex = r"CMake Error at (.+?):(\d+) (.*):"
-
             return
 
         if mode != "build":
@@ -120,17 +119,20 @@ class CmakeCommand(ChimneyCommand):
         else:
             build_targets = listify(
                 build.opt("build_target")
-                or pref("cmake_default_target", "all", window=self.window)
+                or pref("cmake_default_target", window=self.window)
             )
 
-            build.cmd = Cmd(
-                cmd=cmd, preview=f"cmake --target {' '.join(build_targets)}"
-            )
+            build.cmd = Cmd(cmd=cmd)
 
-            build.cmd.append("--target", *build_targets)
+            if build_targets:
+                build.cmd.append("--target", *build_targets)
+                build.cmd.preview = f"cmake --target {' '.join(build_targets)}"
 
         if RUNNING_ON_WINDOWS:
             build.file_regex = r"(.+?)\((\d+),?(\d+)\): (.*)"
+            build.syntax = "MSVC Output"
+
+            build.cmd.append("--config", build_type)
         else:
             build.file_regex = r"(.+?):(\d+):(?:(\d+):)? (.*)"
             build.syntax = "GCC Output"
