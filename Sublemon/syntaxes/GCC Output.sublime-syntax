@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: GCC Output
-scope: text.output.make.gcc
+scope: text.output.gcc
 
 contexts:
   main:

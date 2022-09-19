@@ -40,7 +40,7 @@ generate(
         "mva": ("move assignment", "${1:Class}& operator=(${1:Class}&& ${2:other})"),
         "rof": ("rule of five", rule_of_five),
         "tm": "template<$0>",
-        "td": ("TODO", "// TODO: ")
+        "td": ("TODO", "// TODO: "),
     },
     completions={
         ("Keyword", Icon.KEYWORD): [

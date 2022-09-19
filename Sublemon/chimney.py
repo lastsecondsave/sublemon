@@ -153,12 +153,13 @@ class BuildSetup:
         self.env = options.get("env", {})
         self.file_regex = options.get("file_regex", "")
         self.line_regex = options.get("line_regex", "")
+        self.active_file = window.active_view().file_name()
         self.working_dir = options.get("working_dir")
 
         if not self.working_dir and self.active_file:
             self.working_dir = os.path.dirname(self.active_file)
 
-        self._syntax = options.get("syntax", "Packages/Text/Plain text.tmLanguage")
+        self.syntax = options.get("syntax", "Packages/Text/Plain text.tmLanguage")
 
     def cancel(self, message):
         raise BuildSetupError(message)
@@ -173,18 +174,14 @@ class BuildSetup:
 
     @property
     def syntax(self):
-        if not self._syntax.endswith((".sublime-syntax", ".tmLanguage")):
-            return f"Packages/Sublemon/syntaxes/{self._syntax}.sublime-syntax"
-
         return self._syntax
 
     @syntax.setter
     def syntax(self, value):
-        self._syntax = value
+        if not value.endswith((".sublime-syntax", ".tmLanguage")):
+            value = f"Packages/Sublemon/syntaxes/{value}.sublime-syntax"
 
-    @property
-    def active_file(self):
-        return self.window.active_view().file_name()
+        self._syntax = value
 
 
 class ChimneyCommand(WindowCommand):
