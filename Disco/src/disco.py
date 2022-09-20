@@ -72,8 +72,9 @@ BG_PUNCTUATION = Style(LIGHT_VIOLET)
 PUNCTUATION = Style(DARK_ORANGE)
 ACCESSOR = Style(LIGHT_VIOLET)
 COMMENT = Style(GRAY)
-COMMENT_HIGHLIGHT = Style(WHITE)
 COMMENT_DIM = Style(FADED_VIOLET)
+COMMENT_LIGHT = Style(LIGHT_VIOLET)
+COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
 TAG = Style(BLUE)
@@ -330,12 +331,16 @@ src('java')
 rec(META,
     'punctuation.definition.annotation',
     'variable.annotation')
-rec(COMMENT_HIGHLIGHT,
+rec(COMMENT_LIGHT,
     'meta.tag.block entity.name.tag.documentation')
 rec(COMMENT_HIGHLIGHT + ITALIC,
     'comment.block.documentation variable.parameter')
 rec(COMMENT_DIM,
-    'meta.tag.inline & (entity.name | punctuation.definition)')
+    'meta.tag.inline & (entity.name | punctuation.definition)',
+    'comment.block.documentation meta.tag.html',
+    'comment.block.documentation meta.tag.html punctuation.separator')
+rec(COMMENT_LIGHT,
+    'comment.block.documentation & (string.quoted | punctuation.definition.string)')
 rec(ITALIC,
     'text.html.javadoc markup.underline.link',
     'meta.annotation.parameters variable.parameter')
