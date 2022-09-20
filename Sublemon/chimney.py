@@ -334,7 +334,7 @@ class BufferedPipe:
     def flush(self):
         if self.line_buffer:
             if line := self.process_line(self.get_buffered_line(), self.ctx):
-                self.ctx.print_lines(line)
+                self.ctx.print_lines([line])
 
 
 def read_to_pipe(stream, pipe, on_close=None):

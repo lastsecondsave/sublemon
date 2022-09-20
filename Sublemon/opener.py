@@ -57,6 +57,10 @@ class OpenFilePathCommand(WindowCommand):
 def find_project_folder(window):
     folders = window.folders()
 
+    if not folders:
+        window.status_message("No project")
+        raise Exception("No project")
+
     active_file = window.active_view().file_name()
     if not active_file:
         return folders[0]
