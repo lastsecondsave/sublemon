@@ -122,7 +122,7 @@ class CmakeCommand(ChimneyCommand):
                 or pref("cmake_default_target", window=self.window)
             )
 
-            build.cmd = Cmd(cmd=cmd)
+            build.cmd = Cmd(cmd)
 
             if build_targets:
                 build.cmd.append("--target", *build_targets)

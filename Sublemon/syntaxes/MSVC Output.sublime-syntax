@@ -5,7 +5,7 @@ scope: text.output.msvc
 
 contexts:
   main:
-    - match: '^(.+?)\((\d+),(\d+)\):'
+    - match: '^(.+?)\((\d+)(?:,(\d+))?\):'
       captures:
         1: entity.name.filename
         2: constant.numeric.line
@@ -15,7 +15,6 @@ contexts:
     - match: ^\s*(\^)\s*$
       captures:
         1: punctuation.definition.marker
-
 
   message:
     - match: $

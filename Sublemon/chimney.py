@@ -83,29 +83,27 @@ class BuildSetupError(Exception):
 class Cmd:
     PREVIEW = re.compile(r"\S+( [^-/][\w-]+)?(?=\s|$)")
 
-    def __init__(self, variables=None, **options):
+    def __init__(self, cmd=None, variables=None, **options):
         self.args = deque()
-        self.cmdline = ""
+        self.cmdline = None
         self.shell = options.get("shell", False)
 
         if shell_cmd := options.get("shell_cmd"):
             self.shell = True
-
-            if base := options.get("shell_cmd_base"):
-                base = sublime.expand_variables(base, variables or {})
-                self.cmdline = base + " "
-
-            self.cmdline += (
+            self.cmdline = (
                 shell_cmd if isinstance(shell_cmd, str) else " ".join(shell_cmd)
             )
 
-        elif cmd := options.get("cmd"):
+            if base := options.get("shell_cmd_base"):
+                base = sublime.expand_variables(base, variables or {})
+                self.cmdline = f"{base} {self.cmdline}"
+
+        elif cmd:
             self.args.extend(listify(cmd))
 
-        self._preview = ""
-
-        if preview := options.get("preview"):
-            self._preview = sublime.expand_variables(preview, variables or {})
+        self._preview = options.get("cmd_preview")
+        if self._preview and variables:
+            self._preview = sublime.expand_variables(self._preview, variables)
 
     def verify_editable(self):
         if self.cmdline:
@@ -253,7 +251,7 @@ class ChimneyCommand(WindowCommand):
         if build.cmd:
             build.cmd.append(*(shlex.split(cmd, posix=(not RUNNING_ON_WINDOWS))))
         elif RUNNING_ON_WINDOWS:
-            build.cmd = Cmd(cmd=["pwsh", "-NoProfile", "-Command", cmd])
+            build.cmd = Cmd(["pwsh", "-NoProfile", "-Command", cmd])
         else:
             build.cmd = Cmd(shell_cmd=cmd)
 
