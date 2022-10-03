@@ -134,5 +134,5 @@ class CmakeCommand(ChimneyCommand):
 
             build.cmd.append("--config", build_type)
         else:
-            build.file_regex = r"(.+?):(\d+):(?:(\d+):)? (.*)"
+            build.file_regex = r"^(/.+?):(\d+):(?:(\d+):)? (.*)"
             build.syntax = "GCC Output"
