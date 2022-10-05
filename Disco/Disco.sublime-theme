@@ -256,7 +256,7 @@
       "class": "tabset_control",
       "layer0.tint": "var(tabset_bg)",
       "layer0.opacity": 1.0,
-      "content_margin": [0, 0, 0, 0],
+      "content_margin": [0, 2, 0, 0],
       "tab_overlap": 10,
       "tab_height": 32,
       "connector_height": 1,
@@ -736,7 +736,7 @@
       "class": "panel_control",
       "parents": [{"class": "switch_project_window"}],
       "layer0.tint": "var(titlebar_bg)",
-      "content_margin": [1, 0, 1, 3]
+      "content_margin": [1, 3, 1, 3]
     },
     {
       "class": "panel_grid_control",
