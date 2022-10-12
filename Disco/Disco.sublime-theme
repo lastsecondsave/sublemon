@@ -1115,7 +1115,7 @@
     {
       "class": "tool_tip_control",
       "layer0.tint": "var(panel_gray)",
-      "layer0.opacity": 0.8,
+      "layer0.opacity": 0.9,
       "content_margin": [8, 3, 8, 3]
     },
     {
