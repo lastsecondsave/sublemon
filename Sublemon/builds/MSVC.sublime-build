@@ -1,7 +1,7 @@
 {
   "selector": "source.c++",
   "target": "vcvars",
-  "shell_cmd_base": "cl /EHsc /diagnostics:caret /nologo /W4",
+  "shell_cmd_base": "cl /EHsc /std:c++latest /diagnostics:caret /nologo /W4",
   "shell_cmd": "\"$file\" && \"${file_path}\\\\${file_base_name}.exe\"",
   "cmd_preview": "cl $file_name",
   "syntax": "MSVC Output",
