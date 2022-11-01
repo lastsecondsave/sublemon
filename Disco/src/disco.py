@@ -424,13 +424,14 @@ rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
-    'punctuation.section.block.{begin|end}',
-    'punctuation.separator.generator-expression')
+    'punctuation.section.block.{begin|end}')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.{endfunction|endmacro|function|macro}')
 rec(INDEXED,
     'entity.name.function')
+rec(STORAGE,
+    'support.function.{add_library|add_executable|add_custom_target}')
 
 src('dockerfile')
 rec(VARIABLE,

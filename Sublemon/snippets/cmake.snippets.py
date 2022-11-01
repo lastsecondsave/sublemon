@@ -7,11 +7,14 @@ generate(
     },
     completions={
         ("Function", Icon.FUNCTION): [
+            "add_dependencies",
             "add_executable",
             "add_library",
             "add_subdirectory",
-            "target_compile_options",
+            "install",
+            "set_target_properties",
             "target_compile_definitions",
+            "target_compile_options",
             "target_include_directories",
             "target_link_directories",
             "target_link_libraries",
@@ -22,11 +25,13 @@ generate(
             "if($1)<=>endif()",
             "macro($1)<=>endmacro()",
         ],
-        ("Variable", Icon.VARIABLE): [
+        ("Variable", Icon.CONSTANT): [
             "CMAKE_BINARY_DIR",
             "CMAKE_CURRENT_BINARY_DIR",
             "CMAKE_CURRENT_SOURCE_DIR",
+            "CMAKE_INSTALL_PREFIX",
             "CMAKE_SOURCE_DIR",
+            "CMAKE_SYSTEM_NAME",
         ],
     },
 )
@@ -38,6 +43,10 @@ generate(
             "PUBLIC",
             "PRIVATE",
             "INTERFACE",
-        ]
+        ],
+        ("Operator", Icon.KEYWORD): [
+            "IN_LIST",
+            "STREQUAL",
+        ],
     },
 )
