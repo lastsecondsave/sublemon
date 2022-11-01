@@ -11,7 +11,7 @@ contexts:
         1: entity.name.filename
         2: constant.numeric.line
 
-    - match: '^\s*(\^-*\^?) (\w+): (.*)'
+    - match: '^\s*(\^-*\^?) (\w+)(?: \(.+\))?: (.*)'
       captures:
         1: punctuation.definition.marker
         2: storage.category
