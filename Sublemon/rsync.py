@@ -16,14 +16,7 @@ class RsyncCommand(ChimneyCommand):
 
 
 class RsyncBuildListener(ChimneyBuildListener):
-    def __init__(self):
-        self.status = None
-
     def on_output(self, line, ctx):
         if line.startswith("sent "):
-            self.status = line
+            ctx.on_complete_message = line.replace("  ", "; ")
         return line
-
-    def on_complete(self, ctx):
-        if self.status:
-            ctx.on_complete_message = self.status.replace("  ", "; ")
