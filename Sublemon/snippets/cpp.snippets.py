@@ -110,11 +110,16 @@ generate(
             "include",
             "pragma",
         ],
+        ("Namespace", Icon.NAMESPACE): [
+            "filesystem",
+        ],
         ("Class", Icon.TYPE): [
             "auto",
+            "pair",
             "runtime_error",
             "shared_ptr",
             "string",
+            "tuple",
             "unique_ptr",
             "unordered_map",
             "unordered_set",
