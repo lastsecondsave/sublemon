@@ -162,8 +162,11 @@ class BuildSetup:
     def cancel(self, message):
         raise BuildSetupError(message)
 
-    def opt(self, key, default=None, expand=True):
+    def opt(self, key, default=None, expand=True, required=False):
         value = self.options.get(key, default)
+
+        if required and not value:
+            self.cancel(f"'{key}' is not set")
 
         if expand and isinstance(value, str):
             value = sublime.expand_variables(value, self.window.extract_variables())
