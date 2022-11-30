@@ -586,3 +586,15 @@ class CopyAsOneLineCommand(TextCommand):
         text = " ".join(chunks)
         sublime.set_clipboard(text)
         sublime.status_message(f"Copied {len(text)} characters")
+
+
+# pylint: disable=arguments-differ
+class FindAllInFolderCommand(WindowCommand):
+    def run(self, dirs):
+        self.window.run_command(
+            "show_panel",
+            {"panel": "find_in_files", "where": ",".join(dirs)},
+        )
+
+    def is_visible(self, dirs):
+        return len(dirs) > 0

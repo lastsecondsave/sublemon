@@ -1,3 +1,5 @@
 [
-    { "caption": "Copy Path", "command": "copy_paths", "args": {"paths": []} },
+  { "caption": "Copy Path", "command": "copy_paths", "args": {"paths": []} },
+  { "caption": "-", "id": "folder_commands" },
+  { "caption": "Find All in Folder…", "command": "find_all_in_folder", "args": {"dirs": []} }
 ]
