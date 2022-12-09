@@ -70,7 +70,6 @@ class ClangFormat:
     FILES = {
         "source.c": "file.c",
         "source.c++": "file.cpp",
-        "source.java": "file.java",
         "source.objc": "file.m",
         "source.objc++": "file.mm",
     }
@@ -80,10 +79,7 @@ class ClangFormat:
 
     def cmd(self, view, scope):
         cmd = ["clang-format", f"--assume-filename={self.FILES[scope]}"]
-        config = None
-
-        if scope != "source.java":
-            config = find_in_parent_directories(view, ".clang-format")
+        config = find_in_parent_directories(view, ".clang-format")
 
         if not config:
             style = ", ".join(self.generate_style(view, scope))
@@ -91,27 +87,14 @@ class ClangFormat:
 
         return (cmd, False)
 
-    def generate_style(self, view, scope):
+    def generate_style(self, view, _scope):
         _, tab_width = indent_params(view)
 
-        common = [
+        return [
+            "BasedOnStyle: Google",
             "ColumnLimit: 88",
             f"IndentWidth: {tab_width}",
             f"ContinuationIndentWidth: {tab_width * 2}",
-        ]
-
-        if scope == "source.java":
-            return common + [
-                "BreakAfterJavaFieldAnnotations: true",
-                "AllowShortIfStatementsOnASingleLine: Never",
-                "AllowShortLoopsOnASingleLine: false",
-                "AlignAfterOpenBracket: false",
-                "AlignOperands: DontAlign",
-                "AllowAllArgumentsOnNextLine: true",
-            ]
-
-        return common + [
-            "BasedOnStyle: Google",
             "IncludeBlocks: Preserve",
             "KeepEmptyLinesAtTheStartOfBlocks: true",
             "AllowShortFunctionsOnASingleLine: Empty",
@@ -155,6 +138,19 @@ class PythonFormat:
         return (["black", "-"], False)
 
 
+class JavaFormat:
+    def supported_scopes(self):
+        return ("source.java",)
+
+    def cmd(self, view, _scope):
+        google_java_format_jar = pref("google_java_format_jar", view=view)
+
+        return (
+            ["java", "-jar", google_java_format_jar, "-a", "-"],
+            False,
+        )
+
+
 def prepare_formatters(*formatters):
     mapping = {}
 
@@ -171,6 +167,7 @@ class FmtCommand(TextCommand):
         ClangFormat(),
         CMakeFormat(),
         PythonFormat(),
+        JavaFormat(),
         Formatter("source.rust", "rustfmt"),
         Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-sr", "-"]),
