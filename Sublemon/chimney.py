@@ -391,7 +391,7 @@ class BuildContext:
             print(f"✔ [{self.process.pid}] {returncode}")
         else:
             self.window.status_message("Build cancelled")
-            self.print_lines(("", "*** Terminated ***"))
+            self.print_lines(("", " *** Terminated *** "))
             print(f"✘ [{self.process.pid}]")
 
         self.process = None

@@ -120,7 +120,7 @@
 
   { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
   { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
-  { "keys": ["ctrl+shift+alt+b"], "command": "chimney", "args": {"kill": true} },
+  { "keys": ["ctrl+shift+alt+c"], "command": "chimney", "args": {"kill": true} },
 
   /* L2: CTRL */
 
