@@ -88,6 +88,7 @@
 
   { "keys": ["ctrl+alt+z"], "command": "streamline_regions" },
   { "keys": ["ctrl+alt+x"], "command": "indent_to_braces" },
+  { "keys": ["ctrl+alt+c"], "command": "chimney", "args": {"kill": true} },
   { "keys": ["ctrl+alt+b"], "command": "build" },
   { "keys": ["ctrl+alt+,"], "command": "chain", "args": {
     "commands": [
@@ -120,7 +121,6 @@
 
   { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
   { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
-  { "keys": ["ctrl+shift+alt+c"], "command": "chimney", "args": {"kill": true} },
 
   /* L2: CTRL */
 
