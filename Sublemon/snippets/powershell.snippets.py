@@ -20,7 +20,7 @@ def pwsh_cmdlets():
 
     cmd = ["pwsh", "-NoProfile", "-NoLogo", "-Command", " | ".join(pipeline)]
 
-    process = subprocess.run(cmd, encoding="utf-8", capture_output=True)
+    process = subprocess.run(cmd, encoding="utf-8", capture_output=True, shell=True)
 
     if process.returncode != 0:
         print("Error: Can't query pwsh for completions.")
