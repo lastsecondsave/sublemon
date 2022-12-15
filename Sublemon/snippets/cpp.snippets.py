@@ -41,6 +41,7 @@ generate(
         "rof": ("rule of five", rule_of_five),
         "tm": "template<$0>",
         "td": ("TODO", "// TODO: "),
+        "lm": ("lambda", "[$1]($2) { $0 }"),
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
