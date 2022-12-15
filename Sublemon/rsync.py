@@ -3,6 +3,8 @@ from .chimney import ChimneyBuildListener, ChimneyCommand
 
 class RsyncCommand(ChimneyCommand):
     def setup(self, build):
+        build.in_project_dir()
+
         build.cmd.appendleft("rsync", "-e", "ssh", "-avr")
 
         host = build.opt("host", required=True)

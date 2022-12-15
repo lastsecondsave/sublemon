@@ -87,6 +87,8 @@ class VcvarsCommand(ChimneyCommand):
 
 class CmakeCommand(ChimneyCommand):
     def setup(self, build):
+        build.in_project_dir()
+
         mode = build.opt("mode", "build")
 
         build_dir = build.opt("build_dir") or pref(

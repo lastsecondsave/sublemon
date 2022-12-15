@@ -154,9 +154,6 @@ class BuildSetup:
         self.active_file = window.active_view().file_name()
         self.working_dir = options.get("working_dir")
 
-        if not self.working_dir and self.active_file:
-            self.working_dir = os.path.dirname(self.active_file)
-
         self.syntax = options.get("syntax", "Packages/Text/Plain text.tmLanguage")
 
     def cancel(self, message):
@@ -173,6 +170,10 @@ class BuildSetup:
 
         return value
 
+    def in_project_dir(self):
+        if not self._working_dir:
+            self._working_dir = os.path.dirname(self.window.project_file_name())
+
     @property
     def syntax(self):
         return self._syntax
@@ -183,6 +184,20 @@ class BuildSetup:
             value = f"Packages/Sublemon/syntaxes/{value}.sublime-syntax"
 
         self._syntax = value
+
+    @property
+    def working_dir(self):
+        if self._working_dir:
+            return self._working_dir
+
+        if self.active_file:
+            return os.path.dirname(self.active_file)
+
+        return self.cancel("No working_dir")
+
+    @working_dir.setter
+    def working_dir(self, value):
+        self._working_dir = value
 
 
 class ChimneyCommand(WindowCommand):
