@@ -327,7 +327,7 @@ class BufferedPipe:
 
         while (end := chunk.find("\n", begin)) != -1:
             self.bufferize(chunk, begin, end)
-            if line := self.process_line(self.get_buffered_line(), self.ctx):
+            if (line := self.get_next_line()) is not None:
                 lines.append(line)
 
             begin = end + 1
@@ -344,14 +344,16 @@ class BufferedPipe:
         line = self.ESCAPE_CHARACTER.sub("", chunk[begin:end])
         self.line_buffer.append(line)
 
-    def get_buffered_line(self):
-        content = "".join(self.line_buffer)
+    def get_next_line(self):
+        line = "".join(self.line_buffer)
+        line = self.process_line(line, self.ctx)
+
         self.line_buffer.clear()
-        return content
+        return line
 
     def flush(self):
         if self.line_buffer:
-            if line := self.process_line(self.get_buffered_line(), self.ctx):
+            if (line := self.get_next_line()) is not None:
                 self.ctx.print_lines([line])
 
 
