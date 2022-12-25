@@ -270,6 +270,7 @@ class ChimneyCommand(WindowCommand):
             build.cmd.append(*(shlex.split(cmd, posix=(not RUNNING_ON_WINDOWS))))
         elif RUNNING_ON_WINDOWS:
             build.cmd = Cmd(["pwsh", "-NoProfile", "-Command", cmd])
+            build.env["NO_COLOR"] = "1"
         else:
             build.cmd = Cmd(shell_cmd=cmd)
 
@@ -313,7 +314,7 @@ class ChimneyCommand(WindowCommand):
 
 
 class BufferedPipe:
-    ESCAPE_CHARACTER = re.compile(r"\x1b.*?\[\d*m")
+    ESCAPE_CHARACTER = re.compile(r"\x1b\[[\d;]*m")
 
     def __init__(self, process_line, ctx):
         self.process_line = process_line
