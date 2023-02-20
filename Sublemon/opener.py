@@ -193,11 +193,11 @@ class ShowFilePathCommand(WindowCommand):
 
 class CopyFilePathCommand(WindowCommand):
     MODES = {
-        "file_name": "File Name",
         "file_path": "File Path",
-        "file_project_path": "File Project Path",
-        "dir_name": "Directory Name",
+        "file_name": "File Name",
         "dir_path": "Directory Path",
+        "dir_name": "Directory Name",
+        "file_project_path": "File Project Path",
         "dir_project_path": "Directory Project Path",
     }
 

@@ -57,7 +57,7 @@
   { "keys": ["ctrl+shift+="], "command": "insert", "args": {"characters": "—"} },
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
   { "keys": ["ctrl+shift+s"],  "command": "save_all_edited" },
-  { "keys": ["ctrl+shift+c"], "command": "copy_path" },
+  { "keys": ["ctrl+shift+c"], "command": "copy_as_one_line" },
 
   /* CTRL + ALT */
 
@@ -136,10 +136,9 @@
 
   { "keys": ["ctrl+j", "ctrl+i"], "command": "expand_selection", "args": {"to": "indentation" } },
 
-  { "keys": ["ctrl+j", "ctrl+d"], "command": "convert_case" },
   { "keys": ["ctrl+j", "ctrl+f"], "command": "copy_file_path" },
 
-  { "keys": ["ctrl+j", "ctrl+c"], "command": "copy_as_one_line" },
+  { "keys": ["ctrl+j", "ctrl+c"], "command": "convert_case" },
 
   /* SEARCH WIDGET */
 
