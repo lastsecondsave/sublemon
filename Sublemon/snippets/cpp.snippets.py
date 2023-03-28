@@ -44,6 +44,7 @@ generate(
         "lm": ("lambda", "[$1]($2) { $0 }"),
         "be": ("begin-end", "$1.begin(), $1.end()$0"),
         "cbe": ("cbegin-cend", "$1.cbegin(), $1.cend()$0"),
+        "rs": ("raw string", 'R"($SEL0)"'),
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
