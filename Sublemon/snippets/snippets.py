@@ -29,6 +29,7 @@ class Icon:
 
 def expand_custom_variables(content):
     content = content.replace("$FILENAME", r"${TM_FILENAME/(.*?)(\..+)/$1/}")
+    content = content.replace("$SEL2", "${2:$SELECTION}")
     content = content.replace("$SEL1", "${1:$SELECTION}")
     return content.replace("$SEL0", "${0:$SELECTION}")
 

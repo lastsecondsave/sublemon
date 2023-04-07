@@ -45,6 +45,8 @@ generate(
         "be": ("begin-end", "$1.begin(), $1.end()$0"),
         "cbe": ("cbegin-cend", "$1.cbegin(), $1.cend()$0"),
         "rs": ("raw string", 'R"($SEL0)"'),
+        "rc": ("reinterpret_cast", "reinterpret_cast<$1>($SEL2)"),
+        "sc": ("static_cast", "static_cast<$1>($SEL2)"),
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
