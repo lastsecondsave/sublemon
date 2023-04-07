@@ -261,7 +261,8 @@ src('python')
 rec(KEYWORD,
     'keyword.operator.logical')
 rec(META,
-    'meta.annotation & (-meta.annotation.arguments -punctuation.section | support.function)')
+    '{punctuation.definition|variable}.annotation',
+    'meta.annotation meta.path')
 rec(STRING,
     'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
 rec(ITALIC,
