@@ -473,7 +473,10 @@ def start_process(cmd, env, cwd):
             else:
                 os_env[key] = os.path.expandvars(val)
 
-    args = cmd.args or cmd.cmdline
+    if cmd.shell:
+        args = str(cmd)
+    else:
+        args = cmd.args or cmd.cmdline
 
     try:
         # pylint: disable=consider-using-with
