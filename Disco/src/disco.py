@@ -39,7 +39,7 @@ def color(value, mod):
     return f"color({value} {mod})"
 
 
-WHITE = "#C4C4C4"
+WHITE = "#AEB7BF"
 GRAY = "#9090A0"
 PURPLE = "#E572D2"
 PINK = "#EF51AA"
