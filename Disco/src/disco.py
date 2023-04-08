@@ -43,6 +43,7 @@ WHITE = "#AEB7BF"
 GRAY = "#9090A0"
 PURPLE = "#E572D2"
 PINK = "#EF51AA"
+VIOLET = "#8888BC"
 BLUE = "#6699FF"
 GREEN = "#C5CC4B"
 YELLOW = "#EDC61A"
@@ -53,7 +54,6 @@ CRIMSON = "#E5476C"
 CLEAR_WHITE = "#FFFFFF"
 FADED_GRAY = "#51515D"
 FADED_VIOLET = "#5E5E8E"
-LIGHT_VIOLET = color(FADED_VIOLET, "l(+ 25%)")
 
 BLUISH_BLACK = "#202830"
 DARK_BLUE = "#384868"
@@ -67,13 +67,13 @@ UNDERLINE = Style(font_style="underline")
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
-OPERATOR = Style(LIGHT_VIOLET)
-BG_PUNCTUATION = Style(LIGHT_VIOLET)
+OPERATOR = Style(VIOLET)
+BG_PUNCTUATION = Style(VIOLET)
 PUNCTUATION = Style(DARK_ORANGE)
-ACCESSOR = Style(LIGHT_VIOLET)
+ACCESSOR = Style(VIOLET)
 COMMENT = Style(GRAY)
 COMMENT_DIM = Style(FADED_VIOLET)
-COMMENT_LIGHT = Style(LIGHT_VIOLET)
+COMMENT_LIGHT = Style(VIOLET)
 COMMENT_HIGHLIGHT = Style(WHITE)
 PRIMITIVE = Style(DARK_ORANGE)
 STRING = Style(GREEN)
@@ -107,7 +107,7 @@ COLOR_SCHEME = {
         "selection_border_width": "0",
         "invisibles": color(DARK_BLUE, "l(+ 10%)"),
 
-        "highlight": LIGHT_VIOLET,
+        "highlight": color(WHITE, "a(75%)"),
         "find_highlight": YELLOW,
         "find_highlight_foreground": BLUISH_BLACK,
         "scroll_highlight": WHITE,
@@ -227,7 +227,7 @@ rec(VARIABLE,
     'variable.{language|other.substitution}',
     'support.{constant|variable}')
 rec(BG_PUNCTUATION,
-    '(punctuation.{section|separator|terminator|definition.generic}) -source.json -string')
+    '(punctuation.{section|separator|terminator|definition.generic}) -string')
 rec(PUNCTUATION,
     'punctuation.separator.continuation',
     'punctuation.definition.{template-expression|variable}',
