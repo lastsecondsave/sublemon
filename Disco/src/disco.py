@@ -524,7 +524,7 @@ rec(PUNCTUATION,
     'markup.list.numbered.bullet')
 rec(BG_PUNCTUATION,
     'punctuation.definition.{attributes|bold|constant|italic|metadata}',
-    'meta.link.inet punctuation.definition.link')
+    'meta.link punctuation.definition.{link|reference}')
 rec(COMMENT,
     'meta.code-fence.definition')
 rec(STRING,
@@ -540,7 +540,8 @@ rec(BOLD,
 rec(UNDERLINE,
     'markup.underline.link')
 rec(FOREGROUND,
-    'entity.name.reference.link')
+    'entity.name.reference.link',
+    'markup.underline.link.markdown punctuation.separator.path')
 
 src('diff')
 rec(META, 'meta.diff.range')
