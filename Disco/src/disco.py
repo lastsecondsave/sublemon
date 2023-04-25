@@ -261,8 +261,7 @@ src('python')
 rec(KEYWORD,
     'keyword.operator.logical')
 rec(META,
-    '{punctuation.definition|variable}.annotation',
-    'meta.annotation meta.path')
+    '{punctuation.definition|variable}.annotation')
 rec(STRING,
     'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
 rec(ITALIC,
@@ -504,7 +503,7 @@ rec(PRIMITIVE,
     'constant.other.color')
 rec(SPECIAL,
     'support.type.vendor-prefix')
-rec(STORAGE + ITALIC,
+rec(STORAGE,
     'meta.property-name')
 rec(VARIABLE,
     'entity.other.pseudo-class -punctuation')
