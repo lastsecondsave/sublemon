@@ -5,9 +5,9 @@ class RsyncCommand(ChimneyCommand):
     def setup(self, build):
         build.in_project_dir()
 
-        build.cmd.appendleft("rsync", "-e", "ssh", "-avr")
+        build.cmd.appendleft("rsync", "-e", "ssh", "-avr", "--relative")
 
-        if delete := build.opt("delete"):
+        if build.opt("delete") is True:
             build.cmd.append("--delete-after")
 
         host = build.opt("host", required=True)
