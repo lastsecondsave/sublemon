@@ -31,10 +31,12 @@ def setup_python_exec(build, module=None, allow_venv=True):
 
 
 def find_venv(build):
-    if build.opt("allow_venv") is False:
+    venv = build.opt("venv", default=pref("python_venv", window=build.window))
+
+    if venv is False:
         return None
 
-    if venv := pref("python_venv", window=build.window):
+    if isinstance(venv, str):
         return venv
 
     for folder in build.window.folders():
