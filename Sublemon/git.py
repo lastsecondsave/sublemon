@@ -6,12 +6,7 @@ from pathlib import Path
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import (
-    active_view_contains_file,
-    find_in_parent_directories,
-    start_process,
-    view_cwd,
-)
+from . import active_view_contains_file, locate_config, start_process, view_cwd
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 
@@ -29,7 +24,7 @@ def find_dotgit(window, error_when_not_found=True):
             dotgit = path
 
     if not dotgit:
-        dotgit = find_in_parent_directories(window.active_view(), ".git")
+        dotgit = locate_config(window.active_view(), ".git")
 
     if not dotgit and error_when_not_found:
         sublime.error_message("Not a git repository.")

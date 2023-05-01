@@ -2,7 +2,7 @@ import os
 import re
 from pathlib import Path
 
-from . import RUNNING_ON_WINDOWS, pref
+from . import RUNNING_ON_WINDOWS, locate_config, pref
 from .chimney import ChimneyBuildListener, ChimneyCommand
 
 DEFAULT_BINARY = "python" if RUNNING_ON_WINDOWS else "python3"
@@ -31,7 +31,7 @@ def setup_python_exec(build, module=None, allow_venv=True):
 
 
 def find_venv(build):
-    venv = build.opt("venv", default=pref("python_venv", window=build.window))
+    venv = build.opt("venv") or pref("python_venv", window=build.window)
 
     if venv is False:
         return None
@@ -69,9 +69,11 @@ class PylintCommand(ChimneyCommand):
         if disable := build.opt("disable"):
             build.cmd.append(f"--disable={','.join(disable)}")
 
-        pylintrc = build.opt("pylintrc")
-        if not pylintrc:
-            pylintrc = pref("pylintrc", window=self.window, expand=True)
+        pylintrc = (
+            build.opt("pylintrc")
+            or pref("pylintrc", window=self.window, expand=True)
+            or locate_config(build.window.active_view(), "pylintrc", "pyproject.toml")
+        )
 
         if pylintrc:
             build.cmd.append(f"--rcfile={pylintrc}")

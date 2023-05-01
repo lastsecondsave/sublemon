@@ -53,7 +53,7 @@ def view_cwd(view):
     return Path.home()
 
 
-def find_in_parent_directories(view, *file_names):
+def locate_config(view, *file_names):
     active_file = view.file_name()
     if not active_file:
         return None

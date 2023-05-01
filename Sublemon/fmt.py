@@ -8,8 +8,8 @@ from . import (
     POPEN_CREATION_FLAGS,
     RUNNING_ON_LINUX,
     RUNNING_ON_WINDOWS,
-    find_in_parent_directories,
     indent_params,
+    locate_config,
     pref,
     sad_message,
     view_cwd,
@@ -49,7 +49,7 @@ class Prettier:
         return self.FILES
 
     def cmd(self, view, scope):
-        config = find_in_parent_directories(view, ".prettierrc", ".prettierrc.json")
+        config = locate_config(view, ".prettierrc", ".prettierrc.json")
 
         binary = "prettier.cmd" if RUNNING_ON_WINDOWS else "prettier"
         cmd = [binary, f"--stdin-filepath={self.FILES[scope]}"]
@@ -79,7 +79,7 @@ class ClangFormat:
 
     def cmd(self, view, scope):
         cmd = ["clang-format", f"--assume-filename={self.FILES[scope]}"]
-        config = find_in_parent_directories(view, ".clang-format")
+        config = locate_config(view, ".clang-format")
 
         if not config:
             style = ", ".join(self.generate_style(view, scope))
@@ -109,7 +109,7 @@ class CMakeFormat:
         return ("source.cmake",)
 
     def cmd(self, view, _scope):
-        config = find_in_parent_directories(view, ".cmake-format", ".cmake-format.json")
+        config = locate_config(view, ".cmake-format", ".cmake-format.json")
 
         cmd = ["cmake-format", "-"]
 
