@@ -11,7 +11,7 @@ from sublime_plugin import (
     WindowCommand,
 )
 
-from . import pref
+from . import RUNNING_ON_WINDOWS, pref
 
 
 class OpenFilePathCommand(WindowCommand):
@@ -149,6 +149,14 @@ class OpenFileUnderCursorCommand(TextCommand):
         path = Path(path[: match.start()])
 
         paths = [path] if path.is_absolute() else [root / path for root in roots]
+
+        if not RUNNING_ON_WINDOWS and "\\" in str(path):
+            extra_path = Path(str(path).replace("\\", "/"))
+            paths.extend(
+                [path]
+                if extra_path.is_absolute()
+                else [root / extra_path for root in roots]
+            )
 
         for abs_path in paths:
             if abs_path.is_file():
