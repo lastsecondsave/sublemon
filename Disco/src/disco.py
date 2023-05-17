@@ -411,8 +411,7 @@ rec(ITALIC,
 
 src('makefile')
 rec(PUNCTUATION,
-    'keyword.other.single-character-variable',
-    'variable.parameter keyword.other.block')
+    'meta.interpolation keyword.other.block')
 rec(VARIABLE,
     'variable.other')
 rec(FOREGROUND,
@@ -540,7 +539,7 @@ rec(UNDERLINE,
     'markup.underline.link')
 rec(FOREGROUND,
     'entity.name.reference.link',
-    'markup.underline.link.markdown punctuation.separator.path')
+    'markup.underline.link punctuation.separator.path')
 
 src('diff')
 rec(META, 'meta.diff.range')
