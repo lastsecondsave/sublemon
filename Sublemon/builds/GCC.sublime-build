@@ -13,7 +13,7 @@
     },
     {
       "name": "Debug Build",
-      "shell_cmd": "-Og -g \"$file\""
+      "shell_cmd": "-g \"$file\""
     }
   ]
 }
