@@ -323,7 +323,7 @@ class SelectBetweenMarkersInputHandler(TextInputHandler):
             return None
 
         def escape(value):
-            return html.escape(value.replace(" ", "_"), quote=False)
+            return html.escape(value.replace(" ", "·"), quote=False)
 
         markers = (f"<i>{escape(x)}</i>" for x in split_markers(text))
         return sublime.Html(" ... ".join(markers))
