@@ -169,6 +169,7 @@ class FmtCommand(TextCommand):
         PythonFormat(),
         JavaFormat(),
         Formatter("source.rust", "rustfmt"),
+        Formatter("source.cs", ["dotnet", "csharpier"]),
         Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-sr", "-"]),
         Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
