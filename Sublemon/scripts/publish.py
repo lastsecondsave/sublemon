@@ -52,6 +52,7 @@ def mute_files():
     mute(PACKAGES / "Rust" / "Default.sublime-keymap")
 
     mute(PACKAGES / "Markdown" / "Default.sublime-keymap")
+    mute(PACKAGES / "Markdown" / "Symbol List - Reference Link.tmPreferences")
 
     mute(PACKAGES / "Java" / "Ant.sublime-build")
     mute(PACKAGES / "Java" / "JavaC.sublime-build")
