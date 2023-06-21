@@ -369,10 +369,13 @@ rec(SPECIAL,
     'entity.name.constant',
     'constant.other.flag',
     'storage.type.nullable')
-rec(FOREGROUND,
-    'storage.type.function.lambda')
 rec(META,
     'meta.annotation variable.annotation')
+rec(OPERATOR,
+    'punctuation.definition.annotation',
+    'keyword.declaration.function.arrow')
+rec(FOREGROUND,
+    'storage.type.function.lambda')
 
 src('powershell')
 rec(PUNCTUATION,
