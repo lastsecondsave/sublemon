@@ -1,4 +1,5 @@
 import subprocess
+from timeit import default_timer as timer
 
 import sublime
 from sublime import Region
@@ -190,6 +191,7 @@ class FmtCommand(TextCommand):
 
         def run_formatter():
             cmd, shell = formatter.cmd(self.view, scope)
+            start_time = timer()
 
             process = subprocess.run(
                 cmd,
@@ -203,7 +205,11 @@ class FmtCommand(TextCommand):
 
             if process.returncode == 0:
                 replacement = process.stdout
-                self.view.run_command("replace_with_formatted", {"text": replacement})
+                time_taken = round((timer() - start_time) * 1000, 3)
+                self.view.run_command(
+                    "replace_with_formatted",
+                    {"text": replacement, "time_taken": time_taken},
+                )
             else:
                 sad_message(f"Failed to run program: {cmd}")
                 sublime.error_message(process.stderr.strip())
@@ -213,6 +219,7 @@ class FmtCommand(TextCommand):
 
 class ReplaceWithFormattedCommand(TextCommand):
     # pylint: disable=arguments-differ
-    def run(self, edit, text):
+    def run(self, edit, text, time_taken):
         region = Region(0, self.view.size())
         self.view.replace(edit, region, text)
+        self.view.window().status_message(f"Formatted in {time_taken} ms")
