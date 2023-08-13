@@ -342,7 +342,7 @@ rec(COMMENT_DIM,
 rec(COMMENT_LIGHT,
     'comment.block.documentation & (string.quoted | punctuation.definition.string)')
 rec(ITALIC,
-    'text.html.javadoc markup.underline.link',
+    'comment.block.documentation markup.underline.link',
     'meta.annotation.parameters variable.parameter')
 rec(STORAGE,
     'meta.import entity.name.class',

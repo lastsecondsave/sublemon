@@ -94,6 +94,7 @@ generate(
             "make_unique",
             "move",
             "sizeof",
+            "static_assert",
         ],
         ("Block", Icon.BLOCK): [
             "catch (${1:const std::exception& e}) {}",

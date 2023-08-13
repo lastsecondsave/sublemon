@@ -74,6 +74,7 @@ completions = {
         "for ($1) {}",
         "if ($1) {}",
         "interface ${1:$FILENAME} {}",
+        "record ${1:$FILENAME} {}",
         "switch ($1) {}",
         "synchronized (${1:this}) {}",
         "try {}",
@@ -116,7 +117,7 @@ completions = {
 generate("source.java", snippets, completions)
 
 generate(
-    "source.java comment.block.documentation.javadoc",
+    "source.java comment.block.documentation",
     snippets={
         "code": ("@code", "{@code $SEL1}"),
         "link": ("@link", "{@link $SEL1}"),

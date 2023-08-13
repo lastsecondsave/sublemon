@@ -23,6 +23,7 @@ generate(
         ("Block", Icon.BLOCK): [
             "function($1)<=>endfunction()",
             "if($1)<=>endif()",
+            "foreach($1)<=>endforeach()",
             "macro($1)<=>endmacro()",
         ],
         ("Variable", Icon.CONSTANT): [

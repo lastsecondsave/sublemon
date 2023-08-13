@@ -100,6 +100,7 @@
 
   /* SHIFT + ALT */
 
+  { "keys": ["shift+alt+f8"], "command": "toggle_show_open_files" },
   { "keys": ["shift+alt+f9"], "command": "toggle_ligatures" },
   { "keys": ["shift+alt+f11"], "command": "toggle_setting", "args": {"setting": "draw_indent_guides"} },
   { "keys": ["shift+alt+f12"], "command": "toggle_minimap" },
@@ -131,6 +132,7 @@
   { "keys": ["ctrl+k", "ctrl+f"], "command": "fmt" },
   { "keys": ["ctrl+k", "ctrl+j"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete to BOL.sublime-macro"} },
   { "keys": ["ctrl+k", "ctrl+'"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
+  { "keys": ["ctrl+k", "ctrl+m"], "command": "select_between_markers" },
 
   /* L3: CTRL */
 
