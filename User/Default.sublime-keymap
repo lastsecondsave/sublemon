@@ -1,6 +1,13 @@
 [
   /* CTRL */
 
+  { "keys": ["ctrl+pageup"], "command": "focus_to_left",
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["ctrl+pagedown"], "command": "focus_to_right",
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+
   { "keys": ["ctrl+-"], "command": "one_up", "args": {"negative": true} },
   { "keys": ["ctrl+="], "command": "one_up" },
   { "keys": ["ctrl+o"], "command": "open_file_path" },
@@ -74,8 +81,6 @@
   { "keys": ["ctrl+alt+i"], "command": "reindent", "args": {"single_line": true} },
   { "keys": ["ctrl+alt+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
-  { "keys": ["ctrl+alt+["], "command": "focus_to_left" },
-  { "keys": ["ctrl+alt+]"], "command": "focus_to_right" },
 
   { "keys": ["ctrl+alt+a"], "command": "alignment" },
   { "keys": ["ctrl+alt+s"], "command": "selection_to_cursors" },
