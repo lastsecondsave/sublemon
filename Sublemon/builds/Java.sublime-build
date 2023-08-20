@@ -1,5 +1,5 @@
 {
   "selector": "source.java",
-  "cmd": ["java", "$file_name"],
+  "cmd": ["java", "-DFile.Encoding=UTF-8", "$file_name"],
   "file_regex": "(.+\\.java):(\\d+):() error: (.*)"
 }
