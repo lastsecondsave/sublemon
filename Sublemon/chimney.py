@@ -470,8 +470,12 @@ def start_process(cmd, env, cwd):
         for key, val in env.items():
             if val is None:
                 os_env.pop(key, None)
-            else:
-                os_env[key] = os.path.expandvars(val)
+                continue
+
+            if isinstance(val, list):
+                val = "".join(val)
+
+            os_env[key] = os.path.expandvars(val)
 
     if cmd.shell:
         args = str(cmd)
