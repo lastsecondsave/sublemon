@@ -27,6 +27,11 @@ contexts:
         2: entity.name.filename
         3: string.description
 
+    - match: (\[WARNING\]) (COMPILATION WARNING)
+      captures:
+        1: constant.other.indicator.warning
+        2: constant.other.indicator.note
+
     - match: ^\[ERROR\] Failed to execute goal
       set:
         - meta_scope: comment.failure
@@ -34,19 +39,19 @@ contexts:
     - match: (\[ERROR\]) (COMPILATION ERROR)
       captures:
         1: constant.other.indicator.error
-        2: style.italic constant.other.indicator.error
+        2: constant.other.indicator.note
 
     - match: (\[INFO\]) (?:(--- .+ ---)|(BUILD FAILURE)|(BUILD SUCCESS))
       captures:
-        1: punctuation.formatting
-        2: entity.name.section
-        3: style.italic constant.other.indicator.error
-        4: style.italic constant.other.indicator.success
+        1: constant.other.indicator.info
+        2: comment.highlight
+        3: constant.other.indicator.error
+        4: constant.other.indicator.success
 
     - match: (\[INFO\])\s+(T E S T S)
       captures:
-        1: punctuation.formatting
-        2: style.italic entity.name.section
+        1: constant.other.indicator.info
+        2: entity.name.section
       push: junit5-tests
 
     - include: indicators
@@ -57,7 +62,7 @@ contexts:
     - match: '^\[WARNING\]'
       scope: constant.other.indicator.warning
     - match: '^\[INFO\]'
-      scope: punctuation.formatting
+      scope: constant.other.indicator.info
 
   junit5-tests:
     - meta_scope: meta.tests

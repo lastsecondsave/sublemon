@@ -27,7 +27,6 @@ snippets = {
         "logger",
         "private static final Logger log = LoggerFactory.getLogger(${1:$FILENAME}.class);",
     ),
-    "fori": ("for i", "for (int ${1:i} = 0; $1 < ${2:imax}; ${3:$1++}) {}"),
     "fort": (
         "for iterator",
         "for (Iterator<$1> ${2:itr} = ${3:list}.iterator(); $2.hasNext(); ) {}",
@@ -42,6 +41,10 @@ snippets = {
     "set": ("setter", setter),
     "gs": ("getter + setter", getter + setter),
     "rnn": "Objects.requireNonNull($SEL1)",
+    ";;": (
+        "i = 0; i < imax; i++",
+        "int ${1:i} = 0; $1 < ${2:imax}; ${3:++$1}",
+    ),
 }
 
 completions = {
@@ -52,6 +55,7 @@ completions = {
         "extends",
         "implements",
         "import",
+        "instanceof",
         "package",
         "return",
         "throw",
@@ -74,7 +78,7 @@ completions = {
         "for ($1) {}",
         "if ($1) {}",
         "interface ${1:$FILENAME} {}",
-        "record ${1:$FILENAME} {}",
+        "record ${1:$FILENAME}($2) {$0}",
         "switch ($1) {}",
         "synchronized (${1:this}) {}",
         "try {}",
@@ -82,6 +86,8 @@ completions = {
         ("elif", "else if ($1) {}"),
     ],
     ("Annotation", Icon.META): [
+        "FunctionalInterface",
+        "Nullable",
         "Override",
         "SuppressWarnings",
     ],

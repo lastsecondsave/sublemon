@@ -9,6 +9,7 @@
     ".pylintrc",
     "CPPLINT.cfg",
     "desktop",
+    "Doxyfile",
     "inf",
     "ini",
     "pylintrc",

@@ -273,7 +273,7 @@ contexts:
         2: variable.other.readwrite.dockerfile
 
   flags:
-    - match: --\w+
+    - match: --[\w-]+
       scope: variable.parameter.flag.dockerfile
       push:
         - meta_scope: meta.flag.dockerfile
