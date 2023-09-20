@@ -1,10 +1,10 @@
 [
   /* CTRL */
 
-  { "keys": ["ctrl+pageup"], "command": "focus_to_left",
+  { "keys": ["ctrl+pageup"], "command": "tabber_next", "args": {"forward": false},
     "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
   },
-  { "keys": ["ctrl+pagedown"], "command": "focus_to_right",
+  { "keys": ["ctrl+pagedown"], "command": "tabber_next",
     "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
   },
 
@@ -21,6 +21,34 @@
   },
 
   /* ALT */
+
+  { "keys": ["alt+1"], "command": "tabber_focus", "args": { "index": 0 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+2"], "command": "tabber_focus", "args": { "index": 1 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+3"], "command": "tabber_focus", "args": { "index": 2 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+4"], "command": "tabber_focus", "args": { "index": 3 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+5"], "command": "tabber_focus", "args": { "index": 4 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+6"], "command": "tabber_focus", "args": { "index": 5 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+7"], "command": "tabber_focus", "args": { "index": 6 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+8"], "command": "tabber_focus", "args": { "index": 7 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
+  { "keys": ["alt+9"], "command": "tabber_focus", "args": { "index": 8 },
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
 
   { "keys": ["alt+up"], "command": "swap_line_up" },
   { "keys": ["alt+down"], "command": "swap_line_down" },
