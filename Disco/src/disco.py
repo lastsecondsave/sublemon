@@ -395,7 +395,8 @@ src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'keyword.operator.{end-of-options|expansion|herestring}',
-    'keyword.operator.assignment.{pipe|redirection}')
+    'keyword.operator.assignment.{pipe|redirection}',
+    'meta.interpolation.parameter keyword.operator.assignment')
 rec(STORAGE,
     'keyword.declaration.{alias|variable} | support.function.export')
 rec(VARIABLE,
@@ -448,7 +449,7 @@ rec(STORAGE,
 rec(KEYWORD,
     'keyword.operator.word')
 rec(VARIABLE,
-    'entity.name.constant.preprocessor')
+    'entity.name.constant')
 
 src('objc++', 'objc')
 rec(PARAMETER + ITALIC,
@@ -564,6 +565,7 @@ rec(CRIMSON, 'constant.other.indicator.error')
 rec(ORANGE, 'constant.other.indicator.warning')
 rec(GREEN, 'constant.other.indicator.success')
 rec(PURPLE, 'constant.other.indicator.note')
+rec(COMMENT, 'constant.other.indicator.info')
 rec(FOREGROUND, 'constant.numeric.date')
 
 generate()
