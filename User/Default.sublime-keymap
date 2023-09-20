@@ -84,8 +84,8 @@
 
   /* CTRL + SHIFT */
 
-  { "keys": ["ctrl+shift+pageup"], "command": "move_view", "args": {"forward": false} },
-  { "keys": ["ctrl+shift+pagedown"], "command": "move_view" },
+  { "keys": ["ctrl+shift+pageup"], "command": "tabber_move", "args": {"forward": false} },
+  { "keys": ["ctrl+shift+pagedown"], "command": "tabber_move" },
 
   { "keys": ["ctrl+shift+-"], "command": "insert", "args": {"characters": "–"} },
   { "keys": ["ctrl+shift+="], "command": "insert", "args": {"characters": "—"} },
