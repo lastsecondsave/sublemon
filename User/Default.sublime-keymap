@@ -11,7 +11,6 @@
   { "keys": ["ctrl+-"], "command": "one_up", "args": {"negative": true} },
   { "keys": ["ctrl+="], "command": "one_up" },
   { "keys": ["ctrl+o"], "command": "open_file_path" },
-  { "keys": ["ctrl+'"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
   { "keys": ["ctrl+b"], "command": "show_panel", "args": {"panel": "output.exec"} },
   { "keys": ["ctrl+b"], "command": "hide_panel",
     "context": [
@@ -62,6 +61,7 @@
   { "keys": ["alt+a"], "command": "single_selection",
     "context": [{"key": "num_selections", "operator": "not_equal", "operand": 1}]
   },
+  { "keys": ["alt+s"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
   { "keys": ["alt+d"], "command": "chain", "args": {
     "commands": [
       ["move", {"by": "subwords", "forward": false}],
