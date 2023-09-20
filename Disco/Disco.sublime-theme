@@ -380,7 +380,7 @@
     },
     {
       "class": "tab_label",
-      "parents": [{"class": "tab_control", "attributes": ["selected"]}],
+      "parents": [{"class": "tab_control", "attributes": ["highlighted"]}],
       "fg": "var(label_white)"
     },
     {
