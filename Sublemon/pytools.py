@@ -31,7 +31,10 @@ def setup_python_exec(build, module=None, allow_venv=True):
 
 
 def find_venv(build):
-    venv = build.opt("venv") or pref("python_venv", window=build.window)
+    venv = build.opt("venv")
+
+    if venv is None:
+        venv = pref("python_venv", window=build.window)
 
     if venv is False:
         return None
