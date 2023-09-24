@@ -10,7 +10,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS, listify, sad_message
+from . import RUNNING_ON_WINDOWS, listify
 from .opener import find_project_folder
 
 
@@ -305,7 +305,7 @@ class ChimneyCommand(WindowCommand):
 
         self.active_build = start_build(build, self.window, self.panel)
 
-        marker = "⭭" if build.cmd.shell else "⭍"
+        marker = "⭍" if build.cmd.shell else "↓"
         print(f"{marker} [{self.active_build.process.pid}] {build.cmd}")
 
     def __del__(self):
@@ -486,7 +486,7 @@ def start_process(cmd, env, cwd):
         # pylint: disable=consider-using-with
         return subprocess.Popen(args, **process_params)
     except:
-        sad_message(f"Failed to run program: {cmd}")
+        print(f"!! Failed to run program: {cmd}")
         raise
 
 
@@ -500,6 +500,6 @@ def kill_process(process):
             os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
             process.terminate()
         except ProcessLookupError:
-            sad_message(f"Process {process.pid} doesn't exist")
+            print(f"!! Process {process.pid} doesn't exist")
 
     process.wait()

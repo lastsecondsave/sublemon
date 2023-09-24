@@ -73,10 +73,6 @@ def active_view_contains_file(window):
     return bool(window.active_view() and window.active_view().file_name())
 
 
-def sad_message(*args):
-    print("☹", *args)
-
-
 def start_process(args, cwd=None):
     # pylint: disable=consider-using-with
     subprocess.Popen(

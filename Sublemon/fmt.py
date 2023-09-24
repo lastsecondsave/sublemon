@@ -12,7 +12,6 @@ from . import (
     indent_params,
     locate_config,
     pref,
-    sad_message,
     view_cwd,
 )
 
@@ -211,7 +210,7 @@ class FmtCommand(TextCommand):
                     {"text": replacement, "time_taken": time_taken},
                 )
             else:
-                sad_message(f"Failed to run program: {cmd}")
+                print(f"!! Failed to run program: {cmd}")
                 sublime.error_message(process.stderr.strip())
 
         sublime.set_timeout_async(run_formatter, 0)

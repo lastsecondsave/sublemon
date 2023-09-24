@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from . import RUNNING_ON_WINDOWS, listify, pref, sad_message
+from . import RUNNING_ON_WINDOWS, listify, pref
 from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
 from .pytools import setup_python_exec
 
@@ -60,7 +60,7 @@ class VcvarsCommand(ChimneyCommand):
         process = subprocess.run(cmd, shell=True, capture_output=True)
 
         if process.returncode != 0:
-            sad_message(f"Failed to run program: {cmd}")
+            print(f"!! Failed to run program: {cmd}")
             build.cancel("Failed to capture variables from vcvars")
 
         captures = {}
