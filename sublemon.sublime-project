@@ -29,13 +29,13 @@
 
   "build_systems": [
     {
-      "name": "Sublemon - Publish",
+      "name": "> Publish",
       "target": "python",
       "cmd": ["scripts/publish.py"],
       "working_dir": "${project_path}/Sublemon"
     },
     {
-      "name": "Sublemon - Lint Plugins",
+      "name": "> Lint Plugins",
       "target": "pylint",
       "cmd": [
         "Sublemon",
@@ -44,7 +44,7 @@
       "working_dir": "${project_path}"
     },
     {
-      "name": "Sublemon - Fmt",
+      "name": "> Fmt",
       "shell_cmd": "black . && isort .",
       "cmd_preview": "black + isort",
       "working_dir": "${project_path}/Sublemon"
