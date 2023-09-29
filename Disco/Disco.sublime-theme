@@ -23,7 +23,7 @@
 
     "label_gray": "#838495",
     "label_white": "#D2D2D2",
-    "label_blue": "#77ABFF",
+    "label_blue": "#87B5FF",
 
     "outer_gray": "color(var(panel_gray_dark) s(+ 5%) l(+ 2%))",
     "outer_dark": "color(var(panel_black) blend(var(outer_gray) 80%))",
@@ -380,7 +380,7 @@
     },
     {
       "class": "tab_label",
-      "parents": [{"class": "tab_control", "attributes": ["highlighted"]}],
+      "parents": [{"class": "tab_control", "attributes": ["highlighted", "selected"]}],
       "fg": "var(label_white)"
     },
     {

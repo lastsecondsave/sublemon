@@ -549,8 +549,12 @@ src('diff')
 rec(META, 'meta.diff.range')
 rec(META + UNDERLINE, 'entity.name.section')
 rec(BLUE, 'meta.diff.header')
-rec(GREEN, 'markup.inserted')
-rec(CRIMSON, 'markup.deleted')
+rec(GREEN,
+    'markup.inserted',
+    'punctuation.definition.to-file')
+rec(CRIMSON,
+    'markup.deleted',
+    'punctuation.definition.from-file')
 
 txt('output')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC, 'storage.category.hash')
