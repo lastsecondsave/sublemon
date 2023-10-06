@@ -16,14 +16,14 @@
     "FADED_GRAY": "#51515D",
     "FADED_VIOLET": "#5E5E8E",
 
-    "panel_blue": "#264F78",
+    "panel_blue": "#3C4E85",
     "panel_black": "#161E26",
     "panel_gray": "#54545E",
     "panel_gray_dark": "#2E333C",
 
     "label_gray": "#838495",
     "label_white": "#D2D2D2",
-    "label_blue": "#87B5FF",
+    "label_blue": "#7F9BCC",
 
     "outer_gray": "color(var(panel_gray_dark) s(+ 5%) l(+ 2%))",
     "outer_dark": "color(var(panel_black) blend(var(outer_gray) 80%))",
@@ -529,7 +529,7 @@
       "class": "quick_panel_label",
       "fg": "var(label_white)",
       "match_fg": "var(label_blue)",
-      "selected_fg": "var(CLEAR_WHITE)",
+      "selected_fg": "var(label_white)",
       "selected_match_fg": "var(label_blue)",
       "font.face": "var(font_face)",
       "font.size": "var(font_size_quickpanel)"
@@ -542,9 +542,9 @@
     {
       "class": "quick_panel_path_label",
       "fg": "var(label_gray)",
-      "match_fg": "var(label_white)",
+      "match_fg": "var(label_blue)",
       "selected_fg": "var(label_gray)",
-      "selected_match_fg": "var(label_white)",
+      "selected_match_fg": "var(label_blue)",
       "font.face": "var(font_face)",
       "font.size": "var(font_size)"
     },
