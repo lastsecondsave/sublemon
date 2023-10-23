@@ -98,8 +98,9 @@ COLOR_SCHEME = {
         "foreground": WHITE,
         "caret": CLEAR_WHITE,
         "line_highlight": color(FADED_GRAY, "a(30%)"),
-        "minimap_border": color(CLEAR_WHITE, "a(70%)"),
-        "brackets_foreground": DARK_ORANGE,
+        "fold_marker": FADED_VIOLET,
+        "brackets_foreground": VIOLET,
+        "tags_foreground": VIOLET,
 
         "selection": DARK_BLUE,
         "inactive_selection": color(DARK_BLUE, "a(80%)"),
