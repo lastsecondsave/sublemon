@@ -90,6 +90,7 @@ generate(
         ],
         ("Function", Icon.FUNCTION): [
             "defined",
+            "make_optional",
             "make_shared",
             "make_unique",
             "move",
@@ -123,6 +124,7 @@ generate(
         ],
         ("Class", Icon.TYPE): [
             "auto",
+            "optional",
             "pair",
             "runtime_error",
             "shared_ptr",
@@ -153,6 +155,7 @@ generate(
         ],
         ("Constant", Icon.CONSTANT): [
             "false",
+            "nullopt",
             "nullptr",
             "true",
         ],

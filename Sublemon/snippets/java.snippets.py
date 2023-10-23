@@ -104,10 +104,11 @@ completions = {
     ],
     ("Class", Icon.TYPE): [
         "Exception",
-        "Optional",
         "HashMap",
+        "Optional",
         "RuntimeException",
         "String",
+        "var",
     ],
     ("Constant", Icon.CONSTANT): [
         "false",

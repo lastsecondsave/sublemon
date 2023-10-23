@@ -21,6 +21,7 @@ generate(
         "ie": ("if x else y", "if $1 else $0"),
         "lm": "lambda ${1:x}: ${0:None}",
         "dc": ("doc-comment", '"""$SEL0"""'),
+        "len": "len($SEL0)"
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
