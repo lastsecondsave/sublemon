@@ -30,7 +30,7 @@ contexts:
         3: constant.other.indicator.note
     - match: ‘.+?’|`.+?'
       scope: string.quoted
-    - match: '\[-W[\w-]+]'
+    - match: '\[[\w-]+]$'
       scope: comment.category
 
   listing:
