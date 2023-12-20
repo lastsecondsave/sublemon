@@ -10,21 +10,21 @@ FIRST_WORD_PATTERN = re.compile(r"^[#@]?([\w\-:\.]+\w)")
 
 
 class Icon:
-    KEYWORD = ""
-    MODIFIER = ""
-    ACCESS_MODIFIER = ""
-    BLOCK = ""
-    CONVERT = ""
-    META = ""
-    NAMESPACE = ""
-    FUNCTION = ""
-    TYPE = ""
-    PRIMITIVE_TYPE = ""
-    CONSTANT = ""
-    VARIABLE = ""
-    EXTERNAL = ""
-    PROPERTY = ""
-    TAG = ""
+    KEYWORD = ""
+    MODIFIER = ""
+    ACCESS_MODIFIER = ""
+    BLOCK = ""
+    CONVERT = ""
+    META = ""
+    NAMESPACE = ""
+    FUNCTION = ""
+    TYPE = ""
+    PRIMITIVE_TYPE = ""
+    CONSTANT = ""
+    VARIABLE = ""
+    EXTERNAL = ""
+    PROPERTY = ""
+    TAG = ""
 
 
 def expand_custom_variables(content):
