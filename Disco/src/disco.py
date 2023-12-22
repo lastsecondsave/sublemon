@@ -348,7 +348,7 @@ rec(ITALIC,
 rec(STORAGE,
     'meta.import entity.name.class',
     'support.class',
-    'variable.language.wildcard.asterisk')
+    'constant.other.wildcard.asterisk')
 rec(OPERATOR,
     'keyword.declaration.function.arrow',
     'storage.modifier.array')
