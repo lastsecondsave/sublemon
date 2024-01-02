@@ -117,7 +117,7 @@ COLOR_SCHEME = {
         "guide": color(FADED_GRAY, "a(20%)"),
         "active_guide": color(FADED_GRAY, "a(40%)"),
         "stack_guide": color(FADED_GRAY, "a(20%)"),
-        "rulers": FADED_GRAY,
+        "rulers": color(FADED_GRAY, "a(40%)"),
 
         "line_diff_width": "2",
         "line_diff_added": FADED_GRAY,

@@ -121,6 +121,7 @@
 	"open_files_in_new_window": false,
 	"overlay_scroll_bars": "enabled",
 	"reveal_menu": false,
+	"ruler_style": "stippled",
 	"scroll_past_end": 0.25,
 	"scroll_speed": 0.0,
 	"shift_tab_unindent": true,
