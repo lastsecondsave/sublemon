@@ -10,7 +10,7 @@ FIRST_WORD_PATTERN = re.compile(r"^[#@]?([\w\-:\.]+\w)")
 
 
 class Icon:
-    KEYWORD = ""
+    KEYWORD = ""
     MODIFIER = ""
     ACCESS_MODIFIER = ""
     BLOCK = ""
@@ -23,7 +23,7 @@ class Icon:
     CONSTANT = ""
     VARIABLE = ""
     EXTERNAL = ""
-    PROPERTY = ""
+    PROPERTY = ""
     TAG = ""
 
 
