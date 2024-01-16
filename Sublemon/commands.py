@@ -455,7 +455,7 @@ class AddRulerCommand(TextCommand):
     def run(self, _edit, position):  # pylint: disable=arguments-differ
         settings = self.view.settings()
         rulers = settings.get("rulers", [])
-        rulers.append(int(position))
+        rulers.extend([int(p) for p in position.replace(",", " ").split()])
         settings.set("rulers", rulers)
 
     def input(self, _args):
