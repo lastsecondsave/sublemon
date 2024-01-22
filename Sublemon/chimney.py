@@ -401,9 +401,9 @@ class BuildContext:
             if not self.panel.empty:
                 self.panel.finalize()
             elif returncode:
-                self.print_line(f"Exited with {returncode}")
+                self.print_line(f"[ FAIL ] Exited with {returncode}")
             else:
-                self.print_line("OK")
+                self.print_line("[ OK ]")
 
             self.window.status_message(self.on_complete_message)
             print(f"✔ [{self.process.pid}] {returncode}")
