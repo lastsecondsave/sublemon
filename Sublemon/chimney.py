@@ -10,7 +10,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS, listify
+from . import RUNNING_ON_WINDOWS, listify, pref
 from .opener import find_project_folder
 
 
@@ -424,7 +424,10 @@ class BuildContext:
 
 
 def start_build(build, window, panel):
-    process = start_process(build.cmd, build.env, build.working_dir)
+    env = pref("env", default={}, window=window, settings=False)
+    env.update(build.env)
+
+    process = start_process(build.cmd, env, build.working_dir)
     ctx = BuildContext(window, panel, process, build)
 
     Thread(
@@ -464,18 +467,18 @@ def start_process(cmd, env, cwd):
         process_params["cwd"] = cwd
 
     if env:
-        os_env = os.environ.copy()
-        process_params["env"] = os_env
+        process_env = os.environ.copy()
+        process_params["env"] = process_env
 
         for key, val in env.items():
             if val is None:
-                os_env.pop(key, None)
+                process_env.pop(key, None)
                 continue
 
             if isinstance(val, list):
                 val = "".join(val)
 
-            os_env[key] = os.path.expandvars(val)
+            process_env[key] = os.path.expandvars(val)
 
     if cmd.shell:
         args = str(cmd)

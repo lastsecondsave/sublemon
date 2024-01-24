@@ -11,7 +11,7 @@ RUNNING_ON_LINUX = sublime.platform() == "linux"
 POPEN_CREATION_FLAGS = subprocess.CREATE_NO_WINDOW if RUNNING_ON_WINDOWS else 0
 
 
-def pref(key, default=None, view=None, window=None, expand=False):
+def pref(key, default=None, view=None, window=None, expand=False, settings=True):
     value = None
 
     if view:
@@ -20,9 +20,8 @@ def pref(key, default=None, view=None, window=None, expand=False):
     if window:
         value = (window.project_data() or {}).get("settings", {}).get(key)
 
-    if value is None:
-        settings = sublime.load_settings("Sublemon.sublime-settings")
-        value = settings.get(key)
+    if value is None and settings:
+        value = sublime.load_settings("Sublemon.sublime-settings").get(key)
 
     if value is None:
         return default
