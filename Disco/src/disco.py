@@ -461,6 +461,14 @@ rec(FOREGROUND,
     'support.constant.cocoa',
     'punctuation.separator.arguments')
 
+src('go')
+rec(KEYWORD,
+    'support.function.builtin')
+rec(STORAGE,
+    'support.type.builtin')
+rec(META,
+    '{punctuation.definition|variable}.annotation')
+
 src('rust')
 rec(STORAGE,
     'meta.macro support.function -meta.block.macro-body',
