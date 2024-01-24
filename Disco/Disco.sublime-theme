@@ -92,7 +92,7 @@
       "fg": "var(label_white)",
       "font.face": "var(font_face)",
       "font.size": "var(font_size)",
-      "font.bold": true
+      "font.bold": false
     },
     {
       "class": "sidebar_label",
