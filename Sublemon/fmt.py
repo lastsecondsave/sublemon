@@ -16,7 +16,12 @@ from . import (
 )
 
 
-class Formatter:
+class BasicFormatter:
+    def error(self, message):
+        return message
+
+
+class Formatter(BasicFormatter):
     def __init__(self, scope, command, shell=False, windows=None, linux=None):
         self.scopes = (scope,)
         self.shell = shell
@@ -35,7 +40,7 @@ class Formatter:
         return (self.command, self.shell)
 
 
-class Prettier:
+class Prettier(BasicFormatter):
     FILES = {
         "source.json": "file.json",
         "source.js": "file.js",
@@ -65,8 +70,11 @@ class Prettier:
 
         return (cmd, False)
 
+    def error(self, message):
+        return message.replace("[error] ", "")
 
-class ClangFormat:
+
+class ClangFormat(BasicFormatter):
     FILES = {
         "source.c": "file.c",
         "source.c++": "file.cpp",
@@ -104,7 +112,7 @@ class ClangFormat:
         ]
 
 
-class CMakeFormat:
+class CMakeFormat(BasicFormatter):
     def supported_scopes(self):
         return ("source.cmake",)
 
@@ -125,7 +133,7 @@ class CMakeFormat:
         return (cmd, False)
 
 
-class PythonFormat:
+class PythonFormat(BasicFormatter):
     def supported_scopes(self):
         return ("source.python",)
 
@@ -138,7 +146,7 @@ class PythonFormat:
         return (["black", "-"], False)
 
 
-class JavaFormat:
+class JavaFormat(BasicFormatter):
     def supported_scopes(self):
         return ("source.java",)
 
@@ -149,6 +157,14 @@ class JavaFormat:
             ["java", "-jar", google_java_format_jar, "-a", "-"],
             False,
         )
+
+
+class GoFormat(Formatter):
+    def __init__(self):
+        super().__init__("source.go", "goimports")
+
+    def error(self, message):
+        return message.replace("<standard input>:", "")
 
 
 def prepare_formatters(*formatters):
@@ -168,9 +184,9 @@ class FmtCommand(TextCommand):
         CMakeFormat(),
         PythonFormat(),
         JavaFormat(),
+        GoFormat(),
         Formatter("source.rust", "rustfmt"),
         Formatter("source.cs", ["dotnet", "csharpier"]),
-        Formatter("source.go", "goimports"),
         Formatter("source.shell.bash", ["shfmt", "-ci", "-sr", "-"]),
         Formatter("text.xml", ["xmlstarlet", "fo", "-"], windows=["xml", "fo", "-"]),
     )
@@ -210,8 +226,8 @@ class FmtCommand(TextCommand):
                     {"text": replacement, "time_taken": time_taken},
                 )
             else:
-                print(f"!! Failed to run program: {cmd}")
-                sublime.error_message(process.stderr.strip())
+                print(f"!! Formatter exited with error: {cmd}")
+                sublime.error_message(formatter.error(process.stderr.strip()))
 
         sublime.set_timeout_async(run_formatter, 0)
 
