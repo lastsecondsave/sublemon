@@ -1,3 +1,4 @@
+import re
 import subprocess
 from timeit import default_timer as timer
 
@@ -134,6 +135,8 @@ class CMakeFormat(BasicFormatter):
 
 
 class PythonFormat(BasicFormatter):
+    CLEANER = re.compile(r"\s+Oh no.+reformat\.", flags=re.DOTALL)
+
     def supported_scopes(self):
         return ("source.python",)
 
@@ -144,6 +147,10 @@ class PythonFormat(BasicFormatter):
             return ("isort --profile black - | black -", True)
 
         return (["black", "-"], False)
+
+    def error(self, message):
+        message = message.replace("error: cannot format -: ", "")
+        return self.CLEANER.sub("", message)
 
 
 class JavaFormat(BasicFormatter):
