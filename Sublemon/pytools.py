@@ -11,11 +11,9 @@ VENV_BIN = "Scripts" if RUNNING_ON_WINDOWS else "bin"
 
 def setup_python_exec(build, module=None, allow_venv=True):
     module = module or build.opt("module")
-    build.cmd.preview = "python"
 
     if module:
         build.cmd.appendleft("-m", module)
-        build.cmd.preview = module
 
     binary = DEFAULT_BINARY
 

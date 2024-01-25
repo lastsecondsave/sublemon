@@ -3,6 +3,7 @@ import re
 import shlex
 import signal
 import subprocess
+import textwrap
 from collections import deque
 from itertools import chain, dropwhile
 from threading import Lock, Thread
@@ -62,7 +63,7 @@ class OutputPanel:
 # pylint: disable=unused-argument
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        ctx.window.status_message(f"Running {ctx.cmd.preview} …")
+        ctx.window.status_message(f"Running {ctx.cmd.preview}")
 
     def on_output(self, line, ctx):
         return line
@@ -81,8 +82,6 @@ class BuildSetupError(Exception):
 
 
 class Cmd:
-    PREVIEW = re.compile(r"\S+( [^-/][\w-]+)?(?=\s|$)")
-
     def __init__(self, cmd=None, variables=None, **options):
         self.args = deque()
         self.cmdline = None
@@ -122,7 +121,7 @@ class Cmd:
         if self._preview:
             return self._preview
 
-        return Cmd.PREVIEW.match(str(self)).group(0)
+        return textwrap.shorten(str(self), width=72, placeholder=" …")
 
     @preview.setter
     def preview(self, value):
@@ -382,7 +381,7 @@ class BuildContext:
         self.cmd = build.cmd
 
         self.on_complete = build.listener.on_complete
-        self.on_complete_message = f"Complete: {build.cmd.preview}"
+        self.on_complete_message = None
 
         build.listener.on_startup(self)
 
@@ -405,10 +404,16 @@ class BuildContext:
             else:
                 self.print_line("[ OK ]")
 
-            self.window.status_message(self.on_complete_message)
+            if self.on_complete_message:
+                self.window.status_message(self.on_complete_message)
+            else:
+                self.window.status_message(
+                    f"{'Failed' if returncode else 'Complete'}: {self.cmd.preview}"
+                )
+
             print(f"✔ [{self.process.pid}] {returncode}")
         else:
-            self.window.status_message("Build cancelled")
+            self.window.status_message(f"Cancelled: {self.cmd.preview}")
             self.print_lines(("", " *** Terminated *** "))
             print(f"✘ [{self.process.pid}]")
 
