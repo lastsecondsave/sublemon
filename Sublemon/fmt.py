@@ -42,6 +42,7 @@ class Formatter(BasicFormatter):
 
 
 class Prettier(BasicFormatter):
+    ERROR_FILTER = re.compile(r".+: SyntaxError: ")
     FILES = {
         "source.json": "file.json",
         "source.js": "file.js",
@@ -72,7 +73,7 @@ class Prettier(BasicFormatter):
         return (cmd, False)
 
     def error(self, message):
-        return message.replace("[error] ", "")
+        return self.ERROR_FILTER.sub("", message)
 
 
 class ClangFormat(BasicFormatter):
@@ -135,7 +136,7 @@ class CMakeFormat(BasicFormatter):
 
 
 class PythonFormat(BasicFormatter):
-    CLEANER = re.compile(r"\s+Oh no.+reformat\.", flags=re.DOTALL)
+    ERROR_FILTER = re.compile(r"\s+Oh no.+reformat\.", flags=re.DOTALL)
 
     def supported_scopes(self):
         return ("source.python",)
@@ -150,7 +151,7 @@ class PythonFormat(BasicFormatter):
 
     def error(self, message):
         message = message.replace("error: cannot format -: ", "")
-        return self.CLEANER.sub("", message)
+        return self.ERROR_FILTER.sub("", message)
 
 
 class JavaFormat(BasicFormatter):
