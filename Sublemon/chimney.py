@@ -98,7 +98,9 @@ class Cmd:
                 self.cmdline = f"{base} {self.cmdline}"
 
         elif cmd:
-            self.args.extend(listify(cmd))
+            if isinstance(cmd, str):
+                cmd = shlex.split(cmd, posix=not RUNNING_ON_WINDOWS)
+            self.args.extend(cmd)
 
         self._preview = options.get("cmd_preview")
         if self._preview and variables:
