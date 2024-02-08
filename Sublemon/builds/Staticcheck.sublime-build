@@ -1,6 +1,5 @@
 {
   "selector": "source.go",
-  "cmd": ["staticcheck", "$file"],
-  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
-  "syntax": "Generic Build Output"
+  "target": "staticcheck",
+  "cmd": ["$file"]
 }

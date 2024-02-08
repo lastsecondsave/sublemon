@@ -1,7 +1,5 @@
 {
   "keyfiles": ["go.mod"],
-  "working_dir": "$folder",
-  "cmd": ["staticcheck", "$folder"],
-  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
-  "syntax": "Generic Build Output"
+  "target": "staticcheck",
+  "working_dir": "$folder"
 }

@@ -1,8 +1,7 @@
 {
   "selector": "source.go",
-  "cmd": ["go", "run", "$file"],
-  "file_regex": "(.+?):(\\d+):(\\d+): (.*)",
-  "syntax": "Generic Build Output",
+  "target": "golang",
+  "cmd": ["run", "$file"],
 
   "variants": [
     {

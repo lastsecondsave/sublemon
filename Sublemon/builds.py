@@ -24,3 +24,25 @@ class PwshCommand(ChimneyCommand):
             build.cmd = Cmd(cmd=["-Command", cmdline])
 
         build.cmd.appendleft("pwsh", "-NoProfile")
+
+
+class GolangCommand(ChimneyCommand):
+    def setup(self, build):
+        if build.cmd:
+            build.cmd.appendleft("go")
+        else:
+            build.cmd.append("go", build.opt("action", "build"), build.working_dir)
+
+        build.syntax = "Generic Build Output"
+        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+
+
+class StaticcheckCommand(ChimneyCommand):
+    def setup(self, build):
+        if build.cmd:
+            build.cmd.appendleft("staticcheck")
+        else:
+            build.cmd.append("staticcheck", build.working_dir)
+
+        build.syntax = "Generic Build Output"
+        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
