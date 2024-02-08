@@ -19,6 +19,7 @@ snippets = {
         ),
     ),
     "lf": "log.Fatal(${1:err})",
+    "mp": "map[${1:string}]${2:any}",
 }
 
 completions = {
