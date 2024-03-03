@@ -65,7 +65,6 @@
 		"target",
 	],
 	"font_face": "PragmataPro Mono Liga",
-	"font_size": 10,
 	"git_diff_target": "head",
 	"hide_pointer_while_typing": false,
 	"highlight_line": true,

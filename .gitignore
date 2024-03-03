@@ -19,6 +19,7 @@
 /User/*.crt
 
 !/Default
+/Default/Default (OSX).sublime-keymap
 
 .DS_Store
 *.swp

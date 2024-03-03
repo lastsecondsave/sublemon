@@ -2,6 +2,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from zipfile import ZipFile
 
 SUBLEMON = Path(__file__).resolve().parent.parent
 PACKAGES = SUBLEMON.parent
@@ -14,11 +15,9 @@ def execute(script):
 
 
 def generate_files():
-    execute(PACKAGES / "Disco" / "src" / "disco.py")
-    execute(PACKAGES / "Disco" / "src" / "icons.py")
-
     shutil.rmtree(SUBLEMON / ".generated", ignore_errors=True)
 
+    execute(PACKAGES / "Disco" / "src" / "disco.py")
     execute(SUBLEMON / "scripts" / "settings.py")
 
     for snippet in (SUBLEMON / "snippets").glob("*.snippets.py"):
@@ -68,6 +67,46 @@ def mute_files():
     mute(PACKAGES / "Go" / "Go.sublime-completions")
 
 
-if __name__ == "__main__":
+def system_package(name):
+    if sys.platform == "win32":
+        root = "C:/Program Files/Sublime Text"
+    elif sys.platform == "darwin":
+        root = "/Applications/Sublime Text.app/Contents/MacOS"
+    else:
+        root = "/opt/sublime_text"
+
+    return Path(root) / "Packages" / f"{name}.sublime-package"
+
+
+def unpack_icons():
+    with ZipFile(system_package("Theme - Default")) as package:
+        icons = [name for name in package.namelist() if name.startswith("icons/")]
+        package.extractall(path=PACKAGES / "Disco", members=icons)
+
+    print(f"Copied {len(icons)} icons from the default theme")
+
+
+def override_macos_keymap():
+    with ZipFile(system_package("Default")) as package:
+        keymap = Path(
+            package.extract(
+                "Default (Windows).sublime-keymap",
+                path=PACKAGES / "Default",
+            )
+        )
+        keymap.rename(keymap.parent / "Default (OSX).sublime-keymap")
+
+    print("Copied the macOS keymap")
+
+
+def main():
     generate_files()
     mute_files()
+    unpack_icons()
+
+    if sys.platform == "darwin":
+        override_macos_keymap()
+
+
+if __name__ == "__main__":
+    main()
