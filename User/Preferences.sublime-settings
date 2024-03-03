@@ -113,6 +113,7 @@
 		"build/*",
 		"Makefile",
 	],
+	"index_files": true,
 	"margin": 0,
 	"match_brackets_angle": true,
 	"match_brackets_content": false,
