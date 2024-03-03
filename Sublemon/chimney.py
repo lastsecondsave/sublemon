@@ -11,7 +11,7 @@ from threading import Lock, Thread
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS, listify, pref
+from . import RUNNING_ON_WINDOWS, pref
 from .opener import find_project_folder
 
 
