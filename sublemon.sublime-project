@@ -23,7 +23,8 @@
     },
     {
       "name": "default",
-      "path": "Default"
+      "path": "Default",
+      "file_exclude_patterns": ["Default (OSX).sublime-keymap"],
     }
   ],
 
@@ -39,7 +40,8 @@
       "target": "pylint",
       "cmd": [
         "Sublemon",
-        "--init-hook=import sys; sys.path.extend([\"/opt/sublime_text/Lib/python38\", \"c:/Program Files/Sublime Text/Lib/python38\"])"
+        "--init-hook",
+        "import sys; sys.path.extend(['/opt/sublime_text/Lib/python38', 'c:/Program Files/Sublime Text/Lib/python38', '/Applications/Sublime Text.app/Contents/MacOS/Lib/python38'])"
       ],
       "working_dir": "${project_path}"
     },
