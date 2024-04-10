@@ -226,23 +226,21 @@ class FmtCommand(TextCommand):
                 creationflags=POPEN_CREATION_FLAGS,
             )
 
-            if process.returncode == 0:
-                replacement = process.stdout
-                time_taken = round((timer() - start_time) * 1000, 3)
-                self.view.run_command(
-                    "replace_with_formatted",
-                    {"text": replacement, "time_taken": time_taken},
-                )
-            else:
+            if process.returncode != 0:
                 print(f"!! Formatter exited with error: {cmd}")
                 sublime.error_message(formatter.error(process.stderr.strip()))
+                return
+
+            self.view.run_command("replace_view_content", {"text": process.stdout})
+
+            time_taken = round((timer() - start_time) * 1000, 2)
+            self.view.window().status_message(f"Formatted in {time_taken} ms")
 
         sublime.set_timeout_async(run_formatter, 0)
 
 
-class ReplaceWithFormattedCommand(TextCommand):
+class ReplaceViewContentCommand(TextCommand):
     # pylint: disable=arguments-differ
-    def run(self, edit, text, time_taken):
+    def run(self, edit, text):
         region = Region(0, self.view.size())
         self.view.replace(edit, region, text)
-        self.view.window().status_message(f"Formatted in {time_taken} ms")
