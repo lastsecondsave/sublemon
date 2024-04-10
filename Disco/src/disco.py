@@ -400,13 +400,14 @@ rec(PUNCTUATION,
     'meta.interpolation.parameter keyword.operator.assignment')
 rec(STORAGE,
     'keyword.declaration.{alias|variable} | support.function.export')
+rec(META,
+    'entity.name.tag.heredoc')
 rec(VARIABLE,
     'meta.conditional.case.clause.commands meta.variable variable.other.readwrite',
     'meta.variable variable.other.readwrite - (meta.{arithmetic|conditional|interpolation})',
     'meta.declaration.variable variable.other.readwrite -meta.interpolation')
 rec(KEYWORD,
-    'support.function.{eval|exec|source|trap|unset}',
-    'entity.name.tag.heredoc')
+    'support.function.{eval|exec|source|trap|unset}')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
@@ -440,6 +441,8 @@ rec(STORAGE,
 src('dockerfile')
 rec(VARIABLE,
     'meta.declaration.variable variable.other.readwrite -meta.interpolation')
+rec(META,
+    '{entity.name.tag|keyword.operator}.heredoc')
 
 src('c++', 'c')
 rec(SPECIAL,
