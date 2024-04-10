@@ -68,7 +68,7 @@ KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 INDEXED = Style(BLUE)
 OPERATOR = Style(VIOLET)
-BG_PUNCTUATION = Style(VIOLET)
+GENERIC_PUNCTUATION = Style(VIOLET)
 PUNCTUATION = Style(DARK_ORANGE)
 ACCESSOR = Style(VIOLET)
 COMMENT = Style(GRAY)
@@ -227,7 +227,7 @@ rec(PARAMETER,
 rec(VARIABLE,
     'variable.{language|other.substitution}',
     'support.{constant|variable}')
-rec(BG_PUNCTUATION,
+rec(GENERIC_PUNCTUATION,
     '(punctuation.{section|separator|terminator|definition.generic}) -string')
 rec(PUNCTUATION,
     'punctuation.separator.continuation',
@@ -478,7 +478,7 @@ rec(KEYWORD,
     'variable.annotation')
 rec(SPECIAL,
     'storage.modifier.lifetime')
-rec(BG_PUNCTUATION,
+rec(GENERIC_PUNCTUATION,
     'punctuation.definition.annotation')
 
 src('yaml')
@@ -487,7 +487,7 @@ rec(PUNCTUATION,
     'entity.other.document',
     'keyword.control.flow.block-scalar',
     'storage.modifier.chomping-indicator')
-rec(BG_PUNCTUATION,
+rec(GENERIC_PUNCTUATION,
     'punctuation.definition.sequence')
 rec(TAG,
     'punctuation.definition.directive.begin',
@@ -533,7 +533,7 @@ txt('html.markdown')
 rec(PUNCTUATION,
     'punctuation.definition.{blockquote|image|link|list_item}',
     'markup.list.numbered.bullet')
-rec(BG_PUNCTUATION,
+rec(GENERIC_PUNCTUATION,
     'punctuation.definition.{attributes|bold|constant|italic|metadata}',
     'meta.link punctuation.definition.{link|reference}')
 rec(COMMENT,
