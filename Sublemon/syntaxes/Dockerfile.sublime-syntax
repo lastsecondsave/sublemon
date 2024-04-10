@@ -127,11 +127,20 @@ contexts:
     - include: flags
     - match: (?=\[)
       set: json-sequence
-    - match: (?=\S)
+    - match: (<<-?)(\w+)
+      captures:
+        1: keyword.operator.heredoc.dockerfile
+        2: entity.name.tag.heredoc.dockerfile
       set:
-        - include: variables
-        - include: escapes
-        - include: pop-on-eol
+        - heredoc
+        - copy-instruction-command
+    - match: (?=\S)
+      set: copy-instruction-command
+    - include: pop-on-eol
+
+  copy-instruction-command:
+    - include: variables
+    - include: escapes
     - include: pop-on-eol
 
   pop-on-eol:
@@ -179,13 +188,45 @@ contexts:
         - match: ","
           scope: punctuation.separator.json-sequence.dockerfile
 
+  heredoc:
+    - meta_include_prototype: false
+    - meta_content_scope: meta.string.heredoc.dockerfile string.unquoted.heredoc.dockerfile
+    - match: \2
+      scope: entity.name.tag.heredoc.dockerfile
+      pop: 1
+    - include: variables
+    - include: escapes
+    - match: \\$
+      scope: constant.character.escape.dockerfile
+
   shell-command:
     - meta_content_scope: meta.shell-command.dockerfile
     - include: pop-on-eol
-
     - match: (?=\S)
-      embed: scope:source.shell.bash
-      escape: (?<!\\)(?=\n)|^(?=\s*#)
+      push:
+        - include: pop-on-eol
+
+        - match: (?=<<\w)
+          set:
+            - include: pop-on-eol
+            - match: (<<-?)(\w+)(?:\s.*)
+              captures:
+                1: keyword.operator.heredoc.dockerfile
+                2: entity.name.tag.heredoc.dockerfile
+              embed: scope:source.shell.bash
+              escape: \2
+              escape_captures:
+                0: entity.name.tag.heredoc.dockerfile
+
+        - match: .*? (<<-?)(\w+)(?:\s.*)
+          captures:
+            1: keyword.operator.heredoc.dockerfile
+            2: entity.name.tag.heredoc.dockerfile
+          set: heredoc
+
+        - match: ""
+          embed: scope:source.shell.bash
+          escape: (?<!\\)(?=\n)|^(?=\s*#)
 
   key-value:
     - meta_content_scope: meta.key-value.dockerfile
@@ -283,7 +324,6 @@ contexts:
           captures:
             1: constant.language.flag.attribute-name.dockerfile
             2: keyword.operator.assignment.flag.dockerfile
-        - match: ','
+        - match: ","
           scope: punctuation.separator.arguments.dockerfile
         - include: pop-on-space
-

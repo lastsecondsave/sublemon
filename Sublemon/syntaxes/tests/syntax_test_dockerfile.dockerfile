@@ -26,7 +26,26 @@ RUN --mount=type=secret,id=mysecret cat /run/secrets/mysecret
 #                      ^ punctuation.separator.arguments.dockerfile
 #                       ^^ constant.language.flag.attribute-name.dockerfile
 #                         ^ keyword.operator.assignment.flag.dockerfile
-#                                    shell.bash
+#                                    ^^^^^^^^^^^ source.shell.bash
+
+RUN python3 <<EOF > /test.txt
+#           ^^ keyword.operator.heredoc.dockerfile
+#             ^^^ entity.name.tag.heredoc.dockerfile
+#                   ^^^^^^^^^ -meta.string.heredoc.dockerfile
+print("test")
+# <- -source.shell.bash
+# ^^^^^^^^^^^ meta.shell-command.dockerfile meta.string.heredoc.dockerfile
+EOF
+#^^ entity.name.tag.heredoc.dockerfile
+
+RUN <<EOF
+#   ^^ keyword.operator.heredoc.dockerfile
+#     ^^^ entity.name.tag.heredoc.dockerfile
+echo "test"
+# ^^^^^^^^^ meta.shell-command.dockerfile
+# ^^^^^^^^^ source.shell.bash
+EOF
+#^^ entity.name.tag.heredoc.dockerfile
 
 ENV ver=10.01
 #^^ keyword.control.dockerfile
@@ -187,6 +206,19 @@ COPY --chown=user:group file.txt dir/file.txt
 COPY --chown=user:group ["file.txt", "dir/file.txt"]
 #    ^^^^^^^ variable.parameter.flag.dockerfile
 #                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.json-sequence.dockerfile
+
+COPY <<EOF ${BUILD}/run.sh
+#    ^^ keyword.operator.heredoc.dockerfile
+#      ^^^ entity.name.tag.heredoc.dockerfile
+#          ^^^^^^^^ meta.interpolation.parameter.dockerfile
+#!/usr/bin/env bash
+# <- -comment
+echo \${BUILD}
+#    ^^ constant.character.escape.dockerfile
+echo ${BUILD}
+#    ^^^^^^^^ meta.interpolation.parameter.dockerfile
+EOF
+#^^ entity.name.tag.heredoc.dockerfile
 
 WORKDIR ${HOME}/app
 #       ^^^^^^^ meta.interpolation.parameter.dockerfile
