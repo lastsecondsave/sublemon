@@ -55,7 +55,7 @@ def setup_venv(build, venv):
     build.env["PATH"] = f"{Path(venv, VENV_BIN)}{os.pathsep}$PATH"
     build.cmd.shell = True
 
-    print(f"!! Using venv: {venv}")
+    print(f"‼ Using venv: {venv}")
 
 
 class PythonCommand(ChimneyCommand):

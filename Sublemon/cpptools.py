@@ -60,7 +60,7 @@ class VcvarsCommand(ChimneyCommand):
         process = subprocess.run(cmd, shell=True, capture_output=True)
 
         if process.returncode != 0:
-            print(f"!! Failed to run program: {cmd}")
+            print(f"‼ Failed to run program: {cmd}")
             build.cancel("Failed to capture variables from vcvars")
 
         captures = {}

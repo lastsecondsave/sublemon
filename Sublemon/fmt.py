@@ -227,7 +227,7 @@ class FmtCommand(TextCommand):
             )
 
             if process.returncode != 0:
-                print(f"!! Formatter exited with error: {cmd}")
+                print(f"‼ Formatter exited with error: {cmd}")
                 sublime.error_message(formatter.error(process.stderr.strip()))
                 return
 

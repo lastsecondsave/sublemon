@@ -496,7 +496,7 @@ def start_process(cmd, env, cwd):
         # pylint: disable=consider-using-with
         return subprocess.Popen(args, **process_params)
     except:
-        print(f"!! Failed to run program: {cmd}")
+        print(f"‼ Failed to run program: {cmd}")
         raise
 
 
@@ -510,6 +510,6 @@ def kill_process(process):
             os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
             process.terminate()
         except ProcessLookupError:
-            print(f"!! Process {process.pid} doesn't exist")
+            print(f"‼ Process {process.pid} doesn't exist")
 
     process.wait()
