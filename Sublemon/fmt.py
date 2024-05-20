@@ -136,8 +136,6 @@ class CMakeFormat(BasicFormatter):
 
 
 class PythonFormat(BasicFormatter):
-    ERROR_FILTER = re.compile(r"\s+Oh no.+reformat\.", flags=re.DOTALL)
-
     def supported_scopes(self):
         return ("source.python",)
 
@@ -145,13 +143,12 @@ class PythonFormat(BasicFormatter):
         use_isort = pref("fmt_isort", True, view=view)
 
         if use_isort:
-            return ("isort --profile black - | black -", True)
+            return ("isort --profile black - | black -q -", True)
 
-        return (["black", "-"], False)
+        return (["black", "-q", "-"], False)
 
     def error(self, message):
-        message = message.replace("error: cannot format -: ", "")
-        return self.ERROR_FILTER.sub("", message)
+        return message.replace("error: cannot format -: ", "")
 
 
 class JavaFormat(BasicFormatter):
