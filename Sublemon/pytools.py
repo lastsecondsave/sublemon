@@ -61,6 +61,8 @@ def setup_venv(build, venv):
 class PythonCommand(ChimneyCommand):
     def setup(self, build):
         setup_python_exec(build)
+        build.file_regex = r'^\s*File "(.+)", line (\d+)'
+        build.syntax = "Python Output"
 
 
 class PylintCommand(ChimneyCommand):

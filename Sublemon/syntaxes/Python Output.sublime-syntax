@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: Python Output
+scope: text.output.python
+version: 2
+
+contexts:
+  main:
+    - match: '^Traceback \(most recent call last\):'
+      push: traceback
+
+  traceback:
+    - match: ^(?=\S)
+      pop: true
+    - match: File (".+"), line (\d+), in (.+)
+      captures:
+        1: entity.name.filename
+        2: constant.numeric.line
+        3: storage
+    - match: ^\s+(\^+)
+      captures:
+        1: punctuation.definition.marker
