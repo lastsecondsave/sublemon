@@ -43,11 +43,20 @@ contexts:
         1: keyword.control.dockerfile
       set: run-instruction
 
-    - match: (?i)(ENV|ARG)\s+((\w+)\s.*)
+    - match: (?i)(ARG)\s+((\w+)\s(.+))
       captures:
         1: keyword.control.dockerfile
         2: meta.declaration.variable.dockerfile
         3: variable.other.readwrite.dockerfile
+        4: invalid.illegal.dockerfile
+      pop: 1
+
+    - match: (?i)(ENV)\s+((\w+)\s(.*))
+      captures:
+        1: keyword.control.dockerfile
+        2: meta.declaration.variable.dockerfile
+        3: variable.other.readwrite.dockerfile
+        4: meta.value.dockerfile
       pop: 1
 
     - match: (?i)(ENV|ARG|LABEL)(?=\s|$)

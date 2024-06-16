@@ -94,7 +94,11 @@ ARG version
 
 ARG version 1.2.1 ext
 #   ^^^^^^^ variable.other.readwrite.dockerfile
-#           ^^^^^^^^^ -variable.other.readwrite.dockerfile
+#           ^^^^^^^^^ -variable.other.readwrite.dockerfile invalid.illegal.dockerfile
+
+ENV version 1.2.1 ext
+#   ^^^^^^^ variable.other.readwrite.dockerfile
+#           ^^^^^^^^^ -variable.other.readwrite.dockerfile meta.value.dockerfile
 
 ENV ver= ${VERSION}=x
 #        ^^^^^^^^^^ variable.other.readwrite.dockerfile meta.interpolation.parameter.dockerfile
