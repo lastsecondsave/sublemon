@@ -51,7 +51,9 @@ ORANGE = "#FFAD3A"
 DARK_ORANGE = "#FF8147"
 CRIMSON = "#E5476C"
 
+BRIGHTER_WHITE = "#C6DFD7"
 CLEAR_WHITE = "#FFFFFF"
+
 FADED_GRAY = "#51515D"
 FADED_VIOLET = "#5E5E8E"
 
@@ -270,9 +272,12 @@ rec(ITALIC,
 rec(PARAMETER,
     'meta.interpolation constant.other.format-spec')
 rec(STORAGE,
-    'support.type')
-rec(FOREGROUND,
-    'keyword.other.print')
+    'support.type -comment.line.number-sign')
+rec(COMMENT_LIGHT,
+    'comment.line.number-sign & (keyword | constant.language | support.type)')
+rec(BRIGHTER_WHITE,
+    'keyword.other.print',
+    'support.function.builtin')
 
 src('regexp.python')
 rec(REGEXP_GROUP,
