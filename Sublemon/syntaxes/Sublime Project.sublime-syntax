@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Sublime Project
+extends: Packages/JSON/JSON.sublime-syntax
+version: 2
+scope: source.sublime-project source.json
+file_extensions:
+  - sublime-project
+hidden: true

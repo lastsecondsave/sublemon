@@ -81,3 +81,56 @@ generate(
 )
 
 generate("source.makefile", snippets={"ph": ".PHONY: "})
+
+generate(
+    "source.sublime-project meta.mapping.key string.quoted",
+    completions={
+        ("Property", Icon.NAMESPACE): [
+            "build_systems",
+            "folders",
+            "settings",
+        ],
+        ("Property", Icon.PROPERTY): [
+            "binary_file_patterns",
+            "cancel",
+            "cmd",
+            "encoding",
+            "file_include_patterns",
+            "file_patterns",
+            "file_regex",
+            "folder_exclude_patterns",
+            "folder_include_patterns",
+            "follow_symlinks",
+            "index_exclude_patterns",
+            "index_include_patterns",
+            "line_regex",
+            "name",
+            "shell_cmd",
+            "syntax",
+            "target",
+            "variants",
+            "working_dir",
+        ],
+    },
+)
+
+generate(
+    "source.sublime-project meta.mapping.value string.quoted",
+    completions={
+        ("Variable", Icon.VARIABLE): [
+            "file",
+            "file_base_name",
+            "file_extension",
+            "file_name",
+            "file_path",
+            "folder",
+            "packages",
+            "platform",
+            "project",
+            "project_base_name",
+            "project_extension",
+            "project_name",
+            "project_path",
+        ],
+    },
+)
