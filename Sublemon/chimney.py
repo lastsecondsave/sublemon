@@ -4,6 +4,7 @@ import shlex
 import signal
 import subprocess
 import textwrap
+import timeit
 from collections import deque
 from itertools import chain, dropwhile
 from threading import Lock, Thread
@@ -377,6 +378,8 @@ class BuildContext:
         self.window = window
         self.panel = panel
         self.process = process
+
+        self.start_time = timeit.default_timer()
         self.cancelled = False
 
         self.working_dir = build.working_dir
@@ -394,6 +397,11 @@ class BuildContext:
         self.panel.append((line,))
 
     def complete(self):
+        # pylint: disable=consider-using-f-string
+        duration = "%02d:%02d" % divmod(
+            round(timeit.default_timer() - self.start_time), 60
+        )
+
         if not self.cancelled:
             self.on_complete(self)
 
@@ -413,11 +421,11 @@ class BuildContext:
                     f"{'Failed' if returncode else 'Complete'}: {self.cmd.preview}"
                 )
 
-            print(f"✔ [{self.process.pid}] {returncode}")
+            print(f"✔ [{self.process.pid}] ↑ {returncode} ⌛ {duration}")
         else:
             self.window.status_message(f"Cancelled: {self.cmd.preview}")
             self.print_lines(("", " *** Terminated *** "))
-            print(f"✘ [{self.process.pid}]")
+            print(f"✘ [{self.process.pid}] ⌛ {duration}")
 
         self.process = None
 
