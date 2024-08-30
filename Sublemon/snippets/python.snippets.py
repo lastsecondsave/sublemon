@@ -140,6 +140,8 @@ generate(
     "source.python meta.statement.import",
     completions={
         ("Package", Icon.NAMESPACE): [
+            "argparse",
+            "collections",
             "functools",
             "pathlib",
             "shlex",

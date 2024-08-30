@@ -77,6 +77,7 @@ generate(
         "ln": ("link", "[$SEL1]($2)"),
         "bd": ("bold", "**$SEL1**"),
         "it": ("italic", "_$SEL1_"),
+        "tb": ("table", "| $0 |  |\n|--|--|\n|  |  |"),
     },
 )
 
