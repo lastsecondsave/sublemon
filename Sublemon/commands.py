@@ -1,4 +1,3 @@
-import html
 import importlib
 import json
 import re
@@ -247,27 +246,35 @@ class LastSingleSelectionCommand(TextCommand):
             selection.subtract(region)
 
 
-class SelectBetweenMarkersCommand(TextCommand):
-    def run(self, edit, markers):  # pylint: disable=arguments-differ
+class SelectQueryCommand(TextCommand):
+    last_query = ""
+
+    def run(self, edit):
+        input_view = self.view.window().show_input_panel(
+            "Select:", self.last_query, self.on_done, None, None
+        )
+
+        input_view.sel().add(sublime.Region(0, len(self.last_query)))
+
+    def on_done(self, query):
+        self.last_query = query
+
         for region in self.view.sel():
-            self.expand_region(region, markers, False)
+            self.expand_region(region, query)
 
-    def input(self, _args):
-        return SelectBetweenMarkersInputHandler()
+    def expand_region(self, region, query):
+        lm, rm, wide = self.parse_query(query)
 
-    def expand_region(self, region, markers, select_markers):
-        left_marker, right_marker = split_markers(markers)
-
-        lmlen = len(left_marker)
+        lmlen = len(lm)
         left = region.begin() - lmlen
 
-        while left_marker != self.view.substr(Region(left, left + lmlen)):
+        while lm != self.view.substr(Region(left, left + lmlen)):
             left -= 1
             if left < 0:
                 return
 
-        if right_marker:
-            right = self.view.find(right_marker, region.end(), sublime.LITERAL)
+        if rm:
+            right = self.view.find(rm, region.end(), sublime.LITERAL)
             right = right.begin() if right else None
         else:
             right = region.end()
@@ -275,58 +282,42 @@ class SelectBetweenMarkersCommand(TextCommand):
         if not right:
             return
 
-        if select_markers:
-            right += len(right_marker)
+        if wide:
+            right += len(rm)
         else:
             left += lmlen
 
         self.view.sel().add(Region(left, right))
 
+    def parse_query(self, query):
+        left, right = 0, 0
+        wide = False
 
-class SelectWithMarkersCommand(SelectBetweenMarkersCommand):
-    def run(self, edit, markers):
-        for region in self.view.sel():
-            self.expand_region(region, markers, True)
+        if query == " ":
+            left, right = 0, 0
 
+        elif query in ("  ", "><"):
+            left, right = 1, 1
 
-def split_markers(markers):
-    left, right = find_markers(markers)
-    return (markers[:left], markers[right:])
+        elif (sep := query.find("><")) > -1:
+            left, right = sep, sep + 2
 
+        elif (sep := query.find("> <")) > -1:
+            left, right = sep, sep + 3
+            wide = True
 
-def find_markers(markers):
-    if markers == " ":
-        return (0, 0)
+        elif (sep := query.find("  ")) > -1:
+            left, right = sep, sep + 2
+            wide = True
 
-    if markers in ("  ", "><"):
-        return (1, 1)
+        elif (sep := query.find(" ")) > -1:
+            left, right = sep, sep + 1
 
-    if (sep := markers.find("><")) > -1:
-        return (sep, sep + 2)
+        else:
+            left = int(len(query) / 2)
+            right = left
 
-    if (sep := markers.find(" ")) > -1:
-        return (sep, sep + 1)
-
-    sep = int(len(markers) / 2)
-    return (sep, sep)
-
-
-class SelectBetweenMarkersInputHandler(TextInputHandler):
-    def name(self):
-        return "markers"
-
-    def placeholder(self):
-        return "Markers"
-
-    def preview(self, text):
-        if not text:
-            return None
-
-        def escape(value):
-            return html.escape(value.replace(" ", "·"), quote=False)
-
-        markers = (f"<i>{escape(x)}</i>" for x in split_markers(text))
-        return sublime.Html(" ... ".join(markers))
+        return (query[:left], query[right:], wide)
 
 
 class IndentToBracesCommand(TextCommand):

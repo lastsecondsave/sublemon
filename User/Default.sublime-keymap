@@ -74,8 +74,6 @@
     ]
   },
 
-  { "keys": ["alt+m"], "command": "select_between_markers" },
-
 
   { "keys": ["alt+z"], "command": "last_single_selection",
     "context": [{"key": "num_selections", "operator": "not_equal", "operand": 1}]
@@ -149,7 +147,6 @@
   { "keys": ["shift+alt+s"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
   { "keys": ["shift+alt+z"], "command": "reveal_in_side_bar" },
   { "keys": ["shift+alt+b"], "command": "chimney", "args": {"interactive": true} },
-  { "keys": ["shift+alt+m"], "command": "select_with_markers" },
 
   /* CTRL + SHIFT + ALT */
 
@@ -165,6 +162,8 @@
   { "keys": ["ctrl+k", "ctrl+f"], "command": "fmt" },
   { "keys": ["ctrl+k", "ctrl+j"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete to BOL.sublime-macro"} },
   { "keys": ["ctrl+k", "ctrl+'"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
+
+  { "keys": ["ctrl+k", "ctrl+m"], "command": "select_query" },
 
   /* L3: CTRL */
 
