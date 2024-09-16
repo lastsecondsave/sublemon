@@ -40,6 +40,10 @@ def find_venv(build):
     if isinstance(venv, str):
         return venv
 
+    venv = Path(build.working_dir, ".venv")
+    if venv.is_dir():
+        return str(venv)
+
     for folder in build.window.folders():
         venv = Path(folder, ".venv")
         if venv.is_dir():
