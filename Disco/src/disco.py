@@ -406,7 +406,8 @@ rec(PUNCTUATION,
 rec(STORAGE,
     'keyword.declaration.{alias|variable} | support.function.export')
 rec(META,
-    'entity.name.tag.heredoc')
+    'entity.name.tag.heredoc',
+    'punctuation.definition.tag')
 rec(VARIABLE,
     'meta.conditional.case.clause.commands meta.variable variable.other.readwrite',
     'meta.variable variable.other.readwrite - (meta.{arithmetic|conditional|interpolation})',
@@ -453,6 +454,8 @@ src('c++', 'c')
 rec(SPECIAL,
     'meta.preprocessor keyword.control.import',
     'meta.preprocessor keyword.control -meta.preprocessor.macro')
+rec(SPECIAL + ITALIC,
+    'entity.name.label')
 rec(STORAGE,
     'support.type.{sys-types|stdint}')
 rec(KEYWORD,
