@@ -1,4 +1,5 @@
 import subprocess
+from multiprocessing import cpu_count
 from pathlib import Path
 
 from . import RUNNING_ON_WINDOWS, listify, pref
@@ -113,7 +114,9 @@ class CmakeCommand(ChimneyCommand):
         if mode != "build":
             build.cancel(f"Invalid mode: {mode}")
 
-        cmd = ["cmake", "--build", build_dir, "--parallel"]
+        jobs = max(cpu_count() - 2, 1)
+
+        cmd = ["cmake", "--build", build_dir, "--parallel", str(jobs)]
 
         if build.cmd.args:
             build.cmd.preview = f"cmake {' '.join(build.cmd.args)}"
