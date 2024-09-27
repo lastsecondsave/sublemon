@@ -263,7 +263,7 @@ class SelectQueryCommand(TextCommand):
             self.expand_region(region, query)
 
     def expand_region(self, region, query):
-        lm, rm, wide = self.parse_query(query)
+        lm, rm, wide = self.parse_query(query)  # pylint: disable=invalid-name
 
         lmlen = len(lm)
         left = region.begin() - lmlen
