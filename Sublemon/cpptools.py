@@ -1,3 +1,4 @@
+import re
 import subprocess
 from multiprocessing import cpu_count
 from pathlib import Path
@@ -133,11 +134,39 @@ class CmakeCommand(ChimneyCommand):
                 build.cmd.append("--target", *build_targets)
                 build.cmd.preview = f"cmake --target {' '.join(build_targets)}"
 
+        stdout_replace = build.opt("stdout_replace", {})
+        stderr_replace = build.opt("stderr_replace", {})
+
+        if stdout_replace or stderr_replace:
+            build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
+
         if RUNNING_ON_WINDOWS:
             build.file_regex = r"(.+?)\((\d+),?(\d+)\): (.*)"
             build.syntax = "MSVC Output"
 
             build.cmd.append("--config", build_type)
         else:
-            build.file_regex = r"^(/.+?):(\d+):(?:(\d+):)? (.*)"
+            build.file_regex = r"^(.+?):(\d+):(?:(\d+):)? (.*)"
             build.syntax = "GCC Output"
+
+
+class CmakeBuildListener(ChimneyBuildListener):
+    def __init__(self, stdout_replace, stderr_replace):
+        self.output_patterns = [
+            (re.compile(key), val) for key, val in stdout_replace.items()
+        ]
+        self.error_patterns = [
+            (re.compile(key), val) for key, val in stderr_replace.items()
+        ]
+
+    def on_line(self, line, patterns):
+        for pat, repl in patterns:
+            line = pat.sub(repl, line)
+
+        return line
+
+    def on_output(self, line, ctx):
+        return self.on_line(line, self.output_patterns)
+
+    def on_error(self, line, ctx):
+        return self.on_line(line, self.error_patterns)
