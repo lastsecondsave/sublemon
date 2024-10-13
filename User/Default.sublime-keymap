@@ -56,6 +56,7 @@
   { "keys": ["alt+0"], "command": "unselect_others" },
 
   { "keys": ["alt+q"], "command": "expand_snippet" },
+  { "keys": ["alt+u"], "command": "jump_forward" },
   { "keys": ["alt+p"], "command": "find_under_prev" },
 
   { "keys": ["alt+a"], "command": "single_selection",
@@ -73,6 +74,7 @@
       { "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true },
     ]
   },
+  { "keys": ["alt+h"], "command": "jump_back" },
 
 
   { "keys": ["alt+z"], "command": "last_single_selection",
