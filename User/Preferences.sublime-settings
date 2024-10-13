@@ -115,7 +115,6 @@
 	],
 	"index_files": true,
 	"margin": 0,
-	"match_brackets_angle": true,
 	"match_brackets_content": false,
 	"mini_diff": "auto",
 	"open_files_in_new_window": false,
