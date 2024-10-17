@@ -442,6 +442,19 @@ def start_build(build, window, panel):
     env = pref("env", default={}, window=window, settings=False)
     env.update(build.env)
 
+    if env:
+        variables = window.extract_variables()
+        variables.update(os.environ)
+
+        for key, val in env.items():
+            if val is None:
+                continue
+
+            if isinstance(val, list):
+                val = "".join(val)
+
+            env[key] = sublime.expand_variables(val, variables)
+
     process = start_process(build.cmd, env, build.working_dir)
     ctx = BuildContext(window, panel, process, build)
 
@@ -488,12 +501,8 @@ def start_process(cmd, env, cwd):
         for key, val in env.items():
             if val is None:
                 process_env.pop(key, None)
-                continue
-
-            if isinstance(val, list):
-                val = "".join(val)
-
-            process_env[key] = os.path.expandvars(val)
+            else:
+                process_env[key] = val
 
     if cmd.shell:
         args = str(cmd)
