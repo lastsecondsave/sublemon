@@ -44,18 +44,18 @@ def find_venv(build):
     if venv.is_dir():
         return str(venv)
 
-    for folder in build.window.folders():
-        venv = Path(folder, ".venv")
-        if venv.is_dir():
-            return str(venv)
+    venv = locate_config(build.window.active_view(), ".venv")
+    if venv and venv.is_dir():
+        return str(venv)
 
     return None
 
 
 def setup_venv(build, venv):
-    build.env["VIRTUAL_ENV"] = venv
-    build.env["PYTHONPATH"] = None
+    if "PYTHONPATH" not in build.env:
+        build.env["PYTHONPATH"] = None
 
+    build.env["VIRTUAL_ENV"] = venv
     build.env["PATH"] = f"{Path(venv, VENV_BIN)}{os.pathsep}$PATH"
     build.cmd.shell = True
 
