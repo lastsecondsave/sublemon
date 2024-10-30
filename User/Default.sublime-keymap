@@ -128,7 +128,7 @@
       ["insert", {"characters": ",\n"}]
     ]
   }},
-  { "keys": ["ctrl+alt+/"], "command": "new_window_for_project" },
+  { "keys": ["ctrl+alt+/"], "command": "toggle_setting", "args": {"setting": "draw_centered"} },
 
   /* SHIFT + ALT */
 
@@ -155,6 +155,10 @@
   { "keys": ["ctrl+shift+alt+-"], "command": "decrease_font_size" },
   { "keys": ["ctrl+shift+alt+="], "command": "increase_font_size" },
 
+  { "keys": ["ctrl+shift+alt+h"], "command": "sublime_merge_file_history" },
+
+  { "keys": ["ctrl+shift+alt+m"], "command": "sublime_merge_open_repo" },
+
   /* L2: CTRL */
 
   { "keys": ["ctrl+k", "ctrl+o"], "command": "open_file_under_cursor"},
@@ -165,6 +169,7 @@
   { "keys": ["ctrl+k", "ctrl+j"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete to BOL.sublime-macro"} },
   { "keys": ["ctrl+k", "ctrl+'"], "command": "toggle_setting", "args": {"setting": "word_wrap"} },
 
+  { "keys": ["ctrl+k", "ctrl+n"], "command": "new_window_for_project" },
   { "keys": ["ctrl+k", "ctrl+m"], "command": "select_query" },
 
   /* L3: CTRL */
