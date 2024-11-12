@@ -44,6 +44,12 @@ class CommandFineTuning(EventListener):
             location = view.sel()[0]
             view.show(location)
 
+    def on_activated(self, view):
+        sheets = view.window().selected_sheets()
+        if len(sheets) > 1:
+            for sheet in sheets:
+                sheet.view().settings().set("draw_centered", False)
+
 
 class EscapeBackslashesCommand(TextCommand):
     def run(self, edit):
