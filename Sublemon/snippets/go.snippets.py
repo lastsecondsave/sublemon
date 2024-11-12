@@ -18,8 +18,13 @@ snippets = {
             """
         ),
     ),
+    ";;": (
+        "i = 0; i < imax; i++",
+        "${1:i} := 0; $1 < ${2:imax}; ${3:$1++}",
+    ),
     "lf": "log.Fatal(${1:err})",
     "mp": "map[${1:string}]${2:any}",
+    "fr": ("for range", "for ${1:i} := range ${2:x} {}")
 }
 
 completions = {
