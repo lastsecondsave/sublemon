@@ -569,3 +569,21 @@ class FindAllInFolderCommand(WindowCommand):
 
     def is_visible(self, dirs):
         return len(dirs) > 0
+
+
+class GlideCommand(TextCommand):
+    def run(self, edit, forward=True, amount=0.5):
+        page_size = self.view.viewport_extent()[1] / self.view.line_height()
+        distance = int(page_size * amount) * (1 if forward else -1)
+
+        def move(region):
+            row, col = self.view.rowcol(region.begin())
+            return Region(self.view.text_point(row + distance, col, clamp_column=True))
+
+        selection = self.view.sel()
+        region = move(next(iter(selection)))
+
+        selection.clear()
+        selection.add(region)
+
+        self.view.show_at_center(region)

@@ -1,4 +1,7 @@
 [
+  { "keys": ["pageup"], "command": "glide", "args": {"amount": 0.75, "forward": false} },
+  { "keys": ["pagedown"], "command": "glide", "args": {"amount": 0.75} },
+
   /* CTRL */
 
   { "keys": ["ctrl+pageup"], "command": "tabber_next", "args": {"forward": false},
@@ -20,6 +23,9 @@
   },
 
   /* ALT */
+
+  { "keys": ["alt+pageup"], "command": "glide", "args": {"amount": 0.25, "forward": false} },
+  { "keys": ["alt+pagedown"], "command": "glide", "args": {"amount": 0.25} },
 
   { "keys": ["alt+1"], "command": "tabber_focus", "args": { "index": 0 },
     "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
@@ -85,9 +91,6 @@
 
   /* CTRL + SHIFT */
 
-  { "keys": ["ctrl+shift+pageup"], "command": "tabber_move", "args": {"forward": false} },
-  { "keys": ["ctrl+shift+pagedown"], "command": "tabber_move" },
-
   { "keys": ["ctrl+shift+-"], "command": "insert", "args": {"characters": "–"} },
   { "keys": ["ctrl+shift+="], "command": "insert", "args": {"characters": "—"} },
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
@@ -98,8 +101,8 @@
 
   { "keys": ["ctrl+alt+up"], "command": "select_lines", "args": {"forward": false} },
   { "keys": ["ctrl+alt+down"], "command": "select_lines", "args": {"forward": true} },
-  { "keys": ["ctrl+alt+pageup"], "command": "focus_neighboring_group", "args": {"forward": false} },
-  { "keys": ["ctrl+alt+pagedown"], "command": "focus_neighboring_group", "args": {"forward": true} },
+  { "keys": ["ctrl+alt+pageup"], "command": "tabber_move", "args": {"forward": false} },
+  { "keys": ["ctrl+alt+pagedown"], "command": "tabber_move" },
   { "keys": ["ctrl+alt+enter"], "command": "insert_snippet", "args": {"contents": "\n\t${0:$SELECTION}\n"},
     "context": [{"key": "setting.is_widget", "operator": "equal", "operand": false}]
   },
@@ -131,6 +134,9 @@
   { "keys": ["ctrl+alt+/"], "command": "toggle_setting", "args": {"setting": "draw_centered"} },
 
   /* SHIFT + ALT */
+
+  { "keys": ["alt+shift+pageup"], "command": "focus_neighboring_group", "args": {"forward": false} },
+  { "keys": ["alt+shift+pagedown"], "command": "focus_neighboring_group", "args": {"forward": true} },
 
   { "keys": ["shift+alt+f8"], "command": "toggle_show_open_files" },
   { "keys": ["shift+alt+f9"], "command": "toggle_ligatures" },
