@@ -568,23 +568,13 @@
     },
     {
       "class": "minimap_control",
-      "viewport_color": "color(var(FADED_GRAY) alpha(20%))",
-    },
-    {
-      "class": "minimap_control",
-      "settings": ["always_show_minimap_viewport"],
-      "viewport_opacity": 1.0,
-    },
-    {
-      "class": "minimap_control",
-      "settings": ["!always_show_minimap_viewport"],
-      "viewport_opacity": { "target": 0.0, "speed": 4.0, "interpolation": "smoothstep" },
+      "viewport_color": "var(FADED_GRAY)",
+      "viewport_opacity": { "target": 0.2, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "minimap_control",
       "attributes": ["hover"],
-      "settings": ["!always_show_minimap_viewport"],
-      "viewport_opacity": { "target": 1.0, "speed": 20.0, "interpolation": "smoothstep" },
+      "viewport_opacity": { "target": 0.35, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "fold_button_control",
