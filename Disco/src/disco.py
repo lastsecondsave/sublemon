@@ -556,9 +556,13 @@ rec(VARIABLE,
     'meta.link.reference.def entity.name.reference.link',
     'meta.link.reference constant.other.reference.link')
 rec(ITALIC,
-    'markup.italic -punctuation')
+    'markup.italic -punctuation',
+    'markup.heading.3 entity.name')
 rec(BOLD,
-    'markup.bold -punctuation')
+    'markup.bold -punctuation',
+    'markup.heading.1 entity.name')
+rec(BOLD + ITALIC,
+    'markup.heading.2 entity.name')
 rec(UNDERLINE,
     'markup.underline.link')
 rec(FOREGROUND,
