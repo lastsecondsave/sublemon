@@ -24,9 +24,6 @@
 
   /* ALT */
 
-  { "keys": ["alt+pageup"], "command": "glide", "args": {"amount": 0.25, "forward": false} },
-  { "keys": ["alt+pagedown"], "command": "glide", "args": {"amount": 0.25} },
-
   { "keys": ["alt+1"], "command": "tabber_focus", "args": { "index": 0 },
     "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
   },
@@ -82,12 +79,16 @@
   },
   { "keys": ["alt+h"], "command": "jump_back" },
 
-
   { "keys": ["alt+z"], "command": "last_single_selection",
     "context": [{"key": "num_selections", "operator": "not_equal", "operand": 1}]
   },
   { "keys": ["alt+n"], "command": "find_under" },
   { "keys": ["alt+/"], "command": "show_file_path" },
+
+  /* SHIFT */
+
+  { "keys": ["shift+pageup"], "command": "glide", "args": {"amount": 0.25, "forward": false} },
+  { "keys": ["shift+pagedown"], "command": "glide", "args": {"amount": 0.25} },
 
   /* CTRL + SHIFT */
 
