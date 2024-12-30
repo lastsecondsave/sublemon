@@ -154,6 +154,8 @@
   { "keys": ["shift+alt+f11"], "command": "toggle_setting", "args": {"setting": "draw_indent_guides"} },
   { "keys": ["shift+alt+f12"], "command": "toggle_minimap" },
 
+  { "keys": ["shift+alt+0"], "command": "unselect_current" },
+
   { "keys": ["shift+alt+w"], "command": "insert_snippet",
     "args": {"contents": "<${1:p}>${2:$SELECTION}</${1/([^ ]+).*/$1/}>"}
   },
