@@ -14,6 +14,7 @@
   { "keys": ["ctrl+-"], "command": "one_up", "args": {"negative": true} },
   { "keys": ["ctrl+="], "command": "one_up" },
 
+  { "keys": ["ctrl+q"], "command": "noop" },
   { "keys": ["ctrl+o"], "command": "open_file_path" },
   { "keys": ["ctrl+\\"], "command": "run_macro" },
 
