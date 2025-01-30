@@ -45,7 +45,11 @@ class CommandFineTuning(EventListener):
             view.show(location)
 
     def on_activated(self, view):
-        sheets = view.window().selected_sheets()
+        window = view.window()
+        if not window:
+            return
+
+        sheets = window.selected_sheets()
         if len(sheets) > 1:
             for sheet in sheets:
                 sheet.view().settings().set("draw_centered", False)
