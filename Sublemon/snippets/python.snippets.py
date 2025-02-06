@@ -143,6 +143,7 @@ generate(
             "argparse",
             "collections",
             "functools",
+            "itertools",
             "pathlib",
             "shlex",
             "subprocess",

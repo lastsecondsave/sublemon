@@ -18,13 +18,27 @@ snippets = {
             """
         ),
     ),
+    "ieer": (
+        "if err := ... { return }",
+        dedent(
+            """
+            if ${1:err} := $SEL2; $1 != nil {
+                return ${3:nil}, ${1}
+            }
+            """
+        ),
+    ),
     ";;": (
         "i = 0; i < imax; i++",
         "${1:i} := 0; $1 < ${2:imax}; ${3:$1++}",
     ),
     "lf": "log.Fatal(${1:err})",
     "mp": "map[${1:string}]${2:any}",
-    "fr": ("for range", "for ${1:i} := range ${2:x} {}")
+    "fr": ("for range", "for ${1:i} := range ${2:x} {}"),
+    "ve": "var err error",
+    "ma": ("make array", "make([]${1:byte}, ${2:32})"),
+    "mm": ("make map", "make(map[${1:string}]${2:any})"),
+    "st": ("struct tag", '`${1:json}:"$2"`'),
 }
 
 completions = {
@@ -96,6 +110,16 @@ completions = {
         "new",
         "panic",
         "recover",
+    ],
+    ("Package", Icon.NAMESPACE): [
+        "binary",
+        "bufio",
+        "bytes",
+        "errors",
+        "filepath",
+        "slices",
+        "strconv",
+        "strings",
     ],
 }
 
