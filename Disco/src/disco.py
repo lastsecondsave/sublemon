@@ -476,9 +476,12 @@ src('go')
 rec(KEYWORD,
     'support.function.builtin')
 rec(STORAGE,
-    'support.type.builtin')
+    'support.type.builtin',
+    'meta.function.declaration variable.other.type')
 rec(META,
     '{punctuation.definition|variable}.annotation')
+rec(FOREGROUND,
+    'variable.parameter.type')
 
 src('rust')
 rec(STORAGE,
