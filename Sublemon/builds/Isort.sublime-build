@@ -1,7 +1,0 @@
-{
-  "selector": "source.python",
-  "target": "python",
-  "module": "isort",
-  "cmd": ["--profile", "black", "$file"],
-  "allow_venv": false
-}
