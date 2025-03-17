@@ -457,7 +457,7 @@ rec(SPECIAL,
 rec(SPECIAL + ITALIC,
     'entity.name.label')
 rec(STORAGE,
-    'support.type.{sys-types|stdint}')
+    'support.type.{stdint|stddef}')
 rec(KEYWORD,
     'keyword.operator.word')
 rec(VARIABLE,
