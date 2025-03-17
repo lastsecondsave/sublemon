@@ -132,7 +132,7 @@
 	"show_line_endings": true,
 	"show_project_first": true,
 	"show_rel_path": false,
-	"spelling_selector": "markup.raw, comment, source string.quoted, source string.unquoted -meta.mapping.key",
+	"spelling_selector": "text, markup.raw, comment, source string.quoted, source string.unquoted -meta.mapping.key",
 	"tab_completion": false,
 	"theme": "Disco.sublime-theme",
 	"translate_tabs_to_spaces": true,
