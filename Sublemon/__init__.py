@@ -32,9 +32,13 @@ def pref(key, default=None, view=None, window=None, expand=False, settings=True)
     return value
 
 
-def listify(value):
+def listify(value, split=None):
     if isinstance(value, list):
         return value
+
+    if isinstance(value, str) and split:
+        if split in value:
+            return value.split(split)
 
     return [value] if value is not None else []
 

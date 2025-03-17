@@ -9,6 +9,10 @@
       "mode": "generate"
     },
     {
+      "name": "Clean Generate",
+      "mode": "generate-clean"
+    },
+    {
       "name": "Interactive",
       "interactive": "cmake --target",
       "cmd": "--target"

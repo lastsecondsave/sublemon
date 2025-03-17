@@ -1,4 +1,5 @@
 import re
+import shutil
 import subprocess
 from multiprocessing import cpu_count
 from pathlib import Path
@@ -93,7 +94,7 @@ class CmakeCommand(ChimneyCommand):
 
         mode = build.opt("mode", "build")
 
-        build_dir = build.opt("build_dir") or pref(
+        build_dir = build.opt("build_dir", expand=True) or pref(
             "cmake_build_dir", "build", window=self.window
         )
 
@@ -101,7 +102,7 @@ class CmakeCommand(ChimneyCommand):
             "cmake_build_type", "Release", window=self.window
         )
 
-        if mode == "generate":
+        if mode.startswith("generate"):
             build.cmd.appendleft(
                 "cmake", ".", "-B", build_dir, f"-DCMAKE_BUILD_TYPE={build_type}"
             )
@@ -110,6 +111,12 @@ class CmakeCommand(ChimneyCommand):
                 build.cmd.append(*params)
 
             build.file_regex = r"CMake Error at (.+?):(\d+) (.*):"
+
+            if mode.endswith("-clean"):
+                build.initializer = lambda _: shutil.rmtree(
+                    Path(build.working_dir) / build_dir, ignore_errors=True
+                )
+
             return
 
         if mode != "build":
@@ -125,7 +132,8 @@ class CmakeCommand(ChimneyCommand):
         else:
             build_targets = listify(
                 build.opt("build_target")
-                or pref("cmake_default_target", window=self.window)
+                or pref("cmake_default_target", window=self.window),
+                split=";",
             )
 
             build.cmd = Cmd(cmd)

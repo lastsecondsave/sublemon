@@ -161,7 +161,7 @@ class BuildSetup:
     def cancel(self, message):
         raise BuildSetupError(message)
 
-    def opt(self, key, default=None, expand=True, required=False):
+    def opt(self, key, default=None, expand=False, required=False):
         value = self.options.get(key, default)
 
         if required and not value:
