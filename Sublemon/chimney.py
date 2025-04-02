@@ -150,7 +150,9 @@ class BuildSetup:
         self.initializer = None
         self.cmd = Cmd(variables=window.extract_variables(), **options)
 
-        self.env = options.get("env", {})
+        self.env = pref("env", default={}, window=window)
+        self.env.update(options.get("env", {}))
+
         self.file_regex = options.get("file_regex", "")
         self.line_regex = options.get("line_regex", "")
         self.active_file = window.active_view().file_name()
