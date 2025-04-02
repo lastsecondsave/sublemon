@@ -411,13 +411,16 @@ rec(META,
 rec(VARIABLE,
     'meta.conditional.case.clause.commands meta.variable variable.other.readwrite',
     'meta.variable variable.other.readwrite - (meta.{arithmetic|conditional|interpolation})',
-    'meta.declaration.variable variable.other.readwrite -meta.interpolation')
+    'meta.declaration.variable variable.other.readwrite -meta.interpolation',
+    'meta.assignment.l-value variable.other.readwrite')
 rec(KEYWORD,
-    'support.function.{eval|exec|source|trap|unset}')
+    'support.function.shell',
+    'keyword.operator.iterator.in.')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
-    'keyword.control.conditional.patterns')
+    'keyword.control.conditional.patterns',
+    'punctuation.separator.path')
 rec(ITALIC,
     'meta.conditional.case.clause.patterns meta.pattern.regexp -keyword.operator.logical -keyword.control')
 
@@ -457,7 +460,7 @@ rec(SPECIAL,
 rec(SPECIAL + ITALIC,
     'entity.name.label')
 rec(STORAGE,
-    'support.type.{stdint|stddef}')
+    'support.type.{stdint|stddef|time}')
 rec(KEYWORD,
     'keyword.operator.word')
 rec(VARIABLE,
@@ -502,7 +505,7 @@ rec(PUNCTUATION,
     'keyword.control.flow.block-scalar',
     'storage.modifier.chomping-indicator')
 rec(GENERIC_PUNCTUATION,
-    'punctuation.definition.sequence')
+    'punctuation.definition.{sequence|mapping}')
 rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
