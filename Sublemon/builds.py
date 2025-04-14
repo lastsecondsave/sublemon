@@ -18,7 +18,7 @@ class WslCommand(ChimneyCommand):
 
 class PwshCommand(ChimneyCommand):
     def setup(self, build):
-        if file := build.opt("file"):
+        if file := build.optx("file"):
             build.cmd.appendleft("-File", file)
         elif cmdline := build.cmd.cmdline:
             build.cmd = Cmd(cmd=["-Command", cmdline])

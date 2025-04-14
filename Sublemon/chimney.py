@@ -174,6 +174,9 @@ class BuildSetup:
 
         return value
 
+    def optx(self, key, **kwargs):
+        return self.opt(key, expand=True, **kwargs)
+
     def in_project_dir(self):
         if not self._working_dir:
             self._working_dir = os.path.dirname(self.window.project_file_name())
