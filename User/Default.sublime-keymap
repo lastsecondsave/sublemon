@@ -1,6 +1,16 @@
 [
-  { "keys": ["pageup"], "command": "glide", "args": {"amount": 0.75, "forward": false} },
-  { "keys": ["pagedown"], "command": "glide", "args": {"amount": 0.75} },
+  { "keys": ["pageup"], "command": "glide", "args": {"amount": 0.75, "forward": false},
+    "context": [
+      { "key": "panel", "operator": "not_equal", "operand": "console" },
+      { "key": "setting.is_widget", "operand": false }
+    ]
+  },
+  { "keys": ["pagedown"], "command": "glide", "args": {"amount": 0.75},
+    "context": [
+      { "key": "panel", "operator": "not_equal", "operand": "console" },
+      { "key": "setting.is_widget", "operand": false }
+    ]
+  },
 
   /* CTRL */
 
