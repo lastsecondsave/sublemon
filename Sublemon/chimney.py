@@ -426,11 +426,11 @@ class BuildContext:
                     f"{'Failed' if returncode else 'Complete'}: {self.cmd.preview}"
                 )
 
-            print(f"✔ [{self.process.pid}] ↑ {returncode} ⌛ {duration}")
+            print(f"✔ [{self.process.pid}] ↑ {returncode}  {duration}")
         else:
             self.window.status_message(f"Cancelled: {self.cmd.preview}")
             self.print_lines(("", " *** Terminated *** "))
-            print(f"✘ [{self.process.pid}] ⌛ {duration}")
+            print(f"✘ [{self.process.pid}]  {duration}")
 
         self.process = None
 
