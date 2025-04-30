@@ -110,7 +110,7 @@ COLOR_SCHEME = {
         "selection_border_width": "0",
         "invisibles": color(DARK_BLUE, "l(+ 10%)"),
 
-        "highlight": color(WHITE, "a(75%)"),
+        "highlight": color(CLEAR_WHITE, "l(- 25%)"),
         "find_highlight": YELLOW,
         "find_highlight_foreground": BLUISH_BLACK,
         "scroll_highlight": WHITE,
