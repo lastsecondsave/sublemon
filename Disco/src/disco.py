@@ -68,6 +68,7 @@ UNDERLINE = Style(font_style="underline")
 
 KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
+SUPPORT = Style(BRIGHTER_WHITE)
 INDEXED = Style(BLUE)
 OPERATOR = Style(VIOLET)
 GENERIC_PUNCTUATION = Style(VIOLET)
@@ -275,7 +276,7 @@ rec(STORAGE,
     'support.type -comment.line.number-sign')
 rec(COMMENT_LIGHT,
     'comment.line.number-sign & (keyword | constant.language | support.type)')
-rec(BRIGHTER_WHITE,
+rec(SUPPORT,
     'keyword.other.print',
     'support.function.builtin')
 
@@ -400,11 +401,11 @@ rec(FOREGROUND,
 src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
-    'keyword.operator.{end-of-options|expansion|herestring}',
+    'keyword.operator.{expansion|herestring}',
     'keyword.operator.assignment.{pipe|redirection}',
     'meta.interpolation.parameter keyword.operator.assignment')
 rec(STORAGE,
-    'keyword.declaration.{alias|variable} | support.function.export')
+    'keyword.declaration.{alias|variable}')
 rec(META,
     'entity.name.tag.heredoc',
     'punctuation.definition.tag')
@@ -414,15 +415,19 @@ rec(VARIABLE,
     'meta.declaration.variable variable.other.readwrite -meta.interpolation',
     'meta.assignment.l-value variable.other.readwrite')
 rec(KEYWORD,
-    'support.function.shell',
-    'keyword.operator.iterator.in.')
+    'keyword.operator.iterator.in')
+rec(SUPPORT,
+    'support.function.shell')
+rec(STRING,
+    'meta.function-call meta.quoted')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
     'keyword.control.conditional.patterns',
-    'punctuation.separator.path')
+    'punctuation.separator.path',
+    'constant.language.null')
 rec(ITALIC,
-    'meta.conditional.case.clause.patterns meta.pattern.regexp -keyword.operator.logical -keyword.control')
+    'meta.statement.conditional.case meta.clause.patterns meta.string.glob')
 
 src('makefile')
 rec(PUNCTUATION,
