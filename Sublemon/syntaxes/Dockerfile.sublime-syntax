@@ -110,7 +110,7 @@ contexts:
             - match: (?i)AS(?=\s|$)
               scope: keyword.control.dockerfile
               set:
-                - match: \w+
+                - match: '[\w-]+'
                   scope: entity.name.stage.dockerfile
                   pop: 1
                 - include: pop-otherwise
