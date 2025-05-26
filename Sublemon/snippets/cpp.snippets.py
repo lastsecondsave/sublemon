@@ -89,6 +89,7 @@ generate(
         ],
         ("Cast", Icon.CONVERT): [
             "const_cast",
+            "dynamic_cast",
             "reinterpret_cast",
             "static_cast",
         ],
