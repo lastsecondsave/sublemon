@@ -1,4 +1,5 @@
 [
   { "caption": "-", "id": "folder_commands" },
-  { "caption": "Find All in Folder…", "command": "find_all_in_folder", "args": {"dirs": []} }
+  { "caption": "Find All in Folder…", "command": "find_all_in_folder", "args": {"dirs": []} },
+  { "caption": "Open in New Window…", "command": "open_in_new_window", "args": {"dirs": []} }
 ]

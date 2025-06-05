@@ -16,7 +16,7 @@ from sublime_plugin import (
     WindowCommand,
 )
 
-from . import indent_params
+from . import indent_params, start_process
 
 
 class SublemonReloadCommand(ApplicationCommand):
@@ -576,6 +576,15 @@ class FindAllInFolderCommand(WindowCommand):
             "show_panel",
             {"panel": "find_in_files", "where": ",".join(dirs)},
         )
+
+    def is_visible(self, dirs):
+        return len(dirs) > 0
+
+
+# pylint: disable=arguments-differ
+class OpenInNewWindowCommand(ApplicationCommand):
+    def run(self, dirs):
+        start_process([sublime.executable_path()] + dirs, dirs[0])
 
     def is_visible(self, dirs):
         return len(dirs) > 0
