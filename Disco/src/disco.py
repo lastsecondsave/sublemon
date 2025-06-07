@@ -263,7 +263,7 @@ rec(Highlight("hsla(357, 65%, 60%, 0.30)", 'l(+ 10%)'), 'diff.deleted.char')
 
 src('python')
 rec(KEYWORD,
-    'keyword.operator.logical')
+    'keyword.operator.{logical|iteration}')
 rec(META,
     '{punctuation.definition|variable}.annotation')
 rec(STRING,

@@ -47,7 +47,7 @@ generate(
         "be": ("begin-end", "std::begin($1), std::end($1)$0"),
         "rs": ("raw string", 'R"($SEL0)"'),
         "rc": ("reinterpret_cast", "reinterpret_cast<$1>($SEL2)"),
-        "sc": ("static_cast", "static_cast<$1>($SEL2)"),
+        "sc": ("static_cast", "static_cast<${1:size_t}>($SEL2)"),
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
@@ -78,6 +78,7 @@ generate(
             "const",
             "constexpr",
             "explicit",
+            "inline",
             "mutable",
             "noexcept",
             "override",
