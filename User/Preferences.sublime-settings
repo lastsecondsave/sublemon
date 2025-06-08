@@ -34,6 +34,7 @@
 	"control_character_style": "names",
 	"copy_with_empty_selection": false,
 	"default_line_ending": "unix",
+	"disable_plugin_host_3.3": true,
 	"drag_text": false,
 	"draw_shadows": false,
 	"enable_tab_scrolling": true,
