@@ -19,6 +19,7 @@ from .opener import find_project_folder
 class OutputPanel:
     DEFAULTS = {
         "gutter": False,
+        "highlight_line": False,
         "scroll_past_end": False,
         "word_wrap": True,
         "draw_indent_guides": False,
