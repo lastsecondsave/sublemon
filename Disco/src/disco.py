@@ -415,7 +415,7 @@ rec(VARIABLE,
     'meta.declaration.variable variable.other.readwrite -meta.interpolation',
     'meta.assignment.l-value variable.other.readwrite')
 rec(KEYWORD,
-    'keyword.operator.iterator.in')
+    'keyword.operator.iteration.in')
 rec(SUPPORT,
     'support.function.shell')
 rec(STRING,

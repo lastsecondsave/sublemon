@@ -2,7 +2,7 @@ from snippets import Icon, generate
 
 snippets = {
     "sb": ("shebang", "#!/usr/bin/env ${1:bash}"),
-    "fun": ("function", "${1:run}() {}"),
+    "fn": ("function", "${1:run}() {}"),
     "pl": "echo $SEL0",
 }
 
