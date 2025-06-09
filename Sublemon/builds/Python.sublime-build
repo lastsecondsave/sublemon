@@ -5,8 +5,8 @@
 
   "variants": [
     {
-      "name": "Interactive",
-      "interactive": "python"
+      "name": "Manual",
+      "manual": "python"
     }
   ]
 }

@@ -13,8 +13,8 @@
       "mode": "generate-clean"
     },
     {
-      "name": "Interactive",
-      "interactive": "cmake --target",
+      "name": "Manual",
+      "manual": "cmake --target",
       "cmd": "--target"
     }
   ]

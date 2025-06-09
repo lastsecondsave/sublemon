@@ -10,9 +10,9 @@
       "cmd": ["run", "$folder"]
     },
     {
-      "name": "Run Interactive",
+      "name": "Run Manual",
       "cmd": ["run", "$folder"],
-      "interactive": "go"
+      "manual": "go"
     }
   ]
 }

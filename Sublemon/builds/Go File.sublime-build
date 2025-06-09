@@ -5,8 +5,8 @@
 
   "variants": [
     {
-      "name": "Interactive",
-      "interactive": "go"
+      "name": "Manual",
+      "manual": "go"
     }
   ]
 }

@@ -6,8 +6,8 @@
 
   "variants": [
     {
-      "name": "Interactive",
-      "interactive": "pwsh"
+      "name": "Manual",
+      "manual": "pwsh"
     }
   ]
 }

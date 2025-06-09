@@ -237,7 +237,7 @@ class ChimneyCommand(WindowCommand):
         pass
 
     # pylint: disable=arguments-differ
-    def run(self, kill=False, interactive=None, **options):
+    def run(self, kill=False, manual=None, **options):
         if self.active_build:
             self.active_build.cancel()
 
@@ -246,11 +246,11 @@ class ChimneyCommand(WindowCommand):
 
         build = BuildSetup(options, self.window)
 
-        if not interactive:
+        if not manual:
             self.run_build(build)
             return
 
-        prompt = "$ " + (interactive if isinstance(interactive, str) else "")
+        prompt = "$ " + (manual if isinstance(manual, str) else "")
 
         def on_done(cmd):
             if cmd:
