@@ -4,6 +4,8 @@ import sys
 from pathlib import Path
 from zipfile import ZipFile
 
+# pylint: disable=unspecified-encoding
+
 SUBLEMON = Path(__file__).resolve().parent.parent
 PACKAGES = SUBLEMON.parent
 
@@ -24,7 +26,8 @@ def generate_files():
         execute(snippet)
 
 
-def mute(path):
+def mute(*path):
+    path = PACKAGES.joinpath(*path)
     path.parent.mkdir(exist_ok=True, parents=True)
 
     if (ext := path.suffix) == ".sublime-build":
@@ -44,27 +47,46 @@ def mute(path):
     print(f"Muted {path}")
 
 
+def mute_in_package(package, file_type):
+    pkg_file = system_package(package)
+    if not pkg_file.exists():
+        pkg_file = installed_package(package)
+
+    with ZipFile(pkg_file) as pkg:
+        completions = [n.split("/") for n in pkg.namelist() if n.endswith(file_type)]
+
+    for path in completions:
+        mute(package, *path)
+
+
+def mute_completions(package):
+    mute_in_package(package, "sublime-completions")
+
+
+def mute_builds(package):
+    mute_in_package(package, "sublime-build")
+
+
 def mute_files():
-    mute(PACKAGES / "Python" / "Python.sublime-build")
-    mute(PACKAGES / "Python" / "Indentation Rules.tmPreferences")
+    mute_builds("Python")
+    mute("Python", "Indentation Rules.tmPreferences")
 
-    mute(PACKAGES / "Rust" / "Default.sublime-keymap")
+    mute_completions("ShellScript")
+    mute("ShellScript", "Default.sublime-keymap")
+    mute("ShellScript", "Bash", "Completion Rules.tmPreferences")
+    mute("ShellScript", "Zsh", "Completion Rules.tmPreferences")
 
-    mute(PACKAGES / "Markdown" / "Default.sublime-keymap")
-    mute(PACKAGES / "Markdown" / "Symbol List - Reference Link.tmPreferences")
+    mute("Markdown", "Default.sublime-keymap")
+    mute("Markdown", "Symbol List - Reference Link.tmPreferences")
 
-    mute(PACKAGES / "Java" / "Ant.sublime-build")
-    mute(PACKAGES / "Java" / "JavaC.sublime-build")
-    mute(PACKAGES / "Java" / "Java.sublime-completions")
+    mute_completions("Java")
+    mute_builds("Java")
 
-    mute(PACKAGES / "CMake" / "CMake.sublime-completions")
-    mute(PACKAGES / "CMake" / "CMakeVariables.sublime-completions")
+    mute_completions("CMake")
+    mute_completions("Go")
 
-    mute(PACKAGES / "Makefile" / "Make.sublime-build")
-
-    mute(PACKAGES / "C++" / "C++ Single File.sublime-build")
-
-    mute(PACKAGES / "Go" / "Go.sublime-completions")
+    mute_builds("Makefile")
+    mute_builds("C++")
 
 
 def system_package(name):
@@ -78,18 +100,29 @@ def system_package(name):
     return Path(root) / "Packages" / f"{name}.sublime-package"
 
 
+def installed_package(name):
+    if sys.platform == "win32":
+        root = "AppData/Roaming/Sublime Text"
+    elif sys.platform == "darwin":
+        root = "/Applications/Sublime Text.app/Contents/MacOS"
+    else:
+        root = ".config/sublime-text"
+
+    return Path.home() / root / "Installed Packages" / f"{name}.sublime-package"
+
+
 def unpack_icons():
-    with ZipFile(system_package("Theme - Default")) as package:
-        icons = [name for name in package.namelist() if name.startswith("icons/")]
-        package.extractall(path=PACKAGES / "Disco", members=icons)
+    with ZipFile(system_package("Theme - Default")) as pkg:
+        icons = [name for name in pkg.namelist() if name.startswith("icons/")]
+        pkg.extractall(path=PACKAGES / "Disco", members=icons)
 
     print(f"Copied {len(icons)} icons from the default theme")
 
 
 def override_macos_keymap():
-    with ZipFile(system_package("Default")) as package:
+    with ZipFile(system_package("Default")) as pkg:
         keymap = Path(
-            package.extract(
+            pkg.extract(
                 "Default (Windows).sublime-keymap",
                 path=PACKAGES / "Default",
             )
