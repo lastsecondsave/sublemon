@@ -178,7 +178,7 @@
   { "keys": ["shift+alt+]"], "command": "select_to_right" },
   { "keys": ["shift+alt+s"], "command": "show_overlay", "args": {"overlay": "command_palette", "text": "Snippet: "} },
   { "keys": ["shift+alt+z"], "command": "reveal_in_side_bar" },
-  { "keys": ["shift+alt+b"], "command": "chimney", "args": {"interactive": true} },
+  { "keys": ["shift+alt+b"], "command": "chimney", "args": {"manual": true} },
 
   /* CTRL + SHIFT + ALT */
 
