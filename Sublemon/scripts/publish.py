@@ -104,7 +104,7 @@ def installed_package(name):
     if sys.platform == "win32":
         root = "AppData/Roaming/Sublime Text"
     elif sys.platform == "darwin":
-        root = "/Applications/Sublime Text.app/Contents/MacOS"
+        root = "Library/Application Support/Sublime Text"
     else:
         root = ".config/sublime-text"
 
