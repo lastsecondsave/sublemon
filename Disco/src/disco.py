@@ -298,6 +298,8 @@ rec(OPERATOR,
     'keyword.declaration.function.arrow',
     'meta.type keyword.declaration.function',
     'storage.modifier.array')
+rec(KEYWORD,
+    'keyword.operator.js')
 rec(STRING,
     'meta.template.expression',
     'string.regexp keyword.other.js')
