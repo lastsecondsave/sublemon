@@ -403,8 +403,8 @@ rec(FOREGROUND,
 src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
-    'keyword.operator.{expansion|herestring}',
-    'keyword.operator.assignment.{pipe|redirection}',
+    'keyword.operator.expansion',
+    'keyword.operator.assignment.{pipe|redirection|herestring}',
     'meta.interpolation.parameter keyword.operator.assignment')
 rec(STORAGE,
     'keyword.declaration.{alias|variable}')
@@ -421,7 +421,7 @@ rec(KEYWORD,
 rec(SUPPORT,
     'support.function.shell')
 rec(STRING,
-    'meta.function-call meta.quoted')
+    'meta.function-call punctuation.definition.quoted')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
