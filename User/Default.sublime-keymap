@@ -109,8 +109,8 @@
   { "keys": ["ctrl+shift+pageup"], "command": "noop" },
   { "keys": ["ctrl+shift+pagedown"], "command": "noop" },
 
-  { "keys": ["ctrl+shift+-"], "command": "insert", "args": {"characters": "–"} },
-  { "keys": ["ctrl+shift+="], "command": "insert", "args": {"characters": "—"} },
+  { "keys": ["ctrl+shift+-"], "command": "insert", "args": {"characters": "—"} },
+  { "keys": ["ctrl+shift+="], "command": "insert", "args": {"characters": "–"} },
 
   { "keys": ["ctrl+shift+o"], "command": "prompt_open_file" },
   { "keys": ["ctrl+shift+\\"], "command": "toggle_record_macro" },
