@@ -41,12 +41,9 @@
 	"ensure_newline_at_eof_on_save": true,
 	"file_exclude_patterns":
 	[
-		"*.bak",
-		"*.orig",
 		"*.pyc",
 		"*.sublime-workspace",
 		".DS_Store",
-		".git",
 		".project",
 	],
 	"find_selected_text": false,
