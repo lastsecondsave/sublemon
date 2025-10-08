@@ -157,8 +157,11 @@
 
   /* SHIFT + ALT */
 
-  { "keys": ["alt+shift+pageup"], "command": "focus_neighboring_group", "args": {"forward": false} },
-  { "keys": ["alt+shift+pagedown"], "command": "focus_neighboring_group", "args": {"forward": true} },
+  { "keys": ["shift+alt+pageup"], "command": "focus_neighboring_group", "args": {"forward": false} },
+  { "keys": ["shift+alt+pagedown"], "command": "focus_neighboring_group", "args": {"forward": true} },
+  { "keys": ["shift+alt+home"], "command": "tabber_join",
+    "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
+  },
 
   { "keys": ["shift+alt+f8"], "command": "toggle_show_open_files" },
   { "keys": ["shift+alt+f9"], "command": "toggle_ligatures" },

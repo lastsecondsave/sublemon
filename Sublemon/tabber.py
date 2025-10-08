@@ -41,3 +41,17 @@ class TabberMoveCommand(WindowCommand):
 
         if len(selected_sheets) > 1:
             self.window.select_sheets(selected_sheets)
+
+
+class TabberJoinCommand(WindowCommand):
+    def run(self):
+        sheets = self.window.selected_sheets()
+        active = self.window.active_sheet()
+        group, index = self.window.get_sheet_index(sheets[0])
+
+        for sheet in sheets[1:]:
+            index += 1
+            self.window.set_sheet_index(sheet, group, index)
+
+        self.window.select_sheets(sheets)
+        self.window.focus_sheet(active)
