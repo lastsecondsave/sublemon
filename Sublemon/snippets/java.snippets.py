@@ -1,12 +1,12 @@
 from snippets import Icon, generate
 
-getter = R"""
+getter = r"""
 public ${1:String} ${1/boolean|(.*)/(?1:get:is)/}${2/./\u$0/}() {
     return ${2:property};
 }
 """
 
-setter = R"""
+setter = r"""
 public void set${2/./\u$0/}(${1:String} ${2/.*/$0/}) {
     this.${2:property} = ${2/.*/$0/};
 }
@@ -32,7 +32,7 @@ snippets = {
         "for (Iterator<$1> ${2:itr} = ${3:list}.iterator(); $2.hasNext(); ) {}",
     ),
     "trr": ("try with resources", "try ($1) {}"),
-    "jd": ("javadoc", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
+    "jd": ("javadoc", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
     "get": ("getter", getter),
     "geto": (
         "getter with optional",

@@ -1,5 +1,3 @@
-from textwrap import dedent
-
 from snippets import Icon, generate
 
 snippets = {
@@ -10,23 +8,19 @@ snippets = {
     "ie": ("if err != nil", "if ${1:err} != nil {}"),
     "ier": (
         "if err != nil { return }",
-        dedent(
-            """
-            if ${1:err} != nil {
-                return ${2:nil}, ${1}
-            }
-            """
-        ),
+        """
+        if ${1:err} != nil {
+            return ${2:nil}, ${1}
+        }
+        """,
     ),
     "ieer": (
         "if err := ... { return }",
-        dedent(
-            """
-            if ${1:err} := $SEL2; $1 != nil {
-                return ${3:nil}, ${1}
-            }
-            """
-        ),
+        """
+        if ${1:err} := $SEL2; $1 != nil {
+            return ${3:nil}, ${1}
+        }
+        """
     ),
     ";;": (
         "i = 0; i < imax; i++",

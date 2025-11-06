@@ -2,6 +2,7 @@ import hashlib
 import json
 import re
 import shutil
+import textwrap
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -34,6 +35,10 @@ def expand_custom_variables(content):
     return content.replace("$SEL0", "${0:$SELECTION}")
 
 
+def dedent(content):
+    return textwrap.dedent(content[1:]) if content.startswith("\n") else content
+
+
 def intent_with_tabs(content):
     return content.replace("    ", "\t")
 
@@ -64,12 +69,13 @@ def expand_angle_brackets(content):
 
 
 DEFAULT_MUTATORS = (
+    dedent,
+    intent_with_tabs,
     make_multiline,
     expand_braces,
     expand_parentheses,
     expand_angle_brackets,
     expand_custom_variables,
-    intent_with_tabs,
 )
 
 
