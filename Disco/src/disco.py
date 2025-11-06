@@ -266,8 +266,6 @@ rec(KEYWORD,
     'keyword.operator.{logical|iteration}')
 rec(META,
     '{punctuation.definition|variable}.annotation')
-rec(STRING,
-    'source.sql & (keyword | storage | storage.modifier | variable.language | entity.name | constant.numeric)')
 rec(ITALIC,
     'meta.function-call.arguments variable.parameter -meta.function.inline')
 rec(PARAMETER,

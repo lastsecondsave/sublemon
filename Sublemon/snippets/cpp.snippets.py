@@ -1,14 +1,5 @@
 from snippets import Icon, generate
 
-rule_of_five = """
-${1:Class}() = default;
-virtual ~${1:Class}() = default;
-${1:Class}(const ${1:Class}&) = delete;
-${1:Class}& operator=(const ${1:Class}&) = delete;
-${1:Class}(${1:Class}&&) = delete;
-${1:Class}& operator=(${1:Class}&&) = delete;
-"""
-
 
 def expand_braces_with_semicolon(content):
     return content[:-3] + "{\n\t$0\n};" if content.endswith(" {};") else content
@@ -19,7 +10,7 @@ generate(
     mutators=[expand_braces_with_semicolon],
     snippets={
         "pl": "std::cout << $SEL0 << std::endl;",
-        "dc": ("doc comment", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
+        "dc": ("doc comment", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
         "main": ("main", "int main(${1:int argc, char* argv[]}) {}"),
         "fn": ("function", "${1:void} ${2:run}($3) {}"),
         ";;": (
@@ -33,14 +24,17 @@ generate(
         "mi": ("member init", "$1_(${2:$1})"),
         "mmi": ("member move init", "$1_(std::move(${2:$1}))"),
         "mv": "std::move($SEL0)",
-        "cpc": ("copy constructor", "${1:Class}(const ${1:Class}& ${2:other})"),
-        "mvc": ("move constructor", "${1:Class}(${1:Class}&& ${2:other})"),
-        "cpa": (
-            "copy assignment",
-            "${1:Class}& operator=(const ${1:Class}& ${2:other})",
+        "rof": (
+            "rule of five",
+            """
+            ${1:Class}() = default;
+            virtual ~${1:Class}() = default;
+            ${1:Class}(const ${1:Class}&) = delete;
+            ${1:Class}& operator=(const ${1:Class}&) = delete;
+            ${1:Class}(${1:Class}&&) = delete;
+            ${1:Class}& operator=(${1:Class}&&) = delete;
+            """,
         ),
-        "mva": ("move assignment", "${1:Class}& operator=(${1:Class}&& ${2:other})"),
-        "rof": ("rule of five", rule_of_five),
         "tm": "template<$0>",
         "td": ("TODO", "// TODO: "),
         "lm": ("lambda", "[$1]($2) { $0 }"),
@@ -48,6 +42,7 @@ generate(
         "rs": ("raw string", 'R"($SEL0)"'),
         "rc": ("reinterpret_cast", "reinterpret_cast<$1>($SEL2)"),
         "sc": ("static_cast", "static_cast<${1:size_t}>($SEL2)"),
+        "te": ("throw std::runtime_error", "throw std::runtime_error($SEL0);"),
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
@@ -104,7 +99,7 @@ generate(
             "static_assert",
         ],
         ("Block", Icon.BLOCK): [
-            "catch (${1:const std::exception& e}) {}",
+            "catch (const ${1:std::exception}& e) {}",
             "class $1 {};",
             "else {}",
             "for ($1) {}",

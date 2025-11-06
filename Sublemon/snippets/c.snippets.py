@@ -4,7 +4,7 @@ generate(
     "source.c",
     snippets={
         "pl": "printf($SEL0);",
-        "dc": ("doc comment", R"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
+        "dc": ("doc comment", r"/**-->${SELECTION/^\s*/ * /mg}$0--> */"),
         "main": ("main", "int main(${1:int argc, char* argv[]}) {}"),
         "fn": ("function", "${1:void} ${2:run}($3) {}"),
         ";;": (

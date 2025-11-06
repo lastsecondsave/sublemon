@@ -1,13 +1,40 @@
+import re
 import shutil
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
-from zipfile import ZipFile
 
 # pylint: disable=unspecified-encoding
 
 SUBLEMON = Path(__file__).resolve().parent.parent
 PACKAGES = SUBLEMON.parent
+
+
+def system_package(name):
+    if sys.platform == "win32":
+        root = "C:/Program Files/Sublime Text"
+    elif sys.platform == "darwin":
+        root = "/Applications/Sublime Text.app/Contents/MacOS"
+    else:
+        root = "/opt/sublime_text"
+
+    return Path(root) / "Packages" / f"{name}.sublime-package"
+
+
+def system_package_zip(name):
+    return zipfile.ZipFile(system_package(name))
+
+
+def installed_package(name):
+    if sys.platform == "win32":
+        root = "AppData/Roaming/Sublime Text"
+    elif sys.platform == "darwin":
+        root = "Library/Application Support/Sublime Text"
+    else:
+        root = ".config/sublime-text"
+
+    return Path.home() / root / "Installed Packages" / f"{name}.sublime-package"
 
 
 def execute(script):
@@ -52,7 +79,7 @@ def mute_in_package(package, file_type):
     if not pkg_file.exists():
         pkg_file = installed_package(package)
 
-    with ZipFile(pkg_file) as pkg:
+    with zipfile.ZipFile(pkg_file) as pkg:
         completions = [n.split("/") for n in pkg.namelist() if n.endswith(file_type)]
 
     for path in completions:
@@ -89,30 +116,24 @@ def mute_files():
     mute_builds("C++")
 
 
-def system_package(name):
-    if sys.platform == "win32":
-        root = "C:/Program Files/Sublime Text"
-    elif sys.platform == "darwin":
-        root = "/Applications/Sublime Text.app/Contents/MacOS"
-    else:
-        root = "/opt/sublime_text"
+def patch_python_syntax():
+    with system_package_zip("Python") as pkg:
+        syntax = (zipfile.Path(pkg) / "Python.sublime-syntax").read_text()
 
-    return Path(root) / "Packages" / f"{name}.sublime-package"
+    syntax = re.sub(
+        r"(set: (?:.+-)?quoted)(-raw-\w-string-body)",
+        r"\1-plain\2",
+        syntax,
+    )
 
+    syntax_path = PACKAGES / "Python" / "Python.sublime-syntax"
+    syntax_path.write_text(syntax)
 
-def installed_package(name):
-    if sys.platform == "win32":
-        root = "AppData/Roaming/Sublime Text"
-    elif sys.platform == "darwin":
-        root = "Library/Application Support/Sublime Text"
-    else:
-        root = ".config/sublime-text"
-
-    return Path.home() / root / "Installed Packages" / f"{name}.sublime-package"
+    print(f"Patched {syntax_path}")
 
 
 def unpack_icons():
-    with ZipFile(system_package("Theme - Default")) as pkg:
+    with system_package_zip("Theme - Default") as pkg:
         icons = [name for name in pkg.namelist() if name.startswith("icons/")]
         pkg.extractall(path=PACKAGES / "Disco", members=icons)
 
@@ -120,7 +141,7 @@ def unpack_icons():
 
 
 def override_macos_keymap():
-    with ZipFile(system_package("Default")) as pkg:
+    with system_package_zip("Default") as pkg:
         keymap = Path(
             pkg.extract(
                 "Default (Windows).sublime-keymap",
@@ -135,6 +156,7 @@ def override_macos_keymap():
 def main():
     generate_files()
     mute_files()
+    patch_python_syntax()
     unpack_icons()
 
     if sys.platform == "darwin":
