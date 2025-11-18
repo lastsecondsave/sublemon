@@ -164,6 +164,9 @@ class BuildSetup:
     def cancel(self, message):
         raise BuildSetupError(message)
 
+    def pref(self, key, default=None, **kwargs):
+        return pref(key, default, window=self.window, **kwargs)
+
     def opt(self, key, default=None, expand=False, required=False):
         value = self.options.get(key, default)
 

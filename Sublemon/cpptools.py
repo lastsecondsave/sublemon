@@ -4,7 +4,7 @@ import subprocess
 from multiprocessing import cpu_count
 from pathlib import Path
 
-from . import RUNNING_ON_WINDOWS, listify, pref
+from . import RUNNING_ON_WINDOWS, listify
 from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
 from .pytools import setup_python_exec
 
@@ -94,12 +94,12 @@ class CmakeCommand(ChimneyCommand):
 
         mode = build.opt("mode", "build")
 
-        build_dir = build.opt("build_dir", expand=True) or pref(
-            "cmake_build_dir", "build", window=self.window
+        build_dir = build.opt("build_dir", expand=True) or build.pref(
+            "cmake_build_dir", "build"
         )
 
-        build_type = build.opt("build_type") or pref(
-            "cmake_build_type", "Release", window=self.window
+        build_type = build.opt("build_type") or build.pref(
+            "cmake_build_type", "Release"
         )
 
         if mode.startswith("generate"):
@@ -107,7 +107,7 @@ class CmakeCommand(ChimneyCommand):
                 "cmake", ".", "-B", build_dir, f"-DCMAKE_BUILD_TYPE={build_type}"
             )
 
-            if params := pref("cmake_parameters", window=self.window):
+            if params := build.pref("cmake_parameters"):
                 build.cmd.append(*params)
 
             build.file_regex = r"CMake Error at (.+?):(\d+) (.*):"
@@ -131,8 +131,7 @@ class CmakeCommand(ChimneyCommand):
             build.cmd.appendleft(*cmd)
         else:
             build_targets = listify(
-                build.opt("build_target")
-                or pref("cmake_default_target", window=self.window),
+                build.opt("build_target") or build.pref("cmake_default_target"),
                 split=";",
             )
 
@@ -142,8 +141,13 @@ class CmakeCommand(ChimneyCommand):
                 build.cmd.append("--target", *build_targets)
                 build.cmd.preview = f"cmake --target {' '.join(build_targets)}"
 
-        stdout_replace = build.opt("stdout_replace", {})
-        stderr_replace = build.opt("stderr_replace", {})
+        stdout_replace = build.opt("stdout_replace") or build.pref(
+            "cmake_stdout_replace", {}
+        )
+
+        stderr_replace = build.opt("stderr_replace") or build.pref(
+            "cmake_stderr_replace", {}
+        )
 
         if stdout_replace or stderr_replace:
             build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
