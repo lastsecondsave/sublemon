@@ -39,7 +39,7 @@ contexts:
         1: string
         2: punctuation.formatting
         3: string
-    - match: '^\s+(\|)\s+(~*\^~*|\|)$'
+    - match: '^\s+(\|)\s+(~* *\^~*|\|)$'
       captures:
         1: punctuation.formatting
         2: punctuation.definition.marker
@@ -67,3 +67,7 @@ contexts:
       scope: comment.log
     - match: "(?:--|Scanning dependencies of target|collect2:) .*"
       scope: comment.log
+    - match: (Error while processing) (.+)\.
+      captures:
+        1: entity.name.section
+        2: entity.name.filename
