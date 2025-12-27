@@ -529,6 +529,12 @@ src('ini')
 rec(META,
     '{entity.name|punctuation.definition}.section')
 
+src('proto')
+rec(STORAGE,
+    'support.type')
+rec(GENERIC_PUNCTUATION,
+    'punctuation.definition.block')
+
 src('css')
 rec(STRING,
     'meta.selector string.unquoted')

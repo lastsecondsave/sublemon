@@ -11,6 +11,7 @@
 		"ApplySyntax",
 		"CMake",
 		"Package Control",
+		"Protobuf Syntax Hightlighting",
 		"TOML",
 	],
 }
