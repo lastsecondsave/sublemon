@@ -17,6 +17,10 @@ generate(
             "i = 0; i < imax; i++",
             "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:++$2}",
         ),
+        "::": (
+            "auto& x: coll",
+            "${1:auto&} ${2:x}: ${3:coll}",
+        ),
         "inc": ("#include <header>", "#include <$SEL0>"),
         "inq": ('#include "header"', '#include "$SEL0"'),
         "ifd": ("#if defined()", "#if defined($1)<->#endif"),

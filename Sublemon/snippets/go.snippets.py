@@ -5,6 +5,7 @@ snippets = {
     "ts": ("type struct", "type ${1:Type} struct {}"),
     "fn": ("function", "func ${1:run}($2)$3 {}"),
     "fm": ("method", "func ($1) ${2:run}($3)$4 {}"),
+    "fi": ("inline function", "func(){<=>}()"),
     "ie": ("if err != nil", "if ${1:err} != nil {}"),
     "ier": (
         "if err != nil { return }",
@@ -20,7 +21,7 @@ snippets = {
         if ${1:err} := $SEL2; $1 != nil {
             return ${3:nil}, ${1}
         }
-        """
+        """,
     ),
     ";;": (
         "i = 0; i < imax; i++",
