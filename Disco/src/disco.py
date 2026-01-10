@@ -51,8 +51,9 @@ ORANGE = "#FFAD3A"
 DARK_ORANGE = "#FF8147"
 CRIMSON = "#E5476C"
 
-BRIGHTER_WHITE = "#C6DFD7"
 CLEAR_WHITE = "#FFFFFF"
+BRIGHTER_WHITE = "#C6DFD7"
+LIGHT_YELLOW = "#EFE1A1"
 
 FADED_GRAY = "#51515D"
 FADED_VIOLET = "#5E5E8E"
@@ -112,7 +113,7 @@ COLOR_SCHEME = {
         "invisibles": color(DARK_BLUE, "l(+ 10%)"),
 
         "highlight": color(CLEAR_WHITE, "l(- 25%)"),
-        "find_highlight": YELLOW,
+        "find_highlight": LIGHT_YELLOW,
         "find_highlight_foreground": BLUISH_BLACK,
         "scroll_highlight": WHITE,
         "scroll_selected_highlight": YELLOW,

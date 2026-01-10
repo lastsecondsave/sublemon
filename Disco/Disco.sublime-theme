@@ -34,7 +34,6 @@
     "popup_bg": "var(panel_black)",
     "titlebar_bg": "color(var(outer_dark) blend(var(outer_gray) 40%))",
 
-    "scrollbar_tint": "color(var(CLEAR_WHITE) alpha(60%))",
     "sidebar_icon_tint": "color(var(label_gray) l(- 15%))",
     "findbar_icon_tint": "var(label_white)",
 
@@ -607,7 +606,7 @@
       "class": "popup_control",
       "layer0.tint": "var(popup_bg)",
       "layer0.opacity": 1.0,
-      "content_margin": 0
+      "content_margin": 1
     },
     {
       "class": "auto_complete",
@@ -643,7 +642,7 @@
     {
       "class": "auto_complete_detail_pane",
       "layer1.opacity": 1,
-      "layer1.tint": "var(panel_gray_dark)",
+      "layer1.tint": "var(bottom_bg)",
       "content_margin": [8, 5, 8, 5]
     },
     {
@@ -774,13 +773,7 @@
     // Scroll Bars
     {
       "class": "scroll_area_control",
-      "settings": ["overlay_scroll_bars"],
       "overlay": true
-    },
-    {
-      "class": "scroll_area_control",
-      "settings": ["!overlay_scroll_bars"],
-      "overlay": false
     },
     {
       "class": "scroll_area_control",
@@ -789,59 +782,32 @@
     },
     {
       "class": "scroll_bar_control",
-      "layer0.opacity": 1.0,
-      "content_margin": 4,
-      "tint_index": 0
+      "content_margin": [0, 1, 1, 1],
     },
     {
       "class": "scroll_bar_control",
-      "settings": ["overlay_scroll_bars"],
-      "layer0.opacity": 0.0,
-      "content_margin": 0
-    },
-    {
-      "class": "scroll_bar_control",
-      "settings": ["!overlay_scroll_bars"],
-      "layer0.opacity": 1.0
+      "attributes": ["horizontal"],
+      "content_margin": [1, 0, 1, 1],
     },
     {
       "class": "scroll_track_control",
+      "content_margin": [1, 0, 2, 0]
+    },
+    {
+      "class": "scroll_track_control",
+      "attributes": ["horizontal"],
+      "content_margin": [0, 1, 0, 2]
+    },
+    {
+      "class": "puck_control",
+      "layer0.tint": "var(CLEAR_WHITE)",
+      "layer0.opacity": 0.4,
       "content_margin": 0
-    },
-    {
-      "class": "puck_control",
-      "layer0.tint": [45, 45, 48],
-      "layer0.opacity": 1.0,
-      "content_margin": 1
-    },
-    {
-      "class": "puck_control",
-      "attributes": ["dark"],
-      "layer0.tint": "var(scrollbar_tint)"
     },
     {
       "class": "scroll_corner_control",
-      "layer0.opacity": 1.0,
+      "layer0.opacity": 0.0,
       "tint_index": 0
-    },
-
-    // Scroll Bars (Horizontal)
-    {
-      "class": "scroll_track_control",
-      "attributes": ["horizontal"],
-      "content_margin": 0
-    },
-    {
-      "class": "puck_control",
-      "attributes": ["horizontal"],
-      "layer0.tint": [45, 45, 48],
-      "layer0.opacity": 1.0,
-      "content_margin": 1
-    },
-    {
-      "class": "puck_control",
-      "attributes": ["horizontal", "dark"],
-      "layer0.tint": "var(scrollbar_tint)"
     },
 
     // Inputs
