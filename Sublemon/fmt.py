@@ -207,6 +207,8 @@ class FmtCommand(TextCommand):
         self.view.window().status_message("No supported formatter")
 
     def reformat(self, formatter, scope):
+        self.view.window().status_message("Formatting...")
+
         original_text = self.view.substr(Region(0, self.view.size()))
 
         def run_formatter():
