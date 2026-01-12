@@ -63,7 +63,7 @@
 		"node_modules",
 		"target",
 	],
-	"font_face": "PragmataPro Mono Liga",
+	"font_face": "PragmataPro Liga",
 	"git_diff_target": "head",
 	"hide_pointer_while_typing": false,
 	"highlight_line": true,
