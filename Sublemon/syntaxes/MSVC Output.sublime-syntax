@@ -5,11 +5,15 @@ scope: text.output.msvc
 
 contexts:
   main:
-    - match: '^(.+?)\((\d+)(?:,(\d+))?\):'
+    - match: '^(.+?)(\()(\d+)(?:(,)(\d+))?(\))(:)'
       captures:
         1: entity.name.filename
-        2: constant.numeric.line
-        3: constant.numeric.column
+        2: punctuation.section
+        3: constant.numeric.line
+        4: punctuation.section
+        5: constant.numeric.column
+        6: punctuation.section
+        7: punctuation.separator
       push: [message]
 
     - match: ^\s*(\^)\s*$
@@ -19,12 +23,15 @@ contexts:
   message:
     - match: $
       pop: 1
-    - match: '(?:(error)|(warning)) (?:\w\d+):'
+    - match: '(?:(error)|(warning)) (\w\d+)(:)'
       captures:
         1: constant.other.indicator.error
         2: constant.other.indicator.warning
-    - match: "('.+'):"
+        3: storage.error-code
+        4: punctuation.separator
+    - match: "('.+')(:)"
       captures:
         1: string.quoted
+        2: punctuation.separator
     - match: '\[.+\]$'
       scope: comment.category
