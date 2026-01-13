@@ -44,6 +44,12 @@ class CommandFineTuning(EventListener):
             location = view.sel()[0]
             view.show(location)
 
+    def on_post_window_command(self, window, command_name, _args):
+        if command_name in ["increase_font_size", "decrease_font_size"]:
+            show_setting_status(
+                "font_size", window.active_view().settings().get("font_size")
+            )
+
     def on_activated(self, view):
         window = view.window()
         if not window:
