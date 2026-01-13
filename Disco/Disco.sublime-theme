@@ -11,7 +11,7 @@
     "ORANGE": "#FFAD3A",
     "DARK_ORANGE": "#FF8147",
     "CRIMSON": "#E5476C",
-    "BLUISH_BLACK": "#1C242C",
+    "BLUISH_BLACK": "#1E262E",
 
     "FADED_GRAY": "#51515D",
     "FADED_VIOLET": "#5E5E8E",
@@ -467,7 +467,7 @@
     {
       "class": "sheet_contents",
       "attributes": ["!highlighted"],
-      "background_modifier": "blend(var(panel_black) 5%)"
+      "background_modifier": "l(- 4%)"
     },
 
     // Quick Panel
@@ -567,12 +567,12 @@
     {
       "class": "minimap_control",
       "viewport_color": "var(FADED_GRAY)",
-      "viewport_opacity": { "target": 0.2, "speed": 4.0, "interpolation": "smoothstep" },
+      "viewport_opacity": { "target": 0.25, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "minimap_control",
       "attributes": ["hover"],
-      "viewport_opacity": { "target": 0.35, "speed": 4.0, "interpolation": "smoothstep" },
+      "viewport_opacity": { "target": 0.45, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "fold_button_control",
