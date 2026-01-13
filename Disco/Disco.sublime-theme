@@ -11,7 +11,7 @@
     "ORANGE": "#FFAD3A",
     "DARK_ORANGE": "#FF8147",
     "CRIMSON": "#E5476C",
-    "BLUISH_BLACK": "#202830",
+    "BLUISH_BLACK": "#1C242C",
 
     "FADED_GRAY": "#51515D",
     "FADED_VIOLET": "#5E5E8E",
@@ -30,7 +30,6 @@
 
     "tabset_bg": "var(outer_gray)",
     "bottom_bg": "var(outer_gray)",
-    "sidebar_bg": "var(outer_dark)",
     "popup_bg": "var(panel_black)",
     "titlebar_bg": "color(var(outer_dark) blend(var(outer_gray) 40%))",
 
@@ -58,7 +57,7 @@
     // Side Bar
     {
       "class": "sidebar_container",
-      "layer0.tint": "var(sidebar_bg)",
+      "layer0.tint": "color(var(panel_gray) blend(var(panel_black) 4%))",
       "layer0.opacity": 1.0,
       "content_margin": 0,
     },
@@ -84,7 +83,7 @@
     {
       "class": "tree_row",
       "attributes": ["selected"],
-      "layer0.opacity": 1.0,
+      "layer0.opacity": 0.8,
     },
     {
       "class": "sidebar_heading",
@@ -468,7 +467,7 @@
     {
       "class": "sheet_contents",
       "attributes": ["!highlighted"],
-      "background_modifier": "blend(var(panel_black) 25%)"
+      "background_modifier": "blend(var(panel_black) 5%)"
     },
 
     // Quick Panel
