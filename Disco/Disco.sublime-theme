@@ -32,6 +32,7 @@
     "bottom_bg": "var(outer_gray)",
     "popup_bg": "var(panel_black)",
     "titlebar_bg": "color(var(outer_dark) blend(var(outer_gray) 40%))",
+    "sidebar_bg": "color(var(panel_gray) blend(var(panel_black) 4%))",
 
     "sidebar_icon_tint": "color(var(label_gray) l(- 15%))",
     "findbar_icon_tint": "var(label_white)",
@@ -57,7 +58,7 @@
     // Side Bar
     {
       "class": "sidebar_container",
-      "layer0.tint": "color(var(panel_gray) blend(var(panel_black) 4%))",
+      "layer0.tint": "var(sidebar_bg)",
       "layer0.opacity": 1.0,
       "content_margin": 0,
     },
@@ -72,18 +73,18 @@
     },
     {
       "class": "tree_row",
-      "layer0.tint": "var(panel_gray_dark)",
+      "layer0.tint": "color(var(sidebar_bg) l(+ 4%) s(- 6%))",
       "layer0.opacity": 0.0,
     },
     {
       "class": "tree_row",
       "attributes": ["selectable", "hover", "!selected"],
-      "layer0.opacity": 0.3,
+      "layer0.opacity": 0.45,
     },
     {
       "class": "tree_row",
       "attributes": ["selected"],
-      "layer0.opacity": 0.8,
+      "layer0.opacity": 1.0,
     },
     {
       "class": "sidebar_heading",
@@ -467,7 +468,7 @@
     {
       "class": "sheet_contents",
       "attributes": ["!highlighted"],
-      "background_modifier": "l(- 4%)"
+      "background_modifier": "l(- 3%)"
     },
 
     // Quick Panel
@@ -562,7 +563,7 @@
     {
       "class": "grid_layout_control",
       "border_size": 0,
-      "border_color": "var(outer_dark)"
+      "border_color": "var(outer_gray)"
     },
     {
       "class": "minimap_control",
@@ -572,7 +573,7 @@
     {
       "class": "minimap_control",
       "attributes": ["hover"],
-      "viewport_opacity": { "target": 0.45, "speed": 4.0, "interpolation": "smoothstep" },
+      "viewport_opacity": { "target": 0.35, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {
       "class": "fold_button_control",
@@ -840,7 +841,7 @@
     {
       "class": "text_output_control",
       "parents": [{"class": "window"}],
-      "color_scheme_tint": "color(var(outer_gray) l(- 5%))"
+      "color_scheme_tint": "color(var(outer_gray) l(- 6%))"
     },
     {
       "class": "dropdown_button_control",
