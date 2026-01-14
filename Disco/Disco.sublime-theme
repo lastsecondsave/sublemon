@@ -32,7 +32,6 @@
     "bottom_bg": "var(outer_gray)",
     "popup_bg": "var(panel_black)",
     "titlebar_bg": "color(var(outer_dark) blend(var(outer_gray) 40%))",
-    "sidebar_bg": "color(var(panel_gray) blend(var(panel_black) 4%))",
 
     "sidebar_icon_tint": "color(var(label_gray) l(- 15%))",
     "findbar_icon_tint": "var(label_white)",
@@ -58,7 +57,7 @@
     // Side Bar
     {
       "class": "sidebar_container",
-      "layer0.tint": "var(sidebar_bg)",
+      "layer0.tint": "color(var(panel_gray) blend(var(panel_black) 4%))",
       "layer0.opacity": 1.0,
       "content_margin": 0,
     },
@@ -73,18 +72,18 @@
     },
     {
       "class": "tree_row",
-      "layer0.tint": "color(var(sidebar_bg) l(+ 4%) s(- 6%))",
+      "layer0.tint": "color(var(outer_gray) l(- 1%))",
       "layer0.opacity": 0.0,
     },
     {
       "class": "tree_row",
       "attributes": ["selectable", "hover", "!selected"],
-      "layer0.opacity": 0.45,
+      "layer0.opacity": 0.25,
     },
     {
       "class": "tree_row",
       "attributes": ["selected"],
-      "layer0.opacity": 1.0,
+      "layer0.opacity": 0.8,
     },
     {
       "class": "sidebar_heading",
@@ -567,7 +566,7 @@
     },
     {
       "class": "minimap_control",
-      "viewport_color": "var(FADED_GRAY)",
+      "viewport_color": "color(var(FADED_GRAY) l(+ 3%) s(+ 3%))",
       "viewport_opacity": { "target": 0.25, "speed": 4.0, "interpolation": "smoothstep" },
     },
     {

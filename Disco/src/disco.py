@@ -101,7 +101,7 @@ COLOR_SCHEME = {
         "background": BLUISH_BLACK,
         "foreground": WHITE,
         "caret": CLEAR_WHITE,
-        "line_highlight": color(FADED_GRAY, "a(30%)"),
+        "line_highlight": color(FADED_GRAY, "a(30%) l(+ 3%) s(+ 3%)"),
         "fold_marker": FADED_VIOLET,
         "brackets_foreground": VIOLET,
         "tags_foreground": VIOLET,
