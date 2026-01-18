@@ -42,7 +42,7 @@ class Formatter(BasicFormatter):
 
 
 class Prettier(BasicFormatter):
-    ERROR_FILTER = re.compile(r".+: SyntaxError: ")
+    ERROR_FILTER = re.compile(r".+: SyntaxError: |\[\d+m")
     FILES = {
         "source.json": "file.json",
         "source.js": "file.js",
