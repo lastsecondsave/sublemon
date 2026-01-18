@@ -162,6 +162,7 @@
   { "keys": ["shift+alt+home"], "command": "tabber_join",
     "context": [{ "key": "group_has_multiselect", "operator": "equal", "operand": true }]
   },
+  { "keys": ["shift+alt+end"], "command": "close_unselected", "args": {"group":-1, "index": -1} },
 
   { "keys": ["shift+alt+f8"], "command": "toggle_show_open_files" },
   { "keys": ["shift+alt+f9"], "command": "toggle_ligatures" },
