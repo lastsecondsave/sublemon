@@ -14,15 +14,17 @@ contexts:
         5: constant.numeric.column
         6: punctuation.section
         7: punctuation.separator
-      push: [message]
+      push: [trace, message]
 
-    - match: ^\s*(\^)\s*$
+    - match: .+ (->) .*
       captures:
-        1: punctuation.definition.marker
+        1: punctuation.separator
+
+  pop-on-eol:
+    - match: (?=\n)
+      pop: 1
 
   message:
-    - match: $
-      pop: 1
     - match: '(?:(error)|(warning)) (\w\d+)(:)'
       captures:
         1: constant.other.indicator.error
@@ -33,5 +35,26 @@ contexts:
       captures:
         1: string.quoted
         2: punctuation.separator
-    - match: '\[.+\]$'
+    - match: '\[[^\[]+?\.vcxproj\]$'
       scope: comment.category
+    - include: pop-on-eol
+
+  trace:
+    - match: ^(\s*$|(?=\S))
+      pop: 1
+    - match: '^\s*(.+?)(\()(\d+)(?:(,)(\d+))?(\))(:)'
+      captures:
+        1: entity.name.filename
+        2: punctuation.section
+        3: constant.numeric.line
+        4: punctuation.section
+        5: constant.numeric.column
+        6: punctuation.section
+        7: punctuation.separator
+    - match: ^\s+(\^)
+      captures:
+        1: punctuation.definition.marker
+      push:
+        - match: '\(compiling source file .+\)'
+          scope: comment.category
+        - include: pop-on-eol

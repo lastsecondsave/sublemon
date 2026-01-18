@@ -149,11 +149,15 @@ class CmakeCommand(ChimneyCommand):
             "cmake_stderr_replace", {}
         )
 
+        if RUNNING_ON_WINDOWS:
+            stdout_replace[re.escape(f"{build.working_dir}\\")] = ""
+            stdout_replace[r" \[[^\[]+\.vcxproj\]"] = ""
+
         if stdout_replace or stderr_replace:
             build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
 
         if RUNNING_ON_WINDOWS:
-            build.file_regex = r"(.+?)\((\d+),?(\d+)\): (.*)"
+            build.file_regex = r"\s*(.+?)\((\d+),?(\d+)\): *(.*)"
             build.syntax = "MSVC Output"
 
             build.cmd.append("--config", build_type)
