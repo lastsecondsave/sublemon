@@ -116,6 +116,7 @@
 	"margin": 0,
 	"match_brackets_content": false,
 	"mini_diff": "auto",
+	"move_to_limit_on_up_down": false,
 	"open_files_in_new_window": false,
 	"overlay_scroll_bars": "enabled",
 	"preview_on_click": "only_left",
