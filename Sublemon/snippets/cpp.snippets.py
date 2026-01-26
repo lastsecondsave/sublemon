@@ -14,8 +14,12 @@ generate(
         "main": ("main", "int main(${1:int argc, char* argv[]}) {}"),
         "fn": ("function", "${1:void} ${2:run}($3) {}"),
         ";;": (
-            "i = 0; i < imax; i++",
+            "i = 0; i < imax; ++i",
             "${1:size_t} ${2:i} = 0; $2 < ${3:imax}; ${4:++$2}",
+        ),
+        ";;i": (
+            "i = begin; i != end; ++i",
+            "auto ${1:i} = std::begin(${2:x}); $1 != std::end($2); ++$1",
         ),
         "::": (
             "auto& x: coll",

@@ -106,6 +106,9 @@ def mute_files():
     mute("Markdown", "Default.sublime-keymap")
     mute("Markdown", "Symbol List - Reference Link.tmPreferences")
 
+    mute_builds("C++")
+    mute("C++", "Symbol List - Indent Class Methods.tmPreferences")
+
     mute_completions("Java")
     mute_builds("Java")
 
@@ -113,7 +116,6 @@ def mute_files():
     mute_completions("Go")
 
     mute_builds("Makefile")
-    mute_builds("C++")
 
 
 def patch_python_syntax():
