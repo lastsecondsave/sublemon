@@ -107,7 +107,7 @@ class CmakeCommand(ChimneyCommand):
                 "cmake", ".", "-B", build_dir, f"-DCMAKE_BUILD_TYPE={build_type}"
             )
 
-            if params := build.pref("cmake_parameters"):
+            if params := build.prefx("cmake_parameters"):
                 build.cmd.append(*params)
 
             build.file_regex = r"CMake Error at (.+?):(\d+) (.*):"
@@ -157,7 +157,7 @@ class CmakeCommand(ChimneyCommand):
             build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
 
         if RUNNING_ON_WINDOWS:
-            build.file_regex = r"\s*(.+?)\((\d+),?(\d+)\): *(.*)"
+            build.file_regex = r"^\s*(.+?)\((\d+),?(\d+)\): *(.*)"
             build.syntax = "MSVC Output"
 
             build.cmd.append("--config", build_type)

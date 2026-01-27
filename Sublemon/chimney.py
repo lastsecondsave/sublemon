@@ -167,6 +167,9 @@ class BuildSetup:
     def pref(self, key, default=None, **kwargs):
         return pref(key, default, window=self.window, **kwargs)
 
+    def prefx(self, key, default=None, **kwargs):
+        return pref(key, default, window=self.window, expand=True, **kwargs)
+
     def opt(self, key, default=None, expand=False, required=False):
         value = self.options.get(key, default)
 
