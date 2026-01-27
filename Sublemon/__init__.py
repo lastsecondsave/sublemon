@@ -11,7 +11,7 @@ RUNNING_ON_LINUX = sublime.platform() == "linux"
 POPEN_CREATION_FLAGS = subprocess.CREATE_NO_WINDOW if RUNNING_ON_WINDOWS else 0
 
 
-def pref(key, default=None, view=None, window=None, expand=False, settings=True):
+def pref(key, default=None, view=None, window=None, expand=False, settings=False):
     value = None
 
     if view:

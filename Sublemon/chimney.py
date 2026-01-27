@@ -147,12 +147,16 @@ class BuildSetup:
         self.options = options
         self.window = window
 
+        self.variables = window.extract_variables()
+
         self.listener = ChimneyBuildListener()
         self.initializer = None
-        self.cmd = Cmd(variables=window.extract_variables(), **options)
+        self.cmd = Cmd(variables=self.variables, **options)
 
-        self.env = pref("env", default={}, window=window)
-        self.env.update(options.get("env", {}))
+        self.env = self.prefx("env", {})
+        self.env.update(self.optx("env", {}))
+
+        self.path = self.optx("path", [])
 
         self.file_regex = options.get("file_regex", "")
         self.line_regex = options.get("line_regex", "")
@@ -176,13 +180,16 @@ class BuildSetup:
         if required and not value:
             self.cancel(f"'{key}' is not set")
 
-        if expand and isinstance(value, str):
-            value = sublime.expand_variables(value, self.window.extract_variables())
+        if expand:
+            if isinstance(value, str):
+                value = sublime.expand_variables(value, self.variables)
+            elif isinstance(value, list):
+                value = [sublime.expand_variables(x, self.variables) for x in value]
 
         return value
 
-    def optx(self, key, **kwargs):
-        return self.opt(key, expand=True, **kwargs)
+    def optx(self, key, default=None, **kwargs):
+        return self.opt(key, default, expand=True, **kwargs)
 
     def in_project_dir(self):
         if not self._working_dir:
@@ -451,13 +458,9 @@ class BuildContext:
 
 
 def start_build(build, window, panel):
-    env = pref("env", default={}, window=window, settings=False)
-    env.update(build.env)
+    env = build.env.copy()
 
     if env:
-        variables = window.extract_variables()
-        variables.update(os.environ)
-
         for key, val in env.items():
             if val is None:
                 continue
@@ -465,7 +468,10 @@ def start_build(build, window, panel):
             if isinstance(val, list):
                 val = "".join(val)
 
-            env[key] = sublime.expand_variables(val, variables)
+            env[key] = sublime.expand_variables(val, os.environ)
+
+    if build.path:
+        env["PATH"] = os.pathsep.join(build.path) + os.pathsep + os.environ["PATH"]
 
     process = start_process(build.cmd, env, build.working_dir)
     ctx = BuildContext(window, panel, process, build)
