@@ -326,7 +326,7 @@ class ChimneyCommand(WindowCommand):
 
         self.active_build = start_build(build, self.window, self.panel)
 
-        marker = "⭍" if build.cmd.shell else "↓"
+        marker = "~>" if build.cmd.shell else ">>"
         print(f"{marker} [{self.active_build.process.pid}] {build.cmd}")
 
     def __del__(self):
@@ -440,11 +440,11 @@ class BuildContext:
                     f"{'Failed' if returncode else 'Complete'}: {self.cmd.preview}"
                 )
 
-            print(f"✔ [{self.process.pid}] ↑ {returncode}  {duration}")
+            print(f"<< [{self.process.pid}] ↑ {returncode}  {duration}")
         else:
             self.window.status_message(f"Cancelled: {self.cmd.preview}")
             self.print_lines(("", " *** Terminated *** "))
-            print(f"✘ [{self.process.pid}]  {duration}")
+            print(f"-- [{self.process.pid}]  {duration}")
 
         self.process = None
 
