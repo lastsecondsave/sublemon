@@ -4,10 +4,10 @@ import shlex
 import signal
 import subprocess
 import textwrap
-import timeit
 from collections import deque
 from itertools import chain, dropwhile
 from threading import Lock, Thread
+from timeit import default_timer as timer
 
 import sublime
 from sublime_plugin import WindowCommand
@@ -392,13 +392,21 @@ def read_to_pipe(stream, pipe, on_close=None):
         on_close()
 
 
+def format_duration(duration):
+    minutes, millis = divmod(duration, 60)
+    seconds = int(millis)
+    millis = round((millis - seconds) * 1000)
+
+    return f"{int(minutes):02}:{seconds:02}:{millis:03}"
+
+
 class BuildContext:
     def __init__(self, window, panel, process, build):
         self.window = window
         self.panel = panel
         self.process = process
 
-        self.start_time = timeit.default_timer()
+        self.start_time = timer()
         self.cancelled = False
 
         self.working_dir = build.working_dir
@@ -416,10 +424,7 @@ class BuildContext:
         self.panel.append((line,))
 
     def complete(self):
-        # pylint: disable=consider-using-f-string
-        duration = "%02d:%02d" % divmod(
-            round(timeit.default_timer() - self.start_time), 60
-        )
+        duration = format_duration(timer() - self.start_time)
 
         if not self.cancelled:
             self.on_complete(self)
@@ -429,7 +434,7 @@ class BuildContext:
             if not self.panel.empty:
                 self.panel.finalize()
             elif returncode:
-                self.print_line(f"[ FAIL ] Exited with {returncode}")
+                self.print_line(f"[ FAILED | {returncode} ]")
             else:
                 self.print_line("[ OK ]")
 
