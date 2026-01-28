@@ -601,7 +601,7 @@ rec(CRIMSON,
 txt('output')
 rec(Style([PINK, FADED_VIOLET]) + ITALIC, 'storage.category.hash')
 rec(COMMENT, 'punctuation.formatting')
-rec(ORANGE, 'punctuation.definition.marker')
+rec(DARK_ORANGE, 'punctuation.definition.marker')
 rec(COMMENT + ITALIC, 'comment.category')
 rec(COMMENT_LIGHT, 'comment.highlight')
 rec(COMMENT_DIM, 'comment.highlight.dim')

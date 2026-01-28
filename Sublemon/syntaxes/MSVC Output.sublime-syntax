@@ -16,25 +16,30 @@ contexts:
         7: punctuation.separator
       push: [trace, message]
 
-    - match: .+ (->) .*
+    - match: (.+) (->) .*
       captures:
-        1: punctuation.separator
+        1: comment.category
+        2: punctuation.separator
 
   pop-on-eol:
     - match: (?=\n)
       pop: 1
 
   message:
-    - match: '(?:(error)|(warning)) (\w\d+)(:)'
+    - match: '(warning \w\d+)(:)'
+      captures:
+        1: constant.other.indicator.warning
+        2: punctuation.separator
+    - match: '(error \w\d+)(:)'
       captures:
         1: constant.other.indicator.error
-        2: constant.other.indicator.warning
-        3: storage.error-code
-        4: punctuation.separator
-    - match: "('.+')(:)"
+        2: punctuation.separator
+    - match: "('.+?')(:)"
       captures:
         1: string.quoted
         2: punctuation.separator
+    - match: "'.+?'"
+      scope: string.quoted
     - match: '\[[^\[]+?\.vcxproj\]$'
       scope: comment.category
     - include: pop-on-eol
