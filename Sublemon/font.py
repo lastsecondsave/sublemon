@@ -42,6 +42,6 @@ class SelectFontListener(EventListener):
         self.set_font(view)
 
     def set_font(self, view):
-        window = view.window()
-        if window and (font := window.settings().get("font_face")):
-            view.settings().set("font_face", font)
+        if view.element() is None and (window := view.window()):
+            if font := window.settings().get("font_face"):
+                view.settings().set("font_face", font)
