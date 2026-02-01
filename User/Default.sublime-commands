@@ -34,4 +34,6 @@
   { "caption": "Highlight: Add", "command": "highlight_add" },
   { "caption": "Highlight: Delete", "command": "highlight_delete" },
   { "caption": "Highlight: Delete All", "command": "highlight_delete_all" },
+
+  { "caption": "Select Font", "command": "select_font" },
 ]
