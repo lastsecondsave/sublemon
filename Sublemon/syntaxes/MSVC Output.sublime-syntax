@@ -5,6 +5,8 @@ scope: text.output.msvc
 
 contexts:
   main:
+    - include: cmake
+
     - match: '^(.+?)(\()(\d+)(?:(,)(\d+))?(\))(:)'
       captures:
         1: entity.name.filename
@@ -63,3 +65,7 @@ contexts:
         - match: '\(compiling source file .+\)'
           scope: comment.category
         - include: pop-on-eol
+
+  cmake:
+    - match: -- .+
+      scope: comment.log

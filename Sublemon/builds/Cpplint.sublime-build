@@ -1,5 +1,0 @@
-{
-  "selector": "source.c++",
-  "target": "cpplint",
-  "cmd": ["$file"]
-}

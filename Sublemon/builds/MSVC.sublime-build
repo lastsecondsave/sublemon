@@ -1,16 +1,9 @@
 {
   "selector": "source.c++",
-  "target": "vcvars",
-  "shell_cmd_base": "cl /EHsc /std:c++latest /diagnostics:caret /nologo /W4",
-  "shell_cmd": "\"$file\" && \"${file_path}\\\\${file_base_name}.exe\"",
-  "cmd_preview": "cl $file_name",
+  "target": "vcenv",
+  "shell_cmd_base": "cl /EHsc /std:c++latest /diagnostics:caret /nologo /W4 /O2",
+  "shell_cmd": "\"${file}\" && \"${file_path}\\\\${file_base_name}.exe\"",
+  "cmd_preview": "cl ${file_name}",
   "syntax": "MSVC Output",
-  "file_regex": "(.+?)\\((\\d+),?(\\d+)\\): (.*)",
-
-  "variants": [
-    {
-      "name": "Release Build",
-      "shell_cmd": "/O2 \"$file\""
-    }
-  ]
+  "file_regex": "(.+?)\\((\\d+),?(\\d+)\\): (.*)"
 }

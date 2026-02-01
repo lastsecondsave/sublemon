@@ -6,36 +6,6 @@ from pathlib import Path
 
 from . import RUNNING_ON_WINDOWS, listify
 from .chimney import ChimneyBuildListener, ChimneyCommand, Cmd
-from .pytools import setup_python_exec
-
-
-class CpplintCommand(ChimneyCommand):
-    def setup(self, build):
-        setup_python_exec(build, "cpplint", allow_venv=False)
-
-        build.file_regex = r"(.+?):(\d+)(): (.*)"
-        build.syntax = "Cpplint Output"
-        build.listener = CpplintBuildListener()
-
-
-class CpplintBuildListener(ChimneyBuildListener):
-    def __init__(self):
-        self.output_lines = [""]
-
-    def on_output(self, line, ctx):
-        if not line.startswith("Done processing"):
-            self.output_lines.append(line)
-
-    def on_error(self, line, ctx):
-        if line.startswith(ctx.working_dir):
-            line = line[len(ctx.working_dir) + 1 :]
-
-        line = line.replace("  ", " ")
-
-        return line
-
-    def on_complete(self, ctx):
-        ctx.print_lines(self.output_lines)
 
 
 class MakeCommand(ChimneyCommand):
@@ -46,13 +16,13 @@ class MakeCommand(ChimneyCommand):
         build.syntax = "GCC Output"
 
 
-class VcvarsCommand(ChimneyCommand):
+class VcenvCommand(ChimneyCommand):
     env = None
 
     def capture_env(self, build):
-        self.window.status_message("Capturing variables from vcvars")
+        self.window.status_message("Capturing VC environment")
 
-        vs_path = Path("C:/Program Files/Microsoft Visual Studio/2022/Community")
+        vs_path = Path("C:/Program Files/Microsoft Visual Studio/18/Community")
         vcvars_path = vs_path / "VC/Auxiliary/Build/vcvarsall.bat"
 
         variables = ["LIB", "INCLUDE", "PATH"]
@@ -64,7 +34,7 @@ class VcvarsCommand(ChimneyCommand):
 
         if process.returncode != 0:
             print(f"‼ Failed to run program: {cmd}")
-            build.cancel("Failed to capture variables from vcvars")
+            build.cancel("Failed to capture VC environment")
 
         captures = {}
 
@@ -150,7 +120,7 @@ class CmakeCommand(ChimneyCommand):
         )
 
         if RUNNING_ON_WINDOWS:
-            stdout_replace[re.escape(f"{build.working_dir}\\")] = ""
+            stdout_replace[f"{build.working_dir}\\".replace("\\", r"[/\\]")] = ""
             stdout_replace[r" \[[^\[]+\.vcxproj\]"] = ""
 
         if stdout_replace or stderr_replace:

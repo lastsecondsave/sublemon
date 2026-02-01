@@ -161,6 +161,7 @@ generate(
             "uint64_t",
             "uint8_t",
             "void",
+            "wchar_t",
         ],
         ("Constant", Icon.CONSTANT): [
             "false",
