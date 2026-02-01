@@ -386,18 +386,17 @@ rec(FOREGROUND,
     'storage.type.function.lambda')
 
 src('powershell')
+rec(ITALIC,
+    "variable.parameter.option",
+    "keyword.operator.{string|comparison|logical}")
 rec(PUNCTUATION,
-    'keyword.operator.other',
-    'variable.other punctuation.section.braces',
-    'string.quoted.double & (punctuation.section.{braces|group}) -interpolated')
+    "keyword.operator.pipe")
+rec(KEYWORD,
+    "keyword.operator.call")
+rec(STORAGE,
+    "support.type")
 rec(META,
     'meta.attribute support.function.attribute')
-rec(KEYWORD,
-    'keyword.operator.{comparison|logical|unary}')
-rec(VARIABLE,
-    'variable storage.modifier.scope')
-rec(FOREGROUND,
-    'support.constant variable.other')
 
 src('shell')
 rec(PUNCTUATION,
