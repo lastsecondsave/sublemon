@@ -86,7 +86,8 @@ TAG_ATTRIBUTE = Style(YELLOW)
 PARAMETER = Style(ORANGE)
 VARIABLE = Style(ORANGE)
 META = Style(YELLOW)
-SPECIAL = Style(CRIMSON)
+SPECIAL1 = Style(CRIMSON)
+SPECIAL2 = Style(LIGHT_YELLOW)
 
 INVALID = CLEAR_WHITE + Highlight("#E62020", "l(- 5%)")
 
@@ -331,7 +332,7 @@ rec(REGEXP_CHARACTER_CLASS,
     'keyword.control.character-class')
 rec(REGEXP_CONTROL,
     'keyword.{control|operator}')
-rec(SPECIAL,
+rec(SPECIAL1,
     'storage.modifier.mode',
     'punctuation.definition.modifier')
 
@@ -373,7 +374,7 @@ rec(META, 'storage.type.annotation')
 src('cs')
 rec(KEYWORD,
     'keyword.operator.{new|reflection}')
-rec(SPECIAL,
+rec(SPECIAL1,
     'entity.name.constant',
     'constant.other.flag',
     'storage.type.nullable')
@@ -443,14 +444,17 @@ rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
-    'punctuation.section.block.{begin|end}')
+    'punctuation.section.block.{begin|end}',
+    'punctuation.separator.generator-expression')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.{endfunction|endmacro|function|macro}')
 rec(INDEXED,
     'entity.name.function')
-rec(STORAGE,
+rec(SPECIAL2,
     'support.function.{add_library|add_executable|add_custom_target}')
+rec(SUPPORT,
+    'support.function')
 
 src('dockerfile')
 rec(VARIABLE,
@@ -459,10 +463,10 @@ rec(META,
     '{entity.name.tag|keyword.operator}.heredoc')
 
 src('c++', 'c')
-rec(SPECIAL,
+rec(SPECIAL1,
     'meta.preprocessor keyword.control.import',
     'meta.preprocessor keyword.control -meta.preprocessor.macro')
-rec(SPECIAL + ITALIC,
+rec(SPECIAL1 + ITALIC,
     'entity.name.label')
 rec(STORAGE,
     'support.type.{stdint|stddef|time}')
@@ -474,7 +478,7 @@ rec(VARIABLE,
 src('objc++', 'objc')
 rec(PARAMETER + ITALIC,
     'meta.function-call support.function.any-method -punctuation')
-rec(SPECIAL,
+rec(SPECIAL1,
     'keyword.control.import')
 rec(FOREGROUND,
     'support.constant.cocoa',
@@ -498,7 +502,7 @@ rec(STORAGE,
     'support.type')
 rec(KEYWORD,
     'variable.annotation')
-rec(SPECIAL,
+rec(SPECIAL1,
     'storage.modifier.lifetime')
 rec(GENERIC_PUNCTUATION,
     'punctuation.definition.annotation')
@@ -541,7 +545,7 @@ rec(STRING,
 rec(PRIMITIVE,
     'constant.numeric keyword.other',
     'constant.other.color')
-rec(SPECIAL,
+rec(SPECIAL1,
     'support.type.vendor-prefix')
 rec(STORAGE,
     'meta.property-name')
@@ -605,7 +609,7 @@ rec(COMMENT + ITALIC, 'comment.category')
 rec(COMMENT_LIGHT, 'comment.highlight')
 rec(COMMENT_DIM, 'comment.highlight.dim')
 rec(META, 'entity.name.section')
-rec(SPECIAL, 'support.type.exception')
+rec(SPECIAL1, 'support.type.exception')
 rec(CRIMSON, 'constant.other.indicator.error')
 rec(ORANGE, 'constant.other.indicator.warning')
 rec(GREEN, 'constant.other.indicator.success')
