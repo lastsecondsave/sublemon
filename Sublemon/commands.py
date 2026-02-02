@@ -420,9 +420,9 @@ class JsonReindentCommand(TextCommand):
 
 class CloseWithoutSavingCommand(WindowCommand):
     def run(self):
-        view = self.window.active_view()
-        view.set_scratch(True)
-        view.close()
+        for view in [s.view() for s in self.window.selected_sheets()]:
+            view.set_scratch(True)
+            view.close()
 
 
 class WrapLinesAtWidthCommand(WindowCommand):
