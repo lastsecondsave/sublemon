@@ -527,7 +527,16 @@ rec(META,
 
 src('toml')
 rec(META,
-    '{entity.name|punctuation.definition|punctuation.separator}.table')
+    'entity.name.section',
+    'punctuation.section.brackets',
+    'meta.section punctuation.accessor')
+rec(TAG,
+    'meta.mapping.key meta.string string.unquoted')
+rec(VARIABLE,
+    'constant.other.{datetime|date|time}',
+    'constant.other punctuation.separator')
+rec(PUNCTUATION,
+    'constant.other.datetime & (punctuation.separator.datetime | keyword.operator | storage.modifier)')
 
 src('ini')
 rec(META,

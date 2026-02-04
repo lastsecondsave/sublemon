@@ -119,20 +119,29 @@ def mute_files():
     mute_builds("Powershell")
 
 
-def patch_python_syntax():
-    with system_package_zip("Python") as pkg:
-        syntax = (zipfile.Path(pkg) / "Python.sublime-syntax").read_text()
+def patch_syntax(package, *patches):
+    with system_package_zip(package) as pkg:
+        syntax = (zipfile.Path(pkg) / f"{package}.sublime-syntax").read_text()
 
-    syntax = re.sub(
-        r"(set: (?:.+-)?quoted)(-raw-\w-string-body)",
-        r"\1-plain\2",
-        syntax,
-    )
+    for pattern, repl in patches:
+        syntax = re.sub(pattern, repl, syntax)
 
-    syntax_path = PACKAGES / "Python" / "Python.sublime-syntax"
+    syntax_path = PACKAGES / package / f"{package}.sublime-syntax"
+    syntax_path.parent.mkdir(exist_ok=True)
     syntax_path.write_text(syntax)
 
     print(f"Patched {syntax_path}")
+
+
+def patch_syntaxes():
+    patch_syntax(
+        "Python", (r"(set: (?:.+-)?quoted)(-raw-\w-string-body)", r"\1-plain\2")
+    )
+
+    patch_syntax(
+        "TOML",
+        (r"(meta_scope: )(meta.mapping.(?:key|value).toml)", r"\1source.toml \2"),
+    )
 
 
 def unpack_icons():
@@ -159,7 +168,7 @@ def override_macos_keymap():
 def main():
     generate_files()
     mute_files()
-    patch_python_syntax()
+    patch_syntaxes()
     unpack_icons()
 
     if sys.platform == "darwin":
