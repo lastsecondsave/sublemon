@@ -116,7 +116,7 @@ def mute_files():
     mute_completions("Go")
 
     mute_builds("Makefile")
-    mute_builds("Powershell")
+    mute_builds("PowerShell")
 
 
 def patch_syntax(package, *patches):
