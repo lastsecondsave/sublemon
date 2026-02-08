@@ -244,6 +244,25 @@ class StreamlineRegionsCommand(TextCommand):
         selection.add_all(replacement)
 
 
+class AlignCursorsCommand(TextCommand):
+    def run(self, edit):
+        selection = self.view.sel()
+        points = [r.end() for r in self.view.sel()]
+        columns = [self.view.rowcol(p)[1] for p in points]
+
+        selection.clear()
+
+        max_col = max(columns)
+        offset = 0
+
+        for pt, col in zip(points, columns):
+            if align := max_col - col:
+                self.view.insert(edit, pt + offset, " " * align)
+                offset += align
+
+            selection.add(Region(pt + offset, pt + offset))
+
+
 class SelectionToCursorsCommand(TextCommand):
     def run(self, edit):
         selection = self.view.sel()

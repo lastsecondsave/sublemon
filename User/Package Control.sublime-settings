@@ -7,7 +7,6 @@
 	],
 	"installed_packages":
 	[
-		"Alignment",
 		"ApplySyntax",
 		"CMake",
 		"Package Control",

@@ -135,7 +135,7 @@
   { "keys": ["ctrl+alt+o"], "command": "open_dir", "args": {"dir": "$file_path", "file": "$file_name"}},
   { "keys": ["ctrl+alt+p"], "command": "prompt_select_workspace" },
 
-  { "keys": ["ctrl+alt+a"], "command": "alignment" },
+  { "keys": ["ctrl+alt+a"], "command": "align_cursors" },
   { "keys": ["ctrl+alt+s"], "command": "selection_to_cursors" },
   { "keys": ["ctrl+alt+;"], "command": "chain", "args": {
     "commands": [
