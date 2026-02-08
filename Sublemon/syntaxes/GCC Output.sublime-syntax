@@ -60,14 +60,17 @@ contexts:
         - meta_scope: comment.log
         - match: \n
           pop: 1
-        - match: '(?:Linking \w+ executable|Built target) (.+)'
+        - match: Built target (.+)
           captures:
             1: comment.highlight
+        - match: '(?:Linking \w+ executable|Building \w+ object) (.*)'
+          captures:
+            1: comment.highlight.italic
     - match: 'g?make(?:\[\d+\])?: .*'
       scope: comment.log
     - match: "(?:--|Scanning dependencies of target|collect2:) .*"
       scope: comment.log
     - match: (Error while processing) (.+)\.
       captures:
-        1: entity.name.section
-        2: entity.name.filename
+        1: comment.highlight
+        2: comment.highlight.italic

@@ -122,6 +122,8 @@ class CmakeCommand(ChimneyCommand):
         if RUNNING_ON_WINDOWS:
             stdout_replace[f"{build.working_dir}\\".replace("\\", r"[/\\]")] = ""
             stdout_replace[r" \[[^\[]+\.vcxproj\]"] = ""
+        else:
+            stderr_replace[re.escape(f"{build.working_dir}/")] = ""
 
         if stdout_replace or stderr_replace:
             build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
