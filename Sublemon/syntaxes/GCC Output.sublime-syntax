@@ -63,7 +63,7 @@ contexts:
         - match: Built target (.+)
           captures:
             1: comment.highlight
-        - match: '(?:Linking \w+ executable|Building \w+ object) (.*)'
+        - match: '(?:Linking \w+ (?:executable|shared library)|Building \w+ object) (.*)'
           captures:
             1: comment.highlight.italic
     - match: 'g?make(?:\[\d+\])?: .*'

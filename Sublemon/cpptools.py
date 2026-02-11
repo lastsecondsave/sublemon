@@ -124,6 +124,7 @@ class CmakeCommand(ChimneyCommand):
             stdout_replace[r" \[[^\[]+\.vcxproj\]"] = ""
         else:
             stderr_replace[re.escape(f"{build.working_dir}/")] = ""
+            stderr_replace[r"^g?make(?:\[\d+\])?:.*"] = ""
 
         if stdout_replace or stderr_replace:
             build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
@@ -148,10 +149,13 @@ class CmakeBuildListener(ChimneyBuildListener):
         ]
 
     def on_line(self, line, patterns):
+        if len(line) == 0:
+            return ""
+
         for pat, repl in patterns:
             line = pat.sub(repl, line)
 
-        return line
+        return line if len(line) > 0 else None
 
     def on_output(self, line, ctx):
         return self.on_line(line, self.output_patterns)

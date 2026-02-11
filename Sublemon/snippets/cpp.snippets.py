@@ -51,7 +51,6 @@ generate(
         "rc": ("reinterpret_cast", "reinterpret_cast<$1>($SEL2)"),
         "sc": ("static_cast", "static_cast<${1:size_t}>($SEL2)"),
         "te": ("throw std::runtime_error", "throw std::runtime_error($SEL0);"),
-        "lg": "std::lock_guard lock($SEL0);"
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
@@ -134,12 +133,14 @@ generate(
         ],
         ("Class", Icon.TYPE): [
             "auto",
+            "lock_guard",
             "optional",
             "pair",
             "runtime_error",
             "shared_ptr",
             "string",
             "tuple",
+            "unique_lock",
             "unique_ptr",
             "unordered_map",
             "unordered_set",
