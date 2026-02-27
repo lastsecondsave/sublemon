@@ -51,6 +51,8 @@ generate(
         "rc": ("reinterpret_cast", "reinterpret_cast<$1>($SEL2)"),
         "sc": ("static_cast", "static_cast<${1:size_t}>($SEL2)"),
         "te": ("throw std::runtime_error", "throw std::runtime_error($SEL0);"),
+        "ff": "fmt::format($SEL0)",
+        "fp": 'fmt::println("$1", $SEL0);',
     },
     completions={
         ("Keyword", Icon.KEYWORD): [
