@@ -393,7 +393,7 @@ rec(ITALIC,
 rec(PUNCTUATION,
     "keyword.operator.pipe")
 rec(KEYWORD,
-    "keyword.operator.call")
+    "keyword.operator.{call|source}")
 rec(STORAGE,
     "support.type")
 rec(META,
@@ -426,7 +426,8 @@ rec(FOREGROUND,
     'punctuation.separator.path',
     'constant.language.null')
 rec(ITALIC,
-    'meta.statement.conditional.case meta.clause.patterns meta.string.glob')
+    'meta.statement.conditional.case meta.clause.patterns meta.string.glob',
+    'keyword.operator.comparison')
 
 src('makefile')
 rec(PUNCTUATION,
@@ -622,6 +623,6 @@ rec(ORANGE, 'constant.other.indicator.warning')
 rec(GREEN, 'constant.other.indicator.success')
 rec(PURPLE, 'constant.other.indicator.note')
 rec(COMMENT, 'constant.other.indicator.info')
-rec(FOREGROUND, 'constant.numeric.date')
+rec(COMMENT, 'constant.numeric.date')
 
 generate()
