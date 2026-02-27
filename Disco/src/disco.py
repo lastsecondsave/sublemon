@@ -402,9 +402,7 @@ rec(META,
 src('shell')
 rec(PUNCTUATION,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
-    'keyword.operator.expansion',
-    'keyword.operator.assignment.{pipe|redirection|herestring}',
-    'meta.interpolation.parameter keyword.operator.assignment')
+    'keyword.operator.assignment.{pipe|redirection|herestring}')
 rec(STORAGE,
     'keyword.declaration.{alias|variable}')
 rec(META,
@@ -444,8 +442,7 @@ rec(VARIABLE,
     'variable.other.readwrite.assignment')
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
-    'punctuation.section.block.{begin|end}',
-    'punctuation.separator.generator-expression')
+    'punctuation.section.block.{begin|end}')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.{endfunction|endmacro|function|macro}')
