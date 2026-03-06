@@ -225,7 +225,7 @@ class ChimneyCommand(WindowCommand):
     BUILDS = {}
     PANELS = {}
 
-    last_command = ""
+    last_manual = ""
 
     @property
     def wid(self):
@@ -250,7 +250,7 @@ class ChimneyCommand(WindowCommand):
         pass
 
     # pylint: disable=arguments-differ
-    def run(self, kill=False, manual=None, **options):
+    def run(self, kill=False, manual=None, nocmd=False, **options):
         if self.active_build:
             self.active_build.cancel()
 
@@ -263,22 +263,22 @@ class ChimneyCommand(WindowCommand):
             self.run_build(build)
             return
 
-        prompt = "$ " + (manual if isinstance(manual, str) else "")
+        prompt = "$" if nocmd else f"$ {manual}"
 
         def on_done(cmd):
             if cmd:
-                self.last_command = cmd
-                self.set_cmd(build, cmd)
+                self.last_manual = cmd
+                self.update_cmd(build, cmd, nocmd)
 
             self.run_build(build)
 
         input_view = self.window.show_input_panel(
-            prompt, self.last_command, on_done, None, None
+            prompt, self.last_manual, on_done, None, None
         )
 
-        input_view.sel().add(sublime.Region(0, len(self.last_command)))
+        input_view.sel().add(sublime.Region(0, len(self.last_manual)))
 
-    def set_cmd(self, build, cmd):
+    def update_cmd(self, build, cmd, replace):
         if cmd.startswith("@"):
             cmd = cmd[1:]
             if project_folder := find_project_folder(self.window):
@@ -287,13 +287,14 @@ class ChimneyCommand(WindowCommand):
         cmd = cmd.replace("$$", f'"{build.active_file}"')
         cmd = cmd.replace("@@", f'"{build.working_dir}"')
 
-        if build.cmd:
-            build.cmd.append(*(shlex.split(cmd, posix=not RUNNING_ON_WINDOWS)))
-        elif RUNNING_ON_WINDOWS:
-            build.cmd = Cmd(["pwsh", "-NoProfile", "-Command", cmd])
-            build.env["NO_COLOR"] = "1"
+        if replace:
+            if RUNNING_ON_WINDOWS:
+                build.cmd = Cmd(["pwsh", "-NoProfile", "-Command", cmd])
+                build.env["NO_COLOR"] = "1"
+            else:
+                build.cmd = Cmd(shell_cmd=cmd)
         else:
-            build.cmd = Cmd(shell_cmd=cmd)
+            build.cmd.append(*(shlex.split(cmd, posix=not RUNNING_ON_WINDOWS)))
 
     def run_build(self, build):
         try:
