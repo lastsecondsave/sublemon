@@ -2,17 +2,22 @@
   "keyfiles": ["go.mod"],
   "target": "golang",
   "working_dir": "$folder",
-  "cmd": ["build", "$folder"],
+  "cmd": ["build"],
 
   "variants": [
     {
+      "name": "Manual",
+      "cmd": ["build"],
+      "manual": "go build"
+    },
+    {
       "name": "Run",
-      "cmd": ["run", "$folder"]
+      "cmd": ["run"]
     },
     {
       "name": "Run Manual",
-      "cmd": ["run", "$folder"],
-      "manual": "go"
+      "cmd": ["run"],
+      "manual": "go run"
     }
   ]
 }
