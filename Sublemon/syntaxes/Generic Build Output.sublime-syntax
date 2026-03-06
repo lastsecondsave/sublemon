@@ -5,12 +5,22 @@ scope: text.output
 
 contexts:
   main:
-    - match: '^(.+?):(\d+):(\d+): .*?(\([\w-]+\))?$'
+    - match: '^(.+?)(:)(\d+)(:)(\d+)(:)'
       captures:
         1: entity.name.filename
-        2: constant.numeric.line
-        3: constant.numeric.column
-        4: comment.category.description
+        2: punctuation.separator
+        3: constant.numeric.line
+        4: punctuation.separator
+        5: constant.numeric.column
+        6: punctuation.separator
+      push:
+        - match: (?=\n)
+          pop: 1
+        - match: '"\S+"'
+          scope: string.quoted
+        - match: (\([\w-]+\))$
+          captures:
+            1: comment.category.description
 
     - match: ^\s*(#).*$
       scope: comment.line
