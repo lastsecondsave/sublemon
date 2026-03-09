@@ -267,7 +267,7 @@ src('python')
 rec(KEYWORD,
     'keyword.operator.{logical|iteration}')
 rec(META,
-    '{punctuation.definition|variable}.annotation')
+    'meta.annotation & (meta.generic-name|punctuation.definition|punctuation.accessor|variable)')
 rec(ITALIC,
     'meta.function-call.arguments variable.parameter -meta.function.inline')
 rec(PARAMETER,
@@ -275,18 +275,10 @@ rec(PARAMETER,
 rec(STORAGE,
     'support.type -comment.line.number-sign')
 rec(COMMENT_LIGHT,
-    'comment.line.number-sign & (keyword | constant.language | support.type)')
+    'comment.line.number-sign & (keyword|constant.language|support.type)')
 rec(SUPPORT,
     'keyword.other.print',
     'support.function.builtin')
-
-src('regexp.python')
-rec(REGEXP_GROUP,
-    'punctuation.definition.group | keyword.operator.or')
-rec(REGEXP_CHARACTER_CLASS,
-    'constant.character.character-class | constant.other.character-class.set')
-rec(REGEXP_CONTROL,
-    'punctuation.definition.character-class')
 
 src('js', 'ts', 'tsx')
 rec(TAG + ITALIC,
@@ -444,6 +436,8 @@ rec(VARIABLE,
 rec(PUNCTUATION,
     'meta.text-substitution punctuation.section.braces',
     'punctuation.section.block.{begin|end}')
+rec(GENERIC_PUNCTUATION,
+    'punctuation.separator.generator-expression')
 rec(KEYWORD,
     'keyword.operator.logical',
     'support.function.{endfunction|endmacro|function|macro}')
