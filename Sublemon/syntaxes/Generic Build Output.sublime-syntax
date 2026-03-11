@@ -5,7 +5,7 @@ scope: text.output
 
 contexts:
   main:
-    - match: '^(.+?)(:)(\d+)(:)(\d+)(:)'
+    - match: '^(.+?)(:)(\d+)(?:(:)(\d+))?(:)?'
       captures:
         1: entity.name.filename
         2: punctuation.separator
