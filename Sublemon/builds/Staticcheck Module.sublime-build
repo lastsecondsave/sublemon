@@ -1,5 +1,12 @@
 {
   "keyfiles": ["go.mod"],
   "target": "staticcheck",
-  "working_dir": "$folder"
+  "working_dir": "$folder",
+
+  "variants": [
+    {
+      "name": "Manual",
+      "manual": "staticcheck"
+    }
+  ]
 }
