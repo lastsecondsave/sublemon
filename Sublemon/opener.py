@@ -102,6 +102,7 @@ class OpenFileUnderCursorCommand(TextCommand):
             roots.append(Path(file_name).parent)
 
         roots += self.project_roots()
+        roots += [Path(x) for x in self.view.window().folders()]
 
         files = []
         directories = []
