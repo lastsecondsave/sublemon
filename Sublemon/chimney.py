@@ -12,7 +12,7 @@ from timeit import default_timer as timer
 import sublime
 from sublime_plugin import WindowCommand
 
-from . import RUNNING_ON_WINDOWS, pref
+from . import RUNNING_ON_WINDOWS, expand_variables, pref
 from .opener import find_project_folder
 
 
@@ -181,10 +181,7 @@ class BuildSetup:
             self.cancel(f"'{key}' is not set")
 
         if expand:
-            if isinstance(value, str):
-                value = sublime.expand_variables(value, self.variables)
-            elif isinstance(value, list):
-                value = [sublime.expand_variables(x, self.variables) for x in value]
+            value = expand_variables(value, self.variables)
 
         return value
 

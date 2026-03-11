@@ -27,11 +27,20 @@ def pref(key, default=None, view=None, window=None, expand=False, settings=False
         return default
 
     if window and expand:
-        if isinstance(value, str):
-            value = sublime.expand_variables(value, window.extract_variables())
-        elif isinstance(value, list):
-            variables = window.extract_variables()
-            value = [sublime.expand_variables(x, variables) for x in value]
+        value = expand_variables(value, window.extract_variables())
+
+    return value
+
+
+def expand_variables(value, variables):
+    if isinstance(value, str):
+        return sublime.expand_variables(value, variables)
+
+    if isinstance(value, list):
+        return [expand_variables(x, variables) for x in value]
+
+    if isinstance(value, dict):
+        return {k: expand_variables(v, variables) for k, v in value.items()}
 
     return value
 
