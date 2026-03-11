@@ -4,6 +4,7 @@ snippets = {
     "sb": ("shebang", "#!/usr/bin/env ${1:bash}"),
     "fn": ("function", "${1:run}() {}"),
     "pl": "echo $SEL0",
+    "dn": ("/dev/null", "/dev/null"),
 }
 
 completions = {
@@ -26,6 +27,7 @@ completions = {
         "else==>",
         "if [[ $1 ]]; then<=>fi",
         "while $1; do<=>done",
+        "for ${1:i} in $2; do<=>done",
     ],
     ("Program", Icon.EXTERNAL): [
         "basename",
