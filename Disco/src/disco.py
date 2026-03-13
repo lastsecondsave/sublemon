@@ -568,32 +568,32 @@ rec(TAG,
 
 txt('html.markdown')
 rec(PUNCTUATION,
-    'punctuation.definition.{blockquote|image|link|list_item}',
+    'punctuation.definition.{blockquote|image|list_item}',
     'markup.list.numbered.bullet')
 rec(GENERIC_PUNCTUATION,
     'punctuation.definition.{attributes|bold|constant|italic|metadata}',
-    'meta.link punctuation.definition.{link|reference}')
+    'meta.link & (punctuation.definition.{link|reference})')
+rec(SPECIAL2,
+    'meta.link.inet & (markup.underline|punctuation.separator)')
 rec(COMMENT,
     'meta.code-fence.definition')
+rec(COMMENT + ITALIC,
+    'meta.code-fence.definition constant.other.language-name')
 rec(STRING,
     'markup.raw.inline')
 rec(VARIABLE,
-    '({meta.image.inline|meta.link.inline|meta.link.reference}.description) -markup.underline -punctuation',
-    'meta.link.reference.def entity.name.reference.link',
-    'meta.link.reference constant.other.reference.link')
+    '({meta.image.inline|meta.link.inline|meta.link.reference}.description) -markup.underline -punctuation')
+rec(VARIABLE + ITALIC,
+    'meta.link.reference.def entity.name.reference.link')
 rec(ITALIC,
     'markup.italic -punctuation',
+    'markup.underline.link -meta.link.reference.metadata',
     'markup.heading.3 entity.name')
 rec(BOLD,
     'markup.bold -punctuation',
     'markup.heading.1 entity.name')
 rec(BOLD + ITALIC,
     'markup.heading.2 entity.name')
-rec(UNDERLINE,
-    'markup.underline.link')
-rec(FOREGROUND,
-    'entity.name.reference.link',
-    'markup.underline.link punctuation.separator.path')
 
 src('diff')
 rec(META, 'meta.diff.range')
