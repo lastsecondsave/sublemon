@@ -540,6 +540,10 @@ rec(STORAGE,
 rec(GENERIC_PUNCTUATION,
     'punctuation.definition.block')
 
+src('terraform', 'hcl')
+rec(INDEXED,
+    'meta.block.head & (entity.name|support.type|punctuation.definition.string|string.quoted)')
+
 src('css')
 rec(STRING,
     'meta.selector string.unquoted')
