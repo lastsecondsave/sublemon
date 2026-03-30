@@ -11,17 +11,15 @@ def generate(all_settings):
     target_dir.mkdir(exist_ok=True, parents=True)
 
     for scope, settings in all_settings.items():
+        repack_comments(settings)
         write_settings(scope, settings, target_dir)
 
 
 def write_settings(scope, settings, target_dir):
-    sublime_settings = settings.copy()
-    repack_comments(sublime_settings)
-
     path = target_dir / f"{scope}.tmPreferences"
 
     with path.open(mode="wb") as pfile:
-        plistlib.dump({"scope": scope, "settings": sublime_settings}, pfile)
+        plistlib.dump({"scope": scope, "settings": settings}, pfile)
 
     print("Generated", path.name)
 
@@ -49,31 +47,35 @@ def repack_comments(settings):
         settings["shellVariables"] = shell_variables
 
 
-# fmt: off
-generate({
+SETTINGS = {
     "source.sublime-syntax": {
-        "lineComment": "#"
+        "lineComment": "#",
     },
     "meta.symbol.sublime-syntax entity.name": {
-        "showInSymbolList": 1
+        "showInSymbolList": 1,
     },
     "text.rfc entity.name.title": {
-        "showInSymbolList": 1
+        "showInSymbolList": 1,
     },
     "source.ini": {
-        "lineComment": ("#", ";")
+        "lineComment": ["#", ";"],
     },
     "source.ini entity.name.section": {
-        "showInSymbolList": 1
+        "showInSymbolList": 1,
     },
     "source.unix": {
-        "lineComment": "#"
+        "lineComment": "#",
     },
     "source.python": {
         "increaseIndentPattern": r"^(\s*(class|(\basync\s+)?(def|for|with)|elif|else|except|finally|if|try|while)\b.*:|.*[\{\[])\s*$",
         "decreaseIndentPattern": r"^\s*((elif|else|except|finally)\b.*:|[\}\]])",
     },
     "source.dockerfile": {
-        "lineComment": "#"
+        "lineComment": "#",
     },
-})
+    "source.gomod": {
+        "lineComment": "//",
+    },
+}
+
+generate(SETTINGS)
