@@ -453,6 +453,8 @@ rec(VARIABLE,
     'meta.declaration.variable variable.other.readwrite -meta.interpolation')
 rec(META,
     '{entity.name.tag|keyword.operator}.heredoc')
+rec(SPECIAL2 + ITALIC,
+    'entity.name.stage')
 
 src('c++', 'c')
 rec(SPECIAL1,
@@ -538,7 +540,7 @@ src('proto')
 rec(STORAGE,
     'support.type')
 rec(GENERIC_PUNCTUATION,
-    'punctuation.definition.block')
+    'punctuation.definition')
 
 src('terraform', 'hcl')
 rec(INDEXED,
@@ -574,7 +576,7 @@ rec(GENERIC_PUNCTUATION,
     'punctuation.definition.{attributes|bold|constant|italic|metadata}',
     'meta.link & (punctuation.definition.{link|reference})')
 rec(SPECIAL2,
-    'meta.link.inet & (markup.underline|punctuation.separator)')
+    '(meta.link.{inet|email}) & (markup.underline|punctuation.separator)')
 rec(COMMENT,
     'meta.code-fence.definition')
 rec(COMMENT + ITALIC,
