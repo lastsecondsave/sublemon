@@ -1,0 +1,56 @@
+%YAML 1.2
+---
+name: Go Module
+scope: source.gomod
+version: 2
+file_extensions:
+  - go.mod
+
+contexts:
+  prototype:
+    - match: \s*(//).*$
+      scope: comment.line.gomod
+      captures:
+        1: punctuation.definition.comment.gomod
+
+  main:
+    - match: ^\s*(require|tool)\s*(\()
+      captures:
+        1: storage.type.gomod
+        2: punctuation.section.begin.gomod
+      push:
+        - meta_scope: meta.section.require.gomod
+        - match: \)
+          scope: punctuation.section.end.gomod
+          pop: 1
+        - include: dependencies
+
+    - match: ^\s*(require|tool)\s
+      captures:
+        1: storage.type.gomod
+      push:
+        - meta_scope: meta.section.require.gomod
+        - match: $
+          pop: 1
+        - include: dependencies
+
+    - match: ^\s*(module)\s+([\w./-]+)?
+      captures:
+        1: storage.type.gomod
+        2: entity.name.module.gomod
+
+    - match: ^\s*(go|toolchain)\s+([\w.-]+)?
+      captures:
+        1: storage.type.gomod
+        2: constant.numeric.version.gomod
+
+  dependencies:
+    - match: "/"
+      scope: punctuation.separator.path.gomod
+    - match: (?= v)
+      push:
+        - meta_scope: constant.numeric.version.gomod
+        - match: (?=\s)
+          pop: 1
+        - match: "[-+]"
+          scope: punctuation.separator.version.gomod
