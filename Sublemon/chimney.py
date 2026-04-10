@@ -222,7 +222,7 @@ class ChimneyCommand(WindowCommand):
     BUILDS = {}
     PANELS = {}
 
-    last_manual = ""
+    last_manual_input = ""
 
     @property
     def wid(self):
@@ -258,24 +258,28 @@ class ChimneyCommand(WindowCommand):
 
         if not manual:
             self.run_build(build)
-            return
+        else:
+            self.manual_input(build, manual, nocmd)
 
-        prompt = "$" if nocmd else f"$ {manual}"
+    def manual_input(self, build, prompt, nocmd):
+        prompt = "$" if nocmd else f"$ {prompt}"
 
         def on_done(cmd):
             if cmd:
-                self.last_manual = cmd
-                self.update_cmd(build, cmd, nocmd)
+                self.last_manual_input = cmd
+                self.update_build(build, cmd, nocmd)
 
             self.run_build(build)
 
+        input_string = self.last_manual_input
+
         input_view = self.window.show_input_panel(
-            prompt, self.last_manual, on_done, None, None
+            prompt, input_string, on_done, None, None
         )
 
-        input_view.sel().add(sublime.Region(0, len(self.last_manual)))
+        input_view.sel().add(sublime.Region(0, len(input_string)))
 
-    def update_cmd(self, build, cmd, replace):
+    def update_build(self, build, cmd, replace_cmd):
         if cmd.startswith("@"):
             cmd = cmd[1:]
             if project_folder := find_project_folder(self.window):
@@ -284,7 +288,7 @@ class ChimneyCommand(WindowCommand):
         cmd = cmd.replace("$$", f'"{build.active_file}"')
         cmd = cmd.replace("@@", f'"{build.working_dir}"')
 
-        if replace:
+        if replace_cmd:
             if RUNNING_ON_WINDOWS:
                 build.cmd = Cmd(["pwsh", "-NoProfile", "-Command", cmd])
                 build.env["NO_COLOR"] = "1"
