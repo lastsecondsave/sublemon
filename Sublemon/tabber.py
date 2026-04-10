@@ -44,14 +44,26 @@ class TabberMoveCommand(WindowCommand):
 
 
 class TabberJoinCommand(WindowCommand):
-    def run(self):
-        sheets = self.window.selected_sheets()
+    def run(self, forward=False, move=False):  # pylint: disable=arguments-differ
+        selected = self.window.selected_sheets()
         active = self.window.active_sheet()
-        group, index = self.window.get_sheet_index(sheets[0])
 
-        for sheet in sheets[1:]:
-            index += 1
+        anchor = 0 if not forward else len(selected) - 1
+        group, index = self.window.get_sheet_index(selected[anchor])
+
+        if move:
+            index = 0 if not forward else len(self.window.sheets_in_group(group)) - 1
+
+        if not forward:
+            sheets = selected
+            step = 1
+        else:
+            sheets = reversed(selected)
+            step = -1
+
+        for sheet in sheets:
             self.window.set_sheet_index(sheet, group, index)
+            index += step
 
-        self.window.select_sheets(sheets)
+        self.window.select_sheets(selected)
         self.window.focus_sheet(active)
