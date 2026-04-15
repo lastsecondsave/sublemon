@@ -467,18 +467,17 @@ class BuildContext:
 def start_build(build, window, panel):
     env = build.env.copy()
 
-    if env:
-        for key, val in env.items():
-            if val is None:
-                continue
-
-            if isinstance(val, list):
-                val = "".join(val)
-
-            env[key] = sublime.expand_variables(val, os.environ)
-
     if build.path:
         env["PATH"] = os.pathsep.join(build.path) + os.pathsep + os.environ["PATH"]
+
+    for key, val in env.items():
+        if val is None:
+            continue
+
+        if isinstance(val, list):
+            val = "".join(val)
+
+        env[key] = sublime.expand_variables(val, os.environ)
 
     process = start_process(build.cmd, env, build.working_dir)
     ctx = BuildContext(window, panel, process, build)
