@@ -258,10 +258,10 @@ rec(BLUE, 'style.blue')
 rec(GREEN, 'style.green')
 rec(GRAY, 'style.gray')
 
-rec(Highlight("hsla(170, 45%, 40%, 0.15)", 'l(+ 10%)'), 'diff.inserted')
-rec(Highlight("hsla(170, 65%, 40%, 0.30)", 'l(+ 10%)'), 'diff.inserted.char')
-rec(Highlight("hsla(357, 45%, 60%, 0.15)", 'l(+ 10%)'), 'diff.deleted')
-rec(Highlight("hsla(357, 65%, 60%, 0.30)", 'l(+ 10%)'), 'diff.deleted.char')
+rec(Highlight("hsla(170, 45%, 40%, 0.15)"), 'diff.inserted')
+rec(Highlight("hsla(170, 65%, 40%, 0.30)"), 'diff.inserted.char')
+rec(Highlight("hsla(357, 45%, 60%, 0.15)"), 'diff.deleted')
+rec(Highlight("hsla(357, 65%, 60%, 0.30)"), 'diff.deleted.char')
 
 src('python')
 rec(KEYWORD,
