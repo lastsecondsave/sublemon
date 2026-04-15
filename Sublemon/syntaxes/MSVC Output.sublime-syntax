@@ -40,7 +40,7 @@ contexts:
       captures:
         1: string.quoted
         2: punctuation.separator
-    - match: "'.+?'"
+    - match: "'[^']+?'(?=\\s)"
       scope: string.quoted
     - match: '\[[^\[]+?\.vcxproj\]$'
       scope: comment.category

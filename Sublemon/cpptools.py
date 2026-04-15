@@ -130,7 +130,7 @@ class CmakeCommand(ChimneyCommand):
             build.listener = CmakeBuildListener(stdout_replace, stderr_replace)
 
         if RUNNING_ON_WINDOWS:
-            build.file_regex = r"^\s*(.+?)\((\d+),?(\d+)\): *(.*)"
+            build.file_regex = r"^ *(.+?)\((\d+),?(\d+)\): *(.*)"
             build.syntax = "MSVC Output"
 
             build.cmd.append("--config", build_type)
