@@ -138,11 +138,6 @@ def patch_syntaxes():
         "Python", (r"(set: (?:.+-)?quoted)(-raw-\w-string-body)", r"\1-plain\2")
     )
 
-    patch_syntax(
-        "TOML",
-        (r"(meta_scope: )(meta.mapping.(?:key|value).toml)", r"\1source.toml \2"),
-    )
-
 
 def unpack_icons():
     with system_package_zip("Theme - Default") as pkg:
