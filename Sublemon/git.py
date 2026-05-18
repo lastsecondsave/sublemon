@@ -48,7 +48,7 @@ class GitEditExcludeCommand(WindowCommand):
 
 
 class GitRevertFileCommand(WindowCommand):
-    def run(self, save=True):  # pylint: disable=arguments-differ
+    def run(self, save=True):
         view = self.window.active_view()
 
         if view.is_dirty() and save:

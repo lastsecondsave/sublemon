@@ -213,7 +213,7 @@ class CopyFilePathCommand(WindowCommand):
     def is_enabled(self):
         return bool(self.window.active_view().file_name())
 
-    def run(self, mode):  # pylint: disable=arguments-differ
+    def run(self, mode):
         path = Path(self.window.active_view().file_name())
 
         if mode == "file_name":
@@ -252,6 +252,6 @@ class CopyFilePathCommand(WindowCommand):
 
 
 class CopyPathsCommand(ApplicationCommand):
-    def run(self, paths):  # pylint: disable=arguments-differ
+    def run(self, paths):
         sublime.set_clipboard("\n".join(paths))
         sublime.status_message(f"Copied file path{'s' if len(paths) > 1 else ''}")

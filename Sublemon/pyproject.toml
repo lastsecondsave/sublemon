@@ -1,5 +1,6 @@
 [tool.pylint."MESSAGE CONTROL"]
 disable = [
+    "arguments-differ",
     "missing-docstring",
     "line-too-long",
     "subprocess-run-check",

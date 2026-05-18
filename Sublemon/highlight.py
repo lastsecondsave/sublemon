@@ -11,7 +11,7 @@ class HighlightAddCommand(TextCommand):
     def is_enabled(self):
         return all(not r.empty() for r in self.view.sel())
 
-    def run(self, edit, style, color):  # pylint: disable=arguments-differ
+    def run(self, edit, style, color):
         regions = [r for r in self.view.sel() if not r.empty()]
 
         for region in regions:
@@ -65,7 +65,7 @@ class HighlightDeleteCommand(TextCommand):
     def is_enabled(self):
         return bool(self.view.settings().get(SETTING_GROUPS))
 
-    def run(self, edit, group):  # pylint: disable=arguments-differ
+    def run(self, edit, group):
         self.view.erase_regions(group)
         groups = self.view.settings().get(SETTING_GROUPS)
         groups.remove(group)

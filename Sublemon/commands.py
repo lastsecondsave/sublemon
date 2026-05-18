@@ -445,7 +445,7 @@ class CloseWithoutSavingCommand(WindowCommand):
 
 
 class WrapLinesAtWidthCommand(WindowCommand):
-    def run(self, width):  # pylint: disable=arguments-differ
+    def run(self, width):
         self.window.run_command("wrap_lines", {"width": int(width)})
 
     def input(self, _args):
@@ -464,7 +464,7 @@ class SaveAllEdited(WindowCommand):
 
 
 class MoveViewportHorizontallyCommand(TextCommand):
-    def run(self, _edit, forward=True):  # pylint: disable=arguments-differ
+    def run(self, _edit, forward=True):
         current = self.view.viewport_position()
         if forward:
             cursor = self.view.sel()[0]
@@ -478,7 +478,7 @@ class MoveViewportHorizontallyCommand(TextCommand):
 
 
 class AddRulerCommand(TextCommand):
-    def run(self, _edit, position):  # pylint: disable=arguments-differ
+    def run(self, _edit, position):
         settings = self.view.settings()
         rulers = settings.get("rulers", [])
         rulers.extend([int(p) for p in position.replace(",", " ").split()])
@@ -514,7 +514,7 @@ class ConvertCaseCommand(TextCommand):
         "Title Case": lambda ts: " ".join(x.capitalize() for x in ts),
     }
 
-    def run(self, edit, case):  # pylint: disable=arguments-differ
+    def run(self, edit, case):
         adjusted_regions = []
 
         for region in self.view.sel():
@@ -594,7 +594,6 @@ class CopyAsOneLineCommand(TextCommand):
         sublime.status_message(f"Copied {len(text)} characters")
 
 
-# pylint: disable=arguments-differ
 class FindAllInFolderCommand(WindowCommand):
     def run(self, dirs):
         self.window.run_command(
@@ -606,7 +605,6 @@ class FindAllInFolderCommand(WindowCommand):
         return len(dirs) > 0
 
 
-# pylint: disable=arguments-differ
 class OpenInNewWindowCommand(ApplicationCommand):
     def run(self, dirs):
         start_process([sublime.executable_path()] + dirs, dirs[0])
