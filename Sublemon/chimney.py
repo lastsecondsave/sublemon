@@ -59,7 +59,8 @@ class OutputPanel:
             self.view.run_command("append", {"characters": text})
 
     def finalize(self):
-        self.view.find_all_results()
+        if not self.empty:
+            self.view.find_all_results()
 
 
 # pylint: disable=unused-argument
@@ -433,12 +434,12 @@ class BuildContext:
 
             returncode = self.process.wait()
 
-            if not self.panel.empty:
-                self.panel.finalize()
-            elif returncode:
-                self.print_line(f"[ FAILED | {returncode} ]")
+            if returncode:
+                self.print_lines(("", f"[ ERROR {returncode} | {duration} ]"))
             else:
-                self.print_line("[ OK ]")
+                self.print_lines(("", f"[ OK | {duration} ]"))
+
+            self.panel.finalize()
 
             if self.on_complete_message:
                 self.window.status_message(self.on_complete_message)
@@ -448,9 +449,10 @@ class BuildContext:
                 )
 
             print(f"<< [{self.process.pid}] ↑ {returncode}  {duration}")
+
         else:
+            self.print_lines(("", f" [ TERMINATED | {duration} ] "))
             self.window.status_message(f"Cancelled: {self.cmd.preview}")
-            self.print_lines(("", " *** Terminated *** "))
             print(f"-- [{self.process.pid}]  {duration}")
 
         self.process = None
