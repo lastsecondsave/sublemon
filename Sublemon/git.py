@@ -214,30 +214,50 @@ class GitBlameBuildListener(ChimneyBuildListener):
         ctx.print_lines(combine(line_info) for line_info in self.line_infos)
 
 
-class GitLineLinkCommand(WindowCommand):
-    GIT_URL_PATTERN = re.compile(r"git@(.+):(.+)\.git")
+class GitCopyUrlCommand(WindowCommand):
+    GIT_SSH_PATTERN = re.compile(r"git@(.+):(.+)\.git")
 
-    def run(self):
+    def run(self, to):
         dotgit = find_dotgit(self.window)
         if not dotgit:
             return
 
+        origin_url = self.origin_url(dotgit)
+
+        if to == "origin":
+            self.set_clipboard(origin_url, "Copied URL to repository")
+
+        elif to == "line":
+            parts = [origin_url, "blob", self.ref(dotgit), self.file_path(dotgit)]
+            anchor, desc = self.lines()
+            self.set_clipboard("/".join(parts) + anchor, f"Copied URL to {desc}")
+
+    def set_clipboard(self, content, message):
+        sublime.set_clipboard(content)
+        sublime.status_message(message)
+
+    def origin_url(self, dotgit):
         config = configparser.ConfigParser()
         config.read(dotgit / "config")
 
-        origin_url = config['remote "origin"']["url"]
-        if match := self.GIT_URL_PATTERN.match(origin_url):
-            origin_url = f"https://{match.group(1)}/{match.group(2)}"
+        url = config['remote "origin"']["url"]
+        if match := self.GIT_SSH_PATTERN.match(url):
+            url = f"https://{match.group(1)}/{match.group(2)}"
 
+        return url
+
+    def ref(self, dotgit):
+        ref = (dotgit / "HEAD").read_text().strip()
+        if ref.startswith("ref:"):
+            ref = (dotgit / ref[5:]).read_text().strip()
+
+        return ref
+
+    def file_path(self, dotgit):
         view = self.window.active_view()
-        file_path = "/".join(Path(view.file_name()).relative_to(dotgit.parent).parts)
+        return "/".join(Path(view.file_name()).relative_to(dotgit.parent).parts)
 
-        lines, lines_desc = self.lines_string()
-
-        sublime.set_clipboard(f"{origin_url}/blob/master/{file_path}#{lines}")
-        sublime.status_message(f"Copied URL to {lines_desc}")
-
-    def lines_string(self):
+    def lines(self):
         view = self.window.active_view()
         region = view.sel()[0]
 
@@ -248,9 +268,9 @@ class GitLineLinkCommand(WindowCommand):
             end -= 1
 
         if begin == end:
-            return f"L{begin}", f"line {begin}"
+            return f"#L{begin}", f"line {begin}"
 
-        return f"L{begin}-L{end}", f"lines {begin}-{end}"
+        return f"#L{begin}-L{end}", f"lines {begin}-{end}"
 
     def is_enabled(self):
         return active_view_contains_file(self.window)
