@@ -2,6 +2,9 @@ import re
 
 from .chimney import ChimneyCommand, Cmd
 
+GENERIC_BUILD_FILE_REGEX = r"^ *(.+?):(\d+):(\d+): (.*)"
+GENERIC_BUILD_SYNTAX = "Generic Build Output"
+
 
 class WslCommand(ChimneyCommand):
     WIN_PATH = re.compile(r"([A-Za-z]):\\(.*)")
@@ -33,8 +36,8 @@ class GolangCommand(ChimneyCommand):
         else:
             build.cmd.append("go", build.opt("action", "build"), build.working_dir)
 
-        build.syntax = "Generic Build Output"
-        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+        build.syntax = GENERIC_BUILD_SYNTAX
+        build.file_regex = GENERIC_BUILD_FILE_REGEX
 
 
 class StaticcheckCommand(ChimneyCommand):
@@ -44,5 +47,5 @@ class StaticcheckCommand(ChimneyCommand):
         else:
             build.cmd.append("staticcheck", build.working_dir)
 
-        build.syntax = "Generic Build Output"
-        build.file_regex = r"(.+?):(\d+):(\d+): (.*)"
+        build.syntax = GENERIC_BUILD_SYNTAX
+        build.file_regex = GENERIC_BUILD_FILE_REGEX
