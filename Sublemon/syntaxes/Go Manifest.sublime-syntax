@@ -1,10 +1,11 @@
 %YAML 1.2
 ---
-name: Go Module
+name: Go Manifest
 scope: source.gomod
 version: 2
 file_extensions:
   - go.mod
+  - go.work
 
 contexts:
   prototype:
@@ -43,6 +44,16 @@ contexts:
       captures:
         1: storage.type.gomod
         2: constant.numeric.version.gomod
+
+    - match: ^\s*(use)\s*(\()
+      captures:
+        1: storage.type.gomod
+        2: punctuation.section.begin.gomod
+      push:
+        - meta_scope: meta.section.use.gomod
+        - match: \)
+          scope: punctuation.section.end.gomod
+          pop: 1
 
   dependencies:
     - match: "/"
