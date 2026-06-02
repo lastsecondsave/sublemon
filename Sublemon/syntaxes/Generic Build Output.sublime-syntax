@@ -5,6 +5,13 @@ scope: text.output
 
 contexts:
   main:
+    - match: ^\[.+\]
+
+    - match: ^\s*(#).*$
+      scope: comment.line
+      captures:
+        1: punctuation.definition.comment
+
     - match: '^(.+?)(:)(\d+)(?:(:)(\d+))?(:)?'
       captures:
         1: entity.name.filename
@@ -21,8 +28,3 @@ contexts:
         - match: (\([\w-]+\))$
           captures:
             1: comment.category.description
-
-    - match: ^\s*(#).*$
-      scope: comment.line
-      captures:
-        1: punctuation.definition.comment
