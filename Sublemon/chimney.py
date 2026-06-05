@@ -400,7 +400,7 @@ def format_duration(duration):
     seconds = int(millis)
     millis = round((millis - seconds) * 1000)
 
-    return f"{int(minutes):02}:{seconds:02}:{millis:03}"
+    return f"{int(minutes):02}:{seconds:02}.{millis:03}"
 
 
 class BuildContext:
@@ -451,7 +451,7 @@ class BuildContext:
             print(f"<< [{self.process.pid}] ↑ {returncode}  {duration}")
 
         else:
-            self.print_lines(("", f" [ TERMINATED | {duration} ] "))
+            self.print_lines(("", f"[ TERMINATED | {duration} ] "))
             self.window.status_message(f"Cancelled: {self.cmd.preview}")
             print(f"-- [{self.process.pid}]  {duration}")
 
