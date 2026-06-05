@@ -135,7 +135,7 @@ class OpenFileUnderCursorCommand(TextCommand):
             region.begin(),
             forward=False,
             classes=sublime.CLASS_WORD_START | sublime.CLASS_LINE_START,
-            separators="\"'<[( ",
+            separators="\"'`<[( ",
         )
 
         match = self.view.find(r"(\S+\w)((?::\d+){0,2})", point)
@@ -207,6 +207,7 @@ class CopyFilePathCommand(WindowCommand):
         "dir_path": "Directory Path",
         "dir_name": "Directory Name",
         "file_project_path": "File Project Path",
+        "line_project_path": "File Project Path + Line",
         "dir_project_path": "Directory Project Path",
     }
 
@@ -220,6 +221,8 @@ class CopyFilePathCommand(WindowCommand):
             path = path.name
         elif mode == "file_project_path":
             path = self.project_path(path)
+        elif mode == "line_project_path":
+            path = f"{self.project_path(path)}:{self.line()}"
         elif mode == "dir_name":
             path = path.parent.name
         elif mode == "dir_path":
@@ -233,13 +236,14 @@ class CopyFilePathCommand(WindowCommand):
 
     def project_path(self, path):
         if project_file := self.window.project_file_name():
-            try:
-                return path.relative_to(Path(project_file).parent)
-            except ValueError:
-                pass
+            return path.relative_to(Path(project_file).parent)
 
-        sublime.status_message("Not in a project")
-        return None
+        return path.relative_to(find_project_folder(self.window))
+
+    def line(self):
+        view = self.window.active_view()
+        region = view.sel()[0]
+        return view.rowcol(region.end())[0] + 1
 
     def input(self, _args):
         items = [(val, key) for key, val in self.MODES.items()]
