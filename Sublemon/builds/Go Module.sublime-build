@@ -18,6 +18,15 @@
       "name": "Run Manual",
       "cmd": ["run"],
       "manual": "go run"
+    },
+    {
+      "name": "Test",
+      "cmd": ["test"]
+    },
+    {
+      "name": "Test Manual",
+      "cmd": ["test"],
+      "manual": "go test"
     }
   ]
 }
