@@ -66,6 +66,7 @@ class GitDiffCommand(ChimneyCommand):
     def setup(self, build):
         build.cmd.append("git", "diff", build.active_file)
         build.syntax = "Packages/Diff/Diff.tmLanguage"
+        build.disable_status = True
 
     def is_enabled(self):
         return active_view_contains_file(self.window)
@@ -87,6 +88,7 @@ class GitLogCommand(ChimneyCommand):
 
         build.listener = GitLogBuildListener()
         build.syntax = "Git Log Output"
+        build.disable_status = True
 
     def is_enabled(self):
         return active_view_contains_file(self.window)
@@ -155,6 +157,7 @@ class GitBlameCommand(ChimneyCommand):
         build.cmd.append("--", build.active_file)
         build.syntax = "Git Blame Output"
         build.listener = GitBlameBuildListener()
+        build.disable_status = True
 
     def is_enabled(self):
         return active_view_contains_file(self.window)

@@ -66,7 +66,8 @@ class OutputPanel:
 # pylint: disable=unused-argument
 class ChimneyBuildListener:
     def on_startup(self, ctx):
-        ctx.window.status_message(f"Running {ctx.cmd.preview}")
+        if not ctx.build.disable_status:
+            ctx.window.status_message(f"Running {ctx.build.cmd.preview}")
 
     def on_output(self, line, ctx):
         return line
@@ -165,6 +166,8 @@ class BuildSetup:
         self.working_dir = options.get("working_dir")
 
         self.syntax = options.get("syntax", "Packages/Text/Plain text.tmLanguage")
+
+        self.disable_status = False
 
     def cancel(self, message):
         raise BuildSetupError(message)
@@ -408,14 +411,10 @@ class BuildContext:
         self.window = window
         self.panel = panel
         self.process = process
+        self.build = build
 
         self.start_time = timer()
         self.cancelled = False
-
-        self.working_dir = build.working_dir
-        self.cmd = build.cmd
-
-        self.on_complete = build.listener.on_complete
         self.on_complete_message = None
 
         build.listener.on_startup(self)
@@ -430,29 +429,33 @@ class BuildContext:
         duration = format_duration(timer() - self.start_time)
 
         if not self.cancelled:
-            self.on_complete(self)
+            self.build.listener.on_complete(self)
 
             returncode = self.process.wait()
 
-            if returncode:
-                self.print_lines(("", f"[ ERROR {returncode} | {duration} ]"))
-            else:
-                self.print_lines(("", f"[ OK | {duration} ]"))
+            if not self.build.disable_status:
+                self.print_lines(
+                    ("", f"[ ERROR {returncode} | {duration} ]")
+                    if returncode
+                    else ("", f"[ OK | {duration} ]")
+                )
 
             self.panel.finalize()
 
-            if self.on_complete_message:
-                self.window.status_message(self.on_complete_message)
-            else:
-                self.window.status_message(
-                    f"{'Failed' if returncode else 'Complete'}: {self.cmd.preview}"
-                )
+            status_message = (
+                self.on_complete_message
+                if self.on_complete_message
+                else f"{'Failed' if returncode else 'Complete'}: {self.build.cmd.preview}"
+            )
+
+            if not self.build.disable_status:
+                self.window.status_message(status_message)
 
             print(f"<< [{self.process.pid}] ↑ {returncode}  {duration}")
 
         else:
             self.print_lines(("", f"[ TERMINATED | {duration} ] "))
-            self.window.status_message(f"Cancelled: {self.cmd.preview}")
+            self.window.status_message(f"Cancelled: {self.build.cmd.preview}")
             print(f"-- [{self.process.pid}]  {duration}")
 
         self.process = None
