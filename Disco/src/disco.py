@@ -385,6 +385,8 @@ rec(ITALIC,
 rec(PUNCTUATION,
     "keyword.operator.pipe")
 rec(KEYWORD,
+    "variable.function")
+rec(SPECIAL2,
     "keyword.operator.{call|source}")
 rec(STORAGE,
     "support.type")
@@ -512,7 +514,7 @@ rec(GENERIC_PUNCTUATION,
 rec(TAG,
     'punctuation.definition.directive.begin',
     'constant.language.merge',
-    'keyword.other.directive.yaml',
+    'keyword.control.directive.yaml',
     'meta.mapping.key meta.string string')
 rec(META,
     'variable.other.alias',
@@ -598,9 +600,14 @@ rec(BOLD + ITALIC,
     'markup.heading.2 entity.name')
 
 src('diff')
-rec(META, 'meta.diff.range')
-rec(META + UNDERLINE, 'entity.name.section')
-rec(BLUE, 'meta.diff.header')
+rec(META,
+    'meta.diff.range',
+    'meta.diff.range punctuation.separator')
+rec(META + UNDERLINE,
+    'entity.name.section')
+rec(INDEXED,
+    'meta.diff.header',
+    'meta.diff.header punctuation.separator')
 rec(GREEN,
     'markup.inserted',
     'punctuation.definition.to-file')
