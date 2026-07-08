@@ -5,6 +5,7 @@ from sublime import Region
 from sublime_plugin import TextCommand
 
 HEX_NUMBER_PATTERN = re.compile(r"0[xX][0-9A-Fa-f]+")
+NEGATIVE_MARKERS = (" ", "\n", "[", "(", "'", '"')
 
 
 @unique
@@ -49,7 +50,7 @@ class OneUpCommand(TextCommand):
         region = self.view.word(pos)
 
         if category := classify(self.view.substr(region)):
-            if category is Token.NUMBER and self.view.substr(region.a - 1) == "-":
+            if category is Token.NUMBER and self.is_negative_number(region):
                 region.a -= 1
 
             return (region, category)
@@ -70,6 +71,19 @@ class OneUpCommand(TextCommand):
             return (self.cover_number(pos - 1), Token.NUMBER)
 
         return (None, None)
+
+    def is_negative_number(self, region):
+        if region.begin() == 0:
+            return False
+
+        if self.view.substr(region.begin() - 1) == "-":
+            if region.begin() == 1:
+                return True
+
+            if self.view.substr(region.begin() - 2) in NEGATIVE_MARKERS:
+                return True
+
+        return False
 
     def cover_number(self, pos):
         left = pos
