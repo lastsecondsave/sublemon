@@ -384,14 +384,15 @@ rec(ITALIC,
     "keyword.operator.{string|comparison|logical}")
 rec(PUNCTUATION,
     "keyword.operator.pipe")
+rec(GENERIC_PUNCTUATION,
+    "punctuation.definition.annotation")
 rec(KEYWORD,
-    "variable.function")
-rec(SPECIAL2,
+    "variable.function",
     "keyword.operator.{call|source}")
 rec(STORAGE,
     "support.type")
 rec(META,
-    'meta.attribute support.function.attribute')
+    'meta.annotation variable.annotation')
 
 src('shell')
 rec(PUNCTUATION,
