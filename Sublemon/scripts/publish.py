@@ -11,6 +11,11 @@ SUBLEMON = Path(__file__).resolve().parent.parent
 PACKAGES = SUBLEMON.parent
 
 
+BUILDS = "__BUILDS__"
+COMPLETIONS = "__COMPLETIONS__"
+KEYMAPS = "__KEYMAPS__"
+
+
 def system_package(name):
     if sys.platform == "win32":
         root = "C:/Program Files/Sublime Text"
@@ -53,14 +58,28 @@ def generate_files():
         execute(snippet)
 
 
-def mute(*path):
-    path = PACKAGES.joinpath(*path)
+def mute(package, *items):
+    for item in items:
+        if item is BUILDS:
+            mute_extension(package, "sublime-build")
+        elif item is COMPLETIONS:
+            mute_extension(package, "sublime-completions")
+        elif item is KEYMAPS:
+            mute_extension(package, "sublime-keymap")
+        else:
+            mute_path(package, item)
+
+
+def mute_path(package, path):
+    path = PACKAGES.joinpath(package, path)
     path.parent.mkdir(exist_ok=True, parents=True)
 
     if (ext := path.suffix) == ".sublime-build":
         path.write_text('{"selector": "_"}')
     elif ext == ".sublime-keymap":
         path.write_text("[]")
+    elif ext == ".sublime-completions":
+        path.write_text("{}")
     elif ext == ".tmPreferences":
         path.write_text(
             "<plist><dict>"
@@ -74,49 +93,40 @@ def mute(*path):
     print(f"Muted {path}")
 
 
-def mute_in_package(package, file_type):
+def mute_extension(package, extension):
     pkg_file = system_package(package)
     if not pkg_file.exists():
         pkg_file = installed_package(package)
 
     with zipfile.ZipFile(pkg_file) as pkg:
-        completions = [n.split("/") for n in pkg.namelist() if n.endswith(file_type)]
+        paths = [n for n in pkg.namelist() if n.endswith(extension)]
 
-    for path in completions:
-        mute(package, *path)
-
-
-def mute_completions(package):
-    mute_in_package(package, "sublime-completions")
-
-
-def mute_builds(package):
-    mute_in_package(package, "sublime-build")
+    for path in paths:
+        mute_path(package, path)
 
 
 def mute_files():
-    mute_builds("Python")
-    mute("Python", "Indentation Rules.tmPreferences")
+    mute(
+        "ShellScript",
+        COMPLETIONS,
+        KEYMAPS,
+        "Bash/Completion Rules.tmPreferences",
+        "Zsh/Completion Rules.tmPreferences",
+    )
 
-    mute_completions("ShellScript")
-    mute("ShellScript", "Default.sublime-keymap")
-    mute("ShellScript", "Bash", "Completion Rules.tmPreferences")
-    mute("ShellScript", "Zsh", "Completion Rules.tmPreferences")
+    mute(
+        "Markdown",
+        KEYMAPS,
+        "Symbol List - Reference Link.tmPreferences",
+    )
 
-    mute("Markdown", "Default.sublime-keymap")
-    mute("Markdown", "Symbol List - Reference Link.tmPreferences")
-
-    mute_builds("C++")
-    mute("C++", "Symbol List - Indent Class Methods.tmPreferences")
-
-    mute_completions("Java")
-    mute_builds("Java")
-
-    mute_completions("CMake")
-    mute_completions("Go")
-
-    mute_builds("Makefile")
-    mute_builds("PowerShell")
+    mute("Python", BUILDS, "Indentation Rules.tmPreferences")
+    mute("C++", BUILDS, "Symbol List - Indent Class Methods.tmPreferences")
+    mute("Java", BUILDS, COMPLETIONS)
+    mute("CMake", COMPLETIONS)
+    mute("Go", COMPLETIONS)
+    mute("Makefile", BUILDS)
+    mute("PowerShell", BUILDS, COMPLETIONS)
 
 
 def patch_syntax(package, *patches):
