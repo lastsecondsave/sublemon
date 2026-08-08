@@ -6,8 +6,15 @@ version: 2
 
 contexts:
   main:
-    - match: '^Traceback \(most recent call last\):'
+    - match: '^(Traceback \(most recent call last\):)'
+      captures:
+        1: comment.highlight.italic
       push: traceback
+    - match: '^(\w+Error)(:) (.*)'
+      captures:
+        1: constant.other.indicator.error
+        2: punctuation.separator
+        3: comment.highlight.italic
 
   traceback:
     - match: ^(?=\S)
@@ -17,6 +24,12 @@ contexts:
         1: entity.name.filename
         2: constant.numeric.line
         3: storage
-    - match: ^\s+(\^+)
+    - match: ^\s+(~*)(\^+)
       captures:
-        1: punctuation.definition.marker
+        1: punctuation.formatting
+        2: punctuation.definition.marker
+    - match: ^\s+(\.{3}<)(\d+ lines?)(>\.{3})
+      captures:
+        1: punctuation.formatting
+        2: comment.category.description
+        3: punctuation.formatting
