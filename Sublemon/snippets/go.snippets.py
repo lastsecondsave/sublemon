@@ -34,6 +34,7 @@ snippets = {
     "ma": ("make array", "make([]${1:byte}, ${2:32})"),
     "mm": ("make map", "make(map[${1:string}]${2:any})"),
     "st": ("struct tag", '`${1:json}:"$2"`'),
+    "app": ("append", "${1:x} = append($1, ${2:y})"),
 }
 
 completions = {
