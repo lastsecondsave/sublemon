@@ -40,7 +40,7 @@ def color(value, mod):
 
 
 WHITE = "#AEB7BF"
-GRAY = "#9090A0"
+GRAY = "#8181A0"
 PURPLE = "#E572D2"
 PINK = "#EF51AA"
 VIOLET = "#8888BC"
@@ -413,7 +413,7 @@ rec(KEYWORD,
 rec(SUPPORT,
     'support.function.shell')
 rec(STRING,
-    'meta.function-call punctuation.definition.quoted')
+    '(meta.{function-call|declaration.alias}) & punctuation.definition.quoted')
 rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
@@ -422,7 +422,8 @@ rec(FOREGROUND,
     'constant.language.null')
 rec(ITALIC,
     'meta.statement.conditional.case meta.clause.patterns meta.string.glob',
-    'keyword.operator.comparison')
+    'keyword.operator.comparison',
+    'string.unquoted.heredoc')
 
 src('makefile')
 rec(PUNCTUATION,
