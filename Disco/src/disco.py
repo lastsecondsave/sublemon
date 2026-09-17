@@ -40,7 +40,7 @@ def color(value, mod):
 
 
 WHITE = "#AEB7BF"
-GRAY = "#8181A0"
+GRAY = "#818191"
 PURPLE = "#E572D2"
 PINK = "#EF51AA"
 VIOLET = "#8888BC"
@@ -59,6 +59,7 @@ FADED_GRAY = "#51515D"
 FADED_VIOLET = "#5E5E8E"
 
 BLUISH_BLACK = "#1E262E"
+HERON_BLUE = "#6E819D"
 DARK_BLUE = "#384868"
 
 FOREGROUND = Style(WHITE)
@@ -71,9 +72,9 @@ KEYWORD = Style(PURPLE)
 STORAGE = Style(PINK)
 SUPPORT = Style(BRIGHTER_WHITE)
 INDEXED = Style(BLUE)
-OPERATOR = Style(VIOLET)
-GENERIC_PUNCTUATION = Style(VIOLET)
-PUNCTUATION = Style(DARK_ORANGE)
+OPERATOR = Style(HERON_BLUE)
+PUNCTUATION1 = Style(VIOLET)
+PUNCTUATION2 = Style(DARK_ORANGE)
 ACCESSOR = Style(VIOLET)
 COMMENT = Style(GRAY)
 COMMENT_DIM = Style(FADED_VIOLET)
@@ -95,45 +96,9 @@ REGEXP_GROUP = Style(ORANGE)
 REGEXP_CHARACTER_CLASS = Style(PURPLE)
 REGEXP_CONTROL = Style(PINK)
 
-COLOR_SCHEME = {
-    "name": "Disco",
 
-    "globals": {
-        "background": BLUISH_BLACK,
-        "foreground": WHITE,
-        "caret": CLEAR_WHITE,
-        "line_highlight": color(FADED_GRAY, "a(30%) l(+ 3%) s(+ 3%)"),
-        "fold_marker": LIGHT_YELLOW,
-        "brackets_foreground": VIOLET,
-        "tags_foreground": VIOLET,
-
-        "selection": DARK_BLUE,
-        "inactive_selection": color(DARK_BLUE, "a(80%)"),
-        "selection_corner_radius": "2",
-        "selection_border_width": "0",
-        "invisibles": color(DARK_BLUE, "l(+ 10%)"),
-
-        "highlight": color(CLEAR_WHITE, "l(- 25%)"),
-        "find_highlight": LIGHT_YELLOW,
-        "find_highlight_foreground": BLUISH_BLACK,
-        "scroll_highlight": WHITE,
-        "scroll_selected_highlight": YELLOW,
-
-        "guide": color(FADED_GRAY, "a(20%)"),
-        "active_guide": color(FADED_GRAY, "a(40%)"),
-        "stack_guide": color(FADED_GRAY, "a(20%)"),
-        "rulers": color(FADED_GRAY, "a(40%)"),
-
-        "line_diff_width": "2",
-        "line_diff_added": FADED_GRAY,
-        "line_diff_modified": FADED_VIOLET,
-        "line_diff_deleted": FADED_VIOLET
-    },
-
-    "rules": []
-}
-
-ROOT_SCOPES = None
+ROOT_SCOPES = []
+RULES = []
 
 
 def sec(*scopes):
@@ -191,17 +156,52 @@ def rec(style, *scopes):
         style = Style(style)
 
     for scope in chain.from_iterable(expand(s) for s in regroup(scopes)):
-        COLOR_SCHEME["rules"].append({"scope": scope, **style.settings})
+        RULES.append({"scope": scope, **style.settings})
 
 
-def generate():
+def generate(config, rules):
+    scheme = {"name": "Disco", "globals": config, "rules": rules}
     path = Path(__file__).resolve().parent.parent / "Disco.sublime-color-scheme"
 
     with path.open(mode="w") as json_file:
-        json.dump(COLOR_SCHEME, json_file, indent=2)
+        json.dump(scheme, json_file, indent=2)
 
     print("Generated", path)
 
+
+# fmt: off
+
+CONFIG = {
+    "background": BLUISH_BLACK,
+    "foreground": WHITE,
+    "caret": CLEAR_WHITE,
+    "line_highlight": color(FADED_GRAY, "a(30%) l(+ 3%) s(+ 3%)"),
+    "fold_marker": LIGHT_YELLOW,
+    "brackets_foreground": VIOLET,
+    "tags_foreground": VIOLET,
+
+    "selection": DARK_BLUE,
+    "inactive_selection": color(DARK_BLUE, "a(80%)"),
+    "selection_corner_radius": "2",
+    "selection_border_width": "0",
+    "invisibles": color(DARK_BLUE, "l(+ 10%)"),
+
+    "highlight": color(CLEAR_WHITE, "l(- 25%)"),
+    "find_highlight": LIGHT_YELLOW,
+    "find_highlight_foreground": BLUISH_BLACK,
+    "scroll_highlight": WHITE,
+    "scroll_selected_highlight": YELLOW,
+
+    "guide": color(FADED_GRAY, "a(20%)"),
+    "active_guide": color(FADED_GRAY, "a(40%)"),
+    "stack_guide": color(FADED_GRAY, "a(20%)"),
+    "rulers": color(FADED_GRAY, "a(40%)"),
+
+    "line_diff_width": "2",
+    "line_diff_added": FADED_GRAY,
+    "line_diff_modified": FADED_VIOLET,
+    "line_diff_deleted": FADED_VIOLET
+}
 
 rec(COMMENT,
     'comment',
@@ -232,12 +232,11 @@ rec(PARAMETER,
 rec(VARIABLE,
     'variable.{language|other.substitution}',
     'support.{constant|variable}')
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     '(punctuation.{section|separator|terminator|definition.generic}) -string')
-rec(PUNCTUATION,
-    'punctuation.separator.continuation',
-    'punctuation.definition.{template-expression|variable}',
-    'punctuation.section.interpolation')
+rec(PUNCTUATION2,
+    'punctuation.{separator.continuation|section.interpolation}',
+    'punctuation.definition.{template-expression|variable}')
 rec(ACCESSOR,
     'punctuation.accessor')
 rec(INVALID,
@@ -358,7 +357,7 @@ rec(FOREGROUND,
 
 src('clojure')
 rec(TAG + ITALIC, 'constant.other.keyword')
-rec(PUNCTUATION, 'keyword.operator.macro')
+rec(PUNCTUATION2, 'keyword.operator.macro')
 
 src('groovy')
 rec(META, 'storage.type.annotation')
@@ -382,20 +381,23 @@ src('powershell')
 rec(ITALIC,
     "variable.parameter.option",
     "keyword.operator.{string|comparison|logical}")
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     "keyword.operator.pipe")
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     "punctuation.definition.annotation")
 rec(KEYWORD,
-    "variable.function",
     "keyword.operator.{call|source}")
 rec(STORAGE,
     "support.type")
 rec(META,
     'meta.annotation variable.annotation')
+rec(COMMENT_HIGHLIGHT + ITALIC,
+    '{keyword.other|punctuation.definition.keyword}.documentation')
+rec(COMMENT_LIGHT + ITALIC,
+    'comment.documentation variable.parameter')
 
 src('shell')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'keyword.operator.assignment.{pipe|redirection|herestring}')
 rec(STORAGE,
@@ -426,7 +428,7 @@ rec(ITALIC,
     'string.unquoted.heredoc')
 
 src('makefile')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'meta.interpolation keyword.other.block')
 rec(VARIABLE,
     'variable.other')
@@ -437,10 +439,10 @@ rec(FOREGROUND,
 src('cmake')
 rec(VARIABLE,
     'variable.other.readwrite.assignment')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'meta.text-substitution punctuation.section.braces',
     'punctuation.section.block.{begin|end}')
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     'punctuation.separator.generator-expression')
 rec(KEYWORD,
     'keyword.operator.logical',
@@ -502,16 +504,16 @@ rec(KEYWORD,
     'variable.annotation')
 rec(SPECIAL1,
     'storage.modifier.lifetime')
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     'punctuation.definition.annotation')
 
 src('yaml')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'punctuation.definition.block.sequence.item',
     'entity.other.document',
     'keyword.control.flow.block-scalar',
     'storage.modifier.chomping-indicator')
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     'punctuation.definition.{sequence|mapping}')
 rec(TAG,
     'punctuation.definition.directive.begin',
@@ -533,7 +535,7 @@ rec(TAG,
 rec(VARIABLE,
     'constant.other.{datetime|date|time}',
     'constant.other punctuation.separator')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'constant.other.datetime & (punctuation.separator.datetime | keyword.operator | storage.modifier)')
 
 src('ini')
@@ -543,7 +545,7 @@ rec(META,
 src('proto')
 rec(STORAGE,
     'support.type')
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     'punctuation.definition')
 
 src('terraform', 'hcl')
@@ -564,7 +566,7 @@ rec(VARIABLE,
     'entity.other.pseudo-class -punctuation')
 
 txt('xml', 'html')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'meta.tag.sgml.cdata punctuation.definition.tag',
     'keyword.declaration.cdata')
 rec(VARIABLE,
@@ -573,10 +575,10 @@ rec(TAG,
     'meta.tag.sgml.doctype keyword')
 
 txt('html.markdown')
-rec(PUNCTUATION,
+rec(PUNCTUATION2,
     'punctuation.definition.{blockquote|image|list_item}',
     'markup.list.numbered.bullet')
-rec(GENERIC_PUNCTUATION,
+rec(PUNCTUATION1,
     'punctuation.definition.{attributes|bold|constant|italic|metadata}',
     'meta.link & (punctuation.definition.{link|reference})')
 rec(SPECIAL2,
@@ -634,4 +636,6 @@ rec(PURPLE, 'constant.other.indicator.note')
 rec(COMMENT, 'constant.other.indicator.info')
 rec(COMMENT, 'constant.numeric.date')
 
-generate()
+# fmt: on
+
+generate(CONFIG, RULES)

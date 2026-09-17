@@ -2,11 +2,9 @@
   "variables": {
     "WHITE": "#AEB7BF",
     "CLEAR_WHITE": "#FFFFFF",
-    "GRAY": "#8181A0",
     "PURPLE": "#E572D2",
     "PINK": "#EF51AA",
     "BLUE": "#6699FF",
-    "GREEN": "#C5CC4B",
     "YELLOW": "#EDC61A",
     "ORANGE": "#FFAD3A",
     "DARK_ORANGE": "#FF8147",
