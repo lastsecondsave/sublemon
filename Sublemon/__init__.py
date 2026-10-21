@@ -10,6 +10,8 @@ RUNNING_ON_LINUX = sublime.platform() == "linux"
 
 POPEN_CREATION_FLAGS = subprocess.CREATE_NO_WINDOW if RUNNING_ON_WINDOWS else 0
 
+SUBLEMON_PATH = Path(__file__).parent.resolve()
+
 
 def pref(key, default=None, view=None, window=None, expand=False, settings=False):
     value = None
@@ -96,3 +98,9 @@ def start_process(args, cwd=None):
         cwd=cwd,
         creationflags=POPEN_CREATION_FLAGS,
     )
+
+def at_path(path):
+    if path.startswith("@"):
+        path = str(SUBLEMON_PATH / path[1:])
+
+    return path
