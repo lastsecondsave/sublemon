@@ -27,10 +27,6 @@ def system_package(name):
     return Path(root) / "Packages" / f"{name}.sublime-package"
 
 
-def system_package_zip(name):
-    return zipfile.ZipFile(system_package(name))
-
-
 def installed_package(name):
     if sys.platform == "win32":
         root = "AppData/Roaming/Sublime Text"
@@ -40,6 +36,22 @@ def installed_package(name):
         root = ".config/sublime-text"
 
     return Path.home() / root / "Installed Packages" / f"{name}.sublime-package"
+
+
+def package_path(name):
+    package = system_package(name)
+
+    if not package.exists():
+        package = installed_package(name)
+
+    if not package.exists():
+        sys.exit(f"No such package: {name}")
+
+    return package
+
+
+def package_zip(name):
+    return zipfile.ZipFile(package_path(name))
 
 
 def execute(script):
@@ -94,11 +106,7 @@ def mute_path(package, path):
 
 
 def mute_extension(package, extension):
-    pkg_file = system_package(package)
-    if not pkg_file.exists():
-        pkg_file = installed_package(package)
-
-    with zipfile.ZipFile(pkg_file) as pkg:
+    with package_zip(package) as pkg:
         paths = [n for n in pkg.namelist() if n.endswith(extension)]
 
     for path in paths:
@@ -130,27 +138,29 @@ def mute_files():
 
 
 def patch_syntax(package, *patches):
-    with system_package_zip(package) as pkg:
-        syntax = (zipfile.Path(pkg) / f"{package}.sublime-syntax").read_text()
+    with package_zip(package) as pkg:
+        path = zipfile.Path(pkg) / f"{package}.sublime-syntax"
+        src = path.read_text(encoding="utf-8")
 
     for pattern, repl in patches:
-        syntax = re.sub(pattern, repl, syntax)
+        src = re.sub(pattern, repl, src)
 
-    syntax_path = PACKAGES / package / f"{package}.sublime-syntax"
-    syntax_path.parent.mkdir(exist_ok=True)
-    syntax_path.write_text(syntax)
+    syntax = PACKAGES / package / f"{package}.sublime-syntax"
+    syntax.parent.mkdir(exist_ok=True)
+    syntax.write_text(src, encoding="utf-8")
 
-    print(f"Patched {syntax_path}")
+    print(f"Patched {syntax}")
 
 
 def patch_syntaxes():
     patch_syntax(
-        "Python", (r"(set: (?:.+-)?quoted)(-raw-\w-string-body)", r"\1-plain\2")
+        "Python",
+        [r"(set: (?:.+-)?quoted)(-raw-\w-string-body)", r"\1-plain\2"],
     )
 
 
 def unpack_icons():
-    with system_package_zip("Theme - Default") as pkg:
+    with package_zip("Theme - Default") as pkg:
         icons = [name for name in pkg.namelist() if name.startswith("icons/")]
         pkg.extractall(path=PACKAGES / "Disco", members=icons)
 
@@ -158,7 +168,7 @@ def unpack_icons():
 
 
 def override_macos_keymap():
-    with system_package_zip("Default") as pkg:
+    with package_zip("Default") as pkg:
         keymap = Path(
             pkg.extract(
                 "Default (Windows).sublime-keymap",
