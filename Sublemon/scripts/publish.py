@@ -158,6 +158,12 @@ def patch_syntaxes():
         [r"(set: (?:.+-)?quoted)(-raw-\w-string-body)", r"\1-plain\2"],
     )
 
+    patch_syntax(
+        "PowerShell",
+        ["({{attributes}})", r"([\\w\\.]+)(?=\\()"],
+        ["{{attribute_parameters}}", r"\\w+"],
+    )
+
 
 def unpack_icons():
     with package_zip("Theme - Default") as pkg:
