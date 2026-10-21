@@ -381,10 +381,10 @@ src('powershell')
 rec(ITALIC,
     "variable.parameter.option",
     "keyword.operator.{string|comparison|logical}")
-rec(PUNCTUATION2,
-    "keyword.operator.pipe")
 rec(PUNCTUATION1,
     "punctuation.definition.annotation")
+rec(PUNCTUATION2,
+    "keyword.operator.{pipe|redirection}")
 rec(KEYWORD,
     "keyword.operator.{call|source}")
 rec(STORAGE,
@@ -634,7 +634,7 @@ rec(ORANGE, 'constant.other.indicator.warning')
 rec(GREEN, 'constant.other.indicator.success')
 rec(PURPLE, 'constant.other.indicator.note')
 rec(COMMENT, 'constant.other.indicator.info')
-rec(COMMENT, 'constant.numeric.date')
+rec(COMMENT + ITALIC, 'constant.numeric.date')
 
 # fmt: on
 
