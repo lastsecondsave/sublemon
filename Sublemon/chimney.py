@@ -548,9 +548,10 @@ def start_process(cmd, env, cwd):
 
 def kill_process(process):
     if RUNNING_ON_WINDOWS:
-        cmd = f"taskkill /T /F /PID {process.pid}"
-        # pylint: disable=consider-using-with
-        subprocess.Popen(cmd, creationflags=subprocess.CREATE_NO_WINDOW)
+        subprocess.run(
+            f"taskkill /T /F /PID {process.pid}",
+            creationflags=subprocess.CREATE_NO_WINDOW,
+        )
     else:
         try:
             os.killpg(process.pid, signal.SIGTERM)  # pylint: disable=no-member
