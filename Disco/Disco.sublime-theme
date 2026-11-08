@@ -76,7 +76,7 @@
     {
       "class": "tree_row",
       "attributes": ["selectable", "hover", "!selected"],
-      "layer0.opacity": 0.25,
+      "layer0.opacity": 0.2,
     },
     {
       "class": "tree_row",
