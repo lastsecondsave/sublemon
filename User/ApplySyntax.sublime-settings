@@ -9,6 +9,10 @@
       "rules": [{ "globmatch": "**/{build,pom}.xml" }]
     },
     {
+      "syntax": "Sublemon/syntaxes/Unix Config",
+      "rules": [{ "globmatch": "**/.git/info/exclude" }]
+    },
+    {
       "syntax": "Python/Python",
       "rules": [{ "interpreter": "python" }, { "interpreter": "pypy" }]
     },
