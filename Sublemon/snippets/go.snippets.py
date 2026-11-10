@@ -23,6 +23,14 @@ snippets = {
         }
         """,
     ),
+    "iep": (
+        "if err != nil { panc }",
+        """
+        if ${1:err} != nil {
+            panic(${1})
+        }
+        """,
+    ),
     ";;": (
         "i = 0; i < imax; i++",
         "${1:i} := 0; $1 < ${2:imax}; ${3:$1++}",
@@ -35,6 +43,8 @@ snippets = {
     "mm": ("make map", "make(map[${1:string}]${2:any})"),
     "st": ("struct tag", '`${1:json}:"$2"`'),
     "app": ("append", "${1:x} = append($1, ${2:y})"),
+    "cxp": "ctx context.Context",
+    "cxb": "context.Background()$0",
 }
 
 completions = {

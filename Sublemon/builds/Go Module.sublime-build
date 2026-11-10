@@ -11,6 +11,10 @@
       "manual": "go build"
     },
     {
+      "name": "Build All",
+      "cmd": ["build", "./..."]
+    },
+    {
       "name": "Run",
       "cmd": ["run"]
     },

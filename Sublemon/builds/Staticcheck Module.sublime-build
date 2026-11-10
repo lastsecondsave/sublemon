@@ -7,6 +7,10 @@
     {
       "name": "Manual",
       "manual": "staticcheck"
+    },
+    {
+      "name": "All",
+      "cmd": ["./..."]
     }
   ]
 }
