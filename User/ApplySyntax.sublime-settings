@@ -17,6 +17,10 @@
       "rules": [{ "interpreter": "python" }, { "interpreter": "pypy" }]
     },
     {
+      "syntax": "Groovy/Groovy",
+      "rules": [{ "file_path": ".+/Jenkinsfile([_.-]\\w+)*$" }]
+    },
+    {
       "syntax": "Objective-C/Objective-C++",
       "match": "all",
       "rules": [

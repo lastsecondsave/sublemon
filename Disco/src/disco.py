@@ -360,7 +360,12 @@ rec(TAG + ITALIC, 'constant.other.keyword')
 rec(PUNCTUATION2, 'keyword.operator.macro')
 
 src('groovy')
-rec(META, 'storage.type.annotation')
+rec(META,
+    'storage.type.annotation')
+rec(PUNCTUATION1,
+    'punctuation.definition.{structure|separator}')
+rec(ITALIC,
+    'constant.other.key')
 
 src('cs')
 rec(KEYWORD,
@@ -397,6 +402,8 @@ rec(COMMENT_LIGHT + ITALIC,
     'comment.documentation variable.parameter')
 
 src('shell')
+rec(OPERATOR,
+    'keyword.operator')
 rec(PUNCTUATION2,
     'meta.group.expansion & (punctuation.section | keyword.operator.substitution | variable.parameter.switch)',
     'keyword.operator.assignment.{pipe|redirection|herestring}')
@@ -420,7 +427,7 @@ rec(FOREGROUND,
     'variable.language.tilde',
     'variable.parameter.option',
     'keyword.control.conditional.patterns',
-    'punctuation.separator.path',
+    'punctuation.separator.path -string.quoted',
     'constant.language.null')
 rec(ITALIC,
     'meta.statement.conditional.case meta.clause.patterns meta.string.glob',
